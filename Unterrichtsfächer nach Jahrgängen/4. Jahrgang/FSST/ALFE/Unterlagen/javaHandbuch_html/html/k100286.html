@@ -1,0 +1,268 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100284.html;106,k100285.html;107,k100287.html;108,k100292.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100284.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100285.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100287.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100292.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 45 - Reflection
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id045002"></a>
+<h2>45.2 Die Klassen Object und Class </h2>
+<hr>
+<ul>
+<li><a href="k100286.html#sectlevel2id045002">45.2 Die Klassen Object und Class</a>
+<ul>
+<li><a href="k100286.html#sectlevel3id045002001">45.2.1 Die Klasse Object</a>
+<li><a href="k100286.html#dieklasseclass">45.2.2 Die Klasse Class</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id045002001"></a>
+<h3>45.2.1 Die Klasse Object </h3>
+
+<p>
+Die Klasse <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+wurde bereits in <a href="k100058.html#klasseobject">Abschnitt 9.1.2</a>
+erl&auml;utert. Sie ist die Vaterklasse aller anderen Klassen und
+sorgt daf&uuml;r, dass einige elementare Methoden wie <a href="index_e.html#ixb100230"><font color=#000080><tt>equals</tt></font></a>,
+<a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a>,
+<a href="index_c.html#ixb100290"><font color=#000080><tt>clone</tt></font></a>
+oder <a href="index_h.html#ixb100427"><font color=#000080><tt>hashCode</tt></font></a>
+in allen Klassen zur Verf&uuml;gung stehen. 
+
+<!-- Section -->
+
+<a name="dieklasseclass"></a>
+<h3>45.2.2 Die Klasse Class </h3>
+
+<p>
+Mit der Methode <a name="ixa103284"><a href="index_g.html#ixb100792"><font color=#000080><tt>getClass</tt></font></a></a>
+der Klasse <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+besitzt ein beliebiges Objekt die F&auml;higkeit, ein passendes <a name="ixa103285"><i>Klassenobjekt</i></a>
+zu liefern. Zu jeder Klasse, die das Laufzeitsystem verwendet, wird
+w&auml;hrend des Ladevorgangs ein Klassenobjekt vom Typ <a name="ixa103286"><a href="index_c.html#ixb100654"><font color=#000080><tt>Class</tt></font></a></a>
+erzeugt. Die Klasse <a href="index_c.html#ixb100654"><font color=#000080><tt>Class</tt></font></a>
+stellt Methoden zur Abfrage von Eigenschaften der Klasse zur Verf&uuml;gung
+und erlaubt es, Klassen dynamisch zu laden und Instanzen dynamisch
+zu erzeugen. Dar&uuml;ber hinaus ist sie der Schl&uuml;ssel zur Funktionalit&auml;t
+des Reflection-API. 
+
+<p>
+Wir wollen uns zun&auml;chst an einem einfachen Beispiel das dynamische
+Laden und Instanzieren von Klassen <a name="ixa103287"></a> ansehen.
+Das folgende Listing zeigt das Interface <font color="#000077"><tt>HelloMeth</tt></font>
+und die Klassen <font color="#000077"><tt>CA</tt></font>, <font color="#000077"><tt>CB</tt></font>,
+<font color="#000077"><tt>CC</tt></font> und <font color="#000077"><tt>CD</tt></font>.
+<font color="#000077"><tt>HelloMeth</tt></font> deklariert die Methode
+<font color="#000077"><tt>hello</tt></font>, die von den Klassen <font color="#000077"><tt>CA</tt></font>
+und <font color="#000077"><tt>CB</tt></font> implementiert wird. <font color="#000077"><tt>CC</tt></font>
+besitzt ebenfalls die Methode <font color="#000077"><tt>hello</tt></font>,
+allerdings ohne das Interface <font color="#000077"><tt>HelloMeth</tt></font>
+zu implementieren. <font color="#000077"><tt>CD</tt></font> schlie&szlig;lich
+implementiert nicht <font color="#000077"><tt>hello</tt></font>, sondern
+<font color="#000077"><tt>hallo</tt></font>. 
+
+<p>
+Die Hauptklasse liest zun&auml;chst einen Klassennamen von der Standardeingabe
+ein. Mit der Klassenmethode <a name="ixa103288"><a href="index_f.html#ixb102370"><font color=#000080><tt>forName</tt></font></a></a>
+der Klasse <a href="index_c.html#ixb100654"><font color=#000080><tt>Class</tt></font></a>
+wird dann ein Klassenobjekt zu einer Klasse dieses Namens beschafft.
+Das wird verwendet, um mit der Methode <a name="ixa103289"><a href="index_n.html#ixb102293"><font color=#000080><tt>newInstance</tt></font></a></a>
+der Klasse <a href="index_c.html#ixb100654"><font color=#000080><tt>Class</tt></font></a>
+ein neues Objekt zu erzeugen. Dieses Objekt wird schlie&szlig;lich
+in das Interface <font color="#000077"><tt>HelloMeth</tt></font> konvertiert
+und dessen Methode <font color="#000077"><tt>hello</tt></font> aufgerufen.
+
+<p>
+Das Programm ist in der Lage, die beiden Klassen <font color="#000077"><tt>CA</tt></font>
+und <font color="#000077"><tt>CB</tt></font> ordnungsgem&auml;&szlig;
+zu instanzieren und ihre Methode <font color="#000077"><tt>hello</tt></font>
+aufzurufen. Bei <font color="#000077"><tt>CC</tt></font> und <font color="#000077"><tt>CD</tt></font>
+gibt es eine Ausnahme des Typs <a name="ixa103290"><a href="index_c.html#ixb100738"><font color=#000080><tt>ClassCastException</tt></font></a></a>,
+weil diese Klassen nicht das Interface <font color="#000077"><tt>HelloMeth</tt></font>
+implementieren. Alle anderen Klassennamen werden mit der Ausnahme
+<a name="ixa103291"><a href="index_c.html#ixb102461"><font color=#000080><tt>ClassNotFoundException</tt></font></a></a>
+quittiert. 
+<a name="listingid045001"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4501.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">interface</font> HelloMeth
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> hello();
+<font color="#555555">008 </font>}
+<font color="#555555">009 </font>
+<font color="#555555">010 </font><font color="#0000AA">class</font> CA
+<font color="#555555">011 </font><font color="#0000AA">implements</font> HelloMeth
+<font color="#555555">012 </font>{
+<font color="#555555">013 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> hello()
+<font color="#555555">014 </font>  {
+<font color="#555555">015 </font>    System.out.println(<font color="#0000FF">"hello CA"</font>);
+<font color="#555555">016 </font>  }
+<font color="#555555">017 </font>}
+<font color="#555555">018 </font>
+<font color="#555555">019 </font><font color="#0000AA">class</font> CB
+<font color="#555555">020 </font><font color="#0000AA">implements</font> HelloMeth
+<font color="#555555">021 </font>{
+<font color="#555555">022 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> hello()
+<font color="#555555">023 </font>  {
+<font color="#555555">024 </font>    System.out.println(<font color="#0000FF">"hello CB"</font>);
+<font color="#555555">025 </font>  }
+<font color="#555555">026 </font>}
+<font color="#555555">027 </font>
+<font color="#555555">028 </font><font color="#0000AA">class</font> CC
+<font color="#555555">029 </font>{
+<font color="#555555">030 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> hello()
+<font color="#555555">031 </font>  {
+<font color="#555555">032 </font>    System.out.println(<font color="#0000FF">"hello CC"</font>);
+<font color="#555555">033 </font>  }
+<font color="#555555">034 </font>}
+<font color="#555555">035 </font>
+<font color="#555555">036 </font><font color="#0000AA">class</font> CD
+<font color="#555555">037 </font>{
+<font color="#555555">038 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> hallo()
+<font color="#555555">039 </font>  {
+<font color="#555555">040 </font>    System.out.println(<font color="#0000FF">"hallo CD"</font>);
+<font color="#555555">041 </font>  }
+<font color="#555555">042 </font>}
+<font color="#555555">043 </font>
+<font color="#555555">044 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4501
+<font color="#555555">045 </font>{
+<font color="#555555">046 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">047 </font>  {
+<font color="#555555">048 </font>    String buf = <font color="#0000FF">""</font>;
+<font color="#555555">049 </font>    BufferedReader in = <font color="#0000AA">new</font> BufferedReader(
+<font color="#555555">050 </font>                        <font color="#0000AA">new</font> InputStreamReader(
+<font color="#555555">051 </font>                        <font color="#0000AA">new</font> DataInputStream(System.in)));
+<font color="#555555">052 </font>    <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">053 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">054 </font>        System.out.print(<font color="#0000FF">"Klassenname oder ende eingeben: "</font>);
+<font color="#555555">055 </font>        buf = in.readLine();
+<font color="#555555">056 </font>        <font color="#0000AA">if</font> (buf.equals(<font color="#0000FF">"ende"</font>)) {
+<font color="#555555">057 </font>          <font color="#0000AA">break</font>;
+<font color="#555555">058 </font>        }
+<font color="#555555">059 </font>        Class&lt;?&gt; c = Class.forName(buf);
+<font color="#555555">060 </font>        Object o = c.newInstance();
+<font color="#555555">061 </font>        ((HelloMeth)o).hello();
+<font color="#555555">062 </font>      } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">063 </font>        System.out.println(e.toString());
+<font color="#555555">064 </font>      } <font color="#0000AA">catch</font> (ClassNotFoundException e) {
+<font color="#555555">065 </font>        System.out.println(<font color="#0000FF">"Klasse nicht gefunden"</font>);
+<font color="#555555">066 </font>      } <font color="#0000AA">catch</font> (ClassCastException e) {
+<font color="#555555">067 </font>        System.out.println(e.toString());
+<font color="#555555">068 </font>      } <font color="#0000AA">catch</font> (InstantiationException e) {
+<font color="#555555">069 </font>        System.out.println(e.toString());
+<font color="#555555">070 </font>      } <font color="#0000AA">catch</font> (IllegalAccessException e) {
+<font color="#555555">071 </font>        System.out.println(e.toString());
+<font color="#555555">072 </font>      }
+<font color="#555555">073 </font>    }
+<font color="#555555">074 </font>  }
+<font color="#555555">075 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4501.java"><font color="#000055" size=-1>Listing4501.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 45.1: Dynamisches Laden von Klassen</i></p>
+
+<p>
+Eine Beispielsitzung des Programms k&ouml;nnte so aussehen: 
+<font color="#333300">
+<pre>
+CA
+hello CA
+CB
+hello CB
+CC
+java.lang.ClassCastException
+CD
+java.lang.ClassCastException
+CE
+Klasse nicht gefunden
+ende
+</pre>
+</font>
+
+<p>
+An diesem Beispiel ist zu sehen, wie Klassen geladen und instanziert
+werden k&ouml;nnen, wenn ihr Name zur Compile-Zeit nicht bekannt ist.
+In allen anderen Beispielen in diesem Buch wurden Klassennamen als
+literale Konstanten im Sourcecode gehalten und der Compiler konnte
+den passenden Code erzeugen. Wir wollen die n&ouml;tigen Schritte
+noch einmal zusammenfassen: 
+<ul>
+<li>Mit der statischen Methode <a href="index_f.html#ixb102370"><font color=#000080><tt>forName</tt></font></a>
+wurde der <a name="ixa103292"><i>Classloader</i></a> beauftragt, eine
+Klasse des angegebenen Namens zu suchen und in die Java-Maschine zu
+laden. Die VM f&uuml;hrt anschlie&szlig;end die statischen Initialisierungen
+aus (falls nicht schon geschehen) und liefert das zugeh&ouml;rige
+Klassenobjekt.
+<li>Mit dem Klassenobjekt k&ouml;nnen nun verschiedene Aufgaben erledigt
+werden. Insbesondere ist es m&ouml;glich, Informationen &uuml;ber
+Konstruktoren, Membervariablen oder Methoden der Klasse abzufragen.
+<li>Zudem kann mit <a href="index_n.html#ixb102293"><font color=#000080><tt>newInstance</tt></font></a>
+eine neue Instanz der Klasse angelegt werden. Ist der Typ der Klasse
+oder ihrer Basisklasse oder eines ihrer Interfaces bekannt, kann das
+Objekt auf eine Variable dieses Typs konvertiert und dessen Methoden
+aufgerufen werden.
+</ul>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100284.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100285.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100287.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100292.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

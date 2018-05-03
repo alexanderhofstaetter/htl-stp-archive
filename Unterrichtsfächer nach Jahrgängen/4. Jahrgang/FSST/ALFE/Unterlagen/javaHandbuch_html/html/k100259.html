@@ -1,0 +1,418 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100257.html;106,k100258.html;107,k100260.html;108,k100263.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100257.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100258.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100260.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100263.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 40 - Applets I
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id040002"></a>
+<h2>40.2 Einbinden eines Applets </h2>
+<hr>
+<ul>
+<li><a href="k100259.html#sectlevel2id040002">40.2 Einbinden eines Applets</a>
+<ul>
+<li><a href="k100259.html#sectlevel3id040002001">40.2.1 Das APPLET-Tag</a>
+<li><a href="k100259.html#applettagparameter">40.2.2 Die Parameter des Applet-Tags</a>
+<li><a href="k100259.html#sectlevel3id040002003">40.2.3 Parameter&uuml;bergabe an Applets</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id040002001"></a>
+<h3>40.2.1 Das <a name="ixa102911">APPLET-Tag</a> </h3>
+
+<p>
+Das Einbinden eines Applets in ein <a name="ixa102912">HTML-Dokument</a>
+erfolgt unter Verwendung des APPLET-Tags, es wird also durch <a name="ixa102913"><a href="index_0.html#ixb102167"><font color=#000080><tt>&lt;APPLET&gt;</tt></font></a></a>
+eingeleitet und durch <font color="#000077"><tt>&lt;/APPLET&gt;</tt></font>
+beendet. Zwischen den beiden Marken kann bei Bedarf ein Text stehen,
+der angezeigt werden soll, wenn das Applet nicht aufgerufen werden
+kann; ein applet-f&auml;higer Browser ignoriert den Text. Beispiel:
+<a name="listingid040004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">&lt;APPLET CODE=</font><font color="#0000FF">"Hello.class"</font><font color="#0000AA"> WIDTH=300 HEIGHT=200&gt;</font>
+<font color="#555555">002 </font>Hier steht das Applet Hello
+<font color="#555555">003 </font><font color="#0000AA">&lt;/APPLET&gt;</font></pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 40.4: Das APPLET-Tag</i></p>
+
+<p>
+Ein Applet-Tag wird wie normaler Text in die Browser-Ausgabe eingebunden.
+Das Applet belegt soviel Platz auf dem Bildschirm, wie durch die Gr&ouml;&szlig;enangaben
+<a name="ixa102914"><a href="index_w.html#ixb102168"><font color=#000080><tt>WIDTH</tt></font></a></a>
+und <a name="ixa102915"><a href="index_h.html#ixb102169"><font color=#000080><tt>HEIGHT</tt></font></a></a>
+reserviert wurde. Soll das Applet in einer eigenen Zeile stehen, m&uuml;ssen
+separate Zeilenschaltungen in den HTML-Code eingebaut werden (beispielsweise
+<font color="#000077"><tt>&lt;p&gt;</tt></font> oder <font color="#000077"><tt>&lt;br&gt;</tt></font>)
+oder es muss ein Tag verwendet werden, dessen Ausgabe in einer eigenen
+Zeile steht (z.B. <font color="#000077"><tt>&lt;h1&gt;</tt></font>
+bis <font color="#000077"><tt>&lt;h6&gt;</tt></font>). 
+
+<p>
+Neben dem Ersatztext, der zwischen dem Beginn- und dem Ende-Tag steht,
+besitzt ein Applet-Tag weitere Parameter: 
+<ul>
+<li>Eine Reihe von Parametern, die innerhalb von <font color="#000077"><tt>&lt;APPLET&gt;</tt></font>
+untergebracht werden und die Gr&ouml;&szlig;e und Anordnung des Applets
+bestimmen. <a name="ixa102916"><a href="index_c.html#ixb102170"><font color=#000080><tt>CODE</tt></font></a></a>,
+<a href="index_w.html#ixb102168"><font color=#000080><tt>WIDTH</tt></font></a>
+und <a name="ixa102915"><a href="index_h.html#ixb102169"><font color=#000080><tt>HEIGHT</tt></font></a></a>
+m&uuml;ssen dabei in jedem Fall angegeben werden, au&szlig;erdem gibt
+es noch einige optionale Parameter.
+<li>Eine Liste von PARAM-Tags<a name="ixa102917"></a>, die zwischen
+<font color="#000077"><tt>&lt;APPLET&gt;</tt></font> und <font color="#000077"><tt>&lt;/APPLET&gt;</tt></font>
+stehen und zur Parameter&uuml;bergabe an das Applet verwendet werden.
+</ul>
+
+<p>
+Zwischen beiden Parameterarten besteht ein grunds&auml;tzlicher Unterschied.
+W&auml;hrend die Parameter der ersten Gruppe (also <a href="index_c.html#ixb102170"><font color=#000080><tt>CODE</tt></font></a>,
+<a href="index_w.html#ixb102168"><font color=#000080><tt>WIDTH</tt></font></a>
+und <a href="index_h.html#ixb102169"><font color=#000080><tt>HEIGHT</tt></font></a>)
+vom Browser interpretiert werden, um das Applet zu laden und seine
+visuelle Darstellung zu steuern, werden die Parameter der zweiten
+Gruppe an das Applet selbst weitergegeben. Der Browser &uuml;bernimmt
+bei ihnen nur die Aufbereitung und die Weitergabe, f&uuml;hrt aber
+selbst keine Interpretation der Parameter aus. 
+
+<!-- Section -->
+
+<a name="applettagparameter"></a>
+<h3>40.2.2 Die Parameter des Applet-Tags </h3>
+
+<p>
+Der wichtigste Parameter des Applet-Tags hei&szlig;t <a href="index_c.html#ixb102170"><font color=#000080><tt>CODE</tt></font></a>
+und gibt den Namen der Applet-Klasse an. Bei der Angabe des <a href="index_c.html#ixb102170"><font color=#000080><tt>CODE</tt></font></a>-Parameters
+sind einige Dinge zu beachten: 
+<ul>
+<li>Der Klassenname sollte inklusive der Extension .class angegeben
+werden.
+<li>Gro&szlig;- und Kleinschreibung m&uuml;ssen eingehalten werden.
+<li>Die Klassendatei muss im aktuellen bzw. angegebenen Verzeichnis
+zu finden sein.
+</ul>
+
+<p>
+Alternativ kann die Klassendatei auch in einem der Verzeichnisse liegen,
+die in der Umgebungsvariablen <a href="index_c.html#ixb100137"><font color=#000080><tt>CLASSPATH</tt></font></a>
+angegeben wurden. <a href="index_c.html#ixb100137"><font color=#000080><tt>CLASSPATH</tt></font></a>
+enth&auml;lt eine Liste von durch Kommata getrennten Verzeichnissen,
+die in der Reihenfolge ihres Auftretens durchsucht werden. <a href="index_c.html#ixb100137"><font color=#000080><tt>CLASSPATH</tt></font></a>
+spielt au&szlig;erdem beim Aufruf des Compilers eine Rolle: Sie dient
+dazu, die importierten Pakete zu suchen. 
+
+<p>
+Das Applet-Tag hat zwei weitere nichtoptionale Parameter <a href="index_w.html#ixb102168"><font color=#000080><tt>WIDTH</tt></font></a>
+und <font color="#000077"><tt>HEIGHT</tt></font>, die die H&ouml;he
+und Breite des f&uuml;r das Applet reservierten Bildschirmausschnitts
+angeben. Innerhalb des Applets steht ein Rechteck dieser Gr&ouml;&szlig;e
+als Ausgabefl&auml;che zur Verf&uuml;gung. 
+
+<p>
+Das Applet-Tag besitzt weitere optionale Parameter. Diese dienen zur
+Konfiguration des Applets und zur Beeinflussung der Darstellung des
+Applets und des umgebenden Textes. <a href="k100259.html#optappletparameter">Tabelle 40.1</a>
+gibt einen &Uuml;berblick &uuml;ber die verf&uuml;gbaren Parameter:
+<a name="optappletparameter"></a>
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=20%><b>Parameter</b></td>
+<td valign=top align=left width=80%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102918"><a href="index_c.html#ixb102172"><font color=#000080><tt>CODEBASE</tt></font></a></a></td>
+<td valign=top align=left>Hier kann ein alternatives Verzeichnis f&uuml;r
+das Laden der Klassendateien angegeben werden. Fehlt diese Angabe,
+wird das Dokumentenverzeichnis genommen. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102919"><a href="index_a.html#ixb102173"><font color=#000080><tt>ARCHIVE</tt></font></a></a></td>
+<td valign=top align=left>Angabe eines <a name="ixa102920">JAR-Archivs</a>,
+aus dem die Klassendateien und sonstigen Ressourcen des Applets geladen
+werden sollen. Ein Beispiel zur Verwendung des ARCHIV-Parameters ist
+in <a href="k100338.html#jarwerkzeug">Abschnitt 53.6</a> bei der Vorstellung
+von <a href="index_j.html#ixb100124"><font color=#000080><tt>jar</tt></font></a>
+zu finden. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102921"><a href="index_o.html#ixb102175"><font color=#000080><tt>OBJECT</tt></font></a></a></td>
+<td valign=top align=left>Name einer Datei, die den serialisierten
+Inhalt des Applets enth&auml;lt </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102922"><a href="index_a.html#ixb102176"><font color=#000080><tt>ALT</tt></font></a></a></td>
+<td valign=top align=left>Alternativer Text f&uuml;r solche Browser,
+die zwar das Applet-Tag verstehen, aber Java nicht unterst&uuml;tzen
+</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102923"><a href="index_n.html#ixb102177"><font color=#000080><tt>NAME</tt></font></a></a></td>
+<td valign=top align=left>Eindeutiger Name f&uuml;r das Applet. Er
+kann zur Unterscheidung mehrerer, miteinander kommunizierender Applets
+auf einer Webseite verwendet werden. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102924"><a href="index_a.html#ixb102178"><font color=#000080><tt>ALIGN</tt></font></a></a></td>
+<td valign=top align=left>Vertikale Anordnung des Applets in einer
+Textzeile. Hier kann einer der Werte <a name="ixa102925"><a href="index_l.html#ixb102179"><font color=#000080><tt>left</tt></font></a></a>,
+<a name="ixa102926"><a href="index_r.html#ixb102180"><font color=#000080><tt>right</tt></font></a></a>,
+<a name="ixa102927"><a href="index_t.html#ixb102181"><font color=#000080><tt>top</tt></font></a></a>,
+<a name="ixa102928"><a href="index_t.html#ixb102182"><font color=#000080><tt>texttop</tt></font></a></a>,
+<a name="ixa102929"><a href="index_m.html#ixb102183"><font color=#000080><tt>middle</tt></font></a></a>,
+<a name="ixa102930"><a href="index_a.html#ixb102184"><font color=#000080><tt>absmiddle</tt></font></a></a>,
+<a name="ixa102931"><a href="index_b.html#ixb102185"><font color=#000080><tt>baseline</tt></font></a></a>,
+<a name="ixa102932"><a href="index_b.html#ixb102186"><font color=#000080><tt>bottom</tt></font></a></a>
+oder <a name="ixa102933"><a href="index_a.html#ixb102187"><font color=#000080><tt>absbottom</tt></font></a></a>
+angegeben werden. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102934"><a href="index_v.html#ixb102188"><font color=#000080><tt>VSPACE</tt></font></a></a></td>
+<td valign=top align=left>Rand &uuml;ber und unter dem Applet </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102935"><a href="index_h.html#ixb102189"><font color=#000080><tt>HSPACE</tt></font></a></a></td>
+<td valign=top align=left>Rand links und rechts vom Applet </td></tr>
+</table>
+<p><i>
+Tabelle 40.1: Optionale Parameter des APPLET-Tags </i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id040002003"></a>
+<h3>40.2.3 Parameter&uuml;bergabe an Applets </h3>
+
+<p>
+Neben den Parametern des Applet-Tags gibt es die M&ouml;glichkeit,
+Parameter an das Applet selbst zu &uuml;bergeben. Dazu kann innerhalb
+von <font color="#000077"><tt>&lt;APPLET&gt;</tt></font> und <font color="#000077"><tt>&lt;/APPLET&gt;</tt></font>
+das optionale Tag <font color="#000077"><tt>&lt;PARAM&gt;</tt></font>
+verwendet werden. Jedes PARAM-Tag besitzt die beiden Parameter <font color="#000077"><tt>name</tt></font>
+und <font color="#000077"><tt>value</tt></font>, die den Namen und
+den Wert des zu &uuml;bergebenden Parameters angeben. 
+
+<p>
+Innerhalb des Applets k&ouml;nnen die Parameter mit der Methode <a name="ixa102936"><a href="index_g.html#ixb102190"><font color=#000080><tt>getParameter</tt></font></a></a>
+der Klasse <a href="index_a.html#ixb100603"><font color=#000080><tt>Applet</tt></font></a>
+abgefragt werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public String getParameter(String name)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/applet/Applet.html" onClick="this.href=getApiDoc('java.applet.Applet')"><font color="#660066" size=-1>java.applet.Applet</font></a></td>
+</tr>
+</table>
+
+<p>
+F&uuml;r jeden angegebenen Parameter liefert <a href="index_g.html#ixb102190"><font color=#000080><tt>getParameter</tt></font></a>
+den zugeh&ouml;rigen Wert als <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>.
+Numerische Parameter m&uuml;ssen vor der weiteren Verwendung also
+erst konvertiert werden. Wird der angegebene Parameter nicht gefunden,
+gibt die Methode <a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>
+zur&uuml;ck. 
+
+<p>
+Das folgende Listing demonstriert den Einsatz von <a href="index_g.html#ixb102190"><font color=#000080><tt>getParameter</tt></font></a>
+am Beispiel eines Applets, das eine rot-wei&szlig;e Schranke zeichnet.
+Das Applet erwartet zwei Parameter <font color="#000077"><tt>redwidth</tt></font>
+und <font color="#000077"><tt>whitewidth</tt></font>, die die Breite
+des roten und wei&szlig;en Abschnitts angeben. Diese werden in der
+<a href="index_i.html#ixb101826"><font color=#000080><tt>init</tt></font></a>-Methode
+gelesen und dem Array <font color="#000077"><tt>dx</tt></font> zugewiesen.
+In <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>
+wird dieses Array dann verwendet, um abwechselnd wei&szlig;e und rote
+Parallelogramme der gew&uuml;nschten Gr&ouml;&szlig;e auszugeben.
+Insgesamt entsteht dadurch der Eindruck einer rot-wei&szlig;en Schranke:
+<a name="rotweisseschranke"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Schranke.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.applet.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Schranke
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Applet
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font>[] dx;
+<font color="#555555">010 </font>  <font color="#0000AA">private</font> Color[] color;
+<font color="#555555">011 </font>
+<font color="#555555">012 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> init()
+<font color="#555555">013 </font>  {
+<font color="#555555">014 </font>    dx = <font color="#0000AA">new</font> <font color="#006699">int</font>[2];
+<font color="#555555">015 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">016 </font>      dx[0] = Integer.parseInt(
+<font color="#555555">017 </font>        getParameter(<font color="#0000FF">"redwidth"</font>)
+<font color="#555555">018 </font>      );
+<font color="#555555">019 </font>      dx[1] = Integer.parseInt(
+<font color="#555555">020 </font>        getParameter(<font color="#0000FF">"whitewidth"</font>)
+<font color="#555555">021 </font>      );
+<font color="#555555">022 </font>    } <font color="#0000AA">catch</font> (NumberFormatException e) {
+<font color="#555555">023 </font>      dx[0] = 10;
+<font color="#555555">024 </font>      dx[1] = 10;
+<font color="#555555">025 </font>    }
+<font color="#555555">026 </font>    color = <font color="#0000AA">new</font> Color[2];
+<font color="#555555">027 </font>    color[0] = Color.red;
+<font color="#555555">028 </font>    color[1] = Color.white;
+<font color="#555555">029 </font>  }
+<font color="#555555">030 </font>
+<font color="#555555">031 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">032 </font>  {
+<font color="#555555">033 </font>    <font color="#006699">int</font> maxX = getSize().width;
+<font color="#555555">034 </font>    <font color="#006699">int</font> maxY = getSize().height;
+<font color="#555555">035 </font>    <font color="#006699">int</font> x = 0;
+<font color="#555555">036 </font>    <font color="#006699">int</font> flg = 0;
+<font color="#555555">037 </font>    Polygon p;
+<font color="#555555">038 </font>    <font color="#0000AA">while</font> (x &lt;= maxX+maxY/2) {
+<font color="#555555">039 </font>      p = <font color="#0000AA">new</font> Polygon();
+<font color="#555555">040 </font>      p.addPoint(x,0);
+<font color="#555555">041 </font>      p.addPoint(x+dx[flg],0);
+<font color="#555555">042 </font>      p.addPoint(x+dx[flg]-maxY/2,maxY);
+<font color="#555555">043 </font>      p.addPoint(x-maxY/2,maxY);
+<font color="#555555">044 </font>      p.addPoint(x,0);
+<font color="#555555">045 </font>      g.setColor(color[flg]);
+<font color="#555555">046 </font>      g.fillPolygon(p);
+<font color="#555555">047 </font>      x += dx[flg];
+<font color="#555555">048 </font>      flg = (flg==0) ? 1 : 0;
+<font color="#555555">049 </font>    }
+<font color="#555555">050 </font>  }
+<font color="#555555">051 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Schranke.java"><font color="#000055" size=-1>Schranke.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 40.5: Ein parametrisiertes Applet</i></p>
+
+<p>
+Das folgende HTML-Dokument zeigt die Einbindung eines Schranken-Applets
+mit einer H&ouml;he von 10 Pixeln und einer Breite von 400 Pixeln.
+Die roten Felder der Schranke sind 10 und die wei&szlig;en 7 Pixel
+breit: 
+<a name="listingid040006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">&lt;html&gt;</font>
+<font color="#555555">002 </font><font color="#0000AA">&lt;head&gt;</font>
+<font color="#555555">003 </font><font color="#0000AA">&lt;title&gt;</font>Schranke<font color="#0000AA">&lt;/title&gt;</font>
+<font color="#555555">004 </font><font color="#0000AA">&lt;/head&gt;</font>
+<font color="#555555">005 </font><font color="#0000AA">&lt;body&gt;</font>
+<font color="#555555">006 </font><font color="#0000AA">&lt;h1&gt;</font>Schranke<font color="#0000AA">&lt;/h1&gt;</font>
+<font color="#555555">007 </font><font color="#0000AA">&lt;applet code=</font><font color="#0000FF">"Schranke.class"</font><font color="#0000AA"> width=400 height=10&gt;</font>
+<font color="#555555">008 </font><font color="#0000AA">&lt;param name=</font><font color="#0000FF">"redwidth"</font><font color="#0000AA"> value=10&gt;</font>
+<font color="#555555">009 </font><font color="#0000AA">&lt;param name=</font><font color="#0000FF">"whitewidth"</font><font color="#0000AA"> value=7&gt;</font>
+<font color="#555555">010 </font>Hier steht das Applet Schranke.class
+<font color="#555555">011 </font><font color="#0000AA">&lt;/applet&gt;</font>
+<font color="#555555">012 </font><font color="#0000AA">&lt;/body&gt;</font>
+<font color="#555555">013 </font><font color="#0000AA">&lt;/html&gt;</font></pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Schranke.html"><font color="#000055" size=-1>Schranke.html</font></a></td>
+</tr>
+</table>
+<i>
+Listing 40.6: Die HTML-Datei zum Schranken-Applet</i></p>
+
+<p>
+Beim Aufruf mit dem Netscape Navigator sieht die Ausgabe des Applets
+so aus: 
+<p>
+<a name="imageid040002"></a>
+<img src="images/Schranke.gif">
+<p>
+
+<p><i>
+Abbildung 40.2: Darstellung des Schranken-Applets im Netscape Navigator</i></p>
+
+<p>
+Zu Debug-Zwecken kann ein Applet auch mit dem Programm <a name="ixa102937"><i>Appletviewer</i></a>
+des JDK aufgerufen werden. Ein Web-Browser ist dann nicht erforderlich.
+Unser Programm kann beispielsweise mit dem folgenden Kommando gestartet
+werden: 
+<font color="#000077">
+<pre>
+appletviewer Schranke.html
+</pre>
+</font>
+
+<p>
+Bei Bedarf k&ouml;nnen auch die &#187;echten&#171; Web-Browser mit
+einer Datei als Argument aufgerufen werden. Der Applet-Viewer ist
+n&auml;mlich kein vollwertiger Browser, sondern extrahiert lediglich
+die <a href="index_a.html#ixb102191"><font color=#000080><tt>APPLET</tt></font></a>-Tags
+und ihre Parameter aus der HTML-Datei, um die darin angegebenen Applets
+zu starten. Bei Aufruf mit einem vollwertigen Browser wird dagegen
+auch der restliche HTML-Code interpretiert und zur Anzeige gebracht.
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100257.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100258.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100260.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100263.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

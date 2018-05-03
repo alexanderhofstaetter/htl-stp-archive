@@ -1,0 +1,456 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100104.html;106,k100109.html;107,k100111.html;108,k100114.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100104.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100109.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100111.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100114.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 16 - Collections II
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sortiertecollections"></a>
+<h2>16.6 <a name="ixa100988">Sortierte Collections</a></h2>
+<hr>
+<ul>
+<li><a href="k100110.html#sortiertecollections">16.6 Sortierte Collections</a>
+<ul>
+<li><a href="k100110.html#sectlevel3id016006001">16.6.1 Comparable und Comparator</a>
+<li><a href="k100110.html#sectlevel3id016006002">16.6.2 SortedSet und TreeSet</a>
+<li><a href="k100110.html#sectlevel3id016006003">16.6.3 SortedMap und TreeMap</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id016006001"></a>
+<h3>16.6.1 Comparable und Comparator </h3>
+
+<p>
+Die bisher vorgestellten <a href="index_s.html#ixb100728"><font color=#000080><tt>Set</tt></font></a>-
+und <a href="index_m.html#ixb100109"><font color=#000080><tt>Map</tt></font></a>-Collections
+waren unsortiert, d.h., ihre Iteratoren haben die Elemente in keiner
+bestimmten Reihenfolge zur&uuml;ckgegeben. Im Gegensatz dazu gibt
+ein <a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>-Iterator
+die Elemente in der Reihenfolge ihrer Indexnummern zur&uuml;ck. Im
+JDK gibt es nun auch die M&ouml;glichkeit, die Elemente eines <a href="index_s.html#ixb100728"><font color=#000080><tt>Set</tt></font></a>
+oder einer <a href="index_m.html#ixb100109"><font color=#000080><tt>Map</tt></font></a>
+zu sortieren. Dabei kann entweder die <a name="ixa100989"><i>nat&uuml;rliche Ordnung</i></a>
+der Elemente verwendet werden oder die Elemente k&ouml;nnen mit Hilfe
+eines expliziten Vergleichsobjekts sortiert werden. 
+
+<p>
+Bei der nat&uuml;rlichen Ordnung muss sichergestellt sein, dass alle
+Elemente der Collection eine <a name="ixa100990"><a href="index_c.html#ixb100455"><font color=#000080><tt>compareTo</tt></font></a></a>-Methode
+besitzen und je zwei beliebige Elemente miteinander verglichen werden
+k&ouml;nnen, ohne dass es zu einem Typfehler kommt. Dazu m&uuml;ssen
+die Elemente das Interface <a name="ixa100991"><a href="index_c.html#ixb100454"><font color=#000080><tt>Comparable</tt></font></a></a>
+aus dem Paket <a href="index_j.html#ixb100196"><font color=#000080><tt>java.lang</tt></font></a>
+implementieren: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int compareTo(Object o)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/Comparable.html" onClick="this.href=getApiDoc('java.lang.Comparable')"><font color="#660066" size=-1>java.lang.Comparable</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_c.html#ixb100454"><font color=#000080><tt>Comparable</tt></font></a>
+besitzt lediglich eine einzige Methode <a href="index_c.html#ixb100455"><font color=#000080><tt>compareTo</tt></font></a>,
+die aufgerufen wird, um das aktuelle Element mit einem anderen zu
+vergleichen. 
+<ul>
+<li><a href="index_c.html#ixb100455"><font color=#000080><tt>compareTo</tt></font></a>
+muss einen Wert kleiner 0 zur&uuml;ckgeben, wenn das aktuelle Element
+<i>vor</i> dem zu vergleichenden liegt.
+<li><a href="index_c.html#ixb100455"><font color=#000080><tt>compareTo</tt></font></a>
+muss einen Wert gr&ouml;&szlig;er 0 zur&uuml;ckgeben, wenn das aktuelle
+Element <i>hinter</i> dem zu vergleichenden liegt.
+<li><a href="index_c.html#ixb100455"><font color=#000080><tt>compareTo</tt></font></a>
+muss 0 zur&uuml;ckgeben, wenn das aktuelle Element und das zu vergleichende
+<i>gleich</i> sind.
+</ul>
+
+<p>
+W&auml;hrend in &auml;lteren JDKs bereits einige Klassen sporadisch
+eine <a href="index_c.html#ixb100455"><font color=#000080><tt>compareTo</tt></font></a>-Methode
+besa&szlig;en, wird seit dem JDK 1.2 das <a href="index_c.html#ixb100454"><font color=#000080><tt>Comparable</tt></font></a>-Interface
+bereits von vielen der eingebauten Klassen implementiert, etwa von
+<a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>,
+<a href="index_c.html#ixb100473"><font color=#000080><tt>Character</tt></font></a>,
+<a href="index_d.html#ixb100268"><font color=#000080><tt>Double</tt></font></a>
+usw. Die nat&uuml;rliche Ordnung einer Menge von Elementen ergibt
+sich nun, indem man alle Elemente paarweise miteinander vergleicht
+und dabei jeweils das kleinere vor das gr&ouml;&szlig;ere Element
+stellt. 
+
+<p>
+Die zweite M&ouml;glichkeit, eine Menge von Elementen zu sortieren,
+besteht darin, an den Konstruktor der Collection-Klasse ein Objekt
+des Typs <a name="ixa100992"><a href="index_c.html#ixb100767"><font color=#000080><tt>Comparator</tt></font></a></a>
+zu &uuml;bergeben. <a href="index_c.html#ixb100767"><font color=#000080><tt>Comparator</tt></font></a>
+ist ein Interface, das lediglich eine einzige Methode <a name="ixa100993"><a href="index_c.html#ixb100768"><font color=#000080><tt>compare</tt></font></a></a>
+definiert: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int compare(Object o1, Object o2)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Comparator.html" onClick="this.href=getApiDoc('java.util.Comparator')"><font color="#660066" size=-1>java.util.Comparator</font></a></td>
+</tr>
+</table>
+
+<p>
+Das &uuml;bergebene <a href="index_c.html#ixb100767"><font color=#000080><tt>Comparator</tt></font></a>-Objekt
+&uuml;bernimmt die Aufgabe einer &#187;Vergleichsfunktion&#171;, deren
+Methode <a href="index_c.html#ixb100768"><font color=#000080><tt>compare</tt></font></a>
+immer dann aufgerufen wird, wenn bestimmt werden muss, in welcher
+Reihenfolge zwei beliebige Elemente zueinander stehen. 
+
+<!-- Section -->
+
+<a name="sectlevel3id016006002"></a>
+<h3>16.6.2 SortedSet und TreeSet </h3>
+
+<p>
+Zur Realisierung von sortierten Mengen wurde aus <a href="index_s.html#ixb100728"><font color=#000080><tt>Set</tt></font></a>
+das Interface <a name="ixa100994"><a href="index_s.html#ixb100731"><font color=#000080><tt>SortedSet</tt></font></a></a>
+abgeleitet. Es erweitert das Basisinterface um einige interessante
+Methoden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+Object first()
+Object last()
+
+SortedSet headSet(Object toElement)
+SortedSet subSet(Object fromElement, Object toElement)
+SortedSet tailSet(Object fromElement)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/SortedSet.html" onClick="this.href=getApiDoc('java.util.SortedSet')"><font color="#660066" size=-1>java.util.SortedSet</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa100995"><a href="index_f.html#ixb100769"><font color=#000080><tt>first</tt></font></a></a>
+und <a name="ixa100996"><a href="index_l.html#ixb100770"><font color=#000080><tt>last</tt></font></a></a>
+kann das (gem&auml;&szlig; der Sortierordnung) erste bzw. letzte Element
+der Menge beschafft werden. Die &uuml;brigen Methoden dienen dazu,
+aus der Originalmenge Teilmengen auf der Basis der Sortierung der
+Elemente zu konstruieren: 
+<ul>
+<li><a name="ixa100997"><a href="index_h.html#ixb100771"><font color=#000080><tt>headSet</tt></font></a></a>
+liefert alle Elemente, die echt kleiner als das als Argument &uuml;bergebene
+Element sind.
+<li><a name="ixa100998"><a href="index_t.html#ixb100772"><font color=#000080><tt>tailSet</tt></font></a></a>
+liefert alle Elemente, die gr&ouml;&szlig;er oder gleich dem als Argument
+&uuml;bergebenen Element sind.
+<li><a name="ixa100999"><a href="index_s.html#ixb100773"><font color=#000080><tt>subSet</tt></font></a></a>
+liefert alle Elemente, die gr&ouml;&szlig;er oder gleich <font color="#000077"><tt>fromElement</tt></font>
+und kleiner als <font color="#000077"><tt>toElement</tt></font> sind.
+</ul>
+
+<p>
+Neben dem hier beschriebenen Interface fordert die Dokumentation zu
+<a href="index_s.html#ixb100731"><font color=#000080><tt>SortedSet</tt></font></a>
+eine Reihe von Konstruktoren: 
+<ul>
+<li>Ein parameterloser Konstruktor erzeugt eine leere Menge, deren
+(zuk&uuml;nftige) Elemente bez&uuml;glich ihrer nat&uuml;rlichen Ordnung
+sortiert werden.
+<li>Ein Konstruktor mit einem Argument des Typs <a href="index_c.html#ixb100767"><font color=#000080><tt>Comparator</tt></font></a>
+erzeugt eine leere Menge, deren (zuk&uuml;nftige) Elemente bez&uuml;glich
+der durch den <a href="index_c.html#ixb100767"><font color=#000080><tt>Comparator</tt></font></a>
+vorgegebenen Ordnung sortiert werden.
+<li>Ein Konstruktor mit einem Argument vom Typ <a href="index_c.html#ixb100730"><font color=#000080><tt>Collection</tt></font></a>
+erzeugt eine Menge, die alle eindeutigen Elemente der als Argument
+&uuml;bergebenen Collection in ihrer nat&uuml;rlichen Ordnung enth&auml;lt.
+<li>Ein Konstruktor mit einem Argument des Typs <a href="index_s.html#ixb100731"><font color=#000080><tt>SortedSet</tt></font></a>
+erzeugt eine Menge mit denselben Elementen und derselben Sortierung
+wie die als Argument &uuml;bergebene Menge.
+</ul>
+
+<p>
+Die einzige Klasse im JDK, die das Interface <a href="index_s.html#ixb100731"><font color=#000080><tt>SortedSet</tt></font></a>
+implementiert, ist <a name="ixa101000"><a href="index_t.html#ixb100752"><font color=#000080><tt>TreeSet</tt></font></a></a>.
+Sie implementiert die sortierte Menge mit Hilfe der Klasse <a name="ixa101001"><a href="index_t.html#ixb100774"><font color=#000080><tt>TreeMap</tt></font></a></a>.
+Diese verwendet einen <a name="ixa101002"><i>Red-Black-Tree</i></a>
+als Datenstruktur, also einen Baum, der durch eine imagin&auml;re
+Rot-Schwarz-F&auml;rbung seiner Knoten und spezielle Einf&uuml;ge-
+und L&ouml;schfunktionen davor gesch&uuml;tzt wird, im Extremfall
+zu einer linearen Liste zu entarten. Alle Basisoperationen k&ouml;nnen
+in logarithmischer Zeit bez&uuml;glich der Anzahl der Elemente des
+Baums ausgef&uuml;hrt werden und sind damit auch bei gro&szlig;en
+Elementzahlen recht schnell. 
+
+<p>
+F&uuml;r uns interessanter ist die F&auml;higkeit, einen sortierten
+Iterator zu erzeugen. Wir wollen uns dazu ein Beispiel ansehen. Das
+folgende Programm erzeugt eine sortierte Menge und f&uuml;gt einige
+Strings unsortiert ein. Anschlie&szlig;end werden die Strings mit
+Hilfe eines Iterators ausgegeben: 
+<a name="treesetsortieren"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1605.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1605
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#00AA00">//Konstruieren des Sets</font>
+<font color="#555555">010 </font>    TreeSet s = <font color="#0000AA">new</font> TreeSet();
+<font color="#555555">011 </font>    s.add(<font color="#0000FF">"Kiwi"</font>);
+<font color="#555555">012 </font>    s.add(<font color="#0000FF">"Kirsche"</font>);
+<font color="#555555">013 </font>    s.add(<font color="#0000FF">"Ananas"</font>);
+<font color="#555555">014 </font>    s.add(<font color="#0000FF">"Zitrone"</font>);
+<font color="#555555">015 </font>    s.add(<font color="#0000FF">"Grapefruit"</font>);
+<font color="#555555">016 </font>    s.add(<font color="#0000FF">"Banane"</font>);
+<font color="#555555">017 </font>    <font color="#00AA00">//Sortierte Ausgabe</font>
+<font color="#555555">018 </font>    Iterator it = s.iterator();
+<font color="#555555">019 </font>    <font color="#0000AA">while</font> (it.hasNext()) {
+<font color="#555555">020 </font>      System.out.println((String)it.next());
+<font color="#555555">021 </font>    }
+<font color="#555555">022 </font>  }
+<font color="#555555">023 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1605.java"><font color="#000055" size=-1>Listing1605.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 16.5: Die Klasse TreeSet</i></p>
+
+<p>
+Die Ausgabe des Programms ist: 
+<font color="#333300">
+<pre>
+Ananas
+Banane
+Grapefruit
+Kirsche
+Kiwi
+Zitrone
+</pre>
+</font>
+
+<p>
+Der Iterator hat die Elemente also in alphabetischer Reihenfolge ausgegeben.
+Der Grund daf&uuml;r ist, dass die Klasse <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+das <a href="index_c.html#ixb100454"><font color=#000080><tt>Comparable</tt></font></a>-Interface
+implementiert und eine Methode <a href="index_c.html#ixb100455"><font color=#000080><tt>compareTo</tt></font></a>
+zur Verf&uuml;gung stellt, mit der die Zeichenketten in lexikografischer
+Ordnung angeordnet werden. Sollen die Elemente unserer Menge dagegen
+r&uuml;ckw&auml;rts sortiert werden, ist die vorhandene <a href="index_c.html#ixb100455"><font color=#000080><tt>compareTo</tt></font></a>-Methode
+dazu nicht geeignet. Stattdessen wird nun einfach ein <a href="index_c.html#ixb100767"><font color=#000080><tt>Comparator</tt></font></a>-Objekt
+an den Konstruktor &uuml;bergeben, dessen <a href="index_c.html#ixb100768"><font color=#000080><tt>compare</tt></font></a>-Methode
+so implementiert wurde, dass zwei zu vergleichende Strings genau dann
+als aufsteigend beurteilt werden, wenn sie gem&auml;&szlig; ihrer
+lexikografischen Ordnung absteigend sind. Das folgende Listing zeigt
+dies am Beispiel der Klasse <font color="#000077"><tt>ReverseStringComparator</tt></font>:
+<a name="listingid016006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1606.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1606
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#00AA00">//Konstruieren des Sets</font>
+<font color="#555555">010 </font>    TreeSet s = <font color="#0000AA">new</font> TreeSet(<font color="#0000AA">new</font> ReverseStringComparator());
+<font color="#555555">011 </font>    s.add(<font color="#0000FF">"Kiwi"</font>);
+<font color="#555555">012 </font>    s.add(<font color="#0000FF">"Kirsche"</font>);
+<font color="#555555">013 </font>    s.add(<font color="#0000FF">"Ananas"</font>);
+<font color="#555555">014 </font>    s.add(<font color="#0000FF">"Zitrone"</font>);
+<font color="#555555">015 </font>    s.add(<font color="#0000FF">"Grapefruit"</font>);
+<font color="#555555">016 </font>    s.add(<font color="#0000FF">"Banane"</font>);
+<font color="#555555">017 </font>    <font color="#00AA00">//R&uuml;ckw&auml;rts sortierte Ausgabe</font>
+<font color="#555555">018 </font>    Iterator it = s.iterator();
+<font color="#555555">019 </font>    <font color="#0000AA">while</font> (it.hasNext()) {
+<font color="#555555">020 </font>      System.out.println((String)it.next());
+<font color="#555555">021 </font>    }
+<font color="#555555">022 </font>  }
+<font color="#555555">023 </font>}
+<font color="#555555">024 </font>
+<font color="#555555">025 </font><font color="#0000AA">class</font> ReverseStringComparator
+<font color="#555555">026 </font><font color="#0000AA">implements</font> Comparator
+<font color="#555555">027 </font>{
+<font color="#555555">028 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> compare(Object o1, Object o2)
+<font color="#555555">029 </font>  {
+<font color="#555555">030 </font>    <font color="#0000AA">return</font> ((String)o2).compareTo((String)o1);
+<font color="#555555">031 </font>  }
+<font color="#555555">032 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1606.java"><font color="#000055" size=-1>Listing1606.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 16.6: R&uuml;ckw&auml;rts sortieren mit einem Comparator</i></p>
+
+<p>
+Das Programm gibt nun die Elemente in umgekehrter Reihenfolge aus:
+<font color="#333300">
+<pre>
+Zitrone
+Kiwi
+Kirsche
+Grapefruit
+Banane
+Ananas
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Mit Hilfe eines Comparators kann eine beliebige Sortierung der Elemente
+eines <a href="index_s.html#ixb100731"><font color=#000080><tt>SortedSet</tt></font></a>
+erreicht werden. Wird ein <a href="index_c.html#ixb100767"><font color=#000080><tt>Comparator</tt></font></a>
+an den Konstruktor &uuml;bergeben, so wird die <a href="index_c.html#ixb100455"><font color=#000080><tt>compareTo</tt></font></a>-Methode
+&uuml;berhaupt nicht mehr verwendet, sondern die Sortierung erfolgt
+ausschlie&szlig;lich mit Hilfe der Methode <a href="index_c.html#ixb100768"><font color=#000080><tt>compare</tt></font></a>
+des <a href="index_c.html#ixb100767"><font color=#000080><tt>Comparator</tt></font></a>-Objekts.
+So k&ouml;nnen beispielsweise auch Elemente in einem <a href="index_s.html#ixb100731"><font color=#000080><tt>SortedSet</tt></font></a>
+gespeichert werden, die das <a href="index_c.html#ixb100454"><font color=#000080><tt>Comparable</tt></font></a>-Interface
+nicht implementieren.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id016006003"></a>
+<h3>16.6.3 SortedMap und TreeMap </h3>
+
+<p>
+Neben einem sortierten <a href="index_s.html#ixb100728"><font color=#000080><tt>Set</tt></font></a>
+gibt es auch eine sortierte <a href="index_m.html#ixb100109"><font color=#000080><tt>Map</tt></font></a>.
+Das Interface <a name="ixa101003"><a href="index_s.html#ixb100732"><font color=#000080><tt>SortedMap</tt></font></a></a>
+ist analog zu <a href="index_s.html#ixb100731"><font color=#000080><tt>SortedSet</tt></font></a>
+aufgebaut und enth&auml;lt folgende Methoden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+Object first()
+Object last()
+
+SortedMap headMap(Object toElement)
+SortedMap subMap(Object fromElement, Object toElement)
+SortedMap tailMap(Object fromElement)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/SortedMap.html" onClick="this.href=getApiDoc('java.util.SortedMap')"><font color="#660066" size=-1>java.util.SortedMap</font></a></td>
+</tr>
+</table>
+
+<p>
+Als konkrete Implementierung von <a href="index_s.html#ixb100732"><font color=#000080><tt>SortedMap</tt></font></a>
+gibt es die Klasse <a name="ixa101004"><a href="index_t.html#ixb100774"><font color=#000080><tt>TreeMap</tt></font></a></a>,
+die analog zu <a href="index_t.html#ixb100752"><font color=#000080><tt>TreeSet</tt></font></a>
+arbeitet. Die Methoden <a href="index_k.html#ixb100758"><font color=#000080><tt>keySet</tt></font></a>
+und <a href="index_e.html#ixb100759"><font color=#000080><tt>entrySet</tt></font></a>
+liefern Collections, deren Iteratoren ihre Elemente in aufsteigender
+Reihenfolge abliefern. Auch bei einer <a href="index_s.html#ixb100732"><font color=#000080><tt>SortedMap</tt></font></a>
+kann wahlweise mit der nat&uuml;rlichen Ordnung der Schl&uuml;ssel
+gearbeitet werden oder durch &Uuml;bergabe eines <a href="index_c.html#ixb100767"><font color=#000080><tt>Comparator</tt></font></a>-Objekts
+an den Konstruktor eine andere Sortierfolge erzwungen werden. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100104.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100109.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100111.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100114.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

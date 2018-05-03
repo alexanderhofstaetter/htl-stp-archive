@@ -1,0 +1,524 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100157.html;106,k100160.html;107,k100162.html;108,k100163.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100157.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100160.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100162.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100163.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 24 - Grafikausgabe
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id024004"></a>
+<h2>24.4 Weiterf&uuml;hrende Funktionen </h2>
+<hr>
+<ul>
+<li><a href="k100161.html#sectlevel2id024004">24.4 Weiterf&uuml;hrende Funktionen</a>
+<ul>
+<li><a href="k100161.html#sectlevel3id024004001">24.4.1 Linien- oder F&uuml;llmodus</a>
+<li><a href="k100161.html#sectlevel3id024004002">24.4.2 Kopieren und L&ouml;schen von Fl&auml;chen
+</a>
+<li><a href="k100161.html#sectlevel3id024004003">24.4.3 Die Clipping-Region</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id024004001"></a>
+<h3>24.4.1 <a name="ixa101557">Linien- oder F&uuml;llmodus</a><a name="ixa101558"></a></h3>
+
+<p>
+Mit Ausnahme von <a href="index_d.html#ixb101169"><font color=#000080><tt>drawLine</tt></font></a>
+k&ouml;nnen alle vorgestellten Routinen entweder im <i>Linien</i>-
+oder im <i>F&uuml;llmodus</i> verwendet werden. Beginnt der Methodenname
+mit <font color="#000077"><tt>draw</tt></font>, erfolgt die Ausgabe
+im Linienmodus. Es wird lediglich der Umriss der jeweiligen Figur
+gezeichnet. Beginnt der Methodenname mit <font color="#000077"><tt>fill</tt></font>,
+erfolgt die Ausgabe im F&uuml;llmodus und das Objekt wird mit ausgef&uuml;llter
+Fl&auml;che gezeichnet. 
+
+<p>
+Nachfolgend noch einmal eine Zusammenstellung der verf&uuml;gbaren
+F&uuml;llfunktionen: <a name="ixa101559"></a> <a name="ixa101560"></a>
+<a name="ixa101561"></a> <a name="ixa101562"></a> <a name="ixa101563"></a>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void fillRect(int x, int y, int w, int h)
+
+public void fillRoundRect(
+   int x, int y, int w, int h, int xr, int yr
+)
+
+public void fillPolygon(int[] arx, int[] ary, int cnt)
+public void fillPolygon(Polygon p)
+
+public void fillOval(int x, int y, int width, int height)
+
+public void fillArc(
+   int x, int y, int width, int height,
+   int startAngle, int arcAngle
+)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Graphics.html" onClick="this.href=getApiDoc('java.awt.Graphics')"><font color="#660066" size=-1>java.awt.Graphics</font></a></td>
+</tr>
+</table>
+
+<p>
+Das nachfolgende Beispiel verwendet die Methoden <a href="index_f.html#ixb101184"><font color=#000080><tt>fillRect</tt></font></a>,
+<a href="index_f.html#ixb101186"><font color=#000080><tt>fillPolygon</tt></font></a>,
+<a href="index_f.html#ixb101187"><font color=#000080><tt>fillOval</tt></font></a>
+und <a href="index_f.html#ixb101188"><font color=#000080><tt>fillArc</tt></font></a>,
+um einen stilisierten &#187;Java&#171;-Schriftzug anzuzeigen: 
+<a name="listingid024010"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* GefuellteFlaechen.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#006699">int</font>[] arx = {150,175,200,150};
+<font color="#555555">006 </font>  <font color="#006699">int</font>[] ary = {100,150,100,100};
+<font color="#555555">007 </font>
+<font color="#555555">008 </font>  <font color="#00AA00">//---J</font>
+<font color="#555555">009 </font>  g.fillRect(70,40,20,80);
+<font color="#555555">010 </font>  g.fillArc(30,90,60,60,225,180);
+<font color="#555555">011 </font>  <font color="#00AA00">//---a</font>
+<font color="#555555">012 </font>  g.fillOval(100,100,40,50);
+<font color="#555555">013 </font>  g.fillRect(120,100,20,50);
+<font color="#555555">014 </font>  <font color="#00AA00">//---v</font>
+<font color="#555555">015 </font>  g.fillPolygon(arx,ary,arx.length);
+<font color="#555555">016 </font>  <font color="#00AA00">//---a</font>
+<font color="#555555">017 </font>  g.fillOval(210,100,40,50);
+<font color="#555555">018 </font>  g.fillRect(230,100,20,50);
+<font color="#555555">019 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/GefuellteFlaechen.inc"><font color="#000055" size=-1>GefuellteFlaechen.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 24.10: Ausgabe von gef&uuml;llten Fl&auml;chen</i></p>
+<p>
+<a name="imageid024008"></a>
+<img src="images/LogoFuell.gif">
+<p>
+
+<p><i>
+Abbildung 24.8: Ausgabe von gef&uuml;llten Fl&auml;chen</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Man kann sich die Wirkungsweise der verschiedenen Methodenaufrufe
+etwas deutlicher machen, wenn man sie nicht im F&uuml;ll-, sondern
+im Linienmodus arbeiten l&auml;sst. Dies ist auch eine n&uuml;tzliche
+Vorgehensweise beim Erstellen von komplexeren Grafiken. In unserem
+Beispiel w&uuml;rde die Ausgabe des Programms dann so aussehen:</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<p>
+<a name="imageid024009"></a>
+<img src="images/LogoLinien.gif">
+<p>
+
+<p><i>
+Abbildung 24.9: Ausgabe des Java-Logos als Liniengrafik</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id024004002"></a>
+<h3>24.4.2 Kopieren und <a name="ixa101564">L&ouml;schen von Fl&auml;chen</a>
+<a name="ixa101565"></a> </h3>
+
+<p>
+Die Klasse <a href="index_g.html#ixb101156"><font color=#000080><tt>Graphics</tt></font></a>
+stellt auch einige Methoden zum Bearbeiten bereits gezeichneter Fl&auml;chen
+zur Verf&uuml;gung. Diese erlauben es beispielsweise, einen rechteckigen
+Ausschnitt des Ausgabefensters zu l&ouml;schen oder zu kopieren: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void clearRect(
+   int x, int y,
+   int width, int height
+)
+
+public void copyArea(
+   int x, int y,
+   int width, int height,
+   int dx, int dy
+)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Graphics.html" onClick="this.href=getApiDoc('java.awt.Graphics')"><font color="#660066" size=-1>java.awt.Graphics</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Methode <a name="ixa101566"><a href="index_c.html#ixb101191"><font color=#000080><tt>clearRect</tt></font></a></a>
+l&ouml;scht das angegebene Rechteck, indem sie den Bereich mit der
+aktuellen Hintergrundfarbe ausf&uuml;llt. <font color="#000077"><tt>(x,y)</tt></font>
+bezeichnet die linke obere Ecke, <font color="#000077"><tt>(width,height)</tt></font>
+die Breite und H&ouml;he des zu l&ouml;schenden Bereichs. 
+
+<p>
+Soll ein Teil des Fensters kopiert werden, kann dazu die Methode <a name="ixa101567"><a href="index_c.html#ixb101192"><font color=#000080><tt>copyArea</tt></font></a></a>
+verwendet werden. Die ersten vier Parameter bezeichnen in der &uuml;blichen
+Weise den zu kopierenden Ausschnitt. <font color="#000077"><tt>(dx,dy)</tt></font>
+gibt die Entfernung des Zielrechtecks in <i>x</i>- und <i>y</i>-Richtung
+an. <a href="index_c.html#ixb101192"><font color=#000080><tt>copyArea</tt></font></a>
+kopiert das ausgew&auml;hlte Rechteck also immer an die Position <font color="#000077"><tt>(x+dx,</tt></font>
+<font color="#000077"><tt>y+dy)</tt></font>. 
+
+<p>
+Das folgende Beispiel demonstriert die Anwendung von <a href="index_c.html#ixb101192"><font color=#000080><tt>copyArea</tt></font></a>
+anhand eines Programms, das den Bildschirm mit einem Muster f&uuml;llt:
+<a name="listingid024011"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Kopieren.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#006699">int</font> xorg = 4;
+<font color="#555555">006 </font>  <font color="#006699">int</font> yorg = 28;
+<font color="#555555">007 </font>  <font color="#006699">int</font>[] arx = {0,6,6,2,2,4,4,0,0};
+<font color="#555555">008 </font>  <font color="#006699">int</font>[] ary = {0,0,6,6,4,4,2,2,8};
+<font color="#555555">009 </font>  <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; arx.length; ++i) {
+<font color="#555555">010 </font>    arx[i] += xorg;
+<font color="#555555">011 </font>    ary[i] += yorg;
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>  g.drawPolyline(arx,ary,arx.length);
+<font color="#555555">014 </font>  <font color="#0000AA">for</font> (<font color="#006699">int</font> x = 0; x &lt;= 300; x += 8) {
+<font color="#555555">015 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> y = 0; y &lt;= 160; y += 8) {
+<font color="#555555">016 </font>      <font color="#0000AA">if</font> (x != 0 || y != 0) {
+<font color="#555555">017 </font>        g.copyArea(xorg,yorg,8,8,x,y);
+<font color="#555555">018 </font>      }
+<font color="#555555">019 </font>    }
+<font color="#555555">020 </font>  }
+<font color="#555555">021 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Kopieren.inc"><font color="#000055" size=-1>Kopieren.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 24.11: Kopieren von Fl&auml;chen mit copyArea</i></p>
+
+<p>
+Hier wird zun&auml;chst ein einziges Exemplar des Musters in der Gr&ouml;&szlig;e
+8*8 Pixel in der linken oberen Ecke des Fensters gezeichnet. Alle
+weiteren Wiederholungen werden durch Kopieren hergestellt: 
+<p>
+<a name="imageid024010"></a>
+<img src="images/GrafikCopy.gif">
+<p>
+
+<p><i>
+Abbildung 24.10: Kopieren von Grafiken</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Wann die Anwendung der Methode <a href="index_c.html#ixb101192"><font color=#000080><tt>copyArea</tt></font></a>
+in der Praxis sinnvoll ist, muss von Fall zu Fall entschieden werden.
+In unserem Beispiel w&auml;re es sehr einfach gewesen, das Fenster
+auch ohne Kopieren mit dem Muster zu f&uuml;llen, und der Overhead
+der Kopiermethode h&auml;tte vermieden werden k&ouml;nnen. Ist es
+dagegen sehr aufw&auml;ndig, einen Teil des Fensters zu zeichnen,
+der an anderer Stelle repliziert werden soll, ist die Anwendung von
+<a href="index_c.html#ixb101192"><font color=#000080><tt>copyArea</tt></font></a>
+sinnvoll.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id024004003"></a>
+<h3>24.4.3 Die <a name="ixa101568">Clipping-Region</a> </h3>
+
+<p>
+Jeder Grafikkontext hat eine zugeordnete <i>Clipping-Region</i>, die
+dazu dient, die Ausgabe auf einen bestimmten Bereich einzugrenzen.
+So wird beispielsweise verhindert, dass wichtige Teile eines Fensters,
+wie z.B. der Rahmen oder die Men&uuml;zeile, von den Ausgabeoperationen
+des Programms &uuml;berschrieben werden. 
+
+<p>
+Auch in Java besitzt ein Fenster eine Clipping-Region, die an das
+&uuml;bergebene <a href="index_g.html#ixb101156"><font color=#000080><tt>Graphics</tt></font></a>-Objekt
+gebunden ist. Beim Aufruf der <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>-Methode
+entspricht ihre Gr&ouml;&szlig;e der zur Ausgabe zur Verf&uuml;gung
+stehenden Fl&auml;che. Mit Hilfe der Methode <a name="ixa101569"><a href="index_c.html#ixb101194"><font color=#000080><tt>clipRect</tt></font></a></a>
+kann die Clipping-Region nun sukzessive verkleinert werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void clipRect(int x, int y, int width, int height)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Graphics.html" onClick="this.href=getApiDoc('java.awt.Graphics')"><font color="#660066" size=-1>java.awt.Graphics</font></a></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Ein Aufruf dieser Methode begrenzt die Clipping-Region auf die Schnittmenge
+zwischen dem angegebenen Rechteck und ihrer vorherigen Gr&ouml;&szlig;e.
+Da eine Schnittmenge niemals gr&ouml;&szlig;er werden kann als eine
+der Mengen, aus denen sie gebildet wurde, kann <a href="index_c.html#ixb101194"><font color=#000080><tt>clipRect</tt></font></a>
+also immer nur dazu verwendet werden, die Clipping-Region zu <i>verkleinern</i>.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Soll die Clipping-Region auf einen beliebigen Bereich innerhalb des
+aktuellen Fensters ausgedehnt werden (der dabei auch gr&ouml;&szlig;er
+sein kann als die bisherige Clipping-Region), so kann dazu die Methode
+<a name="ixa101570"><a href="index_s.html#ixb101195"><font color=#000080><tt>setClip</tt></font></a></a>
+verwendet werden, die in zwei verschiedenen Auspr&auml;gungen zur
+Verf&uuml;gung steht: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public abstract void setClip(int x, int y, int width, int height)
+public abstract void setClip(Shape clip)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Graphics.html" onClick="this.href=getApiDoc('java.awt.Graphics')"><font color="#660066" size=-1>java.awt.Graphics</font></a></td>
+</tr>
+</table>
+
+<p>
+Die erste Version &uuml;bergibt ein Rechteck, das die Gr&ouml;&szlig;e
+der gew&uuml;nschten Clipping-Region in Client-Koordinaten angibt.
+Die zweite Variante erlaubt die &Uuml;bergabe eines Objekts, welches
+das <a name="ixa101571"><a href="index_s.html#ixb101196"><font color=#000080><tt>Shape</tt></font></a></a>-Interface
+implementiert. Das Interface besitzt derzeit jedoch nur die Methode
+<a name="ixa101572"><a href="index_g.html#ixb101197"><font color=#000080><tt>getBounds</tt></font></a></a>,
+mit der das umschlie&szlig;ende Rechteck ermittelt werden kann: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public abstract Rectangle getBounds()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Shape.html" onClick="this.href=getApiDoc('java.awt.Shape')"><font color="#660066" size=-1>java.awt.Shape</font></a></td>
+</tr>
+</table>
+
+<p>
+Da au&szlig;er Rechtecken derzeit keine anders geformten <a href="index_s.html#ixb101196"><font color=#000080><tt>Shape</tt></font></a>-Objekte
+zur Definition der Clipping-Region unterst&uuml;tzt werden, wollen
+wir hier nicht weiter auf die zweite Variante von <a href="index_s.html#ixb101195"><font color=#000080><tt>setClip</tt></font></a>
+eingehen. 
+
+<p>
+Soll die Ausdehnung der aktuellen Clipping-Region ermittelt werden,
+so kann dazu eine der Methoden <a name="ixa101573"><a href="index_g.html#ixb101198"><font color=#000080><tt>getClip</tt></font></a></a>
+oder <a name="ixa101574"><a href="index_g.html#ixb101199"><font color=#000080><tt>getClipBounds</tt></font></a></a>
+verwendet werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public abstract Shape getClip()
+
+public abstract Rectangle getClipBounds()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Graphics.html" onClick="this.href=getApiDoc('java.awt.Graphics')"><font color="#660066" size=-1>java.awt.Graphics</font></a></td>
+</tr>
+</table>
+
+<p>
+Dabei liefert <a href="index_g.html#ixb101198"><font color=#000080><tt>getClip</tt></font></a>
+ein <a href="index_s.html#ixb101196"><font color=#000080><tt>Shape</tt></font></a>-Objekt,
+das derzeit denselben Einschr&auml;nkungen unterliegt wie das beim
+Aufruf von <a href="index_s.html#ixb101195"><font color=#000080><tt>setClip</tt></font></a>
+&uuml;bergebene. <a href="index_g.html#ixb101199"><font color=#000080><tt>getClipBounds</tt></font></a>
+liefert das kleinste Rechteck, das die aktuelle Clipping-Region vollst&auml;ndig
+umschlie&szlig;t. 
+
+<p>
+Das folgende Beispiel wiederholt die Ausgabe des Java-Logos, grenzt
+aber vorher die Clipping-Region auf ein Fenster der Gr&ouml;&szlig;e
+150*80 Pixel ein, das seinen Ursprung an Position (50,50) hat: 
+<a name="listingid024012"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Clipping.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#006699">int</font>[] arx = {150,175,200,150};
+<font color="#555555">006 </font>  <font color="#006699">int</font>[] ary = {100,150,100,100};
+<font color="#555555">007 </font>
+<font color="#555555">008 </font>  g.setClip(50,50,150,80);
+<font color="#555555">009 </font>  <font color="#00AA00">//---J</font>
+<font color="#555555">010 </font>  g.fillRect(70,40,20,80);
+<font color="#555555">011 </font>  g.fillArc(30,90,60,60,225,180);
+<font color="#555555">012 </font>  <font color="#00AA00">//---a</font>
+<font color="#555555">013 </font>  g.fillOval(100,100,40,50);
+<font color="#555555">014 </font>  g.fillRect(120,100,20,50);
+<font color="#555555">015 </font>  <font color="#00AA00">//---v</font>
+<font color="#555555">016 </font>  g.fillPolygon(arx,ary,arx.length);
+<font color="#555555">017 </font>  <font color="#00AA00">//---a</font>
+<font color="#555555">018 </font>  g.fillOval(210,100,40,50);
+<font color="#555555">019 </font>  g.fillRect(230,100,20,50);
+<font color="#555555">020 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Clipping.inc"><font color="#000055" size=-1>Clipping.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 24.12: Verwendung der Clipping-Funktionen</i></p>
+
+<p>
+Die Ausgabe des Programms erfolgt nun nur noch innerhalb der Clipping-Region:
+<p>
+<a name="imageid024011"></a>
+<img src="images/Clipping.gif">
+<p>
+
+<p><i>
+Abbildung 24.11: Verwendung der Clipping-Funktionen</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100157.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100160.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100162.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100163.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

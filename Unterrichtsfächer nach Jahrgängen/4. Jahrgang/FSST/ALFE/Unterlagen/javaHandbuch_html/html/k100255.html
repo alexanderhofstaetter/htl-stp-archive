@@ -1,0 +1,989 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100252.html;106,k100254.html;107,k100256.html;108,k100257.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100252.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100254.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100256.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100257.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 39 - Swing: Komponenten II
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="jtree"></a>
+<h2>39.3 JTree </h2>
+<hr>
+<ul>
+<li><a href="k100255.html#jtree">39.3 JTree</a>
+<ul>
+<li><a href="k100255.html#sectlevel3id039003001">39.3.1 Erzeugen eines Baums</a>
+<li><a href="k100255.html#sectlevel3id039003002">39.3.2 Selektieren von Knoten</a>
+<ul>
+<li><a href="k100255.html#sectlevel4id039003002001">Konfiguration der Selektionsm&ouml;glichkeit</a>
+<li><a href="k100255.html#sectlevel4id039003002002">Abfragen der Selektion</a>
+<li><a href="k100255.html#sectlevel4id039003002003">Ver&auml;ndern der Selektion</a>
+</ul>
+<li><a href="k100255.html#sectlevel3id039003003">39.3.3 &Ouml;ffnen und Schlie&szlig;en der Knoten</a>
+<li><a href="k100255.html#sectlevel3id039003004">39.3.4 Ver&auml;ndern der Baumstruktur</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id039003001"></a>
+<h3>39.3.1 Erzeugen eines Baums </h3>
+
+<p>
+Nach <a href="index_j.html#ixb102049"><font color=#000080><tt>JTable</tt></font></a>
+ist <a name="ixa102831"><a href="index_j.html#ixb102110"><font color=#000080><tt>JTree</tt></font></a></a>
+die zweite der &#187;gro&szlig;en&#171; Elementarkomponenten in Swing.
+Sie dient zur Darstellung, Navigation und Bearbeitung baumartiger,
+hierarchischer Datenstrukturen. 
+
+<p>
+Ein einfaches Beispiel f&uuml;r derartige Baumstrukturen stellt etwa
+das Dateisystem unter UNIX oder Windows dar. Es besteht aus einer
+Wurzel (dem Root-Verzeichnis) und darin enthaltenen Unterverzeichnissen.
+Die Unterverzeichnisse k&ouml;nnen ihrerseits weitere Unterverzeichnisse
+enthalten usw. Dadurch entsteht eine geschachtelte Struktur von Verzeichnissen,
+die baumartig durchlaufen und bearbeitet werden kann. Andere Beispiele
+f&uuml;r Baumstrukturen sind die syntaktischen Elemente einer Programmiersprache,
+die Aufbauorganisation eines Unternehmens oder das Inhaltsverzeichnis
+in einem Buch. 
+
+<p>
+Im Umgang mit B&auml;umen haben sich folgende Begriffe eingeb&uuml;rgert:
+<ul>
+<li>Ein Element des Baums wird als <i>Knoten</i> bezeichnet.
+<li>Die in einem Knoten enthaltenen Elemente bezeichnet man als <i>Unterknoten</i>,
+manchmal auch als <i>Kindknoten</i>.
+<li>Das &uuml;bergeordnete Element eines Knotens bezeichnet man als
+<i>Vaterknoten</i>, manchmal auch als <i>Elternknoten</i>.
+<li>Das Startelement des Baums wird <i>Wurzel</i> genannt.
+<li>Knoten, die keine Unterknoten haben, werden als <i>Bl&auml;tter</i>
+bezeichnet.
+<li>Knoten, die sowohl Vater- als auch Unterknoten enthalten, bezeichnet
+man als <i>innere Knoten</i>.
+</ul>
+
+<p>
+Der eigentliche Aufwand beim Erzeugen eines Baums liegt im Aufbau
+eines passenden Datenmodells, das seiner Struktur nach meist ebenfalls
+hierarchisch ist. Das Instanzieren des <a href="index_j.html#ixb102110"><font color=#000080><tt>JTree</tt></font></a>
+ist dann vergleichsweise einfach. Die beiden wichtigsten Konstruktoren
+der Klasse <a href="index_j.html#ixb102110"><font color=#000080><tt>JTree</tt></font></a>
+sind: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public JTree(TreeModel newModel)
+public JTree(TreeNode root)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTree.html" onClick="this.href=getApiDoc('javax.swing.JTree')"><font color="#660066" size=-1>javax.swing.JTree</font></a></td>
+</tr>
+</table>
+
+<p>
+Der erste von beiden erwartet ein vordefiniertes <a name="ixa102832"><a href="index_t.html#ixb102111"><font color=#000080><tt>TreeModel</tt></font></a></a>
+zur Darstellung der Elemente des Baums. Ein <a href="index_t.html#ixb102111"><font color=#000080><tt>TreeModel</tt></font></a>
+kapselt alle relevanten Informationen &uuml;ber die Struktur des Baums.
+Es liefert auf Anfrage dessen Wurzel, stellt Informationen &uuml;ber
+einen bestimmten Knoten zur Verf&uuml;gung oder liefert dessen Unterknoten.
+
+<p>
+An den zweiten Konstruktor wird lediglich die Wurzel des Baums &uuml;bergeben.
+Sie wird vom Konstruktor automatisch in ein geeignetes <a href="index_t.html#ixb102111"><font color=#000080><tt>TreeModel</tt></font></a>
+eingebettet. Beide Varianten sind prinzipiell gleichwertig. Zwar erfragt
+der <a href="index_j.html#ixb102110"><font color=#000080><tt>JTree</tt></font></a>
+die zur Darstellung und Navigation erforderlichen Daten immer beim
+<a href="index_t.html#ixb102111"><font color=#000080><tt>TreeModel</tt></font></a>.
+Aber das mit der Baumwurzel des zweiten Konstruktors instanzierte
+<a name="ixa102833"><a href="index_d.html#ixb102112"><font color=#000080><tt>DefaultTreeModel</tt></font></a></a>
+ist in der Lage, diese Informationen aus den Knoten und den darin
+gespeicherten Verweisen auf ihre Unterknoten zu entnehmen (alle n&ouml;tigen
+Informationen werden in den <a href="index_t.html#ixb102113"><font color=#000080><tt>TreeNodes</tt></font></a>
+selbst gehalten). Wir werden sp&auml;ter auf beide Arten, B&auml;ume
+zu konstruieren, noch genauer eingehen. 
+
+<p>
+Ein <a href="index_j.html#ixb102110"><font color=#000080><tt>JTree</tt></font></a>
+besitzt nicht so viele Konfigurationsoptionen wie eine <a href="index_j.html#ixb102049"><font color=#000080><tt>JTable</tt></font></a>.
+Die wichtigste von ihnen regelt, ob die Wurzel des Baums bei seiner
+Darstellung angezeigt oder unterdr&uuml;ckt werden soll. Auf sie kann
+mit den Methoden <a name="ixa102834"><a href="index_s.html#ixb102114"><font color=#000080><tt>setRootVisible</tt></font></a></a>
+und <a name="ixa102835"><a href="index_i.html#ixb102115"><font color=#000080><tt>isRootVisible</tt></font></a></a>
+zugegriffen werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setRootVisible(boolean rootVisible)
+public boolean isRootVisible()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTree.html" onClick="this.href=getApiDoc('javax.swing.JTree')"><font color="#660066" size=-1>javax.swing.JTree</font></a></td>
+</tr>
+</table>
+
+<p>
+Wir wollen uns zun&auml;chst ein einfaches Beispiel ansehen. Das folgende
+Programm erzeugt eine rekursive Baumstruktur mit Wurzel und zwei Unterebenen,
+deren Knoten aus Objekten des Typs <a name="ixa102836"><a href="index_d.html#ixb102116"><font color=#000080><tt>DefaultMutableTreeNode</tt></font></a></a>
+bestehen. Diese im Paket <a name="ixa102837"><a href="index_j.html#ixb102117"><font color=#000080><tt>javax.swing.tree</tt></font></a></a>
+gelegene Klasse ist eine Standardimplementierung des <a name="ixa102838"><a href="index_t.html#ixb102113"><font color=#000080><tt>TreeNode</tt></font></a></a>-Interface,
+das beschreibt, wie ein Knoten Informationen &uuml;ber seine Unter-
+und Vaterknoten zur Verf&uuml;gung stellen kann. Die vier wichtigsten
+Methoden von <a href="index_t.html#ixb102113"><font color=#000080><tt>TreeNode</tt></font></a>
+sind: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int getChildCount()
+public TreeNode getChildAt(int childIndex)
+
+public TreeNode getParent()
+
+public boolean isLeaf()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/tree/TreeNode.html" onClick="this.href=getApiDoc('javax.swing.tree.TreeNode')"><font color="#660066" size=-1>javax.swing.tree.TreeNode</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa102839"><a href="index_g.html#ixb102118"><font color=#000080><tt>getChildCount</tt></font></a></a>
+kann die Anzahl der Unterknoten ermittelt werden. Sie werden von 0
+an durchnummeriert, <a name="ixa102840"><a href="index_g.html#ixb102119"><font color=#000080><tt>getChildAt</tt></font></a></a>
+liefert einen beliebigen Unterknoten. Ein Knoten kennt seinen Vaterknoten,
+der mit <a name="ixa102841"><a href="index_g.html#ixb101087"><font color=#000080><tt>getParent</tt></font></a></a>
+ermittelt werden kann. Mit <a name="ixa102842"><a href="index_i.html#ixb102120"><font color=#000080><tt>isLeaf</tt></font></a></a>
+kann zudem abgefragt werden, ob ein Knoten ein Blatt ist oder weitere
+Unterknoten enth&auml;lt. Zur Beschriftung des Knotens bei der visuellen
+Darstellung verwendet ein <a href="index_j.html#ixb102110"><font color=#000080><tt>JTree</tt></font></a>
+die Methode <a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a>
+der Knotenklasse. 
+
+<p>
+Mit <a href="index_d.html#ixb102116"><font color=#000080><tt>DefaultMutableTreeNode</tt></font></a>
+steht eine recht flexible Implementierung von <a href="index_t.html#ixb102113"><font color=#000080><tt>TreeNode</tt></font></a>
+zur Verf&uuml;gung, die auch Methoden zum Einf&uuml;gen und L&ouml;schen
+von Knoten bietet (sie implementiert &uuml;brigens das aus <a href="index_t.html#ixb102113"><font color=#000080><tt>TreeNode</tt></font></a>
+abgeleitete Interface <a name="ixa102843"><a href="index_m.html#ixb102121"><font color=#000080><tt>MutableTreeNode</tt></font></a></a>):
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public DefaultMutableTreeNode(Object userObject)
+
+public void add(MutableTreeNode newChild)
+public void insert(MutableTreeNode newChild, int childIndex)
+public void remove(int childIndex)
+public void removeAllChildren()
+
+public void setUserObject(Object userObject)
+public Object getUserObject()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/tree/DefaultMutableTreeNode.html" onClick="this.href=getApiDoc('javax.swing.tree.DefaultMutableTreeNode')"><font color="#660066" size=-1>javax.swing.tree.DefaultMutableTreeNode</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa102844"><a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a></a>
+wird ein neuer Kindknoten an das Ende der Liste der Unterknoten angef&uuml;gt,
+mit <a name="ixa102845"><a href="index_i.html#ixb100549"><font color=#000080><tt>insert</tt></font></a></a>
+kann dies an einer beliebigen Stelle erfolgen. <a name="ixa102846"><a href="index_r.html#ixb100739"><font color=#000080><tt>remove</tt></font></a></a>
+entfernt einen beliebigen und <a name="ixa102847"><a href="index_r.html#ixb102122"><font color=#000080><tt>removeAllChildren</tt></font></a></a>
+alle Kindknoten. Anwendungsbezogene Informationen werden in einem
+<i>UserObject</i> gehalten, das direkt an den Konstruktor &uuml;bergeben
+werden kann. Mit <a name="ixa102848"><a href="index_s.html#ixb102123"><font color=#000080><tt>setUserObject</tt></font></a></a>
+und <a name="ixa102849"><a href="index_g.html#ixb102124"><font color=#000080><tt>getUserObject</tt></font></a></a>
+kann sp&auml;ter darauf zugegriffen werden. Das UserObject ist auch
+der Lieferant f&uuml;r die Knotenbeschriftung: jeder Aufruf von <a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a>
+wird an das UserObject weitergeleitet. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+<a href="index_d.html#ixb102116"><font color=#000080><tt>DefaultMutableTreeNode</tt></font></a>
+stellt noch weitaus mehr als die hier beschriebenen Methoden zur Verf&uuml;gung.
+Die Klasse ist sehr vielseitig und kann auch unabh&auml;ngig von der
+Verwendung in einem <a href="index_j.html#ixb102110"><font color=#000080><tt>JTree</tt></font></a>
+zum Aufbau und zur Verarbeitung baumartiger Datenstrukturen verwendet
+werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Das folgende Programm erzeugt eine Wurzel mit f&uuml;nf Unterknoten,
+die jeweils drei weitere Unterknoten enthalten. Anschlie&szlig;end
+wird der Wurzelknoten an den Konstruktor eines <a href="index_j.html#ixb102110"><font color=#000080><tt>JTree</tt></font></a>
+&uuml;bergeben und dieser durch Einbetten in eine <a href="index_j.html#ixb101791"><font color=#000080><tt>JScrollPane</tt></font></a>
+(um automatisches Scrollen zu erm&ouml;glichen) in einem <a href="index_j.html#ixb100513"><font color=#000080><tt>JFrame</tt></font></a>
+platziert. 
+<a name="treebeispiel1"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3911.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">006 </font><font color="#0000AA">import</font> javax.swing.tree.*;
+<font color="#555555">007 </font>
+<font color="#555555">008 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3911
+<font color="#555555">009 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">010 </font>{
+<font color="#555555">011 </font>  <font color="#0000AA">public</font> Listing3911()
+<font color="#555555">012 </font>  {
+<font color="#555555">013 </font>    <font color="#006699">super</font>(<font color="#0000FF">"JTree 1"</font>);
+<font color="#555555">014 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">015 </font>    <font color="#00AA00">//Einfaches TreeModel bauen</font>
+<font color="#555555">016 </font>    DefaultMutableTreeNode root, child, subchild;
+<font color="#555555">017 </font>    root = <font color="#0000AA">new</font> DefaultMutableTreeNode(<font color="#0000FF">"Root"</font>);
+<font color="#555555">018 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 1; i &lt;= 5; ++i) {
+<font color="#555555">019 </font>      String name = <font color="#0000FF">"Child-"</font> + i;
+<font color="#555555">020 </font>      child = <font color="#0000AA">new</font> DefaultMutableTreeNode(name);
+<font color="#555555">021 </font>      root.add(child);
+<font color="#555555">022 </font>      <font color="#0000AA">for</font> (<font color="#006699">int</font> j = 1; j &lt;= 3; ++j) {
+<font color="#555555">023 </font>        subchild = <font color="#0000AA">new</font> DefaultMutableTreeNode(name + <font color="#0000FF">"-"</font> + j);
+<font color="#555555">024 </font>        child.add(subchild);
+<font color="#555555">025 </font>      }
+<font color="#555555">026 </font>    }
+<font color="#555555">027 </font>    <font color="#00AA00">//JTree erzeugen</font>
+<font color="#555555">028 </font>    JTree tree = <font color="#0000AA">new</font> JTree(root);
+<font color="#555555">029 </font>    tree.setRootVisible(<font color="#006699">true</font>);
+<font color="#555555">030 </font>    <font color="#00AA00">//JTree einf&uuml;gen</font>
+<font color="#555555">031 </font>    Container cp = getContentPane();
+<font color="#555555">032 </font>    cp.add(<font color="#0000AA">new</font> JScrollPane(tree), BorderLayout.CENTER);
+<font color="#555555">033 </font>  }
+<font color="#555555">034 </font>
+<font color="#555555">035 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">036 </font>  {
+<font color="#555555">037 </font>    Listing3911 frame = <font color="#0000AA">new</font> Listing3911();
+<font color="#555555">038 </font>    frame.setLocation(100, 100);
+<font color="#555555">039 </font>    frame.setSize(250, 200);
+<font color="#555555">040 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">041 </font>  }
+<font color="#555555">042 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3911.java"><font color="#000055" size=-1>Listing3911.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 39.11: Ein einfacher JTree</i></p>
+
+<p>
+Mit aufgeklapptem zweiten und vierten Knoten sieht das Programm wie
+in <a href="k100255.html#imagejtree1">Abbildung 39.9</a> dargestellt
+aus. Auf der linken Seite wird der Baum im Metal-, auf der rechten
+im Windows-Look-and-Feel gezeigt. 
+<p>
+<a name="imagejtree1"></a>
+<img src="images/JTree1.gif">
+<p>
+
+<p><i>
+Abbildung 39.9: Ein einfacher JTree im Metal- und Windows-Look-and-Feel</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id039003002"></a>
+<h3>39.3.2 Selektieren von Knoten </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id039003002001"></a>
+<h4>Konfiguration der Selektionsm&ouml;glichkeit </h4>
+
+<p>
+Das Selektieren von Knoten wird durch das <a name="ixa102850"><a href="index_t.html#ixb102125"><font color=#000080><tt>TreeSelectionModel</tt></font></a></a>
+gesteuert, auf das mit Hilfe der Methoden <a name="ixa102851"><a href="index_s.html#ixb102126"><font color=#000080><tt>setSelectionModel</tt></font></a></a>
+und <a name="ixa102852"><a href="index_g.html#ixb102105"><font color=#000080><tt>getSelectionModel</tt></font></a></a>
+zugegriffen werden kann: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setSelectionModel(TreeSelectionModel selectionModel)
+public TreeSelectionModel getSelectionModel()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTree.html" onClick="this.href=getApiDoc('javax.swing.JTree')"><font color="#660066" size=-1>javax.swing.JTree</font></a></td>
+</tr>
+</table>
+
+<p>
+Standardm&auml;&szlig;ig erlaubt ein <a href="index_j.html#ixb102110"><font color=#000080><tt>JTree</tt></font></a>
+das Selektieren mehrerer Knoten. Soll die Selektionsm&ouml;glichkeit
+auf einen einzelnen Knoten beschr&auml;nkt werden, muss ein eigenes
+<a href="index_t.html#ixb102125"><font color=#000080><tt>TreeSelectionModel</tt></font></a>
+an <a href="index_s.html#ixb102126"><font color=#000080><tt>setSelectionModel</tt></font></a>
+&uuml;bergeben werden. Dazu kann eine Instanz der Klasse <a name="ixa102853"><a href="index_d.html#ixb102127"><font color=#000080><tt>DefaultTreeSelectionModel</tt></font></a></a>
+erzeugt und durch Aufruf von <a name="ixa102854"><a href="index_s.html#ixb101960"><font color=#000080><tt>setSelectionMode</tt></font></a></a>
+und &Uuml;bergabe einer der Konstanten <a name="ixa102855"><a href="index_s.html#ixb102128"><font color=#000080><tt>SINGLE_TREE_SELECTION</tt></font></a></a>,
+<a name="ixa102856"><a href="index_c.html#ixb102129"><font color=#000080><tt>CONTIGUOUS_TREE_SELECTION</tt></font></a></a>
+oder <a name="ixa102857"><a href="index_d.html#ixb102130"><font color=#000080><tt>DISCONTIGUOUS_TREE_SELECTION</tt></font></a></a>
+konfiguriert werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setSelectionMode(int mode)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/tree/DefaultTreeSelectionModel.html" onClick="this.href=getApiDoc('javax.swing.tree.DefaultTreeSelectionModel')"><font color="#660066" size=-1>javax.swing.tree.DefaultTreeSelectionModel</font></a></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id039003002002"></a>
+<h4>Abfragen der Selektion </h4>
+
+<p>
+<a href="index_j.html#ixb102110"><font color=#000080><tt>JTree</tt></font></a>
+stellt eine Reihe von Methoden zur Verf&uuml;gung, mit denen abgefragt
+werden kann, ob und welche Knoten selektiert sind. Die wichtigsten
+von ihnen sind: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public TreePath getSelectionPath()
+public TreePath[] getSelectionPaths()
+
+public TreePath getLeadSelectionPath()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTree.html" onClick="this.href=getApiDoc('javax.swing.JTree')"><font color="#660066" size=-1>javax.swing.JTree</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa102858"><a href="index_g.html#ixb102131"><font color=#000080><tt>getSelectionPath</tt></font></a></a>
+wird das selektierte Element ermittelt. Bei aktivierter Mehrfachselektion
+liefert die Methode das erste aller selektierten Elemente. Ist kein
+Knoten selektiert, wird <a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>
+zur&uuml;ckgegeben. <a name="ixa102859"><a href="index_g.html#ixb102132"><font color=#000080><tt>getSelectionPaths</tt></font></a></a>
+gibt ein Array mit allen selektierten Knoten zur&uuml;ck. <a name="ixa102860"><a href="index_g.html#ixb102133"><font color=#000080><tt>getLeadSelectionPath</tt></font></a></a>
+liefert das markierte Element. 
+
+<p>
+Alle beschriebenen Methoden liefern Objekte des Typs <a name="ixa102861"><a href="index_t.html#ixb102134"><font color=#000080><tt>TreePath</tt></font></a></a>.
+Diese Klasse beschreibt einen Knoten im Baum &uuml;ber den Pfad, der
+von der Wurzel aus beschritten werden muss, um zu dem Knoten zu gelangen.
+Mit <a name="ixa102862"><a href="index_g.html#ixb102135"><font color=#000080><tt>getLastPathComponent</tt></font></a></a>
+kann das letzte Element dieses Pfads bestimmt werden. In unserem Fall
+ist das gerade der selektierte Knoten. Mit <a name="ixa102863"><a href="index_g.html#ixb101085"><font color=#000080><tt>getPath</tt></font></a></a>
+kann der komplette Pfad ermittelt werden. An erster Stelle liegt dabei
+die Wurzel des Baums, an letzter Stelle das selektierte Element: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Object getLastPathComponent()
+public Object[] getPath()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/tree/TreePath.html" onClick="this.href=getApiDoc('javax.swing.tree.TreePath')"><font color="#660066" size=-1>javax.swing.tree.TreePath</font></a></td>
+</tr>
+</table>
+
+<p>
+Soll ermittelt werden, ob und welche Elemente im Baum selektiert sind,
+k&ouml;nnen die Methoden <a name="ixa102864"><a href="index_i.html#ixb101970"><font color=#000080><tt>isSelectionEmpty</tt></font></a></a>
+und <a name="ixa102865"><a href="index_i.html#ixb102136"><font color=#000080><tt>isPathSelected</tt></font></a></a>
+aufgerufen werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public boolean isSelectionEmpty()
+public boolean isPathSelected(TreePath path)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTree.html" onClick="this.href=getApiDoc('javax.swing.JTree')"><font color="#660066" size=-1>javax.swing.JTree</font></a></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Alternativ zum <a href="index_t.html#ixb102134"><font color=#000080><tt>TreePath</tt></font></a>
+kann auf die selektierten Elemente auch mit Hilfe ihrer internen Zeilennummer
+zugegriffen werden. Dazu besitzt jedes <i>angezeigte</i> Element im
+Baum eine fortlaufende Nummer, die mit 0 bei der Wurzel beginnt und
+sich dann zeilenweise bis zum letzten Element fortsetzt. Die zugeh&ouml;rigen
+Methoden hei&szlig;en <a name="ixa102866"><a href="index_g.html#ixb102137"><font color=#000080><tt>getSelectionRows</tt></font></a></a>
+und <a name="ixa102867"><a href="index_g.html#ixb102138"><font color=#000080><tt>getLeadSelectionRow</tt></font></a></a>.
+Abh&auml;ngig davon, wie viele Knoten oberhalb eines bestimmten Knotens
+sichtbar oder verdeckt sind, kann sich die Zeilennummer w&auml;hrend
+der Lebensdauer des Baums durchaus ver&auml;ndern und es gibt Methoden,
+um zwischen Knotenpfaden und Zeilennummern zu konvertieren. Wir wollen
+auf dieses Konzept nicht weiter eingehen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Dient der <a href="index_j.html#ixb102110"><font color=#000080><tt>JTree</tt></font></a>
+zur Steuerung anderer Komponenten (etwa in explorerartigen Oberfl&auml;chen),
+muss das Programm meist unmittelbar auf &Auml;nderungen der Selektion
+durch den Anwender reagieren. Dazu kann es einen <a name="ixa102868"><a href="index_t.html#ixb102139"><font color=#000080><tt>TreeSelectionListener</tt></font></a></a>
+instanzieren und ihn mit <a name="ixa102869"><a href="index_a.html#ixb102140"><font color=#000080><tt>addTreeSelectionListener</tt></font></a></a>
+beim <a href="index_j.html#ixb102110"><font color=#000080><tt>JTree</tt></font></a>
+registrieren. Bei jeder Selektions&auml;nderung wird dann die Methode
+<a name="ixa102870"><a href="index_v.html#ixb101983"><font color=#000080><tt>valueChanged</tt></font></a></a>
+aufgerufen und bekommt ein <a name="ixa102871"><a href="index_t.html#ixb102141"><font color=#000080><tt>TreeSelectionEvent</tt></font></a></a>
+als Argument &uuml;bergeben: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void valueChanged(TreeSelectionEvent event)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/event/TreeSelectionListener.html" onClick="this.href=getApiDoc('javax.swing.event.TreeSelectionListener')"><font color="#660066" size=-1>javax.swing.event.TreeSelectionListener</font></a></td>
+</tr>
+</table>
+
+<p>
+Dieses stellt unter anderem die Methoden <a name="ixa102872"><a href="index_g.html#ixb102142"><font color=#000080><tt>getOldLeadSelectionPath</tt></font></a></a>
+und <a name="ixa102873"><a href="index_g.html#ixb102143"><font color=#000080><tt>getNewLeadSelectionPath</tt></font></a></a>
+zur Verf&uuml;gung, um auf den vorherigen oder aktuellen Selektionspfad
+zuzugreifen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public TreePath getOldLeadSelectionPath()
+public TreePath getNewLeadSelectionPath()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/event/TreeSelectionEvent.html" onClick="this.href=getApiDoc('javax.swing.event.TreeSelectionEvent')"><font color="#660066" size=-1>javax.swing.event.TreeSelectionEvent</font></a></td>
+</tr>
+</table>
+
+<p>
+Das folgende Programm erweitert <a href="k100255.html#treebeispiel1">Listing 39.11</a>
+um die F&auml;higkeit, das selektierte Element auf der Konsole auszugeben.
+Dazu definiert es ein <a href="index_t.html#ixb102125"><font color=#000080><tt>TreeSelectionModel</tt></font></a>
+f&uuml;r Einfachselektion und f&uuml;gt einen <a href="index_t.html#ixb102139"><font color=#000080><tt>TreeSelectionListener</tt></font></a>
+hinzu, der jede Selektions&auml;nderung dokumentiert: 
+<a name="listingid039012"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3912.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">006 </font><font color="#0000AA">import</font> javax.swing.event.*;
+<font color="#555555">007 </font><font color="#0000AA">import</font> javax.swing.tree.*;
+<font color="#555555">008 </font>
+<font color="#555555">009 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3912
+<font color="#555555">010 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">011 </font>{
+<font color="#555555">012 </font>  <font color="#0000AA">public</font> Listing3912()
+<font color="#555555">013 </font>  {
+<font color="#555555">014 </font>    <font color="#006699">super</font>(<font color="#0000FF">"JTree 2"</font>);
+<font color="#555555">015 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">016 </font>    <font color="#00AA00">//Einfaches TreeModel bauen</font>
+<font color="#555555">017 </font>    DefaultMutableTreeNode root, child, subchild;
+<font color="#555555">018 </font>    root = <font color="#0000AA">new</font> DefaultMutableTreeNode(<font color="#0000FF">"Root"</font>);
+<font color="#555555">019 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 1; i &lt;= 5; ++i) {
+<font color="#555555">020 </font>      String name = <font color="#0000FF">"Child-"</font> + i;
+<font color="#555555">021 </font>      child = <font color="#0000AA">new</font> DefaultMutableTreeNode(name);
+<font color="#555555">022 </font>      root.add(child);
+<font color="#555555">023 </font>      <font color="#0000AA">for</font> (<font color="#006699">int</font> j = 1; j &lt;= 3; ++j) {
+<font color="#555555">024 </font>        subchild = <font color="#0000AA">new</font> DefaultMutableTreeNode(name + <font color="#0000FF">"-"</font> + j);
+<font color="#555555">025 </font>        child.add(subchild);
+<font color="#555555">026 </font>      }
+<font color="#555555">027 </font>    }
+<font color="#555555">028 </font>    <font color="#00AA00">//JTree erzeugen und Einfachselektion aktivieren</font>
+<font color="#555555">029 </font>    JTree tree = <font color="#0000AA">new</font> JTree(root);
+<font color="#555555">030 </font>    TreeSelectionModel tsm = <font color="#0000AA">new</font> DefaultTreeSelectionModel();
+<font color="#555555">031 </font>    tsm.setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+<font color="#555555">032 </font>    tree.setSelectionModel(tsm);
+<font color="#555555">033 </font>    tree.setRootVisible(<font color="#006699">true</font>);
+<font color="#555555">034 </font>    <font color="#00AA00">//JTree einf&uuml;gen</font>
+<font color="#555555">035 </font>    Container cp = getContentPane();
+<font color="#555555">036 </font>    cp.add(<font color="#0000AA">new</font> JScrollPane(tree), BorderLayout.CENTER);
+<font color="#555555">037 </font>    <font color="#00AA00">//TreeSelectionListener hinzuf&uuml;gen</font>
+<font color="#555555">038 </font>    tree.addTreeSelectionListener(
+<font color="#555555">039 </font>      <font color="#0000AA">new</font> TreeSelectionListener()
+<font color="#555555">040 </font>      {
+<font color="#555555">041 </font>        <font color="#0000AA">public</font> <font color="#006699">void</font> valueChanged(TreeSelectionEvent event)
+<font color="#555555">042 </font>        {
+<font color="#555555">043 </font>          TreePath tp = event.getNewLeadSelectionPath();
+<font color="#555555">044 </font>          <font color="#0000AA">if</font> (tp != <font color="#006699">null</font>) {
+<font color="#555555">045 </font>            System.out.println(<font color="#0000FF">"  Selektiert: "</font> + tp.toString());
+<font color="#555555">046 </font>          } <font color="#0000AA">else</font> {
+<font color="#555555">047 </font>            System.out.println(<font color="#0000FF">"  Kein Element selektiert"</font>);
+<font color="#555555">048 </font>          }
+<font color="#555555">049 </font>        }
+<font color="#555555">050 </font>      }
+<font color="#555555">051 </font>    );
+<font color="#555555">052 </font>  }
+<font color="#555555">053 </font>
+<font color="#555555">054 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">055 </font>  {
+<font color="#555555">056 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">057 </font>      Listing3912 frame = <font color="#0000AA">new</font> Listing3912();
+<font color="#555555">058 </font>      frame.setLocation(100, 100);
+<font color="#555555">059 </font>      frame.setSize(250, 200);
+<font color="#555555">060 </font>      frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">061 </font>    } <font color="#0000AA">catch</font> (Exception e) {
+<font color="#555555">062 </font>    }
+<font color="#555555">063 </font>  }
+<font color="#555555">064 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3912.java"><font color="#000055" size=-1>Listing3912.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 39.12: Ein JTree mit TreeSelectionListener</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id039003002003"></a>
+<h4>Ver&auml;ndern der Selektion </h4>
+
+<p>
+Die Selektion kann auch programmgesteuert ver&auml;ndert werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void clearSelection()
+
+public void addSelectionPath(TreePath path)
+public void addSelectionPaths(TreePath[] paths)
+
+public void setSelectionPath(TreePath path)
+public void setSelectionPaths(TreePath[] paths)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTree.html" onClick="this.href=getApiDoc('javax.swing.JTree')"><font color="#660066" size=-1>javax.swing.JTree</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa102874"><a href="index_c.html#ixb101973"><font color=#000080><tt>clearSelection</tt></font></a></a>
+wird die Selektion vollst&auml;ndig gel&ouml;scht. Mit <a name="ixa102875"><a href="index_a.html#ixb102144"><font color=#000080><tt>addSelectionPath</tt></font></a></a>
+und <a name="ixa102876"><a href="index_a.html#ixb102145"><font color=#000080><tt>addSelectionPaths</tt></font></a></a>
+kann die Selektion um ein einzelnes oder eine Menge von Knoten erweitert
+werden. Mit <a name="ixa102877"><a href="index_s.html#ixb102146"><font color=#000080><tt>setSelectionPath</tt></font></a></a>
+und <a name="ixa102878"><a href="index_s.html#ixb102147"><font color=#000080><tt>setSelectionPaths</tt></font></a></a>
+werden - unabh&auml;ngig von der bisherigen Selektion - die als Argument
+&uuml;bergebenen Knoten selektiert. 
+
+<!-- Section -->
+
+<a name="sectlevel3id039003003"></a>
+<h3>39.3.3 &Ouml;ffnen und Schlie&szlig;en der Knoten </h3>
+
+<p>
+Der Anwender kann die Knoten mit Maus- oder Tastaturkommandos &ouml;ffnen
+oder schlie&szlig;en. Dadurch werden die Unterknoten entweder sichtbar
+oder versteckt. Das Programm kann diesen Zustand mit den Methoden
+<a name="ixa102879"><a href="index_i.html#ixb102148"><font color=#000080><tt>isCollapsed</tt></font></a></a>
+und <a name="ixa102880"><a href="index_i.html#ixb102149"><font color=#000080><tt>isExpanded</tt></font></a></a>
+abfragen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public boolean isExpanded(TreePath path)
+public boolean isCollapsed(TreePath path)
+
+public boolean hasBeenExpanded(TreePath path)
+
+public boolean isVisible(TreePath path)
+public void makeVisible(TreePath path)
+
+public void expandPath(TreePath path)
+public void collapsePath(TreePath path)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTree.html" onClick="this.href=getApiDoc('javax.swing.JTree')"><font color="#660066" size=-1>javax.swing.JTree</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_i.html#ixb102149"><font color=#000080><tt>isExpanded</tt></font></a>
+liefert <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>,
+wenn der Knoten ge&ouml;ffnet ist, <a href="index_i.html#ixb102148"><font color=#000080><tt>isCollapsed</tt></font></a>,
+wenn er geschlossen ist. <a name="ixa102881"><a href="index_h.html#ixb102150"><font color=#000080><tt>hasBeenExpanded</tt></font></a></a>
+gibt an, ob der Knoten &uuml;berhaupt schon einmal ge&ouml;ffnet wurde.
+<a name="ixa102882"><a href="index_i.html#ixb102151"><font color=#000080><tt>isVisible</tt></font></a></a>
+gibt genau dann <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+zur&uuml;ck, wenn der Knoten sichtbar ist, d.h., wenn alle seine Elternknoten
+ge&ouml;ffnet sind. Mit <a name="ixa102883"><a href="index_m.html#ixb102152"><font color=#000080><tt>makeVisible</tt></font></a></a>
+kann ein Knoten sichtbar gemacht werden. Mit <a name="ixa102884"><a href="index_e.html#ixb102153"><font color=#000080><tt>expandPath</tt></font></a></a>
+kann er ge&ouml;ffnet und mit <a name="ixa102885"><a href="index_c.html#ixb102154"><font color=#000080><tt>collapsePath</tt></font></a></a>
+geschlossen werden. 
+
+<!-- Section -->
+
+<a name="sectlevel3id039003004"></a>
+<h3>39.3.4 Ver&auml;ndern der Baumstruktur </h3>
+
+<p>
+Es ist ohne Weiteres m&ouml;glich, den Inhalt und die Struktur des
+Baums nach dem Anlegen des <a href="index_j.html#ixb102110"><font color=#000080><tt>JTree</tt></font></a>
+zu &auml;ndern. Es k&ouml;nnen neue Knoten eingef&uuml;gt, bestehende
+entfernt oder vorhandene modifiziert werden. Wird die Klasse <a href="index_d.html#ixb102116"><font color=#000080><tt>DefaultMutableTreeNode</tt></font></a>
+als Knotenklasse verwendet, reicht es allerdings nicht aus, einfach
+die entsprechenden Methoden zum &Auml;ndern, Einf&uuml;gen oder L&ouml;schen
+auf den betroffenen Knoten aufzurufen. In diesem Fall w&uuml;rde zwar
+die &Auml;nderung im Datenmodell durchgef&uuml;hrt werden, aber die
+Bildschirmdarstellung w&uuml;rde sich nicht ver&auml;ndern. 
+
+<p>
+&Auml;nderungen im Baum m&uuml;ssen immer &uuml;ber das Modell ausgef&uuml;hrt
+werden, denn nur dort ist der <a href="index_j.html#ixb102110"><font color=#000080><tt>JTree</tt></font></a>
+standardm&auml;&szlig;ig als <a name="ixa102886"><a href="index_t.html#ixb102155"><font color=#000080><tt>TreeModelListener</tt></font></a></a>
+registriert und wird &uuml;ber &Auml;nderungen unterrichtet. Werden
+diese dagegen direkt auf den Knoten ausgef&uuml;hrt, bleiben sie dem
+Modell verborgen und die Anzeige wird inkonsistent. 
+
+<p>
+F&uuml;r einfache &Auml;nderungen reicht es aus, eine Instanz der
+Klasse <a name="ixa102887"><a href="index_d.html#ixb102112"><font color=#000080><tt>DefaultTreeModel</tt></font></a></a>
+als <a href="index_t.html#ixb102111"><font color=#000080><tt>TreeModel</tt></font></a>
+zu verwenden. Sie wird durch &Uuml;bergabe des Wurzelknotens instanziert
+und stellt eine Vielzahl von Methoden zum Einf&uuml;gen, L&ouml;schen
+und &Auml;ndern der Knoten zur Verf&uuml;gung. Alle &Auml;nderungen
+werden durch Versenden eines <a name="ixa102888"><a href="index_t.html#ixb102156"><font color=#000080><tt>TreeModelEvent</tt></font></a></a>
+automatisch an alle registrierten <a href="index_t.html#ixb102155"><font color=#000080><tt>TreeModelListener</tt></font></a>
+weitergegeben und f&uuml;hren dort zu entsprechenden Aktualisierungen
+der Bildschirmdarstellung. 
+
+<p>
+Die zum &Auml;ndern des Modells ben&ouml;tigten Methoden von <a href="index_d.html#ixb102112"><font color=#000080><tt>DefaultTreeModel</tt></font></a>
+sind: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void insertNodeInto(
+  MutableTreeNode newChild,
+  MutableTreeNode parent,
+  int index
+)
+
+public void removeNodeFromParent(MutableTreeNode node)
+
+public void nodeChanged(TreeNode node)
+
+public TreeNode[] getPathToRoot(TreeNode aNode)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/tree/DefaultTreeModel.html" onClick="this.href=getApiDoc('javax.swing.tree.DefaultTreeModel')"><font color="#660066" size=-1>javax.swing.tree.DefaultTreeModel</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa102889"><a href="index_i.html#ixb102157"><font color=#000080><tt>insertNodeInto</tt></font></a></a>
+wird ein neuer Kindknoten an einer beliebigen Position zu einem Elternknoten
+hinzugef&uuml;gt. Mit <a name="ixa102890"><a href="index_r.html#ixb102158"><font color=#000080><tt>removeNodeFromParent</tt></font></a></a>
+wird ein beliebiger Knoten aus dem Baum entfernt (er darf auch Unterknoten
+enthalten) und <a name="ixa102891"><a href="index_n.html#ixb102159"><font color=#000080><tt>nodeChanged</tt></font></a></a>
+sollte aufgerufen werden, wenn der Inhalt eines Knotens sich so ge&auml;ndert
+hat, dass seine Bildschirmdarstellung erneuert werden muss. <a name="ixa102892"><a href="index_g.html#ixb102160"><font color=#000080><tt>getPathToRoot</tt></font></a></a>
+schlie&szlig;lich ist eine n&uuml;tzliche Hilfsmethode, mit der das
+zur Konstruktion eines <a href="index_t.html#ixb102134"><font color=#000080><tt>TreePath</tt></font></a>-Objekts
+erforderliche Knoten-Array auf einfache Weise erstellt werden kann.
+
+<p>
+Das folgende Programm zeigt einen Baum, der zun&auml;chst nur den
+Wurzelknoten enth&auml;lt. Dieser ist vom Typ <a href="index_d.html#ixb102116"><font color=#000080><tt>DefaultMutableTreeNode</tt></font></a>
+und wird in ein explizit erzeugtes <a href="index_d.html#ixb102112"><font color=#000080><tt>DefaultTreeModel</tt></font></a>
+eingebettet, dass an den Konstruktor des <a href="index_j.html#ixb102110"><font color=#000080><tt>JTree</tt></font></a>
+&uuml;bergeben wird. Neben dem <a href="index_j.html#ixb102110"><font color=#000080><tt>JTree</tt></font></a>
+enth&auml;lt das Programm drei Buttons, mit denen ein neuer Knoten
+eingef&uuml;gt sowie ein vorhandener gel&ouml;scht oder seine Beschriftung
+ge&auml;ndert werden kann. 
+<a name="jtreeaenderungen"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3913.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">006 </font><font color="#0000AA">import</font> javax.swing.event.*;
+<font color="#555555">007 </font><font color="#0000AA">import</font> javax.swing.tree.*;
+<font color="#555555">008 </font>
+<font color="#555555">009 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3913
+<font color="#555555">010 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">011 </font><font color="#0000AA">implements</font> ActionListener
+<font color="#555555">012 </font>{
+<font color="#555555">013 </font>  <font color="#0000AA">protected</font> DefaultMutableTreeNode root;
+<font color="#555555">014 </font>  <font color="#0000AA">protected</font> DefaultTreeModel       treeModel;
+<font color="#555555">015 </font>  <font color="#0000AA">protected</font> JTree                  tree;
+<font color="#555555">016 </font>
+<font color="#555555">017 </font>  <font color="#0000AA">public</font> Listing3913()
+<font color="#555555">018 </font>  {
+<font color="#555555">019 </font>    <font color="#006699">super</font>(<font color="#0000FF">"JTree 3"</font>);
+<font color="#555555">020 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">021 </font>    <font color="#00AA00">//JTree erzeugen und Einfachselektion aktivieren</font>
+<font color="#555555">022 </font>    root = <font color="#0000AA">new</font> DefaultMutableTreeNode(<font color="#0000FF">"Root"</font>);
+<font color="#555555">023 </font>    treeModel = <font color="#0000AA">new</font> DefaultTreeModel(root);
+<font color="#555555">024 </font>    tree = <font color="#0000AA">new</font> JTree(treeModel);
+<font color="#555555">025 </font>    TreeSelectionModel tsm = <font color="#0000AA">new</font> DefaultTreeSelectionModel();
+<font color="#555555">026 </font>    tsm.setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+<font color="#555555">027 </font>    tree.setSelectionModel(tsm);
+<font color="#555555">028 </font>    tree.setRootVisible(<font color="#006699">true</font>);
+<font color="#555555">029 </font>    <font color="#00AA00">//JTree einf&uuml;gen</font>
+<font color="#555555">030 </font>    Container cp = getContentPane();
+<font color="#555555">031 </font>    cp.add(<font color="#0000AA">new</font> JScrollPane(tree), BorderLayout.CENTER);
+<font color="#555555">032 </font>    <font color="#00AA00">//ButtonPanel</font>
+<font color="#555555">033 </font>    JPanel panel = <font color="#0000AA">new</font> JPanel(<font color="#0000AA">new</font> FlowLayout());
+<font color="#555555">034 </font>    String[] buttons = <font color="#0000AA">new</font> String[]{<font color="#0000FF">"AddChild"</font>, <font color="#0000FF">"Delete"</font>, <font color="#0000FF">"Change"</font>};
+<font color="#555555">035 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; buttons.length; ++i) {
+<font color="#555555">036 </font>      JButton button = <font color="#0000AA">new</font> JButton(buttons[i]);
+<font color="#555555">037 </font>      button.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">038 </font>      panel.add(button);
+<font color="#555555">039 </font>    }
+<font color="#555555">040 </font>    cp.add(panel, BorderLayout.SOUTH);
+<font color="#555555">041 </font>  }
+<font color="#555555">042 </font>
+<font color="#555555">043 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> actionPerformed(ActionEvent event)
+<font color="#555555">044 </font>  {
+<font color="#555555">045 </font>    String cmd = event.getActionCommand();
+<font color="#555555">046 </font>    TreePath tp = tree.getLeadSelectionPath(); <a name="jtreeaenderungen.a"></a>
+<font color="#555555">047 </font>    <font color="#0000AA">if</font> (tp != <font color="#006699">null</font>) {
+<font color="#555555">048 </font>      DefaultMutableTreeNode node;
+<font color="#555555">049 </font>      node = (DefaultMutableTreeNode)tp.getLastPathComponent();
+<font color="#555555">050 </font>      <font color="#0000AA">if</font> (cmd.equals(<font color="#0000FF">"AddChild"</font>)) {
+<font color="#555555">051 </font>        DefaultMutableTreeNode child;
+<font color="#555555">052 </font>        child = <font color="#0000AA">new</font> DefaultMutableTreeNode(<font color="#0000FF">"child"</font>);
+<font color="#555555">053 </font>        treeModel.insertNodeInto(child, node, node.getChildCount()); <a name="jtreeaenderungen.b"></a>
+<font color="#555555">054 </font>        TreeNode[] path = treeModel.getPathToRoot(node);
+<font color="#555555">055 </font>        tree.expandPath(<font color="#0000AA">new</font> TreePath(path));
+<font color="#555555">056 </font>      } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (cmd.equals(<font color="#0000FF">"Delete"</font>)) {
+<font color="#555555">057 </font>        <font color="#0000AA">if</font> (node != root) {
+<font color="#555555">058 </font>          TreeNode parent = node.getParent();
+<font color="#555555">059 </font>          TreeNode[] path = treeModel.getPathToRoot(parent);
+<font color="#555555">060 </font>          treeModel.removeNodeFromParent(node); <a name="jtreeaenderungen.c"></a>
+<font color="#555555">061 </font>          tree.setSelectionPath(<font color="#0000AA">new</font> TreePath(path));
+<font color="#555555">062 </font>        }
+<font color="#555555">063 </font>      } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (cmd.equals(<font color="#0000FF">"Change"</font>)) {
+<font color="#555555">064 </font>        String name = node.toString();
+<font color="#555555">065 </font>        node.setUserObject(name + <font color="#0000FF">"C"</font>);
+<font color="#555555">066 </font>        treeModel.nodeChanged(node); <a name="jtreeaenderungen.d"></a>
+<font color="#555555">067 </font>      }
+<font color="#555555">068 </font>    }
+<font color="#555555">069 </font>  }
+<font color="#555555">070 </font>
+<font color="#555555">071 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">072 </font>  {
+<font color="#555555">073 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">074 </font>      String plaf = <font color="#0000FF">"com.sun.java.swing.plaf.windows.WindowsLookAndFeel"</font>;
+<font color="#555555">075 </font>      UIManager.setLookAndFeel(plaf);
+<font color="#555555">076 </font>      Listing3913 frame = <font color="#0000AA">new</font> Listing3913();
+<font color="#555555">077 </font>      frame.setLocation(100, 100);
+<font color="#555555">078 </font>      frame.setSize(300, 300);
+<font color="#555555">079 </font>      frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">080 </font>    } <font color="#0000AA">catch</font> (Exception e) {
+<font color="#555555">081 </font>    }
+<font color="#555555">082 </font>  }
+<font color="#555555">083 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3913.java"><font color="#000055" size=-1>Listing3913.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 39.13: Einf&uuml;gen, &Auml;ndern und L&ouml;schen in einem
+Baum</i></p>
+
+<p>
+Alle Button-Aktionen werden in <a href="index_a.html#ixb101413"><font color=#000080><tt>actionPerformed</tt></font></a>
+ausgef&uuml;hrt. Darin wird zun&auml;chst das Action-Kommando abgefragt
+und dann in <a href="k100255.html#jtreeaenderungen.a">Zeile 046</a>
+der Pfad des selektierten Elements bestimmt. Ist dieser nicht leer,
+werden die Kommandos wie folgt ausgef&uuml;hrt: 
+<ul>
+<li>Bei &#187;AddChild&#171; wird zun&auml;chst ein neuer Kindknoten
+erzeugt und in <a href="k100255.html#jtreeaenderungen.b">Zeile 053</a>
+als letztes Element an den selektierten Knoten angeh&auml;ngt. Anschlie&szlig;end
+wird der selektierte Knoten expandiert, um die &Auml;nderung f&uuml;r
+den Anwender sichtbar zu machen.
+<li>Bei &#187;Delete&#171; wird zun&auml;chst gepr&uuml;ft, ob der
+zu l&ouml;schende Knoten die Wurzel ist. Ist das nicht der Fall, wird
+zun&auml;chst ein Pfad zum Vaterknoten beschafft und dann in <a href="k100255.html#jtreeaenderungen.c">Zeile 060</a>
+der selektierte Knoten gel&ouml;scht. Anschlie&szlig;end wird der
+Vaterknoten selektiert, um auch nach der L&ouml;schung eine definierte
+Selektion zu haben.
+<li>Bei &#187;Change&#171; wird lediglich das bisherige UserObject
+durch einen <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+mit einem angeh&auml;ngten &#187;C&#171; ersetzt und in <a href="k100255.html#jtreeaenderungen.d">Zeile 066</a>
+<a href="index_n.html#ixb102159"><font color=#000080><tt>nodeChanged</tt></font></a>
+aufgerufen, um dem <a href="index_j.html#ixb102110"><font color=#000080><tt>JTree</tt></font></a>
+mitzuteilen, dass der Knoten neu dargestellt werden soll.
+</ul>
+
+<p>
+Nach einigen Einf&uuml;gungen, &Auml;nderungen und L&ouml;schungen
+sieht die Programmausgabe beispielsweise so aus: 
+<p>
+<a name="aenderbarertree"></a>
+<img src="images/JTree2.gif">
+<p>
+
+<p><i>
+Abbildung 39.10: Ein ver&auml;nderbarer JTree</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100252.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100254.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100256.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100257.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

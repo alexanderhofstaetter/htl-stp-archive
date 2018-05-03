@@ -1,0 +1,443 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100057.html;106,k100060.html;107,k100062.html;108,k100063.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100057.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100060.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100062.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100063.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 9 - OOP II: Vererbung, Polymorphismus und statische Elemente
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="abstraktpolymorph"></a>
+<h2>9.4 <a name="ixa100546">Abstrakte Klassen und Polymorphismus</a></h2>
+<hr>
+<ul>
+<li><a href="k100061.html#abstraktpolymorph">9.4 Abstrakte Klassen und Polymorphismus</a>
+<ul>
+<li><a href="k100061.html#sectlevel3id009004001">9.4.1 Abstrakte Klassen</a>
+<li><a href="k100061.html#sectlevel3id009004002">9.4.2 Ein Beispiel f&uuml;r Polymorphismus</a>
+<li><a href="k100061.html#sectlevel3id009004003">9.4.3 Polymorphe Methodenaufrufe in Konstruktoren</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id009004001"></a>
+<h3>9.4.1 Abstrakte Klassen </h3>
+
+<p>
+In Java ist es m&ouml;glich, <i>abstrakte</i> Methoden zu definieren.
+Im Gegensatz zu den <i>konkreten</i> Methoden enthalten sie nur die
+Deklaration der Methode, nicht aber ihre Implementierung. Syntaktisch
+unterscheiden sich abstrakte Methoden dadurch, dass anstelle der geschweiften
+Klammern mit den auszuf&uuml;hrenden Anweisungen lediglich ein Semikolon
+steht. Zus&auml;tzlich wird die Methode mit dem Attribut <a name="ixa100547"><a href="index_a.html#ixb100448"><font color=#000080><tt>abstract</tt></font></a></a>
+versehen. Abstrakte Methoden k&ouml;nnen nicht aufgerufen werden,
+sie definieren nur eine Schnittstelle. Erst durch &Uuml;berlagerung
+in einer abgeleiteten Klasse und Implementierung des fehlenden Methodenrumpfs
+wird eine abstrakte Klasse konkret und kann aufgerufen werden.
+
+<p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Eine Klasse, die mindestens eine abstrakte Methode enth&auml;lt, wird
+selbst als abstrakt angesehen und muss ebenfalls mit dem Schl&uuml;sselwort
+<a href="index_a.html#ixb100448"><font color=#000080><tt>abstract</tt></font></a>
+versehen werden. Abstrakte Klassen k&ouml;nnen nicht instanziert werden,
+da sie Methoden enthalten, die nicht implementiert wurden. Stattdessen
+werden abstrakte Klassen abgeleitet und in der abgeleiteten Klasse
+werden eine oder mehrere der abstrakten Methoden implementiert. Eine
+abstrakte Klasse wird konkret, wenn alle ihre Methoden implementiert
+sind. Die Konkretisierung kann dabei auch schrittweise &uuml;ber mehrere
+Vererbungsstufen erfolgen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id009004002"></a>
+<h3>9.4.2 Ein Beispiel f&uuml;r Polymorphismus </h3>
+
+<p>
+Wir wollen uns ein Beispiel ansehen, um diese Ausf&uuml;hrungen zu
+verdeutlichen. Zum Aufbau einer Mitarbeiterdatenbank soll zun&auml;chst
+eine Basisklasse definiert werden, die jene Eigenschaften implementiert,
+die auf alle Mitarbeiter zutreffen, wie beispielsweise <i>pers&ouml;nliche
+Daten</i> oder der <i>Eintrittstermin in das Unternehmen</i>. Gleichzeitig
+soll diese Klasse als Basis f&uuml;r spezialisierte Unterklassen verwendet
+werden, um die Besonderheiten spezieller Mitarbeitertypen, wie <i>Arbeiter</i>,
+<i>Angestellte</i> oder <i>Manager</i>, abzubilden. Da die Berechnung
+des monatlichen Gehalts zwar f&uuml;r jeden Mitarbeiter erforderlich,
+in ihrer konkreten Realisierung aber abh&auml;ngig vom Typ des Mitarbeiters
+ist, soll eine abstrakte Methode <font color="#000077"><tt>monatsBrutto</tt></font>
+in der Basisklasse definiert und in den abgeleiteten Klassen konkretisiert
+werden. 
+
+<p>
+Das folgende Listing zeigt die Implementierung der Klassen <font color="#000077"><tt>Mitarbeiter</tt></font>,
+<font color="#000077"><tt>Arbeiter</tt></font>, <font color="#000077"><tt>Angestellter</tt></font>
+und <font color="#000077"><tt>Manager</tt></font> zur Realisierung
+der verschiedenen Mitarbeitertypen. Zus&auml;tzlich wird die Klasse
+<font color="#000077"><tt>Gehaltsberechnung</tt></font> definiert,
+um das Hauptprogramm zur Verf&uuml;gung zu stellen, in dem die Gehaltsberechnung
+durchgef&uuml;hrt wird. Dazu wird ein Array <font color="#000077"><tt>ma</tt></font>
+mit konkreten Untertypen der Klasse <font color="#000077"><tt>Mitarbeiter</tt></font>
+gef&uuml;llt (hier nur angedeutet; die Daten k&ouml;nnten zum Beispiel
+aus einer Datenbank gelesen werden) und dann f&uuml;r alle Elemente
+das Monatsgehalt durch Aufruf von <font color="#000077"><tt>monatsBrutto</tt></font>
+ermittelt. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Das Listing ist ebenfalls ein Beispiel f&uuml;r <a name="ixa100548"><i>Polymorphismus</i></a>.
+Eine Variable vom Typ einer Basisklasse nimmt zur Laufzeit unterschiedliche
+Objekte aus abgeleiteten Klassen auf. Da bereits in der Basisklasse
+die Definition von <font color="#000077"><tt>monatsBrutto</tt></font>
+vorgenommen wurde, akzeptiert der Compiler den Aufruf dieser Methode
+bereits bei Objekten dieser vermeintlich abstrakten Klasse. Erst zur
+Laufzeit ist dann bekannt, welcher abgeleitete Typ hinter jedem einzelnen
+Array-Element steht, und das Laufzeitsystem ruft die darin implementierte
+Variante der Methode <font color="#000077"><tt>monatsBrutto</tt></font>
+auf.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<a name="gehaltsberechnung"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Gehaltsberechnung.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.util.Date;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">abstract</font> <font color="#0000AA">class</font> Mitarbeiter
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#006699">int</font> persnr;
+<font color="#555555">008 </font>  String name;
+<font color="#555555">009 </font>  Date eintritt;
+<font color="#555555">010 </font>
+<font color="#555555">011 </font>  <font color="#0000AA">public</font> <font color="#0000AA">abstract</font> <font color="#006699">double</font> monatsBrutto();
+<font color="#555555">012 </font>}
+<font color="#555555">013 </font>
+<font color="#555555">014 </font><font color="#0000AA">class</font> Arbeiter
+<font color="#555555">015 </font><font color="#0000AA">extends</font> Mitarbeiter
+<font color="#555555">016 </font>{
+<font color="#555555">017 </font>  <font color="#006699">double</font> stundenlohn;
+<font color="#555555">018 </font>  <font color="#006699">double</font> anzahlstunden;
+<font color="#555555">019 </font>  <font color="#006699">double</font> ueberstundenzuschlag;
+<font color="#555555">020 </font>  <font color="#006699">double</font> anzahlueberstunden;
+<font color="#555555">021 </font>  <font color="#006699">double</font> schichtzulage;
+<font color="#555555">022 </font>
+<font color="#555555">023 </font>  <font color="#0000AA">public</font> <font color="#006699">double</font> monatsBrutto()
+<font color="#555555">024 </font>  {
+<font color="#555555">025 </font>    <font color="#0000AA">return</font> stundenlohn*anzahlstunden+
+<font color="#555555">026 </font>           ueberstundenzuschlag*anzahlueberstunden+
+<font color="#555555">027 </font>           schichtzulage;
+<font color="#555555">028 </font>  }
+<font color="#555555">029 </font>}
+<font color="#555555">030 </font>
+<font color="#555555">031 </font><font color="#0000AA">class</font> Angestellter
+<font color="#555555">032 </font><font color="#0000AA">extends</font> Mitarbeiter
+<font color="#555555">033 </font>{
+<font color="#555555">034 </font>  <font color="#006699">double</font> grundgehalt;
+<font color="#555555">035 </font>  <font color="#006699">double</font> ortszuschlag;
+<font color="#555555">036 </font>  <font color="#006699">double</font> zulage;
+<font color="#555555">037 </font>
+<font color="#555555">038 </font>  <font color="#0000AA">public</font> <font color="#006699">double</font> monatsBrutto()
+<font color="#555555">039 </font>  {
+<font color="#555555">040 </font>    <font color="#0000AA">return</font> grundgehalt+
+<font color="#555555">041 </font>           ortszuschlag+
+<font color="#555555">042 </font>           zulage;
+<font color="#555555">043 </font>  }
+<font color="#555555">044 </font>}
+<font color="#555555">045 </font>
+<font color="#555555">046 </font><font color="#0000AA">class</font> Manager
+<font color="#555555">047 </font><font color="#0000AA">extends</font> Mitarbeiter
+<font color="#555555">048 </font>{
+<font color="#555555">049 </font>  <font color="#006699">double</font> fixgehalt;
+<font color="#555555">050 </font>  <font color="#006699">double</font> provision1;
+<font color="#555555">051 </font>  <font color="#006699">double</font> provision2;
+<font color="#555555">052 </font>  <font color="#006699">double</font> umsatz1;
+<font color="#555555">053 </font>  <font color="#006699">double</font> umsatz2;
+<font color="#555555">054 </font>
+<font color="#555555">055 </font>  <font color="#0000AA">public</font> <font color="#006699">double</font> monatsBrutto()
+<font color="#555555">056 </font>  {
+<font color="#555555">057 </font>    <font color="#0000AA">return</font> fixgehalt+
+<font color="#555555">058 </font>           umsatz1*provision1/100+
+<font color="#555555">059 </font>           umsatz2*provision2/100;
+<font color="#555555">060 </font>  }
+<font color="#555555">061 </font>}
+<font color="#555555">062 </font>
+<font color="#555555">063 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Gehaltsberechnung
+<font color="#555555">064 </font>{
+<font color="#555555">065 </font>  <font color="#0000AA">private</font> <font color="#0000AA">static</font> <font color="#0000AA">final</font> <font color="#006699">int</font> ANZ_MA = 100;
+<font color="#555555">066 </font>  <font color="#0000AA">private</font> <font color="#0000AA">static</font> Mitarbeiter[] ma;
+<font color="#555555">067 </font>  <font color="#0000AA">private</font> <font color="#0000AA">static</font> <font color="#006699">double</font> bruttosumme;
+<font color="#555555">068 </font>
+<font color="#555555">069 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">070 </font>  {
+<font color="#555555">071 </font>    ma = <font color="#0000AA">new</font> Mitarbeiter[ANZ_MA];
+<font color="#555555">072 </font>
+<font color="#555555">073 </font>    <font color="#00AA00">//Mitarbeiter-Array f&uuml;llen, z.B.</font>
+<font color="#555555">074 </font>    <font color="#00AA00">//ma[0] = new Manager();</font>
+<font color="#555555">075 </font>    <font color="#00AA00">//ma[1] = new Arbeiter();</font>
+<font color="#555555">076 </font>    <font color="#00AA00">//ma[2] = new Angestellter();</font>
+<font color="#555555">077 </font>    <font color="#00AA00">//...</font>
+<font color="#555555">078 </font>
+<font color="#555555">079 </font>    <font color="#00AA00">//Bruttosumme berechnen</font>
+<font color="#555555">080 </font>    bruttosumme = 0.0;
+<font color="#555555">081 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i=0; i&lt;ma.length; ++i) {
+<font color="#555555">082 </font>      bruttosumme += ma[i].monatsBrutto();
+<font color="#555555">083 </font>    }
+<font color="#555555">084 </font>    System.out.println(<font color="#0000FF">"Bruttosumme = "</font>+bruttosumme);
+<font color="#555555">085 </font>  }
+<font color="#555555">086 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Gehaltsberechnung.java"><font color="#000055" size=-1>Gehaltsberechnung.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 9.11: Abstrakte Klassen und Methoden</i></p>
+
+<p>
+Unabh&auml;ngig davon, ob in einem Array-Element ein Arbeiter, Angestellter
+oder Manager gespeichert wird, f&uuml;hrt der Aufruf von <font color="#000077"><tt>monatsBrutto</tt></font>
+dank der dynamischen Methodensuche die zum Typ des konkreten Objekts
+passende Berechnung aus. Auch weitere Verfeinerungen der Klassenhierarchie
+durch Ableiten neuer Klassen erfordern keine Ver&auml;nderung in der
+Routine zur Berechnung der monatlichen Bruttosumme. 
+
+<p>
+So k&ouml;nnte beispielsweise eine neue Klasse <font color="#000077"><tt>GFManager</tt></font>
+(ein Manager, der Mitglied der Gesch&auml;ftsf&uuml;hrung ist) aus
+<font color="#000077"><tt>Manager</tt></font> abgeleitet und problemlos
+in die Gehaltsberechnung integriert werden: 
+<a name="listingid009012"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> GFManager
+<font color="#555555">002 </font><font color="#0000AA">extends</font> Manager
+<font color="#555555">003 </font>{
+<font color="#555555">004 </font>  <font color="#006699">double</font> gfzulage;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font>  <font color="#0000AA">public</font> <font color="#006699">double</font> monatsBrutto()
+<font color="#555555">007 </font>  {
+<font color="#555555">008 </font>    <font color="#0000AA">return</font> <font color="#006699">super</font>.monatsBrutto()+gfzulage;
+<font color="#555555">009 </font>  }
+<font color="#555555">010 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 9.12: Einf&uuml;gen einer neuen Mitarbeiterklasse in die Gehaltsberechnung</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+In der abgedruckten Form ist das Programm in <a href="k100061.html#gehaltsberechnung">Listing 9.11</a>
+nat&uuml;rlich nicht lauff&auml;hig, denn das Array <font color="#000077"><tt>ma</tt></font>
+wird nicht vollst&auml;ndig initialisiert. Ansonsten ist es aber korrekt
+und illustriert beispielhaft die Anwendung abstrakter Klassen und
+Methoden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id009004003"></a>
+<h3>9.4.3 Polymorphe Methodenaufrufe in Konstruktoren </h3>
+
+<p>
+Eine besondere Gefahrenquelle liegt darin, polymorphe Methoden im
+Konstruktor einer Klasse aufzurufen. Der Grund liegt in der Initialisierungsreihenfolge
+von Membervariablen w&auml;hrend der Konstruktion eines Objekts: 
+<ul>
+<li>Zuerst werden die Konstruktoren der Vaterklassen aufgerufen und
+so deren Membervariablen initialisiert.
+<li>Dann werden die Initialisierer und initialisierenden Zuweisungen
+der eigenen Klasse aufgerufen.
+<li>Schlie&szlig;lich wird der Rumpf des eigenen Konstruktors ausgef&uuml;hrt.
+</ul>
+
+<p>
+Wird nun im eigenen Konstruktor eine Methode aufgerufen, die in einer
+abgeleiteten Klasse &uuml;berlagert wurde, sind die Membervariablen
+der abgeleiteten Klasse noch nicht initialisiert. Ihr Konstruktor
+wird ja erst sp&auml;ter aufgerufen. Das folgende Beispiel illustriert
+dieses Problem: 
+<a name="listingid009013"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing0913.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">class</font> SingleValue
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">protected</font> <font color="#006699">int</font> value1;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> SingleValue(<font color="#006699">int</font> value1)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#006699">this</font>.value1 = value1;
+<font color="#555555">010 </font>    print();
+<font color="#555555">011 </font>  }
+<font color="#555555">012 </font>
+<font color="#555555">013 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> print()
+<font color="#555555">014 </font>  {
+<font color="#555555">015 </font>    System.out.println(<font color="#0000FF">"value = "</font> + value1);
+<font color="#555555">016 </font>  }
+<font color="#555555">017 </font>}
+<font color="#555555">018 </font>
+<font color="#555555">019 </font><font color="#0000AA">class</font> ValuePair
+<font color="#555555">020 </font><font color="#0000AA">extends</font> SingleValue
+<font color="#555555">021 </font>{
+<font color="#555555">022 </font>  <font color="#0000AA">protected</font> <font color="#006699">int</font> value2;
+<font color="#555555">023 </font>
+<font color="#555555">024 </font>  <font color="#0000AA">public</font> ValuePair(<font color="#006699">int</font> value1, <font color="#006699">int</font> value2)
+<font color="#555555">025 </font>  {
+<font color="#555555">026 </font>    <font color="#006699">super</font>(value1);
+<font color="#555555">027 </font>    <font color="#006699">this</font>.value2 = value2;
+<font color="#555555">028 </font>  }
+<font color="#555555">029 </font>
+<font color="#555555">030 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> print()
+<font color="#555555">031 </font>  {
+<font color="#555555">032 </font>    System.out.println(
+<font color="#555555">033 </font>      <font color="#0000FF">"value = ("</font> + value1 + <font color="#0000FF">","</font> + value2 + <font color="#0000FF">")"</font>
+<font color="#555555">034 </font>    );
+<font color="#555555">035 </font>  }
+<font color="#555555">036 </font>}
+<font color="#555555">037 </font>
+<font color="#555555">038 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing0913
+<font color="#555555">039 </font>{
+<font color="#555555">040 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">041 </font>  {
+<font color="#555555">042 </font>    <font color="#0000AA">new</font> ValuePair(10,20);
+<font color="#555555">043 </font>  }
+<font color="#555555">044 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing0913.java"><font color="#000055" size=-1>Listing0913.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 9.13: Polymorphe Methodenaufrufe im Konstruktor</i></p>
+
+<p>
+Die Ausgabe des Programms ist nicht &#187;value = 10&#171;, sondern
+&#187;value = (10,0)&#171;. Bei der Konstruktion des <font color="#000077"><tt>ValuePair</tt></font>-Objekts
+wird zun&auml;chst der Konstruktor der Basisklasse <font color="#000077"><tt>SingleValue</tt></font>
+aufgerufen und er initialisiert seine Membervariable <font color="#000077"><tt>value1</tt></font>.
+Der anschlie&szlig;ende Aufruf von <font color="#000077"><tt>print</tt></font>
+wird polymorph ausgef&uuml;hrt, denn das zu instanzierende Objekt
+ist vom Typ <font color="#000077"><tt>ValuePair</tt></font>. Da zu
+diesem Zeitpunkt der Member <font color="#000077"><tt>value2</tt></font>
+aber noch nicht initialisiert ist (das w&uuml;rde erst passieren,
+wenn der Konstruktor von <font color="#000077"><tt>SingleValue</tt></font>
+komplett abgearbeitet w&auml;re), wird an seiner Stelle 0 ausgegeben
+(beim Anlegen eines neuen Objekts wird der belegte Speicher mit Nullen
+gef&uuml;llt). Das kann zu schwer auffindbaren Fehlern f&uuml;hren.
+Aufrufe von Methoden, die m&ouml;glicherweise &uuml;berlagert werden,
+sollten daher im Konstruktor vermieden werden. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100057.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100060.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100062.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100063.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

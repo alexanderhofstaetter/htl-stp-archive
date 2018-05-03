@@ -1,0 +1,785 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100127.html;106,k100129.html;107,k100131.html;108,k100132.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100127.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100129.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100131.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100132.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 19 - Character-Streams
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id019003"></a>
+<h2>19.3 <a name="ixa101283">Eingabe-Streams</a></h2>
+<hr>
+<ul>
+<li><a href="k100130.html#sectlevel2id019003">19.3 Eingabe-Streams</a>
+<ul>
+<li><a href="k100130.html#sectlevel3id019003001">19.3.1 Die abstrakte Klasse Reader</a>
+<li><a href="k100130.html#readerableitungen">19.3.2 Auswahl des Eingabeger&auml;ts</a>
+<ul>
+<li><a href="k100130.html#sectlevel4id019003002001">InputStreamReader und FileReader</a>
+<li><a href="k100130.html#sectlevel4id019003002002">StringReader und CharArrayReader</a>
+</ul>
+<li><a href="k100130.html#schachtelneingstreams">19.3.3 Schachteln von Eingabe-Streams </a>
+<ul>
+<li><a href="k100130.html#sectlevel4id019003003001">BufferedReader</a>
+<li><a href="k100130.html#sectlevel4id019003003002">LineNumberReader</a>
+<li><a href="k100130.html#sectlevel4id019003003003">FilterReader und PushbackReader</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id019003001"></a>
+<h3>19.3.1 Die abstrakte Klasse Reader </h3>
+
+<p>
+Basis aller sequenziellen Eingaben ist die abstrakte Klasse <a name="ixa101284"><a href="index_r.html#ixb100593"><font color=#000080><tt>Reader</tt></font></a></a>,
+die eine Schnittstelle f&uuml;r stream-basierte Eingaben zur Verf&uuml;gung
+stellt: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Reader()
+
+public void close()
+public void mark(int readAheadlimit)
+public boolean markSupported()
+
+public int read()
+public int read(char[] cbuf)
+public int read(char[] cbuf, int off, int len)
+
+public long skip(long n)
+public boolean ready()
+public void reset()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/Reader.html" onClick="this.href=getApiDoc('java.io.Reader')"><font color="#660066" size=-1>java.io.Reader</font></a></td>
+</tr>
+</table>
+
+<p>
+Analog zu den <a href="index_w.html#ixb100967"><font color=#000080><tt>write</tt></font></a>-Methoden
+von <a href="index_w.html#ixb100594"><font color=#000080><tt>Writer</tt></font></a>
+stellt die Klasse <a href="index_r.html#ixb100593"><font color=#000080><tt>Reader</tt></font></a>
+eine Reihe von <a name="ixa101285"><a href="index_r.html#ixb100989"><font color=#000080><tt>read</tt></font></a></a>-Methoden
+zum Lesen von Daten zur Verf&uuml;gung. Die parameterlose Variante
+liest das n&auml;chste Zeichen aus dem Eingabestrom und liefert es
+als <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>,
+dessen Wert im Bereich von 0 bis 65535 liegt. Ein R&uuml;ckgabewert
+von -1 zeigt das Ende des Eingabestroms an. Die beiden anderen Varianten
+von <a href="index_r.html#ixb100989"><font color=#000080><tt>read</tt></font></a>
+&uuml;bertragen eine Reihe von Zeichen in das als Parameter &uuml;bergebene
+Array und liefern die Anzahl der tats&auml;chlich gelesenen Zeichen
+als R&uuml;ckgabewert. Auch hier wird -1 zur&uuml;ckgegeben, wenn
+das Ende des Streams erreicht ist. 
+
+<p>
+Die Methode <a name="ixa101286"><a href="index_r.html#ixb100990"><font color=#000080><tt>ready</tt></font></a></a>
+liefert <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>,
+falls der n&auml;chste Aufruf von <a href="index_r.html#ixb100989"><font color=#000080><tt>read</tt></font></a>
+erfolgen kann, ohne dass die Eingabe blockt, und <a name="ixa101287"><a href="index_c.html#ixb100596"><font color=#000080><tt>close</tt></font></a></a>
+schlie&szlig;t den Eingabestrom. Mit Hilfe der Methoden <a name="ixa101288"><a href="index_m.html#ixb100991"><font color=#000080><tt>mark</tt></font></a></a>
+und <a name="ixa101289"><a href="index_r.html#ixb100984"><font color=#000080><tt>reset</tt></font></a></a>
+gibt es die M&ouml;glichkeit, eine bestimmte Position innerhalb des
+Eingabe-Streams zu markieren und zu einem sp&auml;teren Zeitpunkt
+wieder anzuspringen. Zuvor muss allerdings durch einen Aufruf von
+<a name="ixa101290"><a href="index_m.html#ixb100992"><font color=#000080><tt>markSupported</tt></font></a></a>
+&uuml;berpr&uuml;ft werden, ob das Markieren &uuml;berhaupt unterst&uuml;tzt
+wird. Ist dies nicht der Fall, w&uuml;rde ein Aufruf von <a href="index_m.html#ixb100991"><font color=#000080><tt>mark</tt></font></a>
+oder <a href="index_r.html#ixb100984"><font color=#000080><tt>reset</tt></font></a>
+eine Ausnahme erzeugen. Die Methode <a href="index_m.html#ixb100991"><font color=#000080><tt>mark</tt></font></a>
+merkt sich die aktuelle Leseposition und spezifiziert, wie viele Bytes
+anschlie&szlig;end maximal gelesen werden k&ouml;nnen, bevor die Markierung
+ung&uuml;ltig wird. Ein Aufruf von <a href="index_r.html#ixb100984"><font color=#000080><tt>reset</tt></font></a>
+setzt den Lesezeiger an die markierte Stelle zur&uuml;ck. 
+
+<p>
+Mit der Methode <a name="ixa101291"><a href="index_s.html#ixb100993"><font color=#000080><tt>skip</tt></font></a></a>
+ist es m&ouml;glich, <i>n</i> Zeichen im Eingabestrom zu &uuml;berspringen.
+Dabei kann es aus verschiedenen Gr&uuml;nden vorkommen, dass nicht
+exakt die angegebene Anzahl an Zeichen &uuml;bersprungen wird (beispielsweise,
+wenn nicht mehr gen&uuml;gend Zeichen vorhanden sind). Der R&uuml;ckgabewert
+von <a href="index_s.html#ixb100993"><font color=#000080><tt>skip</tt></font></a>
+gibt die tats&auml;chliche Anzahl an. 
+
+<!-- Section -->
+
+<a name="readerableitungen"></a>
+<h3>19.3.2 Auswahl des Eingabeger&auml;ts </h3>
+
+<p>
+Analog zur Klasse <a href="index_w.html#ixb100594"><font color=#000080><tt>Writer</tt></font></a>
+dient auch bei der Klasse <a href="index_r.html#ixb100593"><font color=#000080><tt>Reader</tt></font></a>
+die erste Ebene abgeleiteter Klassen vorwiegend dazu, die Art des
+Datenlieferanten zu bestimmen. <a href="k100130.html#readerkindklassen">Tabelle 19.2</a>
+enth&auml;lt eine &Uuml;bersicht der aus <a href="index_r.html#ixb100593"><font color=#000080><tt>Reader</tt></font></a>
+abgeleiteten Klassen. <a name="readerkindklassen"></a>
+
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=25%><b>Klasse</b></td>
+<td valign=top align=left width=75%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101292"><a href="index_i.html#ixb100994"><font color=#000080><tt>InputStreamReader</tt></font></a></a></td>
+<td valign=top align=left>Basisklasse f&uuml;r alle Reader, die einen
+Byte-Stream in einen Character-Stream umwandeln </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101293"><a href="index_f.html#ixb100995"><font color=#000080><tt>FileReader</tt></font></a></a></td>
+<td valign=top align=left>Konkrete Ableitung von <a href="index_i.html#ixb100994"><font color=#000080><tt>InputStreamReader</tt></font></a>
+zum Einlesen aus einer Datei </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101294"><a href="index_f.html#ixb100996"><font color=#000080><tt>FilterReader</tt></font></a></a></td>
+<td valign=top align=left>Abstrakte Basisklasse f&uuml;r die Konstruktion
+von Eingabefiltern </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101295"><a href="index_p.html#ixb100997"><font color=#000080><tt>PushbackReader</tt></font></a></a></td>
+<td valign=top align=left>Eingabefilter mit der M&ouml;glichkeit,
+Zeichen zur&uuml;ckzugeben </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101296"><a href="index_b.html#ixb100998"><font color=#000080><tt>BufferedReader</tt></font></a></a></td>
+<td valign=top align=left>Reader zur Eingabepufferung und zum Lesen
+von kompletten Zeilen </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101297"><a href="index_l.html#ixb100999"><font color=#000080><tt>LineNumberReader</tt></font></a></a></td>
+<td valign=top align=left>Ableitung aus <a href="index_b.html#ixb100998"><font color=#000080><tt>BufferedReader</tt></font></a>
+mit der F&auml;higkeit, Zeilen zu z&auml;hlen </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101298"><a href="index_s.html#ixb101000"><font color=#000080><tt>StringReader</tt></font></a></a></td>
+<td valign=top align=left>Reader zum Einlesen von Zeichen aus einem
+<a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101299"><a href="index_c.html#ixb101001"><font color=#000080><tt>CharArrayReader</tt></font></a></a></td>
+<td valign=top align=left>Reader zum Einlesen von Zeichen aus einem
+Zeichen-Array </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101300"><a href="index_p.html#ixb100975"><font color=#000080><tt>PipedReader</tt></font></a></a></td>
+<td valign=top align=left>Reader zum Einlesen von Zeichen aus einem
+<a name="ixa101301"><a href="index_p.html#ixb100974"><font color=#000080><tt>PipedWriter</tt></font></a></a>
+</td></tr>
+</table>
+<p><i>
+Tabelle 19.2: Aus Reader abgeleitete Klassen </i></p>
+
+<p>
+In den folgenden Unterabschnitten werden die Klassen <a href="index_i.html#ixb100994"><font color=#000080><tt>InputStreamReader</tt></font></a>,
+<a href="index_f.html#ixb100995"><font color=#000080><tt>FileReader</tt></font></a>,
+<a href="index_s.html#ixb101000"><font color=#000080><tt>StringReader</tt></font></a>
+und <a href="index_c.html#ixb101001"><font color=#000080><tt>CharArrayReader</tt></font></a>
+erl&auml;utert. <a href="index_f.html#ixb100996"><font color=#000080><tt>FilterReader</tt></font></a>,
+<a href="index_p.html#ixb100997"><font color=#000080><tt>PushbackReader</tt></font></a>,
+<a href="index_b.html#ixb100998"><font color=#000080><tt>BufferedReader</tt></font></a>
+und <a href="index_l.html#ixb100999"><font color=#000080><tt>LineNumberReader</tt></font></a>
+werden in <a href="k100130.html#schachtelneingstreams">Abschnitt 19.3.3</a>
+behandelt. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Klasse <a name="ixa101300"><a href="index_p.html#ixb100975"><font color=#000080><tt>PipedReader</tt></font></a></a>
+soll hier nicht erl&auml;utert werden. In <a href="k100154.html#pipedthreads">Abschnitt 23.4.5</a>
+findet sich jedoch ein Beispiel zur Anwendung der Klassen <a href="index_p.html#ixb100976"><font color=#000080><tt>PipedInputStream</tt></font></a>
+und <a href="index_p.html#ixb100977"><font color=#000080><tt>PipedOutputStream</tt></font></a>,
+das auf <a href="index_p.html#ixb100975"><font color=#000080><tt>PipedReader</tt></font></a>
+und <a href="index_p.html#ixb100974"><font color=#000080><tt>PipedWriter</tt></font></a>
+&uuml;bertragbar ist.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id019003002001"></a>
+<h4>InputStreamReader und FileReader </h4>
+
+<p>
+Die Klasse <a name="ixa101302"><a href="index_i.html#ixb100994"><font color=#000080><tt>InputStreamReader</tt></font></a></a>
+ist die Basisklasse f&uuml;r alle Reader, die eine Konvertierung zwischen
+Byte- und Character-Streams vornehmen. Sie enth&auml;lt ein Objekt
+des Typs <a name="ixa101303"><a href="index_b.html#ixb101002"><font color=#000080><tt>ByteToCharConverter</tt></font></a></a>
+(aus dem undokumentierten Paket <a name="ixa101304"><a href="index_s.html#ixb100979"><font color=#000080><tt>sun.io</tt></font></a></a>),
+das die Konvertierung der Eingabezeichen bei allen lesenden Zugriffen
+vornimmt. Als &uuml;bergeordnete Basisklasse ist <a href="index_i.html#ixb100994"><font color=#000080><tt>InputStreamReader</tt></font></a>
+f&uuml;r uns allerdings nicht so interessant wie die daraus abgeleitete
+Klasse <a href="index_f.html#ixb100995"><font color=#000080><tt>FileReader</tt></font></a>,
+die die Eingabe aus einer Datei erm&ouml;glicht. Sie implementiert
+die abstrakten Eigenschaften von <a href="index_r.html#ixb100593"><font color=#000080><tt>Reader</tt></font></a>
+und bietet zus&auml;tzliche Konstruktoren, die es erlauben, eine Datei
+zu &ouml;ffnen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public FileReader(String fileName)
+  throws FileNotFoundException
+
+public FileReader(File file)
+  throws FileNotFoundException
+
+public FileReader(FileDescriptor fd)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/FileReader.html" onClick="this.href=getApiDoc('java.io.FileReader')"><font color="#660066" size=-1>java.io.FileReader</font></a></td>
+</tr>
+</table>
+
+<p>
+Bei der &Uuml;bergabe der Zeichenkette <font color="#000077"><tt>fileName</tt></font>
+wird die Datei mit dem angegebenen Namen zum Lesen ge&ouml;ffnet.
+Falls sie nicht vorhanden ist, l&ouml;st der Konstruktor eine Ausnahme
+des Typs <a name="ixa101305"><a href="index_f.html#ixb101003"><font color=#000080><tt>FileNotFoundException</tt></font></a></a>
+aus. Die beiden anderen Konstruktoren erwarten ein <a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a>-Objekt,
+das eine zu &ouml;ffnende Datei spezifiziert, oder ein <a href="index_f.html#ixb100981"><font color=#000080><tt>FileDescriptor</tt></font></a>-Objekt,
+das eine bereits ge&ouml;ffnete Datei angibt. 
+
+<p>
+Das folgende Beispiel demonstriert die Anwendung der Klasse <a href="index_f.html#ixb100995"><font color=#000080><tt>FileReader</tt></font></a>.
+Das Programm liest die Datei <font color="#660099">/etc/hosts</font>
+auf einem Unix-System und gibt ihren Inhalt auf dem Bildschirm aus:
+<a name="filereaderbsp"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1906.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1906
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    FileReader f;
+<font color="#555555">010 </font>    <font color="#006699">int</font> c;
+<font color="#555555">011 </font>
+<font color="#555555">012 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">013 </font>      f = <font color="#0000AA">new</font> FileReader(<font color="#0000FF">"/etc/hosts"</font>);
+<font color="#555555">014 </font>      <font color="#0000AA">while</font> ((c = f.read()) != -1) {
+<font color="#555555">015 </font>         System.out.print((<font color="#006699">char</font>)c);
+<font color="#555555">016 </font>      }
+<font color="#555555">017 </font>      f.close();
+<font color="#555555">018 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">019 </font>      System.out.println(<font color="#0000FF">"Fehler beim Lesen der Datei"</font>);
+<font color="#555555">020 </font>    }
+<font color="#555555">021 </font>  }
+<font color="#555555">022 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1906.java"><font color="#000055" size=-1>Listing1906.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 19.6: Anwendung der Klasse FileReader</i></p>
+
+<p>
+Die Ausgabe des Programms ist: 
+<font color="#333300">
+<pre>
+127.0.0.1	localhost
+
+# The following lines are desirable for IPv6 capable hosts
+::1     ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+ff02::3 ip6-allhosts
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="sectlevel4id019003002002"></a>
+<h4>StringReader und CharArrayReader </h4>
+
+<p>
+Diese beiden Klassen sind die Pendants zu <a href="index_s.html#ixb100972"><font color=#000080><tt>StringWriter</tt></font></a>
+und <a href="index_c.html#ixb100973"><font color=#000080><tt>CharArrayWriter</tt></font></a>.
+Sie erlauben das Lesen von Zeichen aus einem <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+bzw. einem Zeichen-Array. Die Schnittstelle der beiden Klassen ist
+identisch und unterscheidet sich von der Basisklasse <a href="index_r.html#ixb100593"><font color=#000080><tt>Reader</tt></font></a>
+nur durch die ge&auml;nderten Konstruktoren: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public StringReader(String s)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/StringReader.html" onClick="this.href=getApiDoc('java.io.StringReader')"><font color="#660066" size=-1>java.io.StringReader</font></a></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public CharArrayReader(char[] buf)
+
+public CharArrayReader(char[] buf, int offset, int length)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/CharArrayReader.html" onClick="this.href=getApiDoc('java.io.CharArrayReader')"><font color="#660066" size=-1>java.io.CharArrayReader</font></a></td>
+</tr>
+</table>
+
+<p>
+Das folgende Programm zeigt die Verwendung der Klasse <a name="ixa101306"><a href="index_s.html#ixb101000"><font color=#000080><tt>StringReader</tt></font></a></a>
+am Beispiel eines Programms, das einen <a href="index_r.html#ixb100593"><font color=#000080><tt>Reader</tt></font></a>
+konstruiert, der den Satz liest, der hier an dieser Stelle steht:
+<a name="listingid019007"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1907.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1907
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    Reader f;
+<font color="#555555">010 </font>    <font color="#006699">int</font> c;
+<font color="#555555">011 </font>    String s;
+<font color="#555555">012 </font>
+<font color="#555555">013 </font>    s =  <font color="#0000FF">"Das folgende Programm zeigt die Verwendung\r\n"</font>;
+<font color="#555555">014 </font>    s += <font color="#0000FF">"der Klasse StringReader am Beispiel eines\r\n"</font>;
+<font color="#555555">015 </font>    s += <font color="#0000FF">"Programms, das einen Reader konstruiert, der\r\n"</font>;
+<font color="#555555">016 </font>    s += <font color="#0000FF">"den Satz liest, der hier an dieser Stelle steht:\r\n"</font>;
+<font color="#555555">017 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">018 </font>      f = <font color="#0000AA">new</font> StringReader(s);
+<font color="#555555">019 </font>      <font color="#0000AA">while</font> ((c = f.read()) != -1) {
+<font color="#555555">020 </font>        System.out.print((<font color="#006699">char</font>)c);
+<font color="#555555">021 </font>      }
+<font color="#555555">022 </font>      f.close();
+<font color="#555555">023 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">024 </font>      System.out.println(<font color="#0000FF">"Fehler beim Lesen des Strings"</font>);
+<font color="#555555">025 </font>    }
+<font color="#555555">026 </font>  }
+<font color="#555555">027 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1907.java"><font color="#000055" size=-1>Listing1907.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 19.7: Verwendung der Klasse StringReader</i></p>
+
+<p>
+Die Ausgabe des Programms ist: 
+<font color="#333300">
+<pre>
+Das folgende Programm zeigt die Verwendung
+der Klasse StringReader am Beispiel eines
+Programms, das einen Reader konstruiert, der
+den Satz liest, der hier an dieser Stelle steht:
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="schachtelneingstreams"></a>
+<h3>19.3.3 Schachteln von Eingabe-Streams <a name="ixa101307"></a>
+</h3>
+
+<p>
+Das Konzept der geschachtelten Streams funktioniert bei der sequenziellen
+Eingabe genauso wie bei der Ausgabe. Mit den Klassen <a href="index_b.html#ixb100998"><font color=#000080><tt>BufferedReader</tt></font></a>,
+<a href="index_l.html#ixb100999"><font color=#000080><tt>LineNumberReader</tt></font></a>,
+<a href="index_f.html#ixb100996"><font color=#000080><tt>FilterReader</tt></font></a>
+und <a href="index_p.html#ixb100997"><font color=#000080><tt>PushbackReader</tt></font></a>
+stehen Klassen zur Verf&uuml;gung, die im Konstruktor die &Uuml;bergabe
+eines weiteren Reader erwarten und die Leseoperationen vor Ausf&uuml;hrung
+der Filterfunktion an diesen <a href="index_r.html#ixb100593"><font color=#000080><tt>Reader</tt></font></a>
+weiterleiten. 
+
+<!-- Section -->
+
+<a name="sectlevel4id019003003001"></a>
+<h4>BufferedReader </h4>
+
+<p>
+Dieser Filter dient zur Pufferung von Eingaben und kann verwendet
+werden, um die Performance beim Lesen von externen Dateien zu erh&ouml;hen.
+Da nicht jedes Byte einzeln gelesen wird, verringert sich die Anzahl
+der Zugriffe auf den externen Datentr&auml;ger und die Lesegeschwindigkeit
+erh&ouml;ht sich. Zus&auml;tzlich stellt <a name="ixa101308"><a href="index_b.html#ixb100998"><font color=#000080><tt>BufferedReader</tt></font></a></a>
+die Methode <a name="ixa101309"><a href="index_r.html#ixb101004"><font color=#000080><tt>readLine</tt></font></a></a>
+zur Verf&uuml;gung, die eine komplette Textzeile liest und als <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+an den Aufrufer zur&uuml;ckgibt: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public String readLine()
+  throws IOException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/BufferedReader.html" onClick="this.href=getApiDoc('java.io.BufferedReader')"><font color="#660066" size=-1>java.io.BufferedReader</font></a></td>
+</tr>
+</table>
+
+<p>
+Eine Textzeile wird dabei durch die Zeichen <font color="#000077"><tt>'\n'</tt></font>
+oder <font color="#000077"><tt>'\r'</tt></font> oder durch die Folge
+<font color="#000077"><tt>"\r\n"</tt></font> begrenzt. Der R&uuml;ckgabewert
+von <a href="index_r.html#ixb101004"><font color=#000080><tt>readLine</tt></font></a>
+ist ein <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>,
+der den Zeileninhalt ohne Begrenzungszeichen enth&auml;lt, bzw. <a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>,
+falls das Ende des Streams erreicht ist. <a href="index_b.html#ixb100998"><font color=#000080><tt>BufferedReader</tt></font></a>
+besitzt zwei Konstruktoren: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public BufferedReader(Reader in)
+
+public BufferedReader(Reader in, int sz)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/BufferedReader.html" onClick="this.href=getApiDoc('java.io.BufferedReader')"><font color="#660066" size=-1>java.io.BufferedReader</font></a></td>
+</tr>
+</table>
+
+<p>
+Der erste Parameter <font color="#000077"><tt>in</tt></font> ist das
+<a href="index_r.html#ixb100593"><font color=#000080><tt>Reader</tt></font></a>-Objekt,
+auf dem der <a href="index_b.html#ixb100998"><font color=#000080><tt>BufferedReader</tt></font></a>
+aufgesetzt werden soll. Der optionale zweite Parameter <font color="#000077"><tt>sz</tt></font>
+gibt die Gr&ouml;&szlig;e des internen Puffers an. Fehlt er, so wird
+eine f&uuml;r die meisten Situationen angemessene Standardeinstellung
+verwendet. 
+
+<p>
+Das folgende Beispiel demonstriert den Einsatz der Eingabepufferung
+durch die Erweiterung von <a href="k100130.html#filereaderbsp">Listing 19.6</a>.
+Auch hier wird die Datei <font color="#660099">/etc/hosts</font> eingelesen
+und auf dem Bildschirm ausgegeben. Durch den Einsatz der Klasse <a href="index_b.html#ixb100998"><font color=#000080><tt>BufferedReader</tt></font></a>
+versucht das Programm, die Perfomance beim Lesen der Datei zu erh&ouml;hen:
+<a name="listingid019008"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1908.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1908
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    BufferedReader f;
+<font color="#555555">010 </font>    String line;
+<font color="#555555">011 </font>
+<font color="#555555">012 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">013 </font>      f = <font color="#0000AA">new</font> BufferedReader(
+<font color="#555555">014 </font>          <font color="#0000AA">new</font> FileReader(<font color="#0000FF">"/etc/hosts"</font>));
+<font color="#555555">015 </font>      <font color="#0000AA">while</font> ((line = f.readLine()) != <font color="#006699">null</font>) {
+<font color="#555555">016 </font>        System.out.println(line);
+<font color="#555555">017 </font>      }
+<font color="#555555">018 </font>      f.close();
+<font color="#555555">019 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">020 </font>      System.out.println(<font color="#0000FF">"Fehler beim Lesen der Datei"</font>);
+<font color="#555555">021 </font>    }
+<font color="#555555">022 </font>  }
+<font color="#555555">023 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1908.java"><font color="#000055" size=-1>Listing1908.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 19.8: Eingabepufferung beim Lesen aus Dateien</i></p>
+
+<p>
+Zus&auml;tzlich wird die Eingabe nicht zeichen-, sondern mit Hilfe
+von <a href="index_r.html#ixb101004"><font color=#000080><tt>readLine</tt></font></a>
+zeilenweise gelesen, was die Performance weiter erh&ouml;ht. Die Ausgabe
+des Programms ist mit der von <a href="k100130.html#filereaderbsp">Listing 19.6</a>
+identisch. 
+
+<!-- Section -->
+
+<a name="sectlevel4id019003003002"></a>
+<h4>LineNumberReader </h4>
+
+<p>
+Diese Klasse ist eine Ableitung von <a href="index_b.html#ixb100998"><font color=#000080><tt>BufferedReader</tt></font></a>,
+die um die F&auml;higkeit erweitert wurde, die Anzahl der Eingabezeilen
+beim Einlesen zu z&auml;hlen. Die Schnittstelle entspricht dabei exakt
+der von <a href="index_b.html#ixb100998"><font color=#000080><tt>BufferedReader</tt></font></a>,
+erweitert um die Methoden <a name="ixa101310"><a href="index_g.html#ixb101005"><font color=#000080><tt>getLineNumber</tt></font></a></a>
+und <a name="ixa101311"><a href="index_s.html#ixb101006"><font color=#000080><tt>setLineNumber</tt></font></a></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int getLineNumber()
+
+public void setLineNumber(int lineNumber)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/LineNumberReader.html" onClick="this.href=getApiDoc('java.io.LineNumberReader')"><font color="#660066" size=-1>java.io.LineNumberReader</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a href="index_g.html#ixb101005"><font color=#000080><tt>getLineNumber</tt></font></a>
+wird der aktuelle Stand des Zeilenz&auml;hlers abgefragt, mit <a href="index_s.html#ixb101006"><font color=#000080><tt>setLineNumber</tt></font></a>
+kann er sogar ver&auml;ndert werden. 
+
+<p>
+Das folgende Beispiel erweitert unsere bisherigen Programme zur Ausgabe
+der Datei <font color="#660099">/etc/hosts</font> in der Weise, dass
+nun jede einzelne Zeile mit vorangestellter Zeilennummer angezeigt
+wird. Dazu wird der <a href="index_b.html#ixb100998"><font color=#000080><tt>BufferedReader</tt></font></a>
+durch einen <a name="ixa101312"><a href="index_l.html#ixb100999"><font color=#000080><tt>LineNumberReader</tt></font></a></a>
+ersetzt und vor der Ausgabe jeder einzelnen Zeile zun&auml;chst die
+korrespondierende Zeilennummer ausgegeben: 
+<a name="listingid019009"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1909.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1909
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    LineNumberReader f;
+<font color="#555555">010 </font>    String line;
+<font color="#555555">011 </font>
+<font color="#555555">012 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">013 </font>      f = <font color="#0000AA">new</font> LineNumberReader(
+<font color="#555555">014 </font>          <font color="#0000AA">new</font> FileReader(<font color="#0000FF">"/etc/hosts"</font>));
+<font color="#555555">015 </font>      <font color="#0000AA">while</font> ((line = f.readLine()) != <font color="#006699">null</font>) {
+<font color="#555555">016 </font>        System.out.print(f.getLineNumber() + <font color="#0000FF">": "</font>);
+<font color="#555555">017 </font>        System.out.println(line);
+<font color="#555555">018 </font>      }
+<font color="#555555">019 </font>      f.close();
+<font color="#555555">020 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">021 </font>      System.out.println(<font color="#0000FF">"Fehler beim Lesen der Datei"</font>);
+<font color="#555555">022 </font>    }
+<font color="#555555">023 </font>  }
+<font color="#555555">024 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1909.java"><font color="#000055" size=-1>Listing1909.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 19.9: Die Klasse LineNumberReader</i></p>
+
+<p>
+Die Ausgabe des Programms ist nun: 
+<font color="#333300">
+<pre>
+1: 127.0.0.1	localhost
+2: 
+3: # The following lines are desirable for IPv6 capable hosts
+4: ::1     ip6-localhost ip6-loopback
+5: fe00::0 ip6-localnet
+6: ff00::0 ip6-mcastprefix
+7: ff02::1 ip6-allnodes
+8: ff02::2 ip6-allrouters
+9: ff02::3 ip6-allhosts
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="sectlevel4id019003003003"></a>
+<h4>FilterReader und PushbackReader </h4>
+
+<p>
+Das Schachteln von Eingabestreams funktioniert analog zum Schachteln
+von Ausgabestreams. Auch hier existiert eine abstrakte Basisklasse
+<a name="ixa101313"><a href="index_f.html#ixb100996"><font color=#000080><tt>FilterReader</tt></font></a></a>,
+die den eigentlichen <a href="index_r.html#ixb100593"><font color=#000080><tt>Reader</tt></font></a>
+im Konstruktor &uuml;bergeben bekommt und als Membervariable speichert.
+Bei der Konstruktion eigener Eingabefilter kann analog zur Konstruktion
+von Ausgabefiltern vorgegangen werden. 
+
+<p>
+Das JDK enth&auml;lt einen vordefinierten Eingabefilter <a name="ixa101314"><a href="index_p.html#ixb100997"><font color=#000080><tt>PushbackReader</tt></font></a></a>,
+der aus <a href="index_f.html#ixb100996"><font color=#000080><tt>FilterReader</tt></font></a>
+abgeleitet wurde. Ein <a href="index_p.html#ixb100997"><font color=#000080><tt>PushbackReader</tt></font></a>
+erweitert die Klasse <a href="index_f.html#ixb100996"><font color=#000080><tt>FilterReader</tt></font></a>
+um einen ein Byte gro&szlig;en <i>Pushbackbuffer</i>. Dieser erlaubt
+einer Anwendung, das zuletzt gelesene Zeichen wieder in den Eingabestrom
+zur&uuml;ckzuschieben. Der n&auml;chste Lesezugriff liest dann nicht
+das folgende Zeichen im Eingabestrom, sondern das gerade zur&uuml;ckgegebene
+Zeichen. Wahlweise kann beim Aufruf des Konstruktors die Gr&ouml;&szlig;e
+des Pushbackbuffers angegeben werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public PushbackReader(Reader in)
+
+public PushbackReader(Reader in, int size)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/PushbackReader.html" onClick="this.href=getApiDoc('java.io.PushbackReader')"><font color="#660066" size=-1>java.io.PushbackReader</font></a></td>
+</tr>
+</table>
+
+<p>
+Ein <a href="index_p.html#ixb100997"><font color=#000080><tt>PushbackReader</tt></font></a>
+kann beispielsweise angewendet werden, wenn eine Methode das n&auml;chste
+Eingabezeichen kennen muss, um zu entscheiden, welche Aktion als N&auml;chstes
+auszuf&uuml;hren ist. Falls die Methode selbst nicht f&uuml;r die
+Behandlung des Eingabezeichens zust&auml;ndig ist, kann sie das Zeichen
+an den Eingabestrom zur&uuml;ckgeben und eine andere Methode kann
+mit der Bearbeitung beauftragt werden. Derartige Techniken finden
+beispielsweise in Werkzeugen zur lexikalischen Analyse Anwendung,
+wie sie im Compiler-Bau verwendet werden. 
+
+<p>
+Die R&uuml;ckgabe eines Zeichens wird mit Hilfe der Methode <a name="ixa101315"><a href="index_u.html#ixb101007"><font color=#000080><tt>unread</tt></font></a></a>
+durchgef&uuml;hrt. Diese steht in verschiedenen Varianten zur Verf&uuml;gung
+und kann zur R&uuml;ckgabe eines einzelnen Zeichens oder mehrerer
+Zeichen verwendet werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void unread(int c)
+  throws IOException
+
+public void unread(char[] cbuf, int off, int len)
+  throws IOException
+
+public void unread(char[] cbuf)
+  throws IOException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/PushbackReader.html" onClick="this.href=getApiDoc('java.io.PushbackReader')"><font color="#660066" size=-1>java.io.PushbackReader</font></a></td>
+</tr>
+</table>
+
+<p>
+Hierbei muss das oder die zur&uuml;ckzugebenden Zeichen als Parameter
+<a href="index_u.html#ixb101007"><font color=#000080><tt>unread</tt></font></a>
+&uuml;bergeben werden. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100127.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100129.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100131.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100132.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

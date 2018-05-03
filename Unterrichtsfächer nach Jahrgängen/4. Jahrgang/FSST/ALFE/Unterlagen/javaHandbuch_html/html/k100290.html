@@ -1,0 +1,663 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100284.html;106,k100289.html;107,k100291.html;108,k100292.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100284.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100289.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100291.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100292.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 45 - Reflection
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectionannotationen"></a>
+<h2>45.6 Annotationen </h2>
+<hr>
+<ul>
+<li><a href="k100290.html#sectionannotationen">45.6 Annotationen</a>
+<ul>
+<li><a href="k100290.html#sectlevel3id045006001">45.6.1 Grundlagen</a>
+<li><a href="k100290.html#sectlevel3id045006002">45.6.2 Eine einfache Annotation</a>
+<ul>
+<li><a href="k100290.html#sectlevel4id045006002001">Die Annotationsklasse</a>
+<li><a href="k100290.html#sectlevel4id045006002002">Verwendung von Annotationen</a>
+</ul>
+<li><a href="k100290.html#sectlevel3id045006003">45.6.3 Annotationen mit einem Wert</a>
+<li><a href="k100290.html#sectlevel3id045006004">45.6.4 Beliebige Schl&uuml;ssel-Wert-Paare in Annotationen</a>
+<li><a href="k100290.html#sectlevel3id045006005">45.6.5 Standardwerte f&uuml;r Attribute</a>
+<li><a href="k100290.html#sectlevel3id045006006">45.6.6 Einschr&auml;nken von Annotationen</a>
+<ul>
+<li><a href="k100290.html#sectlevel4id045006006001">Einschr&auml;nken der Verwendbarkeit</a>
+<li><a href="k100290.html#sectlevel4id045006006002">Einschr&auml;nken der Sichtbarkeit</a>
+</ul>
+<li><a href="k100290.html#sectlevel3id045006007">45.6.7 Auslesen von Annotationen</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id045006001"></a>
+<h3>45.6.1 Grundlagen </h3>
+
+<p>
+Zum Abschluss dieses Kapitels wollen wir uns mit der M&ouml;glichkeit
+besch&auml;ftigen, Informationen im Quelltext abzulegen, die von Hilfsprogrammen
+ausgelesen werden k&ouml;nnen, die eigentliche Arbeit des Programms
+aber nicht beeinflussen. Diese <a name="ixa103376">Metainformationen</a>
+werden in Java als <a name="ixa103377"><i>Annotationen</i></a> bezeichnet.
+
+<p>
+An verschiedenen Stellen in diesem Buch sind wir bereits mit Annotationen
+in Ber&uuml;hrung gekommen. So sind beispielsweise die zus&auml;tzlichen
+Tags <a href="index_0.html#ixb100232"><font color=#000080><tt>@param</tt></font></a>
+oder <a href="index_0.html#ixb100233"><font color=#000080><tt>@return</tt></font></a>
+f&uuml;r das JavaDoc-Werkzeug nichts anderes als zus&auml;tzliche
+Informationen, die dazu verwendet werden k&ouml;nnen, die Schnittstellen
+eines Programms besser zu dokumentieren (siehe <a href="k100337.html#sectiondoku">Abschnitt 53.5.3</a>).
+
+<p>
+Im Kapitel &uuml;ber Persistenz werden wir sehen, dass Annotationen
+h&auml;ufig dazu verwendet werden, Konfigurationsinformationen f&uuml;r
+zus&auml;tzliche Frameworks zusammen mit dem betreffenden Code abzulegen.
+
+<p>
+Ebenso leicht ist es, eigene Annotationen zu entwickeln und diese
+anschlie&szlig;end &uuml;ber das Reflection API auszuwerten. Wir werden
+dies anhand einer eigenen Annotation demonstrieren, die es gestattet,
+Revisionsinformationen im Quellcode abzulegen, die Auskunft dar&uuml;ber
+geben, wann und von wem eine Klasse oder eine Methode zuletzt ver&auml;ndert
+wurde. 
+
+<!-- Section -->
+
+<a name="sectlevel3id045006002"></a>
+<h3>45.6.2 Eine einfache Annotation </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id045006002001"></a>
+<h4>Die Annotationsklasse </h4>
+
+<p>
+Bevor wir die Revisionsinformationen in unsere Klassen integrieren
+und &uuml;ber das Reflection API auswerten k&ouml;nnen, m&uuml;ssen
+wir sie zun&auml;chst definieren. Da Annotationen &auml;hnlich wie
+Interfaces zus&auml;tzliche Informationen &uuml;ber eine Klasse zur
+Verf&uuml;gung stellen, lag es nahe, sie auf &auml;hnliche Art und
+Weise zu definieren: 
+<a name="revision1"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/**
+<font color="#555555">002 </font> * Eine einfache Annotation
+<font color="#555555">003 </font> */</font>
+<font color="#555555">004 </font><font color="#0000AA">public</font> @<font color="#0000AA">interface</font> Revision
+<font color="#555555">005 </font>{
+<font color="#555555">006 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 45.10: Eine einfache Annotation</i></p>
+
+<p>
+Bis auf das vorangestellte <font color="#000077"><tt>@</tt></font>-Zeichen
+unterscheidet sich die Definition einer Annotation also nicht von
+der eines Interface. Im Gegensatz zu reinen Interfaces kann eine Annotation
+allerdings nicht nur f&uuml;r Klassen, sondern auch f&uuml;r andere
+Sprachelemente verwendet werden.
+
+<!-- Section -->
+
+<a name="sectlevel4id045006002002"></a>
+<h4>Verwendung von Annotationen </h4>
+
+<p>
+Annotationen dienen dazu, zus&auml;tzliche Informationen im Quellcode
+zu hinterlegen. Dabei k&ouml;nnen folgende Elemente annotiert werden:
+<ul>
+<li>Pakete
+<li>Klassen
+<li>Konstruktoren
+<li>Felder
+<li>Methoden
+<li>Lokale Variablen
+<li>Parameter
+<li>Annotationen
+</ul>
+
+<p>
+Um beispielsweise die in <a href="k100288.html#sectionrefmember">Abschnitt 45.4</a>
+beschriebene Klasse <font color="#000077"><tt>PrintableObject</tt></font>
+und die von dieser definierte Methode <font color="#000077"><tt>toString</tt></font>
+mit der zus&auml;tzlichen Revisionsinformation zu versehen, schreiben
+wir ihren Namen einfach vor die Liste der vorhandenen Modifier: 
+<a name="annotation1"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">import</font> java.lang.reflect.*;
+<font color="#555555">002 </font>
+<font color="#555555">003 </font>@Revision <font color="#0000AA">public</font> <font color="#0000AA">class</font> PrintableObject
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  @Revision <font color="#0000AA">public</font> String toString()
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>  ...
+<font color="#555555">008 </font>  }
+<font color="#555555">009 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 45.11: Verwendung der Annotation</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id045006003"></a>
+<h3>45.6.3 Annotationen mit einem Wert </h3>
+
+<p>
+Die Klasse besitzt nun zwar eine Annotation, wirklich brauchbare Informationen
+sind darin jedoch noch nicht untergebracht. Sinnvoll w&auml;re es
+beispielsweise, wenn die Revisionsinformationen an <font color="#000077"><tt>PrintableObject</tt></font>
+und <font color="#000077"><tt>toString</tt></font> beispielsweise
+auch Autor und Datum der letzten &Auml;nderung enthalten w&uuml;rden.
+Wir wollen die Definition dazu zun&auml;chst wie folgt erweitern:
+<a name="revision2"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/**
+<font color="#555555">002 </font> * Eine Annotation mit einer Variablen
+<font color="#555555">003 </font> */</font>
+<font color="#555555">004 </font><font color="#0000AA">public</font> @<font color="#0000AA">interface</font> Revision
+<font color="#555555">005 </font>{
+<font color="#555555">006 </font>  String value();
+<font color="#555555">007 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 45.12: Annotation mit einer Variablen</i></p>
+
+<p>
+Die Annotation besitzt nun den Parameter <font color="#000077"><tt>value</tt></font>,
+um die gew&uuml;nschte Zusatzinformation aufzunehmen. Der Wert dieses
+Parameters wird bei der Verwendung der Annotation &uuml;bergeben:
+<a name="annotation2"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">import</font> java.lang.reflect.*;
+<font color="#555555">002 </font>
+<font color="#555555">003 </font>@Revision(<font color="#0000FF">"Wurde zuerst ge&auml;ndert"</font>)
+<font color="#555555">004 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> PrintableObject
+<font color="#555555">005 </font>{
+<font color="#555555">006 </font>  @Revision(<font color="#0000FF">"Wurde anschlie&szlig;end ge&auml;ndert"</font>)
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> String toString()
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>  ...
+<font color="#555555">010 </font>  }
+<font color="#555555">011 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 45.13: Zuweisen von annotierten Werten </i></p>
+
+<p>
+Nun haben wir die beiden Annotationen mit unterschiedlichen Werten
+parametrisiert, die sp&auml;ter auch ausgewertet werden k&ouml;nnen.
+
+
+<!-- Section -->
+<a name="sectlevel3id045006004"></a>
+<h3>45.6.4 Beliebige Schl&uuml;ssel-Wert-Paare in Annotationen </h3>
+
+<p>
+Der Schl&uuml;ssel <font color="#000077"><tt>value</tt></font> stellt
+einen Spezialfall f&uuml;r ein Standardattribut dar. Eine Annotation
+kann n&auml;mlich nicht nur ein einziges Attribut mit dem Namen <font color="#000077"><tt>value</tt></font>
+haben, sondern beliebig viele mit beliebigen Namen. Diese m&uuml;ssten
+dann sowohl bei der Definition als auch beim Aufruf explizit angegeben
+werden. Nur, wenn wir den Namen des Attributs bei der Verwendung der
+Annotation nicht angeben, weist Java den &uuml;bergebenen Wert dem
+Attribut <font color="#000077"><tt>value</tt></font> zu. 
+
+<p>
+Alternativ w&auml;re auch folgende Schreibweise m&ouml;glich gewesen:
+<a name="annotation3"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">import</font> java.lang.reflect.*;
+<font color="#555555">002 </font>
+<font color="#555555">003 </font>@Revision(value = <font color="#0000FF">"Wurde zuerst ge&auml;ndert"</font>)
+<font color="#555555">004 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> PrintableObject
+<font color="#555555">005 </font>{
+<font color="#555555">006 </font>  @Revision(value = <font color="#0000FF">"Wurde anschlie&szlig;end ge&auml;ndert"</font>)
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> String toString()
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>  ...
+<font color="#555555">010 </font>  }
+<font color="#555555">011 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 45.14: Zuweisen von annotierten Werten </i></p>
+
+<p>
+Wir k&ouml;nnen unsere Revisionsannotation nun wie folgt verfeinern:
+<a name="revision3"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/**
+<font color="#555555">002 </font> * Annotation mit mehreren Variablen
+<font color="#555555">003 </font> */</font>
+<font color="#555555">004 </font><font color="#0000AA">public</font> @<font color="#0000AA">interface</font> Revision
+<font color="#555555">005 </font>{
+<font color="#555555">006 </font>  <font color="#006699">int</font> id();
+<font color="#555555">007 </font>  String name();
+<font color="#555555">008 </font>  String vorname();
+<font color="#555555">009 </font>  String notizen();
+<font color="#555555">010 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 45.15: Komplexe Annotation</i></p>
+
+<p>
+Das unspezifische Attribut <font color="#000077"><tt>value</tt></font>
+ist nun einer Reihe von explizit benannten Einzelattributen gewichen,
+die nat&uuml;rlich beim Aufruf auch &uuml;bergeben werden m&uuml;ssen:
+<a name="annotation4"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">import</font> java.lang.reflect.*;
+<font color="#555555">002 </font>
+<font color="#555555">003 </font>@Revision( id = 1, name = <font color="#0000FF">"Kr&uuml;ger"</font>, vorname = <font color="#0000FF">"Guido"</font>, 
+<font color="#555555">004 </font>           notizen = <font color="#0000FF">"Klasse erstellt"</font>)
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> PrintableObject
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  @Revision( id = 2, name = <font color="#0000FF">"Stark"</font>, vorname = <font color="#0000FF">"Thomas"</font>, 
+<font color="#555555">008 </font>	           notizen = <font color="#0000FF">"Methode hinzugef&uuml;gt"</font>)
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> String toString()
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>  ...
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 45.16: Zuweisen von annotierten Werten </i></p>
+
+<p>
+Die Attribute einer Annotation d&uuml;rfen folgende Typen besitzen:
+<ul>
+<li>Primitive Datentypen wie <font color="#000077"><tt>byte</tt></font>,
+<font color="#000077"><tt>short</tt></font>, <font color="#000077"><tt>int</tt></font>,
+<font color="#000077"><tt>long</tt></font>, <font color="#000077"><tt>float</tt></font>,
+<font color="#000077"><tt>double</tt></font> und <font color="#000077"><tt>boolean</tt></font>,
+jedoch nicht deren Wrapper-Klassen
+<li><font color="#000077"><tt>String</tt></font>, als einzigen Referenztypen
+<li><font color="#000077"><tt>Enum</tt></font>-Aufz&auml;hlungstypen
+<li><font color="#000077"><tt>Class</tt></font>
+<li>Andere Annotationen
+<li>Eindimensionale Felder der hier aufgez&auml;hlten Typen
+</ul>
+
+<p>
+Die Liste ist auf diese Typen beschr&auml;nkt, weil der Compiler nur
+mit ihnen die n&ouml;tigen Typ&uuml;berpr&uuml;fungen vornehmen kann.
+
+
+<!-- Section -->
+<a name="sectlevel3id045006005"></a>
+<h3>45.6.5 Standardwerte f&uuml;r Attribute </h3>
+
+<p>
+Die Spezifikation f&uuml;r Annotationen schreibt vor, dass alle definierten
+Attribute einer Annotation auch verwendet werden m&uuml;ssen. Allerdings
+erlaubt sie es auch, <i>optionale</i> Attribute zu definieren, so
+dass auf diese Weise Standardinhalte festgelegt werden k&ouml;nnen.
+Wir demonstrieren dies, indem wir die Notizen unserer Annotation mit
+einem Leerstring vorbelegen: 
+<a name="revisio4"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/**
+<font color="#555555">002 </font> * Annotation mit mehreren Variablen
+<font color="#555555">003 </font> */</font>
+<font color="#555555">004 </font><font color="#0000AA">public</font> @<font color="#0000AA">interface</font> Revision
+<font color="#555555">005 </font>{
+<font color="#555555">006 </font>  <font color="#006699">int</font> id();
+<font color="#555555">007 </font>  String name();
+<font color="#555555">008 </font>  String vorname();
+<font color="#555555">009 </font>  String notizen() <font color="#0000AA">default</font> <font color="#0000FF">""</font>;
+<font color="#555555">010 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 45.17: Komplexe Annotation</i></p>
+
+<p>
+Nun ist die Angabe des Attributs <font color="#000077"><tt>notizen</tt></font>
+bei der Verwendung von Annotationen optional, da der Wert bereits
+mit einem leeren String vorbelegt ist. 
+
+<!-- Section -->
+
+<a name="sectlevel3id045006006"></a>
+<h3>45.6.6 Einschr&auml;nken von Annotationen </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id045006006001"></a>
+<h4>Einschr&auml;nken der Verwendbarkeit </h4>
+
+<p>
+Bisher haben wir noch keinerlei Einschr&auml;nkungen f&uuml;r unsere
+Annotation definiert und k&ouml;nnen sie daher f&uuml;r alle oben
+genannten Sprachelemente verwenden. Da jedoch nicht jede Annotation
+f&uuml;r jedes Element sinnvoll ist, k&ouml;nnen wir ihre Verwendung
+bei Bedarf mit Hilfe einer eigenen Annotation <a name="ixa103378"><a href="index_0.html#ixb102519"><font color=#000080><tt>@Target</tt></font></a></a>
+einschr&auml;nken. 
+
+<p>
+Um unsere Annotation beispielsweise auf Klassen und Methoden zu beschr&auml;nken,
+erg&auml;nzen wir sie wie folgt: 
+<a name="revision4"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">import</font> java.lang.annotation.Target;
+<font color="#555555">002 </font><font color="#0000AA">import</font> java.lang.annotation.ElementType;
+<font color="#555555">003 </font>
+<font color="#555555">004 </font><font color="#00AA00">// Diese Annotation ist auf Klassen und Methoden beschr&auml;nkt</font>
+<font color="#555555">005 </font>@Target({ElementType.TYPE, ElementType.METHOD})
+<font color="#555555">006 </font><font color="#0000AA">public</font> @<font color="#0000AA">interface</font> Revision
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#006699">int</font> id();
+<font color="#555555">009 </font>  String name();
+<font color="#555555">010 </font>  String vorname();
+<font color="#555555">011 </font>  String notizen() <font color="#0000AA">default</font> <font color="#0000FF">""</font>;
+<font color="#555555">012 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 45.18: Einschr&auml;nken der Verwendbarkeit</i></p>
+
+<p>
+M&ouml;gliche Werte des Aufz&auml;hlungstyps <a name="ixa103379"><a href="index_e.html#ixb102520"><font color=#000080><tt>ElementType</tt></font></a></a>
+sind: 
+<ul>
+<li><a name="ixa103380"><a href="index_p.html#ixb102521"><font color=#000080><tt>PACKAGE</tt></font></a></a>
+<li><a name="ixa103381"><a href="index_t.html#ixb102480"><font color=#000080><tt>TYPE</tt></font></a></a>
+<li><a name="ixa103382"><a href="index_c.html#ixb102522"><font color=#000080><tt>CONSTRUCTOR</tt></font></a></a>
+<li><a name="ixa103383"><a href="index_f.html#ixb102523"><font color=#000080><tt>FIELD</tt></font></a></a>
+<li><a name="ixa103384"><a href="index_m.html#ixb102524"><font color=#000080><tt>METHOD</tt></font></a></a>
+<li><a name="ixa103385"><a href="index_l.html#ixb102525"><font color=#000080><tt>LOCAL_VARIABLE</tt></font></a></a>
+<li><a name="ixa103386"><a href="index_p.html#ixb102526"><font color=#000080><tt>PARAMETER</tt></font></a></a>
+<li><a name="ixa103387"><a href="index_a.html#ixb102527"><font color=#000080><tt>ANNOTATION_TYPE</tt></font></a></a>
+</ul>
+
+
+<!-- Section -->
+<a name="sectlevel4id045006006002"></a>
+<h4>Einschr&auml;nken der Sichtbarkeit </h4>
+
+<p>
+Die Verwendungsm&ouml;glichkeiten von Annotationen reichen von Zusatzinformationen
+f&uuml;r Dokumentationstools, die ausschlie&szlig;lich den Java-Quelltext
+lesen, bis hin zu Konfigurationsdaten, die von der Java Virtual Machine
+gelesen werden und deren Verhalten beeinflussen. Um nicht allen m&ouml;glichen
+&#187;Nutzern&#171; alle Annotationen zur Verf&uuml;gung stellen zu
+m&uuml;ssen, lassen sich diese mit Hilfe der Annotation <a name="ixa103388"><a href="index_0.html#ixb102528"><font color=#000080><tt>@Retention</tt></font></a></a>
+in drei Kategorien einteilen: <a name="tableid045002"></a>
+
+<p>
+<table cols=2 border width=66%>
+
+<tr>
+<td valign=top align=left width=33%><b>Attribut </b></td>
+<td valign=top align=left width=66%><b>Verwendung</b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103389"><a href="index_s.html#ixb102529"><font color=#000080><tt>SOURCE</tt></font></a></a>
+</td>
+<td valign=top align=left>Diese Informationen sind nur Bestandteil
+der Source-Datei und werden nicht in die Klassen einkompiliert.</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103390"><a href="index_c.html#ixb102530"><font color=#000080><tt>CLASS</tt></font></a></a>
+</td>
+<td valign=top align=left>Diese Informationen werden vom Compiler
+in die Klassendatei integriert, stehen aber nicht zur Laufzeit zur
+Verf&uuml;gung.</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103391"><a href="index_r.html#ixb102531"><font color=#000080><tt>RUNTIME</tt></font></a></a>
+</td>
+<td valign=top align=left>Diese Informationen werden vom Compiler
+in die Klassendatei integriert und k&ouml;nnen zur Laufzeit &uuml;ber
+das Reflection API ausgelesen werden.</td></tr>
+</table>
+<p><i>
+Tabelle 45.2: Sicherbarkeitsattribute</i></p>
+
+<p>
+Wenn keine Angabe zur <a name="ixa103392">Retention</a> gemacht wird,
+w&auml;hlt der Compiler <font color="#000077"><tt>CLASS</tt></font>
+als Standardwert aus. Falls unsere Annotation auch zur Laufzeit zur
+Verf&uuml;gung stehen soll, w&uuml;rden wir ihre Definition beispielsweise
+wie folgt erweitern: 
+<a name="revision"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">import</font> java.lang.annotation.Target;
+<font color="#555555">002 </font><font color="#0000AA">import</font> java.lang.annotation.ElementType;
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.lang.annotation.Retention;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.lang.annotation.RetentionPolicy;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#00AA00">// Diese Annotation ist auf Klassen und Methoden beschr&auml;nkt</font>
+<font color="#555555">007 </font>@Target({ElementType.TYPE, ElementType.METHOD})
+<font color="#555555">008 </font>
+<font color="#555555">009 </font><font color="#00AA00">// Die Information soll auch zur Laufzeit zur Verf&uuml;gung stehen</font>
+<font color="#555555">010 </font>@Retention(RetentionPolicy.RUNTIME)
+<font color="#555555">011 </font><font color="#0000AA">public</font> @<font color="#0000AA">interface</font> Revision
+<font color="#555555">012 </font>{
+<font color="#555555">013 </font>  <font color="#006699">int</font> id();
+<font color="#555555">014 </font>  String name();
+<font color="#555555">015 </font>  String vorname();
+<font color="#555555">016 </font>  String notizen() <font color="#0000AA">default</font> <font color="#0000FF">""</font>;
+<font color="#555555">017 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Revision.java"><font color="#000055" size=-1>Revision.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 45.19: Vollst&auml;ndige Annotation</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+&Uuml;ber die zus&auml;tzliche Annotation <a name="ixa103393"><a href="index_0.html#ixb102533"><font color=#000080><tt>@Documented</tt></font></a></a>
+kann gesteuert werden, ob die Verwendung der Annotation auch in der
+JavaDoc-Dokumentation angezeigt werden soll. Und &uuml;ber die Annotation
+<a name="ixa103394"><a href="index_0.html#ixb102534"><font color=#000080><tt>@Inherited</tt></font></a></a>
+gibt man an, ob eine annotierte Klasse diese Zusatzinformationen auch
+an davon abgeleitete Klassen vererben soll.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id045006007"></a>
+<h3>45.6.7 Auslesen von Annotationen </h3>
+
+<p>
+Da dies ein Kapitel &uuml;ber Reflection ist, wollen wir noch kurz
+zeigen, wie Annotationen mit ihrer Hilfe zur Laufzeit ausgelesen werden
+k&ouml;nnen. Das ist nicht schwieriger als das Ermitteln der von einer
+Klasse implementierten Methoden oder ihrer Modifier, denn das Reflection
+API stellt zu diesem Zweck das Interface <a name="ixa103395"><a href="index_a.html#ixb102535"><font color=#000080><tt>AnnotatedElement</tt></font></a></a>
+zur Verf&uuml;gung. Es wir von nahezu allen Reflection-Typen wie <a href="index_c.html#ixb100654"><font color=#000080><tt>Class</tt></font></a>,
+<a href="index_m.html#ixb102463"><font color=#000080><tt>Method</tt></font></a>
+oder <a href="index_f.html#ixb102500"><font color=#000080><tt>Field</tt></font></a>
+implementiert und besitzt folgende Methoden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+boolean isAnnotationPresent(
+  Class&lt;? extends Annotation&gt; annotationClass
+);
+
+&lt;T extends Annotation&gt; T getAnnotation(
+  Class&lt;T&gt; annotationClass
+);
+
+Annotation[] getAnnotations();
+
+Annotation[] getDeclaredAnnotations();
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/reflect/AnnotatedElement.html" onClick="this.href=getApiDoc('java.lang.reflect.AnnotatedElement')"><font color="#660066" size=-1>java.lang.reflect.AnnotatedElement</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit Hilfe der Methode <a name="ixa103396"><a href="index_i.html#ixb102536"><font color=#000080><tt>isAnnotationPresent</tt></font></a></a>
+kann festgestellt werden, ob das Element um die &uuml;bergebene Annotation
+erweitert wurde, und &uuml;ber die Methode <a name="ixa103397"><a href="index_g.html#ixb102537"><font color=#000080><tt>getAnnotation</tt></font></a></a>
+ist es m&ouml;glich, das Annotations-Objekt auszulesen. 
+
+<p>
+Die beiden letzten Methoden geben alle zu einem Element geh&ouml;renden
+Annotationen in Form eines Arrays zur&uuml;ck. Der Unterschied zwischen
+beiden ist, dass <a name="ixa103398"><a href="index_g.html#ixb102538"><font color=#000080><tt>getDeclaredAnnotations</tt></font></a></a>
+nur die tats&auml;chlich an das Element angeh&auml;ngten Metainformationen
+zur&uuml;ckgibt, w&auml;hrend <a name="ixa103399"><a href="index_g.html#ixb102539"><font color=#000080><tt>getAnnotations</tt></font></a></a>
+auch die geerbten Annotationen umfasst. Besitzt das Element keinerlei
+Annotationen, liefern beide Methoden ein Array der L&auml;nge null.
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100284.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100289.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100291.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100292.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

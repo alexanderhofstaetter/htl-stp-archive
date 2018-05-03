@@ -1,0 +1,734 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100132.html;106,k100134.html;107,k100136.html;108,k100137.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100132.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100134.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100136.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100137.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 20 - Byte-Streams
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id020003"></a>
+<h2>20.3 Eingabe-Streams </h2>
+<hr>
+<ul>
+<li><a href="k100135.html#sectlevel2id020003">20.3 Eingabe-Streams</a>
+<ul>
+<li><a href="k100135.html#sectlevel3id020003001">20.3.1 Die Basisklasse InputStream</a>
+<li><a href="k100135.html#sectlevel3id020003002">20.3.2 Aus InputStream direkt abgeleitete Klassen</a>
+<ul>
+<li><a href="k100135.html#sectlevel4id020003002001">FileInputStream</a>
+<li><a href="k100135.html#sectlevel4id020003002002">ByteArrayInputStream</a>
+<li><a href="k100135.html#sectlevel4id020003002003">ObjectInputStream</a>
+<li><a href="k100135.html#sectlevel4id020003002004">SequenceInputStream</a>
+<li><a href="k100135.html#sectlevel4id020003002005">PipedInputStream</a>
+</ul>
+<li><a href="k100135.html#filterinputstream">20.3.3 Aus FilterInputStream abgeleitete Klassen</a>
+<ul>
+<li><a href="k100135.html#sectlevel4id020003003001">BufferedInputStream</a>
+<li><a href="k100135.html#sectlevel4id020003003002">PushbackInputStream</a>
+<li><a href="k100135.html#sectlevel4id020003003003">DataInputStream und DataInput</a>
+<li><a href="k100135.html#sectlevel4id020003003004">CheckedInputStream</a>
+<li><a href="k100135.html#sectlevel4id020003003005">Entpacken von Dateien</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id020003001"></a>
+<h3>20.3.1 Die Basisklasse InputStream </h3>
+
+<p>
+Basis der Eingabe-Streams ist die abstrakte Klasse <a name="ixa101358"><a href="index_i.html#ixb100587"><font color=#000080><tt>InputStream</tt></font></a></a>.
+Sie stellt folgende Methoden zur Verf&uuml;gung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public abstract int read()
+  throws IOException
+
+public int read(byte[] b)
+  throws IOException
+
+public int read(byte[] b, int off, int len)
+  throws IOException
+
+public long skip(long n)
+  throws IOException
+
+public int available()
+  throws IOException
+
+public void close()
+  throws IOException
+
+public void mark(int readlimit)
+
+public void reset()
+  throws IOException
+
+public boolean markSupported()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/InputStream.html" onClick="this.href=getApiDoc('java.io.InputStream')"><font color="#660066" size=-1>java.io.InputStream</font></a></td>
+</tr>
+</table>
+
+<p>
+Die <a name="ixa101359"><a href="index_r.html#ixb100989"><font color=#000080><tt>read</tt></font></a></a>-Methoden
+dienen dazu, Bytes zu lesen. Sie k&ouml;nnen entweder einzelne Bytes
+lesen (die als <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>
+zur&uuml;ckgegeben werden, dessen obere 3 Byte leer sind) oder ihre
+Daten direkt in einen Bytearray-Puffer schreiben. Mit <a name="ixa101360"><a href="index_s.html#ixb100993"><font color=#000080><tt>skip</tt></font></a></a>
+kann eine beliebige Anzahl Bytes &uuml;bersprungen werden. <a name="ixa101361"><a href="index_a.html#ixb101038"><font color=#000080><tt>available</tt></font></a></a>
+liefert die Anzahl an Bytes, die ohne Blockieren mindestens gelesen
+werden k&ouml;nnen (Vorsicht, manche Implementierungen geben hier
+nie einen Wert gr&ouml;&szlig;er als 1 zur&uuml;ck). Mit <a href="index_c.html#ixb100596"><font color=#000080><tt>close</tt></font></a>
+wird der Eingabe-Stream geschlossen. 
+
+<p>
+Die Methode <a name="ixa101362"><a href="index_m.html#ixb100992"><font color=#000080><tt>markSupported</tt></font></a></a>
+gibt Auskunft dar&uuml;ber, ob Markieren/Positionieren unterst&uuml;tzt
+wird. Ist das der Fall, kann mit <a name="ixa101363"><a href="index_m.html#ixb100991"><font color=#000080><tt>mark</tt></font></a></a>
+die aktuelle Position im Eingabestrom markiert und sp&auml;ter mit
+<a name="ixa101364"><a href="index_r.html#ixb100984"><font color=#000080><tt>reset</tt></font></a></a>
+dorthin zur&uuml;ckgesprungen werden. Das Argument von <a href="index_m.html#ixb100991"><font color=#000080><tt>mark</tt></font></a>
+gibt dabei die maximale Anzahl an Zeichen an, die der Eingabestrom
+sich merken soll. 
+
+<!-- Section -->
+
+<a name="sectlevel3id020003002"></a>
+<h3>20.3.2 Aus InputStream direkt abgeleitete Klassen </h3>
+
+<p>
+Aus <a href="index_i.html#ixb100587"><font color=#000080><tt>InputStream</tt></font></a>
+sind einige weitere Klassen direkt abgeleitet. Wie bei den Character-Streams
+bestimmen sie im Wesentlichen die Art bzw. die Quelle der Dateneingabe.
+
+
+<!-- Section -->
+<a name="sectlevel4id020003002001"></a>
+<h4>FileInputStream </h4>
+
+<p>
+Ein <a name="ixa101365"><a href="index_f.html#ixb100595"><font color=#000080><tt>FileInputStream</tt></font></a></a>
+stellt einen Byte-Stream zum Lesen aus einer Datei zur Verf&uuml;gung.
+Er besitzt einige zus&auml;tzliche Konstruktoren: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public FileInputStream(String name)
+  throws FileNotFoundException
+
+public FileInputStream(File file)
+  throws FileNotFoundException
+
+public FileInputStream(FileDescriptor fdObj)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/FileInputStream.html" onClick="this.href=getApiDoc('java.io.FileInputStream')"><font color="#660066" size=-1>java.io.FileInputStream</font></a></td>
+</tr>
+</table>
+
+<p>
+Um eine Datei zu &ouml;ffnen, kann entweder ihr Name oder ein daf&uuml;r
+konstruiertes <a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a>-Objekt
+verwendet werden (siehe <a href="k100143.html#verzeichnisse">Kapitel 22</a>).
+Existiert die Datei nicht oder kann nicht darauf zugegriffen werden,
+l&ouml;st der Konstruktor eine <a name="ixa101366"><a href="index_f.html#ixb101003"><font color=#000080><tt>FileNotFoundException</tt></font></a></a>
+aus. Mit Hilfe des dritten Konstruktors kann ein <a href="index_i.html#ixb100587"><font color=#000080><tt>InputStream</tt></font></a>
+zu einer bereits ge&ouml;ffneten Datei erstellt werden. 
+
+<p>
+Das folgende Programm zeigt die Verwendung der Klassen <a href="index_f.html#ixb100595"><font color=#000080><tt>FileInputStream</tt></font></a>
+und <a href="index_f.html#ixb101010"><font color=#000080><tt>FileOutputStream</tt></font></a>
+zum <a name="ixa101367">Kopieren einer Datei</a> (Vorsicht, eine bereits
+vorhandene Zieldatei wird ohne R&uuml;ckfrage &uuml;berschrieben).
+<a name="listingid020004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* FileCopy.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> FileCopy
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#0000AA">if</font> (args.length != 2) {
+<font color="#555555">010 </font>      System.out.println(<font color="#0000FF">"java FileCopy inputfile outputfile"</font>);
+<font color="#555555">011 </font>      System.exit(1);
+<font color="#555555">012 </font>    }
+<font color="#555555">013 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">014 </font>      FileInputStream in = <font color="#0000AA">new</font> FileInputStream(args[0]);
+<font color="#555555">015 </font>      FileOutputStream out = <font color="#0000AA">new</font> FileOutputStream(args[1]);
+<font color="#555555">016 </font>      <font color="#006699">byte</font>[] buf = <font color="#0000AA">new</font> <font color="#006699">byte</font>[4096];
+<font color="#555555">017 </font>      <font color="#006699">int</font> len;
+<font color="#555555">018 </font>      <font color="#0000AA">while</font> ((len = in.read(buf)) &gt; 0) {
+<font color="#555555">019 </font>        out.write(buf, 0, len);
+<font color="#555555">020 </font>      }
+<font color="#555555">021 </font>      out.close();
+<font color="#555555">022 </font>      in.close();
+<font color="#555555">023 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">024 </font>      System.err.println(e.toString());
+<font color="#555555">025 </font>    }
+<font color="#555555">026 </font>  }
+<font color="#555555">027 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/FileCopy.java"><font color="#000055" size=-1>FileCopy.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 20.4: Kopieren einer Datei</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id020003002002"></a>
+<h4>ByteArrayInputStream </h4>
+
+<p>
+Die Klasse <a name="ixa101368"><a href="index_b.html#ixb101040"><font color=#000080><tt>ByteArrayInputStream</tt></font></a></a>
+stellt einen Adapter dar, mit dessen Hilfe die Daten aus einem Byte-Array
+gelesen werden k&ouml;nnen. Sie besitzt zwei zus&auml;tzliche Konstruktoren,
+in denen die Datenquelle angegeben wird: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public ByteArrayInputStream(byte[] buf)
+public ByteArrayInputStream(byte[] buf, int offset, int length)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/ByteArrayInputStream.html" onClick="this.href=getApiDoc('java.io.ByteArrayInputStream')"><font color="#660066" size=-1>java.io.ByteArrayInputStream</font></a></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id020003002003"></a>
+<h4>ObjectInputStream </h4>
+
+<p>
+Ein <a name="ixa101369"><a href="index_o.html#ixb101041"><font color=#000080><tt>ObjectInputStream</tt></font></a></a>
+erlaubt es, primitive Datentypen und Objekte von einem Input-Stream
+zu lesen. Zwar ist er nicht von <a href="index_f.html#ixb101042"><font color=#000080><tt>FilterInputStream</tt></font></a>
+abgeleitet, wird aber ebenso verwendet und erwartet im Konstruktor
+einen <a href="index_i.html#ixb100587"><font color=#000080><tt>InputStream</tt></font></a>
+als Datenquelle. Die Klasse <a href="index_o.html#ixb101041"><font color=#000080><tt>ObjectInputStream</tt></font></a>
+ist eine der S&auml;ulen des Serialisierungs-API in Java und wird
+in <a href="k100270.html#lesenvonobjekten">Abschnitt 42.1.3</a> ausf&uuml;hrlich
+beschrieben. 
+
+<!-- Section -->
+
+<a name="sectlevel4id020003002004"></a>
+<h4>SequenceInputStream </h4>
+
+<p>
+Ein <a name="ixa101370"><a href="index_s.html#ixb101043"><font color=#000080><tt>SequenceInputStream</tt></font></a></a>
+dient dazu, zwei oder mehr Eingabe-Streams so miteinander zu verbinden,
+dass die Daten nacheinander aus den einzelnen Streams gelesen werden.
+Die beteiligten Streams k&ouml;nnen entweder in einer <a href="index_e.html#ixb100697"><font color=#000080><tt>Enumeration</tt></font></a>
+oder - wenn es sich um genau zwei von ihnen handelt - direkt an den
+Konstruktor &uuml;bergeben werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public SequenceInputStream(Enumeration e)
+public SequenceInputStream(InputStream s1, InputStream s2)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/SequenceInputStream.html" onClick="this.href=getApiDoc('java.io.SequenceInputStream')"><font color="#660066" size=-1>java.io.SequenceInputStream</font></a></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id020003002005"></a>
+<h4>PipedInputStream </h4>
+
+<p>
+Ein <a name="ixa101371"><a href="index_p.html#ixb100976"><font color=#000080><tt>PipedInputStream</tt></font></a></a>
+ist das Gegenst&uuml;ck zum <a href="index_p.html#ixb100977"><font color=#000080><tt>PipedOutputStream</tt></font></a>.
+Beide zusammen bilden eine Pipe zur Kommunikation zweier Threads.
+Ein Beispiel zur Anwendung der beiden Klassen findet sich in <a href="k100154.html#pipedthreads">Abschnitt 23.4.5</a>.
+
+
+<!-- Section -->
+<a name="filterinputstream"></a>
+<h3>20.3.3 Aus FilterInputStream abgeleitete Klassen </h3>
+
+<p>
+FilterInputStream 
+
+<p>
+Die aus <a href="index_i.html#ixb100587"><font color=#000080><tt>InputStream</tt></font></a>
+abgeleitete Klasse <a name="ixa101372"><a href="index_f.html#ixb101042"><font color=#000080><tt>FilterInputStream</tt></font></a></a>
+ist die Basisklasse aller gefilterten Eingabe-Streams. Diese definieren
+kein eigenes Eingabeger&auml;t, sondern bekommen es beim Instanzieren
+in Form eines <a href="index_i.html#ixb100587"><font color=#000080><tt>InputStream</tt></font></a>-Arguments
+&uuml;bergeben: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public FilterInputStream(inputStream in)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/FilterInputStream.html" onClick="this.href=getApiDoc('java.io.FilterInputStream')"><font color="#660066" size=-1>java.io.FilterInputStream</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Aufgabe der aus <a href="index_f.html#ixb101042"><font color=#000080><tt>FilterInputStream</tt></font></a>
+abgeleiteten Klassen besteht darin, die Lesezugriffe abzufangen, in
+einer f&uuml;r sie charakteristischen Weise zu verarbeiten und die
+Daten erst dann an den Aufrufer weiterzugeben. 
+
+<!-- Section -->
+
+<a name="sectlevel4id020003003001"></a>
+<h4>BufferedInputStream </h4>
+
+<p>
+Ein <a name="ixa101373"><a href="index_b.html#ixb101044"><font color=#000080><tt>BufferedInputStream</tt></font></a></a>
+dient zur Pufferung der Eingabedaten. Er kann insbesondere dann die
+Performance der Lesezugriffe erh&ouml;hen, wenn h&auml;ufig nur kleine
+Datenmengen oder einzelne Bytes gelesen werden m&uuml;ssen. Ein <a href="index_b.html#ixb101044"><font color=#000080><tt>BufferedInputStream</tt></font></a>
+besitzt zwei zus&auml;tzliche Konstruktoren, mit denen die Datenquelle
+und die Puffergr&ouml;&szlig;e angegeben werden k&ouml;nnen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public BufferedInputStream(InputStream in)
+public BufferedInputStream(InputStream in, int size)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/BufferedInputStream.html" onClick="this.href=getApiDoc('java.io.BufferedInputStream')"><font color="#660066" size=-1>java.io.BufferedInputStream</font></a></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id020003003002"></a>
+<h4>PushbackInputStream </h4>
+
+<p>
+Die Klasse <a name="ixa101374"><a href="index_p.html#ixb101045"><font color=#000080><tt>PushbackInputStream</tt></font></a></a>
+erweitert den Eingabe-Stream um die F&auml;higkeit, bereits gelesene
+Zeichen wieder zur&uuml;ckzunehmen. Dazu besitzt sie drei Methoden
+mit dem Namen <a name="ixa101375"><a href="index_u.html#ixb101007"><font color=#000080><tt>unread</tt></font></a></a>,
+mit denen einzelne Bytes oder Byte-Arrays wieder zur&uuml;ckgegeben
+werden k&ouml;nnen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void unread(int b)
+  throws IOException
+
+public void unread(byte[] b, int off, int len)
+  throws IOException
+
+public void unread(byte[] b)
+  throws IOException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/PushbackInputStream.html" onClick="this.href=getApiDoc('java.io.PushbackInputStream')"><font color="#660066" size=-1>java.io.PushbackInputStream</font></a></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id020003003003"></a>
+<h4>DataInputStream und DataInput </h4>
+
+<p>
+Analog zum <a href="index_d.html#ixb101016"><font color=#000080><tt>DataOutputStream</tt></font></a>
+gibt es eine Klasse <a name="ixa101376"><a href="index_d.html#ixb101017"><font color=#000080><tt>DataInputStream</tt></font></a></a>,
+mit der die von diesem geschriebenen Daten eingelesen werden k&ouml;nnen.
+Der <a href="index_d.html#ixb101017"><font color=#000080><tt>DataInputStream</tt></font></a>
+implementiert das Interface <a name="ixa101377"><a href="index_d.html#ixb101022"><font color=#000080><tt>DataInput</tt></font></a></a>,
+das folgende Methoden definiert: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+void readFully(byte[] b)
+  throws IOException
+void readFully(byte[] b, int off, int len)
+  throws IOException
+int skipBytes(int n)
+  throws IOException
+boolean readBoolean()
+  throws IOException
+byte readByte()
+  throws IOException
+int readUnsignedByte()
+  throws IOException
+short readShort()
+  throws IOException
+int readUnsignedShort()
+  throws IOException
+char readChar()
+  throws IOException
+int readInt()
+  throws IOException
+long readLong()
+  throws IOException
+float readFloat()
+  throws IOException
+double readDouble()
+  throws IOException
+String readLine()
+  throws IOException
+String readUTF()
+  throws IOException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/DataInput.html" onClick="this.href=getApiDoc('java.io.DataInput')"><font color="#660066" size=-1>java.io.DataInput</font></a></td>
+</tr>
+</table>
+
+<p>
+Die einzelnen Methoden lesen jeweils ein Element des angegebenen Typs,
+das in dem durch die korrespondierende <a href="index_w.html#ixb100967"><font color=#000080><tt>write</tt></font></a>...-Methode
+vorgegebenen bin&auml;ren Format vorliegen muss. <a href="index_r.html#ixb101046"><font color=#000080><tt>readFully</tt></font></a>
+kann dazu verwendet werden, beliebig viele Datenbytes ungeachtet ihres
+Datentyps einzulesen. <a href="index_r.html#ixb101004"><font color=#000080><tt>readLine</tt></font></a>
+liest eine Zeile Text aus der Eingabedatei und gibt sie als <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+an den Aufrufer zur&uuml;ck. Da die Eingabe byteweise gelesen wird,
+werden lediglich UNICODE-Zeichen von \u0000 bis \u00FF korrekt konvertiert.
+Die <a href="index_r.html#ixb101047"><font color=#000080><tt>readUnsigned...</tt></font></a>-Methoden
+<a name="ixa101378"></a> betrachten die Eingabe als vorzeichenlosen
+Wert im Bereich von 0 bis 255 (bzw. 0 bis 65535) und geben niemals
+negative Werte zur&uuml;ck. 
+
+<p>
+Das folgende Programm liest die in <a href="k100134.html#dataoutputstreamexample">Listing 20.2</a>
+erzeugte Datei <font color="#660099">test.txt</font> ein und gibt
+ihren Inhalt auf der Konsole aus: 
+<a name="datainputstreamexample"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2005.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2005
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">010 </font>      DataInputStream in = <font color="#0000AA">new</font> DataInputStream(
+<font color="#555555">011 </font>                           <font color="#0000AA">new</font> BufferedInputStream(
+<font color="#555555">012 </font>                           <font color="#0000AA">new</font> FileInputStream(<font color="#0000FF">"test.txt"</font>)));
+<font color="#555555">013 </font>      System.out.println(in.readInt());
+<font color="#555555">014 </font>      System.out.println(in.readInt());
+<font color="#555555">015 </font>      System.out.println(in.readDouble());
+<font color="#555555">016 </font>      System.out.println(in.readUTF());
+<font color="#555555">017 </font>      System.out.println(in.readUTF());
+<font color="#555555">018 </font>      in.close();
+<font color="#555555">019 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">020 </font>      System.err.println(e.toString());
+<font color="#555555">021 </font>    }
+<font color="#555555">022 </font>  }
+<font color="#555555">023 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2005.java"><font color="#000055" size=-1>Listing2005.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 20.5: Verwendung der Klasse DataInputStream</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id020003003004"></a>
+<h4>CheckedInputStream </h4>
+
+<p>
+Die Klasse <a name="ixa101379"><a href="index_c.html#ixb101034"><font color=#000080><tt>CheckedInputStream</tt></font></a></a>
+aus dem Paket <a href="index_j.html#ixb101026"><font color=#000080><tt>java.util.zip</tt></font></a>
+dient dazu, die Pr&uuml;fsumme zu einer Menge von Eingabedaten direkt
+beim Einlesen zu berechnen. Sie stellt einen Konstruktor zur Verf&uuml;gung,
+mit dem das gew&uuml;nschte Pr&uuml;fsummenverfahren angegeben werden
+kann, und besitzt eine Methode <a name="ixa101380"><a href="index_g.html#ixb101033"><font color=#000080><tt>getChecksum</tt></font></a></a>,
+mit der die Pr&uuml;fsumme ermittelt werden kann: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public CheckedInputStream(InputStream in, Checksum cksum)
+
+public Checksum getChecksum()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/zip/CheckedInputStream.html" onClick="this.href=getApiDoc('java.util.zip.CheckedInputStream')"><font color="#660066" size=-1>java.util.zip.CheckedInputStream</font></a></td>
+</tr>
+</table>
+
+<p>
+Das im Konstruktor erforderliche Objekt muss das Interface <a name="ixa101381"><a href="index_c.html#ixb101049"><font color=#000080><tt>Checksum</tt></font></a></a>
+implementieren. Mit den beiden Klassen <a name="ixa101382"><a href="index_c.html#ixb101050"><font color=#000080><tt>CRC32</tt></font></a></a>
+und <a name="ixa101383"><a href="index_a.html#ixb101051"><font color=#000080><tt>Adler32</tt></font></a></a>
+stehen im JDK zwei vordefinierte Implementierungen zur Verf&uuml;gung.
+Das folgende Programm berechnet die Adler-32-Pr&uuml;fsumme zu der
+in der Kommandozeile angegebenen Datei: 
+<a name="adler32example"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2006.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.util.zip.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2006
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    <font color="#0000AA">if</font> (args.length != 1) {
+<font color="#555555">011 </font>      System.out.println(<font color="#0000FF">"Usage: java Listing2006 file"</font>);
+<font color="#555555">012 </font>      System.exit(1);
+<font color="#555555">013 </font>    }
+<font color="#555555">014 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">015 </font>      CheckedInputStream in = <font color="#0000AA">new</font> CheckedInputStream(
+<font color="#555555">016 </font>        <font color="#0000AA">new</font> FileInputStream(args[0]),
+<font color="#555555">017 </font>        <font color="#0000AA">new</font> Adler32()
+<font color="#555555">018 </font>      );
+<font color="#555555">019 </font>      <font color="#006699">byte</font>[] buf = <font color="#0000AA">new</font> <font color="#006699">byte</font>[4096];
+<font color="#555555">020 </font>      <font color="#0000AA">while</font> ((in.read(buf)) &gt; 0) {
+<font color="#555555">021 </font>        <font color="#00AA00">//nichts</font>
+<font color="#555555">022 </font>      }
+<font color="#555555">023 </font>      System.out.println(in.getChecksum().getValue());
+<font color="#555555">024 </font>      in.close();
+<font color="#555555">025 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">026 </font>      System.err.println(e.toString());
+<font color="#555555">027 </font>    }
+<font color="#555555">028 </font>  }
+<font color="#555555">029 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2006.java"><font color="#000055" size=-1>Listing2006.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 20.6: Berechnung der Adler-32-Pr&uuml;fsumme</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id020003003005"></a>
+<h4>Entpacken von Dateien </h4>
+
+<p>
+Analog zur Klasse <a href="index_d.html#ixb101023"><font color=#000080><tt>DeflaterOutputStream</tt></font></a>
+gibt es im Paket <a href="index_j.html#ixb101026"><font color=#000080><tt>java.util.zip</tt></font></a>
+eine Klasse <a name="ixa101384"><a href="index_i.html#ixb101052"><font color=#000080><tt>InflaterInputStream</tt></font></a></a>
+zum Entpacken von gepackten und/oder komprimierten Dateien. Die daraus
+abgeleiteten Klassen <a name="ixa101385"><a href="index_g.html#ixb101053"><font color=#000080><tt>GZIPInputStream</tt></font></a></a>
+und <a name="ixa101386"><a href="index_z.html#ixb101054"><font color=#000080><tt>ZipInputStream</tt></font></a></a>
+k&ouml;nnen direkt zum Entpacken von GZIP- und ZIP-Dateien verwendet
+werden. 
+
+<p>
+Das folgende Programm zeigt, wie die mit dem Programm <font color="#660099">Zip.java</font>
+aus <a href="k100134.html#zipexample">Listing 20.3</a> gepackten Dateien
+wieder entpackt und dekomprimiert werden k&ouml;nnen: 
+<a name="unzipexample"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Unzip.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.util.zip.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Unzip
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    <font color="#0000AA">if</font> (args.length != 1) {
+<font color="#555555">011 </font>      System.out.println(<font color="#0000FF">"Usage: java Unzip zipfile"</font>);
+<font color="#555555">012 </font>      System.exit(1);
+<font color="#555555">013 </font>    }
+<font color="#555555">014 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">015 </font>      <font color="#006699">byte</font>[] buf = <font color="#0000AA">new</font> <font color="#006699">byte</font>[4096];
+<font color="#555555">016 </font>      ZipInputStream in = <font color="#0000AA">new</font> ZipInputStream(
+<font color="#555555">017 </font>                          <font color="#0000AA">new</font> FileInputStream(args[0]));
+<font color="#555555">018 </font>      <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">019 </font>        <font color="#00AA00">//N&auml;chsten Eintrag lesen</font>
+<font color="#555555">020 </font>        ZipEntry entry = in.getNextEntry();
+<font color="#555555">021 </font>        <font color="#0000AA">if</font> (entry == <font color="#006699">null</font>) {
+<font color="#555555">022 </font>          <font color="#0000AA">break</font>;
+<font color="#555555">023 </font>        }
+<font color="#555555">024 </font>        <font color="#00AA00">//Beschreibung ausgeben</font>
+<font color="#555555">025 </font>        System.out.println(
+<font color="#555555">026 </font>          entry.getName() +
+<font color="#555555">027 </font>          <font color="#0000FF">" ("</font> + entry.getCompressedSize() + <font color="#0000FF">"/"</font> +
+<font color="#555555">028 </font>          entry.getSize() + <font color="#0000FF">")"</font>
+<font color="#555555">029 </font>        );
+<font color="#555555">030 </font>        <font color="#00AA00">//Ausgabedatei erzeugen</font>
+<font color="#555555">031 </font>        FileOutputStream out = <font color="#0000AA">new</font> FileOutputStream(
+<font color="#555555">032 </font>          entry.getName()
+<font color="#555555">033 </font>        );
+<font color="#555555">034 </font>        <font color="#006699">int</font> len;
+<font color="#555555">035 </font>        <font color="#0000AA">while</font> ((len = in.read(buf)) &gt; 0) {
+<font color="#555555">036 </font>          out.write(buf, 0, len);
+<font color="#555555">037 </font>        }
+<font color="#555555">038 </font>        out.close();
+<font color="#555555">039 </font>        <font color="#00AA00">//Eintrag schlie&szlig;en</font>
+<font color="#555555">040 </font>        in.closeEntry();
+<font color="#555555">041 </font>      }
+<font color="#555555">042 </font>      in.close();
+<font color="#555555">043 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">044 </font>      System.err.println(e.toString());
+<font color="#555555">045 </font>    }
+<font color="#555555">046 </font>  }
+<font color="#555555">047 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Unzip.java"><font color="#000055" size=-1>Unzip.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 20.7: Entpacken eines ZIP-Archivs</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Das hier vorgestellte Programm dient - wie sein Gegenst&uuml;ck <font color="#660099">Zip.java</font>
+- vor allem als &#187;Proof of Concept&#171;. Einerseits bietet es
+nur einen Bruchteil der &uuml;blicherweise von einem Entpacker erwarteten
+Features (es werden beispielsweise keine Unterverzeichnisse automatisch
+erzeugt). Andererseits &uuml;berschreibt es vorhandene Ausgabedateien
+ohne Vorwarnung. Der Umgang mit dem Programm sollte also mit der n&ouml;tigen
+Vorsicht erfolgen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100132.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100134.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100136.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100137.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

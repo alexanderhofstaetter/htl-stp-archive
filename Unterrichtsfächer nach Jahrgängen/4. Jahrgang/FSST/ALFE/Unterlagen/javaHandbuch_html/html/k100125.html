@@ -1,0 +1,1368 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100121.html;106,k100124.html;107,k100126.html;108,k100127.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100121.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100124.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100126.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100127.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 18 - Utility-Klassen II
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="internationalisierung"></a>
+<h2>18.4 <a name="ixa101188">Internationalisierung</a> und <a name="ixa101189">Lokalisierung</a>
+</h2>
+<hr>
+<ul>
+<li><a href="k100125.html#internationalisierung">18.4 Internationalisierung und Lokalisierung</a>
+<ul>
+<li><a href="k100125.html#sectlevel3id018004001">18.4.1 Die Klasse Locale</a>
+<li><a href="k100125.html#sectlevel3id018004002">18.4.2 Zahlen formatieren</a>
+<li><a href="k100125.html#i18ndatumformatieren">18.4.3 Datum und Uhrzeit formatieren </a>
+<li><a href="k100125.html#sectlevel3id018004004">18.4.4 Laden von Ressourcen</a>
+<ul>
+<li><a href="k100125.html#sectlevel4id018004004001">Die Methode getBundle</a>
+<li><a href="k100125.html#sectlevel4id018004004002">Eigene Ressourcenklassen erstellen</a>
+<li><a href="k100125.html#sectlevel4id018004004003">Die Verkettung von ResourceBundles</a>
+<li><a href="k100125.html#sectlevel4id018004004004">Die Klasse PropertyResourceBundle</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+<p>
+Seit dem JDK 1.1 bietet Java Unterst&uuml;tzung f&uuml;r das <i>Internationalisieren</i>
+von Anwendungen. Auf diese Weise k&ouml;nnen Programme geschrieben
+werden, die nicht nur im eigenen, sondern auch in anderen L&auml;ndern
+der Erde verwendbar sind. Verschiedene L&auml;nder und Regionen unterscheiden
+sich nicht nur durch die verwendete Sprache und die zugrunde liegenden
+Schrift- und Zahlzeichen, sondern auch durch unterschiedliche Kalender
+und Zeitzonen, abweichende Zahlen-, Zeit- und Datumsformatierungen,
+eigene W&auml;hrungen, unterschiedliche Telefonnummern- und Anschriftenkonventionen
+und so weiter. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Begriffe <i>Internationalisierung</i> und <i>Lokalisierung</i>
+werden h&auml;ufig synonym gebraucht oder miteinander verwechselt.
+Unter <i>Internationalisierung</i> wollen wir das B&uuml;ndel technischer
+Ma&szlig;nahmen verstehen, mit denen ein Programm f&uuml;r die Verwendung
+in verschiedenen L&auml;ndern und Sprachr&auml;umen vorbereitet wird.
+Unter <i>Lokalisierung</i> verstehen wir dagegen die konkrete Anpassung
+eines internationalisierten Programms an eine ganz bestimmte Sprache.
+Ein Teil der Internationalisierung eines Programms ist es also beispielsweise,
+wenn Textkonstanten nicht mehr fest im Programm enthalten sind, sondern
+zur Laufzeit aus Ressourcendateien geladen werden. Die Lokalisierung
+hingegen besteht darin, eben diese Textressourcen in die jeweilige
+Sprache zu &uuml;bersetzen.
+
+<p>
+Im angels&auml;chsischen Sprachraum werden die beiden unhandlichen
+Begriffe meist abgek&uuml;rzt. Statt &#187;Internationalisierung&#171;
+wird <a name="ixa101190"><i>I18N</i></a> gesagt, statt &#187;Lokalisierung&#171;
+<a name="ixa101191"><i>L10N</i></a>. Die Spielregel ist ganz einfach:
+Zwischen den ersten und letzten Buchstaben des jeweiligen Worts steht
+die Gesamtzahl der Zeichen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Internationalisierung ist ein nichttriviales Thema, das viele Facetten
+hat. Einige Beispiele daf&uuml;r, in welcher Weise es von Java unterst&uuml;tzt
+wird, sind: 
+<ul>
+<li>Mit Hilfe der Klasse <a href="index_l.html#ixb100563"><font color=#000080><tt>Locale</tt></font></a>
+wird ein Land oder eine Region der Erde bezeichnet.
+<li>Lokalisierte Ressourcen sorgen daf&uuml;r, dass die statischen
+Textkonserven eines Programms dem jeweiligen Zielland ohne &Auml;nderung
+des eigentlichen Programmcodes angepasst werden k&ouml;nnen.
+<li>Die Klassen <a href="index_c.html#ixb100558"><font color=#000080><tt>Calendar</tt></font></a>
+und <a name="ixa101192"><a href="index_t.html#ixb100926"><font color=#000080><tt>TimeZone</tt></font></a></a>
+abstrahieren Kalender und Zeitzonen.
+<li>Im Paket <a href="index_j.html#ixb100557"><font color=#000080><tt>java.text</tt></font></a>
+befindet sich eine Vielzahl von Klassen zur Formatierung von Zahlen,
+Datums- und Uhrzeitwerten und W&auml;hrungen.
+<li>Ein- und Ausgabe-Streams unterst&uuml;tzen Konvertierungen von
+und zu l&auml;nderspezifischen Zeichens&auml;tzen.
+<li>Es gibt Unterst&uuml;tzung zur Eingabe von komplizierten Schriftzeichen,
+wie sie beispielsweise in der japanischen, chinesischen oder koreanischen
+Sprache verwendet werden.
+</ul>
+
+
+<!-- Section -->
+<a name="sectlevel3id018004001"></a>
+<h3>18.4.1 Die Klasse Locale </h3>
+
+<p>
+Ausgangspunkt der Lokalisierung eines Java-Programms ist die Klasse
+<a name="ixa101193"><a href="index_l.html#ixb100563"><font color=#000080><tt>Locale</tt></font></a></a>
+aus dem Paket <a href="index_j.html#ixb100149"><font color=#000080><tt>java.util</tt></font></a>.
+Jede Instanz dieser Klasse identifiziert eine bestimmte geografische,
+kulturelle oder politische Region auf der Erde inklusive der Sprache,
+die dort &uuml;blicherweise verwendet wird. Ein <a href="index_l.html#ixb100563"><font color=#000080><tt>Locale</tt></font></a>-Objekt
+kann wie folgt erzeugt werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Locale(String language, String country)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Locale.html" onClick="this.href=getApiDoc('java.util.Locale')"><font color="#660066" size=-1>java.util.Locale</font></a></td>
+</tr>
+</table>
+
+<p>
+Das erste Argument ist ein <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+mit dem Code f&uuml;r die Sprache, wie er im Standard <a name="ixa101194"><i>ISO-639</i></a>
+definiert ist. Der Sprachcode wird kleingeschrieben und lautet z.B.
+&#187;en&#171; f&uuml;r englisch, &#187;fr&#171; f&uuml;r franz&ouml;sich
+oder &#187;de&#171; f&uuml;r deutsch. Das zweite Argument gibt das
+Land gem&auml;&szlig; dem Standard <a name="ixa101195"><i>ISO-3166</i></a>
+an, hier werden stets gro&szlig;e Buchstaben verwendet. So stehen
+beispielsweise &#187;US&#171; f&uuml;r die USA, &#187;GB&#171; f&uuml;r
+England, &#187;FR&#171; f&uuml;r Frankreich und &#187;DE&#171; f&uuml;r
+Deutschland. 
+
+<p>
+Der L&auml;nderteil ist optional. Wird an seiner Stelle ein Leerstring
+&uuml;bergeben, repr&auml;sentiert die <a href="index_l.html#ixb100563"><font color=#000080><tt>Locale</tt></font></a>
+lediglich eine Sprache ohne spezifisches Land. &#187;en&#171; alleine
+steht dann beispielsweise f&uuml;r die englische Sprache, wie sie
+nicht nur in England, sondern auch in den USA oder Kanada verst&auml;ndlich
+w&auml;re. Soll dagegen auf kanadische Besonderheiten abgestellt werden,
+ist als Land &#187;CA&#171; zu erg&auml;nzen. F&uuml;r den franz&ouml;sischsprachigen
+Teil von Kanada w&uuml;rde dagegen eine <a href="index_l.html#ixb100563"><font color=#000080><tt>Locale</tt></font></a>
+aus &#187;fr&#171; und &#187;CA&#171; gebildet werden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Neben Sprach- und L&auml;nderkennung kann eine <a href="index_l.html#ixb100563"><font color=#000080><tt>Locale</tt></font></a>
+einen dritten Parameter haben. Dieser wird als <i>Variante</i> bezeichnet
+und kann dazu verwendet werden, Betriebssysteme oder Konfigurationen
+voneinander zu unterscheiden. So werden lokalisierte Hilfetexte unter
+UNIX m&ouml;glicherweise mit anderen Zeichens&auml;tzen oder Hilfsprogrammen
+arbeiten als unter Windows oder auf dem Macintosh. Wir wollen darauf
+allerdings nicht weiter eingehen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Die Klasse <a href="index_l.html#ixb100563"><font color=#000080><tt>Locale</tt></font></a>
+bietet mit der statischen Methode <a name="ixa101196"><a href="index_g.html#ixb100929"><font color=#000080><tt>getDefault</tt></font></a></a>
+die M&ouml;glichkeit, eine <a href="index_l.html#ixb100563"><font color=#000080><tt>Locale</tt></font></a>
+zu beschaffen, die dem Land entspricht, in dem das laufende Programm
+ausgef&uuml;hrt wird. Mit <a name="ixa101197"><a href="index_g.html#ixb100930"><font color=#000080><tt>getCountry</tt></font></a></a>
+kann der L&auml;nder-, mit <a name="ixa101198"><a href="index_g.html#ixb100931"><font color=#000080><tt>getLanguage</tt></font></a></a>
+der Sprachcode und mit <a name="ixa101199"><a href="index_g.html#ixb100932"><font color=#000080><tt>getVariant</tt></font></a></a>
+die Variante ermittelt werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static Locale getDefault()
+
+public String getLanguage()
+public String getCountry()
+public String getVariant()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Locale.html" onClick="this.href=getApiDoc('java.util.Locale')"><font color="#660066" size=-1>java.util.Locale</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa101196"><a href="index_g.html#ixb100929"><font color=#000080><tt>getDefault</tt></font></a></a>
+kann ein Programm zur Laufzeit ermitteln, in welchem Land es l&auml;uft
+und welche Sprache dort gesprochen wird. Weiterhin stellt die Klasse
+noch einige Konstanten mit vordefinierten <a href="index_l.html#ixb100563"><font color=#000080><tt>Locale</tt></font></a>-Objekten
+f&uuml;r wichtige L&auml;nder und Sprachen zur Verf&uuml;gung. 
+
+<p>
+Das folgende Beispielprogramm ermittelt die Standard-<a href="index_l.html#ixb100563"><font color=#000080><tt>Locale</tt></font></a>
+des aktuellen Rechners und die vordefinierten Locales f&uuml;r Deutschland,
+England und die USA und gibt sie auf der Console aus: 
+<a name="listingid018007"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1807.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1807
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    System.out.println(<font color="#0000FF">"Default: "</font> + Locale.getDefault());
+<font color="#555555">010 </font>    System.out.println(<font color="#0000FF">"GERMANY: "</font> + Locale.GERMANY);
+<font color="#555555">011 </font>    System.out.println(<font color="#0000FF">"UK     : "</font> + Locale.UK);
+<font color="#555555">012 </font>    System.out.println(<font color="#0000FF">"US     : "</font> + Locale.US);
+<font color="#555555">013 </font>  }
+<font color="#555555">014 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1807.java"><font color="#000055" size=-1>Listing1807.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 18.7: Darstellung einiger Locales</i></p>
+
+<p>
+Die Ausgabe des Programms sieht hierzulande etwa so aus: 
+<font color="#333300">
+<pre>
+Default: de_DE
+GERMANY: de_DE
+UK     : en_GB
+US     : en_US
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="sectlevel3id018004002"></a>
+<h3>18.4.2 Zahlen formatieren<a name="ixa101200"></a> </h3>
+
+<p>
+In fr&uuml;heren Abschnitten wurde schon gezeigt, wie Flie&szlig;kommazahlen
+erzeugt und verarbeitet werden k&ouml;nnen. Nach Umwandlung in einen
+<a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+lassen sie sich mit den Methoden <a href="index_p.html#ixb100934"><font color=#000080><tt>print</tt></font></a>
+und <a href="index_p.html#ixb100181"><font color=#000080><tt>println</tt></font></a>
+auf der Console, in Dateien oder auf einer grafischen Oberfl&auml;che
+ausgeben - allerdings ohne die M&ouml;glichkeit, auf die Formatierung
+der Ausgabe Einfluss zu nehmen. Wir wollen uns in diesem Abschnitt
+die Klasse <a name="ixa101201"><a href="index_d.html#ixb100935"><font color=#000080><tt>DecimalFormat</tt></font></a></a>
+aus dem Paket <a name="ixa101202"><a href="index_j.html#ixb100557"><font color=#000080><tt>java.text</tt></font></a></a>
+ansehen und zeigen, wie Ganz- und Flie&szlig;kommazahlen mit ihrer
+Hilfe formatiert werden k&ouml;nnen. 
+
+<p>
+<a href="index_d.html#ixb100935"><font color=#000080><tt>DecimalFormat</tt></font></a>
+ist eine Spezialisierung der Klasse <a name="ixa101203"><a href="index_n.html#ixb100936"><font color=#000080><tt>NumberFormat</tt></font></a></a>
+und dient zur Formatierung von Ganz- oder Flie&szlig;kommazahlen in
+Dezimaldarstellung unter Ber&uuml;cksichtigung l&auml;nderspezifischer
+Besonderheiten. Der Aufrufer legt dabei die Anzahl der Vor- oder Nachkommastellen
+fest und <a href="index_d.html#ixb100935"><font color=#000080><tt>DecimalFormat</tt></font></a>
+entscheidet, ob ein Punkt oder Komma als Dezimaltrennzeichen verwendet
+werden soll. 
+
+<p>
+Eine Instanz der Klasse <a href="index_d.html#ixb100935"><font color=#000080><tt>DecimalFormat</tt></font></a>
+kann entweder mit <a href="index_n.html#ixb100088"><font color=#000080><tt>new</tt></font></a>
+oder durch Aufruf einer der Factory-Methoden der Klasse <a name="ixa101203"><a href="index_n.html#ixb100936"><font color=#000080><tt>NumberFormat</tt></font></a></a>
+erzeugt werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public DecimalFormat(String pattern)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/text/DecimalFormat.html" onClick="this.href=getApiDoc('java.text.DecimalFormat')"><font color="#660066" size=-1>java.text.DecimalFormat</font></a></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static NumberFormat getNumberInstance()
+public static NumberFormat getNumberInstance(Locale locale)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/text/NumberFormat.html" onClick="this.href=getApiDoc('java.text.NumberFormat')"><font color="#660066" size=-1>java.text.NumberFormat</font></a></td>
+</tr>
+</table>
+
+<p>
+Soll ein <a href="index_d.html#ixb100935"><font color=#000080><tt>DecimalFormat</tt></font></a>-Objekt
+f&uuml;r die aktuelle <a href="index_l.html#ixb100563"><font color=#000080><tt>Locale</tt></font></a>
+erzeugt werden, kann es durch &Uuml;bergabe eines Formatstrings direkt
+instanziert werden. Wird es dagegen f&uuml;r eine andere <a href="index_l.html#ixb100563"><font color=#000080><tt>Locale</tt></font></a>
+ben&ouml;tigt, muss es mit der statischen Methode <a name="ixa101204"><a href="index_g.html#ixb100937"><font color=#000080><tt>getNumberInstance</tt></font></a></a>
+der Klasse <a href="index_n.html#ixb100936"><font color=#000080><tt>NumberFormat</tt></font></a>
+erzeugt werden. In diesem Fall muss noch die Methode <a name="ixa101205"><a href="index_a.html#ixb100938"><font color=#000080><tt>applyPattern</tt></font></a></a>
+aufgerufen werden, um den Formatstring zuzuweisen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void applyPattern(String pattern)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/text/NumberFormat.html" onClick="this.href=getApiDoc('java.text.NumberFormat')"><font color="#660066" size=-1>java.text.NumberFormat</font></a></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+<a href="index_g.html#ixb100937"><font color=#000080><tt>getNumberInstance</tt></font></a>
+gibt einen Wert vom Typ <a href="index_n.html#ixb100936"><font color=#000080><tt>NumberFormat</tt></font></a>
+zur&uuml;ck (der Basisklasse von <a href="index_d.html#ixb100935"><font color=#000080><tt>DecimalFormat</tt></font></a>).
+Das ist zwar in westlichen L&auml;ndern in der Regel eine Instanz
+von <a href="index_d.html#ixb100935"><font color=#000080><tt>DecimalFormat</tt></font></a>.
+Ganz sicher kann sich ein Programm aber nur sein, wenn es den Typ
+des R&uuml;ckgabewerts vor der Konvertierung nach <a href="index_d.html#ixb100935"><font color=#000080><tt>DecimalFormat</tt></font></a>
+mit <a href="index_i.html#ixb100341"><font color=#000080><tt>instanceof</tt></font></a>
+&uuml;berpr&uuml;ft.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Der Formatstring definiert eine Maske zur Formatierung der Ausgabe.
+Er besteht aus zwei Teilen, die durch ein Semikolon voneinander getrennt
+sind. Der erste gibt die Formatierungsregeln f&uuml;r positive, der
+zweite f&uuml;r negative Zahlen an. Der zweite Teil kann auch ausgelassen
+werden. Dann werden negative Zahlen wie positive Zahlen mit vorangestelltem
+Minuszeichen formatiert. Jedes Zeichen im Formatstring regelt die
+Darstellung der korrespondierenden Ziffer. Der Formatstring kann folgende
+Zeichen enthalten: <a name="tableid018002"></a>
+
+<p>
+<table cols=2 border width=66%>
+
+<tr>
+<td valign=top align=left width=20%><b>Symbol</b></td>
+<td valign=top align=left width=80%><b>Bedeutung</b></td></tr>
+<tr>
+<td valign=top align=left>0</td>
+<td valign=top align=left>Eine einzelne Ziffer</td></tr>
+<tr>
+<td valign=top align=left>#</td>
+<td valign=top align=left>Eine einzelne Ziffer. Wird ausgelassen,
+falls f&uuml;hrende Null.</td></tr>
+<tr>
+<td valign=top align=left>.</td>
+<td valign=top align=left>Dezimaltrennzeichen</td></tr>
+<tr>
+<td valign=top align=left>,</td>
+<td valign=top align=left>Tausendertrennzeichen</td></tr>
+<tr>
+<td valign=top align=left>E</td>
+<td valign=top align=left>Aktiviert Exponentialdarstellung</td></tr>
+<tr>
+<td valign=top align=left>%</td>
+<td valign=top align=left>Ausgabe als Prozentwert</td></tr>
+</table>
+<p><i>
+Tabelle 18.2: Formatzeichen f&uuml;r DecimalFormat</i></p>
+
+<p>
+Zus&auml;tzlich k&ouml;nnen beliebige Zeichen vorangestellt oder hinten
+angef&uuml;gt werden; sie werden dann unver&auml;ndert ausgegeben.
+Ung&uuml;ltige Formatstrings werden mit einer <a href="index_i.html#ixb100376"><font color=#000080><tt>IllegalArgumentException</tt></font></a>
+quittiert. Falls nach einem Semikolon ein eigener Formatstring f&uuml;r
+negative Zahlen angegeben wird, muss er mit Ausnahme eines ver&auml;nderten
+Prefixes und Suffixes genau dem Formatstring f&uuml;r positive Zahlen
+entsprechen. 
+
+<p>
+Die Formatierung einer Zahl wird durch Aufruf von <a name="ixa101206"><a href="index_f.html#ixb100560"><font color=#000080><tt>format</tt></font></a></a>
+ausgef&uuml;hrt: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public final String format(long number)
+public final String format(double number)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/text/DecimalFormat.html" onClick="this.href=getApiDoc('java.text.DecimalFormat')"><font color="#660066" size=-1>java.text.DecimalFormat</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Methode gibt es sowohl mit einem <a href="index_l.html#ixb100252"><font color=#000080><tt>long</tt></font></a>-Parameter
+zur Ausgabe von Ganzzahlen als auch mit einem <a href="index_d.html#ixb100254"><font color=#000080><tt>double</tt></font></a>
+zur Ausgabe von Flie&szlig;kommazahlen. Da der Formatstring bereits
+bei der Konstruktion des Objekts &uuml;bergeben wurde, kann <a href="index_f.html#ixb100560"><font color=#000080><tt>format</tt></font></a>
+mehrfach aufgerufen werden, um nacheinander weitere Zahlen zu formatieren.
+
+<p>
+Das folgende Programm zeigt die beispielhafte Anwendung von <a href="index_d.html#ixb100935"><font color=#000080><tt>DecimalFormat</tt></font></a>.
+Es gibt die Zahl 1768.3518 f&uuml;r die aktuelle <a href="index_l.html#ixb100563"><font color=#000080><tt>Locale</tt></font></a>
+in unterschiedlichen L&auml;ngen und Formatierungen auf der Console
+aus: 
+<a name="listingid018008"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1808.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.text.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1808
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> print(<font color="#006699">double</font> value, String format)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    DecimalFormat df = <font color="#0000AA">new</font> DecimalFormat(format);
+<font color="#555555">010 </font>    System.out.println(df.format(value));
+<font color="#555555">011 </font>  }
+<font color="#555555">012 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">013 </font>  {
+<font color="#555555">014 </font>    <font color="#006699">double</font> value = 1768.3518;
+<font color="#555555">015 </font>    print(value, <font color="#0000FF">"#0.0"</font>);
+<font color="#555555">016 </font>    print(value, <font color="#0000FF">"#0.000"</font>);
+<font color="#555555">017 </font>    print(value, <font color="#0000FF">"000000.000"</font>);
+<font color="#555555">018 </font>    print(value, <font color="#0000FF">"#.000000"</font>);
+<font color="#555555">019 </font>    print(value, <font color="#0000FF">"#,###,##0.000"</font>);
+<font color="#555555">020 </font>    print(value, <font color="#0000FF">"0.000E00"</font>);
+<font color="#555555">021 </font>  }
+<font color="#555555">022 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1808.java"><font color="#000055" size=-1>Listing1808.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 18.8: Anwendung von DecimalFormat</i></p>
+
+<p>
+Die Ausgabe des Programms lautet: 
+<font color="#333300">
+<pre>
+1768,4
+1768,352
+001768,352
+1768,351800
+1.768,352
+1,768E03
+</pre>
+</font>
+
+<p>
+Sie kommt wie folgt zustande: 
+<ul>
+<li>&#187;#0.0&#171;: mindestens eine Vorkommastelle, genau eine Nachkommastelle
+<li>&#187;#0.000&#171;: wie vorher, aber genau drei Nachkommastellen
+<li>&#187;000000.000&#171;: wie vorher, aber mindestens sechs sichtbare
+Vorkommastellen
+<li>&#187;#.000000&#171;: m&ouml;glichst keine Vorkommastellen (was
+nur m&ouml;glich ist, wenn die Zahl kleiner als 1 ist), aber genau
+sechs Nachkommastellen
+<li>&#187;#,###,##0.000&#171;: mindestens eine Vorkommastelle, genau
+drei Nachkommastellen, gr&ouml;&szlig;ere Zahlen mit Tausenderseparatoren
+<li>&#187;0.000E00&#171;: eine Vor- und drei Nachkommastellen, Exponentialdarstellung
+mit mindestens zwei Ziffern im Exponent
+</ul>
+
+<p>
+Wenn das Programm mit englischer <a href="index_l.html#ixb100563"><font color=#000080><tt>Locale</tt></font></a>
+aufgerufen worden w&auml;re, w&auml;ren in der Ausgabe Punkte und
+Kommata vertauscht (denn im englischen Sprachraum werden Kommata als
+Tausenderseparatoren und Punkte als Dezimaltrennzeichen verwendet).
+Die Ausgabe w&auml;re dann wie folgt gewesen: 
+<font color="#333300">
+<pre>
+1768.4
+1768.352
+001768.352
+1768.351800
+1,768.352
+1.768E03
+12345678.909
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Neben der Ausgabesteuerung mit Hilfe des Formatstrings stellt <a href="index_d.html#ixb100935"><font color=#000080><tt>DecimalFormat</tt></font></a>
+noch weitere Methoden zur Konfiguration der Ausgabe zur Verf&uuml;gung.
+Beispiele sind etwa <a name="ixa101207"><a href="index_s.html#ixb100939"><font color=#000080><tt>setGroupingSize</tt></font></a></a>
+zur Einstellung der Gr&ouml;&szlig;e der Tausendergruppen oder <a name="ixa101208"><a href="index_s.html#ixb100940"><font color=#000080><tt>setDecimalSeparatorAlwaysShown</tt></font></a></a>
+zur Festlegung, ob auch Ganzzahlen mit Dezimalzeichen ausgegeben werden
+sollen. Zudem bietet <a href="index_d.html#ixb100935"><font color=#000080><tt>DecimalFormat</tt></font></a>
+eine Methode <a name="ixa101209"><a href="index_p.html#ixb100941"><font color=#000080><tt>parse</tt></font></a></a>,
+mit der lokalisierte Zahleneingaben eingelesen werden k&ouml;nnen.
+Weitere Details zu diesen Methoden k&ouml;nnen in der API-Dokumentation
+nachgelesen werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="i18ndatumformatieren"></a>
+<h3>18.4.3 Datum und Uhrzeit formatieren <a name="ixa101210"></a>
+</h3>
+
+<p>
+Neben Zahlen lassen sich mit dem Paket <a href="index_j.html#ixb100557"><font color=#000080><tt>java.text</tt></font></a>
+auch Datums- und Uhrzeitwerte unter Beachtung nationaler Besonderheiten
+formatieren und in einen <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+konvertieren. Die daf&uuml;r vorgesehene Klasse <a name="ixa101211"><a href="index_d.html#ixb100942"><font color=#000080><tt>DateFormat</tt></font></a></a>
+wird zun&auml;chst (analog zu <a href="index_n.html#ixb100936"><font color=#000080><tt>NumberFormat</tt></font></a>)
+mit einer Factory-Methode instanziert und konfiguriert. Anschlie&szlig;end
+wird <a name="ixa101212"><a href="index_f.html#ixb100560"><font color=#000080><tt>format</tt></font></a></a>
+aufgerufen, um den Ausgabestring zu erzeugen. 
+
+<p>
+Bei der Instanzierung gibt es einige Varianten zu unterscheiden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static final DateFormat getDateInstance(
+  int style,
+  Locale locale
+)
+
+public static final DateFormat getTimeInstance(
+  int style,
+  Locale locale
+)
+
+public static final DateFormat getDateTimeInstance(
+  int datestyle,
+  int timestyle,
+  Locale locale
+)
+
+public final String format(Date date)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/text/DateFormat.html" onClick="this.href=getApiDoc('java.text.DateFormat')"><font color="#660066" size=-1>java.text.DateFormat</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa101213"><a href="index_g.html#ixb100943"><font color=#000080><tt>getDateInstance</tt></font></a></a>
+wird eine Instanz zur Ausgabe eines Datums erzeugt, <a name="ixa101214"><a href="index_g.html#ixb100944"><font color=#000080><tt>getTimeInstance</tt></font></a></a>
+dient zur Ausgabe der Uhrzeit und <a name="ixa101215"><a href="index_g.html#ixb100945"><font color=#000080><tt>getDateTimeInstance</tt></font></a></a>
+zur kombinierten Ausgabe von Datum und Uhrzeit. Alle Methoden erwarten
+ein Argument <font color="#000077"><tt>style</tt></font>, das mit
+einer der Konstanten <a name="ixa101216"><a href="index_s.html#ixb100946"><font color=#000080><tt>SHORT</tt></font></a></a>,
+<a name="ixa101217"><a href="index_m.html#ixb100947"><font color=#000080><tt>MEDIUM</tt></font></a></a>,
+<a name="ixa101218"><a href="index_l.html#ixb100948"><font color=#000080><tt>LONG</tt></font></a></a>,
+<a name="ixa101219"><a href="index_f.html#ixb100949"><font color=#000080><tt>FULL</tt></font></a></a>
+oder <a name="ixa101220"><a href="index_d.html#ixb100950"><font color=#000080><tt>DEFAULT</tt></font></a></a>
+belegt werden muss. Es gibt an, wie lang die jeweilige Ausgabe sp&auml;ter
+sein soll und welche Daten sie enthalten soll. So werden beispielsweise
+bei der kurzen Uhrzeit lediglich Stunden und Minuten ausgegeben, w&auml;hrend
+in den &uuml;brigen Stufen auch die Sekunden und andere Informationen
+enthalten sind. Als zweites Argument wird die gew&uuml;nschte <a href="index_l.html#ixb100563"><font color=#000080><tt>Locale</tt></font></a>
+angegeben; f&uuml;r die Standard-<a href="index_l.html#ixb100563"><font color=#000080><tt>Locale</tt></font></a>
+kann es auch ausgelassen werden. 
+
+<p>
+Das folgende Programm formatiert das aktuelle Datum und die aktuelle
+Uhrzeit mit allen m&ouml;glichen <font color="#000077"><tt>style</tt></font>-Parametern
+und gibt die Ergebnisse auf der Console aus: 
+<a name="listingid018009"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1809.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.text.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1809
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> print(Calendar cal, <font color="#006699">int</font> style)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    DateFormat df;
+<font color="#555555">011 </font>    df = DateFormat.getDateInstance(style);
+<font color="#555555">012 </font>    System.out.print(df.format(cal.getTime()) + <font color="#0000FF">" / "</font>);
+<font color="#555555">013 </font>    df = DateFormat.getTimeInstance(style);
+<font color="#555555">014 </font>    System.out.println(df.format(cal.getTime()));
+<font color="#555555">015 </font>  }
+<font color="#555555">016 </font>
+<font color="#555555">017 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">018 </font>  {
+<font color="#555555">019 </font>    GregorianCalendar now = <font color="#0000AA">new</font> GregorianCalendar();
+<font color="#555555">020 </font>    print(now, DateFormat.SHORT);
+<font color="#555555">021 </font>    print(now, DateFormat.MEDIUM);
+<font color="#555555">022 </font>    print(now, DateFormat.LONG);
+<font color="#555555">023 </font>    print(now, DateFormat.FULL);
+<font color="#555555">024 </font>    print(now, DateFormat.DEFAULT);
+<font color="#555555">025 </font>  }
+<font color="#555555">026 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1809.java"><font color="#000055" size=-1>Listing1809.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 18.9: Anwendung von DateFormat</i></p>
+
+<p>
+Die Ausgabe des Programms lautet: 
+<font color="#333300">
+<pre>
+25.06.11 / 19:59
+25.06.2011 / 19:59:02
+25. Juni 2011 / 19:59:02 MESZ
+Samstag, 25. Juni 2011 / 19:59 Uhr MESZ
+25.06.2011 / 19:59:02
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Leider ist nicht sehr genau dokumentiert, welche Felder des Datums
+bzw. der Uhrzeit in Abh&auml;ngigkeit von dem <font color="#000077"><tt>style</tt></font>-Parameter
+tats&auml;chlich ausgegeben werden, zudem ist die Formatierung l&auml;nderspezifisch.
+Wenn es also auf eine pr&auml;zise definierte Formatierung ankommt,
+muss ausprobiert werden, welche Ergebnisse jeweils zustande kommen,
+und die am besten passende Variante gew&auml;hlt werden. Alternativ
+kann mit Hilfe der Klasse <a name="ixa101221"><a href="index_f.html#ixb100951"><font color=#000080><tt>FieldPosition</tt></font></a></a>
+auf jedes einzelne Feld zugegriffen und so eine genauere Steuerung
+der Ausgabe erreicht werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id018004004"></a>
+<h3>18.4.4 Laden von <a name="ixa101222">Ressourcen</a> </h3>
+
+<p>
+Ein ausgeliefertes Java-Programm besteht in aller Regel nicht nur
+aus Bytecode in Form von <font color="#660099">.class</font>-Dateien,
+sondern enth&auml;lt weitere Dateien mit zus&auml;tzlichen Informationen.
+Dazu z&auml;hlen beispielsweise Textkonserven und Grafikdateien f&uuml;r
+grafische Oberfl&auml;chen, Sounddateien zur akustischen Untermalung
+von Programmereignissen oder Hilfsdateien mit Klartextmeldungen zu
+m&ouml;glichen Programmfehlern. Diese zus&auml;tzlichen Informationen
+werden als <i>Ressourcen</i> bezeichnet und m&uuml;ssen zusammen mit
+dem Programm ausgeliefert werden. Die meisten von ihnen m&uuml;ssen
+lokalisiert werden. 
+
+<p>
+Java stellt seit der Version 1.1 mit der Klasse <a name="ixa101223"><a href="index_r.html#ixb100953"><font color=#000080><tt>ResourceBundle</tt></font></a></a>
+aus dem Paket <a href="index_j.html#ixb100149"><font color=#000080><tt>java.util</tt></font></a>
+ein universelles Hilfsmittel zur Verwendung derartiger Ressourcen
+zur Verf&uuml;gung. Die Grundidee ist dabei einfach: Ein <a href="index_r.html#ixb100953"><font color=#000080><tt>ResourceBundle</tt></font></a>
+ist ein Java-Objekt, das eine Sammlung von Ressourcen zusammenfasst
+und auf Anfrage einzeln zur Verf&uuml;gung stellt. Jede Ressource
+hat einen eindeutigen und f&uuml;r alle unterst&uuml;tzten Sprachvarianten
+identischen Namen, mit dem auf sie zugegriffen werden kann. Ein konkretes
+<a href="index_r.html#ixb100953"><font color=#000080><tt>ResourceBundle</tt></font></a>
+ist stets sprachabh&auml;ngig und enth&auml;lt nur die Ressourcen
+f&uuml;r eine bestimmte <a href="index_l.html#ixb100563"><font color=#000080><tt>Locale</tt></font></a>.
+
+<p>
+Damit ist ein <a href="index_r.html#ixb100953"><font color=#000080><tt>ResourceBundle</tt></font></a>
+zun&auml;chst nicht viel mehr als eine Schl&uuml;ssel-Wert-Collection
+wie beispielsweise <a href="index_h.html#ixb100428"><font color=#000080><tt>Hashtable</tt></font></a>
+oder <a href="index_h.html#ixb100754"><font color=#000080><tt>HashMap</tt></font></a>.
+Der Clou liegt in der Tatsache, dass der <i>Name</i> des <a href="index_r.html#ixb100953"><font color=#000080><tt>ResourceBundle</tt></font></a>
+die <a href="index_l.html#ixb100563"><font color=#000080><tt>Locale</tt></font></a>
+angibt, deren Daten er enth&auml;lt. W&auml;hrend der vordere Teil
+fest und f&uuml;r alle lokalisierten Varianten gleich ist, ist der
+hintere Teil <a href="index_l.html#ixb100563"><font color=#000080><tt>Locale</tt></font></a>-spezifisch
+und gibt Sprache, Land und gegebenenfalls Variante an. Lautet der
+feste Teil beispielsweise &#187;ImageResources&#171;, w&auml;ren &#187;ImageResources_fr&#171;
+und &#187;ImageResources_en_US&#171; die Namen f&uuml;r die franz&ouml;siche
+und US-englische Variante. 
+
+<!-- Section -->
+
+<a name="sectlevel4id018004004001"></a>
+<h4>Die Methode getBundle </h4>
+
+<p>
+<a href="index_r.html#ixb100953"><font color=#000080><tt>ResourceBundle</tt></font></a>
+stellt eine statische Methode <a name="ixa101224"><a href="index_g.html#ixb100954"><font color=#000080><tt>getBundle</tt></font></a></a>
+zur Verf&uuml;gung, mit der zu einem Basisnamen und einer vorgegebenen
+<a href="index_l.html#ixb100563"><font color=#000080><tt>Locale</tt></font></a>
+ein <a href="index_r.html#ixb100953"><font color=#000080><tt>ResourceBundle</tt></font></a>
+beschafft werden kann. Diese gibt es in unterschiedlichen Auspr&auml;gungen:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static final ResourceBundle getBundle(String baseName)
+  throws MissingResourceException
+
+public static final ResourceBundle getBundle(
+  String baseName,
+  Locale locale
+)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/ResourceBundle.html" onClick="this.href=getApiDoc('java.util.ResourceBundle')"><font color="#660066" size=-1>java.util.ResourceBundle</font></a></td>
+</tr>
+</table>
+
+<p>
+Die erste Variante besorgt ein <a href="index_r.html#ixb100953"><font color=#000080><tt>ResourceBundle</tt></font></a>
+f&uuml;r die aktuelle Default-<a href="index_l.html#ixb100563"><font color=#000080><tt>Locale</tt></font></a>,
+die zweite f&uuml;r die als Argument angegebene. In beiden F&auml;llen
+wird wie folgt vorgegangen: 
+<ul>
+<li>Zun&auml;chst wird versucht, eine <i>genau</i> zur gew&uuml;nschten
+<a href="index_l.html#ixb100563"><font color=#000080><tt>Locale</tt></font></a>
+passende Ressourcenklasse zu finden.
+<li>Ist eine solche nicht vorhanden, wird der Ressourcenname schrittweise
+verallgemeinert. Soweit vorhanden, wird zun&auml;chst die Variante
+und dann der L&auml;nderteil entfernt bis nur noch der Sprachteil
+&uuml;brig bleibt.
+<li>Falls immer noch keine passende Ressourcenklasse gefunden wurde,
+wird derselbe Ablauf f&uuml;r die Default-<a href="index_l.html#ixb100563"><font color=#000080><tt>Locale</tt></font></a>
+wiederholt.
+</ul>
+
+<p>
+Ist beispielsweise Deutschland die Default-<a href="index_l.html#ixb100563"><font color=#000080><tt>Locale</tt></font></a>
+und soll die Ressource &#187;MyTextResource&#171; f&uuml;r Frankreich
+beschafft werden, sucht <a href="index_g.html#ixb100954"><font color=#000080><tt>getBundle</tt></font></a>
+nacheinander nach folgenden Klassen: 
+<ol type=1>
+<li><font color="#000077"><tt>MyTextResource_fr_FR</tt></font>
+<li><font color="#000077"><tt>MyTextResource_fr</tt></font>
+<li><font color="#000077"><tt>MyTextResource_de_DE</tt></font>
+<li><font color="#000077"><tt>MyTextResource_de</tt></font>
+<li><font color="#000077"><tt>MyTextResource</tt></font>
+</ol>
+
+<p>
+Die Suche bricht ab, wenn die erste passende Klasse gefunden wurde.
+Ist &uuml;berhaupt keine passende Ressource vorhanden, l&ouml;st <a href="index_g.html#ixb100954"><font color=#000080><tt>getBundle</tt></font></a>
+eine <a name="ixa101225"><a href="index_m.html#ixb100955"><font color=#000080><tt>MissingResourceException</tt></font></a></a>
+aus. Dies ist auch der Fall, wenn die gefundene Klasse nicht aus <a href="index_r.html#ixb100953"><font color=#000080><tt>ResourceBundle</tt></font></a>
+abgeleitet ist. 
+
+<!-- Section -->
+
+<a name="sectlevel4id018004004002"></a>
+<h4>Eigene Ressourcenklassen erstellen </h4>
+
+<p>
+Eigene Ressourcenklassen m&uuml;ssen aus <a href="index_r.html#ixb100953"><font color=#000080><tt>ResourceBundle</tt></font></a>
+abgeleitet werden und die beiden (in der Basisklasse abstrakten) Methoden
+<a name="ixa101226"><a href="index_g.html#ixb100956"><font color=#000080><tt>getKeys</tt></font></a></a>
+und <a name="ixa101227"><a href="index_h.html#ixb100957"><font color=#000080><tt>handleGetObject</tt></font></a></a>
+&uuml;berlagern: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Enumeration getKeys()
+
+protected Object handleGetObject(String key)
+  throws MissingResourceException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/ResourceBundle.html" onClick="this.href=getApiDoc('java.util.ResourceBundle')"><font color="#660066" size=-1>java.util.ResourceBundle</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_h.html#ixb100957"><font color=#000080><tt>handleGetObject</tt></font></a>
+liefert eine Ressource zu einem vorgegebenen Schl&uuml;ssel, <a href="index_g.html#ixb100956"><font color=#000080><tt>getKeys</tt></font></a>
+eine Aufz&auml;hlung aller vorhandenen Schl&uuml;ssel. Gibt es zu
+einem vorgegebenen Schl&uuml;ssel keine Ressource, muss <a href="index_h.html#ixb100957"><font color=#000080><tt>handleGetObject</tt></font></a>
+<a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>
+zur&uuml;ckgeben. 
+
+<p>
+Das folgende Listing zeigt eine Klasse <font color="#000077"><tt>SimpleTextResource</tt></font>,
+die zur Internationalisierung von einfachen Texten verwendet werden
+kann. Die lokalisierten Varianten k&ouml;nnen dabei sehr einfach realisiert
+werden, indem sie aus <font color="#000077"><tt>SimpleTextResource</tt></font>
+abgeleitet werden. Sie m&uuml;ssen dann lediglich im Konstruktor die
+<a href="index_h.html#ixb100428"><font color=#000080><tt>Hashtable</tt></font></a>
+mit den gew&uuml;nschten Schl&uuml;ssel-/Textpaaren f&uuml;llen. 
+<a name="listingid018010"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* SimpleTextResource.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> SimpleTextResource
+<font color="#555555">006 </font><font color="#0000AA">extends</font> ResourceBundle
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">protected</font> Hashtable data = <font color="#0000AA">new</font> Hashtable();
+<font color="#555555">009 </font>
+<font color="#555555">010 </font>  <font color="#0000AA">public</font> Enumeration getKeys()
+<font color="#555555">011 </font>  {
+<font color="#555555">012 </font>    <font color="#0000AA">return</font> data.keys();
+<font color="#555555">013 </font>  }
+<font color="#555555">014 </font>
+<font color="#555555">015 </font>  <font color="#0000AA">public</font> Object handleGetObject(String key)
+<font color="#555555">016 </font>  {
+<font color="#555555">017 </font>    <font color="#0000AA">return</font> data.get(key);
+<font color="#555555">018 </font>  }
+<font color="#555555">019 </font>
+<font color="#555555">020 </font>  <font color="#0000AA">public</font> ResourceBundle getParent()
+<font color="#555555">021 </font>  {
+<font color="#555555">022 </font>    <font color="#0000AA">return</font> parent;
+<font color="#555555">023 </font>  }
+<font color="#555555">024 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/SimpleTextResource.java"><font color="#000055" size=-1>SimpleTextResource.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 18.10: Die Klasse SimpleTextResource</i></p>
+
+<p>
+Nun soll ein <a href="index_r.html#ixb100953"><font color=#000080><tt>ResourceBundle</tt></font></a>
+mit dem Namen &#187;MyTextResource&#171; erstellt werden, das &Uuml;bersetzungen
+zu den beiden Schl&uuml;sseln &#187;Hi&#171; und &#187;To&#171; liefert.
+Dazu definieren wir zun&auml;chst eine Klasse <font color="#000077"><tt>MyTextResource</tt></font>,
+die immer dann verwendet wird, wenn keine passende lokale Variante
+gefunden wird. In unserem Fall soll sie die Texte in englischer Sprache
+zur Verf&uuml;gung stellen: 
+<a name="listingid018011"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* MyTextResource.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> MyTextResource
+<font color="#555555">004 </font><font color="#0000AA">extends</font> SimpleTextResource
+<font color="#555555">005 </font>{
+<font color="#555555">006 </font>  <font color="#0000AA">public</font> MyTextResource()
+<font color="#555555">007 </font>  {
+<font color="#555555">008 </font>    data.put(<font color="#0000FF">"Hi"</font>, <font color="#0000FF">"Hello"</font>);
+<font color="#555555">009 </font>    data.put(<font color="#0000FF">"To"</font>, <font color="#0000FF">"World"</font>);
+<font color="#555555">010 </font>  }
+<font color="#555555">011 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/MyTextResource.java"><font color="#000055" size=-1>MyTextResource.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 18.11: Die Basisvariante MyTextResource</i></p>
+
+<p>
+Des Weiteren wollen wir eine allgemeine deutschsprachige und eine
+spezielle schweizerische Variante zur Verf&uuml;gung stellen: 
+<a name="listingid018012"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* MyTextResource_de.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> MyTextResource_de
+<font color="#555555">004 </font><font color="#0000AA">extends</font> SimpleTextResource
+<font color="#555555">005 </font>{
+<font color="#555555">006 </font>  <font color="#0000AA">public</font> MyTextResource_de()
+<font color="#555555">007 </font>  {
+<font color="#555555">008 </font>    data.put(<font color="#0000FF">"Hi"</font>, <font color="#0000FF">"Hallo"</font>);
+<font color="#555555">009 </font>    data.put(<font color="#0000FF">"To"</font>, <font color="#0000FF">"Welt"</font>);
+<font color="#555555">010 </font>  }
+<font color="#555555">011 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/MyTextResource_de.java"><font color="#000055" size=-1>MyTextResource_de.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 18.12: Die deutschsprachige Variante MyTextResource_de</i></p>
+<a name="listingid018013"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* MyTextResource_de_CH.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> MyTextResource_de_CH
+<font color="#555555">004 </font><font color="#0000AA">extends</font> SimpleTextResource
+<font color="#555555">005 </font>{
+<font color="#555555">006 </font>  <font color="#0000AA">public</font> MyTextResource_de_CH()
+<font color="#555555">007 </font>  {
+<font color="#555555">008 </font>    data.put(<font color="#0000FF">"Hi"</font>, <font color="#0000FF">"Gr&uuml;ezi"</font>);
+<font color="#555555">009 </font>    data.put(<font color="#0000FF">"To"</font>, <font color="#0000FF">"Schweiz"</font>);
+<font color="#555555">010 </font>  }
+<font color="#555555">011 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/MyTextResource_de_CH.java"><font color="#000055" size=-1>MyTextResource_de_CH.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 18.13: Die schweizerische Variante MyTextResource_de_CH</i></p>
+
+<p>
+Will ein Client auf eine Ressource in einem <a href="index_r.html#ixb100953"><font color=#000080><tt>ResourceBundle</tt></font></a>
+zugreifen, tut er das nicht durch direkten Aufruf von <a href="index_h.html#ixb100957"><font color=#000080><tt>handleGetObject</tt></font></a>,
+sondern er verwendet dazu eine der folgenden Methoden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Object getObject(String key)
+  throws MissingResourceException
+
+public String getString(String key)
+  throws MissingResourceException
+
+public final String[] getStringArray(String key)
+  throws MissingResourceException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/ResourceBundle.html" onClick="this.href=getApiDoc('java.util.ResourceBundle')"><font color="#660066" size=-1>java.util.ResourceBundle</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa101228"><a href="index_g.html#ixb100958"><font color=#000080><tt>getObject</tt></font></a></a>
+liefert die Ressource als <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>,
+<a name="ixa101229"><a href="index_g.html#ixb100959"><font color=#000080><tt>getString</tt></font></a></a>
+als <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+und <a name="ixa101230"><a href="index_g.html#ixb100960"><font color=#000080><tt>getStringArray</tt></font></a></a>
+als <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Array.
+Die letzten beiden Methoden dienen vornehmlich der Bequemlichkeit:
+Sie rufen selber <a href="index_g.html#ixb100958"><font color=#000080><tt>getObject</tt></font></a>
+auf und nehmen dem Aufrufer die anschlie&szlig;end erforderliche Typkonvertierung
+ab. 
+
+<p>
+Das folgende Listing zeigt ein einfaches Testprogramm, das die Textressourcen
+f&uuml;r verschiedene Lokalisierungen ermittelt und auf der Konsole
+ausgibt. Das <a href="index_r.html#ixb100953"><font color=#000080><tt>ResourceBundle</tt></font></a>
+wird beschafft, indem <a href="index_g.html#ixb100954"><font color=#000080><tt>getBundle</tt></font></a>
+mit &#187;MyTextResource&#171; und der jeweils gew&uuml;nschten <a href="index_l.html#ixb100563"><font color=#000080><tt>Locale</tt></font></a>
+als Argument aufgerufen wird. Anschlie&szlig;end wird auf die &uuml;bersetzten
+Texte mit Aufrufen von <a href="index_g.html#ixb100959"><font color=#000080><tt>getString</tt></font></a>
+zugegriffen: 
+<a name="testmytextresource"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1814.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1814
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> sayHello(Locale locale)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    System.out.print(locale + <font color="#0000FF">": "</font>);
+<font color="#555555">010 </font>    ResourceBundle textbundle = ResourceBundle.getBundle(
+<font color="#555555">011 </font>      <font color="#0000FF">"MyTextResource"</font>,
+<font color="#555555">012 </font>      locale
+<font color="#555555">013 </font>    );
+<font color="#555555">014 </font>    <font color="#0000AA">if</font> (textbundle != <font color="#006699">null</font>) {
+<font color="#555555">015 </font>      System.out.print(textbundle.getString(<font color="#0000FF">"Hi"</font>) + <font color="#0000FF">", "</font>);
+<font color="#555555">016 </font>      System.out.println(textbundle.getString(<font color="#0000FF">"To"</font>));
+<font color="#555555">017 </font>    }
+<font color="#555555">018 </font>  }
+<font color="#555555">019 </font>
+<font color="#555555">020 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">021 </font>  {
+<font color="#555555">022 </font>    sayHello(Locale.getDefault());
+<font color="#555555">023 </font>    sayHello(<font color="#0000AA">new</font> Locale(<font color="#0000FF">"de"</font>, <font color="#0000FF">"CH"</font>));
+<font color="#555555">024 </font>    sayHello(Locale.US);
+<font color="#555555">025 </font>    sayHello(Locale.FRANCE);
+<font color="#555555">026 </font>  }
+<font color="#555555">027 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1814.java"><font color="#000055" size=-1>Listing1814.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 18.14: Test von MyTextResource</i></p>
+
+<p>
+Die Ausgabe des Programms ist: 
+<font color="#333300">
+<pre>
+de_DE: Hallo, Welt
+de_CH: Gr&uuml;ezi, Schweiz
+en_US: Hallo, Welt
+fr_FR: Hallo, Welt
+</pre>
+</font>
+
+<p>
+Die Default-<a href="index_l.html#ixb100563"><font color=#000080><tt>Locale</tt></font></a>
+war beim Testen &#187;de_DE&#171;. Zwar wurde keine passende Klasse
+<font color="#000077"><tt>MyTextResource_de_DE</tt></font> definiert,
+aber durch den oben beschriebenen Fallback-Mechanismus liefert <a href="index_g.html#ixb100954"><font color=#000080><tt>getBundle</tt></font></a>
+eine Instanz von <font color="#000077"><tt>MyTextResource_de</tt></font>.
+Bei der n&auml;chsten Lokalisierung wird die erforderliche Klasse
+<font color="#000077"><tt>MyTextResource_de_CH</tt></font> direkt
+gefunden und die Ausgabe erfolgt entsprechend. Zu den letzten beiden
+Lokalisierungsw&uuml;nschen werden keine passenden Ressourcen gefunden.
+<a href="index_g.html#ixb100954"><font color=#000080><tt>getBundle</tt></font></a>
+verwendet in beiden F&auml;llen die Datei <font color="#000077"><tt>MyTextResource_de</tt></font>
+zur Default-<font color="#000077"><tt>Locale</tt></font> und die Ausgaben
+erfolgen in deutscher Sprache. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Damit die Suche nach Ressourcen und die (im n&auml;chsten Abschnitt
+zu besprechende) Vaterverkettung richtig funktionieren, m&uuml;ssen
+zu einer Ressource auch stets alle allgemeineren Ressourcen vorhanden
+sein. Gibt es etwa - wie in unserem Beispiel - eine Ressource mit
+der Endung &#187;_de_CH&#171;, so <i>m&uuml;ssen</i> auch die Ressourcen
+mit der Endung &#187;_de&#171; und die Basisressource ohne lokale
+Endung vorhanden sein.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Um die &Uuml;bersichtlichkeit zu verbessern, sollten Ressourcendateien
+in eigenen Verzeichnissen gehalten werden. Da sie mit Hilfe des Classloader
+geladen werden, m&uuml;ssen sie in einem Verzeichnis abgelegt werden,
+in dem auch eine Klasse gefunden werden w&uuml;rde. Man k&ouml;nnte
+beispielsweise im Hauptpaket der Anwendung ein Unterverzeichnis <font color="#660099">resources</font>
+anlegen und alle Ressourcendateien dort platzieren. Der im Programm
+zu verwendende Ressourcenname wird dann einfach vorne um &#187;resources.&#171;
+erg&auml;nzt. Derartige Ressourcen, die &uuml;ber den Klassenpfad
+erreichbar sind, werden auch dann gefunden, wenn das Programm in Form
+einer <font color="#660099">.jar</font>-Datei ausgeliefert wird.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id018004004003"></a>
+<h4>Die Verkettung von ResourceBundles </h4>
+
+<p>
+Ein Aufruf von <a href="index_g.html#ixb100958"><font color=#000080><tt>getObject</tt></font></a>
+wird zun&auml;chst an die Methode <a href="index_h.html#ixb100957"><font color=#000080><tt>handleGetObject</tt></font></a>
+weitergeleitet. Ist deren R&uuml;ckgabewert nicht <a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>,
+wird er an den Aufrufer &uuml;bergeben. Andernfalls wird die Anfrage
+an den <i>Vater</i> des ResourceBundle weitergereicht. Die Vaterverkettung
+erfolgt bei der Instanzierung von <a href="index_r.html#ixb100953"><font color=#000080><tt>ResourceBundle</tt></font></a>-Objekten
+automatisch, indem das jeweils n&auml;chstm&ouml;gliche allgemeinere
+<a href="index_r.html#ixb100953"><font color=#000080><tt>ResourceBundle</tt></font></a>
+als Vater verwendet wird. So ist beispielsweise der Vater von &#187;MyTextResource_de_DE&#171;
+die Ressource &#187;MyTextResource_de&#171; und deren Vater ist &#187;MyTextResource&#171;.
+
+<p>
+Durch diese Vaterverkettung muss ein spezielleres <a href="index_r.html#ixb100953"><font color=#000080><tt>ResourceBundle</tt></font></a>
+nur die Ressourcen zur Verf&uuml;gung stellen, die sich gegen&uuml;ber
+dem Vater unterscheiden oder neu hinzugekommen sind. Alle unver&auml;nderten
+Ressourcen brauchen dagegen nicht erneut definiert zu werden. Soll
+beispielsweise eine &#187;MyTextResource&#171; f&uuml;r englischsprachige
+Lokalisierungen definiert werden, die sich nur durch die &Uuml;bersetzung
+des Schl&uuml;ssels &#187;To&#171; von der Basisressource unterscheidet,
+muss &#187;Hi&#171; nicht definiert werden: 
+<a name="listingid018015"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* MyTextResource_en.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> MyTextResource_en
+<font color="#555555">004 </font><font color="#0000AA">extends</font> SimpleTextResource
+<font color="#555555">005 </font>{
+<font color="#555555">006 </font>  <font color="#0000AA">public</font> MyTextResource_en()
+<font color="#555555">007 </font>  {
+<font color="#555555">008 </font>    data.put(<font color="#0000FF">"To"</font>, <font color="#0000FF">"World of English"</font>);
+<font color="#555555">009 </font>  }
+<font color="#555555">010 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/MyTextResource_en.java"><font color="#000055" size=-1>MyTextResource_en.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 18.15: Die englische Variante MyTextResource_en</i></p>
+
+<p>
+Nach dem Anlegen und &Uuml;bersetzen dieser Klasse w&uuml;rde ein
+Aufruf von <a href="k100125.html#testmytextresource">Listing 18.14</a>
+zu folgender Ausgabe f&uuml;hren: 
+<font color="#333300">
+<pre>
+de_DE: Hallo, Welt
+de_CH: Gr&uuml;ezi, Schweiz
+en_US: Hello, World of English
+fr_FR: Hallo, Welt
+</pre>
+</font>
+
+<p>
+Die &Uuml;bersetzung von &#187;Hi&#171; kommt nun aus der Vaterressource
+<font color="#000077"><tt>MyTextResource</tt></font>. 
+
+<!-- Section -->
+
+<a name="sectlevel4id018004004004"></a>
+<h4>Die Klasse PropertyResourceBundle </h4>
+
+<p>
+Die vorangegangenen Beispiele haben an Textkonserven exemplarisch
+gezeigt, wie man Ressourcen lokalisieren kann. Sollen einfache Texte
+&uuml;bersetzt werden, gibt es aber noch einen einfacheren Weg. Das
+oben beschriebene Suchschema von <a href="index_g.html#ixb100954"><font color=#000080><tt>getBundle</tt></font></a>
+war n&auml;mlich insofern unvollst&auml;ndig, als nach jedem einzelnen
+Schritt zus&auml;tzlich eine Datei desselben Names wie die aktuelle
+Klasse, aber mit der Erweiterung <font color="#660099">.properties</font>,
+gesucht wird. Wird also beispielsweise in einem beliebigen Suchschritt
+die Klasse <font color="#000077"><tt>MyResource_de_DE</tt></font>
+nicht gefunden, so sucht <a href="index_g.html#ixb100954"><font color=#000080><tt>getBundle</tt></font></a>
+vor dem &Uuml;bergang zum n&auml;chsten Schritt nach einer Datei mit
+dem Namen <font color="#660099">MyResource_de_DE.properties</font>.
+
+<p>
+Ist eine solche vorhanden, wird eine Instanz der Klasse <a name="ixa101231"><a href="index_p.html#ixb100961"><font color=#000080><tt>PropertyResourceBundle</tt></font></a></a>
+erzeugt und an den Aufrufer zur&uuml;ckgegeben. <a href="index_p.html#ixb100961"><font color=#000080><tt>PropertyResourceBundle</tt></font></a>
+liest die Eingabedatei (sie muss dasselbe Format wie die in <a href="k100101.html#properties">Abschnitt 15.4.4</a>
+beschriebenen Property-Dateien haben) und speichert alle darin gefundenen
+Schl&uuml;ssel-Wert-Paare ab. Anschlie&szlig;end k&ouml;nnen diese
+als gew&ouml;hnliche Textressourcen vom Programm verwendet werden.
+
+<p>
+Um beispielsweise die vorigen Beispiele um eine franz&ouml;sische
+&Uuml;bersetzung zu erweitern, k&ouml;nnten wir einfach eine Datei
+<font color="#660099">MyTextResource_fr.properties</font> anlegen
+und ihr folgenden Inhalt geben: 
+<font color="#000077">
+<pre>
+Hi=Salut
+To=monde francais
+</pre>
+</font>
+
+<p>
+<a href="k100125.html#testmytextresource">Listing 18.14</a> w&uuml;rde
+nun folgende Ausgabe erzeugen: 
+<font color="#333300">
+<pre>
+de_DE: Hallo, Welt
+de_CH: Gr&uuml;ezi, Schweiz
+en_US: Hello, World of English
+fr_FR: Salut, monde francais
+</pre>
+</font>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100121.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100124.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100126.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100127.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

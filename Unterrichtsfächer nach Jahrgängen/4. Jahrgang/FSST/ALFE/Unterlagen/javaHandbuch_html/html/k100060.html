@@ -1,0 +1,420 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100057.html;106,k100059.html;107,k100061.html;108,k100063.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100057.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100059.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100061.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100063.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 9 - OOP II: Vererbung, Polymorphismus und statische Elemente
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id009003"></a>
+<h2>9.3 Statische Methoden und Membervariablen </h2>
+<hr>
+<ul>
+<li><a href="k100060.html#sectlevel2id009003">9.3 Statische Methoden und Membervariablen</a>
+<ul>
+<li><a href="k100060.html#sectlevel3id009003001">9.3.1 Klassenvariablen</a>
+<li><a href="k100060.html#sectlevel3id009003002">9.3.2 Konstanten</a>
+<li><a href="k100060.html#sectlevel3id009003003">9.3.3 Klassenmethoden</a>
+<ul>
+<li><a href="k100060.html#sectlevel4id009003003001">Die statische Methode main</a>
+</ul>
+<li><a href="k100060.html#sectlevel3id009003004">9.3.4 Statische Initialisierer</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id009003001"></a>
+<h3>9.3.1 <a name="ixa100535">Klassenvariablen</a></h3>
+
+<p>
+Java ist eine konsequent objektorientierte Sprache, in der es weder
+globale Funktionen noch globale Variablen gibt. Da es aber mitunter
+sinnvoll ist, Eigenschaften zu verwenden, die nicht an Instanzen einer
+Klasse gebunden sind, haben die Sprachdesigner das Attribut <a name="ixa100536"><a href="index_s.html#ixb100431"><font color=#000080><tt>static</tt></font></a></a>
+f&uuml;r Methoden und Variablen eingef&uuml;hrt. Eine Variable, die
+innerhalb einer Klasse mit dem Attribut <a href="index_s.html#ixb100431"><font color=#000080><tt>static</tt></font></a>
+versehen wurde, nennt man <i>Klassenvariable</i> (oder auch <a name="ixa100537"><i>Statische
+Variable</i></a>). Im Gegensatz zu Instanzvariablen,
+die immer an ein konkretes Objekt gebunden sind, existieren Klassenvariablen
+unabh&auml;ngig von einem Objekt. 
+
+<p>
+Jede Klassenvariable wird nur einmal angelegt und kann von allen Methoden
+der Klasse aufgerufen werden. Da sich alle Methoden die Variable &#187;teilen&#171;,
+sind Ver&auml;nderungen, die eine Instanz vornimmt, auch in allen
+anderen Instanzen sichtbar. Klassenvariablen sind daher vergleichbar
+mit globalen Variablen, denn ihre Lebensdauer erstreckt sich auf das
+gesamte Programm. Namenskollisionen k&ouml;nnen allerdings nicht auftreten,
+denn der Zugriff von au&szlig;en erfolgt durch Qualifizierung mit
+dem Klassennamen in der Form <font color="#000077"><tt>Klassenname.Variablenname</tt></font>.
+
+<p>
+Ein einfaches Beispiel f&uuml;r die Verwendung von Klassenvariablen
+besteht darin, einen Instanzenz&auml;hler in eine Klasse einzubauen.
+Hierzu wird eine beliebige Klassenvariable eingef&uuml;hrt, die beim
+Erzeugen eines Objekts hoch- und beim Zerst&ouml;ren heruntergez&auml;hlt
+wird. Das folgende Beispiel demonstriert das f&uuml;r die Klasse <font color="#000077"><tt>Auto</tt></font>:
+<a name="listingid009007"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Testauto.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Testauto
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">static</font> <font color="#0000AA">private</font> <font color="#006699">int</font> objcnt = 0;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> Testauto()
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    ++objcnt;
+<font color="#555555">010 </font>  }
+<font color="#555555">011 </font>
+<font color="#555555">012 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> finalize()
+<font color="#555555">013 </font>  {
+<font color="#555555">014 </font>    --objcnt;
+<font color="#555555">015 </font>  }
+<font color="#555555">016 </font>
+<font color="#555555">017 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">018 </font>  {
+<font color="#555555">019 </font>    Testauto auto1;
+<font color="#555555">020 </font>    Testauto auto2 = <font color="#0000AA">new</font> Testauto();
+<font color="#555555">021 </font>    System.out.println(
+<font color="#555555">022 </font>      <font color="#0000FF">"Anzahl Testauto-Objekte: "</font> + Testauto.objcnt
+<font color="#555555">023 </font>    );
+<font color="#555555">024 </font>  }
+<font color="#555555">025 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Testauto.java"><font color="#000055" size=-1>Testauto.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 9.7: Realisierung eines Instanzenz&auml;hlers mit Klassenvariablen</i></p>
+
+<p>
+Die Ausgabe des Programms ist: 
+<font color="#333300">
+<pre>
+Anzahl Testauto-Objekte: 1
+</pre>
+</font>
+
+<p>
+Mit <font color="#000077"><tt>auto2</tt></font> wurde eine Instanz
+der Klasse erzeugt, <font color="#000077"><tt>auto1</tt></font> ist
+dagegen zum Zeitpunkt der Ausgabeanweisung lediglich eine noch nicht
+initialisierte Objektreferenz. 
+
+<!-- Section -->
+
+<a name="sectlevel3id009003002"></a>
+<h3>9.3.2 <a name="ixa100538">Konstanten</a></h3>
+
+<p>
+Eine andere Anwendung von Klassenvariablen besteht in der Deklaration
+von Konstanten. Dazu wird das <a href="index_s.html#ixb100431"><font color=#000080><tt>static</tt></font></a>-Attribut
+mit dem <a name="ixa100539"><a href="index_f.html#ixb100410"><font color=#000080><tt>final</tt></font></a></a>-Attribut
+kombiniert, um eine unver&auml;nderliche Variable mit unbegrenzter
+Lebensdauer zu erzeugen: 
+<a name="listingid009008"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Auto
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  <font color="#0000AA">private</font> <font color="#0000AA">static</font> <font color="#0000AA">final</font> <font color="#006699">double</font> STEUERSATZ = 18.9;
+<font color="#555555">004 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 9.8: Verwendung von Klassenvariablen zur Definition von Konstanten</i></p>
+
+<p>
+Durch die Anwendung von <a href="index_f.html#ixb100410"><font color=#000080><tt>final</tt></font></a>
+wird verhindert, dass der Konstanten STEUERSATZ w&auml;hrend der Ausf&uuml;hrung
+des Programms ein anderer Wert zugewiesen wird. Da Java keinen Pr&auml;prozessor
+enth&auml;lt und damit keine <font color="#000077"><tt>#define</tt></font>-Anweisung
+kennt, ist die beschriebene Methode das einzige Verfahren zur Deklaration
+von Konstanten in Java. Die Konvention, Konstantennamen gro&szlig;
+zu schreiben, wurde dabei von C &uuml;bernommen. 
+
+<!-- Section -->
+
+<a name="sectlevel3id009003003"></a>
+<h3>9.3.3 <a name="ixa100540">Klassenmethoden</a></h3>
+
+<p>
+Neben Klassenvariablen gibt es in Java auch <i>Klassenmethoden</i>,
+d.h. Methoden, die unabh&auml;ngig von einer bestimmten Instanz existieren.
+Sie werden auch als <a name="ixa100541"><i>statische Methoden</i></a>
+bezeichnet. Klassenmethoden werden ebenfalls mit Hilfe des <a name="ixa100542"><a href="index_s.html#ixb100431"><font color=#000080><tt>static</tt></font></a></a>-Attributs
+deklariert und - analog zu Klassenvariablen - durch Voranstellen des
+Klassennamens aufgerufen. 
+
+<p>
+Da Klassenmethoden unabh&auml;ngig von konkreten Instanzen ihrer Klasse
+existieren, ist ein Zugriff auf Instanzvariablen nicht m&ouml;glich.
+Diese Trennung &auml;u&szlig;ert sich darin, dass Klassenmethoden
+keinen <a href="index_t.html#ixb100284"><font color=#000080><tt>this</tt></font></a>-Zeiger
+besitzen. Der Zugriff auf Instanzvariablen und der Aufruf von Instanzmethoden
+wird daher schon zur Compile-Zeit als Fehler erkannt. 
+
+<p>
+Klassenmethoden werden h&auml;ufig da eingesetzt, wo Funktionalit&auml;ten
+zur Verf&uuml;gung gestellt werden, die nicht datenzentriert arbeiten
+oder auf primitiven Datentypen operieren. Beispiele f&uuml;r beide
+Arten sind in der Klassenbibliothek zu finden. Zur ersten Gruppe geh&ouml;ren
+beispielsweise die Methoden der Klasse <a href="index_s.html#ixb100182"><font color=#000080><tt>System</tt></font></a>.
+Die Klasse <a href="index_s.html#ixb100182"><font color=#000080><tt>System</tt></font></a>
+ist eine Art Toolbox, die Funktionen wie <i>Aufruf des Garbage Collectors</i>
+oder <i>Beenden des Programms</i> zur Verf&uuml;gung stellt. Zur zweiten
+Gruppe geh&ouml;ren beispielsweise die Methoden der Klasse <a href="index_m.html#ixb100444"><font color=#000080><tt>Math</tt></font></a>,
+die eine gro&szlig;e Anzahl an Funktionen zur Flie&szlig;komma-Arithmetik
+zur Verf&uuml;gung stellen. Da die Flie&szlig;kommatypen primitiv
+sind, h&auml;tte ein instanzbasiertes Methodendesign an dieser Stelle
+wenig Sinn. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Eine weitere Anwendung f&uuml;r Klassenmethoden liegt in der Instanzierung
+von Objekten der eigenen Klasse. Beispiele daf&uuml;r finden sich
+in den Design-Patterns <i>Singleton</i> (siehe <a href="k100074.html#singletonpattern">Abschnitt 11.4.1</a>)
+und <i>Factory-Methode</i> (siehe <a href="k100074.html#factorypattern">Abschnitt 11.4.4</a>).</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Das folgende Listing zeigt die Verwendung der Klassenmethode <a href="index_s.html#ixb100445"><font color=#000080><tt>sqrt</tt></font></a>
+der Klasse <a href="index_m.html#ixb100444"><font color=#000080><tt>Math</tt></font></a>
+zur Ausgabe einer Tabelle von Quadratwurzeln: 
+<a name="listingid009009"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing0909.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing0909
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#006699">double</font> x, y;
+<font color="#555555">008 </font>    <font color="#0000AA">for</font> (x = 0.0; x &lt;= 10.0; x = x + 1.0) {
+<font color="#555555">009 </font>      y = Math.sqrt(x);
+<font color="#555555">010 </font>      System.out.println(<font color="#0000FF">"sqrt("</font>+x+<font color="#0000FF">") = "</font>+y);
+<font color="#555555">011 </font>    }
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing0909.java"><font color="#000055" size=-1>Listing0909.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 9.9: Verwendung von Math.sqrt</i></p>
+
+<p>
+Die Ausgabe des Programms ist: 
+<font color="#333300">
+<pre>
+sqrt(0.0) = 0.0
+sqrt(1.0) = 1.0
+sqrt(2.0) = 1.4142135623730951
+sqrt(3.0) = 1.7320508075688772
+sqrt(4.0) = 2.0
+sqrt(5.0) = 2.23606797749979
+sqrt(6.0) = 2.449489742783178
+sqrt(7.0) = 2.6457513110645907
+sqrt(8.0) = 2.8284271247461903
+sqrt(9.0) = 3.0
+sqrt(10.0) = 3.1622776601683795
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="sectlevel4id009003003001"></a>
+<h4>Die statische Methode main<a name="ixa100543"></a> </h4>
+
+<p>
+Ein schon bekanntes Beispiel f&uuml;r eine Klassenmethode ist die
+Methode <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>,
+die als Startpunkt in Applikationen verwendet wird. Im Gegensatz zu
+Applets, bei denen vom Laufzeitsystem eine Instanz der Applet-Klasse
+erzeugt und dann durch Aufruf von Callback-Methoden bedient wird,
+erfolgt der Start einer Applikation ohne die Instanzierung einer Klasse.
+Der Java-Interpreter l&auml;dt lediglich das beim Starten angegebene
+Klassenobjekt und sucht nach einer statischen Methode mit der Signatur:
+<font color="#000077">
+<pre>
+public static void main(String[] args)
+</pre>
+</font>
+
+<p>
+Wird diese gefunden, stellt es ein Array mit den Kommandozeilenparametern
+zusammen und &uuml;bergibt es als Argument an <font color="#000077"><tt>main</tt></font>.
+Wird keine Methode mit dieser Signatur gefunden, gibt es einen Laufzeitfehler.
+
+
+<!-- Section -->
+<a name="sectlevel3id009003004"></a>
+<h3>9.3.4 <a name="ixa100544">Statische Initialisierer</a></h3>
+
+<p>
+Bisher haben wir nur die M&ouml;glichkeit kennengelernt, statischen
+Variablen w&auml;hrend der Deklaration einen Wert zuzuweisen. Falls
+komplexere Initialisierungen ben&ouml;tigt werden, k&ouml;nnen zur
+Initialisierung von statischen Variablen <i>statische Initialisierer</i>
+definiert werden. 
+
+<p>
+Sie &auml;hneln gew&ouml;hnlichen Konstruktoren und dienen wie diese
+dazu, Variablen mit einem definierten Startwert zu belegen. Im Gegensatz
+zu einem gew&ouml;hnlichen Konstruktor erfolgt der Aufruf eines statischen
+Initialisierers aber nicht mit jedem neu angelegten Objekt, sondern
+nur einmal, wenn die Klasse geladen wird. 
+
+<p>
+Ein statischer Initialisierer wird als parameterlose Methode mit dem
+Namen <a name="ixa100545"><a href="index_s.html#ixb100431"><font color=#000080><tt>static</tt></font></a></a>
+definiert: 
+<a name="listingid009010"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">class</font> Test
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  <font color="#0000AA">static</font> <font color="#006699">int</font> i;
+<font color="#555555">004 </font>  <font color="#0000AA">static</font> <font color="#006699">int</font> j;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font>  <font color="#0000AA">static</font>
+<font color="#555555">007 </font>  {
+<font color="#555555">008 </font>    i = 5;
+<font color="#555555">009 </font>    j = 3 * i;
+<font color="#555555">010 </font>  }
+<font color="#555555">011 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 9.10: Definition eines statischen Initialisierers</i></p>
+
+<p>
+Da der statische Initialisierer vom Laufzeitsystem aufgerufen wird,
+wenn die Klasse geladen wird, ist eine benutzerdefinierte Parametrisierung
+nicht m&ouml;glich. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Es ist erlaubt, mehrere statische Initialisierer innerhalb einer Klasse
+zu definieren. Sie werden dann nacheinander in der textuellen Reihenfolge
+ihrer Deklaration ausgef&uuml;hrt. Wechseln sich initialisierte statische
+Variablen und statische Initialisierer im Quelltext ab, werden beide
+gleichwertig behandelt, d.h., die Ausf&uuml;hrung erfolgt unabh&auml;ngig
+vom Typ in textueller Reihenfolge. Eine Ausnahme bilden lediglich
+die statischen Variablen, denen Konstanten zugewiesen werden, deren
+Wert bereits zur Compile-Zeit feststeht. Ihre Initialisierung erfolgt
+- unabh&auml;ngig von ihrer Position im Quellcode - unmittelbar nach
+dem Laden der Klasse.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100057.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100059.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100061.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100063.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100157.html;106,k100157.html;107,k100159.html;108,k100163.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100157.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100157.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100159.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100163.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 24 - Grafikausgabe
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id024001"></a>
+<h2>24.1 Das Abstract Windowing Toolkit </h2>
+<hr>
+<ul>
+<li><a href="k100158.html#sectlevel2id024001">24.1 Das Abstract Windowing Toolkit</a>
+<ul>
+<li><a href="k100158.html#sectlevel3id024001001">24.1.1 Grundlegende Eigenschaften</a>
+<li><a href="k100158.html#sectlevel3id024001002">24.1.2 Von AWT nach Swing</a>
+<ul>
+<li><a href="k100158.html#sectlevel4id024001002001">&Auml;nderungen mit dem JDK 1.1</a>
+<li><a href="k100158.html#sectlevel4id024001002002">Swing</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id024001001"></a>
+<h3>24.1.1 Grundlegende Eigenschaften </h3>
+
+<p>
+Im Gegensatz zu den meisten anderen Programmiersprachen wurde Java
+von Anfang an mit dem Anspruch entwickelt, ein vielseitiges, aber
+einfach zu bedienendes System f&uuml;r die Gestaltung grafischer Oberfl&auml;chen
+zur Verf&uuml;gung zu stellen. Das Resultat dieser Bem&uuml;hungen
+steht seit dem JDK 1.0 als Grafikbibliothek unter dem Namen <a name="ixa101519"><i>Abstract
+Windowing Toolkit</i></a> (<a name="ixa101520"><i>AWT</i></a>)
+zur Verf&uuml;gung. 
+
+<p>
+Die F&auml;higkeiten des AWT lassen sich grob in vier Gruppen unterteilen:
+<ul>
+<li>Grafische Primitivoperationen zum Zeichnen von Linien oder F&uuml;llen
+von Fl&auml;chen und zur Ausgabe von Text
+<li>Methoden zur Steuerung des Programmablaufs auf der Basis von Nachrichten
+f&uuml;r Tastatur-, Maus- und Fensterereignisse
+<li>Dialogelemente zur Kommunikation mit dem Anwender und Funktionen
+zum portablen Design von Dialogboxen
+<li>Fortgeschrittenere Grafikfunktionen zur Darstellung und Manipulation
+von Bitmaps und zur Ausgabe von Sound
+</ul>
+
+<p>
+Da die grafischen F&auml;higkeiten Bestandteil der Sprache bzw. ihrer
+Klassenbibliothek sind, k&ouml;nnen sie als portabel angesehen werden.
+Unabh&auml;ngig von der Zielplattform wird ein GUI-basiertes Programm
+auf allen verwendeten Systemen gleich oder zumindest &auml;hnlich
+laufen. 
+
+<!-- Section -->
+
+<a name="sectlevel3id024001002"></a>
+<h3>24.1.2 Von AWT nach Swing </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id024001002001"></a>
+<h4>&Auml;nderungen mit dem JDK 1.1 </h4>
+
+<p>
+Die Entwicklung von grafikorientierten Anwendungen im JDK 1.0 war
+zwar relativ einfach und erzeugte portable Programme mit grafischer
+Oberfl&auml;che, war aber durch eine Reihe von Fehlern und Restriktionen
+des AWT eingeschr&auml;nkt. Vor allem bei der Erstellung gro&szlig;er
+GUI-Anwendungen wurden die Programme schnell un&uuml;bersichtlich
+und die Performance litt unter dem unzul&auml;nglichen Event-Modell
+der Version 1.0. Mit der Version 1.1 des JDK hat SUN das AWT massiv
+ver&auml;ndert. Es gab umfangreiche Fehlerbehebungen und eine Vielzahl
+von Methodennamen wurden ge&auml;ndert. Vor allem aber wurde das Event-Handling,
+also der Transfer von GUI-Ereignissen, komplett &uuml;berarbeitet.
+
+<p>
+Das neue Schlagwort lautet <a name="ixa101521"><i>Delegation Based Event Handling</i></a>.
+Es bezeichnet die F&auml;higkeit des AWT, GUI-Ereignisse an beliebige
+Objekte weiterzuleiten und dort zu behandeln. Obwohl das Verst&auml;ndnis
+f&uuml;r diese neuen Techniken etwas schwieriger zu erlangen ist als
+beim alten Event-Modell, lohnt sich der zus&auml;tzliche Aufwand.
+Die Entwicklung gro&szlig;er GUI-Anwendungen mit einer klaren Trennung
+zwischen Benutzeroberfl&auml;che und Applikationslogik wird so erst
+m&ouml;glich gemacht. Wir gehen in <a href="k100181.html#kapiteleventhandling">Kapitel 28</a>
+detailliert auf das neue Paradigma ein. Wo erforderlich, werden einzelne
+Bestandteile bereits vorher informell eingef&uuml;hrt. 
+
+<!-- Section -->
+
+<a name="sectlevel4id024001002002"></a>
+<h4>Swing </h4>
+
+<p>
+Neben dem AWT gibt es eine zweite Bibliothek f&uuml;r die Gestaltung
+grafischer Benutzeroberfl&auml;chen. Sie hei&szlig;t <a name="ixa101522"><i>Swing</i></a>,
+ist seit dem JDK 1.1 als Add-On verf&uuml;gbar und seit der Version
+1.2 fester Bestandteil des Java Development Kit. Da Swing-Anwendungen
+in ihren M&ouml;glichkeiten weit &uuml;ber das hinausgehen, was das
+AWT bietet, werden die meisten GUI-Programme heute mit Swing geschrieben.
+Wir beschreiben Swing ab <a href="k100236.html#kapitelswinggrundlagen">Kapitel 36</a>,
+denn es macht Sinn, sich zun&auml;chst mit dem AWT zu besch&auml;ftigen.
+
+<p>
+Einerseits ist das AWT einfacher zu erlernen, denn es ist weniger
+umfangreich als Swing. Gerade als Anf&auml;nger muss man nicht so
+viele neue Konzepte erlernen. Zum anderen werden viele der AWT-Features
+auch in Swing ben&ouml;tigt und das m&uuml;hsam angeeignete Wissen
+ist nicht v&ouml;llig verloren. Ob es um die Verwendung von Farben
+oder unterschiedlichen Schriftarten oder um die Anordnung von Dialogelementen
+mit Hilfe von Panels und Layout-Managern geht, die zugrunde liegenden
+Techniken sind in beiden F&auml;llen gleich. Drittens gibt es auch
+heute noch Anwendungen f&uuml;r das AWT, etwa bei der Applet-Programmierung
+oder wenn die Verwendung von plattformspezifischen Dialogelementen
+zwingend erforderlich ist. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Leser, die dennoch ausschlie&szlig;lich Swing lernen wollen und das
+AWT als unn&ouml;tigen Ballast ansehen, brauchen die Kapitel <a href="k100193.html#kapitelmenues">30</a>
+und <a href="k100207.html#kapitelawtdialogelemente">32</a> lediglich
+kurz anzusehen. Das dazwischen liegende <a href="k100202.html#kapitelguidialoge">Kapitel 31</a>
+sollte dagegen nicht &uuml;bersprungen werden, denn es beschreibt
+die Arbeitsweise und Anwendung der Layoutmanager. Die &uuml;brigen
+Kapitel in diesem Teil des Buchs behandeln Themen, die in beiden Welten
+von Bedeutung sind.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100157.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100157.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100159.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100163.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

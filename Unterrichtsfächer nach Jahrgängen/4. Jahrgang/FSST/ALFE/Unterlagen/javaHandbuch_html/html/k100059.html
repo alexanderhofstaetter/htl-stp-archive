@@ -1,0 +1,412 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100057.html;106,k100058.html;107,k100060.html;108,k100063.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100057.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100058.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100060.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100063.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 9 - OOP II: Vererbung, Polymorphismus und statische Elemente
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="modifier"></a>
+<h2>9.2 <a name="ixa100519">Modifier</a></h2>
+<hr>
+<ul>
+<li><a href="k100059.html#modifier">9.2 Modifier</a>
+<ul>
+<li><a href="k100059.html#sectlevel3id009002001">9.2.1 Sichtbarkeit</a>
+<li><a href="k100059.html#sectlevel3id009002002">9.2.2 Die Attribute im &Uuml;berblick</a>
+<ul>
+<li><a href="k100059.html#sectlevel4id009002002001">private</a>
+<li><a href="k100059.html#sectlevel4id009002002002">protected</a>
+<li><a href="k100059.html#sectlevel4id009002002003">public</a>
+<li><a href="k100059.html#sectlevel4id009002002004">Standard (package scoped)</a>
+<li><a href="k100059.html#sectlevel4id009002002005">static</a>
+<li><a href="k100059.html#sectlevel4id009002002006">final</a>
+<li><a href="k100059.html#sectlevel4id009002002007">transient</a>
+<li><a href="k100059.html#sectlevel4id009002002008">volatile</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+<p>
+In diesem Kapitel wurden an verschiedenen Stellen Beispiele gezeigt,
+in denen Schl&uuml;sselw&ouml;rter wie <a href="index_p.html#ixb100083"><font color=#000080><tt>public</tt></font></a>
+oder <a href="index_p.html#ixb100084"><font color=#000080><tt>private</tt></font></a>
+zusammen mit bestimmten Programmelementen verwendet wurden. Mit Hilfe
+dieser Attribute k&ouml;nnen die Eigenschaften von Klassen, Methoden
+und Variablen ver&auml;ndert werden. Sie haben insbesondere Einfluss
+auf die <a name="ixa100520"><i>Lebensdauer</i></a>, <i>Sichtbarkeit</i>
+und <a name="ixa100521"><i>Ver&auml;nderbarkeit</i></a> dieser Programmelemente
+und werden meist als <i>Modifier</i> bezeichnet. Wir wollen sie nun
+im Zusammenhang betrachten und ihre Wirkungsweise auf die verschiedenen
+Elemente eines Java-Programms erl&auml;utern. 
+
+<!-- Section -->
+
+<a name="sectlevel3id009002001"></a>
+<h3>9.2.1 <a name="ixa100522">Sichtbarkeit</a></h3>
+
+<p>
+Die eingangs erw&auml;hnte Tatsache, dass in einer abgeleiteten Klasse
+alle Eigenschaften der Basisklasse &uuml;bernommen werden, ist nicht
+in allen F&auml;llen ganz korrekt. Zwar besitzt sie immer alle Variablen
+und Methoden der Basisklasse, kann aber unter Umst&auml;nden nicht
+darauf zugreifen, wenn ihre Sichtbarkeit eingeschr&auml;nkt wurde.
+
+<p>
+Die Sichtbarkeit von Variablen und Methoden wird mit Hilfe folgender
+Modifier geregelt: 
+<ul>
+<li>Elemente des Typs <a name="ixa100523"><a href="index_p.html#ixb100083"><font color=#000080><tt>public</tt></font></a></a>
+sind in der Klasse selbst (also in ihren Methoden), in Methoden abgeleiteter
+Klassen und f&uuml;r den Aufrufer von Instanzen der Klasse sichtbar.
+<li>Elemente des Typs <a name="ixa100524"><a href="index_p.html#ixb100085"><font color=#000080><tt>protected</tt></font></a></a>
+sind in der Klasse selbst und in Methoden abgeleiteter Klassen sichtbar.
+Zus&auml;tzlich k&ouml;nnen Klassen desselben Pakets sie aufrufen.
+<li>Elemente des Typs <a name="ixa100525"><a href="index_p.html#ixb100084"><font color=#000080><tt>private</tt></font></a></a>
+sind lediglich in der Klasse selbst sichtbar. F&uuml;r abgeleitete
+Klassen und f&uuml;r Aufrufer von Instanzen bleiben <a href="index_p.html#ixb100084"><font color=#000080><tt>private</tt></font></a>-Variablen
+verdeckt.
+<li>Elemente, die ohne einen der drei genannten Modifier deklariert
+wurden, werden als <a name="ixa100526"><i>package scoped</i></a> oder
+Elemente mit <a name="ixa100527"><i>Standard-Sichtbarkeit</i></a>
+bezeichnet. Sie sind nur innerhalb des Pakets sichtbar, zu dem diese
+Klasse geh&ouml;rt. In anderen Paketen sind sie dagegen unsichtbar.
+</ul>
+
+<p>
+Mit Hilfe dieser Sichtbarkeitsebenen kann der Zugriff auf Klassenelemente
+eingeschr&auml;nkt werden. <a href="index_p.html#ixb100084"><font color=#000080><tt>private</tt></font></a>-Elemente
+sollten immer dann verwendet werden, wenn implementierungsabh&auml;ngige
+Details zu verstecken sind, die auch in abgeleiteten Klassen nicht
+sichtbar sein sollen. <a href="index_p.html#ixb100085"><font color=#000080><tt>protected</tt></font></a>-Elemente
+sind vor Zugriffen von au&szlig;en gesch&uuml;tzt, k&ouml;nnen aber
+von abgeleiteten Klassen verwendet werden. Die <a href="index_p.html#ixb100083"><font color=#000080><tt>public</tt></font></a>-Elemente
+schlie&szlig;lich bilden die f&uuml;r alle sichtbaren Teile einer
+Klassendefinition und k&ouml;nnen daher als ihre Schnittstelle angesehen
+werden. Nachfolgend werden die verschiedenen Sichtbarkeitsattribute
+noch einmal genau beschrieben. Elemente mit Standard-Sichtbarkeit
+verhalten sich innerhalb des Pakets wie <a href="index_p.html#ixb100083"><font color=#000080><tt>public</tt></font></a>-
+und au&szlig;erhalb wie <a href="index_p.html#ixb100084"><font color=#000080><tt>private</tt></font></a>-Elemente.
+
+
+<!-- Section -->
+<a name="sectlevel3id009002002"></a>
+<h3>9.2.2 Die Attribute im &Uuml;berblick </h3>
+
+<p>
+Nachfolgend wollen wir die wichtigsten Attribute noch einmal zusammenfassend
+darstellen und ihre jeweiligen Auswirkungen auf die Sichtbarkeit,
+Lebensdauer oder Ver&auml;nderbarkeit von Variablen, Methoden und
+Klassen beschreiben. 
+
+<!-- Section -->
+
+<a name="sectlevel4id009002002001"></a>
+<h4>private </h4>
+
+<p>
+Methoden oder Variablen vom Typ <a name="ixa100528"><a href="index_p.html#ixb100084"><font color=#000080><tt>private</tt></font></a></a>
+sind nur in der aktuellen Klasse sichtbar, in allen anderen Klassen
+bleiben sie dagegen unsichtbar. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Diese Einschr&auml;nkung bedeutet &uuml;berraschenderweise nicht,
+dass die Methoden einer Klasse nur auf die privaten Membervariablen
+des eigenen Objekts zugreifen d&uuml;rfen. Vielmehr ist es ebenfalls
+m&ouml;glich, (quasi von au&szlig;en) auf die <a href="index_p.html#ixb100084"><font color=#000080><tt>private</tt></font></a>-Variablen
+eines <i>anderen</i> Objekts zuzugreifen. Vorausgesetzt, es handelt
+sich um eine Instanz derselben Klasse. 
+
+<p>
+Das folgende Beispielprogramm demonstriert dies mit Hilfe der Klasse
+<font color="#000077"><tt>ClassWithPrivateA</tt></font>, die eine
+private Membervariable <font color="#000077"><tt>a</tt></font> besitzt.
+An der Implementierung von <font color="#000077"><tt>setOtherA</tt></font>
+k&ouml;nnen wir erkennen, wie der Zugriff auf fremde Objekte desselben
+Typs m&ouml;glich ist: 
+<a name="listingid009006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing0906.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing0906
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    ClassWithPrivateA a1 = <font color="#0000AA">new</font> ClassWithPrivateA(7);
+<font color="#555555">008 </font>    ClassWithPrivateA a2 = <font color="#0000AA">new</font> ClassWithPrivateA(11);
+<font color="#555555">009 </font>    a2.setOtherA(a1, 999);
+<font color="#555555">010 </font>    System.out.println(<font color="#0000FF">"a1 = "</font> + a1.toString());
+<font color="#555555">011 </font>    System.out.println(<font color="#0000FF">"a2 = "</font> + a2.toString());
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>}
+<font color="#555555">014 </font>
+<font color="#555555">015 </font><font color="#0000AA">class</font> ClassWithPrivateA
+<font color="#555555">016 </font>{
+<font color="#555555">017 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font> a;
+<font color="#555555">018 </font>
+<font color="#555555">019 </font>  <font color="#0000AA">public</font> ClassWithPrivateA(<font color="#006699">int</font> a)
+<font color="#555555">020 </font>  {
+<font color="#555555">021 </font>    <font color="#006699">this</font>.a = a;
+<font color="#555555">022 </font>  }
+<font color="#555555">023 </font>
+<font color="#555555">024 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setOtherA(ClassWithPrivateA other, <font color="#006699">int</font> newvalue)
+<font color="#555555">025 </font>  {
+<font color="#555555">026 </font>    other.a = newvalue;
+<font color="#555555">027 </font>  }
+<font color="#555555">028 </font>
+<font color="#555555">029 </font>  <font color="#0000AA">public</font> String toString()
+<font color="#555555">030 </font>  {
+<font color="#555555">031 </font>    <font color="#0000AA">return</font> <font color="#0000FF">""</font> + a;
+<font color="#555555">032 </font>  }
+<font color="#555555">033 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing0906.java"><font color="#000055" size=-1>Listing0906.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 9.6: Zugriff auf fremde private Membervariablen</i></p>
+</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+An der Ausgabe des Programms kann man erkennen, dass &uuml;ber das
+Objekt <i>a2</i> auf private Membervariablen des Objekts <i>a1</i>
+zugegriffen wurde: 
+<font color="#000077">
+<pre>
+a1 = 999
+a2 = 11
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="sectlevel4id009002002002"></a>
+<h4>protected </h4>
+
+<p>
+Methoden oder Variablen vom Typ <a name="ixa100529"><a href="index_p.html#ixb100085"><font color=#000080><tt>protected</tt></font></a></a>
+sind in der aktuellen Klasse und in abgeleiteten Klassen sichtbar.
+Dar&uuml;ber hinaus sind sie f&uuml;r Methoden anderer Klassen innerhalb
+desselben Pakets sichtbar. Sie sind jedoch nicht f&uuml;r Aufrufer
+der Klasse sichtbar, die in anderen Paketen definiert wurden. 
+
+<!-- Section -->
+
+<a name="sectlevel4id009002002003"></a>
+<h4>public </h4>
+
+<p>
+Membervariablen und Methoden vom Typ <a name="ixa100530"><a href="index_p.html#ixb100083"><font color=#000080><tt>public</tt></font></a></a>
+sind im Rahmen ihrer Lebensdauer &uuml;berall sichtbar. Sie k&ouml;nnen
+daher in der eigenen Klasse und von beliebigen Methoden anderer Klassen
+verwendet werden. Das Attribut <a href="index_p.html#ixb100083"><font color=#000080><tt>public</tt></font></a>
+ist zus&auml;tzlich auch bei der Klassendefinition selbst von Bedeutung,
+denn nur Klassen, die als <a href="index_p.html#ixb100083"><font color=#000080><tt>public</tt></font></a>
+deklariert wurden, sind au&szlig;erhalb des Pakets sichtbar, in dem
+sie definiert wurden. In jeder Quelldatei darf nur eine Klasse mit
+dem Attribut <a href="index_p.html#ixb100083"><font color=#000080><tt>public</tt></font></a>
+angelegt werden. 
+
+<!-- Section -->
+
+<a name="sectlevel4id009002002004"></a>
+<h4>Standard (<a name="ixa100531">package scoped</a>) </h4>
+
+<p>
+Klassen, Methoden, Variablen mit Standard-Sichtbarkeit sind nur innerhalb
+des Pakets sichtbar, in dem sie definiert wurden. Sie sind beispielsweise
+n&uuml;tzlich, um in aufw&auml;ndigeren Paketen allgemein zug&auml;ngliche
+Hilfsklassen zu realisieren, die au&szlig;erhalb des Pakets unsichtbar
+bleiben sollen. Sie k&ouml;nnen mitunter n&uuml;tzlich sein, um zu
+verhindern, dass Elemente als <a href="index_p.html#ixb100083"><font color=#000080><tt>public</tt></font></a>
+deklariert werden. 
+
+<!-- Section -->
+
+<a name="sectlevel4id009002002005"></a>
+<h4>static </h4>
+
+<p>
+Variablen und Methoden mit dem Attribut <a name="ixa100532"><a href="index_s.html#ixb100431"><font color=#000080><tt>static</tt></font></a></a>
+sind nicht an die Existenz eines konkreten Objekts gebunden, sondern
+existieren vom Laden der Klasse bis zum Beenden des Programms. Das
+<a href="index_s.html#ixb100431"><font color=#000080><tt>static</tt></font></a>-Attribut
+beeinflusst bei Membervariablen ihre Lebensdauer und erlaubt bei Methoden
+den Aufruf, ohne dass der Aufrufer ein Objekt der Klasse besitzt,
+in der die Methode definiert wurde. 
+
+<p>
+Wird das Attribut <a href="index_s.html#ixb100431"><font color=#000080><tt>static</tt></font></a>
+nicht verwendet, so sind Variablen innerhalb einer Klasse immer an
+eine konkrete Instanz gebunden. Ihre Lebensdauer beginnt mit dem Anlegen
+des Objekts und dem Aufruf eines Konstruktors und endet mit der Freigabe
+des Objekts durch den Garbage Collector. 
+
+<!-- Section -->
+
+<a name="sectlevel4id009002002006"></a>
+<h4>final </h4>
+
+<p>
+Membervariablen mit dem Attribut <a name="ixa100533"><a href="index_f.html#ixb100410"><font color=#000080><tt>final</tt></font></a></a>
+d&uuml;rfen nicht ver&auml;ndert werden, sind also als <i>Konstanten</i>
+anzusehen. Methoden des Typs <a href="index_f.html#ixb100410"><font color=#000080><tt>final</tt></font></a>
+d&uuml;rfen nicht &uuml;berlagert werden; ebenso wenig d&uuml;rfen
+Klassen des Typs <a href="index_f.html#ixb100410"><font color=#000080><tt>final</tt></font></a>
+zur Ableitung neuer Klassen verwendet werden. Wird das Attribut <a href="index_f.html#ixb100410"><font color=#000080><tt>final</tt></font></a>
+dagegen nicht verwendet, sind Membervariablen ver&auml;nderbar, k&ouml;nnen
+Methoden &uuml;berlagert und Klassen abgeleitet werden. 
+
+<p>
+Falls eine Methode oder Klasse das Attribut <a href="index_f.html#ixb100410"><font color=#000080><tt>final</tt></font></a>
+besitzt, kann der Compiler auf die dynamische Methodensuche verzichten.
+<a href="index_f.html#ixb100410"><font color=#000080><tt>final</tt></font></a>-Methoden
+k&ouml;nnen daher performanter aufgerufen werden als normale Methoden.
+Dies ist einer der Gr&uuml;nde daf&uuml;r, dass die Java-Designer
+einige der mitgelieferten Klassen als <a href="index_f.html#ixb100410"><font color=#000080><tt>final</tt></font></a>
+deklariert haben. Es f&uuml;hrt aber gleichzeitig dazu, dass die entsprechenden
+Klassen nicht mehr erweitert werden k&ouml;nnen. Ein prominentes Beispiel
+aus der Laufzeitbibliothek ist die als <a href="index_f.html#ixb100410"><font color=#000080><tt>final</tt></font></a>
+deklarierte Klasse <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>.
+
+<p>
+Seit dem JDK 1.1 kann das <a href="index_f.html#ixb100410"><font color=#000080><tt>final</tt></font></a>-Attribut
+auch auf Parameter von Methoden und lokale Variablen angewendet werden.
+Dadurch stellt der Compiler sicher, dass die Variable bzw. der Parameter
+nach der Initialisierung nicht mehr ver&auml;ndert wird. Die Initialisierung
+muss dabei nicht unbedingt bei der Deklaration erfolgen, sondern kann
+auch sp&auml;ter vorgenommen werden. Wichtig ist, dass nur genau einmal
+ein Wert zugewiesen wird. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Im Gegensatz zu C oder C++ gibt es allerdings bei als <a href="index_f.html#ixb100410"><font color=#000080><tt>final</tt></font></a>
+deklarierten Objektparametern keine M&ouml;glichkeit, zwischen dem
+Objekt insgesamt und seinen einzelnen Elementen zu unterscheiden.
+Eine als <a href="index_f.html#ixb100410"><font color=#000080><tt>final</tt></font></a>
+deklarierte Objektvariable wird zwar insgesamt vor Zuweisungen gesch&uuml;tzt,
+der Wert einzelner Membervariablen kann jedoch ver&auml;ndert werden.
+Dies gilt analog f&uuml;r Arrays, die ja ebenfalls Objekte sind: <a href="index_f.html#ixb100410"><font color=#000080><tt>final</tt></font></a>
+bietet keinen Schutz gegen die unerw&uuml;nschte Zuweisung eines Werts
+an ein einzelnes Element des Arrays.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id009002002007"></a>
+<h4>transient </h4>
+
+<p>
+Membervariablen k&ouml;nnen mit dem Attribut <a href="index_t.html#ixb100438"><font color=#000080><tt>transient</tt></font></a>
+belegt werden, um anzuzeigen, dass sie keine persistente Form besitzen.
+Sie werden beim Serialisieren und Deserialisieren von Objekten dieses
+Typs ignoriert. Details werden in <a href="k100269.html#kapitelserialisierung">Kapitel 42</a>
+beschrieben. 
+
+<!-- Section -->
+
+<a name="sectlevel4id009002002008"></a>
+<h4>volatile </h4>
+
+<p>
+Das Schl&uuml;sselwort <a name="ixa100534"><a href="index_v.html#ixb100439"><font color=#000080><tt>volatile</tt></font></a></a>
+wird verwendet, um anzuzeigen, dass Membervariablen <i>asynchron</i>,
+also au&szlig;erhalb des aktuellen Threads, modifiziert werden k&ouml;nnen.
+Der Wert einer so deklarierten Variable wird daher bei jedem Zugriff
+erneut gelesen (anstatt m&ouml;glicherweise direkt aus einem Register
+der virtuellen Maschine genommen zu werden). Die Verwendung von <a href="index_v.html#ixb100439"><font color=#000080><tt>volatile</tt></font></a>
+ist eher ungebr&auml;uchlich. Es kann beispielsweise zur Sicherstellung
+der Datenintegrit&auml;t beim Multithreading verwendet werden oder
+dient dazu, Zugriffe auf asynchron ver&auml;nderliche Speicherstellen
+(etwa eine Echtzeituhr, auf die &uuml;ber eine Variable zugegriffen
+wird) stets aktuell zu halten. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100057.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100058.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100060.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100063.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

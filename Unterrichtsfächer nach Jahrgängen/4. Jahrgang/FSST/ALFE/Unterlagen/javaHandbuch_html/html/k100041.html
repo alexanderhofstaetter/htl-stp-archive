@@ -1,0 +1,134 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100036.html;106,k100040.html;107,k100042.html;108,k100046.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100036.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100040.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100042.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100046.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 6 - Ausdr&uuml;cke
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id006005"></a>
+<h2>6.5 <a name="ixa100359">Bitweise Operatoren</a><a name="ixa100360"></a></h2>
+<hr>
+<ul>
+<li><a href="k100041.html#sectlevel2id006005">6.5 Bitweise Operatoren</a>
+</ul>
+<hr>
+
+<p>
+Mit Hilfe der bitweisen Operatoren kann auf die Bin&auml;rdarstellung
+von numerischen Operanden zugegriffen werden. Ein numerischer Datentyp
+wird dabei als Folge von Bits angesehen, die mit Hilfe der bitweisen
+Operatoren einzeln abgefragt und manipuliert werden k&ouml;nnen. 
+
+<p>
+Java hat dieselben bitweisen Operatoren wie C und C++ und stellt daher
+<a name="ixa100361"><i>Schiebeoperationen</i></a>, <i>logische Verkn&uuml;pfungen</i>
+und das <a name="ixa100362"><i>Einerkomplement</i></a> zur Verf&uuml;gung.
+Da alle numerischen Typen in Java vorzeichenbehaftet sind, gibt es
+einen zus&auml;tzlichen <a name="ixa100363"><i>Rechtsschiebeoperator</i></a>
+<font color="#000077"><tt>&gt;&gt;&gt;</tt></font>, der das h&ouml;chstwertige
+Bit nach der Verschiebung auf 0 setzt - und zwar auch dann, wenn es
+vorher auf 1 stand. <a href="k100041.html#bitweiseoperatoren">Tabelle 6.4</a>
+gibt eine &Uuml;bersicht &uuml;ber die bitweisen Operatoren in Java.
+<a name="bitweiseoperatoren"></a>
+<p>
+<table cols=3 border width=100%>
+
+<tr>
+<td valign=top align=left width=33%><b>Operator</b></td>
+<td valign=top align=left width=33%><b>Bezeichnung</b></td>
+<td valign=top align=left width=33%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left>~</td>
+<td valign=top align=left>Einerkomplement</td>
+<td valign=top align=left>~a entsteht aus a, indem alle Bits von a
+invertiert werden. </td></tr>
+<tr>
+<td valign=top align=left>|</td>
+<td valign=top align=left>Bitweises ODER</td>
+<td valign=top align=left>a | b ergibt den Wert, der entsteht, wenn
+die korrespondierenden Bits von a und b miteinander ODER-verkn&uuml;pft
+werden. </td></tr>
+<tr>
+<td valign=top align=left>&amp;</td>
+<td valign=top align=left>Bitweises UND</td>
+<td valign=top align=left>a &amp; b ergibt den Wert, der entsteht,
+wenn die korrespondierenden Bits von a und b miteinander UND-verkn&uuml;pft
+werden. </td></tr>
+<tr>
+<td valign=top align=left>^</td>
+<td valign=top align=left>Bitweises Exklusiv-ODER</td>
+<td valign=top align=left>a ^ b ergibt den Wert, der entsteht, wenn
+die korrespondierenden Bits von a und b miteinander Exklusiv-ODER-verkn&uuml;pft
+werden. </td></tr>
+<tr>
+<td valign=top align=left>&gt;&gt;</td>
+<td valign=top align=left>Rechtsschieben mit Vorzeichen</td>
+<td valign=top align=left>a &gt;&gt; b ergibt den Wert, der entsteht,
+wenn alle Bits von a um b Positionen nach rechts geschoben werden.
+Falls das h&ouml;chstwertige Bit gesetzt ist (a also negativ ist),
+wird auch das h&ouml;chstwertige Bit des Resultats gesetzt. </td></tr>
+<tr>
+<td valign=top align=left>&gt;&gt;&gt;</td>
+<td valign=top align=left>Rechtsschieben ohne Vorzeichen</td>
+<td valign=top align=left>a &gt;&gt;&gt; b ergibt den Wert, der entsteht,
+wenn alle Bits von a um b Positionen nach rechts geschoben werden.
+Dabei wird das h&ouml;chstwertige Bit des Resultats immer auf 0 gesetzt.
+</td></tr>
+<tr>
+<td valign=top align=left>&lt;&lt;</td>
+<td valign=top align=left>Linksschieben</td>
+<td valign=top align=left>a &lt;&lt; b ergibt den Wert, der entsteht,
+wenn alle Bits von a um b Positionen nach links geschoben werden.
+Das h&ouml;chstwertige Bit (also das Vorzeichen) erf&auml;hrt keine
+besondere Behandlung. </td></tr>
+</table>
+<p><i>
+Tabelle 6.4: Bitweise Operatoren </i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100036.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100040.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100042.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100046.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

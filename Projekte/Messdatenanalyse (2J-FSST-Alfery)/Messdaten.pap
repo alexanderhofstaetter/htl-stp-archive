@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FRAME GUID="2FB25471-B62C-4EE6-BD43-F819C095ACF8" FORMAT="0000" APP_VERSION="2.2.0.8" CHECKSUM="FC9C4DC3AF38245F">
+  <PROJECT FORMAT="1.00" NAME="Messdatenanalyse" AUTHOR="Alex Hofstätter" CREATED="2013.06.06 14:17:21" MODIFIED="2013.06.06 14:25:28">
+    <DIAGRAMS>
+      <DIAGRAM FORMAT="1.00" ID="0" NAME="Messdatenanalyse" CREATED="2013.06.06 14:17:31" MODIFIED="2013.06.06 14:25:28">
+        <LAYOUT FORMAT="1.00" COLUMNS="2" ROWS="11">
+          <ENTRIES>
+            <ENTRY COLUMN="0" ROW="0" ANCHOR="True">
+              <FIGURE SUBTYPE="PapTitle" FORMAT="1.00" ID="0">
+                <TEXT><![CDATA[Messdatenanalyse]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="0" ROW="1">
+              <FIGURE SUBTYPE="PapStart" FORMAT="1.00" ID="1">
+                <TEXT><![CDATA[Start]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="0" ROW="2">
+              <FIGURE SUBTYPE="PapLoopStart" FORMAT="1.00" ID="29" ASSOCIATE="31">
+                <TEXT><![CDATA[Wiederholung]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="0" ROW="3">
+              <FIGURE SUBTYPE="PapCondition" FORMAT="1.00" ID="54">
+                <TEXT><![CDATA[CSV Datei einlesen]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="0" ROW="4">
+              <FIGURE SUBTYPE="PapActivity" FORMAT="1.00" ID="6">
+                <TEXT><![CDATA[Analyse]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="0" ROW="5">
+              <FIGURE SUBTYPE="PapCondition" FORMAT="1.00" ID="59">
+                <TEXT><![CDATA[HTML- und Text Ausgabe Datei erstellen]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="0" ROW="6">
+              <FIGURE SUBTYPE="PapCondition" FORMAT="1.00" ID="38">
+                <TEXT><![CDATA[Taste gedrückt]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="0" ROW="7">
+              <FIGURE SUBTYPE="PapActivity" FORMAT="1.00" ID="49">
+                <TEXT><![CDATA[Grafikausgabe]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="0" ROW="8">
+              <FIGURE SUBTYPE="PapLoopEnd" FORMAT="1.00" ID="31" ASSOCIATE="29">
+                <TEXT><![CDATA[bis ESC Taste gedrückt]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="0" ROW="9">
+              <FIGURE SUBTYPE="PapConnector" FORMAT="1.00" ID="46">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="0" ROW="10">
+              <FIGURE SUBTYPE="PapEnd" FORMAT="1.00" ID="2">
+                <TEXT><![CDATA[Ende]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="1" ROW="3">
+              <FIGURE SUBTYPE="PapConnector" FORMAT="1.00" ID="56">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="1" ROW="5">
+              <FIGURE SUBTYPE="PapConnector" FORMAT="1.00" ID="62">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="1" ROW="6">
+              <FIGURE SUBTYPE="PapConnector" FORMAT="1.00" ID="40">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="1" ROW="9">
+              <FIGURE SUBTYPE="PapConnector" FORMAT="1.00" ID="44">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+          </ENTRIES>
+        </LAYOUT>
+        <CONNECTIONS>
+          <CONNECTION FORMAT="1.00" ID="3" FROM="1" TO="29" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="58" FROM="56" TO="62" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="30" FROM="29" TO="54" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="61" FROM="6" TO="59" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="55" FROM="54" TO="6" TEXT="alles ok" />
+          <CONNECTION FORMAT="1.00" ID="64" FROM="59" TO="62" TEXT="Dateifehler" />
+          <CONNECTION FORMAT="1.00" ID="47" FROM="46" TO="2" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="39" FROM="38" TO="49" TEXT="ENTER" />
+          <CONNECTION FORMAT="1.00" ID="41" FROM="38" TO="40" TEXT="ESC" />
+          <CONNECTION FORMAT="1.00" ID="37" FROM="31" TO="46" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="43" FROM="40" TO="44" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="48" FROM="44" TO="46" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="50" FROM="49" TO="31" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="63" FROM="62" TO="40" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="57" FROM="54" TO="56" TEXT="Dateifehler" />
+          <CONNECTION FORMAT="1.00" ID="60" FROM="59" TO="38" TEXT="alles ok" />
+        </CONNECTIONS>
+      </DIAGRAM>
+    </DIAGRAMS>
+  </PROJECT>
+</FRAME>

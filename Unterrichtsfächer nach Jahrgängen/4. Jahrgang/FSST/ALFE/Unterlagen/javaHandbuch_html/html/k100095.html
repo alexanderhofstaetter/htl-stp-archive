@@ -1,0 +1,923 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100090.html;106,k100094.html;107,k100096.html;108,k100097.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100090.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100094.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100096.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100097.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 14 - Strukturierung von Java-Programmen
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="javawebstart"></a>
+<h2>14.5 Java Web Start<a name="ixa100838"></a> </h2>
+<hr>
+<ul>
+<li><a href="k100095.html#javawebstart">14.5 Java Web Start</a>
+<ul>
+<li><a href="k100095.html#sectlevel3id014005001">14.5.1 Einleitung und Funktionsweise</a>
+<li><a href="k100095.html#sectlevel3id014005002">14.5.2 Erstellen einer WebStart-Applikation</a>
+<ul>
+<li><a href="k100095.html#sectlevel4id014005002001">Erzeugen der jar-Dateien</a>
+<li><a href="k100095.html#sectlevel4id014005002002">Anlegen der Deskriptordatei</a>
+<li><a href="k100095.html#sectlevel4id014005002003">Die Anwendung auf dem Web-Server installieren</a>
+<li><a href="k100095.html#sectlevel4id014005002004">Starten der Anwendung</a>
+</ul>
+<li><a href="k100095.html#dasjnlpapi">14.5.3 Das jnlp-API</a>
+<ul>
+<li><a href="k100095.html#sectlevel4id014005003001">Services</a>
+<li><a href="k100095.html#sectlevel4id014005003002">Ein einfaches Beispiel</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id014005001"></a>
+<h3>14.5.1 Einleitung und Funktionsweise </h3>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Ausf&uuml;hrungen in diesem Abschnitt k&ouml;nnen beim ersten
+Lesen &uuml;bersprungen werden. Sie setzen ein grunds&auml;tzliches
+Verst&auml;ndnis f&uuml;r Applets voraus und verwenden Beispielcode
+aus den Abschnitten <a href="k100255.html#jtree">39.3</a> und <a href="k100310.html#experimentwebserver">48.3.3</a>.
+Aus systematischen Gr&uuml;nden soll das Thema jedoch an dieser Stelle
+behandelt werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Applets werden ab <a href="k100257.html#kapitelapplets1">Kapitel 40</a>
+erkl&auml;rt. Sie waren es, die mit der M&ouml;glichkeit, eigenst&auml;ndige
+Programme mit grafischer Oberfl&auml;che in Webseiten einzubinden,
+einen gro&szlig;en Teil der anf&auml;nglichen Begeisterung f&uuml;r
+Java ausl&ouml;sten. Sp&auml;ter erkannte man noch einen zweiten,
+strategischen Vorteil: Diese Programme mussten nicht <i>installiert</i>
+werden, sondern wurden einfach aufgerufen und waren immer up-to-date.
+Das brachte &#187;gute alte Zeiten&#171; in Erinnerung, bei denen
+die Anwender an einfachen Terminals sa&szlig;en, die - wenn sie wirklich
+einmal defekt waren - ohne gro&szlig;en Aufwand ausgetauscht werden
+konnten. 
+
+<p>
+Schnell war die Idee geboren, dies mit aktueller (Java-)Technologie
+nachzuahmen. Warum nicht alle ben&ouml;tigten Programme als Applets
+implementieren, die bei Bedarf von einem zentralen Server geladen
+werden? Man hatte n&auml;mlich erkannt, dass in den Unternehmen ein
+Gro&szlig;teil der durch Computerarbeitspl&auml;tze verursachten Kosten
+gar nicht bei deren Kauf entstanden, sondern erst danach. Etwa durch
+Updates, Reparaturen und Wartungen; aber auch durch Probleme, die
+durch nicht verf&uuml;gbare, fehlerhafte oder inkonsistente Programmversionen
+entstanden. Die aus dieser Idee entstandenen <a name="ixa100839"><i>Java Workstations</i></a>
+konnten sich allerdings nicht durchsetzen. Trotz vielversprechender
+Anf&auml;nge wurden die durch langsame Netzwerkverbindungen oder unzul&auml;ngliche
+Java-Implementierungen in den Browsern verursachten Probleme nicht
+gel&ouml;st. Die Java-Stations verschwanden ebenso schnell von der
+Bildfl&auml;che, wie sie zuvor aufgetaucht waren. 
+
+<p>
+W&auml;hrend der Entwicklung des JDK 1.3 brachte SUN eine Technologie
+auf den Markt, mit der die Vorteile von Applets und Applikationen
+kombiniert werden sollten. Sie wird als <i>Java Web Start</i> (kurz
+<a name="ixa100840"><i>WebStart</i></a>) bezeichnet und ist seit dem
+JDK 1.4 fester Bestandteil jedes JDK und JRE. Java Web Start bietet
+die M&ouml;glichkeit, <i>Applikationen</i> &uuml;ber einen Web-Server
+automatisch zu laden und zu aktualisieren, ohne dass dazu eine lokale
+Installation oder das manuelle Einspielen eines Softwareupdates erforderlich
+w&auml;re. Sie kombiniert so die Installationsfreiheit von Applets
+mit der Geschwindigkeit und Flexibilit&auml;t von Java-Applikationen.
+
+<p>
+Wir wollen uns einmal ansehen, wie das Ganze funktioniert: 
+<ul>
+<li>Der Entwickler liefert seine Java-Applikation in dem von WebStart
+ben&ouml;tigten Format aus. Dazu muss er alle Bestandteile seiner
+Applikation (Klassen und Ressourcen) in einem oder mehreren jar-Archiven
+unterbringen. Zus&auml;tzlich muss er eine Deskriptordatei zur Verf&uuml;gung
+stellen, in der alle von WebStart ben&ouml;tigten Informationen untergebracht
+sind.
+<li>Der Administrator stellt eine Webseite zur Verf&uuml;gung, von
+der die WebStart-Applikation geladen werden kann. Er kopiert dazu
+alle jar-Dateien und die Deskriptordatei auf den Server und macht
+Letztere &uuml;ber einen Link den potenziellen Anwendern verf&uuml;gbar.
+Einmalig muss er seinen Web-Server so konfigurieren, dass dieser Deskriptordateien
+an ihrer Extension <font color="#660099">.jnlp</font> erkennt und
+den Browsern den korrekten Mime-Typ <a name="ixa100841"><a href="index_a.html#ixb100660"><font color=#000080><tt>application/x-java-jnlp-file</tt></font></a></a>
+&uuml;bertr&auml;gt.
+<li>M&ouml;chte der Anwender eine Java-Applikation verwenden, die
+noch nicht lokal auf seinem Rechner verf&uuml;gbar ist, ruft er die
+vom Administrator zur Verf&uuml;gung gestellte Webseite auf und klickt
+auf den Link mit der Deskriptor-Datei. Diese wird vom Web-Browser
+geladen, der WebStart-Anwendungsmanager wird automatisch aufgerufen
+und &uuml;berpr&uuml;ft, ob die gew&uuml;nschte Applikation bereits
+lokal vorhanden und alle Bestandteile auf dem neuesten Stand sind.
+Ist das der Fall, wird die Applikation gestartet, andernfalls werden
+zuvor die fehlenden Bestandteile nachgeladen. Der Anwender kann mit
+der Applikation nun wie mit jedem anderen Java-Programm arbeiten.
+<li>Hat der Anwender die Applikation bereits einmal geladen, ist die
+Webseite f&uuml;r weitere Aufrufe nicht mehr unbedingt erforderlich.
+WebStart speichert die Bestandteile der Applikation in einem Cache
+und kann sie auch dann zur Verf&uuml;gung stellen, wenn keine Verbindung
+zu dem Server besteht, von dem sie heruntergeladen wurde. Dazu ruft
+der Anwender einfach das (zusammen mit dem JDK oder JRE installierte)
+Programm &#187;Java Web Start&#171; auf und w&auml;hlt aus der Liste
+der bereits heruntergeladenen Programme das zu startende aus. Wird
+das Programm oft ben&ouml;tigt, kann der Anwender sich eine Verkn&uuml;pfung
+auf dem Desktop oder einen Eintrag im Startmen&uuml; erstellen lassen.
+</ul>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die hier skizzierte Vorgehensweise beschreibt die Nutzungsm&ouml;glichkeiten
+von Java Web Start nur in Ans&auml;tzen. Tats&auml;chlich bietet diese
+Technologie weit mehr M&ouml;glichkeiten, als hier erl&auml;utert
+werden k&ouml;nnte. So ist es beispielsweise m&ouml;glich, die Anwendung
+in separate Teile zu zerlegen, die erst bei Bedarf geladen werden.
+Teile von Anwendungen lassen sich versionieren und werden nur dann
+aktualisiert, wenn eine neuere Version zur Verf&uuml;gung steht. Man
+kann Applikationen auch signieren, um ihnen den Zugriff auf den kompletten
+Arbeitsplatz zu erm&ouml;glichen. Ohne Signatur laufen sie - &auml;hnlich
+wie Applets - lediglich in einer &#187;Sandbox&#171; ab, in der sie
+nur beschr&auml;nkte Zugriffsm&ouml;glichkeiten auf lokale Ressourcen
+haben. Weitere Informationen dazu werden in <a href="k100095.html#dasjnlpapi">Abschnitt 14.5.3</a>
+gegeben. 
+
+<p>
+Ein Gro&szlig;teil dieser M&ouml;glichkeiten wird im <a name="ixa100842"><i>Java Network
+Launching Protocol</i></a> beschrieben, das
+&uuml;ber die Download-Seite der WebStart-Homepage heruntergeladen
+werden kann. Es findet sich wie alle anderen WebStart-Ressourcen und
+-Dokumentationen auf <a href="http://www.oracle.com/technetwork/java/javase/javawebstart/index.html">http://www.oracle.com/technetwork/java/javase/javawebstart/index.html</a>.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id014005002"></a>
+<h3>14.5.2 Erstellen einer WebStart-Applikation </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id014005002001"></a>
+<h4>Erzeugen der jar-Dateien </h4>
+
+<p>
+Wir wollen uns in diesem Abschnitt die Aufgabe stellen, das Beispielprogramm
+<i>JTree 3</i> aus <a href="k100255.html#jtreeaenderungen">Listing 39.13</a>
+in eine WebStart-Applikation zu verwandeln. Der &Uuml;bersichtlichkeit
+halber erstellen wir dazu ein Unterverzeichnis <font color="#660099">wstest</font>,
+in dem wir alle ben&ouml;tigten Dateien sammeln. Auf der DVD zum Buch
+befindet sich dieses unterhalb der Beispieldateien, also direkt im
+Verzeichnis <font color="#660099">examples</font>. Da es auf der DVD
+bereits mit allen ben&ouml;tigten Dateien gef&uuml;llt ist, sind die
+nachfolgend beschriebenen Schritte (bei Verwendung dieses Verzeichnisses)
+redundant. Zum Lernen sollten sie aber dennoch nachvollzogen werden.
+
+<p>
+Zun&auml;chst kopieren wir die Dateien <font color="#660099">Listing3913.java</font>
+und <font color="#660099">WindowClosingAdapter.java</font> in das
+Verzeichnis und kompilieren sie: 
+<font color="#333300">
+<pre>
+javac *.java
+</pre>
+</font>
+
+<p>
+Nach dem Kompilieren befinden sich die <font color="#660099">.class</font>-Dateien
+<font color="#660099">Listing3913.class</font> und <font color="#660099">WindowClosingAdapter.class</font>
+in diesem Verzeichnis. Sie werden nun in ein jar-Archiv <font color="#660099">wstest.jar</font>
+verpackt: 
+<font color="#333300">
+<pre>
+jar cvf wstest.jar Listing3813.class WindowClosingAdapter.class
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="sectlevel4id014005002002"></a>
+<h4>Anlegen der Deskriptordatei </h4>
+
+<p>
+Der n&auml;chste Schritt besteht darin, die Deskriptordatei zu unserem
+WebStart-Projekt anzulegen. Hierbei handelt es sich um eine XML-Datei
+mit der Erweiterung <font color="#660099">.jnlp</font><a name="ixa100843"></a>,
+in der alle Informationen untergebracht sind, die der WebStart-Anwendungsmanager
+f&uuml;r das Laden, Ausf&uuml;hren und Darstellen der Applikation
+ben&ouml;tigt. Sie hei&szlig;t in unserem Beispiel <font color="#660099">wstest.jnlp</font>
+und hat folgenden Inhalt: 
+<a name="listingid014010"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">&lt;?xml version=</font><font color="#0000FF">"1.0"</font><font color="#0000AA"> encoding=</font><font color="#0000FF">"utf-8"</font><font color="#0000AA">?&gt;</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#00AA00">&lt;!-- JNLP File fuer HJP WebStart Demo-Applikation --&gt;</font>
+<font color="#555555">004 </font><font color="#0000AA">&lt;jnlp codebase=</font><font color="#0000FF">"http://localhost:7777/"</font><font color="#0000AA"> href=</font><font color="#0000FF">"wstest.jnlp"</font><font color="#0000AA">&gt;</font>
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">&lt;information&gt;</font>
+<font color="#555555">007 </font>  <font color="#0000AA">&lt;title&gt;</font>HJP WebStart Demo Application<font color="#0000AA">&lt;/title&gt;</font>
+<font color="#555555">008 </font>  <font color="#0000AA">&lt;vendor&gt;</font>Guido Krueger<font color="#0000AA">&lt;/vendor&gt;</font>
+<font color="#555555">009 </font>  <font color="#0000AA">&lt;homepage href=</font><font color="#0000FF">"http://www.javabuch.de"</font><font color="#0000AA">/&gt;</font>
+<font color="#555555">010 </font>  <font color="#0000AA">&lt;description&gt;</font>HJP WebStart Demo Application<font color="#0000AA">&lt;/description&gt;</font>
+<font color="#555555">011 </font>  <font color="#0000AA">&lt;icon href=</font><font color="#0000FF">"wstest.gif"</font><font color="#0000AA">/&gt;</font>
+<font color="#555555">012 </font>  <font color="#0000AA">&lt;offline-allowed/&gt;</font>
+<font color="#555555">013 </font><font color="#0000AA">&lt;/information&gt;</font>
+<font color="#555555">014 </font>
+<font color="#555555">015 </font><font color="#0000AA">&lt;information locale=</font><font color="#0000FF">"de"</font><font color="#0000AA">&gt;</font>
+<font color="#555555">016 </font>  <font color="#0000AA">&lt;description&gt;</font>HJP WebStart Demo-Applikation<font color="#0000AA">&lt;/description&gt;</font>
+<font color="#555555">017 </font>  <font color="#0000AA">&lt;offline-allowed/&gt;</font>
+<font color="#555555">018 </font><font color="#0000AA">&lt;/information&gt;</font>
+<font color="#555555">019 </font>
+<font color="#555555">020 </font><font color="#0000AA">&lt;security&gt;</font>
+<font color="#555555">021 </font>  <font color="#00AA00">&lt;!-- &lt;all-permissions/&gt;</font> --&gt;
+<font color="#555555">022 </font><font color="#0000AA">&lt;/security&gt;</font>
+<font color="#555555">023 </font>
+<font color="#555555">024 </font><font color="#0000AA">&lt;resources&gt;</font>
+<font color="#555555">025 </font>  <font color="#0000AA">&lt;j2se version=</font><font color="#0000FF">"1.6+"</font><font color="#0000AA">/&gt;</font>
+<font color="#555555">026 </font>  <font color="#0000AA">&lt;jar href=</font><font color="#0000FF">"wstest.jar"</font><font color="#0000AA">/&gt;</font>
+<font color="#555555">027 </font><font color="#0000AA">&lt;/resources&gt;</font>
+<font color="#555555">028 </font>
+<font color="#555555">029 </font><font color="#0000AA">&lt;application-desc main-class=</font><font color="#0000FF">"Listing3813"</font><font color="#0000AA">/&gt;</font>
+<font color="#555555">030 </font>
+<font color="#555555">031 </font><font color="#0000AA">&lt;/jnlp&gt;</font></pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 14.10: Eine WebStart-Deskriptordatei</i></p>
+
+<p>
+Die Datei besteht aus dem <font color="#000077"><tt>jnlp</tt></font>-Element
+und vier Deskriptoren. Das <font color="#000077"><tt>jnlp</tt></font>-Element
+enth&auml;lt die Attribute <font color="#000077"><tt>codebase</tt></font>
+und <font color="#000077"><tt>href</tt></font>. In <font color="#000077"><tt>codebase</tt></font>
+wird das Basisverzeichnis f&uuml;r alle <i>relativen</i> URLs angegeben,
+<font color="#000077"><tt>href</tt></font> ist die Lokation der <font color="#000077"><tt>jnlp</tt></font>-Datei
+selbst. <font color="#000077"><tt>localhost:7777</tt></font> bedeutet,
+dass auf dem eigenen Rechner ein Web-Server auf TCP-Port 7777 l&auml;uft.
+Wir werden sp&auml;ter noch zeigen, wie der in <a href="k100310.html#experimentwebserver">Abschnitt 48.3.3</a>
+vorgestellte <font color="#000077"><tt>ExperimentalWebServer</tt></font>
+f&uuml;r diesen Zweck verwendet werden kann. Alle URLs innerhalb der
+Datei k&ouml;nnen entweder absolut oder relativ zur <font color="#000077"><tt>codebase</tt></font>
+angegeben werden. 
+
+<p>
+Die vier Deskriptoren haben folgende Bedeutung: 
+<ul>
+<li>In <font color="#000077"><tt>information</tt></font> werden beschreibende
+Angaben zur Applikation gemacht. Neben Titel, Icon, Beschreibung und
+Hersteller des Programms kann eine Homepage angegeben werden, auf
+der der Anwender weitere Informationen zum Programm finden kann. Wichtig
+ist der Eintrag <font color="#000077"><tt>offline-allowed</tt></font>.
+Er gibt an, dass das Programm auch ohne Verbindung zum Internet (genauer:
+zu seinen Download-Quellen) betrieben werden kann. Das geht nat&uuml;rlich
+nur dann, wenn der WebStart-Anwendungsmanager bereits alle Teile der
+Applikation geladen und lokal im Cache gespeichert hat. In diesem
+Fall w&uuml;rde dann auch nicht gepr&uuml;ft, ob Teile der Anwendung
+veraltet sind und ein Update f&auml;llig w&auml;re. 
+
+<p>
+Das <font color="#000077"><tt>information</tt></font>-Element kann
+ein optionales <font color="#000077"><tt>locale</tt></font>-Argument
+haben und mehrfach vorhanden sein. So lassen sich Angaben machen,
+die nur f&uuml;r eine bestimmte Sprachversion gelten. In unserem Beispiel
+gibt es ein zweites <font color="#000077"><tt>information</tt></font>-Element,
+in dem die <font color="#000077"><tt>description</tt></font> in deutscher
+Sprache angegeben wird. Als m&ouml;gliche Werte f&uuml;r das <font color="#000077"><tt>locale</tt></font>-Argument
+k&ouml;nnen die in <a href="k100125.html#internationalisierung">Abschnitt 18.4</a>
+erl&auml;uterten Sprachen-/L&auml;nderstrings der <a href="index_l.html#ixb100563"><font color=#000080><tt>Locale</tt></font></a>-Klasse
+verwendet werden.
+<li>Das Element <font color="#000077"><tt>security</tt></font> dient
+zur Angabe von sicherheitsrelevanten Informationen. Sein wichtigstes
+Element ist <font color="#000077"><tt>all-permissions</tt></font>,
+mit dem der volle Zugriff auf alle Systemressourcen gefordert wird.
+Analog zu einem Applet wird dieser aber nur dann gew&auml;hrt, wenn
+alle jar-Dateien signiert sind und der Anwender das zum Signieren
+verwendete Zertifikat akzeptiert. In unserem Beispiel wurde dieses
+Element auskommentiert und die Anwendung hat daher nur eingeschr&auml;nkten
+Zugriff auf Systemressourcen. &Auml;hnlich wie ein Applet kann eine
+unsignierte WebStart-Applikation daher keinen nennenswerten Schaden
+am System anrichten. Allerdings sind diese Einschr&auml;nkungen etwas
+weniger ausgepr&auml;gt als bei Applets und es gibt einige APIs, um
+in kontrollierter Weise auf diese Systemressourcen zuzugreifen.
+<li>Das Element <font color="#000077"><tt>resources</tt></font> dient
+dazu, die zum Betrieb der Anwendung erforderlichen Ressourcen zu spezifizieren.
+Hier wird angegeben, welche Java-Version zum Starten der Anwendung
+verwendet werden soll (jede WebStart-Applikation kann ihre eigene
+haben) und welche jar-Dateien oder plattformspezifischen Libraries
+ben&ouml;tigt werden. In unserem Beispiel soll die Anwendung mit dem
+JRE 1.3 oder h&ouml;her betrieben werden und die zum Betrieb erforderliche
+jar-Datei <font color="#660099">wstest.jar</font> soll relativ zur
+<font color="#000077"><tt>codebase</tt></font> geladen werden.
+<li>Das letzte Element <font color="#000077"><tt>application-desc</tt></font>
+gibt an, wie die Applikation zu starten ist. In unserem Beispiel wird
+lediglich der Name der Klasse mit der <font color="#000077"><tt>main</tt></font>-Methode
+ben&ouml;tigt. Zus&auml;tzlich k&ouml;nnten hier bei Bedarf <font color="#000077"><tt>argument</tt></font>-Unterelemente
+angegeben werden, die beim Aufruf als Parameter an die Anwendung &uuml;bergeben
+werden.
+</ul>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Anmerkung: Das <font color="#000077"><tt>offline-allowed</tt></font>-Element
+wird hier nur deshalb dupliziert, weil es auf Grund eines Bugs in
+der zum JDK 1.4 geh&ouml;renden WebStart-Version 1.0.1 nicht vererbt
+wurde. Laut BugParade sollte dieser Fehler ab WebStart 1.2 behoben
+sein.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id014005002003"></a>
+<h4>Die Anwendung auf dem Web-Server installieren </h4>
+
+<p>
+Zun&auml;chst ben&ouml;tigen wir f&uuml;r unsere Beispielapplikation
+einen Webserver. Der Einfachheit halber wollen wir dazu den in <a href="k100310.html#experimentwebserver">Abschnitt 48.3.3</a>
+vorgestellten <font color="#000077"><tt>ExperimentalWebServer</tt></font>
+verwenden. Wir kopieren dazu die Datei <font color="#660099">ExperimentalWebServer.java</font>
+aus dem Verzeichnis <font color="#000077"><tt>examples</tt></font>
+ebenfalls in unser Beispielverzeichnis und &uuml;bersetzen sie: 
+<font color="#333300">
+<pre>
+javac ExperimentalWebServer.java
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Soll ein anderer Web-Server verwendet werden, ist es wichtig, den
+Mime-Typ f&uuml;r jnlp-Dateien korrekt zu konfigurieren. Der Server
+muss eine Datei mit der Erweiterung <font color="#660099">.jnlp</font>
+stets mit dem Mime-Typ <a name="ixa100844"><a href="index_a.html#ixb100660"><font color=#000080><tt>application/x-java-jnlp-file</tt></font></a></a>
+an den Client &uuml;bertragen. Andernfalls k&ouml;nnte es sein, dass
+der WebStart-Applikationsmanager nicht korrekt aufgerufen wird. In
+unserem <font color="#000077"><tt>ExperimentalWebServer</tt></font>
+ist dieser Typ bereits vorkonfiguriert, zus&auml;tzliche Anpassungen
+sind daher nicht n&ouml;tig.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Wir wollen nun noch eine einfache HTML-Datei <font color="#660099">wstest.html</font>
+zum Starten der WebStart-Applikation erstellen. Sie enth&auml;lt im
+Wesentlichen einen Link auf die jnlp-Datei: 
+<a name="listingid014011"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">&lt;html&gt;</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">&lt;head&gt;</font>
+<font color="#555555">004 </font><font color="#0000AA">&lt;title&gt;</font>HJP WebStart Demo Application<font color="#0000AA">&lt;/title&gt;</font>
+<font color="#555555">005 </font><font color="#0000AA">&lt;/head&gt;</font>
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">&lt;body&gt;</font>
+<font color="#555555">008 </font>
+<font color="#555555">009 </font><font color="#0000AA">&lt;h2&gt;</font>HJP WebStart Demo Application<font color="#0000AA">&lt;/h2&gt;</font>
+<font color="#555555">010 </font>
+<font color="#555555">011 </font><font color="#0000AA">&lt;a href=</font><font color="#0000FF">"wstest.jnlp"</font><font color="#0000AA">&gt;</font>Anwendung laden/starten<font color="#0000AA">&lt;/a&gt;</font>
+<font color="#555555">012 </font>
+<font color="#555555">013 </font><font color="#0000AA">&lt;/body&gt;</font>
+<font color="#555555">014 </font>
+<font color="#555555">015 </font><font color="#0000AA">&lt;/html&gt;</font></pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 14.11: Die HTML-Datei zum Aufruf der WebStart-Applikation</i></p>
+
+<p>
+Zus&auml;tzlich m&uuml;ssen wir die in der jnlp-Datei angegebene Icon-Datei
+<font color="#660099">wstest.gif</font> in unser Beispielverzeichnis
+kopieren. Anschlie&szlig;end k&ouml;nnen wir den Web-Server starten:
+<font color="#333300">
+<pre>
+java ExperimentalWebServer 7777
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="sectlevel4id014005002004"></a>
+<h4>Starten der Anwendung </h4>
+
+<p>
+Zum erstmaligen Starten der Anwendung wird die Webseite mit dem Link
+auf die jnlp-Datei aufgerufen: 
+<p>
+<a name="imageid014003"></a>
+<img src="images/WebStartHtml.gif">
+<p>
+
+<p><i>
+Abbildung 14.3: Die Startdatei der WebStart-Anwendung im Browser</i></p>
+
+<p>
+Wird nun der Link &#187;Anwendung laden/starten&#171; angeklickt,
+l&auml;dt der Browser die jnlp-Datei und ruft als zugeh&ouml;rige
+Applikation den WebStart-Applikationsmanager auf. Dieser liest die
+Datei ein und l&auml;dt alle darin beschriebenen Ressourcen. Anschlie&szlig;end
+wird die Applikation gestartet und wir sehen das in <a href="k100255.html#aenderbarertree">Abbildung 39.10</a>
+gezeigte Programm. 
+
+<p>
+Beim Herunterladen hat der WebStart-Applikationsmanager alle Dateien
+der Anwendung in seinen lokalen Cache kopiert. Die HTML-Datei wird
+nun zum Starten nicht mehr unbedingt ben&ouml;tigt. Stattdessen kann
+der WebStart-Applikationsmanager direkt aufgerufen werden. Nach einem
+Klick auf den Men&uuml;punkt &#187;Ansicht.Heruntergeladene Anwendungen&#171;
+stellt er sich wie folgt dar: 
+<p>
+<a name="imageid014004"></a>
+<img src="images/WebStartMgr.gif">
+<p>
+
+<p><i>
+Abbildung 14.4: Der WebStart-Applikationsmanager</i></p>
+
+<p>
+Durch Dr&uuml;cken des &#187;Starten&#171;-Buttons wird unsere Anwendung
+gestartet. Die internen Abl&auml;ufe unterscheiden sich dabei nicht
+von denen beim Starten &uuml;ber den Link im Browser. Zun&auml;chst
+wird stets die jnlp-Datei geladen und alle darin beschriebenen Ressourcen
+werden &uuml;berpr&uuml;ft bzw. aktualisiert. Sind alle Dateien verf&uuml;gbar,
+wird die Anwendung gestartet. Taucht ein Problem auf, bricht WebStart
+den Startvorgang ab und gibt eine Fehlermeldung aus. Wir wollen hier
+nicht weiter auf Details eingehen; der WebStart-Applikationsmanager
+ist einfach aufgebaut und seine Funktionen sind weitgehend selbst
+erkl&auml;rend. 
+
+<p>
+Wird eine WebStart-Anwendung das zweite Mal gestartet, fragt der Anwendungsmanager,
+ob die Anwendung auf dem Desktop bzw. im Startmen&uuml; verankert
+werden soll. Stimmt der Anwender zu, kann sie anschlie&szlig;end auch
+auf diesem Weg gestartet werden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Nachdem die Anwendung im lokalen Cache gespeichert wurde, kann sie
+auch offline betrieben werden, d.h. ohne den auf Port 7777 laufenden
+Webserver. Sie kann dann zwar nicht mehr &uuml;ber den Link im Browser
+gestartet werden, aber die drei anderen Wege stehen ihr noch offen.
+Stellt WebStart beim Aufruf einer Applikation fest, dass die in der
+jnlp-Datei genannten Ressourcen nicht erreichbar sind, verwendet er
+die lokalen Kopien und startet die Anwendung aus dem Cache. Das ist
+allerdings nur m&ouml;glich, wenn in der jnlp-Datei das Element <font color="#000077"><tt>offline-allowed</tt></font>
+gesetzt wurde. War das nicht der Fall, kann die Anwendung nicht offline
+gestartet werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="dasjnlpapi"></a>
+<h3>14.5.3 Das jnlp-API </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id014005003001"></a>
+<h4>Services </h4>
+
+<p>
+Eingangs wurde schon erw&auml;hnt, dass unsignierte WebStart-Applikationen
+nur eingeschr&auml;nkten Zugriff auf lokale Systemressourcen haben.
+Zwar ist - anders als bei Applets - der Aufruf von <a href="index_e.html#ixb100663"><font color=#000080><tt>System.exit</tt></font></a>
+erlaubt. Dennoch gibt es einige Einschr&auml;nkungen: 
+<ul>
+<li>Der unkontrollierte Zugriff auf das lokale Dateisystem ist nicht
+erlaubt.
+<li>Alle jar-Dateien m&uuml;ssen von demselben Host geladen werden.
+<li>Netzwerkverbindungen d&uuml;rfen nur mit dem Host betrieben werden,
+vom dem die jar-Dateien geladen wurden.
+<li>Native Libraries sind nicht erlaubt.
+<li>Der Zugriff auf System-Properties ist eingeschr&auml;nkt.
+</ul>
+
+<p>
+Damit unsignierte WebStart-Anwendungen dennoch ein gewisses Ma&szlig;
+an praxisrelevanter Funktionalit&auml;t anbieten k&ouml;nnen, stellt
+die WebStart-Laufzeitumgebung einige <a name="ixa100845"><i>Services</i></a>
+zur Verf&uuml;gung, &uuml;ber die Anwendungen in kontrollierter Weise
+auf Systemressourcen zugreifen k&ouml;nnen: 
+<ul>
+<li>Der <a name="ixa100846"><a href="index_b.html#ixb100665"><font color=#000080><tt>BasicService</tt></font></a></a>
+stellt (&auml;hnlich dem <a name="ixa100847"><a href="index_a.html#ixb100666"><font color=#000080><tt>AppletContext</tt></font></a></a>)
+Methoden zur Interaktion mit der Laufzeitumgebung zur Verf&uuml;gung.
+<li>Der <a name="ixa100848"><a href="index_c.html#ixb100667"><font color=#000080><tt>ClipboardService</tt></font></a></a>
+bietet Zugriff auf die systemweite Zwischenablage.
+<li>Der <a name="ixa100849"><a href="index_d.html#ixb100668"><font color=#000080><tt>DownloadService</tt></font></a></a>
+erlaubt es einer Applikation, zu kontrollieren, wie ihre Ressourcen
+heruntergeladen und gecacht werden.
+<li>Mit dem <a name="ixa100850"><a href="index_f.html#ixb100669"><font color=#000080><tt>FileOpenService</tt></font></a></a>
+kann die Anwendung mit Hilfe eines Datei&Ouml;ffnen-Dialogs lokale
+Dateien lesen.
+<li>Mit dem <a name="ixa100851"><a href="index_f.html#ixb100670"><font color=#000080><tt>FileSaveService</tt></font></a></a>
+kann die Anwendung mit Hilfe eines DateiSpeichern-Dialogs lokale Dateien
+schreiben.
+<li>Der <a name="ixa100852"><a href="index_p.html#ixb100671"><font color=#000080><tt>PrintService</tt></font></a></a>
+erlaubt es der Anwendung, auf den Drucker zuzugreifen.
+<li>Der <a name="ixa100853"><a href="index_p.html#ixb100672"><font color=#000080><tt>PersistenceService</tt></font></a></a>
+erlaubt das Erzeugen und Lesen lokaler persistenter Daten (&auml;hnlich
+den Cookies in Web-Browsern).
+</ul>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+All diese Services sind insofern als relativ sicher anzusehen, als
+sie dem Programm entweder nur sehr beschr&auml;nkten Zugriff auf Systemressourcen
+erlauben (z.B. <a href="index_c.html#ixb100667"><font color=#000080><tt>ClipboardService</tt></font></a>,
+<a href="index_p.html#ixb100672"><font color=#000080><tt>PersistenceService</tt></font></a>)
+oder der Anwender per GUI-Dialog ihrer Benutzung zustimmen muss und
+somit selbst entscheiden kann, welche konkreten Ressourcen verwendet
+werden (z.B. <a href="index_f.html#ixb100669"><font color=#000080><tt>FileOpenService</tt></font></a>,
+<a href="index_f.html#ixb100670"><font color=#000080><tt>FileSaveService</tt></font></a>,
+<a href="index_p.html#ixb100671"><font color=#000080><tt>PrintService</tt></font></a>).
+
+<p>
+Dennoch sollten unsignierte WebStart-Applikationen aus potenziell
+unsicheren Quellen mit der n&ouml;tigen Vorsicht verwendet werden.
+Einerseits ist nicht auszuschlie&szlig;en, dass man als Anwender im
+Eifer des Gefechts einmal unbeabsichtigt einer Service-Nutzung zustimmt,
+die sp&auml;ter Schaden anrichtet. Andererseits sind <a name="ixa100854"><i>Denial-of-Service-Attacken</i></a>
+nicht auszuschlie&szlig;en. Hierbei verwendet eine b&ouml;sartige
+Anwendung eine Ressource in so hohem Ma&szlig;e, dass sie f&uuml;r
+den ordnungsgem&auml;&szlig;en Betrieb anderer Anwendungen nicht mehr
+ausreichend zur Verf&uuml;gung steht. Beispiele sind etwa Programme,
+die 100 Prozent CPU-Last verursachen oder solche, die das Dateisystem
+durch Erzeugen riesiger Dateien zum &Uuml;berlauf bringen. Gegen derartige
+Programme bieten auch die Service-Einschr&auml;nkungen der WebStart-Applikationen
+keinen Schutz.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id014005003002"></a>
+<h4>Ein einfaches Beispiel </h4>
+
+<p>
+In diesem Abschnitt wollen wir uns ein einfaches Beispiel f&uuml;r
+die Verwendung des jnlp-API ansehen. Ein Programm soll dem Anwender
+einen Datei&Ouml;ffnen-Dialog pr&auml;sentieren und den Inhalt der
+darin ausgew&auml;hlten Datei auf der Konsole ausgeben (sie l&auml;sst
+sich im WebStart-Applikationsmanager im Dialog &#187;Datei.Einstellungen.Erweitert&#171;
+sichtbar machen). Auf die &uuml;brigen Services wollen wir nicht weiter
+eingehen, denn ihre Anwendung &auml;hnelt der hier beschriebenen.
+Weitere Details zu den Services sind in der jnlp-API-Dokumentation
+zu finden. 
+
+<p>
+Soll ein WebStart-Programm auf einen jnlp-Service zugreifen, muss
+dieser zun&auml;chst mit Hilfe der Klasse <a name="ixa100855"><a href="index_s.html#ixb100674"><font color=#000080><tt>ServiceManager</tt></font></a></a>
+aus dem Paket <a name="ixa100856"><a href="index_j.html#ixb100675"><font color=#000080><tt>javax.jnlp</tt></font></a></a>
+angefordert werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static java.lang.Object lookup(java.lang.String name)
+  throws UnavailableServiceException
+</pre>
+</font>
+</td>
+<td valign=top>
+<font color="#660066" size=-1>javax.jnlp.ServiceManager</font></td>
+</tr>
+</table>
+
+<p>
+Die Methode <a name="ixa100857"><a href="index_l.html#ixb100676"><font color=#000080><tt>lookup</tt></font></a></a>
+erwartet einen <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+mit dem Servicenamen als Argument. Dies muss ein qualifizierter Klassenname
+sein, etwa &#187;javax.jnlp.FileOpenService&#171; oder &#187;javax.jnlp.PrintService&#171;.
+Kann der Service nicht zur Verf&uuml;gung gestellt werden (die meisten
+Services sind optional und m&uuml;ssen nicht von allen WebStart-Clients
+implementiert werden), wird eine Ausnahme des Typs <a name="ixa100858"><a href="index_u.html#ixb100677"><font color=#000080><tt>UnavailableServiceException</tt></font></a></a>
+ausgel&ouml;st. Andernfalls wird der R&uuml;ckgabewert auf den gew&uuml;nschten
+Typ konvertiert und kann dann verwendet werden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Alle Klassen aus dem jnlp-API befinden sich im Paket <a href="index_j.html#ixb100675"><font color=#000080><tt>javax.jnlp</tt></font></a>.
+Dieses ist seit Version 1.5 Bestandteil des JDK, allerdings liegt
+die Datei <font color="#660099">jnlp.jar</font> nicht in einer der
+naheliegenden Unterverzeichnisse, sondern unter <font color="#660099">sample/jnlp/servlet</font>.
+Sie ist zum Kompilieren in den Klassenpfad einzubinden. Zur Laufzeit
+muss sie nicht explizit angegeben werden, sondern wird vom WebStart-Applikationsmanager
+zur Verf&uuml;gung gestellt.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Die nun folgenden Schritte sind Service-spezifisch. Der <a name="ixa100859"><a href="index_f.html#ixb100669"><font color=#000080><tt>FileOpenService</tt></font></a></a>
+stellt beispielsweise folgende Methode zur Verf&uuml;gung, um einen
+Datei&Ouml;ffnen-Dialog zu erzeugen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public FileContents openFileDialog(
+  java.lang.String pathHint,
+  java.lang.String[] extensions
+)
+  throws java.io.IOException
+</pre>
+</font>
+</td>
+<td valign=top>
+<font color="#660066" size=-1>javax.jnlp.FileOpenService</font></td>
+</tr>
+</table>
+
+<p>
+Das erste Argument <font color="#000077"><tt>pathhint</tt></font>
+ist ein Vorgabewert der Anwendung f&uuml;r das Verzeichnis, aus dem
+die Datei geladen werden soll. Das zweite Argument enth&auml;lt eine
+Liste von Dateierweiterungen, die standardm&auml;&szlig;ig angezeigt
+werden. Der R&uuml;ckgabewert ist entweder <a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>,
+falls der Dialog abgebrochen wurde, oder er enth&auml;lt ein <a name="ixa100860"><a href="index_f.html#ixb100678"><font color=#000080><tt>FileContents</tt></font></a></a>-Objekt
+f&uuml;r die vom Anwender ausgew&auml;hlte Datei. Dieses kann verwendet
+werden, um Informationen &uuml;ber die Datei abzufragen sowie um Eingabe-
+oder Ausgabestreams zum Lesen und Schreiben der Datei zu beschaffen.
+
+<p>
+Wichtige Methoden der Klasse <a href="index_f.html#ixb100678"><font color=#000080><tt>FileContents</tt></font></a>
+sind: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public java.lang.String getName()
+  throws java.io.IOException
+
+public long getLength()
+  throws java.io.IOException
+
+public boolean canRead()
+  throws java.io.IOException
+
+public boolean canWrite()
+  throws java.io.IOException
+
+public InputStream getInputStream()
+  throws java.io.IOException
+
+public OutputStream getOutputStream(boolean overwrite)
+  throws java.io.IOException
+</pre>
+</font>
+</td>
+<td valign=top>
+<font color="#660066" size=-1>javax.jnlp.FileContents</font></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa100861"><a href="index_g.html#ixb100679"><font color=#000080><tt>getName</tt></font></a></a>
+liefert den Namen der Datei und mit <a name="ixa100862"><a href="index_g.html#ixb100680"><font color=#000080><tt>getLength</tt></font></a></a>
+kann ihre L&auml;nge bestimmt werden. Mit <a name="ixa100863"><a href="index_c.html#ixb100681"><font color=#000080><tt>canRead</tt></font></a></a>
+und <a name="ixa100864"><a href="index_c.html#ixb100682"><font color=#000080><tt>canWrite</tt></font></a></a>
+kann festgestellt werden, ob Lese- bzw. Schreibzugriffe erlaubt sind.
+<a name="ixa100865"><a href="index_g.html#ixb100683"><font color=#000080><tt>getInputStream</tt></font></a></a>
+beschafft einen <a href="index_i.html#ixb100587"><font color=#000080><tt>InputStream</tt></font></a>,
+mit dem die Datei gelesen werden kann, und <a name="ixa100866"><a href="index_g.html#ixb100684"><font color=#000080><tt>getOutputStream</tt></font></a></a>
+stellt einen <a href="index_o.html#ixb100588"><font color=#000080><tt>OutputStream</tt></font></a>
+zum Schreiben der Datei zur Verf&uuml;gung. Das Argument <font color="#000077"><tt>overwrite</tt></font>
+gibt dabei an, ob der bestehende Inhalt &uuml;berschrieben oder die
+neuen Daten an das Ende der bestehenden Datei angeh&auml;ngt werden
+sollen. 
+
+<p>
+Nach diesen Vorbemerkungen k&ouml;nnen wir uns nun das Beispielprogramm
+ansehen: 
+<a name="listingid014012"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* WebStartTest2.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> javax.jnlp.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> WebStartTest2
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">011 </font>      <font color="#00AA00">//FileOpenService anfordern</font>
+<font color="#555555">012 </font>      FileOpenService fos = (FileOpenService)ServiceManager.lookup(
+<font color="#555555">013 </font>        <font color="#0000FF">"javax.jnlp.FileOpenService"</font>
+<font color="#555555">014 </font>      );
+<font color="#555555">015 </font>      <font color="#00AA00">//Datei&Ouml;ffnen-Dialog aufrufen</font>
+<font color="#555555">016 </font>      FileContents fc = fos.openFileDialog(<font color="#006699">null</font>, <font color="#006699">null</font>);
+<font color="#555555">017 </font>      <font color="#0000AA">if</font> (fc == <font color="#006699">null</font>) {
+<font color="#555555">018 </font>        System.err.println(<font color="#0000FF">"openFileDialog fehlgeschlagen"</font>);
+<font color="#555555">019 </font>      } <font color="#0000AA">else</font> {
+<font color="#555555">020 </font>        <font color="#00AA00">//Dateiinhalt auf der Konsole ausgeben</font>
+<font color="#555555">021 </font>        InputStream is = fc.getInputStream();
+<font color="#555555">022 </font>        <font color="#006699">int</font> c;
+<font color="#555555">023 </font>        <font color="#0000AA">while</font> ((c = is.read()) != -1) {
+<font color="#555555">024 </font>          System.out.print((<font color="#006699">char</font>)c);
+<font color="#555555">025 </font>        }
+<font color="#555555">026 </font>        is.close();
+<font color="#555555">027 </font>      }
+<font color="#555555">028 </font>    } <font color="#0000AA">catch</font> (UnavailableServiceException e) {
+<font color="#555555">029 </font>      System.err.println(<font color="#0000FF">"***"</font> + e + <font color="#0000FF">"***"</font>);
+<font color="#555555">030 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">031 </font>      System.err.println(<font color="#0000FF">"***"</font> + e + <font color="#0000FF">"***"</font>);
+<font color="#555555">032 </font>    }
+<font color="#555555">033 </font>    <font color="#00AA00">//10 Sekunden warten, dann Programm beenden</font>
+<font color="#555555">034 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">035 </font>      Thread.sleep(10000);
+<font color="#555555">036 </font>    } <font color="#0000AA">catch</font> (InterruptedException e) {
+<font color="#555555">037 </font>    }
+<font color="#555555">038 </font>    System.exit(0);
+<font color="#555555">039 </font>  }
+<font color="#555555">040 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/WebStartTest2.java"><font color="#000055" size=-1>WebStartTest2.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 14.12: Ein Beispielprogramm f&uuml;r das jnlp-API</i></p>
+
+<p>
+Das Programm kann wie im vorigen Abschnitt gezeigt &uuml;bersetzt,
+in eine WebStart-Applikation verpackt und ausgef&uuml;hrt werden.
+Wenn die Konsole im WebStart-Applikationsmanager aktiviert wurde,
+kann mit dem Programm jede beliebige Datei gelesen werden - vorausgesetzt,
+der Anwender stimmt im Datei&Ouml;ffnen-Dialog zu. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100090.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100094.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100096.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100097.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

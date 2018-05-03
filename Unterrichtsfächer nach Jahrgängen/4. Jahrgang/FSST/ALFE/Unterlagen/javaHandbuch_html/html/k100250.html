@@ -1,0 +1,259 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100245.html;106,k100249.html;107,k100251.html;108,k100252.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100245.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100249.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100251.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100252.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 38 - Swing: Komponenten I
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id038005"></a>
+<h2>38.5 JLayer </h2>
+<hr>
+<ul>
+<li><a href="k100250.html#sectlevel2id038005">38.5 JLayer</a>
+</ul>
+<hr>
+
+<p>
+Seit der Version 7 des JDK gibt es im Paket <a href="index_j.html#ixb100200"><font color=#000080><tt>javax.swing</tt></font></a>
+die Klasse <a name="ixa102715"><a href="index_j.html#ixb102015"><font color=#000080><tt>JLayer</tt></font></a></a>.
+Sie dient dazu, Swing-Komponenten zu &#187;dekorieren&#171;, d.h.
+um Eigenschaften zu erweitern, ohne sich von der Komponente selbst
+ableiten zu m&uuml;ssen (entsprechend dem Design-Pattern &#187;Dekorator&#171;).
+Mit ihrer Hilfe k&ouml;nnen das Aussehen und die Ereignisbehandlung
+von Dialogelementen ver&auml;ndert werden. 
+
+<p>
+Mit einem <a href="index_j.html#ixb102015"><font color=#000080><tt>JLayer</tt></font></a>
+lassen sich &auml;hnliche Effekte erzielen wie mit einer <a name="ixa102716"><a href="index_g.html#ixb102016"><font color=#000080><tt>GlassPane</tt></font></a></a>,
+auf die wir bereits in <a href="k100241.html#jframestruktur">Abschnitt 37.1.1</a>
+eingegangen sind. Einfach gesprochen handelt es sich bei einem <a href="index_j.html#ixb102015"><font color=#000080><tt>JLayer</tt></font></a>
+um eine transparente View, die &uuml;ber der dekorierten Komponente
+liegt. Das l&auml;sst sich z.B. dazu verwenden, um bei einem langlaufenden
+Hintergrundprozess Teile der grafischen Oberfl&auml;che durch optische
+Effekte zu sperren. Bei der Implementation kann man dann klar zwischen
+den Funktionen der dekorierten Komponente und den Effekten des <font color="#000077"><tt>JLayer</tt></font>
+trennen, was die Lesbar- und Wartbarkeit des Codes erh&ouml;ht. 
+
+<p>
+Die Klasse <a href="index_j.html#ixb102015"><font color=#000080><tt>JLayer</tt></font></a>
+delegiert an ihre UI-Klasse <a name="ixa102717"><a href="index_l.html#ixb102017"><font color=#000080><tt>LayerUI</tt></font></a></a>.
+Deren wichtigste Methoden sind: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void paint(Graphics g, JComponent c)
+
+public void installUI(JComponent c)
+public void uninstallUI(JComponent c)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/plaf/LayerUI.html" onClick="this.href=getApiDoc('javax.swing.plaf.LayerUI')"><font color="#660066" size=-1>javax.swing.plaf.LayerUI</font></a></td>
+</tr>
+</table>
+
+<p>
+Da sich die Klasse <a href="index_j.html#ixb102015"><font color=#000080><tt>JLayer</tt></font></a>
+von <a href="index_j.html#ixb101780"><font color=#000080><tt>JComponent</tt></font></a>
+(siehe <a href="k100243.html#jcomponent">Abschnitt 37.3.1</a>) ableitet,
+erbt sie deren <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>-Methoden.
+Diese k&ouml;nnen jedoch nicht verwendet werden, sondern man &uuml;bergibt
+die zu dekorierende Komponente &uuml;ber den Konstruktor an das <a href="index_j.html#ixb102015"><font color=#000080><tt>JLayer</tt></font></a>-Objekt.
+<a href="index_j.html#ixb102015"><font color=#000080><tt>JLayer</tt></font></a>
+und <a href="index_l.html#ixb102017"><font color=#000080><tt>LayerUI</tt></font></a>
+sind generische Klassen, sie erwarten den Typ <font color="#000077"><tt>V</tt></font>
+der dekorierten Komponente. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public JLayer(V view, LayerUI&lt;V&gt; ui)
+public JLayer(V view)
+
+public void setLayerEventMask(long layerEventMask)
+
+public void setUI(LayerUI&lt;? super V&gt; ui)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JLayer.html" onClick="this.href=getApiDoc('javax.swing.JLayer')"><font color="#660066" size=-1>javax.swing.JLayer</font></a></td>
+</tr>
+</table>
+
+<p>
+Am einfachsten erkl&auml;rt sich die Funktionsweise anhand eines Beispiels.
+Das folgende Listing dekoriert dazu ein <a href="index_j.html#ixb101779"><font color=#000080><tt>JPanel</tt></font></a>,
+auf dem wir eine Reihe von <a href="index_j.html#ixb101781"><font color=#000080><tt>JLabel</tt></font></a>-Objekten
+platzieren. Wenn auf das Panel mit der Maus geklickt wird, soll um
+den Punkt herum ein kleiner blauer Kreis gezeichnet werden. 
+
+<p>
+Wir merken uns dazu in einer Liste die Mausklickpositionen und &uuml;berschreiben
+die <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>-Methode
+der <a href="index_l.html#ixb102017"><font color=#000080><tt>LayerUI</tt></font></a>-Klasse.
+Mit <a href="index_d.html#ixb101179"><font color=#000080><tt>drawOval</tt></font></a>
+zeichnen wir die blauen Kreise. Um die Mausereignisse zu empfangen,
+m&uuml;ssen wir uns mit der Methode <a name="ixa102718"><a href="index_s.html#ixb102018"><font color=#000080><tt>setLayerEventMask</tt></font></a></a>
+der Klasse <a href="index_j.html#ixb102015"><font color=#000080><tt>JLayer</tt></font></a>
+f&uuml;r Mausereignisse registrieren. Alle Mausereignisse, die das
+dekorierte Panel oder eines seiner Subkomponenten empf&auml;ngt, erh&auml;lt
+nach der Registrierung auch der <a href="index_l.html#ixb102017"><font color=#000080><tt>LayerUI</tt></font></a>.
+
+<p>
+Die Methoden <font color="#000077"><tt>installUI</tt></font> und <font color="#000077"><tt>uninstallUI</tt></font>
+sind Callback-Methoden, mit denen wir das Registrieren und Deregistrieren
+vornehmen k&ouml;nnen. 
+
+<p>
+<a name="listingid038015"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3815.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.MouseEvent;
+<font color="#555555">005 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">006 </font><font color="#0000AA">import</font> java.util.List;
+<font color="#555555">007 </font>
+<font color="#555555">008 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">009 </font><font color="#0000AA">import</font> javax.swing.plaf.LayerUI;
+<font color="#555555">010 </font>
+<font color="#555555">011 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3815 <font color="#0000AA">extends</font> JFrame
+<font color="#555555">012 </font>{
+<font color="#555555">013 </font>  <font color="#0000AA">private</font> <font color="#0000AA">final</font> <font color="#0000AA">static</font> <font color="#006699">int</font> RADIUS = 10;
+<font color="#555555">014 </font>  <font color="#0000AA">private</font> <font color="#0000AA">final</font> List&lt;Point&gt; points = <font color="#0000AA">new</font> ArrayList&lt;Point&gt;();
+<font color="#555555">015 </font>  
+<font color="#555555">016 </font>  <font color="#0000AA">public</font> Listing3815()
+<font color="#555555">017 </font>  {
+<font color="#555555">018 </font>    <font color="#006699">super</font>(<font color="#0000FF">"JLayer"</font>);
+<font color="#555555">019 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">020 </font>    
+<font color="#555555">021 </font>    LayerUI&lt;JPanel&gt; ui = <font color="#0000AA">new</font> LayerUI&lt;JPanel&gt;()
+<font color="#555555">022 </font>    {
+<font color="#555555">023 </font>      <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g, JComponent c) 
+<font color="#555555">024 </font>      {
+<font color="#555555">025 </font>        <font color="#006699">super</font>.paint(g, c);
+<font color="#555555">026 </font>        g.setColor(Color.BLUE);
+<font color="#555555">027 </font>        <font color="#0000AA">for</font> (Point p : points) {
+<font color="#555555">028 </font>          g.drawOval(p.x-RADIUS, p.y-RADIUS, 2*RADIUS, 2*RADIUS);
+<font color="#555555">029 </font>        }
+<font color="#555555">030 </font>      }
+<font color="#555555">031 </font>      
+<font color="#555555">032 </font>      <font color="#0000AA">protected</font> <font color="#006699">void</font> processMouseEvent(MouseEvent e, JLayer&lt;? <font color="#0000AA">extends</font> JPanel&gt; l)
+<font color="#555555">033 </font>      {
+<font color="#555555">034 </font>        <font color="#006699">super</font>.processMouseEvent(e, l);
+<font color="#555555">035 </font>        <font color="#0000AA">if</font> (e.getID() == MouseEvent.MOUSE_CLICKED) {
+<font color="#555555">036 </font>          points.add(e.getPoint());
+<font color="#555555">037 </font>        }
+<font color="#555555">038 </font>        l.repaint();
+<font color="#555555">039 </font>      }
+<font color="#555555">040 </font>      
+<font color="#555555">041 </font>      <font color="#0000AA">public</font> <font color="#006699">void</font> installUI(JComponent c)
+<font color="#555555">042 </font>      {
+<font color="#555555">043 </font>        <font color="#006699">super</font>.installUI(c);
+<font color="#555555">044 </font>        ((JLayer&lt;?&gt;) c).setLayerEventMask(AWTEvent.MOUSE_EVENT_MASK);
+<font color="#555555">045 </font>      }
+<font color="#555555">046 </font>      
+<font color="#555555">047 </font>      <font color="#0000AA">public</font> <font color="#006699">void</font> uninstallUI(JComponent c)
+<font color="#555555">048 </font>      {
+<font color="#555555">049 </font>        <font color="#006699">super</font>.uninstallUI(c);
+<font color="#555555">050 </font>        ((JLayer&lt;?&gt;) c).setLayerEventMask(0);
+<font color="#555555">051 </font>      }
+<font color="#555555">052 </font>    };
+<font color="#555555">053 </font>    
+<font color="#555555">054 </font>    <font color="#0000AA">final</font> JPanel panel = <font color="#0000AA">new</font> JPanel(<font color="#0000AA">new</font> FlowLayout());
+<font color="#555555">055 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; 20; i++) {
+<font color="#555555">056 </font>      JLabel label = <font color="#0000AA">new</font> JLabel(<font color="#0000FF">"Label "</font>+ i);
+<font color="#555555">057 </font>      panel.add(label);
+<font color="#555555">058 </font>    }
+<font color="#555555">059 </font>    
+<font color="#555555">060 </font>    Container cp = getContentPane();
+<font color="#555555">061 </font>    cp.add(<font color="#0000AA">new</font> JLayer&lt;JPanel&gt;(panel, ui), BorderLayout.CENTER);
+<font color="#555555">062 </font>  }
+<font color="#555555">063 </font>  
+<font color="#555555">064 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">065 </font>  {
+<font color="#555555">066 </font>    Listing3815 frame = <font color="#0000AA">new</font> Listing3815();
+<font color="#555555">067 </font>    frame.setLocation(100, 100);
+<font color="#555555">068 </font>    frame.setSize(250, 200);
+<font color="#555555">069 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">070 </font>  }
+<font color="#555555">071 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3815.java"><font color="#000055" size=-1>Listing3815.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 38.15: Die Klasse JLayer</i></p>
+
+<p>
+Das folgende Bild zeigt die Beispielanwendung unter Ubuntu: 
+<p>
+<a name="imageid038013"></a>
+<img src="images/JLayer.gif">
+<p>
+
+<p><i>
+Abbildung 38.13: Die Klasse JLayer</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100245.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100249.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100251.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100252.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

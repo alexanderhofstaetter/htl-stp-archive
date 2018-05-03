@@ -1,0 +1,350 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100332.html;106,k100336.html;107,k100338.html;108,index.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100332.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100336.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100338.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 53 - Hilfsprogramme des JDK
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id053005"></a>
+<h2>53.5 javadoc - der <a name="ixa103900">Dokumentationsgenerator</a>
+</h2>
+<hr>
+<ul>
+<li><a href="k100337.html#sectlevel2id053005">53.5 javadoc - der Dokumentationsgenerator</a>
+<ul>
+<li><a href="k100337.html#sectlevel3id053005001">53.5.1 Aufruf</a>
+<li><a href="k100337.html#sectlevel3id053005002">53.5.2 Beschreibung</a>
+<li><a href="k100337.html#sectiondoku">53.5.3 Dokumentationskommentare</a>
+<li><a href="k100337.html#sectlevel3id053005004">53.5.4 Aufruf von javadoc</a>
+<li><a href="k100337.html#sectlevel3id053005005">53.5.5 Optionen</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id053005001"></a>
+<h3>53.5.1 Aufruf </h3>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+javadoc [ options ] ( { package | sourcefile } | @files )
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id053005002"></a>
+<h3>53.5.2 Beschreibung </h3>
+
+<p>
+<a name="ixa103901"><a href="index_j.html#ixb100194"><font color=#000080><tt>javadoc</tt></font></a></a>
+ist ein Programm, das aus Java-Quelltexten Dokumentationen im HTML-Format
+erstellt. Dazu verwendet es die &ouml;ffentlichen Klassen-, Interface-
+und Methodendeklarationen und f&uuml;gt zus&auml;tzliche Informationen
+aus eventuell vorhandenen Dokumentationskommentaren hinzu. Zu jeder
+Klassendatei <font color="#660099">xyz.java</font> wird eine HTML-Seite
+<font color="#660099">xyz.html</font> generiert, die &uuml;ber verschiedene
+Querverweise mit den anderen Seiten desselben Projekts in Verbindung
+steht. Zus&auml;tzlich generiert <a href="index_j.html#ixb100194"><font color=#000080><tt>javadoc</tt></font></a>
+diverse Index- und Hilfsdateien, die das Navigieren in den Dokumentationsdateien
+erleichtern. 
+
+<!-- Section -->
+
+<a name="sectiondoku"></a>
+<h3>53.5.3 <a name="ixa103902">Dokumentationskommentare</a></h3>
+
+<p>
+Bereits ohne zus&auml;tzliche Informationen erstellt <a href="index_j.html#ixb100194"><font color=#000080><tt>javadoc</tt></font></a>
+aus dem Quelltext eine brauchbare Beschreibung aller Klassen und Interfaces.
+Durch das Einf&uuml;gen von Dokumentationskommentaren kann die Ausgabe
+zus&auml;tzlich bereichert werden. Ein Dokumentationskommentar beginnt
+mit <a name="ixa103903"><a href="index_0.html#ixb100180"><font color=#000080><tt>/**</tt></font></a></a>
+und endet mit <font color="#000077"><tt>*/</tt></font> und &auml;hnelt
+damit einem gew&ouml;hnlichen Kommentar. Er muss im Quelltext immer
+unmittelbar vor dem zu dokumentierenden Item platziert werden (einer
+Klassendefinition, einer Methode oder einer Instanzvariable). Er kann
+aus mehreren Zeilen bestehen. Die erste Zeile des Kommentars wird
+sp&auml;ter als Kurzbeschreibung verwendet. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Zur Erh&ouml;hung der &Uuml;bersichtlichkeit darf am Anfang jeder
+Zeile ein Sternchen stehen, es wird sp&auml;ter ignoriert. Innerhalb
+der Dokumentationskommentare d&uuml;rfen neben normalem Text auch
+HTML-Tags vorkommen. Sie werden unver&auml;ndert in die Dokumentation
+&uuml;bernommen und erlauben es damit, bereits im Quelltext die Formatierung
+der sp&auml;teren Dokumentation vorzugeben. Die Tags <font color="#000077"><tt>&lt;h1&gt;</tt></font>
+und <font color="#000077"><tt>&lt;h2&gt;</tt></font> sollten m&ouml;glichst
+nicht verwendet werden, da sie von <a href="index_j.html#ixb100194"><font color=#000080><tt>javadoc</tt></font></a>
+selbst zur Strukturierung der Ausgabe verwendet werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+<a href="index_j.html#ixb100194"><font color=#000080><tt>javadoc</tt></font></a>
+erkennt des Weiteren <i>markierte Abs&auml;tze</i> innerhalb von Dokumentationskommentaren.
+Die Markierung muss mit dem Zeichen <font color="#000077"><tt>@</tt></font>
+beginnen und - abgesehen von Leerzeichen - am Anfang der Zeile stehen.
+Jede Markierung leitet einen eigenen Abschnitt innerhalb der Beschreibung
+ein, alle Markierungen eines Typs m&uuml;ssen hintereinanderstehen.
+<a href="k100337.html#dokukommmarks">Tabelle 53.5</a> gibt eine &Uuml;bersicht
+der wichtigsten Markierungen und beschreibt, wie sie verwendet werden.
+<a name="dokukommmarks"></a>
+<p>
+<table cols=3 border width=100%>
+
+<tr>
+<td valign=top align=left width=25%><b>Markierung und Parameter</b></td>
+<td valign=top align=left width=50%><b>Dokumentation</b></td>
+<td valign=top align=left width=25%><b>Verwendung in </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103904"><a href="index_0.html#ixb100237"><font color=#000080><tt>@author name</tt></font></a></a></td>
+<td valign=top align=left>Erzeugt einen Autoreneintrag.</td>
+<td valign=top align=left>Klasse, Interface </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103905"><a href="index_0.html#ixb100236"><font color=#000080><tt>@version version</tt></font></a></a></td>
+<td valign=top align=left>Erzeugt einen Versionseintrag. Darf h&ouml;chstens
+einmal je Klasse oder Interface verwendet werden.</td>
+<td valign=top align=left>Klasse, Interface </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103906"><a href="index_0.html#ixb102931"><font color=#000080><tt>@since version</tt></font></a></a></td>
+<td valign=top align=left>Beschreibt, seit wann das beschriebene Feature
+existiert.</td>
+<td valign=top align=left>Klasse, Interface </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103907"><a href="index_0.html#ixb100234"><font color=#000080><tt>@see reference</tt></font></a></a></td>
+<td valign=top align=left>Erzeugt einen Querverweis auf eine andere
+Klasse, Methode oder einen beliebigen anderen Teil der Dokumentation.
+G&uuml;ltige Verweise sind: 
+<ul>
+<li><font color="#000077"><tt>@see java.util.Vector</tt></font> 
+<li><font color="#000077"><tt>@see Vector</tt></font> 
+<li><font color="#000077"><tt>@see Vector#addElement</tt></font> 
+<li><font color="#000077"><tt>@see &lt;a href="Spez.html"&gt;Spez&lt;/a&gt;</tt></font>
+</ul>
+</td>
+<td valign=top align=left>Klasse, Interface, Instanzvariable, Methode
+</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103908"><a href="index_0.html#ixb100232"><font color=#000080><tt>@param name description</tt></font></a></a></td>
+<td valign=top align=left>Parameterbeschreibung einer Methode</td>
+<td valign=top align=left>Methode </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103909"><a href="index_0.html#ixb100233"><font color=#000080><tt>@return description</tt></font></a></a></td>
+<td valign=top align=left>Beschreibung des R&uuml;ckgabewerts einer
+Methode</td>
+<td valign=top align=left>Methode </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103910"><a href="index_0.html#ixb100235"><font color=#000080><tt>@exception classname description</tt></font></a></a></td>
+<td valign=top align=left>Beschreibung einer Ausnahme, die von dieser
+Methode ausgel&ouml;st wird</td>
+<td valign=top align=left>Methode </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103911"><a href="index_0.html#ixb102918"><font color=#000080><tt>@deprecated description</tt></font></a></a></td>
+<td valign=top align=left>Markiert eine veraltete Methode, die zuk&uuml;nftig
+nicht mehr verwendet werden sollte.</td>
+<td valign=top align=left>Methode </td></tr>
+</table>
+<p><i>
+Tabelle 53.5: Markierungen in Dokumentationskommentaren </i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id053005004"></a>
+<h3>53.5.4 Aufruf von javadoc </h3>
+
+<p>
+Um <a href="index_j.html#ixb100194"><font color=#000080><tt>javadoc</tt></font></a>
+aufzurufen, sollte zun&auml;chst in das Verzeichnis gewechselt werden,
+in dem sich die zu dokumentierenden Quelldateien befinden. Anschlie&szlig;end
+kann durch Eingabe des folgenden Kommandos die Erzeugung der Dokumentationen
+f&uuml;r alle Quelldateien im Default-Package gestartet werden: 
+<font color="#000077">
+<pre>
+javadoc *.java
+</pre>
+</font>
+
+<p>
+Das Programm erzeugt eine Reihe von HMTL-Dateien, die die zu den jeweiligen
+Quellen korrespondierenden Dokumentationen enthalten. Zus&auml;tzlich
+werden eine Reihe von Hilfsdateien zur Darstellung und Indexierung
+der Dokumentationsdateien erstellt. 
+
+<p>
+Alternativ zum Aufruf mit einer Reihe von Quelldateien kann <a href="index_j.html#ixb100194"><font color=#000080><tt>javadoc</tt></font></a>
+auch mit Paketnamen als Argument aufgerufen werden. Wenn der Klassenpfad
+korrekt gesetzt ist, spielt es dann keine Rolle mehr, aus welchem
+Verzeichnis das Programm gestartet wird, denn die Klassendateien werden
+automatisch korrekt gefunden. Wenn nicht per Schalter <font color="#000077"><tt>-d</tt></font>
+etwas anderes angegeben wurde, erzeugt <a href="index_j.html#ixb100194"><font color=#000080><tt>javadoc</tt></font></a>
+die Dokumentationsdateien im aktuellen Verzeichnis. 
+
+<p>
+F&uuml;r Verweise auf Klassen oder Methoden der Java-Klassenbibliothek
+(z.B. <font color="#000077"><tt>java.lang.String</tt></font>) wurde
+der Parameter <font color="#000077"><tt>-link</tt></font> eingef&uuml;hrt,
+mit dem ein Pfad auf die Dokumentation der Standardklassen angegeben
+werden kann. Der Pfad muss als URL angegeben werden und das Verzeichnis
+beschreiben, in dem die Datei <font color="#660099">package-list</font><a name="ixa103912"></a>
+der Dokumentationsdateien liegt. In der Dokumentation zu <a href="index_j.html#ixb100194"><font color=#000080><tt>javadoc</tt></font></a>
+gibt Oracle folgendes Beispiel an: 
+<font color="#000077">
+<pre>
+javadoc -link http://java.sun.com/j2se/1.6.0/docs/api ...
+</pre>
+</font>
+
+<p>
+Dadurch wird bei Standardklassennamen auf die auf dem Oracle-Server
+liegende Originaldokumentation verwiesen. Soll dagegen auf eine lokal
+installierte Dokumentation verwiesen werden, kann auch ein <font color="#000077"><tt>file</tt></font>-URL
+angegeben werden. Liegt die Dokumentation des JDK beispielsweise im
+Verzeichnis <font color="#660099">c:\jdk1.7\docs</font> (und somit
+die API-Dokumentation im Verzeichnis <font color="#660099">c:\jdk1.7\docs\api</font>),
+kann <a href="index_j.html#ixb100194"><font color=#000080><tt>javadoc</tt></font></a>
+wie folgt aufgerufen werden: 
+<font color="#000077">
+<pre>
+javadoc -link file:///c:/jdk1.7/docs/api ...
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="sectlevel3id053005005"></a>
+<h3>53.5.5 Optionen </h3>
+<a name="tableid053006"></a>
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=25%><b>Option</b></td>
+<td valign=top align=left width=75%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103913"><a href="index_0.html#ixb100162"><font color=#000080><tt>-classpath path</tt></font></a></a></td>
+<td valign=top align=left>Gibt die Liste der Pfade zur Suche von Klassendateien
+an. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103914"><a href="index_0.html#ixb102933"><font color=#000080><tt>-public</tt></font></a></a></td>
+<td valign=top align=left>Nur Elemente des Typs <a href="index_p.html#ixb100083"><font color=#000080><tt>public</tt></font></a>
+werden dokumentiert. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103915"><a href="index_0.html#ixb102934"><font color=#000080><tt>-protected</tt></font></a></a></td>
+<td valign=top align=left>Elemente des Typs <a href="index_p.html#ixb100083"><font color=#000080><tt>public</tt></font></a>
+und <a href="index_p.html#ixb100085"><font color=#000080><tt>protected</tt></font></a>
+werden dokumentiert (das ist die Voreinstellung). </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103916"><a href="index_0.html#ixb102935"><font color=#000080><tt>-package</tt></font></a></a></td>
+<td valign=top align=left>Elemente des Typs <font color="#000077"><tt>package</tt></font>,
+<a href="index_p.html#ixb100083"><font color=#000080><tt>public</tt></font></a>
+und <a href="index_p.html#ixb100085"><font color=#000080><tt>protected</tt></font></a>
+werden dokumentiert. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103917"><a href="index_0.html#ixb102936"><font color=#000080><tt>-private</tt></font></a></a></td>
+<td valign=top align=left>Alle Elemente werden dokumentiert. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103918"><a href="index_0.html#ixb100126"><font color=#000080><tt>-version</tt></font></a></a></td>
+<td valign=top align=left>Versionseintrag generieren </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103919"><a href="index_0.html#ixb102937"><font color=#000080><tt>-author</tt></font></a></a></td>
+<td valign=top align=left>Autoreneintrag generieren </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103920"><a href="index_0.html#ixb102911"><font color=#000080><tt>-sourcepath path</tt></font></a></a></td>
+<td valign=top align=left>Pfad mit den Quelldateien </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103921"><a href="index_0.html#ixb100647"><font color=#000080><tt>-d directory</tt></font></a></a></td>
+<td valign=top align=left>Verzeichnis, in dem die generierten Dokumentationsdateien
+abgelegt werden. Standardm&auml;&szlig;ig werden sie im aktuellen
+Verzeichnis angelegt. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103922"><a href="index_0.html#ixb102914"><font color=#000080><tt>-verbose</tt></font></a></a></td>
+<td valign=top align=left>Ausgabe zus&auml;tzlicher Meldungen w&auml;hrend
+der Dokumentationserstellung </td></tr>
+</table>
+<p><i>
+Tabelle 53.6: Einige Optionen von javadoc </i></p>
+
+<p>
+Neben den hier erw&auml;hnten Schaltern kennt <a href="index_j.html#ixb100194"><font color=#000080><tt>javadoc</tt></font></a>
+eine ganze Reihe zus&auml;tzlicher Optionen, mit denen die Codeerzeugung
+beeinflusst werden kann. Bemerkenswert ist dabei auf jeden Fall das
+Konzept der <a name="ixa103923"><i>Doclets</i></a>, mit denen das
+Verhalten von <a href="index_j.html#ixb100194"><font color=#000080><tt>javadoc</tt></font></a>
+und das Aussehen der generierten Dokumentationsdateien weitgehend
+ver&auml;ndert werden kann. Doclets sind Zusatzmodule f&uuml;r <a href="index_j.html#ixb100194"><font color=#000080><tt>javadoc</tt></font></a>,
+deren Aufgabe es ist, auf der Basis des Doclet-API und der geparsten
+Quelltexte die Ausgabedateien zu erzeugen. Ob der generierte Code
+dabei im HTML-, RTF- oder einem anderen Format erzeugt wird, spielt
+keine Rolle. Das seit dem JDK 1.2 ausgelieferte Standard-Doclet erzeugt
+die Dokumentationsdateien im HTML-Format. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100332.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100336.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100338.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

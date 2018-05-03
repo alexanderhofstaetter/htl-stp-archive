@@ -1,0 +1,565 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100121.html;106,k100123.html;107,k100125.html;108,k100127.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100121.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100123.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100125.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100127.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 18 - Utility-Klassen II
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="bigintbigdec"></a>
+<h2>18.3 Die Klassen BigInteger und BigDecimal </h2>
+<hr>
+<ul>
+<li><a href="k100124.html#bigintbigdec">18.3 Die Klassen BigInteger und BigDecimal</a>
+<ul>
+<li><a href="k100124.html#sectlevel3id018003001">18.3.1 Die Klasse BigInteger</a>
+<li><a href="k100124.html#sectlevel3id018003002">18.3.2 Die Klasse BigDecimal</a>
+</ul>
+</ul>
+<hr>
+
+<p>
+Seit dem JDK 1.1 gibt es das Paket <a name="ixa101165"><a href="index_j.html#ixb100612"><font color=#000080><tt>java.math</tt></font></a></a>
+mit den beiden Klassen <a name="ixa101166"><a href="index_b.html#ixb100903"><font color=#000080><tt>BigInteger</tt></font></a></a>
+und <a name="ixa101167"><a href="index_b.html#ixb100904"><font color=#000080><tt>BigDecimal</tt></font></a></a>.
+Beide implementieren beliebig gro&szlig;e bzw. beliebig genaue Zahlen
+und stellen Methoden zur Durchf&uuml;hrung arithmetischer Berechnungen
+zur Verf&uuml;gung. W&auml;hrend <a href="index_b.html#ixb100903"><font color=#000080><tt>BigInteger</tt></font></a>
+beliebig gro&szlig;e <i>Ganzzahlen</i> implementiert, dient <a href="index_b.html#ixb100904"><font color=#000080><tt>BigDecimal</tt></font></a>
+zur Darstellung sehr gro&szlig;er <i>Flie&szlig;kommazahlen</i>. Objekte
+beider Klassen sind <i>immutable</i>, d.h., sie k&ouml;nnen nach der
+Instanzierung nicht mehr ver&auml;ndert werden. 
+
+<!-- Section -->
+
+<a name="sectlevel3id018003001"></a>
+<h3>18.3.1 Die Klasse BigInteger </h3>
+
+<p>
+Die einfachste Art, ein <a href="index_b.html#ixb100903"><font color=#000080><tt>BigInteger</tt></font></a>-Objekt
+zu konstruieren, besteht darin, eine String-Repr&auml;sentation der
+darzustellenden Zahl an den Konstruktor zu &uuml;bergeben. Das kann
+wahlweise mit oder ohne Angabe des Zahlensystems geschehen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public BigInteger(String val)
+
+public BigInteger(String val, int radix)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/math/BigInteger.html" onClick="this.href=getApiDoc('java.math.BigInteger')"><font color="#660066" size=-1>java.math.BigInteger</font></a></td>
+</tr>
+</table>
+
+<p>
+Wird das Zahlensystem nicht angegeben, erwartet der Konstruktor eine
+Zahl zur Basis 10. Der &uuml;bergebene String darf eine beliebig lange
+Folge von Ziffern sein. An erster Stelle kann ein Minuszeichen stehen,
+um eine negative Zahl anzuzeigen. 
+
+<p>
+Die Arithmetik auf <a href="index_b.html#ixb100903"><font color=#000080><tt>BigInteger</tt></font></a>-Zahlen
+erfolgt durch Aufruf ihrer arithmetischen Methoden und &Uuml;bergabe
+der erforderlichen Argumente, die meist ebenfalls vom Typ <a href="index_b.html#ixb100903"><font color=#000080><tt>BigInteger</tt></font></a>
+sind. Der Methodenaufruf ver&auml;ndert dabei nicht den Wert des Objekts,
+sondern gibt das Ergebnis als neue <a href="index_b.html#ixb100903"><font color=#000080><tt>BigInteger</tt></font></a>-Zahl
+an den Aufrufer zur&uuml;ck. Wichtige arithmetische Methoden sind:
+<a name="ixa101168"></a> <a name="ixa101169"></a> <a name="ixa101170"></a>
+<a name="ixa101171"></a> <a name="ixa101172"></a> <a name="ixa101173"></a>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public BigInteger add(BigInteger val)
+public BigInteger subtract(BigInteger val)
+public BigInteger multiply(BigInteger val)
+public BigInteger divide(BigInteger val)
+public BigInteger remainder(BigInteger val)
+public BigInteger pow(int exponent)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/math/BigInteger.html" onClick="this.href=getApiDoc('java.math.BigInteger')"><font color="#660066" size=-1>java.math.BigInteger</font></a></td>
+</tr>
+</table>
+
+<p>
+Sie berechnen die Summe, Differenz, Produkt, Quotient, Restwert und
+Potenz zweier <a href="index_b.html#ixb100903"><font color=#000080><tt>BigInteger</tt></font></a>-Zahlen.
+Neben den Grundrechenarten gibt es weitere Funktionen: <a name="ixa101174"></a>
+<a name="ixa101175"></a> <a name="ixa101176"></a> <a name="ixa101177"></a>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public BigInteger abs()
+public BigInteger negate()
+public int signum()
+public BigInteger gcd(BigInteger val)
+
+public BigInteger min(BigInteger val)
+public BigInteger max(BigInteger val)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/math/BigInteger.html" onClick="this.href=getApiDoc('java.math.BigInteger')"><font color="#660066" size=-1>java.math.BigInteger</font></a></td>
+</tr>
+</table>
+
+<p>
+Sie stellen den absoluten Betrag zur Verf&uuml;gung, multiplizieren
+mit -1, liefern das Vorzeichen und ermitteln den gr&ouml;&szlig;ten
+gemeinsamen Teiler zweier Zahlen. <a href="index_m.html#ixb100892"><font color=#000080><tt>min</tt></font></a>
+und <a href="index_m.html#ixb100893"><font color=#000080><tt>max</tt></font></a>
+liefern den kleineren bzw. gr&ouml;&szlig;eren Wert aus aktueller
+und als Argument &uuml;bergebener Zahl. Daneben gibt es logische und
+bitweise Operationen, die denen der primitiven ganzzahligen Typen
+entsprechen. 
+
+<p>
+Zum Vergleich zweier <a href="index_b.html#ixb100903"><font color=#000080><tt>BigInteger</tt></font></a>-Zahlen
+kann <a href="index_c.html#ixb100455"><font color=#000080><tt>compareTo</tt></font></a>
+und <a href="index_e.html#ixb100230"><font color=#000080><tt>equals</tt></font></a>
+verwendet werden, die Konvertierung in einen String wird mit <a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a>
+erledigt: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int compareTo(BigInteger val)
+public boolean equals(Object x)
+
+public String toString()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/math/BigInteger.html" onClick="this.href=getApiDoc('java.math.BigInteger')"><font color="#660066" size=-1>java.math.BigInteger</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Arbeitsweise dieser Methoden entspricht der in der Klasse <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+und dem Interface <a href="index_c.html#ixb100454"><font color=#000080><tt>Comparable</tt></font></a>
+definierten und kann in <a href="k100058.html#klasseobject">Abschnitt 9.1.2</a>
+und <a href="k100065.html#interfacecomparable">Abschnitt 10.2</a>
+nachgelesen werden. Schlie&szlig;lich gibt es noch einige Methoden,
+um <a href="index_b.html#ixb100903"><font color=#000080><tt>BigInteger</tt></font></a>-Objekte
+in primitive Typen zu verwandeln: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int intValue()
+public long longValue()
+public float floatValue()
+public double doubleValue()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/math/BigInteger.html" onClick="this.href=getApiDoc('java.math.BigInteger')"><font color="#660066" size=-1>java.math.BigInteger</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Umwandlung folgt den in <a href="k100034.html#abschnitttypkonvertierungen">Abschnitt 5.6</a>
+beschriebenen Regeln f&uuml;r einschr&auml;nkende Konvertierungen.
+
+<p>
+Als abschlie&szlig;endes Beispiel wollen wir uns ein kleines Programm
+ansehen, das die Fakult&auml;ten der Zahlen 30 bis 40 berechnet: 
+<a name="listingid018005"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1805.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.math.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1805
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> printFaculty(<font color="#006699">int</font> n)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    BigInteger bi = <font color="#0000AA">new</font> BigInteger(<font color="#0000FF">"1"</font>);
+<font color="#555555">010 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 2; i &lt;= n; ++i) {
+<font color="#555555">011 </font>      bi = bi.multiply(<font color="#0000AA">new</font> BigInteger(<font color="#0000FF">""</font> + i));
+<font color="#555555">012 </font>    }
+<font color="#555555">013 </font>    System.out.println(n + <font color="#0000FF">"! is "</font> + bi.toString());
+<font color="#555555">014 </font>  }
+<font color="#555555">015 </font>
+<font color="#555555">016 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">017 </font>  {
+<font color="#555555">018 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 30; i &lt;= 40; ++i) {
+<font color="#555555">019 </font>      printFaculty(i);
+<font color="#555555">020 </font>    }
+<font color="#555555">021 </font>  }
+<font color="#555555">022 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1805.java"><font color="#000055" size=-1>Listing1805.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 18.5: Anwendung der Klasse BigInteger</i></p>
+
+<p>
+Die Ausgabe des Programms ist: 
+<font color="#333300">
+<pre>
+30! is 265252859812191058636308480000000
+31! is 8222838654177922817725562880000000
+32! is 263130836933693530167218012160000000
+33! is 8683317618811886495518194401280000000
+34! is 295232799039604140847618609643520000000
+35! is 10333147966386144929666651337523200000000
+36! is 371993326789901217467999448150835200000000
+37! is 13763753091226345046315979581580902400000000
+38! is 523022617466601111760007224100074291200000000
+39! is 20397882081197443358640281739902897356800000000
+40! is 815915283247897734345611269596115894272000000000
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="sectlevel3id018003002"></a>
+<h3>18.3.2 Die Klasse BigDecimal </h3>
+
+<p>
+Die Klasse <a href="index_b.html#ixb100904"><font color=#000080><tt>BigDecimal</tt></font></a>
+kann beliebig genaue Flie&szlig;kommazahlen darstellen. Sie bestehen
+aus einer Ziffernfolge (die als Objekt vom Typ <a href="index_b.html#ixb100903"><font color=#000080><tt>BigInteger</tt></font></a>
+gespeichert ist) und einer <i>Skalierung</i>, die als nichtnegative
+Ganzzahl gespeichert wird. Die Skalierung bestimmt die Anzahl der
+Nachkommastellen. Der Wert der Zahl ergibt sich aus der Formel <i>Unskalierter
+Wert / (10 <sup>Skalierung</sup>)</i>. 
+
+<p>
+Die Instanzierung eines <a href="index_b.html#ixb100904"><font color=#000080><tt>BigDecimal</tt></font></a>-Objekts
+kann analog zur Klasse <a href="index_b.html#ixb100903"><font color=#000080><tt>BigInteger</tt></font></a>
+durch &Uuml;bergabe eines Strings an den Konstruktor erfolgen. Dabei
+ist neben dem ganzzahligen Teil zus&auml;tzlich ein Dezimalpunkt und
+ein Gleitkommateil erlaubt. Die Anzahl der Nachkommastellen bestimmt
+die Skalierung. Alternativ kann das Objekt auch aus einem <a href="index_b.html#ixb100903"><font color=#000080><tt>BigInteger</tt></font></a>
+oder einem <a href="index_d.html#ixb100254"><font color=#000080><tt>double</tt></font></a>
+konstruiert werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public BigDecimal(BigInteger val)
+public BigDecimal(double val)
+public BigDecimal(String val)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/math/BigDecimal.html" onClick="this.href=getApiDoc('java.math.BigDecimal')"><font color="#660066" size=-1>java.math.BigDecimal</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_b.html#ixb100904"><font color=#000080><tt>BigDecimal</tt></font></a>
+stellt elementare arithmetische Funktionen zur Verf&uuml;gung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public BigDecimal add(BigDecimal val)
+public BigDecimal subtract(BigDecimal val)
+public BigDecimal multiply(BigDecimal val)
+public BigDecimal divide(BigDecimal val, int roundingMode)
+
+public BigDecimal abs()
+public BigDecimal negate()
+public int signum()
+
+public BigDecimal min(BigDecimal val)
+public BigDecimal max(BigDecimal val)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/math/BigDecimal.html" onClick="this.href=getApiDoc('java.math.BigDecimal')"><font color="#660066" size=-1>java.math.BigDecimal</font></a></td>
+</tr>
+</table>
+
+<p>
+Ihr Verhalten entspricht weitgehend dem bei <a href="index_b.html#ixb100903"><font color=#000080><tt>BigInteger</tt></font></a>
+beschriebenen. Eine Ausnahme bildet die Methode <a href="index_d.html#ixb100907"><font color=#000080><tt>divide</tt></font></a>,
+denn sie ben&ouml;tigt zus&auml;tzlich eine Konstante, die die Art
+der Rundung (falls erforderlich) bestimmt: 
+<ul>
+<li><a name="ixa101178"><a href="index_r.html#ixb100912"><font color=#000080><tt>ROUND_CEILING</tt></font></a></a>
+<li><a name="ixa101179"><a href="index_r.html#ixb100913"><font color=#000080><tt>ROUND_DOWN</tt></font></a></a>
+<li><a name="ixa101180"><a href="index_r.html#ixb100914"><font color=#000080><tt>ROUND_FLOOR</tt></font></a></a>
+<li><a name="ixa101181"><a href="index_r.html#ixb100915"><font color=#000080><tt>ROUND_HALF_DOWN</tt></font></a></a>
+<li><a name="ixa101182"><a href="index_r.html#ixb100916"><font color=#000080><tt>ROUND_HALF_EVEN</tt></font></a></a>
+<li><a name="ixa101183"><a href="index_r.html#ixb100917"><font color=#000080><tt>ROUND_HALF_UP</tt></font></a></a>
+<li><a name="ixa101184"><a href="index_r.html#ixb100918"><font color=#000080><tt>ROUND_UNNECESSARY</tt></font></a></a>
+<li><a name="ixa101185"><a href="index_r.html#ixb100919"><font color=#000080><tt>ROUND_UP</tt></font></a></a>
+</ul>
+
+<p>
+Auch die Konvertierungs- und Vergleichsmethoden entsprechen denen
+der Klasse <a href="index_b.html#ixb100903"><font color=#000080><tt>BigInteger</tt></font></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int compareTo(BigDecimal val)
+public boolean equals(Object x)
+
+public String toString()
+
+public int intValue()
+public long longValue()
+public float floatValue()
+public double doubleValue()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/math/BigDecimal.html" onClick="this.href=getApiDoc('java.math.BigDecimal')"><font color="#660066" size=-1>java.math.BigDecimal</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit Hilfe der Methoden <a name="ixa101186"><a href="index_s.html#ixb100920"><font color=#000080><tt>scale</tt></font></a></a>
+und <a name="ixa101187"><a href="index_s.html#ixb100921"><font color=#000080><tt>setScale</tt></font></a></a>
+kann die Skalierung abgefragt bzw. ein neues Objekt mit ge&auml;nderter
+Skalierung erzeugt werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int scale()
+
+public BigDecimal setScale(int scale)
+public BigDecimal setScale(int scale, int roundingMode)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/math/BigDecimal.html" onClick="this.href=getApiDoc('java.math.BigDecimal')"><font color="#660066" size=-1>java.math.BigDecimal</font></a></td>
+</tr>
+</table>
+
+<p>
+Das &Auml;ndern der Skalierung l&auml;sst den numerischen Wert des
+Objekts intakt und ver&auml;ndert lediglich die Anzahl der darstellbaren
+Dezimalstellen. Soll diese verkleinert werden, muss die zweite Variante
+von <a href="index_s.html#ixb100921"><font color=#000080><tt>setScale</tt></font></a>
+verwendet und eine passende Rundungskonstante &uuml;bergeben werden.
+Soll die Anzahl der Dezimalstellen vergr&ouml;&szlig;ert werden, kann
+die erste Variante verwendet werden. 
+
+<p>
+Zus&auml;tzlich gibt es zwei Methoden, mit denen der Dezimalpunkt
+um eine bestimmte Anzahl Stellen nach links oder rechts verschoben
+werden kann, also eine Multiplikation bzw. Division mit einer Zehnerpotenz
+ausgef&uuml;hrt wird: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public BigDecimal movePointLeft(int n)
+public BigDecimal movePointRight(int n)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/math/BigDecimal.html" onClick="this.href=getApiDoc('java.math.BigDecimal')"><font color="#660066" size=-1>java.math.BigDecimal</font></a></td>
+</tr>
+</table>
+
+<p>
+Zum Abschluss wollen wir uns ein Beispielprogramm ansehen, das die
+Quadratwurzel der Zahl 2 in (theoretisch) beliebiger Genauigkeit errechnen
+kann: 
+<a name="listingid018006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1806.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.math.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1806
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#0000AA">final</font> BigDecimal ZERO = <font color="#0000AA">new</font> BigDecimal(<font color="#0000FF">"0"</font>);
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#0000AA">final</font> BigDecimal ONE  = <font color="#0000AA">new</font> BigDecimal(<font color="#0000FF">"1"</font>);
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#0000AA">final</font> BigDecimal TWO  = <font color="#0000AA">new</font> BigDecimal(<font color="#0000FF">"2"</font>);
+<font color="#555555">010 </font>
+<font color="#555555">011 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> BigDecimal sqrt(BigDecimal x, <font color="#006699">int</font> digits)
+<font color="#555555">012 </font>  {
+<font color="#555555">013 </font>    BigDecimal zero = ZERO.setScale(digits + 10);
+<font color="#555555">014 </font>    BigDecimal one  = ONE.setScale(digits + 10);
+<font color="#555555">015 </font>    BigDecimal two  = TWO.setScale(digits + 10);
+<font color="#555555">016 </font>    BigDecimal maxerr = one.movePointLeft(digits);
+<font color="#555555">017 </font>    BigDecimal lower = zero;
+<font color="#555555">018 </font>    BigDecimal upper = x.compareTo(one) &lt;= 0 ? one : x;
+<font color="#555555">019 </font>    BigDecimal mid;
+<font color="#555555">020 </font>    <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">021 </font>      mid = lower.add(upper).divide(two, BigDecimal.ROUND_HALF_UP);
+<font color="#555555">022 </font>      BigDecimal sqr = mid.multiply(mid);
+<font color="#555555">023 </font>      BigDecimal error = x.subtract(sqr).abs();
+<font color="#555555">024 </font>      <font color="#0000AA">if</font> (error.compareTo(maxerr) &lt;= 0) {
+<font color="#555555">025 </font>        <font color="#0000AA">break</font>;
+<font color="#555555">026 </font>      }
+<font color="#555555">027 </font>      <font color="#0000AA">if</font> (sqr.compareTo(x) &lt; 0) {
+<font color="#555555">028 </font>        lower = mid;
+<font color="#555555">029 </font>      } <font color="#0000AA">else</font> {
+<font color="#555555">030 </font>        upper = mid;
+<font color="#555555">031 </font>      }
+<font color="#555555">032 </font>    }
+<font color="#555555">033 </font>    <font color="#0000AA">return</font> mid;
+<font color="#555555">034 </font>  }
+<font color="#555555">035 </font>
+<font color="#555555">036 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">037 </font>  {
+<font color="#555555">038 </font>    BigDecimal sqrtTwo = sqrt(TWO, 100);
+<font color="#555555">039 </font>    BigDecimal apxTwo  = sqrtTwo.multiply(sqrtTwo);
+<font color="#555555">040 </font>    System.out.println(<font color="#0000FF">"sqrt(2): "</font> + sqrtTwo.toString());
+<font color="#555555">041 </font>    System.out.println(<font color="#0000FF">"check  : "</font> + apxTwo.toString());
+<font color="#555555">042 </font>  }
+<font color="#555555">043 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1806.java"><font color="#000055" size=-1>Listing1806.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 18.6: Anwendung der Klasse BigDecimal</i></p>
+
+<p>
+Das Programm arbeitet mit einer Intervallschachtelung. Dazu werden
+zun&auml;chst passende Unter- und Obergrenzen gesucht, so dass das
+Quadrat der Untergrenze auf jeden Fall kleiner gleich und das Quadrat
+der Obergrenze gr&ouml;&szlig;er oder gleich der gesuchten Zahl ist.
+Nun wird der Wert genau in der Mitte zwischen beiden Punkten quadriert
+und mit dem gesuchten Ergebnis verglichen. Ist er gr&ouml;&szlig;er,
+wird die Mitte als neue Obergrenze verwendet, andernfalls als neue
+Untergrenze. Diese Iteration wird so lange fortgesetzt, bis der Fehler
+kleiner als der maximal erlaubte ist. 
+
+<p>
+Die Ausgabe des Programms sieht wie folgt aus:
+<font color="#333300">
+<pre>
+sqrt(2): 1.4142135623730950488016887242096980785696718753769480...
+check  : 1.9999999999999999999999999999999999999999999999999999...
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Das Beispielprogramm berechnet das Ergebnis auf etwa 100 Stellen nach
+dem Komma. Dieser Wert kann prinzipiell beliebig vergr&ouml;&szlig;ert
+werden. Zu bedenken ist allerdings, dass dadurch die Laufzeit &uuml;berproportional
+ansteigt. Zwar bleibt die Intervallschachtelung an sich performant,
+aber durch die gr&ouml;&szlig;ere Anzahl an zu verarbeitenden Dezimalstellen
+ben&ouml;tigt jeder einzelne Aufruf einer arithmetischen Methode mehr
+Rechenzeit. Zudem erfordert die h&ouml;here Genauigkeit insgesamt
+mehr Iterationen, so dass insgesamt das Laufzeitverhalten wohl quadratisch
+mit der Genauigkeitsanforderung wachsen d&uuml;rfte.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100121.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100123.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100125.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100127.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

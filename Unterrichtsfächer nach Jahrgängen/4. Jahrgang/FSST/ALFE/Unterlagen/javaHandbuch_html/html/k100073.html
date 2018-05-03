@@ -1,0 +1,352 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100070.html;106,k100072.html;107,k100074.html;108,k100076.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100070.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100072.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100074.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100076.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 11 - OOP IV: Verschiedenes
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="aufzaehlungstypen"></a>
+<h2>11.3 <a name="ixa100617">Aufz&auml;hlungstypen</a></h2>
+<hr>
+<ul>
+<li><a href="k100073.html#aufzaehlungstypen">11.3 Aufz&auml;hlungstypen</a>
+<ul>
+<li><a href="k100073.html#sectlevel3id011003001">11.3.1 Grundlagen</a>
+<li><a href="k100073.html#sectlevel3id011003002">11.3.2 Erweiterung der Aufz&auml;hlungsklasse</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id011003001"></a>
+<h3>11.3.1 Grundlagen </h3>
+
+<p>
+In der Praxis hat man es h&auml;ufig mit Datentypen zu tun, deren
+Werte aus einem kleinen, konstanten Wertevorrat entnommen werden.
+Beispiele sind die booleschen Werte TRUE und FALSE, die Jahreszeiten
+FRUEHLING, SOMMER, HERBST und WINTER oder die Anredekennzeichen HERR,
+FRAU, FR&Auml;ULEIN und FIRMA. 
+
+<p>
+Um mit solchen Daten arbeiten zu k&ouml;nnen, gibt es in vielen Programmiersprachen
+<i>Aufz&auml;hlungstypen</i>, die es erlauben, einen solchen Datentyp
+zu definieren und seine m&ouml;glichen Wert-Auspr&auml;gungen explizit
+festzulegen. Variablen oder Parameter dieses Typs k&ouml;nnen dann
+jeweils nur die vereinbarten Werte enthalten. In Sprachen, die das
+nicht vorsehen, behilft man sich meist mit kleinen Ganzzahlen, die
+auf Konstanten gelegt werden, hat dann aber keine Typsicherheit mehr.
+Der Compiler kann bei dieser Technik nicht unterscheiden, ob etwa
+an einen Methodenparameter einer der zul&auml;ssigen Aufz&auml;hlungswerte
+&uuml;bergeben wurde oder ein unzul&auml;ssiger Wert aus dem &uuml;brigen
+Wertebereich der Ganzzahlen. 
+
+<p>
+In der Java-Community gab es seit ca. 2004 einige Ideen, wie man einen
+Aufz&auml;hlungstyp in Java realisieren k&ouml;nnte. Joshua Bloch
+<a name="ixa100618"></a> hat in seinem Buch &#187;Effective Java&#171;
+einen sehr ausgefeilten Vorschlag zu dessen Realisierung gemacht.
+Mit der J2SE 5.0 hat er sich ein Denkmal gesetzt und diesen Vorschlag
+in den Kern der Sprache eingebaut. Neu eingef&uuml;hrt wurde dazu
+das Schl&uuml;sselwort <a name="ixa100619"><a href="index_e.html#ixb100492"><font color=#000080><tt>enum</tt></font></a></a>,
+mit dessen Hilfe ein Aufz&auml;hlungstyp definiert werden kann. In
+seiner einfachsten Form hat er folgende Syntax: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+enum Typname ( Wert1, Wert2, Wert3, ...)
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+Durch diese Deklaration wird ein Datentyp <font color="#000077"><tt>Typname</tt></font>
+vereinbart, der als m&ouml;glichen Inhalt die Werte <font color="#000077"><tt>Typname.Wert1</tt></font>,
+<font color="#000077"><tt>Typname.Wert2</tt></font>, <font color="#000077"><tt>Typname.Wert3</tt></font>
+usw. annehmen kann. Unter Verwendung des Typnamens k&ouml;nnen Variablen
+oder Parameter deklariert werden und die Werte k&ouml;nnen diesen
+zugewiesen oder in Ausdr&uuml;cken zur Abfrage verwendet werden. Aufz&auml;hlungen
+sind als Klassen und ihre Werte als Objekte realisiert und neben den
+beschriebenen besitzen Aufz&auml;hlungstypen noch eine Reihe weiterer
+n&uuml;tzlicher Eigenschaften: 
+<ul>
+<li>Sie besitzen eine <a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a>-Methode,
+die den Namen des Werts im Klartext ausgibt.
+<li>Sie k&ouml;nnen mit <a href="index_e.html#ixb100230"><font color=#000080><tt>equals</tt></font></a>
+auf Gleichheit gepr&uuml;ft werden.
+<li>Sie implementieren die Interfaces <a href="index_c.html#ixb100454"><font color=#000080><tt>Comparable</tt></font></a>
+und <a href="index_s.html#ixb100461"><font color=#000080><tt>Serializable</tt></font></a>.
+<li>Sie k&ouml;nnen in <a href="index_s.html#ixb100078"><font color=#000080><tt>switch</tt></font></a>-Anweisungen
+verwendet werden.
+<li>Der Typname besitzt eine Methode <a name="ixa100620"><a href="index_v.html#ixb100493"><font color=#000080><tt>values</tt></font></a></a>.
+Diese gibt ein Array zur&uuml;ck, das alle Elemente der Aufz&auml;hlung
+enth&auml;lt. Dieses Array kann zum Beispiel mit der <font color="#000077"><tt>foreach</tt></font>-Schleife
+durchlaufen werden. 
+<li>Es gibt zwei neue Collection-Klassen <a name="ixa100621"><a href="index_e.html#ixb100494"><font color=#000080><tt>EnumSet</tt></font></a></a>
+und <a name="ixa100622"><a href="index_e.html#ixb100495"><font color=#000080><tt>EnumMap</tt></font></a></a>
+zur Bildung von Mengen von Werten eines Aufz&auml;hlungstyps.
+</ul>
+
+<p>
+Das folgende Beispiel zeigt diese Eigenschaften in der praktischen
+Anwendung: 
+<a name="listingid011008"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1108.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1108
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  enum Farbe {ROT, GRUEN, BLAU, GELB};
+<font color="#555555">006 </font>
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> farbVergleich(Farbe f1, Farbe f2)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    System.out.print(f1);
+<font color="#555555">010 </font>    System.out.print(f1.equals(f2) ? <font color="#0000FF">" = "</font> : <font color="#0000FF">" != "</font>);
+<font color="#555555">011 </font>    System.out.println(f2);
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> String toRGB(Farbe f)
+<font color="#555555">015 </font>  {
+<font color="#555555">016 </font>    String ret = <font color="#0000FF">"?"</font>;
+<font color="#555555">017 </font>    <font color="#0000AA">switch</font> (f) {
+<font color="#555555">018 </font>      <font color="#0000AA">case</font> ROT:   ret = <font color="#0000FF">"(255,0,0)"</font>; <font color="#0000AA">break</font>;
+<font color="#555555">019 </font>      <font color="#0000AA">case</font> GRUEN: ret = <font color="#0000FF">"(0,255,0)"</font>; <font color="#0000AA">break</font>;
+<font color="#555555">020 </font>      <font color="#0000AA">case</font> BLAU:  ret = <font color="#0000FF">"(0,0,255)"</font>; <font color="#0000AA">break</font>;
+<font color="#555555">021 </font>      <font color="#0000AA">case</font> GELB:  ret = <font color="#0000FF">"(255,255,0)"</font>; <font color="#0000AA">break</font>;
+<font color="#555555">022 </font>    }
+<font color="#555555">023 </font>    <font color="#0000AA">return</font> ret;
+<font color="#555555">024 </font>  }
+<font color="#555555">025 </font>
+<font color="#555555">026 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">027 </font>  {
+<font color="#555555">028 </font>    <font color="#00AA00">//Aufz&auml;hlungsvariablen</font>
+<font color="#555555">029 </font>    Farbe f1 = Farbe.ROT;
+<font color="#555555">030 </font>    Farbe f2 = Farbe.BLAU;
+<font color="#555555">031 </font>    Farbe f3 = Farbe.ROT;
+<font color="#555555">032 </font>    <font color="#00AA00">//toString() liefert den Namen</font>
+<font color="#555555">033 </font>    System.out.println(<font color="#0000FF">"--"</font>);
+<font color="#555555">034 </font>    System.out.println(f1);
+<font color="#555555">035 </font>    System.out.println(f2);
+<font color="#555555">036 </font>    System.out.println(f3);
+<font color="#555555">037 </font>    <font color="#00AA00">//equals funktioniert auch</font>
+<font color="#555555">038 </font>    System.out.println(<font color="#0000FF">"--"</font>);
+<font color="#555555">039 </font>    farbVergleich(f1, f2);
+<font color="#555555">040 </font>    farbVergleich(f1, f3);
+<font color="#555555">041 </font>    farbVergleich(f2, f3);
+<font color="#555555">042 </font>    farbVergleich(f1, f1);
+<font color="#555555">043 </font>    <font color="#00AA00">//Die Methode values()</font>
+<font color="#555555">044 </font>    System.out.println(<font color="#0000FF">"--"</font>);
+<font color="#555555">045 </font>    <font color="#0000AA">for</font> (Farbe f : Farbe.values()) {
+<font color="#555555">046 </font>      System.out.println(f + <font color="#0000FF">"="</font> + toRGB(f));
+<font color="#555555">047 </font>    }
+<font color="#555555">048 </font>  }
+<font color="#555555">049 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1108.java"><font color="#000055" size=-1>Listing1108.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 11.8: Anwendung von Aufz&auml;hlungstypen</i></p>
+
+<p>
+Das Programm erzeugt folgende Ausgabe: 
+<font color="#333300">
+<pre>
+--
+ROT
+BLAU
+ROT
+--
+ROT != BLAU
+ROT = ROT
+BLAU != ROT
+ROT = ROT
+--
+ROT=(255,0,0)
+GRUEN=(0,255,0)
+BLAU=(0,0,255)
+GELB=(255,255,0)
+</pre>
+</font>
+
+<p>
+Zun&auml;chst wird ein Aufz&auml;hlungstyp <font color="#000077"><tt>Farbe</tt></font>
+vereinbart, mit den Werten <font color="#000077"><tt>ROT</tt></font>,
+<font color="#000077"><tt>GRUEN</tt></font>, <font color="#000077"><tt>BLAU</tt></font>
+und <font color="#000077"><tt>GELB</tt></font>. In <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>
+werden dann einige Variablen deklariert, ihnen Werte zugewiesen und
+diese mit <a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a>
+auf der Konsole ausgegeben. Der Aufruf von <font color="#000077"><tt>farbVergleich</tt></font>
+zeigt, wie man Farben als Parameter an eine Methode &uuml;bergibt.
+In der Methode wird mit Hilfe von <a href="index_e.html#ixb100230"><font color=#000080><tt>equals</tt></font></a>
+verglichen, ob die beiden Werte &uuml;bereinstimmen. Die Methode <font color="#000077"><tt>toRGB</tt></font>
+zeigt schlie&szlig;lich die Anwendung der <a href="index_s.html#ixb100078"><font color=#000080><tt>switch</tt></font></a>-Anweisung
+auf Aufz&auml;hlungstypen. Sie wird in einer <a href="index_v.html#ixb100493"><font color=#000080><tt>values</tt></font></a>-Schleife
+auf alle Farbwerte angewendet. 
+
+<!-- Section -->
+
+<a name="sectlevel3id011003002"></a>
+<h3>11.3.2 Erweiterung der Aufz&auml;hlungsklasse </h3>
+
+<p>
+Wie schon erw&auml;hnt, werden Aufz&auml;hlungstypen in (lokale) Klassen
+&uuml;bersetzt (siehe <a href="k100071.html#lokaleanonymeklassen">Abschnitt 11.1</a>)
+und ihre Werte werden zu Instanzen dieser Klasse. Konsequenterweise
+bietet der Aufz&auml;hlungstyp die M&ouml;glichkeit, diese Klasse
+direkt bei der Deklaration zu erweitern, etwa um eigene Membervariablen
+oder Methoden und damit zus&auml;tzliche &#187;Intelligenz&#171; in
+den Aufz&auml;hlungstyp oder seine Werte zu packen. Wir wollen dazu
+eine Klasse <font color="#000077"><tt>Farbe2</tt></font> vorstellen,
+die einige der zus&auml;tzlichen M&ouml;glichkeiten demonstriert:
+<a name="listingid011009"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Farbe2.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> enum Farbe2
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  ROT(255, 0 , 0),
+<font color="#555555">006 </font>  GRUEN(0, 255, 0),
+<font color="#555555">007 </font>  BLAU(0, 0, 255),
+<font color="#555555">008 </font>  GELB(255, 255, 0);
+<font color="#555555">009 </font>
+<font color="#555555">010 </font>  <font color="#0000AA">private</font> <font color="#0000AA">final</font> <font color="#006699">int</font> r;
+<font color="#555555">011 </font>  <font color="#0000AA">private</font> <font color="#0000AA">final</font> <font color="#006699">int</font> g;
+<font color="#555555">012 </font>  <font color="#0000AA">private</font> <font color="#0000AA">final</font> <font color="#006699">int</font> b;
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>  Farbe2(<font color="#006699">int</font> r, <font color="#006699">int</font> g, <font color="#006699">int</font> b)
+<font color="#555555">015 </font>  {
+<font color="#555555">016 </font>    <font color="#006699">this</font>.r = r;
+<font color="#555555">017 </font>    <font color="#006699">this</font>.g = g;
+<font color="#555555">018 </font>    <font color="#006699">this</font>.b = b;
+<font color="#555555">019 </font>  }
+<font color="#555555">020 </font>
+<font color="#555555">021 </font>  <font color="#0000AA">public</font> String toRGB()
+<font color="#555555">022 </font>  {
+<font color="#555555">023 </font>    <font color="#0000AA">return</font> <font color="#0000FF">"("</font> + r + <font color="#0000FF">","</font> + g + <font color="#0000FF">","</font> + b + <font color="#0000FF">")"</font>;
+<font color="#555555">024 </font>  }
+<font color="#555555">025 </font>
+<font color="#555555">026 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">027 </font>  {
+<font color="#555555">028 </font>    <font color="#0000AA">for</font> (Farbe2 f : Farbe2.values()) {
+<font color="#555555">029 </font>      System.out.println(f + <font color="#0000FF">":"</font> + f.toRGB());
+<font color="#555555">030 </font>    }
+<font color="#555555">031 </font>  }
+<font color="#555555">032 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Farbe2.java"><font color="#000055" size=-1>Farbe2.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 11.9: Erweiterung von Aufz&auml;hlungstypen</i></p>
+
+<p>
+Im Vergleich zum vorigen Beispiel fallen einige Unterschiede auf:
+<ul>
+<li>Die Klasse enth&auml;lt nun zus&auml;tzliche konstante Membervariablen
+<font color="#000077"><tt>r</tt></font>, <font color="#000077"><tt>g</tt></font>
+und <font color="#000077"><tt>b</tt></font>, die den RGB-Wert der
+Farbe aufnehmen k&ouml;nnen.
+<li>Diese werden bei der Initialisierung der Werte zugewiesen und
+k&ouml;nnen sp&auml;ter nicht mehr ver&auml;ndert werden (sie wurden
+als <a href="index_f.html#ixb100410"><font color=#000080><tt>final</tt></font></a>
+deklariert). Dazu wurde ein Konstruktor mit drei Parametern definiert,
+der anstelle der einfachen Wertzuweisung, wie sie im vorigen Beispiel
+gezeigt wurde, bei der Definition der m&ouml;glichen Werte aufgerufen
+wird.
+<li>Zus&auml;tzlich wurde die Methode <font color="#000077"><tt>toRGB</tt></font>
+in der Aufz&auml;hlungsklasse implementiert und kann so ohne zus&auml;tzliche
+Parameter direkt auf den <font color="#000077"><tt>Farbe2</tt></font>-Werten
+operieren.
+</ul>
+
+<p>
+Die Ausgabe des Programms ist: 
+<font color="#333300">
+<pre>
+ROT:(255,0,0)
+GRUEN:(0,255,0)
+BLAU:(0,0,255)
+GELB:(255,255,0)
+</pre>
+</font>
+
+<p>
+Wir haben nun Farbkonstanten, die nicht nur ihren Namen kennen, sondern
+zus&auml;tzlich ihren RGB-Wert und diesen auch ausgeben k&ouml;nnen.
+Dieses Beispiel deutet nur einige der M&ouml;glichkeiten an, die diese
+Art der Implementierung mit sich bringt. Grunds&auml;tzlich ist ein
+Aufz&auml;hlungstyp eine gew&ouml;hnliche Klasse und kann wie diese
+ausgebaut werden. So k&ouml;nnten beispielsweise auch nichtkonstante
+Member verwendet und durch Methodenaufrufe ver&auml;ndert werden.
+Ob das im Einzelfall sinnvoll ist, muss abgewogen werden. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100070.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100072.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100074.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100076.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

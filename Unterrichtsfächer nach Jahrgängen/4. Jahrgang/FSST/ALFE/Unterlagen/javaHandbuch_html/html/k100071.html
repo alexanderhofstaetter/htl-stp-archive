@@ -1,0 +1,542 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100070.html;106,k100070.html;107,k100072.html;108,k100076.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100070.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100070.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100072.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100076.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 11 - OOP IV: Verschiedenes
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="lokaleanonymeklassen"></a>
+<h2>11.1 Lokale und anonyme Klassen </h2>
+<hr>
+<ul>
+<li><a href="k100071.html#lokaleanonymeklassen">11.1 Lokale und anonyme Klassen</a>
+<ul>
+<li><a href="k100071.html#sectlevel3id011001001">11.1.1 Grundlagen</a>
+<li><a href="k100071.html#sectlevel3id011001002">11.1.2 Nichtstatische lokale Klassen</a>
+<ul>
+<li><a href="k100071.html#sectlevel4id011001002001">Klassen in Klassen</a>
+<li><a href="k100071.html#sectlevel4id011001002002">Klassen in Methoden</a>
+</ul>
+<li><a href="k100071.html#sectlevel3id011001003">11.1.3 Anonyme Klassen</a>
+<li><a href="k100071.html#sectlevel3id011001004">11.1.4 Statische lokale Klassen</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id011001001"></a>
+<h3>11.1.1 Grundlagen </h3>
+
+<p>
+Bis zum JDK 1.0 wurden Klassen immer auf Paketebene definiert, eine
+Schachtelung war nicht m&ouml;glich. Das hat die Compiler-Implementierung
+vereinfacht und die Struktur der Klassen innerhalb eines Pakets flach
+und &uuml;bersichtlich gemacht. Unhandlich wurde dieses Konzept immer
+dann, wenn eine Klasse nur lokale Bedeutung hatte oder wenn &#187;auf
+die Schnelle eine kleine Klasse&#171; gebraucht wurde. Da es in Java
+keine Funktionszeiger gibt, besteht die einzige M&ouml;glichkeit,
+kleine Codebestandteile zwischen verschiedenen Programmteilen auszutauschen,
+darin, ein Interface zu deklarieren und die ben&ouml;tigte Funktionalit&auml;t
+in einer implementierenden Klasse zur Verf&uuml;gung zu stellen. Diese
+Technik wurde in <a href="k100067.html#fzeigerinterfaces">Abschnitt 10.4.3</a>
+vorgestellt. 
+
+<p>
+Insbesondere bei den Erweiterungen f&uuml;r die Programmierung grafischer
+Oberfl&auml;chen, die mit dem JDK 1.1 eingef&uuml;hrt wurden, entstand
+der Wunsch nach einem flexibleren Mechanismus. Durch das neue Ereignismodell
+(siehe <a href="k100181.html#kapiteleventhandling">Kapitel 28</a>)
+m&uuml;ssen seit dem JDK 1.1 sehr viel h&auml;ufiger kleine Programmteile
+geschrieben werden, die nur in einem eng begrenzten Kontext eine Bedeutung
+haben. Die L&ouml;sung f&uuml;r dieses Problem wurde mit der Einf&uuml;hrung
+von lokalen und anonymen Klassen geschaffen (im JDK werden sie als
+<a name="ixa100575"><i>Inner Classes</i></a> bezeichnet). Dabei wird
+innerhalb einer bestehenden Klasse X eine neue Klasse Y definiert,
+die nur innerhalb von X sichtbar ist. Objektinstanzen von Y k&ouml;nnen
+damit auch nur innerhalb von X erzeugt werden. Anders herum kann Y
+auf die Membervariablen von X zugreifen. 
+
+<p>
+Lokale und anonyme Klassen sind ein m&auml;chtiges - und manchmal
+leicht verwirrendes - Feature von Java. Wir wollen nachfolgend seine
+wichtigsten Anwendungen vorstellen. Dar&uuml;ber hinaus gibt es seltener
+genutzte Varianten, die haupts&auml;chlich durch trickreiche Anwendung
+von Modifiern auf die lokale Klasse oder ihrer Member entstehen. Auf
+diese wollen wir hier nicht weiter eingehen. 
+
+<!-- Section -->
+
+<a name="sectlevel3id011001002"></a>
+<h3>11.1.2 Nichtstatische lokale Klassen </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id011001002001"></a>
+<h4>Klassen in Klassen </h4>
+
+<p>
+Die Definition einer nichtstatischen lokalen Klasse entspricht genau
+dem zuvor beschriebenen Grundprinzip: <i>Innerhalb</i> des Definitionsteils
+einer beliebigen Klasse wird eine neue Klasse definiert. Ihre Instanzierung
+muss innerhalb der &auml;u&szlig;eren Klasse erfolgen, also in einer
+der Methoden der &auml;u&szlig;eren Klasse oder w&auml;hrend ihrer
+Initialisierung. Die innere Klasse kann auf die Membervariablen der
+&auml;u&szlig;eren Klasse zugreifen und umgekehrt. Das folgende Listing
+illustriert dies an einem einfachen Beispiel: 
+<a name="nichtstatischlokal"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1101.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">class</font> Outer
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  String name;
+<font color="#555555">006 </font>  <font color="#006699">int</font>    number;
+<font color="#555555">007 </font>
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> createAndPrintInner(String iname)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    Inner inner = <font color="#0000AA">new</font> Inner();
+<font color="#555555">011 </font>    inner.name = iname;
+<font color="#555555">012 </font>    System.out.println(inner.getQualifiedName());
+<font color="#555555">013 </font>  }
+<font color="#555555">014 </font>
+<font color="#555555">015 </font>  <font color="#0000AA">class</font> Inner
+<font color="#555555">016 </font>  {
+<font color="#555555">017 </font>    <font color="#0000AA">private</font> String name;
+<font color="#555555">018 </font>
+<font color="#555555">019 </font>    <font color="#0000AA">private</font> String getQualifiedName()
+<font color="#555555">020 </font>    {
+<font color="#555555">021 </font>      <font color="#0000AA">return</font> number + <font color="#0000FF">":"</font> + Outer.<font color="#006699">this</font>.name + <font color="#0000FF">"."</font> + name;
+<font color="#555555">022 </font>    }
+<font color="#555555">023 </font>  }
+<font color="#555555">024 </font>}
+<font color="#555555">025 </font>
+<font color="#555555">026 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1101
+<font color="#555555">027 </font>{
+<font color="#555555">028 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">029 </font>  {
+<font color="#555555">030 </font>    Outer outer = <font color="#0000AA">new</font> Outer(); <a name="nichtstatischlokal.a"></a>
+<font color="#555555">031 </font>    outer.name = <font color="#0000FF">"Outer"</font>;
+<font color="#555555">032 </font>    outer.number = 77;
+<font color="#555555">033 </font>    outer.createAndPrintInner(<font color="#0000FF">"Inner"</font>);
+<font color="#555555">034 </font>  }
+<font color="#555555">035 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1101.java"><font color="#000055" size=-1>Listing1101.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 11.1: Eine nichtstatische lokale Klasse</i></p>
+
+<p>
+Zun&auml;chst wird eine Klasse <font color="#000077"><tt>Outer</tt></font>
+mit den Membervariablen <font color="#000077"><tt>name</tt></font>
+und <font color="#000077"><tt>number</tt></font> definiert. Innerhalb
+von <font color="#000077"><tt>Outer</tt></font> wird dann eine Klasse
+<font color="#000077"><tt>Inner</tt></font> definiert. Sie besitzt
+eine eigene Membervariable <font color="#000077"><tt>name</tt></font>
+und eine Methode <font color="#000077"><tt>getQualifiedName</tt></font>.
+Beim Programmstart erzeugt <font color="#000077"><tt>main</tt></font>
+eine Instanz von <font color="#000077"><tt>Outer</tt></font> und initialisiert
+ihre Membervariablen. Anschlie&szlig;end ruft sie die Methode <font color="#000077"><tt>createAndPrintInner</tt></font>
+auf. 
+
+<p>
+In <font color="#000077"><tt>createAndPrintInner</tt></font> wird
+nun eine Instanz von <font color="#000077"><tt>Inner</tt></font> erzeugt
+und mit dem als Argument &uuml;bergebenen Namen initialisiert. Die
+Instanzierung erfolgt also im Kontext der &auml;u&szlig;eren Klasse
+und diese kann auf die Membervariable der inneren Klasse zugreifen.
+In der Praxis wichtiger ist jedoch die M&ouml;glichkeit, die innere
+Klasse auf die Membervariablen der &auml;u&szlig;eren Klasse zugreifen
+zu lassen. Dadurch wird ihr der Status der &auml;u&szlig;eren Klasse
+zug&auml;nglich gemacht und sie kann Programmcode erzeugen (und durch
+die Kapselung in ein Objekt n&ouml;tigenfalls an eine ganz andere
+Stelle im Programm transferieren), der Informationen aus der Umgebung
+der Klassendefinition verwendet. Um dies zu zeigen, ruft <font color="#000077"><tt>Outer</tt></font>
+nun die Methode <font color="#000077"><tt>getQualifiedName</tt></font>
+der inneren Klasse auf. 
+
+<p>
+In <font color="#000077"><tt>getQualifiedName</tt></font> wird auf
+drei unterschiedliche Arten auf Membervariablen zugegriffen. Bei der
+Verwendung von <i>unqualifizierten</i> Namen (also solchen ohne Klassennamen-Pr&auml;fix)
+werden <i>lexikalische</i> Sichtbarkeitsregeln angewandt. Der Compiler
+pr&uuml;ft also zun&auml;chst, ob es eine lokale Variable dieses Namens
+gibt. Ist das nicht der Fall, sucht er nach einer gleichnamigen Membervariable
+in der aktuellen Klasse. Ist auch diese nicht vorhanden, erweitert
+er seine Suche sukzessive von innen nach au&szlig;en auf alle umschlie&szlig;enden
+Klassen. Im Beispiel bezeichnet <font color="#000077"><tt>name</tt></font>
+also die gleichnamige Membervariable von <font color="#000077"><tt>Inner</tt></font>
+und <font color="#000077"><tt>number</tt></font> diejenige von <font color="#000077"><tt>Outer</tt></font>.
+Wird die Membervariable einer &auml;u&szlig;eren Klasse durch eine
+gleichnamige Membervariable der inneren Klasse verdeckt, kann &uuml;ber
+den Pr&auml;fix &#187;Klassenname.this.&#171; auf die &auml;u&szlig;ere
+Variable zugegriffen werden. Im Beispielprogramm wird das f&uuml;r
+die Variable <font color="#000077"><tt>name</tt></font> so gemacht.
+
+<p>
+Wird der Ausdruck &#187;Klassenname.this&#171; alleine verwendet,
+bezeichnet er das Objekt der &auml;u&szlig;eren Klasse, in der die
+aktuelle Instanz der inneren Klasse erzeugt wurde. In <font color="#000077"><tt>getQualifiedName</tt></font>
+w&uuml;rde <font color="#000077"><tt>Outer.this</tt></font> also die
+in <a href="k100071.html#nichtstatischlokal.a">Zeile 030</a> erzeugte
+Instanz <font color="#000077"><tt>outer</tt></font> bezeichnen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Implementierung von lokalen Klassen konnte im JDK 1.1 ohne gr&ouml;&szlig;ere
+&Auml;nderungen der virtuellen Maschine vorgenommen werden. Lokale
+Klassen sind zwar zum Compile-Zeitpunkt bekannt, werden aber zur Laufzeit
+behandelt wie normale Klassen. Insbesondere wird vom Compiler zu jeder
+lokalen Klasse eine eigene <font color="#660099">.class</font>-Datei
+erzeugt. Um &Uuml;berschneidungen zu vermeiden, besteht ihr Name aus
+dem Namen der &auml;u&szlig;eren Klasse, gefolgt von einem Dollarzeichen
+und dem Namen der inneren Klasse. Bei den sp&auml;ter behandelten
+anonymen Klassen wird statt des Namens der inneren Klasse eine vom
+Compiler vergebene fortlaufende Nummer verwendet. Beim &Uuml;bersetzen
+des vorigen Beispiels w&uuml;rden also die Klassendateien <font color="#660099">Outer.class</font>,
+<font color="#660099">Outer$Inner.class</font> und <font color="#660099">Listing1101.class</font>
+generiert.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id011001002002"></a>
+<h4>Klassen in Methoden </h4>
+
+<p>
+Innere Klassen k&ouml;nnen nicht nur auf der &auml;u&szlig;ersten
+Ebene einer anderen Klasse definiert werden, sondern auch innerhalb
+ihrer Methoden und sogar innerhalb eines beliebigen Blocks. In diesem
+Fall k&ouml;nnen sie auch auf die lokalen Variablen der umgebenden
+Methode oder des umgebenden Blocks zugreifen. Bedingung ist allerdings,
+dass diese mit Hilfe des Schl&uuml;sselworts <a href="index_f.html#ixb100410"><font color=#000080><tt>final</tt></font></a>
+als konstant deklariert wurden. 
+
+<p>
+Diese Art, lokale Klassen zu definieren, ist nicht sehr gebr&auml;uchlich,
+taucht aber mitunter in fremdem Programmcode auf. In der Praxis werden
+an ihrer Stelle meist anonyme Klassen verwendet, wie sie im folgenden
+Abschnitt besprochen werden. Wir wollen uns dennoch ein einfaches
+Beispiel ansehen: 
+<a name="listingid011002"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1102.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">class</font> Outer2
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> print()
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#0000AA">final</font> <font color="#006699">int</font> value = 10;
+<font color="#555555">008 </font>
+<font color="#555555">009 </font>    <font color="#0000AA">class</font> Inner2
+<font color="#555555">010 </font>    {
+<font color="#555555">011 </font>      <font color="#0000AA">public</font> <font color="#006699">void</font> print()
+<font color="#555555">012 </font>      {
+<font color="#555555">013 </font>        System.out.println(<font color="#0000FF">"value = "</font> + value);
+<font color="#555555">014 </font>      }
+<font color="#555555">015 </font>    }
+<font color="#555555">016 </font>
+<font color="#555555">017 </font>    Inner2 inner = <font color="#0000AA">new</font> Inner2();
+<font color="#555555">018 </font>    inner.print();
+<font color="#555555">019 </font>  }
+<font color="#555555">020 </font>}
+<font color="#555555">021 </font>
+<font color="#555555">022 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1102
+<font color="#555555">023 </font>{
+<font color="#555555">024 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">025 </font>  {
+<font color="#555555">026 </font>    Outer2 outer = <font color="#0000AA">new</font> Outer2();
+<font color="#555555">027 </font>    outer.print();
+<font color="#555555">028 </font>  }
+<font color="#555555">029 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1102.java"><font color="#000055" size=-1>Listing1102.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 11.2: Definition einer lokalen Klasse in einer Methode</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id011001003"></a>
+<h3>11.1.3 Anonyme Klassen </h3>
+
+<p>
+Die h&auml;ufigste Anwendung lokaler Klassen innerhalb von Methoden
+besteht darin, diese <i>anonym</i> zu definieren. Dabei erh&auml;lt
+die Klasse keinen eigenen Namen, sondern Definition und Instanzierung
+erfolgen in einer kombinierten Anweisung. Eine anonyme Klasse ist
+also eine Einwegklasse, die nur einmal instanziert werden kann. Anonyme
+Klassen werden normalerweise aus anderen Klassen abgeleitet oder erweitern
+existierende Interfaces. Ihre wichtigste Anwendung finden sie bei
+der Definition von <i>Listenern</i> f&uuml;r grafische Oberfl&auml;chen,
+auf die wir in <a href="k100181.html#kapiteleventhandling">Kapitel 28</a>
+noch ausf&uuml;hrlich eingehen werden. 
+
+<p>
+Als einfaches Anwendungsbeispiel wollen wir das in <a href="k100067.html#doublemethod">Listing 10.14</a>
+definierte Interface <font color="#000077"><tt>DoubleMethod</tt></font>
+noch einmal verwenden und zeigen, wie man beim Aufruf von <font color="#000077"><tt>printTable</tt></font>
+eine anonyme Klasse erzeugt und als Argument weitergibt: 
+<a name="beispielanonymeklasse"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1103.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1103
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> printTable(DoubleMethod meth)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    System.out.println(<font color="#0000FF">"Wertetabelle "</font> + meth.toString());
+<font color="#555555">008 </font>    <font color="#0000AA">for</font> (<font color="#006699">double</font> x = 0.0; x &lt;= 5.0; x += 1) {
+<font color="#555555">009 </font>      System.out.println(<font color="#0000FF">" "</font> + x + <font color="#0000FF">"-&gt;"</font> + meth.compute(x));
+<font color="#555555">010 </font>    }
+<font color="#555555">011 </font>  }
+<font color="#555555">012 </font>
+<font color="#555555">013 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">014 </font>  {
+<font color="#555555">015 </font>    printTable(
+<font color="#555555">016 </font>      <font color="#0000AA">new</font> DoubleMethod() <a name="beispielanonymeklasse.a"></a>
+<font color="#555555">017 </font>      {
+<font color="#555555">018 </font>        <font color="#0000AA">public</font> <font color="#006699">double</font> compute(<font color="#006699">double</font> value)
+<font color="#555555">019 </font>        {
+<font color="#555555">020 </font>          <font color="#0000AA">return</font> Math.sqrt(value);
+<font color="#555555">021 </font>        }
+<font color="#555555">022 </font>      }
+<font color="#555555">023 </font>    );
+<font color="#555555">024 </font>  }
+<font color="#555555">025 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1103.java"><font color="#000055" size=-1>Listing1103.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 11.3: Anwendung anonymer Klassen</i></p>
+
+<p>
+Statt eine vordefinierte Klasse zu instanzieren, wird hier in <a href="k100071.html#beispielanonymeklasse.a">Zeile 016</a>
+eine lokale anonyme Klasse definiert und instanziert. Syntaktisch
+unterscheidet sie sich von der Instanzierung einer vordefinierten
+Klasse dadurch, dass nach dem <font color="#000077"><tt>new KlassenName(...)</tt></font>
+nicht ein Semikolon, sondern eine geschweifte Klammer steht. Anschlie&szlig;end
+folgt die Definition der Klasse. Wird als Klassenname ein <i>Interface</i>
+angegeben, implementiert die anonyme Klasse dieses Interface. Handelt
+es sich dagegen um den Namen einer <i>Klasse</i>, wird die anonyme
+Klasse daraus abgeleitet. In unserem Beispiel wird das Interface <font color="#000077"><tt>DoubleMethod</tt></font>
+implementiert. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Das Programm hat durch die Verwendung der anonymen Klasse nicht unbedingt
+an &Uuml;bersichtlichkeit gewonnen. Tats&auml;chlich sind sowohl Nutzen
+als auch Syntax anonymer Klassen Gegenstand vieler Diskussionen gewesen.
+Der gro&szlig;e Vorteil anonymer Klassen besteht in ihrer Flexibilit&auml;t.
+Eine anonyme Klasse kann da deklariert werden, wo sie gebraucht wird
+(hier beispielsweise beim Aufruf von <font color="#000077"><tt>printTable</tt></font>).
+Zudem kann sie Code weitergeben, der auf lokale Variablen und Membervariablen
+ihrer unmittelbaren Umgebung zugreift. 
+
+<p>
+Ihre Anwendung sollte sich auf die F&auml;lle beschr&auml;nken, in
+denen eine Klasse mit wenigen Zeilen Code erzeugt werden muss, die
+nur an einer bestimmten Programmstelle bedeutsam ist. Ist die Klasse
+umfangreicher oder wird sie an verschiedenen Stellen ben&ouml;tigt,
+sollte eine benannte Klasse definiert und an den Aufrufstellen instanziert
+werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id011001004"></a>
+<h3>11.1.4 Statische lokale Klassen </h3>
+
+<p>
+Die letzte Variante innerer Klassen, die wir betrachten wollen, ist
+eigentlich gar keine. Hierbei wird eine Klasse innerhalb einer anderen
+Klasse definiert und mit dem Attribut <a href="index_s.html#ixb100431"><font color=#000080><tt>static</tt></font></a>
+versehen. In diesem Fall erzeugt der Compiler Code, der genau dem
+einer gew&ouml;hnlichen globalen Klasse entspricht. Insbesondere ist
+eine statische lokale Klasse nicht nur innerhalb der Klasse sichtbar,
+in der sie definiert wurde, sondern kann auch von au&szlig;en instanziert
+werden. Sie h&auml;lt auch keinen Verweis auf die instanzierende Klasse
+und kann somit nicht auf deren Membervariablen zugreifen. Der einzige
+Unterschied zu einer globalen Klasse besteht darin, dass der Name
+der inneren Klasse als Pr&auml;fix den Namen der &auml;u&szlig;eren
+Klasse enth&auml;lt. Beide sind durch einen Punkt voneinander getrennt.
+
+<p>
+Eine Klasse k&ouml;nnte beispielsweise dann als statische lokale Klasse
+definiert werden, wenn ihre Daseinsberechtigung auf der Existenz der
+&auml;u&szlig;eren Klasse basiert. Typische Anwendungen sind kleinere
+Hilfsklassen, die ausreichend Substanz zur Deklaration einer eigenen
+Klasse, aber zu wenig f&uuml;r eine eigene Datei haben. Durch den
+separaten Namensraum k&ouml;nnen sie auch Allerweltsnamen wie &#187;Entry&#171;,
+&#187;Element&#171; oder &#187;Debug&#171; haben. 
+
+<p>
+Das folgende Listing zeigt eine einfache Anwendung statischer lokaler
+Klassen: 
+<a name="listingid011004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1104.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">class</font> Outer3
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">static</font> <font color="#0000AA">class</font> Inner3
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#0000AA">public</font> <font color="#006699">void</font> print()
+<font color="#555555">008 </font>    {
+<font color="#555555">009 </font>      System.out.println(<font color="#0000FF">"Inner3"</font>);
+<font color="#555555">010 </font>    }
+<font color="#555555">011 </font>  }
+<font color="#555555">012 </font>}
+<font color="#555555">013 </font>
+<font color="#555555">014 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1104
+<font color="#555555">015 </font>{
+<font color="#555555">016 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">017 </font>  {
+<font color="#555555">018 </font>    Outer3.Inner3 inner = <font color="#0000AA">new</font> Outer3.Inner3();
+<font color="#555555">019 </font>    inner.print();
+<font color="#555555">020 </font>  }
+<font color="#555555">021 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1104.java"><font color="#000055" size=-1>Listing1104.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 11.4: Anwendung statischer lokaler Klassen</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Lokale und anonyme Klassen werden recht h&auml;ufig eingesetzt. Auch
+in diesem Buch sind weitere Beispiele f&uuml;r ihre Anwendung zu finden.
+So wird beispielsweise in <a href="k100183.html#lokaleanonymeeventhandler">Abschnitt 28.2.2</a>
+erl&auml;utert, wie man sie zur Entwicklung von Ereignishandlern f&uuml;r
+GUI-Programme nutzen kann. </td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100070.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100070.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100072.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100076.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

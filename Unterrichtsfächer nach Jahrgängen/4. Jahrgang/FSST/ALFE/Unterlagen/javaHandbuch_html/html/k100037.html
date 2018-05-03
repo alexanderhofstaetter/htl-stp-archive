@@ -1,0 +1,226 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100036.html;106,k100036.html;107,k100038.html;108,k100046.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100036.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100036.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100038.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100046.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 6 - Ausdr&uuml;cke
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id006001"></a>
+<h2>6.1 Eigenschaften von Ausdr&uuml;cken </h2>
+<hr>
+<ul>
+<li><a href="k100037.html#sectlevel2id006001">6.1 Eigenschaften von Ausdr&uuml;cken</a>
+</ul>
+<hr>
+
+<p>
+Wie in den meisten anderen Programmiersprachen geh&ouml;ren auch in
+Java <i>Ausdr&uuml;cke</i> zu den kleinsten ausf&uuml;hrbaren Einheiten
+eines Programms. Sie dienen dazu, Variablen einen Wert zuzuweisen,
+numerische Berechnungen durchzuf&uuml;hren oder logische Bedingungen
+zu formulieren. 
+
+<p>
+Ein Ausdruck besteht immer aus mindestens einem Operator und einem
+oder mehreren Operanden, auf die der Operator angewendet wird. Nach
+den Typen der Operanden unterscheidet man <i>numerische</i>, <i>relationale</i>,
+<i>logische</i>, <i>bitweise</i>, <i>Zuweisungs</i>- und <i>sonstige</i>
+Operatoren. Jeder Ausdruck hat einen R&uuml;ckgabewert, der durch
+die Anwendung des Operators auf die Operanden entsteht. Der Typ des
+R&uuml;ckgabewerts bestimmt sich aus den Typen der Operanden und der
+Art des verwendeten Operators. 
+
+<p>
+Neben der Typisierung ist die <a name="ixa100323"><i>Stelligkeit eines Operators</i></a>
+von Bedeutung. Operatoren, die lediglich ein Argument erwarten, nennt
+man <i>einstellig</i>, solche mit zwei Argumenten <i>zweistellig</i>.
+Beispiele f&uuml;r einstellige Operatoren sind das un&auml;re Minus
+(also das negative Vorzeichen) oder der logische Nicht-Operator. Arithmetische
+Operatoren wie Addition oder Subtraktion sind zweistellig. Dar&uuml;ber
+hinaus gibt es in Java - wie in C - auch den dreiwertigen Fragezeichenoperator.
+
+<p>
+F&uuml;r die richtige Interpretation von Ausdr&uuml;cken muss man
+die <a name="ixa100324"><i>Bindungs</i></a>- und <a name="ixa100325"><i>Assoziativit&auml;tsregeln</i></a>
+der Operatoren kennen. Bindungsregeln beschreiben die Reihenfolge,
+in der verschiedene Operatoren innerhalb eines Ausdrucks ausgewertet
+werden. So besagt beispielsweise die bekannte Regel &#187;Punktrechnung
+vor Strichrechnung&#171;, dass der Multiplikationsoperator eine h&ouml;here
+Bindungskraft hat als der Additionsoperator und demnach in Ausdr&uuml;cken
+zuerst ausgewertet wird. Assoziativit&auml;t beschreibt die Auswertungsreihenfolge
+von Operatoren derselben Bindungskraft, also beispielsweise die Auswertungsreihenfolge
+einer Kette von Additionen und Subtraktionen. Da Summationsoperatoren
+linksassoziativ sind, wird beispielsweise der Ausdruck <font color="#000077"><tt>a-b+c</tt></font>
+wie <font color="#000077"><tt>(a-b)+c</tt></font> ausgewertet und
+nicht wie <font color="#000077"><tt>a-(b+c)</tt></font>. 
+
+<p>
+Neben ihrer eigentlichen Funktion, einen R&uuml;ckgabewert zu produzieren,
+haben einige Operatoren auch <a name="ixa100326"><i>Nebeneffekte</i></a>.
+Als Nebeneffekt bezeichnet man das Verhalten eines Ausdrucks, auch
+ohne explizite Zuweisung die Inhalte von Variablen zu ver&auml;ndern.
+Meist sind diese Nebeneffekte erw&uuml;nscht, wie etwa bei der Verwendung
+der Inkrement- und Dekrementoperatoren. Komplexere Ausdr&uuml;cke
+k&ouml;nnen wegen der oftmals verdeckten Auswertungsreihenfolge der
+Teilausdr&uuml;cke jedoch unter Umst&auml;nden schwer verst&auml;ndliche
+Nebeneffekte enthalten und sollten deshalb mit Vorsicht angewendet
+werden. 
+
+<p>
+Im Gegensatz zu vielen anderen Programmiersprachen ist in Java die
+<a name="ixa100327"><i>Reihenfolge der Auswertung</i></a> der Operanden
+innerhalb eines Teilausdrucks wohldefiniert. Die Sprachdefinition
+schreibt explizit vor, den linken Operanden eines Ausdrucks vollst&auml;ndig
+vor dem rechten Operanden auszuwerten. Falls also beispielsweise <font color="#000077"><tt>i</tt></font>
+den Wert 2 hat, dann ergibt der Ausdruck <font color="#000077"><tt>(i=3)
+* i</tt></font> in jedem Fall den Wert 9 und nicht 6. 
+
+<p>
+Neben der nat&uuml;rlichen Auswertungsreihenfolge, die innerhalb eines
+Ausdrucks durch die Bindungs- und Assoziativit&auml;tsregeln vorgegeben
+wird, l&auml;sst sich durch eine explizite <a name="ixa100328">Klammerung</a>
+jederzeit eine andere Reihenfolge erzwingen. W&auml;hrend das Ergebnis
+des Ausdrucks <font color="#000077"><tt>4+2*5</tt></font> wegen der
+Bindungsregeln 14 ist, liefert <font color="#000077"><tt>(4+2)*5</tt></font>
+das Resultat 30. Die Regeln f&uuml;r die Klammerung von Teilausdr&uuml;cken
+in Java gleichen denen aller anderen Programmiersprachen und brauchen
+daher nicht weiter erl&auml;utert zu werden. 
+
+<p>
+In Java gibt es ein Konzept, das sich <a name="ixa100329"><i>Definite Assignment</i></a>
+nennt. Gemeint ist damit die Tatsache, dass jede lokale Variable vor
+ihrer ersten Verwendung definitiv initialisiert sein muss. Das w&uuml;nscht
+sich eigentlich zwar auch jeder Programmierer, aber in Java wird dies
+durch den Compiler sichergestellt! Dazu muss im Quelltext eine <a name="ixa100330">Datenflussanalyse</a>
+durchgef&uuml;hrt werden, die jeden m&ouml;glichen Ausf&uuml;hrungspfad
+von der Deklaration einer Variablen bis zu ihrer Verwendung ermittelt
+und sicherstellt, dass kein Weg existiert, der eine Initialisierung
+auslassen w&uuml;rde.
+
+<p>
+
+<p>
+Die folgende Methode <font color="#000077"><tt>Test</tt></font> l&auml;sst
+sich beispielsweise deshalb nicht fehlerfrei kompilieren, weil <font color="#000077"><tt>k</tt></font>
+vor der Ausgabeanweisung nicht initialisiert wird, wenn <font color="#000077"><tt>i</tt></font>
+kleiner 2 ist: 
+<a name="listingid006001"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> Test(<font color="#006699">int</font> i)
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  <font color="#006699">int</font> k;
+<font color="#555555">004 </font>  <font color="#0000AA">if</font> (i &gt;= 2) {
+<font color="#555555">005 </font>    k = 5;
+<font color="#555555">006 </font>  }
+<font color="#555555">007 </font>  System.out.println(k);
+<font color="#555555">008 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 6.1: Fehler beim Kompilieren durch unvollst&auml;ndige Initialisierung</i></p>
+
+<p>
+Ein solches Verhalten des Compilers ist nat&uuml;rlich h&ouml;chst
+w&uuml;nschenswert, denn es zeigt einen <i>tats&auml;chlichen</i>
+Fehler an, der sonst unbemerkt geblieben w&auml;re. Dass die Datenflussanalyse
+allerdings auch Grenzen hat, zeigt das folgende Beispiel, bei dem
+ebenfalls ein Compiler-Fehler auftritt: 
+<a name="listingid006002"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> Test(<font color="#006699">int</font> i)
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  <font color="#006699">int</font> k;
+<font color="#555555">004 </font>  <font color="#0000AA">if</font> (i &lt; 2) {
+<font color="#555555">005 </font>    k = 5;
+<font color="#555555">006 </font>  }
+<font color="#555555">007 </font>  <font color="#0000AA">if</font> (i &gt;= 2) {
+<font color="#555555">008 </font>    k = 6;
+<font color="#555555">009 </font>  }
+<font color="#555555">010 </font>  System.out.println(k);
+<font color="#555555">011 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 6.2: Fehler beim Kompilieren durch unvollst&auml;ndige Datenflussanalyse</i></p>
+
+<p>
+Nat&uuml;rlich kann hier <font color="#000077"><tt>k</tt></font> nicht
+uninitialisiert bleiben, denn eine der beiden Bedingungen ist immer
+wahr. Leider gehen die F&auml;higkeiten der Compiler noch nicht so
+weit, dies zu erkennen. 
+
+<p>
+Es w&auml;re in diesem Fall nat&uuml;rlich vern&uuml;nftiger gewesen,
+den <a href="index_e.html#ixb100152"><font color=#000080><tt>else</tt></font></a>-Zweig
+an die erste Verzweigung anzuh&auml;ngen und damit die zweite ganz
+einzusparen. 
+
+<p>
+In Wirklichkeit funktioniert die Datenflussanalyse bei vern&uuml;nftigem
+Programmierstil recht gut. Die wenigen F&auml;lle, in denen der Compiler
+sich irrt, k&ouml;nnen in der Regel durch explizite Initialisierungen
+aufgel&ouml;st werden. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100036.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100036.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100038.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100046.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

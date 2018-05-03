@@ -1,0 +1,503 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100008.html;106,k100008.html;107,k100010.html;108,k100012.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100008.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100008.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100010.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100012.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 1 - Was ist Java?
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id001001"></a>
+<h2>1.1 Historie </h2>
+<hr>
+<ul>
+<li><a href="k100009.html#sectlevel2id001001">1.1 Historie</a>
+</ul>
+<hr>
+
+<p>
+Als offizieller Geburtstag der Programmiersprache Java gilt der 23.
+Mai 1995 - mit dem Erscheinen dieses Buchs wird Java also stattliche
+16 Jahre alt sein. 
+
+<p>
+Nach einer wechselhaften Vorgeschichte, einem gro&szlig;en Hype in
+den Anfangsjahren und fast ebenso vielen technischen Schwierigkeiten
+wie Errungenschaften in der Folgezeit hat sich Java mittlerweile vollst&auml;ndig
+etabliert. Nach wie vor verzeichnet die Sprache ein wachsendes Interesse
+in breiten Kreisen der Entwicklergemeinschaft und sie hat C und C++
+als am h&auml;ufigsten genutzte Programmiersprache abgel&ouml;st.
+Bevor wir uns in den nachfolgenden Kapiteln mit den technischen Details
+der Sprache besch&auml;ftigen, wollen wir einen kurzen Blick auf die
+Entstehungsgeschichte von Java werfen. 
+
+<p>
+Einschl&auml;gigen Berichten zufolge fing alles mit einer Mail des
+damals 25-j&auml;hrigen Programmierers Patrick Naughton<a name="ixa100001"></a>
+an den SUN-Chef Scott McNealy<a name="ixa100002"></a> an. Naughton
+hatte angek&uuml;ndigt, das Unternehmen zu verlassen, um zu <i>Next
+Computer, Inc.</i> zu wechseln. Er war der Meinung, dass manches bei
+SUN nicht gut funktionierte, und die weitaus moderneren Technologien
+von Next reizten ihn. McNealy, der mit Naughton zusammen Eishockey
+spielte, forderte ihn auf, seine Kritik samt m&ouml;glicher L&ouml;sungsvorschl&auml;ge
+niederzuschreiben, ganz gleich, wie radikal sie auch sein m&ouml;gen.
+
+<p>
+Naughtons Mail verfehlte ihre Wirkung nicht. In einer f&uuml;r SUN
+schwierigen Periode mit internen Diskussionen um den Kurs des Unternehmens
+und seiner Produkte rannte Naughton offene T&uuml;ren ein. Seine Hauptkritikpunkte
+betrafen die nicht zeitgem&auml;&szlig;en grafischen Oberfl&auml;chen,
+die un&uuml;bersehbare Anzahl an Programmierwerkzeugen, die hohen
+Kosten der Workstations und die komplizierte Anwendung der Programme.
+Kurz, er warf SUN vor, auf dem besten Wege zu sein, sich mehr und
+mehr von seinen potenziellen Kunden und Anwendern zu entfernen. Er
+forderte Hard- und Software, die nicht nur von Akademikern und hochspezialisierten
+Profis, sondern von normalen Menschen angewendet werden konnte. 
+
+<p>
+Naughtons Klagen wurden erh&ouml;rt und innerhalb weniger Tage wurde
+ein Projekt aufgesetzt, dessen Ziel es sein sollte, die n&auml;chsten
+gro&szlig;en Trends der Computer- und Softwareindustrie aufzusp&uuml;ren.
+Naughton zog seine angedrohte K&uuml;ndigung zur&uuml;ck und begann
+1991 zusammen mit James Gosling <a name="ixa100003"></a> und Mike
+Sheridan<a name="ixa100004"></a> die Arbeit an einem geheimen, zun&auml;chst
+f&uuml;r ein Jahr finanzierten und au&szlig;erhalb des regul&auml;ren
+Unternehmens angesiedelten Vorhabens, das sp&auml;ter den Namen <a name="ixa100005"><i>Green-Projekt</i></a>
+erhielt. 
+
+<p>
+Nach anf&auml;nglichen Schwierigkeiten, seine eigene Aufgabe zu definieren,
+entschied sich das Team daf&uuml;r, einen Prototyp zur Steuerung und
+Integration von Ger&auml;ten zu bauen, wie sie in normalen Haushalten
+in gro&szlig;er Zahl verwendet wurden (Toaster, Videorecorder, Fernseher
+etc.). Bestandteile dieses Projekts waren ein Betriebssystem (<a name="ixa100006">Green-OS</a>),
+ein portabler Interpreter (<a name="ixa100007">Oak</a>), ein Grafiksubsystem
+und diverse Hardwarekomponenten. Bis Mitte 1992 entwickelte Naughton
+mit seinen Kollegen ein Ger&auml;t, das etwa heutigen PDAs oder Tablet-PCs
+&auml;hnelte und mit einer tastaturlosen grafischen Oberfl&auml;che
+per drahtloser Daten&uuml;bertragung zur Bedienung unterschiedlichster
+Ger&auml;te der Konsumelektronik verwendet werden konnte. 
+
+<p>
+Das als &#187;*7&#171; (<a name="ixa100008"><i>Star Seven</i></a>)
+bezeichnete Ger&auml;t wurde im Herbst 1992 firmenintern pr&auml;sentiert
+und konnte einige der Manager - unter ihnen SUN-Mitbegr&uuml;nder
+Bill Joy<a name="ixa100009"></a> und Scott McNealy - so beeindrucken,
+dass im November 1992 aus dem lockeren Team die Firma <a name="ixa100010"><i>First Person,
+Inc.</i></a> wurde. Mit zuletzt etwa 70 Mitarbeitern
+versuchte das junge Unternehmen, den Prototypen zur Serienreife zu
+bringen und zu vermarkten. Trotz gro&szlig;er Anstrengungen scheiterten
+aber alle Versuche, Vertr&auml;ge und Partnerschaften zur kommerziellen
+Verwendung von Star Seven unter Dach und Fach zu bringen. Nach vielen
+M&uuml;hen wurde die Arbeit von <i>First Person, Inc.</i> im April
+1994 praktisch beendet. 
+
+<p>
+Fast w&auml;re die Geschichte von Java nun bereits zu Ende gewesen,
+ehe sie richtig begonnen hatte. 
+
+<p>
+Bei aller Euphorie &uuml;ber zuk&uuml;nftiges interaktives Fernsehen
+und Heimelektronik hatten die Entwickler n&auml;mlich eine andere,
+viel realere Entwicklung &uuml;bersehen! Mittlerweile hatte n&auml;mlich
+das World Wide Web eine kritische Gr&ouml;&szlig;e erreicht und nachdem
+<a name="ixa100011">NCSA Mosaic</a> als erster grafischer Web-Browser
+im April 1993 verf&uuml;gbar war, konnte jedermann ansprechend aufbereitete
+Informationen im Internet ansehen und auf einfache Weise zwischen
+unterschiedlichen Diensten, Medien und Anbietern wechseln. Vor allem
+Bill Joy, der sich gelegentlich &uuml;ber den Stand des Green-Projekts
+informierte, erkannte das Potenzial des World Wide Web und die Bedeutung
+einer plattformunabh&auml;ngigen Programmiersprache, mit der neben
+textuellen Inhalten auch Programme transportiert und ohne Installations-
+oder Portierungsaufwand auf einem beliebigen Zielrechner ausgef&uuml;hrt
+werden konnten. 
+
+<p>
+In der Annahme, damit die Bedeutung des Internets zu st&auml;rken
+und auf diese Weise indirekte Verkaufsf&ouml;rderung f&uuml;r SUN-Produkte
+zu betreiben, beauftragte Joy die Kollegen Gosling und Naughton mit
+der Entwicklung einer &#187;Killer-Applikation&#171;, die dieses Potenzial
+offenlegen sollte. W&auml;hrend *7 dabei keine Rolle mehr spielte,
+wurde die Programmiersprache Oak zur Entwicklung einer ganz neuen
+Art von Programm verwendet. Im Herbst 1994 wurde mit ihrer Hilfe die
+erste Version von <a name="ixa100012"><i>WebRunner</i></a> fertiggestellt,
+einem Web-Browser, der neben der Darstellung von HTML-Seiten auch
+kleine Java-Programme, <i>Applets</i> genannt, aus dem World Wide
+Web laden und innerhalb des Browserfensters ausf&uuml;hren konnte.
+
+<p>
+Zu diesem Zeitpunkt war Oak, das sp&auml;ter in Java umbenannt wurde,
+bereits eine recht stabile Sprache. Sie wurde nicht nur dazu benutzt,
+WebRunner zu entwickeln, sondern von Arthur van Hoff<a name="ixa100013"></a>,
+der Ende 1993 zum Team kam, zur Entwicklung des Java-Compilers selbst
+verwendet. Ende 1994 stand WebRunner einer kleinen Anzahl von Entwicklern
+zum Test zur Verf&uuml;gung und konnte nicht nur diese, sondern auch
+die Verantwortlichen bei SUN &uuml;berzeugen. Das Programm wurde nach
+der Umbenennung in <a name="ixa100014"><i>HotJava</i></a> in den n&auml;chsten
+Monaten stabilisiert und konnte im Mai auf der <a name="ixa100015"><i>SunWorld '95</i></a>
+der &Ouml;ffentlichkeit vorgestellt werden. 
+
+<p>
+Trotz des technologischen Durchbruchs und gro&szlig;en Presserummels
+mochten sich zun&auml;chst nur wenige Anwender mit HotJava anfreunden
+- der &uuml;berlegene Netscape Navigator war zu diesem Zeitpunkt bereits
+zu stark verbreitet. So war es ein gro&szlig;es Gl&uuml;ck, dass Netscape
+sich entschied, die Java-Technologie von SUN zu lizenzieren und in
+der Version 2.0 des Navigators, die im Dezember 1995 auf den Markt
+kam, einem breiten Publikum zur Verf&uuml;gung zu stellen. Die Ank&uuml;ndigung
+dieser Fortentwicklung, die Netscape-Gr&uuml;nder Marc Andreessen<a name="ixa100016"></a>
+am 23. Mai 1995 zusammen mit der &ouml;ffentlichen Vorstellung von
+Java vortrug, wird von SUN als offizielle Geburtsstunde von Java angesehen.
+
+<p>
+Nach einigen Monaten des Betatests f&uuml;r Java und HotJava wurde
+im Januar 1996 das <i>JDK 1.0</i><a name="ixa100017"></a>, die erste
+Version des <a name="ixa100018"><i>Java Development Kit</i></a>, freigegeben.
+Bereits w&auml;hrend der Betatests wurden Hunderte von frei verf&uuml;gbaren
+Applets geschrieben, die schon fr&uuml;h einen Eindruck von den M&ouml;glichkeiten
+der Sprache vermittelten. Kurz vor der Fertigstellung des JDK 1.0
+wurde aus den verbliebenen Mitgliedern des Green-Teams die Firma <a name="ixa100019"><i>JavaSoft</i></a>
+gegr&uuml;ndet, die von SUN mit der Weiterentwicklung von Java betraut
+wurde. Unter ihrem Pr&auml;sidenten Alan Baratz<a name="ixa100020"></a>
+entwickelte und pflegte JavaSoft das JDK und seine Werkzeuge und sollte
+fortan ma&szlig;geblich den weiteren Weg von Java bestimmen. 
+
+<p>
+Tats&auml;chlich stand die Entwicklung nun keinesfalls still, sondern
+gewann noch an Dynamik. In den folgenden Monaten bildeten sich eine
+Reihe von strategischen Allianzen zwischen SUN bzw. JavaSoft und vielen
+Gro&szlig;en der Branche. So wurde beispielsweise die im Mai 1996
+angek&uuml;ndigte Komponentenarchitektur <a name="ixa100021"><i>JavaBeans</i></a>
+von so prominenten Firmen wie <a name="ixa100022">Borland</a>, <a name="ixa100023">Lotus</a>,
+<a name="ixa100024">Oracle</a>, <a name="ixa100025">IBM</a>, <a name="ixa100026">Netscape</a>
+und <a name="ixa100027">Symantec</a> unterst&uuml;tzt. 
+
+<p>
+Im Laufe der n&auml;chsten Monate kam der &#187;Hype&#171; dann richtig
+in Fahrt und Java wurde mit Lorbeeren aus der Entwicklergemeinde &uuml;berh&auml;uft.
+Nach einer Reihe von Ank&uuml;ndigungen im ersten Halbjahr wurden
+bis Ende 1996 zahlreiche Neuerungen vorgestellt. Unter ihnen waren
+die Datenbank-Spezifikation <a name="ixa100028">JDBC</a>, die Komponentenarchitektur
+Beans, das <a name="ixa100029">JavaCard API</a>, <a name="ixa100030">HotJava Views</a>,
+die &#187;<a name="ixa100031">100 % Pure Java Initiative</a>&#171;
+und eine Reihe weiterer APIs. Zus&auml;tzlich kamen die ersten integrierten
+Entwicklungssysteme, wie <a name="ixa100032"><i>Cafe</i></a> und <a name="ixa100033"><i>Visual
+Cafe</i></a> von Symantec oder <a name="ixa100034"><i>J++</i></a>
+von Microsoft, auf den Markt. 
+
+<p>
+Im Dezember 1996 wurde die Version 1.1 des Java Development Kit angek&uuml;ndigt.
+Sie sollte eine Reihe von Bugs der Vorg&auml;ngerversion beheben und
+weitere Funktionalit&auml;ten hinzuf&uuml;gen. Im Februar 1997 standen
+die ersten Betaversionen des JDK 1.1 zur Verf&uuml;gung und konnten
+von interessierten Entwicklern heruntergeladen werden. Im M&auml;rz
+1997 wurde dann HotJava 1.0 herausgegeben (alle vorigen Versionen
+hatten lediglich Betacharakter) und auch das Java-Betriebssystem <a name="ixa100035"><i>JavaOS
+1.0</i></a> wurde in diesem Monat der &Ouml;ffentlichkeit
+vorgestellt. 
+
+<p>
+Etwa zeitgleich konnte man auf der Cebit 1997 den ersten Prototypen
+der <a name="ixa100036"><i>JavaStation</i></a>, einer diskettenlosen
+Workstation, die ausschlie&szlig;lich auf Java basierte, bewundern.
+Mit der Ank&uuml;ndigung von Java-Prozessoren wie dem <a name="ixa100037"><i>PicoJava</i></a>
+er&ouml;ffnete SUN die Perspektive, dass Java-Programme mittelfristig
+ebenso schnell laufen werden wie kompilierter C- oder C++-Code. Das
+f&uuml;r Java-Entwickler herausragende Ereignis des Jahres war die
+<a name="ixa100038"><i>JavaOne</i></a> im April 1997, die erste Konferenz,
+die sich ausschlie&szlig;lich um Java drehte. Sie brachte eine Vielzahl
+von Ank&uuml;ndigungen, Prototypen und neuen Produkten hervor. Die
+JavaOne findet seither jedes Fr&uuml;hjahr in San Francisco statt
+und ist nach wie vor eines der wichtigsten Ereignisse der weltweiten
+Java-Gemeinde. 
+
+<p>
+Die folgenden Monate standen f&uuml;r viele Entwickler und Tool-Hersteller
+im Zeichen der Umstellung auf die Version 1.1 des JDK. Zwar gab es
+bereits Ende 1997 mehr als ein Dutzend integrierte Entwicklungsumgebungen,
+doch Support f&uuml;r die Version 1.1 war l&auml;ngst nicht &uuml;berall
+vorhanden. Auch die Browser-Hersteller taten sich schwer und stellten
+erst zum Jahreswechsel 1997/98 mit den 4er Versionen ihrer Browser
+erste Implementierungen des JDK 1.1 vor. Bis diese einigerma&szlig;en
+stabil waren, vergingen weitere Monate. 
+
+<p>
+W&auml;hrend sich 1998 die meisten Entwickler mit der Version 1.1
+besch&auml;ftigten, wurde bei SUN bereits am JDK 1.2 gearbeitet. Im
+Fr&uuml;hjahr 1998 stand dessen erste &ouml;ffentliche Version, das
+JDK 1.2 Beta 2, der &Ouml;ffentlichkeit zur Verf&uuml;gung. Wichtige
+Neuerungen waren die <a name="ixa100039"><i>Java Foundation Classes</i></a>
+mit dem <a name="ixa100040"><i>Swing Toolset</i></a>, dem <a name="ixa100041"><i>Java 2D
+API</i></a> und dem <a name="ixa100042"><i>Drag-and-Drop API</i></a>,
+das <a name="ixa100043"><i>Collection-API</i></a> und das <a name="ixa100044"><i>Extension
+Framework</i></a>. Daneben gab es viele weitere
+Verbesserungen bestehender Pakete. Nach zwei weiteren Betas, die bis
+zum Juli erschienen, brachte SUN im Oktober und November die &#187;Release
+Candidates&#171; 1 und 2 heraus. Anfang Dezember 1998 wurde dann schlie&szlig;lich
+die erste finale Version des JDK 1.2 zur Verf&uuml;gung gestellt und
+im Januar 1999 in <a name="ixa100045"><i>Java 2 Platform</i></a> umbenannt.
+
+<p>
+Mit der Version 1.2 hatte sich der Anspruch SUNs an das JDK ge&auml;ndert.
+W&auml;hrend es zuvor darum ging, m&ouml;glichst viele Features in
+das JDK einzubauen, standen seit dem JDK 1.2 offiziell die Stabilit&auml;t
+und Performance im Vordergrund. Ersteres sollte mit einem rigorosen
+Qualit&auml;tssicherungsprogramm erreicht werden, Letzteres durch
+Verbesserung der virtuellen Maschine. Im M&auml;rz 1999 wurde der
+lange angek&uuml;ndigte <a name="ixa100046"><i>Hotspot-Compiler</i></a>
+ausgeliefert. Zwar brachte er mit seiner adaptiven Compilertechnologie,
+bei der interpretierte Programmteile zur Ausf&uuml;hrungszeit genau
+dann in direkt ausf&uuml;hrbaren Maschinencode &uuml;bersetzt werden,
+wenn sie wesentlich zur Laufzeit des Programms beitragen, f&uuml;r
+einige Anwendungen Geschwindigkeitsvorteile. In vielen F&auml;llen
+reichte den Entwicklern und Anwendern die Performance der Java-Programme
+jedoch nicht aus. Insbesondere das Swing-Toolkit, die neue Grafikplattform,
+galt auf durchschnittlichen Arbeitspl&auml;tzen als zu tr&auml;ge
+und trug sehr zu dem Ruf Javas bei, f&uuml;r &#187;echte&#171; Anwendungen
+zu langsam zu sein. 
+
+<p>
+Zudem wurde das JDK 1.2 nur z&ouml;gernd von der Industrie angenommen.
+Zwar gab es auf dem PC bald 1.2-kompatible Entwicklungswerkzeuge,
+doch auf anderen Betriebssystemen (Macintosh, UNIX, LINUX) blieben
+die Portierungen bei den 1.1er Versionen stehen. Dies mag einerseits
+durch technische Schwierigkeiten begr&uuml;ndet gewesen sein, lag
+aber auch an der damals kaum akzeptierten <a name="ixa100047"><i>Community Source Licence</i></a>
+von SUN. Mit dieser sollte ein offener Java-Standard etabliert werden,
+ohne dass SUN die Kontrolle &uuml;ber die Weiterentwicklung von Java
+verlor. Durch diese Vereinbarung waren Unternehmen, die Weiterentwicklungen
+des JDK vornahmen, unter Umst&auml;nden dazu verpflichtet, diese offenzulegen
+bzw. unentgeltlich an SUN zu &uuml;bergeben. 
+
+<p>
+Nach den fehlerbereinigten Versionen 1.2.1 und 1.2.2 des JDK betrieb
+SUN die Weiterentwicklung des JDK unter dem Codenamen <a name="ixa100048"><i>Kestrel</i></a>.
+Mit einem neuen Garbage Collector, verbessertem Speichermanagement
+und einem neuen Hotspot-Compiler sollte diese Version stabiler und
+performanter werden als alle vorherigen. Viele kleine Verbesserungen
+sollten zudem bei der Swing-Oberfl&auml;che deutliche Geschwindigkeitsgewinne
+bringen. Die intensive Arbeit an dieser Version &auml;u&szlig;erte
+sich auch darin, dass alle Bugfixes des JDK 1.2.2 auf die neue Version
+verschoben wurden. 
+
+<p>
+Im August 1999 gab es dann die erste &ouml;ffentliche Betaversion
+des JDK 1.3. Tats&auml;chlich schienen sich die Versprechen zu erf&uuml;llen.
+Bereits das Beta lief recht stabil und brachte bei der grafischen
+Oberfl&auml;che deutliche Geschwindigkeitsgewinne. Durch eine ge&auml;nderte
+Initialisierung der virtuellen Maschine reduzierte sich die Startzeit
+von Java-Applikationen und mit dem neuentwickelten Compiler gab es
+gro&szlig;e Verbesserungen bei den Turnaround-Zeiten. Auch subjektiv
+lieferte das JDK 1.3 den Eindruck erheblich besserer Performance.
+Nach drei weiteren Vorabversionen wurde im Mai 2000 die endg&uuml;ltige
+Version des JDK 1.3 f&uuml;r Windows ausgeliefert; Versionen f&uuml;r
+andere Betriebssysteme (namentlich SOLARIS und LINUX) sollten etwa
+drei Monate sp&auml;ter folgen. Selbst Apple, dessen Java-Implementierungen
+lange Zeit bei der Version 1.1 stehen geblieben waren, liefert mit
+dem Mac OS X mittlerweile ein aktuelles JDK als integralen Bestandteil
+des Betriebssystems aus. 
+
+<p>
+2001 folgte dann das Bug-Fix-Release 1.3.1, und nach einigen Betas
+und einem &#187;Release Candidate&#171; brachte SUN Mitte Februar
+2002 schlie&szlig;lich das JDK 1.4 heraus - diesmal zeitgleich f&uuml;r
+alle unterst&uuml;tzten Plattformen. Neben vielen Detailverbesserungen
+und umfangreichen Erweiterungen der Klassenbibliotheken sollte das
+JDK 1.4 weitere Performance-Verbesserungen bringen. So wurde unter
+anderem das zuvor schlechte Laufzeitverhalten von Swing-Anwendungen
+auf UNIX-Betriebssystemen beseitigt. Zu den wichtigsten funktionalen
+Erweiterungen der Version 1.4 z&auml;hlten die <a name="ixa100049"><a href="index_a.html#ixb100053"><font color=#000080><tt>assert</tt></font></a></a>-Anweisung,
+<a name="ixa100050">Unterst&uuml;tzung f&uuml;r XML</a>, neue Bibliotheken
+f&uuml;r schnelle I/O-Zugriffe, Benutzer-Voreinstellungen, Logging
+oder regul&auml;re Ausdr&uuml;cke sowie viele Erweiterungen bestehender
+Bibliotheken. Zudem gab es Unterst&uuml;tzung f&uuml;r Solaris 64-Bit-Systeme
+und IPv6-Support. Die folgende Java 5 Version brachte neue Sprachkonstrukte
+wie typisierte Klassen, eine neue for-Schleife und das Autoboxing
+von Basistypen. Sie erlaubten es, den Quellcode von Java-Klassen einfacher
+und dennoch klarer als zuvor zu schreiben. 
+
+<p>
+In 2006 wurde die Version 6 des JDK unter dem Codenamen <a name="ixa100051"><i>Mustang</i></a>
+entwickelt. Kurz nach Erscheinen der ersten Betaversion teilte <i>Ray
+Gans</i> - einer der f&uuml;hrenden Java Entwickler bei Sun - in seinem
+Blog mit, dass Sun in Zukunft auf Codenamen verzichten und stattdessen
+nur noch die Versionsnummern verwenden wird. 
+
+<p>
+F&uuml;r viele Java-Programmierer &uuml;berraschend gab Sun im November
+2006 bekannt, dass die komplette Java-Technologie im Laufe des Jahres
+2007 St&uuml;ck f&uuml;r St&uuml;ck unter die popul&auml;re <a name="ixa100052"><i>General
+Public License</i></a> (GPL) gestellt und damit
+jedermann zug&auml;nglich gemacht werden soll. Java war zwar seit
+der ersten Version kostenlos und konnte von jedem &uuml;ber die Homepage
+von Sun heruntergeladen werden. Allerdings war das &#187;Verteilen&#171;
+des Programms an Auflagen gebunden und der Gedanke, dass Java zwar
+kostenlos, aber eben nicht frei verf&uuml;gbar ist, lief der Intention
+vieler Open-Source-Projekte, Linux-Distributionen und Anbietern von
+Java-Anwendungen zuwider, so dass im Laufe der Jahre eine stattliche
+Anzahl von freien Java-Implementierungen entstanden waren, wie beispielsweise
+<a name="ixa100053"><i>GNU Classpath</i></a> oder <a name="ixa100054"><i>Apache Harmony</i></a>.
+
+<p>
+Die sechste Version von Java wurde am 11. Dezember 2006 ver&ouml;ffentlicht
+und brachte als Neuerungen eine vollst&auml;ndig &uuml;berarbeitete
+und vereinheitlichte Webservice-API, eine komplett in Java geschriebene
+Datenbank sowie einen JavaScript-Interpreter. Au&szlig;erdem wurden
+viele Fehler behoben und Java 6 war nochmals einen &#187;Tick&#171;
+schneller als die vorangegangenen Versionen. 
+
+<p>
+Im Januar 2010 &uuml;bernahm Oracle f&uuml;r &uuml;ber 7 Mrd. US-Dollar
+die Firma SUN und erwarb damit auch die Rechte an Java. James Gosling,
+einer der Urv&auml;ter der Sprache und zuletzt CTO bei SUN, verlie&szlig;
+daraufhin im April 2010 das Unternehmen und wechselte ein Jahr sp&auml;ter
+zu Google. 
+
+<p>
+Oracle arbeitet seither an der Weiterentwicklung von Java und schafft
+es langsam, die ersten Zweifel in der Entwicklergemeinde an seinen
+Bekenntnissen zu der beliebten Sprache auszur&auml;umen. Im Oktober
+2010 gab IBM die langj&auml;hrige Entwicklung seines JDK zu Gunsten
+einer Zusammenarbeit mit Oracle auf Basis des OpenJDK auf. Andere
+Firmen folgten, darunter SAP und Apple. 
+
+<p>
+Am 28. Juli 2011 erschien offiziell die Version 7, die nach einer
+von Mark Reinholds begonnenen Diskussion im Funktionsumfang um die
+Projekte Lamba (Erweiterung um funktionale Sprachbestandteile), Jigsaw
+(Modularisierung der Plattform) und einige Teile des Projekts Coin
+(kleinere Spracherweiterungen) reduziert wurde. Diese Features werden
+mit Version 8 umgesetzt werden, die voraussichtlich Ende 2012 erscheinen
+wird. 
+
+<p>
+Erstmals ist mit der Version 7 das unter GPL-Lizenz frei erh&auml;ltliche
+OpenJDK die offizielle Standardimplementation des JDK. 
+
+<p>
+Das Engagement der Softwareentwickler zu den aktuellen Java-Versionen
+ist betr&auml;chtlich. Neben vielen Partnerschaften, bei denen Spezialisten
+aus der ganzen Welt durch die Mitarbeit im <a name="ixa100055"><i>Java Community Process</i></a>
+(<a name="ixa100056"><i>JCP</i></a>) zu den Neuerungen und Erweiterungen
+der aktuellen Versionen beigetragen haben, gibt es mittlerweile auch
+eine gro&szlig;e Zahl an Applikationen, die in Java geschrieben wurden
+oder bei deren Entwicklung Java eine wichtige Rolle gespielt hat.
+Auch bei der Entwicklung von Server-Applikationen und Web-Services
+spielt Java mittlerweile in der ersten Liga. So l&auml;sst sich feststellen,
+dass Java nach der ersten (Applet-)Euphorie der Versionen 1.0 und
+1.1 und einer dezenten Zur&uuml;ckhaltung w&auml;hrend der 1.2er Versionen
+mit dem JDK 1.3 auch bei den meisten Skeptikern den Durchbruch geschafft
+hat. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Zwischen den Versionen 1.2 und 1.4 firmierten alle Java-Versionen
+unter dem offiziellen Oberbegriff <i>Java 2 Platform</i> - im Unterschied
+zu der zwar niemals explizit so bezeichneten, aber doch wohl gemeinten
+&#187;Java 1 Platform&#171;, die aus den Versionen 1.0 und 1.1 bestand.
+Parallel dazu wurden die Entwicklungssysteme dann nicht mehr JDK,
+sondern <a name="ixa100057"><i>Java 2 SDK</i></a> genannt (SDK steht
+f&uuml;r <i>Software Development Kit</i>). Mit dem folgenden Release
+wurde bez&uuml;glich der Namensgebung erneut eine kleine Kurskorrektur
+vorgenommen. Einerseits wurde die Versionsnummer 1.5 w&auml;hrend
+der Betaphase auf 5.0 erh&ouml;ht (um - laut SUN-Website - das hohe
+Ma&szlig; an Reife, Stabilit&auml;t, Sicherheit und Skalierbarkeit
+der aktuellen Version zu dokumentieren). Andererseits wurde der Begriff
+<i>JDK</i> rehabilitiert und darf nun auch &#187;offiziell&#171; wieder
+verwendet werden (Begr&uuml;ndung: &#187;...due to significant popularity
+within the Java developer community...&#171;). 
+
+<p>
+Seit der f&uuml;nften Version setzt sich die - aus Sicht des Marketings
+besser verwendbare - ganzzahlige Namenskonvention durch, bei der neue
+Java-Versionen mit der nachfolgenden nat&uuml;rlichen Zahl gekennzeichnet
+werden, w&auml;hrend die &#187;Zwischenversionen&#171; kleineren Verbesserungen
+und Bugfixes vorbehalten bleiben. Dieses Schema wurde in alle Java-Editionen
+&uuml;bernommen, die sich vor allem in Art und Umfang der enthaltenen
+Bibliotheken unterscheiden. Ein Java-Entwickler kann sich zwischen
+diesen Auslieferungen entscheiden: 
+<ul>
+<li>Die <a name="ixa100058"><i>Java Standard Edition</i></a>, von
+der in diesem Buch die Rede sein wird
+<li>Die <a name="ixa100059"><i>Java Enterprise Edition</i></a>, mit
+der verteilte, unternehmensweite Business-Applikationen entwickelt
+werden k&ouml;nnen
+<li>Die <a name="ixa100060"><i>Java Micro Edition</i></a>, f&uuml;r
+kleine Ger&auml;te wie Mobiltelefone und PDAs
+<li>Die <a name="ixa100061"><i>Java Card Edition</i></a>, f&uuml;r
+kreditkartengro&szlig;e Smartcards
+</ul>
+
+<p>
+Die offizielle Bezeichnung der aktuellen Java-Version ist also <i>Java
+Standard Edition 7</i>. Sie besteht aus den Teilen <a name="ixa100017"><i>JDK</i></a>
+(voller Name <i>Java Development Kit</i>) und <a name="ixa100062"><i>JRE</i></a>
+(voller Name <i>Java Runtime Environment</i>). W&auml;hrend das JDK
+alle Werkzeuge zum <i>Entwickeln</i> von Java-Programmen enth&auml;lt,
+bezeichnet das JRE die Laufzeitumgebung (oder <a name="ixa100063"><i>Virtuelle Maschine</i></a>),
+um Java-Programme auszuf&uuml;hren. Wir werden meist von <i>Java 7</i>
+sprechen, mitunter aber auch den Begriff <i>JDK</i> verwenden. Wenn
+nicht anders erw&auml;hnt, beziehen sich alle Ausf&uuml;hrungen in
+diesem Buch auf die Standard Edition.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100008.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100008.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100010.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100012.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

@@ -1,0 +1,637 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100150.html;106,k100151.html;107,k100153.html;108,k100157.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100150.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100151.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100153.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100157.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 23 - Multithreading
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id023002"></a>
+<h2>23.2 Die Klasse Thread </h2>
+<hr>
+<ul>
+<li><a href="k100152.html#sectlevel2id023002">23.2 Die Klasse Thread</a>
+<ul>
+<li><a href="k100152.html#neuerthread">23.2.1 Erzeugen eines neuen Threads</a>
+<li><a href="k100152.html#threadabbrechen">23.2.2 Abbrechen eines Threads</a>
+<li><a href="k100152.html#weiterethreadmethoden">23.2.3 Weitere Methoden</a>
+<ul>
+<li><a href="k100152.html#sectlevel4id023002003001">sleep</a>
+<li><a href="k100152.html#sectlevel4id023002003002">isAlive</a>
+<li><a href="k100152.html#sectlevel4id023002003003">join</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="neuerthread"></a>
+<h3>23.2.1 Erzeugen eines neuen Threads </h3>
+
+<p>
+Die Klasse <a href="index_t.html#ixb100606"><font color=#000080><tt>Thread</tt></font></a>
+ist Bestandteil des Pakets <a href="index_j.html#ixb100196"><font color=#000080><tt>java.lang</tt></font></a>
+und steht damit allen Anwendungen standardm&auml;&szlig;ig zur Verf&uuml;gung.
+<a href="index_t.html#ixb100606"><font color=#000080><tt>Thread</tt></font></a>
+stellt die Basismethoden zur Erzeugung, Kontrolle und zum Beenden
+von Threads zur Verf&uuml;gung. Um einen konkreten Thread zu erzeugen,
+muss eine eigene Klasse aus <a href="index_t.html#ixb100606"><font color=#000080><tt>Thread</tt></font></a>
+abgeleitet und die Methode <a href="index_r.html#ixb101111"><font color=#000080><tt>run</tt></font></a>
+&uuml;berlagert werden. 
+
+<p>
+Mit Hilfe eines Aufrufs der Methode <a name="ixa101462"><a href="index_s.html#ixb101113"><font color=#000080><tt>start</tt></font></a></a>
+wird der Thread gestartet und die weitere Ausf&uuml;hrung an die Methode
+<a href="index_r.html#ixb101111"><font color=#000080><tt>run</tt></font></a>
+&uuml;bertragen. <a href="index_s.html#ixb101113"><font color=#000080><tt>start</tt></font></a>
+wird nach dem Starten des Threads beendet und der Aufrufer kann parallel
+zum neu erzeugten Thread fortfahren. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Methode <a href="index_r.html#ixb101111"><font color=#000080><tt>run</tt></font></a>
+sollte vom Programm niemals direkt aufgerufen werden. Um einen Thread
+zu starten, ist immer <a href="index_s.html#ixb101113"><font color=#000080><tt>start</tt></font></a>
+aufzurufen. Dadurch wird der neue Thread erzeugt und initialisiert
+und ruft schlie&szlig;lich selbst <a href="index_r.html#ixb101111"><font color=#000080><tt>run</tt></font></a>
+auf, um den Anwendungscode auszuf&uuml;hren. Ein direkter Aufruf von
+<a href="index_r.html#ixb101111"><font color=#000080><tt>run</tt></font></a>
+w&uuml;rde dagegen keinen neuen Thread erzeugen, sondern w&auml;re
+ein normaler Methodenaufruf wie jeder andere und w&uuml;rde direkt
+aus dem bereits laufenden Thread des Aufrufers erfolgen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Das folgende Beispiel zeigt einen einfachen Thread, der in einer Endlosschleife
+einen Zahlenwert hochz&auml;hlt: 
+<a name="einfacherzaehlthread"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2301.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">class</font> MyThread2301
+<font color="#555555">004 </font><font color="#0000AA">extends</font> Thread
+<font color="#555555">005 </font>{
+<font color="#555555">006 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> run()
+<font color="#555555">007 </font>  {
+<font color="#555555">008 </font>    <font color="#006699">int</font> i = 0;
+<font color="#555555">009 </font>    <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">010 </font>      System.out.println(i++);
+<font color="#555555">011 </font>    }
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>}
+<font color="#555555">014 </font>
+<font color="#555555">015 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2301
+<font color="#555555">016 </font>{
+<font color="#555555">017 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">018 </font>  {
+<font color="#555555">019 </font>    MyThread2301 t = <font color="#0000AA">new</font> MyThread2301();
+<font color="#555555">020 </font>    t.start();
+<font color="#555555">021 </font>  }
+<font color="#555555">022 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2301.java"><font color="#000055" size=-1>Listing2301.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 23.1: Ein einfacher Thread mit einem Z&auml;hler</i></p>
+
+<p>
+Zun&auml;chst wird hier ein neues Objekt vom Typ <font color="#000077"><tt>MyThread2301</tt></font>
+instanziert. Die Ausf&uuml;hrung eines Threads ist damit vorbereitet,
+aber noch nicht tats&auml;chlich erfolgt. Erst durch den Aufruf von
+<a href="index_s.html#ixb101113"><font color=#000080><tt>start</tt></font></a>
+wird ein neuer Thread erzeugt und durch einen impliziten Aufruf von
+<a href="index_r.html#ixb101111"><font color=#000080><tt>run</tt></font></a>
+wird der Thread-Body gestartet. Da das Programm in einer Endlosschleife
+l&auml;uft, l&auml;sst es sich nur gewaltsam abbrechen (beispielsweise
+durch Dr&uuml;cken von <font color="#007700"><tt>[STRG]</tt></font>+<font color="#007700"><tt>[C]</tt></font>).
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Im Gegensatz zu unseren bisherigen Beispielen wird dieses Programm
+nicht automatisch nach <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>
+beendet. <a name="ixa101463"></a><a name="ixa101464"></a> Eine Java-Applikation
+wird n&auml;mlich immer nach Ende des letzten Threads beendet, der
+kein <a name="ixa101465"><i>Hintergrund-Thread</i></a> (<a name="ixa101466"><i>D&auml;mon</i></a>)
+ist. Da ein einfaches Programm nur einen einzigen Vordergrund-Thread
+besitzt (n&auml;mlich den, in dem <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>
+l&auml;uft), wird es demnach beendet, wenn <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>
+beendet wird. Das Beispielprogramm erzeugt dagegen einen zus&auml;tzlichen
+Vordergrund-Thread und kann damit vom Interpreter erst dann beendet
+werden, wenn auch dieser Thread beendet wurde. Durch Aufruf von <a href="index_e.html#ixb100663"><font color=#000080><tt>exit</tt></font></a>
+lassen sich auch Programme mit laufenden Vordergrund-Threads abbrechen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="threadabbrechen"></a>
+<h3>23.2.2 Abbrechen eines Threads </h3>
+
+<p>
+Zun&auml;chst einmal wird ein Thread dadurch beendet, dass das Ende
+seiner <a href="index_r.html#ixb101111"><font color=#000080><tt>run</tt></font></a>-Methode
+erreicht ist. In manchen F&auml;llen ist es jedoch erforderlich, den
+Thread von au&szlig;en abzubrechen. Die bis zum JDK 1.1 &uuml;bliche
+Vorgehensweise bestand darin, die Methode <a name="ixa101467"><a href="index_s.html#ixb101118"><font color=#000080><tt>stop</tt></font></a></a>
+der Klasse <a href="index_t.html#ixb100606"><font color=#000080><tt>Thread</tt></font></a>
+aufzurufen. Dadurch wurde der Thread abgebrochen und aus der Liste
+der aktiven Threads entfernt. 
+
+<p>
+Wir wollen das vorige Beispiel erweitern und den Thread nach zwei
+Sekunden durch Aufruf von <a href="index_s.html#ixb101118"><font color=#000080><tt>stop</tt></font></a>
+beenden: 
+<a name="listingid023002"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2302.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">class</font> MyThread2302
+<font color="#555555">004 </font><font color="#0000AA">extends</font> Thread
+<font color="#555555">005 </font>{
+<font color="#555555">006 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> run()
+<font color="#555555">007 </font>  {
+<font color="#555555">008 </font>    <font color="#006699">int</font> i = 0;
+<font color="#555555">009 </font>    <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">010 </font>      System.out.println(i++);
+<font color="#555555">011 </font>    }
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>}
+<font color="#555555">014 </font>
+<font color="#555555">015 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2302
+<font color="#555555">016 </font>{
+<font color="#555555">017 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">018 </font>  {
+<font color="#555555">019 </font>    MyThread2302 t = <font color="#0000AA">new</font> MyThread2302();
+<font color="#555555">020 </font>    t.start();
+<font color="#555555">021 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">022 </font>      Thread.sleep(2000);
+<font color="#555555">023 </font>    } <font color="#0000AA">catch</font> (InterruptedException e) {
+<font color="#555555">024 </font>      <font color="#00AA00">//nichts</font>
+<font color="#555555">025 </font>    }
+<font color="#555555">026 </font>    t.stop();
+<font color="#555555">027 </font>  }
+<font color="#555555">028 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2302.java"><font color="#000055" size=-1>Listing2302.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 23.2: Beenden des Threads durch Aufruf von stop</i></p>
+
+<p>
+An diesem Beispiel kann man gut erkennen, dass der Thread tats&auml;chlich
+parallel zum Hauptprogramm ausgef&uuml;hrt wird. Nach dem Aufruf von
+<a href="index_s.html#ixb101113"><font color=#000080><tt>start</tt></font></a>
+beginnt einerseits die Z&auml;hlschleife mit der Bildschirmausgabe,
+aber gleichzeitig f&auml;hrt das Hauptprogramm mit dem Aufruf der
+<a href="index_s.html#ixb100867"><font color=#000080><tt>sleep</tt></font></a>-Methode
+und dem Aufruf von <a href="index_s.html#ixb101118"><font color=#000080><tt>stop</tt></font></a>
+fort. Beide Programmteile laufen also parallel ab. 
+
+<p>
+Mit dem JDK 1.2 wurde die Methode <a href="index_s.html#ixb101118"><font color=#000080><tt>stop</tt></font></a>
+als <a name="ixa101468"><a href="index_d.html#ixb100139"><font color=#000080><tt>deprecated</tt></font></a></a>
+markiert, d.h., sie sollte nicht mehr verwendet werden. Der Grund
+daf&uuml;r liegt in der potenziellen <i>Unsicherheit</i> des Aufrufs,
+denn es ist nicht voraussagbar und auch nicht definiert, an welcher
+Stelle ein Thread unterbrochen wird, wenn ein Aufruf von <a href="index_s.html#ixb101118"><font color=#000080><tt>stop</tt></font></a>
+erfolgt. Es kann n&auml;mlich insbesondere vorkommen, dass der Abbruch
+innerhalb eines kritischen Abschnitts erfolgt (der mit dem <a name="ixa101469"><a href="index_s.html#ixb100727"><font color=#000080><tt>synchronized</tt></font></a></a>-Schl&uuml;sselwort
+gesch&uuml;tzt wurde) oder in einer anwendungsspezifischen Transaktion
+auftritt, die aus Konsistenzgr&uuml;nden nicht unterbrochen werden
+darf. 
+
+<p>
+Die alternative Methode, einen Thread abzubrechen, besteht darin,
+im Thread selbst auf Unterbrechungsanforderungen zu reagieren. So
+k&ouml;nnte beispielsweise eine Membervariable <font color="#000077"><tt>cancelled</tt></font>
+eingef&uuml;hrt und beim Initialisieren des Threads auf <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>
+gesetzt werden. Mit Hilfe einer Methode <font color="#000077"><tt>cancel</tt></font>
+kann der Wert der Variable zu einem beliebigen Zeitpunkt auf <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+gesetzt werden. Aufgabe der Bearbeitungsroutine in <a href="index_r.html#ixb101111"><font color=#000080><tt>run</tt></font></a>
+ist es nun, an geeigneten Stellen diese Variable abzufragen und f&uuml;r
+den Fall, dass sie <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+ist, die Methode <a href="index_r.html#ixb101111"><font color=#000080><tt>run</tt></font></a>
+konsistent zu beenden. 
+
+<p>
+Dabei darf <font color="#000077"><tt>cancelled</tt></font> nat&uuml;rlich
+nicht zu oft abgefragt werden, um das Programm nicht unn&ouml;tig
+aufzubl&auml;hen und das Laufzeitverhalten des Threads nicht zu sehr
+zu verschlechtern. Andererseits darf die Abfrage nicht zu selten erfolgen,
+damit es nicht zu lange dauert, bis auf eine Abbruchanforderung reagiert
+wird. Insbesondere darf es keine potenziellen Endlosschleifen geben,
+in denen <font color="#000077"><tt>cancelled</tt></font> <i>&uuml;berhaupt
+nicht</i> abgefragt wird. Die Kunst besteht darin, diese gegens&auml;tzlichen
+Anforderungen sinnvoll zu vereinen. 
+
+<p>
+Gl&uuml;cklicherweise gibt es in der Klasse Thread bereits einige
+Methoden, die einen solchen Mechanismus standardm&auml;&szlig;ig unterst&uuml;tzen:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void interrupt()
+
+public boolean isInterrupted()
+
+public static boolean interrupted()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/Thread.html" onClick="this.href=getApiDoc('java.lang.Thread')"><font color="#660066" size=-1>java.lang.Thread</font></a></td>
+</tr>
+</table>
+
+<p>
+Durch Aufruf von <a name="ixa101470"><a href="index_i.html#ixb101119"><font color=#000080><tt>interrupt</tt></font></a></a>
+wird ein Flag gesetzt, das eine Unterbrechungsanforderung signalisiert.
+Durch Aufruf von <a name="ixa101471"><a href="index_i.html#ixb101120"><font color=#000080><tt>isInterrupted</tt></font></a></a>
+kann der Thread feststellen, ob das Abbruchflag gesetzt wurde und
+der Thread beendet werden soll. Die statische Methode <a name="ixa101472"><a href="index_i.html#ixb101121"><font color=#000080><tt>interrupted</tt></font></a></a>
+stellt den Status des Abbruchsflags beim <i>aktuellen</i> Thread fest.
+Ihr Aufruf entspricht dem Aufruf von <font color="#000077"><tt>currentThread().isInterrupted()</tt></font>,
+setzt aber zus&auml;tzlich das Abbruchflag auf seinen initialen Wert
+<a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>
+zur&uuml;ck. 
+
+<p>
+Wir wollen uns den Gebrauch dieser Methoden an einem Beispiel ansehen.
+Dazu soll ein Programm geschrieben werden, das in einem separaten
+Thread ununterbrochen Textzeilen auf dem Bildschirm ausgibt. Das Hauptprogramm
+soll den Thread erzeugen und nach 2 Sekunden durch einen Aufruf von
+<a href="index_i.html#ixb101119"><font color=#000080><tt>interrupt</tt></font></a>
+eine Unterbrechungsanforderung erzeugen. Der Thread soll dann die
+aktuelle Zeile fertig ausgeben und anschlie&szlig;end terminieren.
+<a name="listingid023003"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2303.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2303
+<font color="#555555">004 </font><font color="#0000AA">extends</font> Thread
+<font color="#555555">005 </font>{
+<font color="#555555">006 </font>  <font color="#006699">int</font> cnt = 0;
+<font color="#555555">007 </font>
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> run()
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">011 </font>      <font color="#0000AA">if</font> (isInterrupted()) {
+<font color="#555555">012 </font>        <font color="#0000AA">break</font>;
+<font color="#555555">013 </font>      }
+<font color="#555555">014 </font>      printLine(++cnt);
+<font color="#555555">015 </font>    }
+<font color="#555555">016 </font>  }
+<font color="#555555">017 </font>
+<font color="#555555">018 </font>  <font color="#0000AA">private</font> <font color="#006699">void</font> printLine(<font color="#006699">int</font> cnt)
+<font color="#555555">019 </font>  {
+<font color="#555555">020 </font>    <font color="#00AA00">//Zeile ausgeben</font>
+<font color="#555555">021 </font>    System.out.print(cnt + <font color="#0000FF">": "</font>);
+<font color="#555555">022 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; 30; ++i) {
+<font color="#555555">023 </font>      System.out.print(i == cnt % 30 ? <font color="#0000FF">"* "</font> : <font color="#0000FF">". "</font>);
+<font color="#555555">024 </font>    }
+<font color="#555555">025 </font>    System.out.println();
+<font color="#555555">026 </font>    <font color="#00AA00">//100 ms. warten</font>
+<font color="#555555">027 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">028 </font>      Thread.sleep(100);
+<font color="#555555">029 </font>    } <font color="#0000AA">catch</font> (InterruptedException e) {
+<font color="#555555">030 </font>      interrupt();
+<font color="#555555">031 </font>    }
+<font color="#555555">032 </font>  }
+<font color="#555555">033 </font>
+<font color="#555555">034 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">035 </font>  {
+<font color="#555555">036 </font>    Listing2303 th = <font color="#0000AA">new</font> Listing2303();
+<font color="#555555">037 </font>    {
+<font color="#555555">038 </font>      <font color="#00AA00">//Thread starten</font>
+<font color="#555555">039 </font>      th.start();
+<font color="#555555">040 </font>      <font color="#00AA00">//2 Sekunden warten</font>
+<font color="#555555">041 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">042 </font>        Thread.sleep(2000);
+<font color="#555555">043 </font>      } <font color="#0000AA">catch</font> (InterruptedException e) {
+<font color="#555555">044 </font>      }
+<font color="#555555">045 </font>      <font color="#00AA00">//Thread unterbrechen</font>
+<font color="#555555">046 </font>      th.interrupt();
+<font color="#555555">047 </font>    }
+<font color="#555555">048 </font>  }
+<font color="#555555">049 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2303.java"><font color="#000055" size=-1>Listing2303.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 23.3: Anwendung der Methoden interrupt und isInterrupted</i></p>
+
+<p>
+Die <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>-Methode
+ist leicht zu verstehen. Sie startet den Thread, wartet 2 Sekunden
+und ruft dann die Methode <a href="index_i.html#ixb101119"><font color=#000080><tt>interrupt</tt></font></a>
+auf. In der Methode <a href="index_r.html#ixb101111"><font color=#000080><tt>run</tt></font></a>
+wird in einer Endlosschleife durch Aufruf von <font color="#000077"><tt>printLine</tt></font>
+jeweils eine neue Zeile ausgegeben. Zuvor wird bei jedem Aufruf mit
+<a href="index_i.html#ixb101120"><font color=#000080><tt>isInterrupted</tt></font></a>
+gepr&uuml;ft, ob das Abbruchflag gesetzt wurde. Ist das der Fall,
+wird keine weitere Zeile ausgegeben, sondern die Schleife (und mit
+ihr der Thread) beendet. 
+
+<p>
+Innerhalb von <font color="#000077"><tt>printLine</tt></font> wird
+zun&auml;chst die Textzeile ausgegeben und dann eine Pause von 100
+Millisekunden eingelegt. Da in der Methode keine Abfrage des Abbruchflags
+erfolgt, ist sichergestellt, dass die aktuelle Zeile selbst dann bis
+zum Ende ausgegeben wird, wenn der Aufruf von <a href="index_i.html#ixb101119"><font color=#000080><tt>interrupt</tt></font></a>
+mitten in der Schleife zur Ausgabe der Bildschirmzeile erfolgt. 
+
+<p>
+Da die Pause nach der Bildschirmausgabe mit 100 Millisekunden vermutlich
+l&auml;nger dauert als die Bildschirmausgabe selbst, ist es recht
+wahrscheinlich, dass der Aufruf von <a href="index_i.html#ixb101119"><font color=#000080><tt>interrupt</tt></font></a>
+w&auml;hrend des Aufrufs von <a href="index_s.html#ixb100867"><font color=#000080><tt>sleep</tt></font></a>
+erfolgt. Ist das der Fall, wird <a href="index_s.html#ixb100867"><font color=#000080><tt>sleep</tt></font></a>
+mit einer <a href="index_i.html#ixb100642"><font color=#000080><tt>InterruptedException</tt></font></a>
+abgebrochen (auch wenn die geforderte Zeitspanne noch nicht vollst&auml;ndig
+verstrichen ist). Wichtig ist hier, dass das Abbruchflag zur&uuml;ckgesetzt
+wird und der Aufruf von <a href="index_i.html#ixb101119"><font color=#000080><tt>interrupt</tt></font></a>
+somit eigentlich verlorengehen w&uuml;rde, wenn er nicht direkt in
+der <a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a>-Klausel
+behandelt w&uuml;rde. Wir rufen daher innerhalb der <a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a>-Klausel
+<a href="index_i.html#ixb101119"><font color=#000080><tt>interrupt</tt></font></a>
+erneut auf, um das Flag wieder zu setzen und <a href="index_r.html#ixb101111"><font color=#000080><tt>run</tt></font></a>
+die Abbruchanforderung zu signalisieren. Alternativ h&auml;tten wir
+auch die Ausnahme an den Aufrufer weitergeben k&ouml;nnen und sie
+dort als Ausl&ouml;ser f&uuml;r das Ende der Ausgabeschleife betrachten
+k&ouml;nnen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die beiden anderen Methoden, die eine Ausnahme des Typs <a name="ixa101473"><a href="index_i.html#ixb100642"><font color=#000080><tt>InterruptedException</tt></font></a></a>
+ausl&ouml;sen k&ouml;nnen, sind <a name="ixa101474"><a href="index_j.html#ixb101122"><font color=#000080><tt>join</tt></font></a></a>
+der Klasse <a href="index_t.html#ixb100606"><font color=#000080><tt>Thread</tt></font></a>
+und <a name="ixa101475"><a href="index_w.html#ixb101123"><font color=#000080><tt>wait</tt></font></a></a>
+der Klasse <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>.
+Auch sie setzen beim Auftreten der Ausnahme das Abbruchflag zur&uuml;ck
+und m&uuml;ssen daher in &auml;hnlicher Weise behandelt werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="weiterethreadmethoden"></a>
+<h3>23.2.3 Weitere Methoden </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id023002003001"></a>
+<h4>sleep </h4>
+
+<p>
+Sowohl innerhalb der Threads als auch innerhalb der Methode <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>
+wird ein Aufruf von <font color="#000077"><tt>Thread.sleep</tt></font>
+verwendet, um das Programm pausieren zu lassen. <a name="ixa101476"><a href="index_s.html#ixb100867"><font color=#000080><tt>sleep</tt></font></a></a>
+ist eine statische Methode der Klasse <a href="index_t.html#ixb100606"><font color=#000080><tt>Thread</tt></font></a>,
+die mit einem oder zwei Parametern aufgerufen werden kann: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static void sleep(long millis)
+public static void sleep(long millis, int nanos)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/Thread.html" onClick="this.href=getApiDoc('java.lang.Thread')"><font color="#660066" size=-1>java.lang.Thread</font></a></td>
+</tr>
+</table>
+
+<p>
+Die erste Version sorgt daf&uuml;r, dass der aktuelle Prozess f&uuml;r
+die (in Millisekunden) angegebene Zeit unterbrochen wird. Die zweite
+erlaubt eine noch genauere Eingabe der Wartezeit, indem auch Bruchteile
+im Nanosekundenbereich angegeben werden k&ouml;nnen. In beiden F&auml;llen
+wird die tats&auml;chlich erzielbare Genauigkeit allerdings durch
+Hardwarerestriktionen der Zielmaschine begrenzt. Im Falle der aktuellen
+JDKs unter Windows liegt sie bei etwa 1 ms und ist damit wesentlich
+h&ouml;her als <a href="index_c.html#ixb100866"><font color=#000080><tt>currentTimeMillis</tt></font></a>.
+In <a href="k100117.html#currenttimemillis">Abschnitt 17.3.5</a> finden
+sich Beispielprogramme, mit denen die Aufl&ouml;sungen von <a href="index_c.html#ixb100866"><font color=#000080><tt>currentTimeMillis</tt></font></a>
+und <a href="index_s.html#ixb100867"><font color=#000080><tt>sleep</tt></font></a>
+ermittelt werden k&ouml;nnen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Kapselung des Aufrufs von <font color="#000077"><tt>Thread.sleep</tt></font>
+innerhalb eines <font color="#000077"><tt>try-catch</tt></font>-Blocks
+ist erforderlich, weil <a href="index_s.html#ixb100867"><font color=#000080><tt>sleep</tt></font></a>
+w&auml;hrend der Wartezeit eine Ausnahme vom Typ <a href="index_i.html#ixb100642"><font color=#000080><tt>InterruptedException</tt></font></a>
+ausl&ouml;sen kann. Ohne den <font color="#000077"><tt>try-catch</tt></font>-Block
+w&uuml;rde diese an den Aufrufer weitergegeben werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Als Klassenmethode kann <a href="index_s.html#ixb100867"><font color=#000080><tt>sleep</tt></font></a>
+aufgerufen werden, ohne dass eine Instanz der Klasse <a href="index_t.html#ixb100606"><font color=#000080><tt>Thread</tt></font></a>
+verf&uuml;gbar ist. Insbesondere kann die Methode auch dazu verwendet
+werden, das Hauptprogramm pausieren zu lassen, das ja nicht explizit
+als Thread erzeugt wurde. Dies funktioniert deshalb, weil beim Starten
+eines Java-Programms automatisch ein Thread f&uuml;r die Ausf&uuml;hrung
+des Hauptprogramms angelegt wurde. 
+
+<!-- Section -->
+
+<a name="sectlevel4id023002003002"></a>
+<h4>isAlive<a name="ixa101477"></a> </h4>
+
+<p>
+Mit dieser Methode kann festgestellt werden, ob ein Thread noch l&auml;uft.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public final boolean isAlive()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/Thread.html" onClick="this.href=getApiDoc('java.lang.Thread')"><font color="#660066" size=-1>java.lang.Thread</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa101477"><a href="index_i.html#ixb101124"><font color=#000080><tt>isAlive</tt></font></a></a>
+gibt immer dann <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+zur&uuml;ck, wenn der Thread gestartet, aber noch nicht wieder beendet
+wurde. Beendet wird ein Thread, wenn das Ende der <a name="ixa101478"><a href="index_r.html#ixb101111"><font color=#000080><tt>run</tt></font></a></a>-Methode
+erreicht ist oder wenn (in Pr&auml;-1.2-JDKs) die Methode <a href="index_s.html#ixb101118"><font color=#000080><tt>stop</tt></font></a>
+aufgerufen wurde. 
+
+<!-- Section -->
+
+<a name="sectlevel4id023002003003"></a>
+<h4>join </h4>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public final void join()
+  throws InterruptedException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/Thread.html" onClick="this.href=getApiDoc('java.lang.Thread')"><font color="#660066" size=-1>java.lang.Thread</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Methode <a name="ixa101479"><a href="index_j.html#ixb101122"><font color=#000080><tt>join</tt></font></a></a>
+wartet auf das Ende des Threads, f&uuml;r den sie aufgerufen wurde.
+Sie erm&ouml;glicht es damit, einen Prozess zu starten und (&auml;hnlich
+einem Funktionsaufruf) mit der weiteren Ausf&uuml;hrung so lange zu
+warten, bis der Prozess beendet ist. <a href="index_j.html#ixb101122"><font color=#000080><tt>join</tt></font></a>
+gibt es auch mit einem <a href="index_l.html#ixb100252"><font color=#000080><tt>long</tt></font></a>
+als Parameter. In diesem Fall wartet die Methode maximal die angegebene
+Zeit in Millisekunden und f&auml;hrt nach Ablauf der Zeit auch dann
+fort, wenn der Prozess noch nicht beendet ist. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100150.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100151.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100153.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100157.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

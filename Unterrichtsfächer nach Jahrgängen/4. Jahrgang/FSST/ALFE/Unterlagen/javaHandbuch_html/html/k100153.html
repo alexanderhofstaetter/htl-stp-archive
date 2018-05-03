@@ -1,0 +1,524 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100150.html;106,k100152.html;107,k100154.html;108,k100157.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100150.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100152.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100154.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100157.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 23 - Multithreading
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id023003"></a>
+<h2>23.3 Das Interface Runnable </h2>
+<hr>
+<ul>
+<li><a href="k100153.html#sectlevel2id023003">23.3 Das Interface Runnable</a>
+<ul>
+<li><a href="k100153.html#sectlevel3id023003001">23.3.1 Implementieren von Runnable</a>
+<li><a href="k100153.html#sectlevel3id023003002">23.3.2 Multithreading durch Wrapper-Klassen</a>
+</ul>
+</ul>
+<hr>
+
+<p>
+Nicht immer ist es m&ouml;glich, eine Klasse, die als Thread laufen
+soll, von <a href="index_t.html#ixb100606"><font color=#000080><tt>Thread</tt></font></a>
+abzuleiten. Dies ist insbesondere dann nicht m&ouml;glich, wenn die
+Klasse Bestandteil einer Vererbungshierarchie ist, die eigentlich
+nichts mit Multithreading zu tun hat. Da Java keine Mehrfachvererbung
+kennt, kann eine bereits abgeleitete Klasse nicht von einer weiteren
+Klasse erben. Da sehr unterschiedliche Klassen als Thread parallel
+zu vorhandenem Code ausgef&uuml;hrt werden k&ouml;nnen, ist dies eine
+sehr unsch&ouml;ne Einschr&auml;nkung des Multithreading-Konzepts
+von Java. 
+
+<p>
+Gl&uuml;cklicherweise gibt es einen Ausweg. Er besteht darin, einen
+Thread nicht durch Ableiten aus <a href="index_t.html#ixb100606"><font color=#000080><tt>Thread</tt></font></a>,
+sondern durch Implementierung des Interface <a name="ixa101480"><a href="index_r.html#ixb101110"><font color=#000080><tt>Runnable</tt></font></a></a>
+zu erzeugen. <a href="index_r.html#ixb101110"><font color=#000080><tt>Runnable</tt></font></a>
+enth&auml;lt nur eine einzige Deklaration, n&auml;mlich die der Methode
+<a href="index_r.html#ixb101111"><font color=#000080><tt>run</tt></font></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public abstract void run()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/Runnable.html" onClick="this.href=getApiDoc('java.lang.Runnable')"><font color="#660066" size=-1>java.lang.Runnable</font></a></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id023003001"></a>
+<h3>23.3.1 Implementieren von Runnable </h3>
+
+<p>
+Tats&auml;chlich muss jede Klasse, deren Instanzen als Thread laufen
+sollen, das Interface <a href="index_r.html#ixb101110"><font color=#000080><tt>Runnable</tt></font></a>
+implementieren (sogar die Klasse <a href="index_t.html#ixb100606"><font color=#000080><tt>Thread</tt></font></a>
+selbst). Um eine nicht von <a href="index_t.html#ixb100606"><font color=#000080><tt>Thread</tt></font></a>
+abgeleitete Instanz in dieser Weise als Thread laufen zu lassen, ist
+in folgenden Schritten vorzugehen: 
+<ul>
+<li>Zun&auml;chst wird ein neues Thread-Objekt erzeugt.
+<li>An den Konstruktor wird das Objekt &uuml;bergeben, das parallel
+ausgef&uuml;hrt werden soll.
+<li>Die Methode <a href="index_s.html#ixb101113"><font color=#000080><tt>start</tt></font></a>
+des neuen Thread-Objekts wird aufgerufen.
+</ul>
+
+<p>
+Nun startet das <a href="index_t.html#ixb100606"><font color=#000080><tt>Thread</tt></font></a>-Objekt
+die <a href="index_r.html#ixb101111"><font color=#000080><tt>run</tt></font></a>-Methode
+des &uuml;bergebenen Objekts, das sie ja durch die &Uuml;bergabe im
+Konstruktor kennt. Da dieses Objekt das Interface <a href="index_r.html#ixb101110"><font color=#000080><tt>Runnable</tt></font></a>
+implementiert, ist garantiert, dass eine geeignete Methode <a href="index_r.html#ixb101111"><font color=#000080><tt>run</tt></font></a>
+zur Verf&uuml;gung steht. 
+
+<p>
+Wir wollen dies an einem Beispiel deutlich machen: 
+<a name="implrunnable"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2304.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">class</font> A2304
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#006699">int</font> irgendwas;
+<font color="#555555">006 </font>  <font color="#00AA00">//...</font>
+<font color="#555555">007 </font>}
+<font color="#555555">008 </font>
+<font color="#555555">009 </font><font color="#0000AA">class</font> B2304
+<font color="#555555">010 </font><font color="#0000AA">extends</font> A2304
+<font color="#555555">011 </font><font color="#0000AA">implements</font> Runnable
+<font color="#555555">012 </font>{
+<font color="#555555">013 </font>   <font color="#0000AA">public</font> <font color="#006699">void</font> run()
+<font color="#555555">014 </font>   {
+<font color="#555555">015 </font>      <font color="#006699">int</font> i = 0;
+<font color="#555555">016 </font>      <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">017 </font>         <font color="#0000AA">if</font> (Thread.interrupted()) {
+<font color="#555555">018 </font>            <font color="#0000AA">break</font>;
+<font color="#555555">019 </font>         }
+<font color="#555555">020 </font>         System.out.println(i++);
+<font color="#555555">021 </font>      }
+<font color="#555555">022 </font>   }
+<font color="#555555">023 </font>}
+<font color="#555555">024 </font>
+<font color="#555555">025 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2304
+<font color="#555555">026 </font>{
+<font color="#555555">027 </font>   <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">028 </font>   {
+<font color="#555555">029 </font>      B2304 b = <font color="#0000AA">new</font> B2304();
+<font color="#555555">030 </font>      Thread t = <font color="#0000AA">new</font> Thread(b);
+<font color="#555555">031 </font>      t.start();
+<font color="#555555">032 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">033 </font>         Thread.sleep(1000);
+<font color="#555555">034 </font>      } <font color="#0000AA">catch</font> (InterruptedException e){
+<font color="#555555">035 </font>         <font color="#00AA00">//nichts</font>
+<font color="#555555">036 </font>      }
+<font color="#555555">037 </font>      t.interrupt();
+<font color="#555555">038 </font>   }
+<font color="#555555">039 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2304.java"><font color="#000055" size=-1>Listing2304.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 23.4: Implementieren von Runnable</i></p>
+
+<p>
+Die Klasse <font color="#000077"><tt>B2304</tt></font> ist von <font color="#000077"><tt>A2304</tt></font>
+abgeleitet und kann daher nicht von <a href="index_t.html#ixb100606"><font color=#000080><tt>Thread</tt></font></a>
+abgeleitet sein. Stattdessen implementiert sie das Interface <a href="index_r.html#ixb101110"><font color=#000080><tt>Runnable</tt></font></a>.
+Um nun ein Objekt der Klasse <font color="#000077"><tt>B2304</tt></font>
+als Thread auszuf&uuml;hren, wird in <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>
+von <font color="#000077"><tt>Listing2304</tt></font> eine Instanz
+dieser Klasse erzeugt und an den Konstruktor der Klasse <a href="index_t.html#ixb100606"><font color=#000080><tt>Thread</tt></font></a>
+&uuml;bergeben. Nach dem Aufruf von <a href="index_s.html#ixb101113"><font color=#000080><tt>start</tt></font></a>
+wird die <a href="index_r.html#ixb101111"><font color=#000080><tt>run</tt></font></a>-Methode
+von <font color="#000077"><tt>B2304</tt></font> aufgerufen. 
+
+<!-- Section -->
+
+<a name="sectlevel3id023003002"></a>
+<h3>23.3.2 Multithreading durch Wrapper-Klassen </h3>
+
+<p>
+Auf eine &auml;hnliche Weise lassen sich auch Methoden, die urspr&uuml;nglich
+nicht als Thread vorgesehen waren, in einen solchen umwandeln und
+im Hintergrund ausf&uuml;hren. Der Grundstein f&uuml;r die Umwandlung
+eines gew&ouml;hnlichen Objekts in einen Thread wird dabei immer bei
+der &Uuml;bergabe eines <a name="ixa101481"><a href="index_r.html#ixb101110"><font color=#000080><tt>Runnable</tt></font></a></a>-Objekts
+an den Konstruktor des <a href="index_t.html#ixb100606"><font color=#000080><tt>Thread</tt></font></a>-Objekts
+gelegt. Das folgende Beispiel demonstriert, wie eine zeitintensive
+Primfaktorzerlegung im Hintergrund laufen kann. 
+
+<p>
+Zun&auml;chst ben&ouml;tigen wir dazu eine Klasse <font color="#000077"><tt>PrimeNumberTools</tt></font>,
+die Routinen zur Berechnung von Primzahlen und zur Primfaktorzerlegung
+zur Verf&uuml;gung stellt. Diese Klasse ist weder von <a href="index_t.html#ixb100606"><font color=#000080><tt>Thread</tt></font></a>
+abgeleitet, noch implementiert sie <a href="index_r.html#ixb101110"><font color=#000080><tt>Runnable</tt></font></a>:
+<a name="listingid023005"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* PrimeNumberTools.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> PrimeNumberTools
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> printPrimeFactors(<font color="#006699">int</font> num)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#006699">int</font> whichprime = 1;
+<font color="#555555">008 </font>    <font color="#006699">int</font> prime;
+<font color="#555555">009 </font>    String prefix;
+<font color="#555555">010 </font>
+<font color="#555555">011 </font>    prefix = <font color="#0000FF">"primeFactors("</font>+num+<font color="#0000FF">")= "</font>;
+<font color="#555555">012 </font>    <font color="#0000AA">while</font> (num &gt; 1) {
+<font color="#555555">013 </font>      prime = getPrime(whichprime);
+<font color="#555555">014 </font>      <font color="#0000AA">if</font> (num % prime == 0) {
+<font color="#555555">015 </font>        System.out.print(prefix+prime);
+<font color="#555555">016 </font>        prefix = <font color="#0000FF">" "</font>;
+<font color="#555555">017 </font>        num /= prime;
+<font color="#555555">018 </font>      } <font color="#0000AA">else</font> {
+<font color="#555555">019 </font>        ++whichprime;
+<font color="#555555">020 </font>      }
+<font color="#555555">021 </font>    }
+<font color="#555555">022 </font>    System.out.println();
+<font color="#555555">023 </font>  }
+<font color="#555555">024 </font>
+<font color="#555555">025 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> getPrime(<font color="#006699">int</font> cnt)
+<font color="#555555">026 </font>  {
+<font color="#555555">027 </font>    <font color="#006699">int</font> i = 1;
+<font color="#555555">028 </font>    <font color="#006699">int</font> ret = 2;
+<font color="#555555">029 </font>
+<font color="#555555">030 </font>    <font color="#0000AA">while</font> (i &lt; cnt) {
+<font color="#555555">031 </font>      ++ret;
+<font color="#555555">032 </font>      <font color="#0000AA">if</font> (isPrime(ret)) {
+<font color="#555555">033 </font>        ++i;
+<font color="#555555">034 </font>      }
+<font color="#555555">035 </font>    }
+<font color="#555555">036 </font>    <font color="#0000AA">return</font> ret;
+<font color="#555555">037 </font>  }
+<font color="#555555">038 </font>
+<font color="#555555">039 </font>  <font color="#0000AA">private</font> <font color="#006699">boolean</font> isPrime(<font color="#006699">int</font> num)
+<font color="#555555">040 </font>  {
+<font color="#555555">041 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 2; i &lt; num; ++i) {
+<font color="#555555">042 </font>      <font color="#0000AA">if</font> (num % i == 0) {
+<font color="#555555">043 </font>        <font color="#0000AA">return</font> <font color="#006699">false</font>;
+<font color="#555555">044 </font>      }
+<font color="#555555">045 </font>    }
+<font color="#555555">046 </font>    <font color="#0000AA">return</font> <font color="#006699">true</font>;
+<font color="#555555">047 </font>  }
+<font color="#555555">048 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/PrimeNumberTools.java"><font color="#000055" size=-1>PrimeNumberTools.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 23.5: Eine Klasse zur Primfaktorzerlegung</i></p>
+
+<p>
+Ohne Hintergrundverarbeitung k&ouml;nnte <font color="#000077"><tt>PrimeNumberTools</tt></font>
+instanziert und ihre Methoden durch einfachen Aufruf verwendet werden:
+<a name="primfakt1"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2306.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2306
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    PrimeNumberTools pt = <font color="#0000AA">new</font> PrimeNumberTools();
+<font color="#555555">010 </font>    BufferedReader   in = <font color="#0000AA">new</font> BufferedReader(
+<font color="#555555">011 </font>                          <font color="#0000AA">new</font> InputStreamReader(
+<font color="#555555">012 </font>                          <font color="#0000AA">new</font> DataInputStream(System.in)));
+<font color="#555555">013 </font>    <font color="#006699">int</font> num;
+<font color="#555555">014 </font>
+<font color="#555555">015 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">016 </font>      <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">017 </font>        System.out.print(<font color="#0000FF">"Bitte eine Zahl eingeben: "</font>);
+<font color="#555555">018 </font>        System.out.flush();
+<font color="#555555">019 </font>        num = (<font color="#0000AA">new</font> Integer(in.readLine())).intValue();
+<font color="#555555">020 </font>        <font color="#0000AA">if</font> (num == -1) {
+<font color="#555555">021 </font>          <font color="#0000AA">break</font>;
+<font color="#555555">022 </font>        }
+<font color="#555555">023 </font>        pt.printPrimeFactors(num);
+<font color="#555555">024 </font>      }
+<font color="#555555">025 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">026 </font>      <font color="#00AA00">//nichts</font>
+<font color="#555555">027 </font>    }
+<font color="#555555">028 </font>  }
+<font color="#555555">029 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2306.java"><font color="#000055" size=-1>Listing2306.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 23.6: Verwendung der Klasse zur Primfaktorzerlegung</i></p>
+
+<p>
+Das Programm erzeugt eine Instanz der Klasse <font color="#000077"><tt>PrimeNumberTools</tt></font>
+und f&uuml;hrt f&uuml;r jeden eingelesenen Zahlenwert durch Aufruf
+der Methode <font color="#000077"><tt>printPrimeFactors</tt></font>
+die Primfaktorzerlegung durch. Um nun diese Berechnungen asynchron
+durchzuf&uuml;hren, entwerfen wir eine Wrapper-Klasse, die von <font color="#000077"><tt>PrimeNumberTools</tt></font>
+abgeleitet wird und das Interface <a href="index_r.html#ixb101110"><font color=#000080><tt>Runnable</tt></font></a>
+implementiert: 
+<a name="listingid023007"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* ThreadedPrimeNumberTools.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> ThreadedPrimeNumberTools
+<font color="#555555">004 </font><font color="#0000AA">extends</font> PrimeNumberTools
+<font color="#555555">005 </font><font color="#0000AA">implements</font> Runnable
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font> arg;
+<font color="#555555">008 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font> func;
+<font color="#555555">009 </font>
+<font color="#555555">010 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> printPrimeFactors(<font color="#006699">int</font> num)
+<font color="#555555">011 </font>  {
+<font color="#555555">012 </font>    execAsynchron(1,num);
+<font color="#555555">013 </font>  }
+<font color="#555555">014 </font>
+<font color="#555555">015 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> printPrime(<font color="#006699">int</font> cnt)
+<font color="#555555">016 </font>  {
+<font color="#555555">017 </font>    execAsynchron(2,cnt);
+<font color="#555555">018 </font>  }
+<font color="#555555">019 </font>
+<font color="#555555">020 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> run()
+<font color="#555555">021 </font>  {
+<font color="#555555">022 </font>    <font color="#0000AA">if</font> (func == 1) {
+<font color="#555555">023 </font>      <font color="#006699">super</font>.printPrimeFactors(arg);
+<font color="#555555">024 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (func == 2) {
+<font color="#555555">025 </font>      <font color="#006699">int</font> result = <font color="#006699">super</font>.getPrime(arg);
+<font color="#555555">026 </font>      System.out.println(<font color="#0000FF">"prime number #"</font>+arg+<font color="#0000FF">" is: "</font>+result);
+<font color="#555555">027 </font>    }
+<font color="#555555">028 </font>  }
+<font color="#555555">029 </font>
+<font color="#555555">030 </font>  <font color="#0000AA">private</font> <font color="#006699">void</font> execAsynchron(<font color="#006699">int</font> func, <font color="#006699">int</font> arg)
+<font color="#555555">031 </font>  {
+<font color="#555555">032 </font>    Thread t = <font color="#0000AA">new</font> Thread(<font color="#006699">this</font>);
+<font color="#555555">033 </font>    <font color="#006699">this</font>.func = func;
+<font color="#555555">034 </font>    <font color="#006699">this</font>.arg  = arg;
+<font color="#555555">035 </font>    t.start();
+<font color="#555555">036 </font>  }
+<font color="#555555">037 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/ThreadedPrimeNumberTools.java"><font color="#000055" size=-1>ThreadedPrimeNumberTools.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 23.7: Primfaktorzerlegung mit Threads</i></p>
+
+<p>
+Hier wurde die Methode <font color="#000077"><tt>printPrimeFactors</tt></font>
+&uuml;berlagert, um den Aufruf der Superklasse asynchron ausf&uuml;hren
+zu k&ouml;nnen. Dazu wird in <font color="#000077"><tt>execAsynchron</tt></font>
+ein neuer Thread generiert, dem im Konstruktor das aktuelle Objekt
+&uuml;bergeben wird. Durch Aufruf der Methode <a href="index_s.html#ixb101113"><font color=#000080><tt>start</tt></font></a>
+wird der Thread gestartet und die <a href="index_r.html#ixb101111"><font color=#000080><tt>run</tt></font></a>-Methode
+des aktuellen Objekts aufgerufen. Diese f&uuml;hrt die gew&uuml;nschten
+Aufrufe der Superklasse aus und schreibt die Ergebnisse auf den Bildschirm.
+So ist es m&ouml;glich, bereits w&auml;hrend der Berechnung der Primfaktoren
+einer Zahl eine neue Eingabe zu erledigen und eine neue Primfaktorberechnung
+zu beginnen. 
+
+<p>
+Um dies zu erreichen, ist in der Klasse <font color="#000077"><tt>Listing2306</tt></font>
+lediglich die Deklaration des Objekts vom Typ <font color="#000077"><tt>PrimeNumberTools</tt></font>
+durch eine Deklaration vom Typ der daraus abgeleiteten Klasse <font color="#000077"><tt>ThreadedPrimeNumberTools</tt></font>
+zu ersetzen: 
+<a name="listingid023008"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2308.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2308
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    ThreadedPrimeNumberTools pt;
+<font color="#555555">010 </font>    BufferedReader in = <font color="#0000AA">new</font> BufferedReader(
+<font color="#555555">011 </font>                        <font color="#0000AA">new</font> InputStreamReader(
+<font color="#555555">012 </font>                        <font color="#0000AA">new</font> DataInputStream(System.in)));
+<font color="#555555">013 </font>    <font color="#006699">int</font> num;
+<font color="#555555">014 </font>
+<font color="#555555">015 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">016 </font>      <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">017 </font>        System.out.print(<font color="#0000FF">"Bitte eine Zahl eingeben: "</font>);
+<font color="#555555">018 </font>        System.out.flush();
+<font color="#555555">019 </font>        num = (<font color="#0000AA">new</font> Integer(in.readLine())).intValue();
+<font color="#555555">020 </font>        <font color="#0000AA">if</font> (num == -1) {
+<font color="#555555">021 </font>           <font color="#0000AA">break</font>;
+<font color="#555555">022 </font>        }
+<font color="#555555">023 </font>        pt = <font color="#0000AA">new</font> ThreadedPrimeNumberTools();
+<font color="#555555">024 </font>        pt.printPrimeFactors(num);
+<font color="#555555">025 </font>      }
+<font color="#555555">026 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">027 </font>      <font color="#00AA00">//nichts</font>
+<font color="#555555">028 </font>    }
+<font color="#555555">029 </font>  }
+<font color="#555555">030 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2308.java"><font color="#000055" size=-1>Listing2308.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 23.8: Verwendung der Klasse zur Primfaktorzerlegung mit Threads</i></p>
+
+<p>
+Wenn alle Eingaben erfolgen, bevor das erste Ergebnis ausgegeben wird,
+k&ouml;nnte eine Beispielsitzung etwa so aussehen (Benutzereingaben
+sind fett gedruckt): 
+<font color="#333300">
+<pre>
+Bitte eine Zahl eingeben: <b>991</b>
+Bitte eine Zahl eingeben: <b>577</b>
+Bitte eine Zahl eingeben: <b>677</b>
+Bitte eine Zahl eingeben: <b>-1</b>
+primeFactors(577)= 577
+primeFactors(677)= 677
+primeFactors(991)= 991
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Obwohl das gew&uuml;nschte Verhalten (n&auml;mlich die asynchrone
+Ausf&uuml;hrung einer zeitaufw&auml;ndigen Berechnung im Hintergrund)
+realisiert wird, ist dieses Beispiel nicht beliebig zu verallgemeinern.
+Die Ausgabe erfolgt beispielsweise nur dann ohne Unterbrechung durch
+Benutzereingaben, wenn alle Eingaben vor der ersten Ausgabe abgeschlossen
+sind. Selbst in diesem Fall funktioniert das Programm nicht immer
+zuverl&auml;ssig. Es ist generell problematisch, Hintergrundprozessen
+zu erlauben, auf die Standardein- oder -ausgabe zuzugreifen, die ja
+vorwiegend vom Vordergrund-Thread verwendet wird. Ein- und Ausgaben
+k&ouml;nnten durcheinandergeraten und es k&ouml;nnte zu Synchronisationsproblemen
+kommen, die die Ausgabe verf&auml;lschen. Wir haben nur ausnahmsweise
+davon Gebrauch gemacht, um das Prinzip der Hintergrundverarbeitung
+an einem einfachen Beispiel darzustellen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Das n&auml;chste Problem ist die Realisierung des Dispatchers in <a href="index_r.html#ixb101111"><font color=#000080><tt>run</tt></font></a>,
+der mit Hilfe der Instanzvariablen <font color="#000077"><tt>func</tt></font>
+und <font color="#000077"><tt>arg</tt></font> die erforderlichen Funktionsaufrufe
+durchf&uuml;hrt. Dies funktioniert hier recht problemlos, weil alle
+Methoden dieselbe Parametrisierung haben. Im Allgemeinen w&auml;re
+hier ein aufw&auml;ndigerer &Uuml;bergabemechanismus erforderlich.
+
+<p>
+Des Weiteren sind meistens Vorder- und Hintergrundverarbeitung zu
+<i>synchronisieren</i>, weil der Vordergrundprozess die Ergebnisse
+des Hintergrundprozesses ben&ouml;tigt. Auch hier haben wir stark
+vereinfacht, indem die Ergebnisse einfach direkt nach der Verf&uuml;gbarkeit
+vom Hintergrundprozess auf den Bildschirm geschrieben wurden. Das
+Beispiel zeigt jedoch, wie <i>prinzipiell</i> vorgegangen werden k&ouml;nnte,
+und ist vorwiegend als Anregung f&uuml;r eigene Experimente anzusehen.
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100150.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100152.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100154.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100157.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

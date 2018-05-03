@@ -1,0 +1,273 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100207.html;106,k100211.html;107,k100213.html;108,k100221.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100207.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100211.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100213.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100221.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 32 - AWT-Dialogelemente
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id032005"></a>
+<h2>32.5 Checkbox </h2>
+<hr>
+<ul>
+<li><a href="k100212.html#sectlevel2id032005">32.5 Checkbox</a>
+</ul>
+<hr>
+
+<p>
+Eine <a name="ixa102094"><a href="index_c.html#ixb101422"><font color=#000080><tt>Checkbox</tt></font></a></a>
+ist ein Eingabeelement, das eine Zustandsvariable besitzt, die zwischen
+den Werten <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+und <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>
+umgeschaltet werden kann. Der aktuelle Zustand wird durch ein H&auml;kchen
+oder Kreuz in der <a href="index_c.html#ixb101422"><font color=#000080><tt>Checkbox</tt></font></a>
+angezeigt. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Checkbox()
+
+public Checkbox(String label)
+
+public Checkbox(String label, boolean state)
+
+public Checkbox(String label, CheckboxGroup cbg, boolean state)
+
+public Checkbox(String label, boolean state, CheckboxGroup cbg)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Checkbox.html" onClick="this.href=getApiDoc('java.awt.Checkbox')"><font color="#660066" size=-1>java.awt.Checkbox</font></a></td>
+</tr>
+</table>
+
+<p>
+Der parameterlose Konstruktor erzeugt eine <a href="index_c.html#ixb101422"><font color=#000080><tt>Checkbox</tt></font></a>
+ohne Beschriftung mit dem Anfangszustand <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>.
+Wird der String <font color="#000077"><tt>label</tt></font> angegeben,
+bekommt die <a href="index_c.html#ixb101422"><font color=#000080><tt>Checkbox</tt></font></a>
+die angegebene Beschriftung. Durch &Uuml;bergabe des booleschen Parameters
+<font color="#000077"><tt>state</tt></font> ist es m&ouml;glich, den
+anf&auml;nglichen Zustand der <a href="index_c.html#ixb101422"><font color=#000080><tt>Checkbox</tt></font></a>
+vorzugeben. Der in den letzten beiden Konstruktoren verwendete Parameter
+<font color="#000077"><tt>cbg</tt></font> dient zur Gruppierung von
+<i>Radiobuttons</i> und sollte bei einer <a href="index_c.html#ixb101422"><font color=#000080><tt>Checkbox</tt></font></a>
+stets <a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>
+sein. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public String getLabel()
+
+public void setLabel(String label)
+
+public boolean getState()
+
+public void setState(boolean state)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Checkbox.html" onClick="this.href=getApiDoc('java.awt.Checkbox')"><font color="#660066" size=-1>java.awt.Checkbox</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa102095"></a> <a name="ixa102096"></a> <a name="ixa102097"></a>
+<a name="ixa102098"></a> Die Methoden erm&ouml;glichen den Zugriff
+auf die Beschriftung und den aktuellen Zustand der <a href="index_c.html#ixb101422"><font color=#000080><tt>Checkbox</tt></font></a>.
+
+<p>
+Oft repr&auml;sentiert eine <a href="index_c.html#ixb101422"><font color=#000080><tt>Checkbox</tt></font></a>
+einen logischen Schalter, dessen Zustand abgefragt wird, nachdem der
+Dialog beendet wurde. Zus&auml;tzlich kann aber auch unmittelbar auf
+eine Zustands&auml;nderung reagiert werden, denn eine <a href="index_c.html#ixb101422"><font color=#000080><tt>Checkbox</tt></font></a>
+generiert ein Item-Event, wenn die Markierung vom Anwender gesetzt
+oder zur&uuml;ckgenommen wird. Um auf dieses Event zu reagieren, ist
+durch Aufruf von <a name="ixa102099"><a href="index_a.html#ixb101421"><font color=#000080><tt>addItemListener</tt></font></a></a>
+ein Objekt, das das Interface <a name="ixa102100"><a href="index_i.html#ixb101420"><font color=#000080><tt>ItemListener</tt></font></a></a>
+implementiert, bei der <a href="index_c.html#ixb101422"><font color=#000080><tt>Checkbox</tt></font></a>
+zu registrieren: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void addItemListener(ItemListener l)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Checkbox.html" onClick="this.href=getApiDoc('java.awt.Checkbox')"><font color="#660066" size=-1>java.awt.Checkbox</font></a></td>
+</tr>
+</table>
+
+<p>
+Ein Item-Event wird immer dann gesendet, wenn sich der Zustand einer
+Checkbox ver&auml;ndert hat. In diesem Fall wird im Ereignisempf&auml;nger
+die Methode <a name="ixa102101"><a href="index_i.html#ixb101425"><font color=#000080><tt>itemStateChanged</tt></font></a></a>
+mit einem Argument vom Typ <a name="ixa102102"><a href="index_i.html#ixb101345"><font color=#000080><tt>ItemEvent</tt></font></a></a>
+aufgerufen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public abstract void itemStateChanged(ItemEvent e)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/event/ItemListener.html" onClick="this.href=getApiDoc('java.awt.event.ItemListener')"><font color="#660066" size=-1>java.awt.event.ItemListener</font></a></td>
+</tr>
+</table>
+
+<p>
+Das <a href="index_i.html#ixb101345"><font color=#000080><tt>ItemEvent</tt></font></a>
+stellt die Methode <a name="ixa102103"><a href="index_g.html#ixb101587"><font color=#000080><tt>getItemSelectable</tt></font></a></a>
+zur Verf&uuml;gung, mit der ermittelt werden kann, durch welche <a href="index_c.html#ixb101422"><font color=#000080><tt>Checkbox</tt></font></a>
+das Ereignis ausgel&ouml;st wurde: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public ItemSelectable getItemSelectable()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/event/ItemEvent.html" onClick="this.href=getApiDoc('java.awt.event.ItemEvent')"><font color="#660066" size=-1>java.awt.event.ItemEvent</font></a></td>
+</tr>
+</table>
+
+<p>
+Der R&uuml;ckgabewert kann dann in ein Objekt des Typs <a href="index_c.html#ixb101422"><font color=#000080><tt>Checkbox</tt></font></a>
+konvertiert werden. Durch Aufruf von <a name="ixa102097"><a href="index_g.html#ixb101306"><font color=#000080><tt>getState</tt></font></a></a>
+kann der aktuelle Zustand bestimmt werden. 
+<a name="listingid032003"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Checkbox1.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">private</font> <font color="#006699">void</font> customizeLayout(Panel panel)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  panel.setLayout(<font color="#0000AA">new</font> GridLayout(3,1));
+<font color="#555555">006 </font>  Checkbox cb = <font color="#0000AA">new</font> Checkbox(<font color="#0000FF">"Checkbox 1"</font>);
+<font color="#555555">007 </font>  cb.addItemListener(<font color="#006699">this</font>);
+<font color="#555555">008 </font>  panel.add(cb);
+<font color="#555555">009 </font>  cb = <font color="#0000AA">new</font> Checkbox(<font color="#0000FF">"Checkbox 2"</font>, <font color="#006699">true</font>);
+<font color="#555555">010 </font>  cb.addItemListener(<font color="#006699">this</font>);
+<font color="#555555">011 </font>  panel.add(cb);
+<font color="#555555">012 </font>  cb = <font color="#0000AA">new</font> Checkbox(<font color="#0000FF">"Checkbox 3"</font>, <font color="#006699">false</font>);
+<font color="#555555">013 </font>  cb.addItemListener(<font color="#006699">this</font>);
+<font color="#555555">014 </font>  panel.add(cb);
+<font color="#555555">015 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Checkbox1.inc"><font color="#000055" size=-1>Checkbox1.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 32.3: Verwendung von Checkbox-Komponenten</i></p>
+<p>
+<a name="imageid032004"></a>
+<img src="images/Checkbox.gif">
+<p>
+
+<p><i>
+Abbildung 32.4: Ein Dialog mit Checkbox-Komponenten</i></p>
+
+<p>
+Das folgende Listing zeigt eine beispielhafte Implementierung der
+Methode <a href="index_i.html#ixb101425"><font color=#000080><tt>itemStateChanged</tt></font></a>,
+die in der Klasse <font color="#000077"><tt>MyDialog</tt></font> beim
+Auftreten eines Item-Events aufgerufen wird (zus&auml;tzlich muss
+<font color="#000077"><tt>MyDialog</tt></font> das Interface <a href="index_i.html#ixb101420"><font color=#000080><tt>ItemListener</tt></font></a>
+implementieren): 
+<a name="listingid032004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Checkbox2.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#006699">void</font> itemStateChanged(ItemEvent event)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  Checkbox cb = (Checkbox) event.getItemSelectable();
+<font color="#555555">006 </font>  System.out.println(cb.getLabel() + <font color="#0000FF">": "</font> + cb.getState());
+<font color="#555555">007 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Checkbox2.inc"><font color="#000055" size=-1>Checkbox2.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 32.4: Behandlung von Item-Events</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100207.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100211.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100213.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100221.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

@@ -1,0 +1,1128 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100104.html;106,k100111.html;107,k100113.html;108,k100114.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100104.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100111.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100113.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100114.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 16 - Collections II
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="typisierteklassen"></a>
+<h2>16.8 Typisierte Klassen und generische Collections <a name="ixa101012"></a>
+<a name="ixa101013"></a> <a name="ixa101014"></a> </h2>
+<hr>
+<ul>
+<li><a href="k100112.html#typisierteklassen">16.8 Typisierte Klassen und generische Collections 
+ </a>
+<ul>
+<li><a href="k100112.html#sectlevel3id016008001">16.8.1 Grundlagen</a>
+<li><a href="k100112.html#sectlevel3id016008002">16.8.2 Collections mit mehreren Typparametern</a>
+<li><a href="k100112.html#eigenetypisiertelistenklasse">16.8.3 Eine eigene typisierte Listenklasse</a>
+<li><a href="k100112.html#sectlevel3id016008004">16.8.4 Typkompatibilit&auml;t</a>
+<ul>
+<li><a href="k100112.html#sectlevel4id016008004001">Ober- und Unterklassen in generischen Typen</a>
+<li><a href="k100112.html#sectlevel4id016008004002">Der Wildcard ?</a>
+<li><a href="k100112.html#sectlevel4id016008004003">Gebundene Wildcards</a>
+</ul>
+<li><a href="k100112.html#sectlevel3id016008005">16.8.5 Sonstiges</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id016008001"></a>
+<h3>16.8.1 Grundlagen </h3>
+
+<p>
+Dieser Abschnitt beschreibt eine Erweiterung, die seit der J2SE 5.0
+zur Verf&uuml;gung steht und unter dem Namen &#187;Generics&#171;
+bekannt geworden ist. Es geht dabei vordergr&uuml;ndig um die M&ouml;glichkeit,
+typsichere Collection-Klassen zu definieren, also solche, in die nicht
+nur allgemein Objekte des Typs <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+gesteckt werden k&ouml;nnen, sondern die durch vorhergehende Typisierung
+sicherstellen, dass nur Objekte des korrekten Typs (etwa <a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>
+oder <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>)
+eingef&uuml;gt werden k&ouml;nnen. Diese Spracherweiterung bringt
+zwei wichtige Vorteile: 
+<ul>
+<li>Da die Einf&uuml;geoperationen typsicher sind, kann zum Zugriffszeitpunkt
+kein fehlerhaft typisiertes Objekt mehr in der Collection sein. Bereits
+der Compiler stellt sicher, dass nur Objekte eingef&uuml;gt werden
+k&ouml;nnen, die zur Collection passen. Ausnahmen des Typs <a href="index_c.html#ixb100738"><font color=#000080><tt>ClassCastException</tt></font></a>,
+die beim sp&auml;teren Auslesen von fehlerhaft typisierten Collection-Elementen
+auftreten w&uuml;rden (also erst zur Laufzeit des Programms), geh&ouml;ren
+der Vergangenheit an.
+<li>Da der Compiler den Typ der Collection kennt, kann die umst&auml;ndliche
+Typkonvertierung beim Auslesen der Collection-Elemente entfallen und
+der Programmcode wird k&uuml;rzer und lesbarer.
+</ul>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Genau genommen geht es nicht nur um Collections im eigentlichen Sinne,
+sondern um die Typisierung von beliebigen Java-Klassen. Also die M&ouml;glichkeit,
+festzulegen, dass eine bestimmte Klasse <font color="#000077"><tt>X</tt></font>
+zwar so <i>implementiert</i> wurde, dass sie prinzipiell mit allen
+anderen Klassen zusammenarbeitet (bzw. Objekte deren Typs aufnimmt),
+im konkreten Anwendungsfall von <font color="#000077"><tt>X</tt></font>
+aber die M&ouml;glichkeit besteht, die Zusammenarbeit (etwa aus Sicherheits-
+oder Konsistenzgr&uuml;nden) auf eine fest vorgegebene andere Klasse
+zu beschr&auml;nken.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Was sich etwas kompliziert anh&ouml;rt, wollen wir durch ein einfaches
+Beispiel illustrieren: 
+<a name="listingid016008"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> printSorted1(<font color="#006699">int</font>... args)
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  ArrayList l = <font color="#0000AA">new</font> ArrayList();
+<font color="#555555">004 </font>  <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; args.length; ++i) {
+<font color="#555555">005 </font>    l.add(<font color="#0000AA">new</font> Integer(args[i]));
+<font color="#555555">006 </font>  }
+<font color="#555555">007 </font>  Collections.sort(l);
+<font color="#555555">008 </font>  <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; l.size(); ++i) {
+<font color="#555555">009 </font>    <font color="#006699">int</font> wert = 10 * ((Integer)l.get(i)).intValue();
+<font color="#555555">010 </font>    System.out.print(wert + <font color="#0000FF">" "</font>);
+<font color="#555555">011 </font>  }
+<font color="#555555">012 </font>  System.out.println();
+<font color="#555555">013 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 16.8: Eine untypisierte Sortiermethode</i></p>
+
+<p>
+<font color="#000077"><tt>printSorted1</tt></font> bekommt als Parameter
+eine Menge von Ganzzahlen &uuml;bergeben und hat die Aufgabe, diese
+mit 10 zu multiplizieren und sortiert auf der Konsole auszugeben.
+Die Methode legt dazu eine Liste <font color="#000077"><tt>l</tt></font>
+an und f&uuml;gt in diese zun&auml;chst die in <a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>
+konvertierten <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>-Werte
+ein. Anschlie&szlig;end sortiert sie die Liste, liest die <a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>-Objekte
+aus, konvertiert sie in <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>-Werte
+zur&uuml;ck und gibt die mit 10 multiplizierten Ergebnisse auf der
+Konsole aus. 
+
+<p>
+Seit der J2SE 5.0 kann die Methode nun typsicher gemacht werden: 
+<a name="listingid016009"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> printSorted2(<font color="#006699">int</font>... args)
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  ArrayList&lt;Integer&gt; l = <font color="#0000AA">new</font> ArrayList&lt;Integer&gt;();
+<font color="#555555">004 </font>  <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; args.length; ++i) {
+<font color="#555555">005 </font>    l.add(<font color="#0000AA">new</font> Integer(args[i]));
+<font color="#555555">006 </font>  }
+<font color="#555555">007 </font>  Collections.sort(l);
+<font color="#555555">008 </font>  <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; l.size(); ++i) {
+<font color="#555555">009 </font>    <font color="#006699">int</font> wert = 10 * l.get(i).intValue();
+<font color="#555555">010 </font>    System.out.print(wert + <font color="#0000FF">" "</font>);
+<font color="#555555">011 </font>  }
+<font color="#555555">012 </font>  System.out.println();
+<font color="#555555">013 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 16.9: Die typsichere Version der Sortiermethode</i></p>
+
+<p>
+Die <a href="index_a.html#ixb100195"><font color=#000080><tt>ArrayList</tt></font></a>
+wurde hier mit einem Typparameter versehen, der in spitzen Klammern
+angegeben wird: 
+<font color="#000077">
+<pre>
+ArrayListe&lt;Integer&gt; l = new ArrayList&lt;Integer&gt;();
+</pre>
+</font>
+
+<p>
+Dadurch wird dem Compiler mitgeteilt, dass diese <a href="index_a.html#ixb100195"><font color=#000080><tt>ArrayList</tt></font></a>
+ausschlie&szlig;lich <a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>-Objekte
+aufnehmen kann. Alle Versuche, darin einen <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>,
+ein <a href="index_d.html#ixb100268"><font color=#000080><tt>Double</tt></font></a>
+oder irgendein anderes Nicht-<font color="#000077"><tt>Integer</tt></font>-Objekt
+zu speichern, werden vom Compiler unterbunden. Auch der zweite der
+oben genannten Vorteile kommt zum Tragen: Beim Zugriff auf <a href="index_a.html#ixb100195"><font color=#000080><tt>ArrayList</tt></font></a>-Elemente
+mit Hilfe der Methode <a href="index_g.html#ixb100713"><font color=#000080><tt>get</tt></font></a>
+werden diese automatisch in ein <a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>
+konvertiert, der &uuml;bliche Typecast kann also entfallen. 
+
+<p>
+Auf diese Weise k&ouml;nnen nun seit der J2SE 5.0 alle Collection-Klassen
+typsicher verwendet werden: einfach den Datentyp in spitzen Klammern
+direkt hinter dem Klassennamen angeben! Auch bei Collections, die
+mit mehr als einem Parameter arbeiten, ist das m&ouml;glich, also
+inbesondere bei den verschiedenen Maps. Hier werden beide Parameter
+in spitzen Klammern angegeben und durch Komma voneinander getrennt.
+Wir werden dazu sp&auml;ter ein Beispiel sehen. 
+
+<p>
+Zun&auml;chst soll jedoch das obige Beispiel weiter vereinfacht werden.
+Tats&auml;chlich ist <font color="#000077"><tt>printSorted2</tt></font>
+n&auml;mlich etwas l&auml;nger als <font color="#000077"><tt>printSorted1</tt></font>,
+d.h., wir haben uns die Typsicherheit durch <i>zus&auml;tzlichen</i>
+Code erkauft. Dass es wesentlich einfacher geht, zeigt folgende Variante:
+<a name="einfachtypsicher"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> printSorted3(<font color="#006699">int</font>... args)
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  ArrayList&lt;Integer&gt; l = <font color="#0000AA">new</font> ArrayList&lt;Integer&gt;();
+<font color="#555555">004 </font>  <font color="#0000AA">for</font> (<font color="#006699">int</font> i : args) {
+<font color="#555555">005 </font>    l.add(i); <a name="einfachtypsicher.a"></a>
+<font color="#555555">006 </font>  }
+<font color="#555555">007 </font>  Collections.sort(l);
+<font color="#555555">008 </font>  <font color="#0000AA">for</font> (Integer i : l) {
+<font color="#555555">009 </font>    System.out.print((i * 10) + <font color="#0000FF">" "</font>); <a name="einfachtypsicher.b"></a>
+<font color="#555555">010 </font>  }
+<font color="#555555">011 </font>  System.out.println();
+<font color="#555555">012 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 16.10: Die vereinfachte Version der typsicheren Variante</i></p>
+
+<p>
+Hier kommen zus&auml;tzlich folgende Techniken zum Einsatz: 
+<ul>
+<li>Dank Autoboxing wird der <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>
+in <a href="k100112.html#einfachtypsicher.a">Zeile 005</a> automatisch
+in einen <a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>
+konvertiert.
+<li>Dank Autounboxing funktioniert in <a href="k100112.html#einfachtypsicher.b">Zeile 009</a>
+auch die umgekehrte Richtung automatisch.
+<li>Dank der erweiterten <a href="index_f.html#ixb100077"><font color=#000080><tt>for</tt></font></a>-Schleife
+lassen sich sowohl die Einf&uuml;ge- als auch die Ausgabeschleife
+erheblich k&uuml;rzen.
+</ul>
+
+<p>
+Dieses Programm sieht wesentlich besser aus als die erste Fassung.
+Es ist nun sowohl typsicher als auch besser lesbar. M&ouml;glich gemacht
+wird dies durch verschiedene Neuerungen der J2SE 5.0, die hier im
+Zusammenspiel ihr Synergiepotenzial entfalten. 
+
+<p>
+Autoboxing und Autounboxing wurden in <a href="k100072.html#autoboxing">Abschnitt 11.2.3</a>
+erl&auml;utert und die erweiterte <a href="index_f.html#ixb100077"><font color=#000080><tt>for</tt></font></a>-Schleife
+in <a href="k100049.html#dieforschleife">Abschnitt 7.3.3</a>. Auch
+die variablen Parameterlisten sind eine Neuerung der J2SE 5.0; sie
+wurden in <a href="k100055.html#variableparameterlisten">Abschnitt 8.3.4</a>
+erl&auml;utert. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#FF9900"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#FF9900"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Seit der Version 7 gibt es eine Neuerung, die eine noch kompaktere
+Schreibweise erm&ouml;glicht: 
+<font color="#000077">
+<pre>
+  ArrayList&lt;Integer&gt; l = new ArrayList&lt;&gt;();
+</pre>
+</font>
+
+<p>
+statt 
+<font color="#000077">
+<pre>
+  ArrayList&lt;Integer&gt; l = new ArrayList&lt;Integer&gt;();
+</pre>
+</font>
+
+<p>
+Hier stehen auf der rechten Seite der Zuweisung keine Typinformationen
+mehr, sondern lediglich die beiden spitzen Klammern. Wegen ihres Aussehens
+wird diese Schreibweise als &#187;Diamond&#171;-Operator<a name="ixa101015"></a>
+bezeichnet. Sie erm&ouml;glicht es, dass man die Typinformation nur
+auf der linken Seite der Zuweisung hinschreiben muss, denn der Compiler
+versucht nun, den Typ der rechten Seite aus den Angaben der linken
+Seite herzuleiten. In unserem Fall ist klar, dass es sich um eine
+<a href="index_a.html#ixb100195"><font color=#000080><tt>ArrayList</tt></font></a>
+vom Typ <a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>
+handeln muss.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#FF9900">
+<tr>
+<td><font color="#FFFFFF">&nbsp;JDK6.0-7.0&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#FF9900"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id016008002"></a>
+<h3>16.8.2 Collections mit mehreren Typparametern </h3>
+
+<p>
+Wie bereits erw&auml;hnt k&ouml;nnen auch Collections typsicher gemacht
+werden, deren Methoden &uuml;blicherweise mehr als einen Parameter
+erwarten. Ein gutes Beispiel daf&uuml;r ist das Interface <a href="index_m.html#ixb100109"><font color=#000080><tt>Map</tt></font></a>
+und dessen implementierende Klassen (etwa <a href="index_h.html#ixb100754"><font color=#000080><tt>HashMap</tt></font></a>,
+<a href="index_t.html#ixb100774"><font color=#000080><tt>TreeMap</tt></font></a>
+oder <a href="index_h.html#ixb100428"><font color=#000080><tt>Hashtable</tt></font></a>).
+Sie speichern nicht einzelne Werte, sondern Schl&uuml;ssel-Wert-Paare.
+Soll eine solche Klasse typsicher verwendet werden, sind bei der Deklaration
+zwei Typparameter anzugeben: 
+<font color="#000077">
+<pre>
+HashMap&lt;String, Integer&gt; h = new HashMap&lt;String, Integer&gt;();
+</pre>
+</font>
+
+<p>
+An die Einf&uuml;geoperationen, die beide Parameter erwarten, muss
+nach einer solchen Deklaration zwangsweise ein String und ein Integer
+&uuml;bergeben werden. Die Zugriffsmethoden dagegen erwarten einen
+<a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+als Schl&uuml;ssel und liefern einen <a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>
+als R&uuml;ckgabewert. Beispielhaft wollen wir uns eine Methode ansehen,
+die eine Liste von Strings erwartet und dann z&auml;hlt, wie oft jedes
+einzelne Wort darin vorkommt. Eine Pre-5.0-Implementierung k&ouml;nnte
+so aussehen: 
+<a name="listingid016011"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> wordCount1(String[] args)
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  HashMap h = <font color="#0000AA">new</font> HashMap();
+<font color="#555555">004 </font>  <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; args.length; ++i) {
+<font color="#555555">005 </font>    <font color="#006699">int</font> cnt = 1;
+<font color="#555555">006 </font>    <font color="#0000AA">if</font> (h.containsKey(args[i])) {
+<font color="#555555">007 </font>      cnt = 1 + ((Integer)h.get(args[i])).intValue();
+<font color="#555555">008 </font>    }
+<font color="#555555">009 </font>    h.put(args[i], <font color="#0000AA">new</font> Integer(cnt));
+<font color="#555555">010 </font>  }
+<font color="#555555">011 </font>  System.out.println(h);
+<font color="#555555">012 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 16.11: Ein untypisierter Wortz&auml;hler</i></p>
+
+<p>
+F&uuml;r jedes Element des Parameter-Arrays wird gepr&uuml;ft, ob
+es schon in der <a href="index_h.html#ixb100754"><font color=#000080><tt>HashMap</tt></font></a>
+<font color="#000077"><tt>h</tt></font> enthalten ist. Ist das der
+Fall, wird das Wort als Schl&uuml;ssel verwendet, der zugeh&ouml;rige
+Z&auml;hlerstand aus <font color="#000077"><tt>h</tt></font> gelesen
+und um 1 erh&ouml;ht. Ist das nicht der Fall, wird der Z&auml;hler
+mit 1 initialisiert. Anschlie&szlig;end wird der Z&auml;hlerwert mit
+dem Wort als Schl&uuml;ssel in die HashMap geschrieben. 
+
+<p>
+Seit der J2SE 5.0 kann man die Methode stark vereinfachen: 
+<a name="zweifachtypsicher"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> wordCount2(String... args)
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  HashMap&lt;String, Integer&gt; h = <font color="#0000AA">new</font> HashMap&lt;String, Integer&gt;();
+<font color="#555555">004 </font>  <font color="#0000AA">for</font> (String key : args) {
+<font color="#555555">005 </font>    <font color="#0000AA">if</font> (h.containsKey(key)) {
+<font color="#555555">006 </font>      h.put(key, 1 + h.get(key));
+<font color="#555555">007 </font>    } <font color="#0000AA">else</font> {
+<font color="#555555">008 </font>      h.put(key, 1);
+<font color="#555555">009 </font>    }
+<font color="#555555">010 </font>  }
+<font color="#555555">011 </font>  System.out.println(h);
+<font color="#555555">012 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 16.12: Die 5.0-Wortz&auml;hlervariante</i></p>
+
+<p>
+Auch hier machen wir uns gleich alle drei oben genannten Erweiterungen
+der J2SE 5.0 zu Nutze. Zudem gibt es einen weiteren Vorteil. Da nun
+die Datentypen der Methoden <a href="index_p.html#ixb100712"><font color=#000080><tt>put</tt></font></a>
+und <a href="index_g.html#ixb100713"><font color=#000080><tt>get</tt></font></a>
+bekannt sind, k&ouml;nnen wir - dank der Verk&uuml;rzung durch Autoboxing
+und Autounboxing - die Programmstruktur &uuml;bersichtlicher machen.
+Wir schreiben dazu die <a href="index_p.html#ixb100712"><font color=#000080><tt>put</tt></font></a>-
+und <a href="index_g.html#ixb100713"><font color=#000080><tt>get</tt></font></a>-Operationen
+in eine Zeile, die Hilfsvariable <font color="#000077"><tt>cnt</tt></font>
+wird gar nicht mehr gebraucht. 
+
+<!-- Section -->
+
+<a name="eigenetypisiertelistenklasse"></a>
+<h3>16.8.3 Eine eigene typisierte Listenklasse </h3>
+
+<p>
+Nachdem wir uns in den vorherigen Abschnitten angesehen haben, wie
+generische Collections verwendet werden, wollen wir nun eine eigene
+generische Listenklasse implementieren. Deren Interface soll bewusst
+schlank gehalten werden, um unn&ouml;tige Verkomplizierungen zu vermeiden.
+Es besteht aus je einer Methode, um Elemente einzuf&uuml;gen und auszulesen,
+einer Methode zur Abfrage der Gr&ouml;&szlig;e und aus einem Iterator,
+um die Elemente (u.a. mit den neuen foreach-Schleifen der J2SE 5.0)
+durchlaufen zu k&ouml;nnen. 
+
+<p>
+Der Einfachheit halber wollen wir die Liste mit einem Array als interne
+Datenstruktur realisieren und definieren dazu folgende Klasse: 
+<a name="listingid016013"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#00AA00">/**
+<font color="#555555">004 </font> * Die folgende Klasse realisiert eine einfache Liste mit einer
+<font color="#555555">005 </font> * festen Gr&ouml;&szlig;e. Die Liste kann typisiert werden, so dass
+<font color="#555555">006 </font> * Zugriffs- und Hinzuf&uuml;gemethoden typsicher werden. Dar&uuml;ber
+<font color="#555555">007 </font> * hinaus implementiert sie das Interface Iterable und stellt
+<font color="#555555">008 </font> * einen typsicheren Iterator zur Verf&uuml;gung, um die Verwendung
+<font color="#555555">009 </font> * in J2SE-5.0-foreach-Schleifen zu erm&ouml;glichen.
+<font color="#555555">010 </font> */</font>
+<font color="#555555">011 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> MiniListe&lt;E&gt;
+<font color="#555555">012 </font><font color="#0000AA">implements</font> Iterable&lt;E&gt;
+<font color="#555555">013 </font>{
+<font color="#555555">014 </font>  <font color="#0000AA">private</font> Object[] data;
+<font color="#555555">015 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font>      size;
+<font color="#555555">016 </font>
+<font color="#555555">017 </font>  <font color="#00AA00">/**
+<font color="#555555">018 </font>   * Erzeugt eine leere Liste, die maximal maxSize Elemente
+<font color="#555555">019 </font>   * aufnehmen kann.
+<font color="#555555">020 </font>   */</font>
+<font color="#555555">021 </font>  <font color="#0000AA">public</font> MiniListe(<font color="#006699">int</font> maxSize)
+<font color="#555555">022 </font>  {
+<font color="#555555">023 </font>    <font color="#006699">this</font>.data = <font color="#0000AA">new</font> Object[maxSize];
+<font color="#555555">024 </font>    <font color="#006699">this</font>.size = 0;
+<font color="#555555">025 </font>  }
+<font color="#555555">026 </font>
+<font color="#555555">027 </font>  <font color="#00AA00">/**
+<font color="#555555">028 </font>   * F&uuml;gt ein Element zur Liste hinzu. Falls diese schon
+<font color="#555555">029 </font>   * voll ist, wird eine Exception ausgel&ouml;st.
+<font color="#555555">030 </font>   */</font>
+<font color="#555555">031 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> addElement(E element)
+<font color="#555555">032 </font>  {
+<font color="#555555">033 </font>    <font color="#0000AA">if</font> (size &gt;= data.length) {
+<font color="#555555">034 </font>      <font color="#0000AA">throw</font> <font color="#0000AA">new</font> ArrayIndexOutOfBoundsException();
+<font color="#555555">035 </font>    }
+<font color="#555555">036 </font>    data[size++] = element;
+<font color="#555555">037 </font>  }
+<font color="#555555">038 </font>
+<font color="#555555">039 </font>  <font color="#00AA00">/**
+<font color="#555555">040 </font>   * Liefert die Anzahl der Elemente in der Liste.
+<font color="#555555">041 </font>   */</font>
+<font color="#555555">042 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> size()
+<font color="#555555">043 </font>  {
+<font color="#555555">044 </font>    <font color="#0000AA">return</font> size;
+<font color="#555555">045 </font>  }
+<font color="#555555">046 </font>
+<font color="#555555">047 </font>  <font color="#00AA00">/**
+<font color="#555555">048 </font>   * Liefert das Element an Position pos. Falls kein solches
+<font color="#555555">049 </font>   * Element vorhanden ist, wird eine Exception ausgel&ouml;st.
+<font color="#555555">050 </font>   */</font>
+<font color="#555555">051 </font>  <font color="#0000AA">public</font> E elementAt(<font color="#006699">int</font> pos)
+<font color="#555555">052 </font>  {
+<font color="#555555">053 </font>    <font color="#0000AA">if</font> (pos &gt;= size) {
+<font color="#555555">054 </font>      <font color="#0000AA">throw</font> <font color="#0000AA">new</font> NoSuchElementException();
+<font color="#555555">055 </font>    }
+<font color="#555555">056 </font>    <font color="#0000AA">return</font> (E)data[pos];
+<font color="#555555">057 </font>  }
+<font color="#555555">058 </font>
+<font color="#555555">059 </font>  <font color="#00AA00">/**
+<font color="#555555">060 </font>   * Liefert einen Iterator zum Durchlaufen der Elemente.
+<font color="#555555">061 </font>   */</font>
+<font color="#555555">062 </font>  <font color="#0000AA">public</font> Iterator&lt;E&gt; iterator()
+<font color="#555555">063 </font>  {
+<font color="#555555">064 </font>    <font color="#0000AA">return</font> <font color="#0000AA">new</font> Iterator&lt;E&gt;()
+<font color="#555555">065 </font>    {
+<font color="#555555">066 </font>      <font color="#006699">int</font> pos = 0;
+<font color="#555555">067 </font>
+<font color="#555555">068 </font>      <font color="#0000AA">public</font> <font color="#006699">boolean</font> hasNext()
+<font color="#555555">069 </font>      {
+<font color="#555555">070 </font>        <font color="#0000AA">return</font> pos &lt; size;
+<font color="#555555">071 </font>      }
+<font color="#555555">072 </font>      <font color="#0000AA">public</font> E next()
+<font color="#555555">073 </font>      {
+<font color="#555555">074 </font>        <font color="#0000AA">if</font> (pos &gt;= size) {
+<font color="#555555">075 </font>          <font color="#0000AA">throw</font> <font color="#0000AA">new</font> NoSuchElementException();
+<font color="#555555">076 </font>        }
+<font color="#555555">077 </font>        <font color="#0000AA">return</font> (E)data[pos++];
+<font color="#555555">078 </font>      }
+<font color="#555555">079 </font>      <font color="#0000AA">public</font> <font color="#006699">void</font> remove()
+<font color="#555555">080 </font>      {
+<font color="#555555">081 </font>        <font color="#0000AA">throw</font> <font color="#0000AA">new</font> UnsupportedOperationException();
+<font color="#555555">082 </font>      }
+<font color="#555555">083 </font>    };
+<font color="#555555">084 </font>  }
+<font color="#555555">085 </font>
+<font color="#555555">086 </font>  <font color="#00AA00">//------------------------------------------</font>
+<font color="#555555">087 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">088 </font>  {
+<font color="#555555">089 </font>    <font color="#00AA00">//Untypisierte Verwendung</font>
+<font color="#555555">090 </font>    MiniListe l1 = <font color="#0000AA">new</font> MiniListe(10);
+<font color="#555555">091 </font>    l1.addElement(3.14);
+<font color="#555555">092 </font>    l1.addElement(<font color="#0000FF">"world"</font>);
+<font color="#555555">093 </font>    <font color="#0000AA">for</font> (Object o : l1) {
+<font color="#555555">094 </font>      System.out.println(o);
+<font color="#555555">095 </font>    }
+<font color="#555555">096 </font>    <font color="#00AA00">//Ganzzahlige Typisierung</font>
+<font color="#555555">097 </font>    System.out.println(<font color="#0000FF">"---"</font>);
+<font color="#555555">098 </font>    MiniListe&lt;Integer&gt; l2 = <font color="#0000AA">new</font> MiniListe&lt;Integer&gt;(5);
+<font color="#555555">099 </font>    l2.addElement(3);
+<font color="#555555">100 </font>    l2.addElement(1);
+<font color="#555555">101 </font>    l2.addElement(4);
+<font color="#555555">102 </font>    <font color="#0000AA">for</font> (Integer i : l2) {
+<font color="#555555">103 </font>      System.out.println(i + 1000);
+<font color="#555555">104 </font>    }
+<font color="#555555">105 </font>    <font color="#00AA00">//Verwendung read-only</font>
+<font color="#555555">106 </font>    System.out.println(<font color="#0000FF">"---"</font>);
+<font color="#555555">107 </font>    MiniListe&lt;? <font color="#0000AA">extends</font> Number&gt; l3 = l2;
+<font color="#555555">108 </font>    <font color="#0000AA">for</font> (Number i : l3) {
+<font color="#555555">109 </font>      System.out.println(i.intValue() + 1000);
+<font color="#555555">110 </font>    }
+<font color="#555555">111 </font>  }
+<font color="#555555">112 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/MiniListe.java"><font color="#000055" size=-1>MiniListe.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 16.13: Eine eigene typisierte Listenklasse</i></p>
+
+<p>
+Die Ausgabe des Programms ist: 
+<font color="#333300">
+<pre>
+3.14
+world
+---
+1003
+1001
+1004
+---
+1003
+1001
+1004
+</pre>
+</font>
+
+<p>
+Wir wollen uns einige interessante Implementierungsdetails ansehen:
+<ul>
+<li>Zun&auml;chst f&auml;llt auf, dass bei der Deklaration der Klasse
+ein formaler Typparameter <font color="#000077"><tt>E</tt></font>
+an den Typnamen angeh&auml;ngt wird. Dieser wird beim Einf&uuml;gen
+und Auslesen von Listenelementen wiederverwendet und steht f&uuml;r
+den Datentyp, mit dem die Klasse sp&auml;ter instanziert wird. Er
+sorgt beispielsweise daf&uuml;r, dass eine <font color="#000077"><tt>MiniListe&lt;Integer&gt;</tt></font>
+auch nur <a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>-Werte
+aufnehmen und ausgeben kann, nicht aber <a href="index_d.html#ixb100268"><font color=#000080><tt>Double</tt></font></a>-,
+<a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-
+oder andere Datentypen. Die Bezeichnung <font color="#000077"><tt>E</tt></font>
+ist eine Namenskonvention, die f&uuml;r &#187;Element&#171; steht,
+bei Schl&uuml;ssel-Wert-Collections empfiehlt die Java-Dokumentation
+<font color="#000077"><tt>K</tt></font> (f&uuml;r &#187;Key&#171;)
+und <font color="#000077"><tt>V</tt></font> (f&uuml;r &#187;Value&#171;).
+<li>Das Array zur Ablage der Daten ist vom Typ <a name="ixa101016"><a href="index_o.html#ixb100786"><font color=#000080><tt>Object[]</tt></font></a></a>.
+Egal, wie die Liste sp&auml;ter typisiert wird, das Array kann die
+eingehenden Werte auf jeden Fall aufnehmen, denn <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+ist die Oberklasse aller anderen Klassen. 
+<li>Die Methode <font color="#000077"><tt>addElement</tt></font> besitzt
+einen formalen Parameter vom Typ <font color="#000077"><tt>E</tt></font>.
+Damit dr&uuml;cken wir aus, dass beim Aufruf von <font color="#000077"><tt>addElement</tt></font>
+nur solche Elemente &uuml;bergeben werden k&ouml;nnen, die dem Typ
+entsprechen, mit dem die Liste deklariert wurde. <font color="#000077"><tt>E</tt></font>
+steht hier als Platzhalter f&uuml;r den Typ, mit dem die Liste instanziert
+wurde, und wird &uuml;berall dort verwendet, wo sichergestellt werden
+soll, dass beim Aufruf der korrekte Typ verwendet wird. Wurde die
+Liste beispielsweise als <font color="#000077"><tt>MiniListe&lt;Integer&gt;</tt></font>
+deklariert, steht <font color="#000077"><tt>E</tt></font> f&uuml;r
+<a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>
+und <font color="#000077"><tt>addElement</tt></font> verh&auml;lt
+sich, als w&auml;re sie wie folgt deklariert worden: 
+<font color="#000077">
+<pre>
+    public void addElement(Integer element)
+    
+</pre>
+</font>
+<li>Das gleiche Verfahren wird beim R&uuml;ckgabewert von <font color="#000077"><tt>elementAt</tt></font>
+angewendet. Damit dr&uuml;cken wir aus, dass auch die R&uuml;ckgabewerte
+beim Zugriff auf Listenelemente genau den Datentyp haben sollen, mit
+dem die Liste deklariert wurde. 
+<li>Der Iterator wird ebenfalls typisiert deklariert, damit er beim
+Durchlaufen der Elemente direkt den richtigen Datentyp liefert. Hier
+kann man erkennen, dass der formale Typparameter nicht nur zur Definition
+von einfachen Methodenparametern und R&uuml;ckgabewerten, sondern
+auch zur typkonformen Deklaration und Instanzierung anderer generischer
+Klassen verwendet werden kann. 
+</ul>
+
+<p>
+Damit ist die komplette Schnittstelle der Klasse typsicher und wir
+k&ouml;nnen sie wie in den vorigen Abschnitten beschrieben verwenden.
+Die <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>-Methode
+zeigt einige Anwendungen, die nach den bisherigen Ausf&uuml;hrungen
+selbst erkl&auml;rend sein sollten. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Zu beachten ist, dass in diesem Beispiel &#187;nur&#171; die &ouml;ffentliche
+Schnittstelle der Klasse typsicher ist. Innerhalb der Klasse selbst
+ist es nach wie vor m&ouml;glich, fehlerhaft typisierte Werte in das
+Datenarray einzuf&uuml;gen, denn als <a href="index_o.html#ixb100786"><font color=#000080><tt>Object[]</tt></font></a>
+kann es beliebige Objekte aufnehmen. Wir k&ouml;nnten eine solche
+Schnittstelle sogar &ouml;ffentlich machen: 
+<font color="#000077">
+<pre>
+public void addStringElement(String s)
+{
+  if (size &gt;= data.length) {
+    throw new ArrayIndexOutOfBoundsException();
+  }
+  data[size++] = s;
+}
+</pre>
+</font>
+
+<p>
+Dieser Code w&auml;re vollkommen korrekt und w&uuml;rde vom Compiler
+nicht beanstandet werden. Ein Aufruf der Methode in einer <font color="#000077"><tt>MiniListe&lt;Double&gt;</tt></font>
+w&uuml;rde tats&auml;chlich einen <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+einf&uuml;gen und beim Zugriff auf dieses Element w&uuml;rde es zu
+einer <a href="index_c.html#ixb100738"><font color=#000080><tt>ClassCastException</tt></font></a>
+kommen. &#187;Typsichere&#171; Klassen sind also nur dann wirklich
+typsicher, wenn die Implementierung sicherstellt, dass keine typfremden
+Werte gespeichert werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id016008004"></a>
+<h3>16.8.4 Typkompatibilit&auml;t </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id016008004001"></a>
+<h4>Ober- und Unterklassen in generischen Typen </h4>
+
+<p>
+Beim Umgang mit typisierten Collections gibt es einige Besonderheiten,
+die zu einer Verkomplizierung des urspr&uuml;nglichen Mechanismus
+gef&uuml;hrt haben. Wir wollen zun&auml;chst eine einfache Methode
+betrachten, um uns noch einmal das Zusammenspiel zwischen Ober- und
+Unterklassen anzusehen (es wurde unter dem Stichwort &#187;Polymorphismus&#171;
+bereits in den Abschnitten <a href="k100053.html#polymorphismus">Abschnitt 8.1.6</a>
+und <a href="k100061.html#abstraktpolymorph">Abschnitt 9.4</a> erl&auml;utert):
+<a name="listingid016014"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> doesWork1()
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  Double pi = <font color="#0000AA">new</font> Double(3.14);
+<font color="#555555">004 </font>  Number num = pi;
+<font color="#555555">005 </font>  System.out.println(num.toString());
+<font color="#555555">006 </font>  Double pi2 = (Double)num;
+<font color="#555555">007 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 16.14: Funktionierendes Zusammenspiel von Ober- und Unterklassen</i></p>
+
+<p>
+Zun&auml;chst wird eine <a href="index_d.html#ixb100268"><font color=#000080><tt>Double</tt></font></a>-Variable
+<font color="#000077"><tt>pi</tt></font> angelegt und mit dem Flie&szlig;kommawert
+3.14 initialisiert. In der n&auml;chsten Zeile machen wir uns die
+Tatsache zunutze, dass <a href="index_d.html#ixb100268"><font color=#000080><tt>Double</tt></font></a>
+eine Unterklasse von <a name="ixa101017"><a href="index_n.html#ixb100787"><font color=#000080><tt>Number</tt></font></a></a>
+ist, und weisen der Variablen der Oberklasse einen Wert der Unterklasse
+zu. Dies entspricht unserem bisherigen Verst&auml;ndnis von objektorientierter
+Programmierung, denn ein <a href="index_d.html#ixb100268"><font color=#000080><tt>Double</tt></font></a>
+<i>ist eine</i> <a href="index_n.html#ixb100787"><font color=#000080><tt>Number</tt></font></a>,
+hat alle Eigenschaften von <a href="index_n.html#ixb100787"><font color=#000080><tt>Number</tt></font></a>
+(und ein paar mehr) und kann daher problemlos als <a href="index_n.html#ixb100787"><font color=#000080><tt>Number</tt></font></a>
+verwendet werden. Die n&auml;chsten beiden Zeilen beweisen, dass diese
+Annahme korrekt ist (der Inhalt von <font color="#000077"><tt>num</tt></font>
+ist tats&auml;chlich 3.14) und dass man die <a href="index_n.html#ixb100787"><font color=#000080><tt>Number</tt></font></a>-Variable
+auch zur&uuml;ckkonvertieren kann - in Wirklichkeit zeigt sie ja auf
+ein <a href="index_d.html#ixb100268"><font color=#000080><tt>Double</tt></font></a>.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+&Uuml;bertr&auml;gt man das Beispiel auf typisierte Collections, lassen
+sich die dahinter stehenden Annahmen nicht ohne Weiteres aufrechterhalten.
+Eine <font color="#000077"><tt>ArrayList&lt;Double&gt;</tt></font>
+ist kein Subtyp einer <font color="#000077"><tt>ArrayList&lt;Number&gt;</tt></font>!
+Die folgenden Codezeilen sind illegal und werden vom Compiler abgewiesen:
+<font color="#000077">
+<pre>
+ArrayList&lt;Double&gt; ld = new ArrayList&lt;Double&gt;();
+ArrayList&lt;Number&gt; ln = ld;
+</pre>
+</font>
+</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Wir wollen uns ansehen, warum das so ist. W&auml;ren sie n&auml;mlich
+erlaubt, k&ouml;nnten wir folgende Methode schreiben: 
+<a name="listingid016015"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> doesntWork1()
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  ArrayList&lt;Double&gt; ld = <font color="#0000AA">new</font> ArrayList&lt;Double&gt;();
+<font color="#555555">004 </font>  ArrayList&lt;Number&gt; ln = ld;
+<font color="#555555">005 </font>  ln.add(<font color="#0000AA">new</font> Integer(7));
+<font color="#555555">006 </font>  Double x = ld.get(0);
+<font color="#555555">007 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 16.15: Nicht funktionierendes Zusammenspiel von Ober- und
+Unterklassen</i></p>
+
+<p>
+Das Programm erzeugt eine <font color="#000077"><tt>ArrayList&lt;Double&gt;
+ld</tt></font> und weist sie einer <font color="#000077"><tt>ArrayList&lt;Number&gt;-Variable
+ln</tt></font> zu. W&auml;re diese eine Oberklasse von <font color="#000077"><tt>ArrayList&lt;Double&gt;</tt></font>,
+k&ouml;nnten wir nat&uuml;rlich auch <a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>-Werte
+in die <a href="index_a.html#ixb100195"><font color=#000080><tt>ArrayList</tt></font></a>
+einf&uuml;gen wollen. Denn auch <a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>
+ist eine Unterklasse von <a href="index_n.html#ixb100787"><font color=#000080><tt>Number</tt></font></a>
+und mit derselben Berechtigung w&uuml;rden wir annehmen, dass <font color="#000077"><tt>ArrayList&lt;Number&gt;</tt></font>
+Oberklasse von <font color="#000077"><tt>ArrayList&lt;Integer&gt;</tt></font>
+ist. Dann w&auml;re aber nicht mehr sichergestellt, dass beim Zugriff
+auf <font color="#000077"><tt>ld</tt></font> nur noch <a href="index_d.html#ixb100268"><font color=#000080><tt>Double</tt></font></a>-Elemente
+geliefert werden, denn &uuml;ber den Umweg <font color="#000077"><tt>ln</tt></font>
+haben wir ja auch ein <a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>-Objekt
+eingef&uuml;gt. Der Compiler k&ouml;nnte also nicht mehr garantieren,
+dass die vierte Zeile korrekt ausgef&uuml;hrt wird. 
+
+<p>
+Daraus ist ein folgenschwerer Schluss zu ziehen: Ist <font color="#000077"><tt>U</tt></font>
+eine Unterklasse von <font color="#000077"><tt>O</tt></font>, so folgt
+daraus <i>eben nicht</i>, dass auch <font color="#000077"><tt>G&lt;U&gt;</tt></font>
+eine Unterklasse von <font color="#000077"><tt>G&lt;O&gt;</tt></font>
+ist. Das ist schwer zu verstehen, denn es widerspricht unseren bisherigen
+Erfahrungen im Umgang mit Ober- und Unterklassen. Das Problem dabei
+ist die <i>Ver&auml;nderlichkeit</i> der Liste, denn dadurch k&ouml;nnte
+man &uuml;ber den Alias-Zeiger <font color="#000077"><tt>ln</tt></font>
+Werte ein f&uuml;gen, die nicht typkonform sind. Aus diesem Grund
+w&uuml;rde der Compiler bereits die zweite Zeile der obigen Methode
+mit einem Typfehler ablehnen. 
+
+<!-- Section -->
+
+<a name="sectlevel4id016008004002"></a>
+<h4>Der Wildcard ?<a name="ixa101018"></a><a name="ixa101019"></a>
+</h4>
+
+<p>
+Diese neue Typinkompatibilit&auml;t hat nun einige Konsequenzen, die
+sich vor allem dort bemerkbar machen, wo wir bisher intuitiv angenommen
+haben, dass Ober- und Unterklasse zuweisungskompatibel sind. Ein Beispiel
+ist etwa die Parametrisierung von Methoden, bei der man &uuml;blicherweise
+die formalen Parameter etwas allgemeiner fasst, um die Methode vielseitiger
+einsetzen zu k&ouml;nnen. 
+
+<p>
+Betrachten wir eine Methode zur Ausgabe aller Elemente unserer Zahlenliste.
+Mit etwas Weitblick w&uuml;rde man sie so formulieren: 
+<a name="listingid016016"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> printAllNumbers1(List&lt;Number&gt; numbers)
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  <font color="#0000AA">for</font> (Number s : numbers) {
+<font color="#555555">004 </font>    System.out.println(s);
+<font color="#555555">005 </font>  }
+<font color="#555555">006 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 16.16: Nicht funktionierende Ausgabe der Zahlenliste</i></p>
+
+<p>
+Anstelle einer <font color="#000077"><tt>ArrayList&lt;Double&gt;</tt></font>
+verallgemeinern wir auf <font color="#000077"><tt>List&lt;Number&gt;</tt></font>.
+In der Annahme, dann nicht nur den Inhalt einer <font color="#000077"><tt>ArrayList</tt></font>
+ausgeben zu k&ouml;nnen, sondern auch den eines <a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>
+oder <a href="index_l.html#ixb100709"><font color=#000080><tt>LinkedList</tt></font></a>
+(die beide ebenfalls vom Typ <a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>
+sind), und zwar auch dann, wenn sie nicht <a href="index_d.html#ixb100268"><font color=#000080><tt>Double</tt></font></a>-,
+sondern auch <a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>-
+oder <a href="index_l.html#ixb100264"><font color=#000080><tt>Long</tt></font></a>-Werte
+enthalten (die ebenfalls vom Typ <a href="index_n.html#ixb100787"><font color=#000080><tt>Number</tt></font></a>
+sind). Diese Methode enth&auml;lt nicht mehr Code als die speziellere
+Form, ist aber viel universeller einzusetzen. Ergo w&uuml;rde sich
+ein erfahrener Programmierer normalerweise daf&uuml;r entscheiden,
+sie auf diese Weise zu parametrisieren. 
+
+<p>
+Leider hat die Sache einen Haken. Zwar akzeptiert <font color="#000077"><tt>printAllNumbers1</tt></font>
+beliebige Collections vom Typ <a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>,
+aber eben nur, wenn sie Werte vom Typ <a href="index_n.html#ixb100787"><font color=#000080><tt>Number</tt></font></a>
+enthalten. Solche mit <a href="index_d.html#ixb100268"><font color=#000080><tt>Double</tt></font></a>-,
+<a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>-
+oder <a href="index_l.html#ixb100264"><font color=#000080><tt>Long</tt></font></a>-Werten
+lehnt sie - aus den oben beschriebenen Gr&uuml;nden - ab. Der praktische
+Nutzen dieser Methode ist damit nur mehr gering. 
+
+<p>
+Um mehr Flexibilit&auml;t zu gewinnen, wurde der Wildcard &#187;?&#171;
+als Typparameter eingef&uuml;hrt. Wird das Fragezeichen anstelle eines
+konkreten Elementtyps angegeben, bedeutet dies, dass die Collection
+beliebige Werte enthalten kann: 
+<a name="listingid016017"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> printAllNumbers2(List&lt;?&gt; numbers)
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  <font color="#0000AA">for</font> (Object o: numbers) {
+<font color="#555555">004 </font>    System.out.println(o);
+<font color="#555555">005 </font>  }
+<font color="#555555">006 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 16.17: Funktionierende Ausgabe der Zahlenliste</i></p>
+
+<p>
+An diese Methode k&ouml;nnen nun Listen mit beliebig typisierten Elementen
+&uuml;bergeben werden. Allerdings gibt es beim Lesen der Elemente
+keine Typsicherheit mehr. Am Kopf der <a href="index_f.html#ixb100077"><font color=#000080><tt>for</tt></font></a>-Schleife
+kann man erkennen, dass der Compiler die Listenelemente nun - wie
+in fr&uuml;heren JDK-Versionen - lediglich als Werte des Typs <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+ansieht. Spezielle Eigenschaften sind damit unsichtbar bzw. m&uuml;ssen
+mit Hilfe einer expliziten Typkonvertierung wieder sichtbar gemacht
+werden. 
+
+<!-- Section -->
+
+<a name="sectlevel4id016008004003"></a>
+<h4><a name="ixa101020">Gebundene Wildcards</a><a name="ixa101021"></a></h4>
+
+<p>
+Eine abgeschw&auml;chte Form des &#187;?&#171;-Wildcard sind die gebundenen
+Wildcards (&#187;bounded wildcards&#171;). Sie entstehen, wenn nach
+dem Fragezeichen das Schl&uuml;sselwort <a name="ixa101022"><a href="index_e.html#ixb100425"><font color=#000080><tt>extends</tt></font></a></a>
+angegeben wird, gefolgt vom Namen des Elementtyps. Dadurch wird ausgedr&uuml;ckt,
+dass die Collection Elemente der angegebenen Klasse oder einer ihrer
+Unterklassen enthalten kann: 
+<a name="listingid016018"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> printAllNumbers3(List&lt;? <font color="#0000AA">extends</font> Number&gt; numbers)
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  <font color="#0000AA">for</font> (Number s : numbers) {
+<font color="#555555">004 </font>    System.out.println(s.doubleValue());
+<font color="#555555">005 </font>  }
+<font color="#555555">006 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 16.18: Verbesserte funktionierende Ausgabe der Zahlenliste</i></p>
+
+<p>
+Gebundene Wildcards realisieren am ehesten die bisher bekannten Regeln
+von Typkonformit&auml;t bei Ober- und Unterklassen von Elementen.
+<font color="#000077"><tt>? extends O</tt></font> bedeutet, dass die
+Collection Elemente des Typs <font color="#000077"><tt>O</tt></font>
+oder einer (auch &uuml;ber mehrere Stufen) daraus abgeleiteten Unterklasse
+enthalten kann. An einen formalen Parameter vom Typ <font color="#000077"><tt>List&lt;?
+extends Number&gt;</tt></font> k&ouml;nnen also aktuelle Parameter
+des Typs <font color="#000077"><tt>Vector&lt;Double&gt;</tt></font>,
+<font color="#000077"><tt>ArrayList&lt;Integer&gt;</tt></font> usw.
+&uuml;bergeben werden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Zu beachten ist allerdings, dass die Wildcards nur das <i>Lesen</i>
+der Elemente flexibilisieren. Das Einf&uuml;gen neuer Elemente ist
+dagegen <i>nicht mehr erlaubt</i> und wird vom Compiler unterbunden.
+Genauer gesagt, verboten ist der Aufruf von Methoden, die mindestens
+einen generisch typisierten Parameter haben. Die Gr&uuml;nde entsprechen
+den oben erl&auml;uterten. W&auml;re es n&auml;mlich zul&auml;ssig,
+in eine <font color="#000077"><tt>List&lt;? extends Number&gt;</tt></font>
+einen <a href="index_d.html#ixb100268"><font color=#000080><tt>Double</tt></font></a>
+einzuf&uuml;gen, so w&uuml;rde ein Problem entstehen, wenn es sich
+tats&auml;chlich beispielsweise um einen <font color="#000077"><tt>Vector&lt;Integer&gt;</tt></font>
+handeln w&uuml;rde, denn dieser darf ja kein Element des Typs <a href="index_d.html#ixb100268"><font color=#000080><tt>Double</tt></font></a>
+aufnehmen. Daher sorgt der Compiler daf&uuml;r, dass bei der Verwendung
+von Wildcards und gebundenen Wildcards die Collection nur noch zum
+Lesen der Elemente verwendet werden darf. Versuche, neue Elemente
+einzuf&uuml;gen, werden mit einem Compiler-Fehler quittiert.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id016008005"></a>
+<h3>16.8.5 Sonstiges </h3>
+
+<p>
+Die Implementierung von generischen Collections ist in Java im Prinzip
+Sache des Compilers, die virtuelle Maschine merkt davon nichts. Der
+Compiler interpretiert den Quelltext, pr&uuml;ft die Typparameter
+und erzeugt Bytecode mit den erforderlichen Typkonvertierungen, Warnungen
+und Fehlermeldungen. Das Laufzeitsystem, die virtuelle Maschine, arbeitet
+dabei im Grunde wie in fr&uuml;heren JDK-Versionen. Dabei bleibt insbesondere
+die Integrit&auml;t der VM stets erhalten und Typfehler f&uuml;hren
+zu kontrollierten (ClassCast-)Exceptions, wie in fr&uuml;heren JDK-Versionen.
+Trotz allen Aufwands lassen sich n&auml;mlich F&auml;lle konstruieren,
+bei denen fehlerhaft typisierte Werte in eine generische Collection
+eingef&uuml;gt werden. Wir sehen dazu im n&auml;chsten Abschnitt ein
+einfaches Beispiel. 
+
+<p>
+Anders als Templates in C++ erzeugen generische Java-Klassen keinen
+zus&auml;tzlichen Programmcode. Alle Instanzen einer generischen Klasse
+verwenden denselben Bytecode, <a name="ixa101023"><a href="index_g.html#ixb100792"><font color=#000080><tt>getClass</tt></font></a></a>
+liefert ein und dasselbe Klassenobjekt und die statischen Variablen
+werden gemeinsam verwendet. Es ist nicht erlaubt, in statischen Initialisierern
+oder statischen Methoden auf den Typparameter einer Klasse zuzugreifen,
+und die Anwendung des <a name="ixa101024"><a href="index_i.html#ixb100341"><font color=#000080><tt>instanceof</tt></font></a></a>-Operators
+auf eine typisierte Klasse ist illegal. 
+
+<p>
+Es ist zul&auml;ssig, generische Collections und herk&ouml;mmliche
+Collections gemeinsam zu verwenden. Erwartet beispielsweise ein Methodenparameter
+eine typisierte Collection, so kann auch eine untypisierte Collection
+&uuml;bergeben werden, und umgekehrt. In diesem Fall kann der Compiler
+die Typsicherheit des Programmcodes allerdings nicht mehr sicherstellen
+und generiert vorsichtshalber eine &#187;unchecked warning&#171;<a name="ixa101025"></a>:
+<font color="#333300">
+<pre>
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+</pre>
+</font>
+
+<p>
+Durch Rekompilieren mit <a name="ixa101026"><a href="index_0.html#ixb100794"><font color=#000080><tt>-Xlint:unchecked</tt></font></a></a>
+werden Detailinformationen ausgegeben. Die Entwickler des JDK gehen
+davon aus, dass in Zukunft nur noch typisierte Collections verwendet
+werden und diese Warnungen nach einer gewissen &Uuml;bergangszeit
+der Vergangenheit angeh&ouml;ren. 
+
+<p>
+Neben den hier beschriebenen Eigenschaften gibt es noch eine ganze
+Reihe weiterer Aspekte von generischen Klassen, auf die wir hier nicht
+n&auml;her eingehen wollen. Sie werden meist gebraucht, um spezielle
+Sonderf&auml;lle bei der Entwicklung von Collection-Klassen zu realisieren;
+f&uuml;r &#187;Otto Normalprogrammierer&#171; sind die meisten von
+ihnen weniger relevant. Die nachfolgende Aufz&auml;hlung listet einige
+von ihnen auf; weitere Informationen k&ouml;nnen der Sprachspezifikation
+bzw. der Dokumentation der J2SE entnommen werden: 
+<ul>
+<li>Mit dem Schl&uuml;sselwort <a name="ixa101027"><a href="index_s.html#ixb100433"><font color=#000080><tt>super</tt></font></a></a>
+k&ouml;nnen gebundene Wildcards mit unteren Grenzen definiert werden.
+<font color="#000077"><tt>List&lt;? super Number&gt;</tt></font> ist
+eine Liste von Objekten des Typs <a href="index_n.html#ixb100787"><font color=#000080><tt>Number</tt></font></a>
+oder einer beliebigen Oberklasse von <a href="index_n.html#ixb100787"><font color=#000080><tt>Number</tt></font></a>.
+<li>Mit Hilfe des &amp;-Operators k&ouml;nnen mehrfache Bindungen
+angegeben werden (&#187;multiple bounds&#171; <a name="ixa101028"></a>).
+Ein derart spezifizierter Typ ist Subtyp aller angegebenen Typen.
+<li>Neben generischen Klassen k&ouml;nnen auch <a name="ixa101029"></a>generische
+Methoden definiert werden. Sie erhalten einen expliziten Typparameter,
+der in Aufruf- und R&uuml;ckgabeparametern verwendet werden kann.
+Anders als bei typisierten Klassen muss dieser bei Aufruf der Methode
+nicht explizit angegeben werden, sondern er wird vom Compiler automatisch
+hergeleitet.
+</ul>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100104.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100111.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100113.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100114.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

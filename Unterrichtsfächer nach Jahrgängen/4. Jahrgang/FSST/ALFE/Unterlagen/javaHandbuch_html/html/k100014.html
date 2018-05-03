@@ -1,0 +1,535 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100012.html;106,k100013.html;107,k100015.html;108,k100017.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100012.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100013.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100015.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100017.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 2 - Schnelleinstieg
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id002002"></a>
+<h2>2.2 <a name="ixa100125">Erste Gehversuche</a></h2>
+<hr>
+<ul>
+<li><a href="k100014.html#sectlevel2id002002">2.2 Erste Gehversuche</a>
+<ul>
+<li><a href="k100014.html#sectlevel3id002002001">2.2.1 Quelltext erstellen, &uuml;bersetzen und ausf&uuml;hren</a>
+<ul>
+<li><a href="k100014.html#sectlevel4id002002001001">1. Vorbereitung</a>
+<li><a href="k100014.html#sectlevel4id002002001002">2. Erstellen des Quelltextes </a>
+<li><a href="k100014.html#sectlevel4id002002001003">3. &Uuml;bersetzen des Quelltextes</a>
+<li><a href="k100014.html#sectlevel4id002002001004">4. Ausf&uuml;hren des erzeugten Programms</a>
+<li><a href="k100014.html#sectlevel4id002002001005">5. Beenden des Programms</a>
+</ul>
+<li><a href="k100014.html#beispielprogramme">2.2.2 Die Beispielprogramme</a>
+<ul>
+<li><a href="k100014.html#sectlevel4id002002002001">Starten der Beispielprogramme</a>
+<li><a href="k100014.html#sectlevel4id002002002002">Zus&auml;tzlich erforderliche Dateien</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+<p>
+Falls Sie die ersten Gehversuche in Java machen wollen, ohne erst
+viele Grundlagen lernen zu m&uuml;ssen, oder wenn Sie einfach nur
+daran interessiert sind, m&ouml;glichst schnell Ihr erstes Java-Programm
+auszuf&uuml;hren, dann sollten Sie den folgenden Abschnitt lesen.
+Sie erfahren hier in komprimierter Form, wie Sie ein einfaches Programm
+erstellen und mit den Werkzeugen des JDK &uuml;bersetzen und ausf&uuml;hren.
+Zus&auml;tzlich gibt es einige Hinweise, um einfache Ein- und Ausgaben
+durchzuf&uuml;hren. 
+
+<p>
+Alle wichtigen Werkzeuge des JDK arbeiten kommandozeilenorientiert.
+Sie haben also keine grafische Oberfl&auml;che, sondern werden in
+einer DOS-Box aufgerufen und durch Aufrufparameter gesteuert. Eine
+integrierte Entwicklungsumgebung mit integriertem Editor, Compiler
+und Debugger bietet das JDK von sich aus nicht. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Wenn Sie statt eines Editors lieber eine der auf Java abgestimmten
+integrierten Entwicklungsumgebungen (IDE) verwenden wollen, ist das
+freie Eclipse-Framework oder die IntelliJ IDEA eventuell das Richtige
+f&uuml;r Sie. Beide sind vollst&auml;ndig in Java geschrieben und
+als Testversion auf der beigef&uuml;gten DVD enthalten. Einen Einstieg
+in die Bedienung dieser und anderer integrierter Entwicklungsumgebungen
+finden Sie in <a href="k100017.html#kapitelides">Kapitel 3</a>.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id002002001"></a>
+<h3>2.2.1 Quelltext erstellen, &uuml;bersetzen und ausf&uuml;hren
+</h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id002002001001"></a>
+<h4>1. Vorbereitung </h4>
+
+<p>
+Installieren Sie das JDK wie in <a href="k100013.html#jdkinstallation">Abschnitt 2.1</a>
+beschrieben und sorgen Sie daf&uuml;r, dass in Ihrer Pfadangabe das
+Verzeichnis <font color="#660099">\jdk1.7\bin</font> enthalten ist.
+Falls Sie das JDK nicht nach <font color="#660099">c:\jdk1.7</font>
+installiert haben, passen Sie die Pfadangaben entsprechend an. Ein
+Aufruf von <font color="#000077"><tt>PATH</tt></font> zeigt an, ob
+der Pfad korrekt gesetzt ist, durch Eingabe von <font color="#000077"><tt>java
+-version</tt></font> k&ouml;nnen Sie die installierte JDK-Version
+&uuml;berpr&uuml;fen: 
+<p>
+<a name="imageid002001"></a>
+<img src="images/FirstSteps1.gif">
+<p>
+
+<p><i>
+Abbildung 2.1: Ist das JDK korrekt installiert?</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Seit Java 5.0 unterst&uuml;tzen nicht nur der Interpreter, sondern
+auch der Java-Compiler den Schalter <a href="index_0.html#ixb100126"><font color=#000080><tt>-version</tt></font></a>.
+Durch Eingabe von <font color="#000077"><tt>javac -version</tt></font>
+k&ouml;nnen Sie also &uuml;berpr&uuml;fen, ob auch der Java-Compiler
+in der aktuellsten Version vorliegt.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id002002001002"></a>
+<h4>2. Erstellen des Quelltextes<a name="ixa100126"></a> <a name="ixa100127"></a>
+</h4>
+
+<p>
+Erstellen Sie mit einem beliebigen Texteditor die folgende Datei <font color="#660099">Hello.java</font>:
+<a name="helloworld"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Hello.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Hello
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    System.out.println(<font color="#0000FF">"Hello, world"</font>);
+<font color="#555555">008 </font>  }
+<font color="#555555">009 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Hello.java"><font color="#000055" size=-1>Hello.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 2.1: Hello, world</i></p>
+
+<p>
+Die korrekt erstellte Datei enth&auml;lt die Definition der Klasse
+<font color="#000077"><tt>Hello</tt></font> mit der Methode <a name="ixa100128"><a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a></a>,
+die das Hauptprogramm unserer Applikation enth&auml;lt. Bitte geben
+Sie die am Anfang jeder Zeile stehenden Zeilennummern <i>nicht</i>
+mit ein. Sie dienen lediglich dazu, auf Teile des Listings verweisen
+zu k&ouml;nnen, und werden beim Erstellen des Buchs automatisch generiert.
+Der Java-Compiler kann damit nichts anfangen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Achten Sie bei der Vergabe der Datei- und Klassennamen auf korrekte
+Gro&szlig;-/Kleinschreibung. Sowohl der Compiler als auch das Laufzeitsystem
+erwarten, dass die Hauptklasse einer Quelldatei genauso geschrieben
+wird wie der Name der Datei, in der sie sich befindet. Der Dateiname
+unserer Beispielklasse <font color="#000077"><tt>Hello</tt></font>
+lautet daher <font color="#660099">Hello.java</font> und nicht <font color="#660099">hello.java</font>,
+<font color="#660099">HELLO.JAVA</font> oder <font color="#660099">HELLO.JAV</font>.
+Erstellen Sie die Datei nicht auf Systemen oder Laufwerken (beispielsweise
+im Netz), die keine langen Dateinamen unterst&uuml;tzen. Der Compiler
+w&uuml;rde die Datei in diesem Fall nicht finden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Sie k&ouml;nnen zum Editieren beispielsweise <i>notepad</i> oder <i>edit</i>
+(unter Windows) oder <i>vi</i> oder <i>Emacs</i> (gibt es f&uuml;r
+UNIX und Windows) verwenden. Ein guter Windows-Editor, der fast ebenso
+viel kann wie seine professionellen (und sehr viel teureren) Br&uuml;der,
+ist <i>TextPad</i> von <i>Helios Software Solutions</i>. Eine weitere
+gute Alternative ist <i>Notepad++</i>. 
+<p>
+<a name="imageid002002"></a>
+<img src="images/FirstSteps2.gif">
+<p>
+
+<p><i>
+Abbildung 2.2: Hello.java im Windows-Notepad</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Windows-Editoren <i>notepad</i> und <i>edit</i> sind f&uuml;r
+die Entwicklung von gr&ouml;&szlig;eren Java-Programmen wenig empfehlenswert.
+Au&szlig;erdem verwendet <i>edit</i> den MS-DOS-Zeichensatz und versieht
+so Programme mit Windows-Oberfl&auml;che mit unbrauchbaren Umlauten
+(sie w&auml;ren dann nur f&uuml;r Windows-Konsolenanwendungen korrekt).
+</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id002002001003"></a>
+<h4>3. <a name="ixa100129">&Uuml;bersetzen des Quelltextes</a> </h4>
+
+<p>
+&Uuml;bersetzen Sie die Datei mit dem Kommando <a name="ixa100130"><a href="index_j.html#ixb100131"><font color=#000080><tt>javac</tt></font></a></a>
+(so hei&szlig;t der Java-Compiler des JDK). Wenn Sie keinen Fehler
+gemacht haben, wird der Compiler-Aufruf kommentarlos akzeptiert und
+Sie sehen wieder den DOS-Prompt: 
+<p>
+<a name="imageid002003"></a>
+<img src="images/FirstSteps3.gif">
+<p>
+
+<p><i>
+Abbildung 2.3: &Uuml;bersetzen von Hello.java</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Eine DOS-Box wird unter aktuellen Windows-Installationen &uuml;ber
+den Eintrag &#187;Eingabeaufforderung&#171; aufgerufen, der im Startmen&uuml;
+liegt. Eine &Uuml;bersicht &uuml;ber die JDK-Werkzeuge und ihre Bedienung
+finden Sie in <a href="k100332.html#kapitelwerkzeuge">Kapitel 53</a>.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id002002001004"></a>
+<h4>4. Ausf&uuml;hren des erzeugten Programms </h4>
+
+<p>
+Sie haben nun eine Datei <font color="#660099">Hello.class</font>
+erzeugt, die mit dem Java-Interpreter ausgef&uuml;hrt werden kann.
+Das Programm wird aufgerufen und gibt die gew&uuml;nschte Meldung
+auf dem Bildschirm aus: 
+<p>
+<a name="imageid002004"></a>
+<img src="images/FirstSteps4.gif">
+<p>
+
+<p><i>
+Abbildung 2.4: Ausf&uuml;hren von Hello</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Wenn der Interpreter den Bytecode zur angegebenen Klassendatei nicht
+finden kann, gibt er eine Fehlermeldung <a name="ixa100131"><a href="index_n.html#ixb100132"><font color=#000080><tt>NoClassDefFoundError</tt></font></a></a>
+aus. Wenn die <font color="#660099">.class</font>-Datei tats&auml;chlich
+vorhanden ist, liegt das fast immer daran, dass der Name der Klasse
+falsch geschrieben wurde oder dass darin keine oder eine falsch deklarierte
+<a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>-Methode
+vorhanden ist. Beachten Sie, dass die Erweiterung <font color="#660099">.class</font>
+beim Aufruf des Interpreters nicht an den Namen der auszuf&uuml;hrenden
+Klasse angeh&auml;ngt werden darf.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id002002001005"></a>
+<h4>5. Beenden des Programms </h4>
+
+<p>
+Ein einfaches Java-Programm wird automatisch beendet, wenn seine <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>-Methode
+beendet wurde (in welchen F&auml;llen das nicht so ist, wird am Ende
+von <a href="k100152.html#neuerthread">Abschnitt 23.2.1</a> beschrieben).
+Unser Programm wird also nach der Ausgabe von &#187;Hello, world&#171;
+beendet. Es gibt nat&uuml;rlich auch F&auml;lle, bei denen ein gestartetes
+Programm nicht ordnungsgem&auml;&szlig; zum Ende kommt und auch auf
+Benutzereingaben nicht mehr reagiert - meistens ist daf&uuml;r eine
+Endlosschleife verantwortlich. Gl&uuml;cklicherweise l&auml;sst sich
+die virtuelle Maschine, in der das Java-Programm l&auml;uft, fast
+immer durch Dr&uuml;cken von <font color="#007700"><tt>[STRG]</tt></font>+<font color="#007700"><tt>[C]</tt></font>
+abbrechen. Diese &#187;Notbremse&#171; sollte allerdings nur im Notfall
+gezogen werden, denn sie beendet das Programm augenblicklich und hinterl&auml;sst
+dessen Daten m&ouml;glicherweise in einem inkonsistenten Zustand.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Falls Sie es trotz aller Bem&uuml;hungen bis zu diesem Punkt noch
+nicht geschafft haben, das Beispiel zu &uuml;bersetzen und zu starten,
+kann Ihnen m&ouml;glicherweise <a href="k100015.html#troubleshooting">Abschnitt 2.3.7</a>
+weiterhelfen. Er beschreibt einige h&auml;ufig vorkommende Fehler,
+gibt Tipps zu ihrer Diagnose und zeigt, wie man sie behebt.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="beispielprogramme"></a>
+<h3>2.2.2 Die Beispielprogramme </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id002002002001"></a>
+<h4><a name="ixa100132">Starten der Beispielprogramme</a></h4>
+
+<p>
+Auf die im vorigen Abschnitt beschriebene Weise k&ouml;nnen nun beliebige
+Java-Programme angelegt, &uuml;bersetzt und ausgef&uuml;hrt werden.
+Die im Buch abgedruckten Beispielprogramme befinden sich auf der DVD
+im Verzeichnis <font color="#660099">\examples</font>. Kopieren Sie
+diese einschlie&szlig;lich der darin enthaltenen Unterverzeichnisse
+in ein beliebiges Verzeichnis auf Ihrer Festplatte. Benutzen Sie einen
+beliebigen Editor zur Eingabe oder Ver&auml;nderung von <font color="#660099">.java</font>-Dateien<a name="ixa100133"></a>,
+&uuml;bersetzen Sie die Datei mit dem Kommando <a name="ixa100134"><a href="index_j.html#ixb100131"><font color=#000080><tt>javac</tt></font></a></a>
+und starten Sie das fertige Programm mit dem Kommando <a name="ixa100135"><a href="index_j.html#ixb100134"><font color=#000080><tt>java</tt></font></a></a>.
+Falls Sie ein Applet geschrieben haben, erstellen Sie zus&auml;tzlich
+eine passende HTML-Datei, und starten Sie das Programm mit dem Kommando
+<a name="ixa100136"><a href="index_a.html#ixb100135"><font color=#000080><tt>appletviewer</tt></font></a></a>
+anstatt mit <a href="index_j.html#ixb100134"><font color=#000080><tt>java</tt></font></a>.
+Die Originalversionen der Beispielprogramme wurden bereits vorkompiliert
+und k&ouml;nnen direkt mit dem Java-Interpreter ausgef&uuml;hrt werden.
+
+<p>
+Als Entwicklungssysteme f&uuml;r dieses Buch wurden die Versionen
+1.1 bis 7.0 des JDK verwendet. Die meisten Beispiele wurden unter
+Windows 95, 98 und XP entwickelt und getestet, einige auch unter Windows
+NT, Vista, Windows 7, SUSE Linux, Ubuntu, Mac OS X oder Solaris. In
+die Beispiellistings aus dem AWT sind einige Hinweise von Lesern mit
+SUN-Solaris-Plattformen eingeflossen. Bei Verwendung anderer Plattformen
+k&ouml;nnte es zu leichten Abweichungen bei der Installation, der
+Funktionalit&auml;t der Entwicklungswerkzeuge oder den Eigenschaften
+der Standardbibliothek kommen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die <font color="#660099">.class</font>-Dateien im <font color="#660099">\examples</font>-Verzeichnis
+der DVD wurden mit dem Java-7.0-Compiler erzeugt. Falls es Probleme
+geben sollte, ein bestimmtes Beispielprogramm mit einem &auml;lteren
+Java-Interpreter zu starten, hilft eventuell Neukompilieren dieses
+Programms mit dem &auml;lteren Compiler.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id002002002002"></a>
+<h4>Zus&auml;tzlich erforderliche Dateien </h4>
+
+<p>
+Der mit Abstand h&auml;ufigste Fehler beim Starten der Beispielprogramme
+passiert dadurch, dass nicht alle ben&ouml;tigten <font color="#660099">.class</font>-Dateien
+im aktuellen Verzeichnis liegen. Denn neben der kompilierten Klassendatei
+ben&ouml;tigen die Beispielprogramme mitunter weitere <font color="#660099">.class</font>-Dateien.
+Werden die Beispiele direkt aus dem <font color="#660099">examples</font>-Verzeichnis
+der DVD (oder einer vollst&auml;ndigen Kopie davon) gestartet, treten
+keine Probleme auf. Werden jedoch nur einzelne Klassendateien kopiert,
+kann es beim Aufruf von <a href="index_j.html#ixb100134"><font color=#000080><tt>java</tt></font></a>
+zu Fehlern des Typs <a name="ixa100137"><a href="index_n.html#ixb100132"><font color=#000080><tt>NoClassDefFoundError</tt></font></a></a>
+kommen. Der h&auml;ufigste weist auf einen fehlenden <a name="ixa100138"><a href="index_w.html#ixb100136"><font color=#000080><tt>WindowClosingAdapter</tt></font></a></a>
+hin, der von den meisten GUI-Beispielen ben&ouml;tigt wird. In diesem
+Fall m&uuml;ssen lediglich die fehlenden Dateien <font color="#660099">WindowClosingAdapter.java</font>
+und <font color="#660099">WindowClosingAdapter.class</font> aus dem
+<font color="#660099">examples</font>-Verzeichnis in das aktuelle
+Verzeichnis kopiert werden. 
+
+<p>
+Mitunter werden neben den <font color="#660099">.class</font>-Dateien
+noch weitere Dateien ben&ouml;tigt, damit das Beispiel korrekt l&auml;uft.
+So erfordert etwa <a href="k100179.html#aendernfensterelemente">Listing 27.4</a>
+zus&auml;tzlich die Datei <font color="#660099">testicon.gif</font>,
+damit das Fenster-Icon korrekt angezeigt wird. Und um das Beispiel
+zum Abspielen von Midi-Dateien in <a href="k100325.html#mididateien">Abschnitt 51.3.5</a>
+wie angegeben ausf&uuml;hren zu k&ouml;nnen, wird die Datei <font color="#660099">ame.mid</font>
+ben&ouml;tigt. Diese Dateien liegen in aller Regel ebenfalls im <font color="#660099">examples</font>-Verzeichnis
+und sollten bei Bedarf auch in das Startverzeichnis des Beispielprogramms
+kopiert werden. 
+
+<p>
+In einigen Kapiteln werden Themen behandelt, die zus&auml;tzliche
+jar-Archive fordern, weil die entsprechende Funktionalit&auml;t nicht
+im Standardumfang des JDK enthalten ist oder weil herstellerspezifische
+Treiber erforderlich sind, beispielsweise <a href="k100278.html#kapiteljdbc">Kapitel 44</a>.
+Wo die entsprechenden jar-Archive zu finden sind, wird in den jeweiligen
+Abschnitten erl&auml;utert, und wie sie in den <a href="index_c.html#ixb100137"><font color=#000080><tt>CLASSPATH</tt></font></a>
+eingebunden werden, damit Compiler und Interpreter sie finden, wird
+in <a href="k100092.html#zuspaketeeinbinden">Abschnitt 14.2.3</a>
+erkl&auml;rt. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100012.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100013.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100015.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100017.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

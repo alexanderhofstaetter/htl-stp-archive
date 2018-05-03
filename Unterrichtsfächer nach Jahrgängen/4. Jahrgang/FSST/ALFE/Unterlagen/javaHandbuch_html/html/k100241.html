@@ -1,0 +1,1288 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100240.html;106,k100240.html;107,k100242.html;108,k100245.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100240.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100240.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100242.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100245.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 37 - Swing: Container und Men&uuml;s
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id037001"></a>
+<h2>37.1 Hauptfenster </h2>
+<hr>
+<ul>
+<li><a href="k100241.html#sectlevel2id037001">37.1 Hauptfenster</a>
+<ul>
+<li><a href="k100241.html#jframestruktur">37.1.1 JFrame</a>
+<ul>
+<li><a href="k100241.html#sectlevel4id037001001001">RootPane, LayeredPane und ContentPane</a>
+<li><a href="k100241.html#sectlevel4id037001001002">Dialogelemente platzieren</a>
+</ul>
+<li><a href="k100241.html#sectlevel3id037001002">37.1.2 JWindow</a>
+<li><a href="k100241.html#sectlevel3id037001003">37.1.3 JDialog</a>
+<li><a href="k100241.html#sectlevel3id037001004">37.1.4 JOptionPane</a>
+<ul>
+<li><a href="k100241.html#sectlevel4id037001004001">Anzeigen einer Nachricht</a>
+<li><a href="k100241.html#sectlevel4id037001004002">Eingabe einer Best&auml;tigung</a>
+<li><a href="k100241.html#sectlevel4id037001004003">Eingabe von Daten</a>
+</ul>
+<li><a href="k100241.html#sectlevel3id037001005">37.1.5 JApplet</a>
+<li><a href="k100241.html#jinternalframe">37.1.6 JInternalFrame</a>
+<ul>
+<li><a href="k100241.html#sectlevel4id037001006001">Der Desktop</a>
+<li><a href="k100241.html#sectlevel4id037001006002">Die Kindfenster</a>
+<li><a href="k100241.html#sectlevel4id037001006003">Beispielprogramm</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="jframestruktur"></a>
+<h3>37.1.1 JFrame </h3>
+
+<p>
+Die Klasse <a name="ixa102399"><a href="index_j.html#ixb100513"><font color=#000080><tt>JFrame</tt></font></a></a>
+ist die wichtigste Hauptfensterklasse in Swing. Sie ist aus <a href="index_f.html#ixb101151"><font color=#000080><tt>java.awt.Frame</tt></font></a>
+abgeleitet und stellt ein Hauptfenster mit Rahmen, Systemmen&uuml;
+und Standardschaltfl&auml;chen zur Verf&uuml;gung. Ein <a href="index_j.html#ixb100513"><font color=#000080><tt>JFrame</tt></font></a>
+kann ebenso einfach instanziert werden wie ein <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public JFrame()
+public JFrame(String title)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JFrame.html" onClick="this.href=getApiDoc('javax.swing.JFrame')"><font color="#660066" size=-1>javax.swing.JFrame</font></a></td>
+</tr>
+</table>
+
+<p>
+Der parameterlose Konstruktor erzeugt ein Hauptfenster mit einer leeren
+Titelzeile, der andere schreibt den &uuml;bergebenen String hinein.
+Da <a href="index_j.html#ixb100513"><font color=#000080><tt>JFrame</tt></font></a>
+aus <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>
+abgeleitet ist, stehen alle Methoden aus <a href="index_w.html#ixb101153"><font color=#000080><tt>Window</tt></font></a>,
+<a href="index_c.html#ixb101294"><font color=#000080><tt>Container</tt></font></a>
+und <a href="index_c.html#ixb101293"><font color=#000080><tt>Component</tt></font></a>
+zur Verf&uuml;gung. Ein einfaches Beispielprogramm mit einem leeren
+Hauptfenster, das sich &uuml;ber den Schlie&szlig;en-Button beenden
+l&auml;sst, k&ouml;nnen wir (analog zu den Beispielen in <a href="k100202.html#kapitelguidialoge">Kapitel 31</a>)
+wie folgt realisieren: 
+<a name="listingid037001"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3701.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3701
+<font color="#555555">007 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> Listing3701()
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Ein einfacher JFrame"</font>);
+<font color="#555555">012 </font>    addWindowListener(
+<font color="#555555">013 </font>      <font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>)
+<font color="#555555">014 </font>    );
+<font color="#555555">015 </font>  }
+<font color="#555555">016 </font>
+<font color="#555555">017 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">018 </font>  {
+<font color="#555555">019 </font>    Listing3701 wnd = <font color="#0000AA">new</font> Listing3701();
+<font color="#555555">020 </font>    wnd.setLocation(100, 100);
+<font color="#555555">021 </font>    wnd.setSize(300, 200);
+<font color="#555555">022 </font>    wnd.setVisible(<font color="#006699">true</font>);
+<font color="#555555">023 </font>  }
+<font color="#555555">024 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3701.java"><font color="#000055" size=-1>Listing3701.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 37.1: Verwendung der Klasse JFrame</i></p>
+
+<p>
+Das Programm erzeugt ein Hauptfenster der Gr&ouml;&szlig;e 300 * 200
+an der Bildschirmposition (100, 100). In der Titelzeile steht &#187;Ein
+einfacher JFrame&#171; und das Programm l&auml;sst sich durch einen
+Klick auf den Schlie&szlig;en-Button beenden: 
+<p>
+<a name="imageid037001"></a>
+<img src="images/JFrame1.gif">
+<p>
+
+<p><i>
+Abbildung 37.1: Ein einfaches JFrame-Beispiel</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id037001001001"></a>
+<h4>RootPane, LayeredPane und ContentPane </h4>
+
+<p>
+Ein bedeutender Unterschied zwischen den AWT- und Swing-Hauptfenstern
+besteht in ihrer Komponentenstruktur und den sich daraus ergebenden
+Unterschieden in der Bedienung. W&auml;hrend die Komponenten eines
+AWT-Fensters direkt auf dem Fenster platziert werden, besitzt ein
+Swing-Hauptfenster eine einzige Hauptkomponente, die alle anderen
+Komponenten aufnimmt. 
+
+<p>
+Diese Hauptkomponente wird als <a name="ixa102400"><i>RootPane</i></a>
+bezeichnet und ist vom Typ <a name="ixa102401"><a href="index_j.html#ixb101800"><font color=#000080><tt>JRootPane</tt></font></a></a>.
+Sie &uuml;bernimmt die Rolle einer Art Verwaltungsinstanz f&uuml;r
+alle anderen Komponenten des Hauptfensters. Eine RootPane enth&auml;lt
+folgende Komponenten: 
+<ul>
+<li>eine aus <a href="index_c.html#ixb101294"><font color=#000080><tt>Container</tt></font></a>
+abgeleitete <a name="ixa102402"><i>GlassPane</i></a> und
+<li>eine aus <a name="ixa102403"><a href="index_j.html#ixb101802"><font color=#000080><tt>JLayeredPane</tt></font></a></a>
+abgeleitete <a name="ixa102404"><i>LayeredPane</i></a>
+</ul>
+
+<p>
+Die LayeredPane enth&auml;lt ihrerseits zwei Unterkomponenten: 
+<ul>
+<li>eine aus Container abgeleitete <a name="ixa102405"><i>ContentPane</i></a>
+und
+<li>eine aus <a name="ixa102406"><a href="index_j.html#ixb101804"><font color=#000080><tt>JMenuBar</tt></font></a></a>
+abgeleitete Men&uuml;leiste
+</ul>
+
+<p>
+Damit ergibt sich folgende Struktur: 
+<p>
+<a name="imageid037002"></a>
+<img src="images/RootPane.gif">
+<p>
+
+<p><i>
+Abbildung 37.2: Die Struktur einer RootPane</i></p>
+
+<p>
+LayeredPane und GlassPane liegen &#187;&uuml;bereinander&#171; und
+f&uuml;llen das Fenster jeweils komplett aus. Die GlassPane ist normalerweise
+durchsichtig und wird meist nicht zur Grafikausgabe benutzt. Sie k&ouml;nnte
+dann verwendet werden, wenn Effekte erzielt werden sollen, die das
+Fenster als Ganzes betreffen (und nicht seine einzelnen Dialogelemente).
+Eine (beispielsweise von <a href="index_j.html#ixb100514"><font color=#000080><tt>JInternalFrame</tt></font></a>
+genutzte) Funktion besteht darin, Mausereignisse abzufangen, bevor
+sie an andere Komponenten weitergegeben werden. 
+
+<p>
+Die LayeredPane enth&auml;lt das Men&uuml; und die Dialogelemente
+der Anwendung. Als Instanz der Klasse <a name="ixa102403"><a href="index_j.html#ixb101802"><font color=#000080><tt>JLayeredPane</tt></font></a></a>
+verf&uuml;gt sie &uuml;ber die F&auml;higkeit, Dialogelemente nicht
+nur neben-, sondern in kontrollierter Weise auch &uuml;bereinander
+anzuordnen. Das ist beispielsweise wichtig, um Men&uuml;s oder interne
+Dialoge &uuml;ber den Komponenten anzuzeigen, die sie verdecken. Tats&auml;chlich
+verdeckt das in der LayeredPane gehaltene Men&uuml; die in seiner
+ContentPane platzierten Dialogelemente der Anwendung. 
+
+<p>
+Das h&ouml;rt sich alles sehr kompliziert an und mancher wird sich
+fragen, ob so viel Aufwand wirklich n&ouml;tig war. Gl&uuml;cklicherweise
+braucht eine Swing-Anwendung sich um die Details gar nicht zu k&uuml;mmern.
+Einerseits wird die RootPane, und mit ihr die darin enthaltene GlassPane,
+LayeredPane und ContentPane, beim Anlegen des Fensters automatisch
+erzeugt (einzig die Men&uuml;leiste bleibt standardm&auml;&szlig;ig
+leer). Zweitens implementieren alle Hauptfenster das Interface <a name="ixa102407"><a href="index_r.html#ixb101805"><font color=#000080><tt>RootPaneContainer</tt></font></a></a>,
+das den Zugriff auf die RootPane vereinfacht. Einige seiner Methoden
+sind: <a name="ixa102408"></a> <a name="ixa102409"></a> <a name="ixa102410"></a>
+<a name="ixa102411"></a> 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public JRootPane getRootPane()
+public Container getContentPane()
+public JLayeredPane getLayeredPane()
+public Component getGlassPane()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/RootPaneContainer.html" onClick="this.href=getApiDoc('javax.swing.RootPaneContainer')"><font color="#660066" size=-1>javax.swing.RootPaneContainer</font></a></td>
+</tr>
+</table>
+
+<p>
+Um auf einem Hauptfenster Komponenten zu platzieren, ist es also nicht
+n&ouml;tig, zun&auml;chst mit <a href="index_g.html#ixb101806"><font color=#000080><tt>getRootPane</tt></font></a>
+die RootPane, dann mit <a href="index_g.html#ixb101807"><font color=#000080><tt>getLayeredPane</tt></font></a>
+die LayeredPane und schlie&szlig;lich mit <a href="index_g.html#ixb101776"><font color=#000080><tt>getContentPane</tt></font></a>
+die ContentPane zu beschaffen, sondern es kann direkt <a href="index_g.html#ixb101776"><font color=#000080><tt>getContentPane</tt></font></a>
+aufgerufen werden. Neben den getter-Methoden gibt es auch setter-Methoden,
+mit denen der strukturelle Aufbau der RootPane vollst&auml;ndig ver&auml;ndert
+werden kann. Darauf wollen wir aber nicht weiter eingehen. 
+
+<!-- Section -->
+
+<a name="sectlevel4id037001001002"></a>
+<h4>Dialogelemente platzieren </h4>
+
+<p>
+Das Einf&uuml;gen und Anordnen von Dialogelementen auf einem Hauptfenster
+erfolgt also &uuml;ber dessen ContentPane. Die Aufrufe von <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+und <a href="index_s.html#ixb101538"><font color=#000080><tt>setLayout</tt></font></a>
+werden damit nicht direkt auf dem Fenster ausgef&uuml;hrt, sondern
+auf dessen ContentPane, die &uuml;ber einen Aufruf von <a href="index_g.html#ixb101776"><font color=#000080><tt>getContentPane</tt></font></a>
+beschafft werden kann. 
+
+<p>
+Um das zu demonstrieren, wollen wir das vorige Beispiel um drei Buttons
+erweitern, die mit Hilfe eines <a href="index_g.html#ixb101540"><font color=#000080><tt>GridLayout</tt></font></a>
+der Gr&ouml;&szlig;e 3 * 1 angeordnet werden: 
+<a name="swingcontrolsanordnen"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3702.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3702
+<font color="#555555">008 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">009 </font>{
+<font color="#555555">010 </font>  <font color="#0000AA">public</font> Listing3702()
+<font color="#555555">011 </font>  {
+<font color="#555555">012 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Ein einfacher JFrame"</font>);
+<font color="#555555">013 </font>    <font color="#00AA00">//WindowListener hinzuf&uuml;gen</font>
+<font color="#555555">014 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">015 </font>    <font color="#00AA00">//Layout setzen und Buttons hinzuf&uuml;gen</font>
+<font color="#555555">016 </font>    Container contentPane = getContentPane();
+<font color="#555555">017 </font>    contentPane.setLayout(<font color="#0000AA">new</font> GridLayout(3, 1));
+<font color="#555555">018 </font>    contentPane.add(<font color="#0000AA">new</font> JButton(<font color="#0000FF">"Button 1"</font>));
+<font color="#555555">019 </font>    contentPane.add(<font color="#0000AA">new</font> JButton(<font color="#0000FF">"Button 2"</font>));
+<font color="#555555">020 </font>    contentPane.add(<font color="#0000AA">new</font> JButton(<font color="#0000FF">"Button 3"</font>));
+<font color="#555555">021 </font>  }
+<font color="#555555">022 </font>
+<font color="#555555">023 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">024 </font>  {
+<font color="#555555">025 </font>    Listing3702 wnd = <font color="#0000AA">new</font> Listing3702();
+<font color="#555555">026 </font>    wnd.setLocation(100, 100);
+<font color="#555555">027 </font>    wnd.setSize(300, 200);
+<font color="#555555">028 </font>    wnd.setVisible(<font color="#006699">true</font>);
+<font color="#555555">029 </font>  }
+<font color="#555555">030 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3702.java"><font color="#000055" size=-1>Listing3702.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 37.2: Anordnen von Dialogelementen in einem Hauptfenster</i></p>
+
+<p>
+Das Programm hat nun folgendes Aussehen: 
+<p>
+<a name="imageid037003"></a>
+<img src="images/JFrame2.gif">
+<p>
+
+<p><i>
+Abbildung 37.3: Ein Hauptfenster mit Dialogelementen</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id037001002"></a>
+<h3>37.1.2 JWindow </h3>
+
+<p>
+Die zweite Hauptfensterklasse, die wir in diesem Kapitel vorstellen,
+ist <a name="ixa102412"><a href="index_j.html#ixb101774"><font color=#000080><tt>JWindow</tt></font></a></a>.
+Sie ist aus <a href="index_w.html#ixb101153"><font color=#000080><tt>Window</tt></font></a>
+abgeleitet und dient wie diese dazu, ein rahmenloses Fenster zu erzeugen,
+das an beliebiger Stelle und in beliebiger Gr&ouml;&szlig;e auf dem
+Bildschirm platziert werden kann. <a href="index_j.html#ixb101774"><font color=#000080><tt>JWindow</tt></font></a>
+besitzt drei Konstruktoren: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public JWindow()
+public JWindow(Frame owner)
+public JWindow(Window owner)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JWindow.html" onClick="this.href=getApiDoc('javax.swing.JWindow')"><font color="#660066" size=-1>javax.swing.JWindow</font></a></td>
+</tr>
+</table>
+
+<p>
+Ebenso wie <a href="index_j.html#ixb100513"><font color=#000080><tt>JFrame</tt></font></a>
+besitzt auch <a href="index_j.html#ixb101774"><font color=#000080><tt>JWindow</tt></font></a>
+eine RootPane mit der im vorigen Abschnitt beschriebenen Struktur.
+Dialogelemente und Layoutmanager werden also nicht direkt auf dem
+Fenster, sondern auf der ContentPane platziert. Zur einfacheren Verwendung
+implementiert auch <a href="index_j.html#ixb101774"><font color=#000080><tt>JWindow</tt></font></a>
+das Interface <a href="index_r.html#ixb101805"><font color=#000080><tt>RootPaneContainer</tt></font></a>.
+
+<p>
+Als Beispiel f&uuml;r die Anwendung von <a href="index_j.html#ixb101774"><font color=#000080><tt>JWindow</tt></font></a>
+wollen wir einen einfachen <a name="ixa102413"><i>SplashScreen</i></a>
+konstruieren, also ein Fenster, das nach dem Start eines Programms
+angezeigt wird und nach dessen Initialisierung wieder entfernt wird.
+Dazu leiten wir eine Klasse <font color="#000077"><tt>SplashScreen</tt></font>
+von <a href="index_j.html#ixb101774"><font color=#000080><tt>JWindow</tt></font></a>
+ab und platzieren darin ein Icon und einen Text. Der Name der Icondatei
+und der Text k&ouml;nnen an den Konstruktor &uuml;bergeben werden.
+Das Programm soll jeweils ein Drittel der verf&uuml;gbaren H&ouml;he
+und Breite des Bildschirms belegen und das Icon und den Text zentriert
+darin anzeigen. 
+<a name="splashscreen"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* SplashScreen.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> javax.swing.border.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> SplashScreen
+<font color="#555555">008 </font><font color="#0000AA">extends</font> JWindow
+<font color="#555555">009 </font>{
+<font color="#555555">010 </font>  <font color="#0000AA">public</font> SplashScreen(String image, String text)
+<font color="#555555">011 </font>  {
+<font color="#555555">012 </font>    JPanel contentPane = <font color="#0000AA">new</font> JPanel(); <a name="splashscreen.a"></a>
+<font color="#555555">013 </font>    contentPane.setLayout(<font color="#0000AA">new</font> BorderLayout());
+<font color="#555555">014 </font>    Border bd1 = BorderFactory.createBevelBorder( <a name="splashscreen.c"></a>
+<font color="#555555">015 </font>      BevelBorder.RAISED
+<font color="#555555">016 </font>    );
+<font color="#555555">017 </font>    Border bd2 = BorderFactory.createEtchedBorder();
+<font color="#555555">018 </font>    Border bd3 = BorderFactory.createCompoundBorder(bd1, bd2);
+<font color="#555555">019 </font>    contentPane.setBorder(bd3);
+<font color="#555555">020 </font>    ImageIcon icon = <font color="#0000AA">new</font> ImageIcon(image);
+<font color="#555555">021 </font>    contentPane.add(<font color="#0000AA">new</font> JLabel(<font color="#0000FF">" "</font>, JLabel.CENTER), BorderLayout.NORTH);
+<font color="#555555">022 </font>    contentPane.add(<font color="#0000AA">new</font> JLabel(icon, JLabel.CENTER), BorderLayout.CENTER);
+<font color="#555555">023 </font>    contentPane.add(<font color="#0000AA">new</font> JLabel(text, JLabel.CENTER), BorderLayout.SOUTH);
+<font color="#555555">024 </font>    setContentPane(contentPane); <a name="splashscreen.b"></a>
+<font color="#555555">025 </font>  }
+<font color="#555555">026 </font>
+<font color="#555555">027 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> showFor(<font color="#006699">int</font> millis)
+<font color="#555555">028 </font>  {
+<font color="#555555">029 </font>    Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+<font color="#555555">030 </font>    setLocation(dim.width / 3, dim.height / 3);
+<font color="#555555">031 </font>    setSize(dim.width / 3, dim.height / 3);
+<font color="#555555">032 </font>    setVisible(<font color="#006699">true</font>);
+<font color="#555555">033 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">034 </font>      Thread.sleep(millis);
+<font color="#555555">035 </font>    } <font color="#0000AA">catch</font> (InterruptedException e) {
+<font color="#555555">036 </font>    }
+<font color="#555555">037 </font>    setVisible(<font color="#006699">false</font>);
+<font color="#555555">038 </font>  }
+<font color="#555555">039 </font>
+<font color="#555555">040 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">041 </font>  {
+<font color="#555555">042 </font>    SplashScreen intro = <font color="#0000AA">new</font> SplashScreen(
+<font color="#555555">043 </font>      <font color="#0000FF">"mine.gif"</font>,
+<font color="#555555">044 </font>      <font color="#0000FF">"(C) Copyright 2000, J. Kr&uuml;ger, All Rights Reserved"</font>
+<font color="#555555">045 </font>    );
+<font color="#555555">046 </font>    intro.showFor(3000);
+<font color="#555555">047 </font>    System.exit(0);
+<font color="#555555">048 </font>  }
+<font color="#555555">049 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/SplashScreen.java"><font color="#000055" size=-1>SplashScreen.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 37.3: Ein einfacher SplashScreen</i></p>
+
+<p>
+Die Ausgabe des Programms sieht so aus: 
+<p>
+<a name="imageid037004"></a>
+<img src="images/SplashScreen.gif">
+<p>
+
+<p><i>
+Abbildung 37.4: Ein einfacher SplashScreen</i></p>
+
+<p>
+Das Programm ist prinzipiell so aufgebaut wie die bisherigen Swing-Beispiele,
+zeigt aber bei n&auml;herem Hinsehen einige Besonderheiten. Zun&auml;chst
+definiert es einen eigenen ContentPane. In <a href="k100241.html#splashscreen.a">Zeile 012</a>
+wird dazu ein <a href="index_j.html#ixb101779"><font color=#000080><tt>JPanel</tt></font></a>
+instanziert und mit einem <a href="index_b.html#ixb101541"><font color=#000080><tt>BorderLayout</tt></font></a>
+versehen (der Standard-Layoutmanager von <a href="index_j.html#ixb101779"><font color=#000080><tt>JPanel</tt></font></a>
+ist <a href="index_f.html#ixb101539"><font color=#000080><tt>FlowLayout</tt></font></a>).
+Alle Dialogelemente werden auf diesem Panel platziert. In <a href="k100241.html#splashscreen.b">Zeile 024</a>
+wird das Panel durch Aufruf von <a name="ixa102414"><a href="index_s.html#ixb101810"><font color=#000080><tt>setContentPane</tt></font></a></a>
+als ContentPane des Fensters definiert. 
+
+<p>
+Zum anderen zeigt das Programm ein paar zus&auml;tzliche M&ouml;glichkeiten,
+Umrandungen zu verwenden. Ab <a href="k100241.html#splashscreen.c">Zeile 014</a>
+werden mit Hilfe der Methoden <a name="ixa102415"><a href="index_c.html#ixb101811"><font color=#000080><tt>createBevelBorder</tt></font></a></a>
+und <a name="ixa102416"><a href="index_c.html#ixb101812"><font color=#000080><tt>createEtchedBorder</tt></font></a></a>
+der Klasse <a name="ixa102417"><a href="index_b.html#ixb101788"><font color=#000080><tt>BorderFactory</tt></font></a></a>
+zwei unabh&auml;ngige Umrandungen konstruiert. Durch Aufruf von <a name="ixa102418"><a href="index_c.html#ixb101813"><font color=#000080><tt>createCompoundBorder</tt></font></a></a>
+werden sie zu einer neuen Umrandung zusammengefasst und anschlie&szlig;end
+an den ContentPane &uuml;bergeben. 
+
+<!-- Section -->
+
+<a name="sectlevel3id037001003"></a>
+<h3>37.1.3 JDialog </h3>
+
+<p>
+Neben einem oder mehreren langlebigen Hauptfenstern besitzt eine Anwendung
+meist auch Dialogfenster. Sie werden oft nur vor&uuml;bergehend aufgerufen,
+um eine tempor&auml;re Kommunikation zwischen Anwender und Programm
+zu etablieren. Dialogfenster unterscheiden sich meist dadurch von
+Hauptfenstern, dass sie kein Men&uuml; und nur eingeschr&auml;nkte
+Systemfunktionen besitzen. Zudem ist ihre Gr&ouml;&szlig;e oft nicht
+ver&auml;nderbar und sie halten (als <i>modale</i> Fenster) w&auml;hrend
+der eigenen Ausf&uuml;hrung den Programmfluss im &uuml;brigen Programm
+an. 
+
+<p>
+Mit der aus <a href="index_d.html#ixb101152"><font color=#000080><tt>Dialog</tt></font></a>
+abgeleiteten Klasse <a name="ixa102419"><a href="index_j.html#ixb101773"><font color=#000080><tt>JDialog</tt></font></a></a>
+stehen auch in Swing Dialogfenster zur Verf&uuml;gung. Sie besitzen
+denselben strukturellen Aufbau wie <a href="index_j.html#ixb100513"><font color=#000080><tt>JFrame</tt></font></a>
+und <a href="index_j.html#ixb101774"><font color=#000080><tt>JWindow</tt></font></a>
+und implementieren ebenfalls das Interface <a href="index_r.html#ixb101805"><font color=#000080><tt>RootPaneContainer</tt></font></a>.
+Auch hier erfolgt also das Hinzuf&uuml;gen und Anordnen von Komponenten
+nicht auf dem Fenster selbst, sondern auf seiner ContentPane. <a href="index_j.html#ixb101773"><font color=#000080><tt>JDialog</tt></font></a>
+besitzt eine Vielzahl von Konstruktoren. Die wichtigsten sind: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public JDialog(Frame owner)
+public JDialog(Frame owner, boolean modal)
+public JDialog(Frame owner, String title)
+public JDialog(Frame owner, String title, boolean modal)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JDialog.html" onClick="this.href=getApiDoc('javax.swing.JDialog')"><font color="#660066" size=-1>javax.swing.JDialog</font></a></td>
+</tr>
+</table>
+
+<p>
+Als <font color="#000077"><tt>owner</tt></font> sollte der Aufrufer
+dabei das Fenster &uuml;bergeben, zu dem der Dialog logisch geh&ouml;rt.
+Alle Konstruktoren gibt es auch in einer Form, bei der der <font color="#000077"><tt>owner</tt></font>
+vom Typ <a href="index_d.html#ixb101152"><font color=#000080><tt>Dialog</tt></font></a>
+ist. Wahlweise kann ein <a href="index_j.html#ixb101773"><font color=#000080><tt>JDialog</tt></font></a>
+auch ohne <font color="#000077"><tt>owner</tt></font> konstruiert
+werden (mit dem parameterlosen Konstruktor), doch dann kann es unter
+Umst&auml;nden Fokusprobleme beim Wechsel zwischen mehreren Anwendungen
+geben. 
+
+<p>
+Die &uuml;brigen Parameter geben den Titel des Dialogs an und legen
+fest, ob er modal oder nichtmodal sein soll. Bei einem modalen Dialog
+wird der Aufruf von <a href="index_s.html#ixb101517"><font color=#000080><tt>show</tt></font></a>
+(bzw. <font color="#000077"><tt>setVisible(true)</tt></font>) erst
+dann beendet, wenn der Dialog geschlossen wurde. Bei einem nichtmodalen
+Dialog f&auml;hrt das Programm dagegen unmittelbar mit der n&auml;chsten
+Anweisung hinter <a href="index_s.html#ixb101517"><font color=#000080><tt>show</tt></font></a>
+fort. 
+
+<!-- Section -->
+
+<a name="sectlevel3id037001004"></a>
+<h3>37.1.4 JOptionPane </h3>
+
+<p>
+Eine weitere (und noch dazu sehr bequeme) M&ouml;glichkeit, Swing-Dialoge
+zu erzeugen, steht mit der Klasse <a name="ixa102420"><a href="index_j.html#ixb101814"><font color=#000080><tt>JOptionPane</tt></font></a></a>
+zur Verf&uuml;gung. Diese ist in der Lage, einfache Dialoge, die lediglich
+ein Icon und einen Text oder ein Eingabefeld und eine Auswahl der
+Buttons &#187;Yes&#171;, &#187;No&#171; und &#187;Cancel&#171; enthalten,
+mit einem einzigen Aufruf einer statischen Methode zu erzeugen. <a href="index_j.html#ixb101814"><font color=#000080><tt>JOptionPane</tt></font></a>
+ist sehr vielseitig, wir wollen uns an dieser Stelle allerdings auf
+ihre wichtigsten Anwendungen beschr&auml;nken. 
+
+<!-- Section -->
+
+<a name="sectlevel4id037001004001"></a>
+<h4>Anzeigen einer Nachricht </h4>
+
+<p>
+In seiner einfachsten Form kann <a href="index_j.html#ixb101814"><font color=#000080><tt>JOptionPane</tt></font></a>
+dazu verwendet werden, ein Dialogfenster mit Titel, Icon und Hinweistext
+anzuzeigen, das mit Hilfe eines &#187;OK&#171;-Buttons beendet werden
+kann. Dazu stehen verschiedene Varianten der Methode <a name="ixa102421"><a href="index_s.html#ixb101815"><font color=#000080><tt>showMessageDialog</tt></font></a></a>
+zur Verf&uuml;gung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static void showMessageDialog(
+  Component parentComponent,
+  Object message
+)
+
+public static void showMessageDialog(
+  Component parentComponent,
+  Object message,
+  String title,
+  int messageType
+)
+
+public static void showMessageDialog(
+  Component parentComponent,
+  Object message,
+  String title,
+  int messageType,
+  Icon icon
+)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JOptionPane.html" onClick="this.href=getApiDoc('javax.swing.JOptionPane')"><font color="#660066" size=-1>javax.swing.JOptionPane</font></a></td>
+</tr>
+</table>
+
+<p>
+Aufrufe von <a href="index_s.html#ixb101815"><font color=#000080><tt>showMessageDialog</tt></font></a>
+sind grunds&auml;tzlich modal. Erst wenn der Dialog vom Anwender beendet
+wurde, wird die n&auml;chste Anweisung ausgef&uuml;hrt. Der Parameter
+<font color="#000077"><tt>parentComponent</tt></font> bezeichnet die
+Vaterkomponente, aus der heraus der Dialog aufgerufen wurde, und <font color="#000077"><tt>message</tt></font>
+ist der anzuzeigende Text. Soll eine eigene Titelzeile angegeben werden,
+kann dazu <font color="#000077"><tt>title</tt></font> verwendet werden,
+andernfalls wird &#187;Message&#171; angezeigt. Wahlweise kann mit
+dem Parameter <font color="#000077"><tt>icon</tt></font> ein Icon
+angegeben werden, das neben dem Text angezeigt wird. Alternativ kann
+auch durch &Uuml;bergabe einer der Konstanten <a name="ixa102422"><a href="index_e.html#ixb101816"><font color=#000080><tt>ERROR_MESSAGE</tt></font></a></a>,
+<a name="ixa102423"><a href="index_i.html#ixb101817"><font color=#000080><tt>INFORMATION_MESSAGE</tt></font></a></a>,
+<a name="ixa102424"><a href="index_w.html#ixb101818"><font color=#000080><tt>WARNING_MESSAGE</tt></font></a></a>,
+<a name="ixa102425"><a href="index_q.html#ixb101819"><font color=#000080><tt>QUESTION_MESSAGE</tt></font></a></a>
+oder <a name="ixa102426"><a href="index_p.html#ixb101820"><font color=#000080><tt>PLAIN_MESSAGE</tt></font></a></a>
+an den Parameter <font color="#000077"><tt>messageType</tt></font>
+ein Standard-Icon erzeugt werden: 
+<p>
+<a name="imageid037005"></a>
+<img src="images/JOptionPane1.gif">
+<p>
+
+<p><i>
+Abbildung 37.5: Die Standard-Icons bei JOptionPane</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id037001004002"></a>
+<h4>Eingabe einer Best&auml;tigung </h4>
+
+<p>
+Mit den verschiedenen Varianten der Methode <a name="ixa102427"><a href="index_s.html#ixb101821"><font color=#000080><tt>showConfirmDialog</tt></font></a></a>
+kann ein Dialog erzeugt werden, der neben den zuvor besprochenen F&auml;higkeiten
+die M&ouml;glichkeit bietet, die Auswahl der Buttons zu beeinflussen,
+mit denen der Dialog beendet werden kann. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static int showConfirmDialog(
+  Component parentComponent,
+  Object message
+)
+
+public static int showConfirmDialog(
+  Component parentComponent,
+  Object message,
+  String title,
+  int optionType
+)
+
+public static int showConfirmDialog(
+  Component parentComponent,
+  Object message,
+  String title,
+  int optionType,
+  int messageType
+)
+
+public static int showConfirmDialog(
+  Component parentComponent,
+  Object message,
+  String title,
+  int optionType,
+  int messageType,
+  Icon icon
+)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JOptionPane.html" onClick="this.href=getApiDoc('javax.swing.JOptionPane')"><font color="#660066" size=-1>javax.swing.JOptionPane</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Parameter entsprechen im Wesentlichen denen der Methode <a href="index_s.html#ixb101815"><font color=#000080><tt>showMessageDialog</tt></font></a>.
+Zus&auml;tzlich kann mit <font color="#000077"><tt>optionType</tt></font>
+eine der Konstanten <a name="ixa102428"><a href="index_y.html#ixb101822"><font color=#000080><tt>YES_NO_OPTION</tt></font></a></a>,
+<a name="ixa102429"><a href="index_o.html#ixb101823"><font color=#000080><tt>OK_CANCEL_OPTION</tt></font></a></a>
+oder <a name="ixa102430"><a href="index_y.html#ixb101824"><font color=#000080><tt>YES_NO_CANCEL_OPTION</tt></font></a></a>
+angegeben werden, um zu entscheiden, welche Kombination von Buttons
+der Dialog anzeigen soll: 
+<p>
+<a name="imageid037006"></a>
+<img src="images/JOptionPane2.gif">
+<p>
+
+<p><i>
+Abbildung 37.6: Button-Kombinationen bei showConfirmDialog</i></p>
+
+<p>
+<a href="index_s.html#ixb101821"><font color=#000080><tt>showConfirmDialog</tt></font></a>
+ist ebenfalls modal und ihr R&uuml;ckgabewert zeigt an, auf welche
+Weise der Dialog beendet wurde: <a name="tableid037001"></a>
+
+<p>
+<table cols=2 border width=66%>
+
+<tr>
+<td valign=top align=left width=33%><b>R&uuml;ckgabewert </b></td>
+<td valign=top align=left width=66%><b>Bedeutung</b></td></tr>
+<tr>
+<td valign=top align=left>YES_OPTION </td>
+<td valign=top align=left>Mit dem &#187;Yes&#171;-Button</td></tr>
+<tr>
+<td valign=top align=left>NO_OPTION </td>
+<td valign=top align=left>Mit dem &#187;No&#171;-Button</td></tr>
+<tr>
+<td valign=top align=left>CANCEL_OPTION </td>
+<td valign=top align=left>Mit dem &#187;Cancel&#171;-Button</td></tr>
+<tr>
+<td valign=top align=left>OK_OPTION </td>
+<td valign=top align=left>Mit dem &#187;OK&#171;-Button</td></tr>
+<tr>
+<td valign=top align=left>CLOSED_OPTION </td>
+<td valign=top align=left>Mit dem &#187;Schlie&szlig;en&#171;-Button
+der Titelzeile</td></tr>
+</table>
+<p><i>
+Tabelle 37.1: R&uuml;ckgabewerte von showConfirmDialog</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id037001004003"></a>
+<h4>Eingabe von Daten </h4>
+
+<p>
+Mit der M&ouml;glichkeit, neben dem Icon und dem Nachrichtentext auch
+ein Textfeld im Dialog zu platzieren, kann <a href="index_j.html#ixb101814"><font color=#000080><tt>JOptionPane</tt></font></a>
+auch zur Erfassung einfacher Daten verwendet werden. Die dazu aufzurufende
+Methode <a name="ixa102431"><a href="index_s.html#ixb101825"><font color=#000080><tt>showInputDialog</tt></font></a></a>
+gibt es ebenfalls in mehreren Varianten: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static String showInputDialog(
+  Component parentComponent,
+  Object message
+)
+
+public static String showInputDialog(
+  Component parentComponent,
+  Object message,
+  String title,
+  int messageType
+)
+
+public static Object showInputDialog(
+  Component parentComponent,
+  Object message,
+  String title,
+  int messageType,
+  Icon icon,
+  Object[] selectionValues,
+  Object initialSelectionValue
+)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JOptionPane.html" onClick="this.href=getApiDoc('javax.swing.JOptionPane')"><font color="#660066" size=-1>javax.swing.JOptionPane</font></a></td>
+</tr>
+</table>
+
+<p>
+In der einfachsten Form werden lediglich ein Dialog mit dem Titel
+&#187;Input&#171;, die angegebene Nachricht mit einem Icon und das
+Textfeld zur Eingabe der Daten angezeigt. Die zweite Variante erlaubt
+zus&auml;tzlich die Angabe der Titelzeile und die Auswahl des Icontyps.
+In der letzten Variante wird anstelle des Textfelds eine Combobox
+zur Dateneingabe verwendet. Der Parameter <font color="#000077"><tt>selectionValues</tt></font>
+gibt die in der Combobox anzuzeigenden Elemente an (sie werden mit
+<a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a>
+in Strings konvertiert) und <font color="#000077"><tt>initialSelectionValue</tt></font>
+gibt an, welches von ihnen standardm&auml;&szlig;ig selektiert werden
+soll. 
+
+<p>
+Bei allen Methoden ist der R&uuml;ckgabewert ein String mit den vom
+Anwender eingegebenen Daten. Falls eine Combobox zur Auswahl verwendet
+wurde, wird der String-Wert des ausgew&auml;hlten Elements zur&uuml;ckgegeben.
+Ein R&uuml;ckgabewert von <a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>
+zeigt an, dass der Anwender den Dialog abgebrochen hat. 
+
+<p>
+Das folgende Programm zeigt eine einfache Anwendung von <a href="index_j.html#ixb101814"><font color=#000080><tt>JOptionPane</tt></font></a>,
+bei der der Anwender einen Wert aus einer vordefinierten Liste ausw&auml;hlen
+kann: 
+<a name="listingid037004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3704.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3704
+<font color="#555555">008 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">009 </font>{
+<font color="#555555">010 </font>  <font color="#0000AA">private</font> <font color="#0000AA">static</font> <font color="#0000AA">final</font> String[] QUARTALE = {
+<font color="#555555">011 </font>    <font color="#0000FF">"1. Quartal"</font>, <font color="#0000FF">"2. Quartal"</font>, <font color="#0000FF">"3. Quartal"</font>, <font color="#0000FF">"4. Quartal"</font>
+<font color="#555555">012 </font>  };
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>  <font color="#0000AA">public</font> Listing3704()
+<font color="#555555">015 </font>  {
+<font color="#555555">016 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Test von JOptionPane"</font>);
+<font color="#555555">017 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">018 </font>  }
+<font color="#555555">019 </font>
+<font color="#555555">020 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">021 </font>  {
+<font color="#555555">022 </font>    Listing3704 wnd = <font color="#0000AA">new</font> Listing3704();
+<font color="#555555">023 </font>    wnd.setLocation(100, 100);
+<font color="#555555">024 </font>    wnd.setSize(300, 200);
+<font color="#555555">025 </font>    wnd.setVisible(<font color="#006699">true</font>);
+<font color="#555555">026 </font>    String ret = (String)JOptionPane.showInputDialog(
+<font color="#555555">027 </font>      wnd,
+<font color="#555555">028 </font>      <font color="#0000FF">"W&auml;hlen Sie das Quartal aus"</font>,
+<font color="#555555">029 </font>      <font color="#0000FF">"JOptionPane.showInputDialog"</font>,
+<font color="#555555">030 </font>      JOptionPane.QUESTION_MESSAGE,
+<font color="#555555">031 </font>      <font color="#006699">null</font>,
+<font color="#555555">032 </font>      QUARTALE,
+<font color="#555555">033 </font>      QUARTALE[2]
+<font color="#555555">034 </font>    );
+<font color="#555555">035 </font>    System.out.println(<font color="#0000FF">"Ausgew&auml;hlt wurde "</font> + ret);
+<font color="#555555">036 </font>  }
+<font color="#555555">037 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3704.java"><font color="#000055" size=-1>Listing3704.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 37.4: Anwendungsbeispiel f&uuml;r JOptionPane</i></p>
+
+<p>
+Der vom Programm erzeugte Dialog sieht unmittelbar nach dem Aufruf
+von <a href="index_s.html#ixb101825"><font color=#000080><tt>showInputDialog</tt></font></a>
+so aus: 
+<p>
+<a name="imageid037007"></a>
+<img src="images/JOptionPane3.gif">
+<p>
+
+<p><i>
+Abbildung 37.7: Die Methode showInputDialog</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id037001005"></a>
+<h3>37.1.5 JApplet </h3>
+
+<p>
+Die Klasse <a name="ixa102432"><a href="index_j.html#ixb101775"><font color=#000080><tt>JApplet</tt></font></a></a>
+ist eine einfache Erweiterung von <a href="index_a.html#ixb100603"><font color=#000080><tt>java.applet.Applet</tt></font></a>.
+Sie dient zur Entwicklung von Applets, die Swing-Dialogelemente zur
+Gestaltung der Oberfl&auml;che verwenden. Die Unterschiede zwischen
+beiden Klassen sind nicht sehr umfangreich; insbesondere werden die
+Methoden <a name="ixa102433"><a href="index_i.html#ixb101826"><font color=#000080><tt>init</tt></font></a></a>,
+<a name="ixa102434"><a href="index_s.html#ixb101113"><font color=#000080><tt>start</tt></font></a></a>,
+<a name="ixa102435"><a href="index_s.html#ixb101118"><font color=#000080><tt>stop</tt></font></a></a>
+und <a href="index_d.html#ixb100878"><font color=#000080><tt>destroy</tt></font></a>
+in derselben Weise verwendet wie bei der Klasse <a href="index_a.html#ixb100603"><font color=#000080><tt>Applet</tt></font></a>.
+
+<p>
+Wie bei den anderen Hauptfenstern ist auch hier der wichtigste Unterschied,
+dass <a href="index_j.html#ixb101775"><font color=#000080><tt>JApplet</tt></font></a>
+die in <a href="k100241.html#jframestruktur">Abschnitt 37.1.1</a>
+beschriebene RootPane-Struktur realisiert. Die Klasse implementiert
+ebenfalls das <a href="index_r.html#ixb101805"><font color=#000080><tt>RootPaneContainer</tt></font></a>-Interface
+und alle Komponenten m&uuml;ssen an die ContentPane &uuml;bergeben
+werden. Da die Applet-Programmierung ab <a href="k100257.html#kapitelapplets1">Kapitel 40</a>
+ausf&uuml;hrlich beschrieben wird, wollen wir uns an dieser Stelle
+auf ein einfaches Beispiel beschr&auml;nken: 
+<a name="listingid037005"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* JAppletTest.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> JAppletTest
+<font color="#555555">007 </font><font color="#0000AA">extends</font> JApplet
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> init()
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    Container contentPane = getContentPane();
+<font color="#555555">012 </font>    contentPane.setLayout(<font color="#0000AA">new</font> GridLayout(3, 1));
+<font color="#555555">013 </font>    contentPane.add(<font color="#0000AA">new</font> JButton(<font color="#0000FF">"Button 1"</font>));
+<font color="#555555">014 </font>    contentPane.add(<font color="#0000AA">new</font> JButton(<font color="#0000FF">"Button 2"</font>));
+<font color="#555555">015 </font>    contentPane.add(<font color="#0000AA">new</font> JButton(<font color="#0000FF">"Button 3"</font>));
+<font color="#555555">016 </font>  }
+<font color="#555555">017 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/JAppletTest.java"><font color="#000055" size=-1>JAppletTest.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 37.5: Anwendungsbeispiel f&uuml;r JApplet</i></p>
+
+<p>
+Das Programm stellt ein sehr einfaches Applet dar, das - analog zu
+<a href="k100241.html#swingcontrolsanordnen">Listing 37.2</a> - drei
+Buttons in einem <a href="index_g.html#ixb101540"><font color=#000080><tt>GridLayout</tt></font></a>
+anzeigt. Es kann wie folgt in eine HTML-Datei eingebettet werden:
+<a name="listingid037006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">&lt;html&gt;</font>
+<font color="#555555">002 </font><font color="#0000AA">&lt;head&gt;</font><font color="#0000AA">&lt;title&gt;</font>JAppletTest<font color="#0000AA">&lt;/title&gt;</font><font color="#0000AA">&lt;/head&gt;</font>
+<font color="#555555">003 </font>
+<font color="#555555">004 </font><font color="#0000AA">&lt;body&gt;</font>
+<font color="#555555">005 </font><font color="#0000AA">&lt;h1&gt;</font>JAppletTest<font color="#0000AA">&lt;/h1&gt;</font>
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">&lt;applet code=</font><font color="#0000FF">"JAppletTest.class"</font><font color="#0000AA"> width=300 height=200&gt;</font>
+<font color="#555555">008 </font>Hier steht das JAppletTest
+<font color="#555555">009 </font><font color="#0000AA">&lt;/applet&gt;</font>
+<font color="#555555">010 </font>
+<font color="#555555">011 </font><font color="#0000AA">&lt;/body&gt;</font>
+<font color="#555555">012 </font><font color="#0000AA">&lt;/html&gt;</font></pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/japplet.html"><font color="#000055" size=-1>japplet.html</font></a></td>
+</tr>
+</table>
+<i>
+Listing 37.6: HTML-Datei f&uuml;r JApplet-Beispiel</i></p>
+
+<p>
+Das Applet kann nun mit Hilfe des AppletViewer gestartet werden: 
+<font color="#000077">
+<pre>
+appletviewer japplet.html
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="jinternalframe"></a>
+<h3>37.1.6 JInternalFrame </h3>
+
+<p>
+Bei vielen Programmen ist es &uuml;blich, dass sie ein einziges Hauptfenster
+besitzen und ihre zahlreichen, gleichzeitig ge&ouml;ffneten Kindfenster
+<i>innerhalb</i> dieses Hauptfensters anordnen. Diese unter Windows
+als <a name="ixa102436"><i>MDI</i></a> (<a name="ixa102437"><i>Multiple Document Interface</i></a>)
+bezeichnete Technik war bei bestimmten Typen von Anwendungen einmal
+recht verbreitet (z.B. bei Textverarbeitungen, Grafikprogrammen oder
+Entwicklungsumgebungen), ist aber mittlerweile etwas aus der Mode
+gekommen. Der Vollst&auml;ndigkeit halber wollen wir sie trotzdem
+kurz vorstellen. 
+
+<p>
+W&auml;hrend im AWT keine M&ouml;glichkeit vorgesehen war, MDI-Anwendungen
+zu entwickeln, ist es in Swing recht einfach. Dazu werden lediglich
+zwei Arten von Komponenten ben&ouml;tigt: 
+<ul>
+<li>Das als <a name="ixa102438"><i>Desktop</i></a> bezeichnete Hauptfenster
+der Anwendung
+<li>Die Kindfenster der Anwendung
+</ul>
+
+
+<!-- Section -->
+<a name="sectlevel4id037001006001"></a>
+<h4>Der Desktop </h4>
+
+<p>
+Als Desktop ist prinzipiell jede beliebige Hauptfensterklasse geeignet,
+meist wird aber die Klasse <a href="index_j.html#ixb100513"><font color=#000080><tt>JFrame</tt></font></a>
+verwendet. Um die Kindfenster zu verwalten, wird die vordefinierte
+ContentPane durch eine Instanz der Klasse <a name="ixa102439"><a href="index_j.html#ixb101830"><font color=#000080><tt>JDesktopPane</tt></font></a></a>
+ersetzt. Diese von <a href="index_j.html#ixb101802"><font color=#000080><tt>JLayeredPane</tt></font></a>
+abgeleitete Klasse besitzt einen <a name="ixa102440"><a href="index_d.html#ixb101831"><font color=#000080><tt>DesktopManager</tt></font></a></a>,
+der f&uuml;r die Verwaltung der Kindfenster zust&auml;ndig ist. Der
+<a href="index_d.html#ixb101831"><font color=#000080><tt>DesktopManager</tt></font></a>
+wird beispielsweise benachrichtigt (und f&uuml;hrt alle dazu erforderlichen
+Aktionen aus), wenn ein Kindfenster verkleinert, vergr&ouml;&szlig;ert
+oder verschoben werden soll. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+<a href="index_d.html#ixb101831"><font color=#000080><tt>DesktopManager</tt></font></a>
+ist ein Interface, das eine Vielzahl von Methoden enth&auml;lt. Mit
+der Klasse <a name="ixa102441"><a href="index_d.html#ixb101832"><font color=#000080><tt>DefaultDesktopManager</tt></font></a></a>
+gibt es eine Standardimplementierung, die f&uuml;r viele Zwecke ausreichend
+ist.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id037001006002"></a>
+<h4>Die Kindfenster </h4>
+
+<p>
+Die Kindfenster werden aus <a name="ixa102442"><a href="index_j.html#ixb100514"><font color=#000080><tt>JInternalFrame</tt></font></a></a>
+abgeleitet; einem Dialogelement, das recht &uuml;berzeugend vort&auml;uscht,
+ein Hauptfenster zu sein. Tats&auml;chlich ist <a href="index_j.html#ixb100514"><font color=#000080><tt>JInternalFrame</tt></font></a>
+direkt aus <a href="index_j.html#ixb101780"><font color=#000080><tt>JComponent</tt></font></a>
+abgeleitet und nicht aus <a href="index_j.html#ixb100513"><font color=#000080><tt>JFrame</tt></font></a>,
+wie man es vielleicht vermuten k&ouml;nnte. Der Grund liegt darin,
+dass <a href="index_j.html#ixb100513"><font color=#000080><tt>JFrame</tt></font></a>
+als <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>
+stets eine betriebssystemspezifische Fensterressource besitzt und
+damit f&uuml;r die Verwendung <i>innerhalb</i> der Grenzen eines anderen
+Fensters ungeeignet ist. 
+
+<p>
+Eine <i>betriebssystemspezifische</i> Ressource f&uuml;r MDI-Kindfenster
+steht aber nicht auf allen grafischen Oberfl&auml;chen zur Verf&uuml;gung
+und so haben sich die Swing-Entwickler entschlossen, <a href="index_j.html#ixb100514"><font color=#000080><tt>JInternalFrame</tt></font></a>
+als leichtgewichtige Komponente selbst zu realisieren. 
+
+<p>
+Das hat einige Konsequenzen: 
+<ul>
+<li>Die &uuml;blichen Ausstattungsmerkmale und Bedienelemente eines
+Fensters m&uuml;ssen nachgebildet werden (Rahmen, Titelleiste, Systemmen&uuml;,
+Buttons, das Verschieben des Fensters und das Ver&auml;ndern seiner
+Gr&ouml;&szlig;e usw.).
+<li>Die Programmierschnittstelle der Klasse <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>
+muss nachgebildet werden.
+<li>Da <a href="index_j.html#ixb100514"><font color=#000080><tt>JInternalFrame</tt></font></a>
+nicht aus <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>
+abgeleitet ist, kann ein <a href="index_j.html#ixb100514"><font color=#000080><tt>JInternalFrame</tt></font></a>-Objekt
+nicht verwendet werden, wenn eine Variable oder ein Parameter vom
+Typ <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>
+gefordert ist.
+<li>Muss eine Anwendung sowohl in einem <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>
+als auch in einem <a href="index_j.html#ixb100514"><font color=#000080><tt>JInternalFrame</tt></font></a>
+laufen k&ouml;nnen, so muss der Code f&uuml;r die Implementierung
+des Fensters in beiden Klassen verf&uuml;gbar gemacht werden. Vererbung
+kommt wegen der unterschiedlichen Vererbungslinien beider Klassen
+nicht in Frage. Als L&ouml;sung f&uuml;r dieses Problem k&ouml;nnte
+das Delegate-Pattern aus <a href="k100074.html#delegatepattern">Abschnitt 11.4.6</a>
+angewendet werden.
+</ul>
+
+<p>
+Um die Kindfenster zu aktivieren, m&uuml;ssen sie durch Aufruf von
+<a href="index_s.html#ixb101154"><font color=#000080><tt>setVisible</tt></font></a>
+sichtbar gemacht und mit <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+auf dem Desktop platziert werden. 
+
+<p>
+<a href="index_j.html#ixb100514"><font color=#000080><tt>JInternalFrame</tt></font></a>
+besitzt diverse Konstruktoren. Das nachfolgende Syntaxdiagramm zeigt
+nur den umfangreichsten von ihnen. Alle anderen ergeben sich, indem
+man auf der rechten Seite nicht ben&ouml;tigte Argumente wegfallen
+l&auml;sst: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public JInternalFrame(
+  String title,
+  boolean resizable,
+  boolean closable,
+  boolean maximizable,
+  boolean iconifiable
+)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JInternalFrame.html" onClick="this.href=getApiDoc('javax.swing.JInternalFrame')"><font color="#660066" size=-1>javax.swing.JInternalFrame</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_j.html#ixb100514"><font color=#000080><tt>JInternalFrame</tt></font></a>
+implementiert das schon erl&auml;uterte Interface <a href="index_r.html#ixb101805"><font color=#000080><tt>RootPaneContainer</tt></font></a>
+und stellt zus&auml;tzlich verschiedene Methoden zur Verf&uuml;gung.
+Einige von ihnen sind: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setClosable(boolean b)
+public void setResizable(boolean b)
+public void setIconifiable(boolean b)
+public void setMaximizable(boolean b)
+
+public void setTitle(String title)
+
+public void setDefaultCloseOperation(int operation)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JInternalFrame.html" onClick="this.href=getApiDoc('javax.swing.JInternalFrame')"><font color="#660066" size=-1>javax.swing.JInternalFrame</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa102443"><a href="index_s.html#ixb101833"><font color=#000080><tt>setClosable</tt></font></a></a>
+entscheidet, ob das Fenster geschlossen, und <a name="ixa102444"><a href="index_s.html#ixb101582"><font color=#000080><tt>setResizable</tt></font></a></a>,
+ob seine Gr&ouml;&szlig;e ver&auml;ndert werden kann. <a name="ixa102445"><a href="index_s.html#ixb101834"><font color=#000080><tt>setIconifiable</tt></font></a></a>
+legt fest, ob das Fenster in ein Symbol verkleinert, und <a name="ixa102446"><a href="index_s.html#ixb101835"><font color=#000080><tt>setMaximizable</tt></font></a></a>,
+ob es maximiert werden kann. Mit <a name="ixa102447"><a href="index_s.html#ixb101318"><font color=#000080><tt>setTitle</tt></font></a></a>
+kann der Rahmentitel angegeben werden und mit <a name="ixa102448"><a href="index_s.html#ixb101836"><font color=#000080><tt>setDefaultCloseOperation</tt></font></a></a>
+wird angegeben, wie das Fenster sich beim Schlie&szlig;en verhalten
+soll. Hier kann eine der Konstanten <a name="ixa102449"><a href="index_d.html#ixb101837"><font color=#000080><tt>DO_NOTHING_ON_CLOSE</tt></font></a></a>,
+<a name="ixa102450"><a href="index_h.html#ixb101838"><font color=#000080><tt>HIDE_ON_CLOSE</tt></font></a></a>
+oder <a name="ixa102451"><a href="index_d.html#ixb101839"><font color=#000080><tt>DISPOSE_ON_CLOSE</tt></font></a></a>
+angegeben werden. 
+
+<!-- Section -->
+
+<a name="sectlevel4id037001006003"></a>
+<h4>Beispielprogramm </h4>
+
+<p>
+Nach diesen Vorbemerkungen wollen wir ein einfaches Beispielprogramm
+erstellen. Es soll einen <a href="index_j.html#ixb100513"><font color=#000080><tt>JFrame</tt></font></a>
+als Desktop mit zwei Kindfenstern enthalten. Diese sollen alle Standardbedienelemente
+enthalten, vergr&ouml;&szlig;er- und verkleinerbar sein und innerhalb
+des Desktops verschoben werden k&ouml;nnen. 
+
+<p>
+Wir erstellen dazu eine Klasse <font color="#000077"><tt>DesktopFrame</tt></font>,
+die mit einem <a href="index_d.html#ixb101832"><font color=#000080><tt>DefaultDesktopManager</tt></font></a>
+ein Desktop aufbaut. Mit ihrer Methode <font color="#000077"><tt>addChild</tt></font>
+kann ein Kindfenster an einer bestimmten Position auf dem Desktop
+platziert werden. Weiterhin definieren wir eine aus <a href="index_j.html#ixb100514"><font color=#000080><tt>JInternalFrame</tt></font></a>
+abgeleitete Klasse <font color="#000077"><tt>ChildFrame</tt></font>.
+Sie legt im Konstruktor die Eigenschaften des Fensters fest, hat dar&uuml;ber
+hinaus aber keine Funktionalit&auml;ten. 
+<a name="listingid037007"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3707.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">class</font> DesktopFrame
+<font color="#555555">008 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">009 </font>{
+<font color="#555555">010 </font>  <font color="#0000AA">private</font> JDesktopPane desk;
+<font color="#555555">011 </font>
+<font color="#555555">012 </font>  <font color="#0000AA">public</font> DesktopFrame()
+<font color="#555555">013 </font>  {
+<font color="#555555">014 </font>    <font color="#006699">super</font>(<font color="#0000FF">"DesktopFrame"</font>);
+<font color="#555555">015 </font>    <font color="#006699">this</font>.desk = <font color="#0000AA">new</font> JDesktopPane();
+<font color="#555555">016 </font>    desk.setDesktopManager(<font color="#0000AA">new</font> DefaultDesktopManager());
+<font color="#555555">017 </font>    setContentPane(desk);
+<font color="#555555">018 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">019 </font>  }
+<font color="#555555">020 </font>
+<font color="#555555">021 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> addChild(JInternalFrame child, <font color="#006699">int</font> x, <font color="#006699">int</font> y)
+<font color="#555555">022 </font>  {
+<font color="#555555">023 </font>    child.setLocation(x, y);
+<font color="#555555">024 </font>    child.setSize(200, 150);
+<font color="#555555">025 </font>    child.setDefaultCloseOperation(
+<font color="#555555">026 </font>      JInternalFrame.DISPOSE_ON_CLOSE
+<font color="#555555">027 </font>    );
+<font color="#555555">028 </font>    desk.add(child);
+<font color="#555555">029 </font>    child.setVisible(<font color="#006699">true</font>);
+<font color="#555555">030 </font>  }
+<font color="#555555">031 </font>}
+<font color="#555555">032 </font>
+<font color="#555555">033 </font><font color="#0000AA">class</font> ChildFrame
+<font color="#555555">034 </font><font color="#0000AA">extends</font> JInternalFrame
+<font color="#555555">035 </font>{
+<font color="#555555">036 </font>  <font color="#0000AA">public</font> ChildFrame(String title)
+<font color="#555555">037 </font>  {
+<font color="#555555">038 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Child "</font> + title, <font color="#006699">true</font>, <font color="#006699">true</font>);
+<font color="#555555">039 </font>    setIconifiable(<font color="#006699">true</font>);
+<font color="#555555">040 </font>    setMaximizable(<font color="#006699">true</font>);
+<font color="#555555">041 </font>    setBackground(Color.lightGray);
+<font color="#555555">042 </font>  }
+<font color="#555555">043 </font>}
+<font color="#555555">044 </font>
+<font color="#555555">045 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3707
+<font color="#555555">046 </font>{
+<font color="#555555">047 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">048 </font>  {
+<font color="#555555">049 </font>    <font color="#00AA00">//Desktop erzeugen</font>
+<font color="#555555">050 </font>    DesktopFrame desktop = <font color="#0000AA">new</font> DesktopFrame();
+<font color="#555555">051 </font>    desktop.setLocation(100, 100);
+<font color="#555555">052 </font>    desktop.setSize(400, 300);
+<font color="#555555">053 </font>    desktop.setVisible(<font color="#006699">true</font>);
+<font color="#555555">054 </font>    <font color="#00AA00">//Zwei ChildFrames hinzuf&uuml;gen</font>
+<font color="#555555">055 </font>    desktop.addChild(<font color="#0000AA">new</font> ChildFrame(<font color="#0000FF">"1"</font>), 10, 10);
+<font color="#555555">056 </font>    desktop.addChild(<font color="#0000AA">new</font> ChildFrame(<font color="#0000FF">"2"</font>), 20, 20);
+<font color="#555555">057 </font>  }
+<font color="#555555">058 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3707.java"><font color="#000055" size=-1>Listing3707.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 37.7: Die Klasse JInternalFrame</i></p>
+
+<p>
+Die Ausgabe des Programms sieht so aus: 
+<p>
+<a name="imageid037008"></a>
+<img src="images/JIntFrame.gif">
+<p>
+
+<p><i>
+Abbildung 37.8: Die Klasse JInternalFrame</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100240.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100240.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100242.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100245.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

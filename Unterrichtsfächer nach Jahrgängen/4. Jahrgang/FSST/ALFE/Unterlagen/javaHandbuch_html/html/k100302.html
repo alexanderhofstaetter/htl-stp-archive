@@ -1,0 +1,666 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100300.html;106,k100301.html;107,k100303.html;108,k100307.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100300.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100301.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100303.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100307.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 47 - Objektorientierte Persistenz
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id047002"></a>
+<h2>47.2 Datenbanktabellen und Java-Objekte </h2>
+<hr>
+<ul>
+<li><a href="k100302.html#sectlevel2id047002">47.2 Datenbanktabellen und Java-Objekte</a>
+<ul>
+<li><a href="k100302.html#sectlevel3id047002001">47.2.1 Eine einfache Java-Klasse f&uuml;r Tabellen</a>
+<li><a href="k100302.html#sectlevel3id047002002">47.2.2 Verkn&uuml;pfen der Java-Klasse mit der Datenbank</a>
+<li><a href="k100302.html#sectlevel3id047002003">47.2.3 Konfiguration des Datenbankzugriffs</a>
+<ul>
+<li><a href="k100302.html#sectlevel4id047002003001">Aufbau der Konfigurationsdatei</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id047002001"></a>
+<h3>47.2.1 Eine einfache Java-Klasse f&uuml;r Tabellen </h3>
+
+<p>
+Wenn wir uns an die Tabelle <font color="#000077"><tt>dir</tt></font>
+aus <a href="k100278.html#kapiteljdbc">Kapitel 44</a> erinnern, k&ouml;nnten
+wir auf die Idee kommen, dass diese auch durch eine Java Bean abgebildet
+werden kann, deren Instanzen die Datens&auml;tze repr&auml;sentieren.
+Zur Erinnerung hier noch einmal die Tabellenstruktur: <a name="jpatablestrucdir"></a>
+
+<p>
+<table cols=3 border width=66%>
+
+<tr>
+<td valign=top align=left width=25%><b>Name </b></td>
+<td valign=top align=left width=25%><b>Typ </b></td>
+<td valign=top align=left width=50%><b>Bedeutung</b></td></tr>
+<tr>
+<td valign=top align=left>did </td>
+<td valign=top align=left>INT </td>
+<td valign=top align=left>Prim&auml;rschl&uuml;ssel</td></tr>
+<tr>
+<td valign=top align=left>dname </td>
+<td valign=top align=left>CHAR(100) </td>
+<td valign=top align=left>Verzeichnisname</td></tr>
+<tr>
+<td valign=top align=left>fatherdid </td>
+<td valign=top align=left>INT </td>
+<td valign=top align=left>Schl&uuml;ssel Vaterverzeichnis</td></tr>
+<tr>
+<td valign=top align=left>entries </td>
+<td valign=top align=left>INT </td>
+<td valign=top align=left>Anzahl der Verzeichniseintr&auml;ge</td></tr>
+</table>
+<p><i>
+Tabelle 47.1: Die Struktur der dir-Tabelle</i></p>
+
+<p>
+Der Einfachheit halber wollen wir uns im ersten Teil des Kapitels
+auf die Tabelle <i>dir</i> der Datenbank konzentrieren. Hierf&uuml;r
+entwerfen wir zun&auml;chst eine einfache Java-Klasse mit Variablen,
+die den Attributen der Datenbanktabelle entsprechen. Jede Instanz
+der Klasse kann damit eine Zeile bzw. einen Datensatz der Tabelle
+repr&auml;sentieren. 
+<a name="dirtable1"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Verzeichnis.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#00AA00">/**
+<font color="#555555">004 </font> * Diese Klasse repr&auml;sentiert die Tabelle 'dir' der 'DirDB'
+<font color="#555555">005 </font> * Jede Instanz der Klasse repr&auml;sentiert wiederum einen
+<font color="#555555">006 </font> * Datensatz
+<font color="#555555">007 </font> */</font>
+<font color="#555555">008 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Verzeichnis {
+<font color="#555555">009 </font>
+<font color="#555555">010 </font>  <font color="#00AA00">// Variablen die den Attributen der Tabelle entsprechen</font>
+<font color="#555555">011 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font> did;
+<font color="#555555">012 </font>  <font color="#0000AA">private</font> String dname;
+<font color="#555555">013 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font> fatherid;
+<font color="#555555">014 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font> entries;
+<font color="#555555">015 </font>
+<font color="#555555">016 </font>  <font color="#00AA00">/**
+<font color="#555555">017 </font>   * Ein einfacher Konstruktor ohne Initialisierung der
+<font color="#555555">018 </font>   * Objektvariablen (Minimalkonstruktor)
+<font color="#555555">019 </font>   */</font>
+<font color="#555555">020 </font>  <font color="#0000AA">public</font> Verzeichnis() {
+<font color="#555555">021 </font>  }
+<font color="#555555">022 </font>
+<font color="#555555">023 </font>  <font color="#00AA00">/**
+<font color="#555555">024 </font>   * Konstruktor zum Erzeugen von Instanzen der Klasse
+<font color="#555555">025 </font>   */</font>
+<font color="#555555">026 </font>  <font color="#0000AA">public</font> Verzeichnis(<font color="#006699">int</font> did,
+<font color="#555555">027 </font>                   String dname,
+<font color="#555555">028 </font>                   <font color="#006699">int</font> fatherid,
+<font color="#555555">029 </font>                   <font color="#006699">int</font> entries)
+<font color="#555555">030 </font>  {
+<font color="#555555">031 </font>    <font color="#006699">this</font>.did = did;
+<font color="#555555">032 </font>    <font color="#006699">this</font>.dname = dname;
+<font color="#555555">033 </font>    <font color="#006699">this</font>.fatherid = fatherid;
+<font color="#555555">034 </font>    <font color="#006699">this</font>.entries = entries;
+<font color="#555555">035 </font>  }
+<font color="#555555">036 </font>
+<font color="#555555">037 </font>  <font color="#00AA00">// Zugriffsmethoden, um die Daten</font>
+<font color="#555555">038 </font>  <font color="#00AA00">// Lesen und Schreiben zu k&ouml;nnen  </font>
+<font color="#555555">039 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> getDid()
+<font color="#555555">040 </font>  {
+<font color="#555555">041 </font>    <font color="#0000AA">return</font> did;
+<font color="#555555">042 </font>  }
+<font color="#555555">043 </font>
+<font color="#555555">044 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setDid(<font color="#006699">int</font> did)
+<font color="#555555">045 </font>  {
+<font color="#555555">046 </font>    <font color="#006699">this</font>.did = did;
+<font color="#555555">047 </font>  }
+<font color="#555555">048 </font>
+<font color="#555555">049 </font>  <font color="#0000AA">public</font> String getDname()
+<font color="#555555">050 </font>  {
+<font color="#555555">051 </font>    <font color="#0000AA">return</font> dname;
+<font color="#555555">052 </font>  }
+<font color="#555555">053 </font>
+<font color="#555555">054 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setDname(String dname)
+<font color="#555555">055 </font>  {
+<font color="#555555">056 </font>    <font color="#006699">this</font>.dname = dname;
+<font color="#555555">057 </font>  }
+<font color="#555555">058 </font>
+<font color="#555555">059 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> getFatherid()
+<font color="#555555">060 </font>  {
+<font color="#555555">061 </font>    <font color="#0000AA">return</font> fatherid;
+<font color="#555555">062 </font>  }
+<font color="#555555">063 </font>
+<font color="#555555">064 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setFatherid(<font color="#006699">int</font> fatherid)
+<font color="#555555">065 </font>  {
+<font color="#555555">066 </font>    <font color="#006699">this</font>.fatherid = fatherid;
+<font color="#555555">067 </font>  }
+<font color="#555555">068 </font>
+<font color="#555555">069 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> getEntries()
+<font color="#555555">070 </font>  {
+<font color="#555555">071 </font>    <font color="#0000AA">return</font> entries;
+<font color="#555555">072 </font>  }
+<font color="#555555">073 </font>
+<font color="#555555">074 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setEntries(<font color="#006699">int</font> entries)
+<font color="#555555">075 </font>  {
+<font color="#555555">076 </font>    <font color="#006699">this</font>.entries = entries;
+<font color="#555555">077 </font>  }
+<font color="#555555">078 </font>
+<font color="#555555">079 </font>  <font color="#0000AA">public</font> String toString() 
+<font color="#555555">080 </font>  {
+<font color="#555555">081 </font>    <font color="#0000AA">return</font> <font color="#0000FF">"Directory[id:"</font>+ did + <font color="#0000FF">", name:"</font> + dname +  <font color="#0000FF">"]"</font>;
+<font color="#555555">082 </font>  }    
+<font color="#555555">083 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 47.1: Eine Klasse f&uuml;r die dir-Tabelle</i></p>
+
+<p>
+Die Klasse <font color="#000077"><tt>Verzeichnis</tt></font> enth&auml;lt
+f&uuml;r jedes Datenbankattribut eine &auml;quivalente Variable, die
+&uuml;ber Getter-Methoden ausgelesen und &uuml;ber Setter-Methoden
+ver&auml;ndert werden kann. Derartige Java-Objekte werden auch als
+Java Beans bezeichnet und wurden in <a href="k100293.html#sectionbeans">Abschnitt 46.1</a>
+beschrieben. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Egal welche Konstruktoren f&uuml;r die mit der Datenbank verkn&uuml;pfte
+Java Bean vorgesehen sind: Das Persistenz-Framework ben&ouml;tigt
+immer einen parameterlosen Standardkonstruktor. Wenn n&ouml;tig, kann
+man dessen Sichtbarkeit &uuml;ber den Modifier <font color="#000077"><tt>protected</tt></font>
+einschr&auml;nken.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id047002002"></a>
+<h3>47.2.2 Verkn&uuml;pfen der Java-Klasse mit der Datenbank </h3>
+
+<p>
+Die soeben erstellte Java-Klasse entspricht auf triviale Weise der
+Datenbanktabelle <font color="#000077"><tt>dir</tt></font>. Um sie
+mit dem Persistenz-Framework zu verbinden, bedienen wir uns zus&auml;tzlicher
+Metainformationen in Form von <a name="ixa103474">Annotation</a>en
+(siehe auch <a href="k100290.html#sectionannotationen">Abschnitt 45.6</a>).
+
+<p>
+Die Metainformationen beeinflussen die Klasse oder den Programmablauf
+in keiner Weise, k&ouml;nnen jedoch zur Laufzeit - zum Beispiel &uuml;ber
+das Reflection API aus <a href="k100284.html#kapitelreflection">Kapitel 45</a>
+- ausgelesen werden. Die in den Annotationen hinterlegten Informationen
+teilen der Persistenzschicht mit, welche Tabelle in der Datenbank
+und welche Spalten durch die Attribute der Java Bean abgebildet werden:
+<a name="directory"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Verzeichnis.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> javax.persistence.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#00AA00">/**
+<font color="#555555">006 </font> * Diese Klasse repr&auml;sentiert die Tabelle 'dir' der 'DirDB'
+<font color="#555555">007 </font> * Jede Instanz der Klasse repr&auml;sentiert wiederum einen
+<font color="#555555">008 </font> * Datensatz
+<font color="#555555">009 </font> */</font>
+<font color="#555555">010 </font>@Entity
+<font color="#555555">011 </font>@Table( name = <font color="#0000FF">"dir"</font> )
+<font color="#555555">012 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Verzeichnis {
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>  <font color="#00AA00">// Variablen die den Attributen der Tabelle entsprechen</font>
+<font color="#555555">015 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font> did;
+<font color="#555555">016 </font>  <font color="#0000AA">private</font> String dname;
+<font color="#555555">017 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font> fatherid;
+<font color="#555555">018 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font> entries;
+<font color="#555555">019 </font>
+<font color="#555555">020 </font>  <font color="#00AA00">/**
+<font color="#555555">021 </font>   * Ein einfacher Konstruktor ohne Initialisierung der
+<font color="#555555">022 </font>   * Objektvariablen
+<font color="#555555">023 </font>   */</font>
+<font color="#555555">024 </font>  <font color="#0000AA">public</font> Verzeichnis() {
+<font color="#555555">025 </font>  }
+<font color="#555555">026 </font>
+<font color="#555555">027 </font>  <font color="#00AA00">/**
+<font color="#555555">028 </font>   * Konstruktor mit Initialisierung der Variablen
+<font color="#555555">029 </font>   */</font>
+<font color="#555555">030 </font>  <font color="#0000AA">public</font> Verzeichnis(<font color="#006699">int</font> did,
+<font color="#555555">031 </font>                   String dname,
+<font color="#555555">032 </font>                   <font color="#006699">int</font> fatherid,
+<font color="#555555">033 </font>                   <font color="#006699">int</font> entries)
+<font color="#555555">034 </font>  {
+<font color="#555555">035 </font>    <font color="#006699">this</font>.did = did;
+<font color="#555555">036 </font>    <font color="#006699">this</font>.dname = dname;
+<font color="#555555">037 </font>    <font color="#006699">this</font>.fatherid = fatherid;
+<font color="#555555">038 </font>    <font color="#006699">this</font>.entries = entries;
+<font color="#555555">039 </font>  }
+<font color="#555555">040 </font>
+<font color="#555555">041 </font>  <font color="#00AA00">// Zugriffsmethoden, um die Daten der Klasse</font>
+<font color="#555555">042 </font>  <font color="#00AA00">// Auslesen und Schreiben zu k&ouml;nnen</font>
+<font color="#555555">043 </font>  @Id
+<font color="#555555">044 </font>  @Column( name = <font color="#0000FF">"id"</font> )
+<font color="#555555">045 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> getDid()
+<font color="#555555">046 </font>  {
+<font color="#555555">047 </font>    <font color="#0000AA">return</font> did;
+<font color="#555555">048 </font>  }
+<font color="#555555">049 </font>
+<font color="#555555">050 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setDid(<font color="#006699">int</font> did)
+<font color="#555555">051 </font>  {
+<font color="#555555">052 </font>    <font color="#006699">this</font>.did = did;
+<font color="#555555">053 </font>  }
+<font color="#555555">054 </font>
+<font color="#555555">055 </font>  @Column( name = <font color="#0000FF">"dname"</font>, nullable = <font color="#006699">false</font> ) <a name="directory.x"></a>
+<font color="#555555">056 </font>  <font color="#0000AA">public</font> String getDname()
+<font color="#555555">057 </font>  {
+<font color="#555555">058 </font>    <font color="#0000AA">return</font> dname;
+<font color="#555555">059 </font>  }
+<font color="#555555">060 </font>
+<font color="#555555">061 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setDname(String dname)
+<font color="#555555">062 </font>  {
+<font color="#555555">063 </font>    <font color="#006699">this</font>.dname = dname;
+<font color="#555555">064 </font>  }
+<font color="#555555">065 </font>
+<font color="#555555">066 </font>  @Column ( name = <font color="#0000FF">"fatherid"</font> )
+<font color="#555555">067 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> getFatherid()
+<font color="#555555">068 </font>  {
+<font color="#555555">069 </font>    <font color="#0000AA">return</font> fatherid;
+<font color="#555555">070 </font>  }
+<font color="#555555">071 </font>
+<font color="#555555">072 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setFatherid(<font color="#006699">int</font> fatherid)
+<font color="#555555">073 </font>  {
+<font color="#555555">074 </font>    <font color="#006699">this</font>.fatherid = fatherid;
+<font color="#555555">075 </font>  }
+<font color="#555555">076 </font>
+<font color="#555555">077 </font>  @Column ( name = <font color="#0000FF">"entries"</font> )
+<font color="#555555">078 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> getEntries()
+<font color="#555555">079 </font>  {
+<font color="#555555">080 </font>    <font color="#0000AA">return</font> entries;
+<font color="#555555">081 </font>  }
+<font color="#555555">082 </font>
+<font color="#555555">083 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setEntries(<font color="#006699">int</font> entries)
+<font color="#555555">084 </font>  {
+<font color="#555555">085 </font>    <font color="#006699">this</font>.entries = entries;
+<font color="#555555">086 </font>  }
+<font color="#555555">087 </font>    
+<font color="#555555">088 </font>  <font color="#0000AA">public</font> String toString() 
+<font color="#555555">089 </font>  {
+<font color="#555555">090 </font>    <font color="#0000AA">return</font> <font color="#0000FF">"Directory[id:"</font>+ did + <font color="#0000FF">", name:"</font> + dname +  <font color="#0000FF">"]"</font>;
+<font color="#555555">091 </font>  }    
+<font color="#555555">092 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 47.2: Annotierte Klasse f&uuml;r die dir-Tabelle</i></p>
+
+<p>
+Wenn wir <a href="k100302.html#directory">Listing 47.2</a> mit <a href="k100302.html#dirtable1">Listing 47.1</a>
+vergleichen, stellen wir fest, dass lediglich einige Annotationen
+hinzugekommen sind. Sie enthalten Informationen, die Java ben&ouml;tigt,
+um die Instanzen der Klasse mit der Tabelle in der Datenbank zu verkn&uuml;pfen.
+Diese Annotationen k&ouml;nnen entweder &uuml;ber den Attributen der
+Klasse selbst oder &uuml;ber den damit verkn&uuml;pften Getter-Methoden
+stehen. Die hier verwendeten Annotationen haben folgende Bedeutung:
+<a name="jpatablebasicannotations"></a>
+<p>
+<table cols=2 border width=66%>
+
+<tr>
+<td valign=top align=left width=33%><b>Annotation </b></td>
+<td valign=top align=left width=66%><b>Beschreibung</b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103475"><a href="index_0.html#ixb102604"><font color=#000080><tt>@Entity</tt></font></a></a>
+</td>
+<td valign=top align=left>Markiert die Klasse als persistierbares,
+das hei&szlig;t mit einer Datenbank verkn&uuml;pftes Objekt</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103476"><a href="index_0.html#ixb102605"><font color=#000080><tt>@Table</tt></font></a></a>
+</td>
+<td valign=top align=left>Bezeichnet die verkn&uuml;pfte Datenbanktabelle</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103477"><a href="index_0.html#ixb102606"><font color=#000080><tt>@Id</tt></font></a></a>
+</td>
+<td valign=top align=left>Markiert das Attribut als Prim&auml;rschl&uuml;ssel
+der Datenbank</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103478"><a href="index_0.html#ixb102607"><font color=#000080><tt>@Column</tt></font></a></a>
+</td>
+<td valign=top align=left>Verkn&uuml;pft das Attribut mit einer Spalte
+in der Datenbanktabelle</td></tr>
+</table>
+<p><i>
+Tabelle 47.2: Die Struktur der dir-Tabelle</i></p>
+
+<p>
+Die Annotationen <a href="index_0.html#ixb102605"><font color=#000080><tt>@Table</tt></font></a>
+und <a href="index_0.html#ixb102607"><font color=#000080><tt>@Column</tt></font></a>
+besitzen jeweils das Attribut <font color="#000077"><tt>name</tt></font>,
+das den Namen der verkn&uuml;pften Datenbanktabelle bzw. -spalte enth&auml;lt.
+Ist dieser identisch mit dem Namen des Java-Attributs, kann die Angabe
+auch weggelassen werden, aus Gr&uuml;nden der Dokumentation ist das
+normalerweise aber nicht empfehlenswert. <a href="k100302.html#directory.x">Zeile 055</a>
+zeigt zudem, dass die Annotationen weitere Attribute aufnehmen k&ouml;nnen,
+mit denen die Struktur und Beschr&auml;nkungen der Datenbank granular
+beschrieben werden k&ouml;nnen. 
+
+<p>
+Die Annotation <font color="#000077"><tt>@Column</tt></font> unterst&uuml;tzt
+beispielsweise folgende Attribute: <a name="jpatablecolumnatts"></a>
+
+<p>
+<table cols=4 border width=66%>
+
+<tr>
+<td valign=top align=left width=16%><b>Attribut </b></td>
+<td valign=top align=left width=16%><b>Typ </b></td>
+<td valign=top align=left width=33%><b>Beschreibung </b></td>
+<td valign=top align=left width=33%><b>Standardwert</b></td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>name</tt></font>
+</td>
+<td valign=top align=left><font color="#000077"><tt>String</tt></font>
+</td>
+<td valign=top align=left>Name der Tabellenspalte </td>
+<td valign=top align=left>Name des Java Bean Attributs</td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>length</tt></font>
+</td>
+<td valign=top align=left><font color="#000077"><tt>int</tt></font>
+</td>
+<td valign=top align=left>Maximale L&auml;nge des Eintrags </td>
+<td valign=top align=left>255</td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>table</tt></font>
+</td>
+<td valign=top align=left><font color="#000077"><tt>String</tt></font>
+</td>
+<td valign=top align=left>Name einer Tabelle </td>
+<td valign=top align=left>Namen der Tabelle dieser Java Bean</td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>nullable</tt></font>
+</td>
+<td valign=top align=left><font color="#000077"><tt>boolean</tt></font>
+</td>
+<td valign=top align=left>Sind <font color="#000077"><tt>null</tt></font>-Werte
+erlaubt? </td>
+<td valign=top align=left><font color="#000077"><tt>true</tt></font></td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>insertable</tt></font>
+</td>
+<td valign=top align=left><font color="#000077"><tt>boolean</tt></font>
+</td>
+<td valign=top align=left>Darf dieser Wert mit INSERT Statements ver&auml;ndert
+werden? </td>
+<td valign=top align=left><font color="#000077"><tt>true</tt></font></td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>updateable</tt></font>
+</td>
+<td valign=top align=left><font color="#000077"><tt>boolean</tt></font>
+</td>
+<td valign=top align=left>Darf dieser Wert mit UPDATE Statements ge&auml;ndert
+werden? </td>
+<td valign=top align=left><font color="#000077"><tt>true</tt></font></td></tr>
+</table>
+<p><i>
+Tabelle 47.3: Attribute der Annotation @Column</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id047002003"></a>
+<h3>47.2.3 Konfiguration des Datenbankzugriffs </h3>
+
+<p>
+Wir haben nun eine Java Bean erstellt, die in der Lage ist, einen
+Datensatz der Tabelle <font color="#000077"><tt>dir</tt></font> aufzunehmen.
+Anschlie&szlig;end haben wir sie mit Zusatzinformationen versehen,
+um die Verkn&uuml;pfung zwischen Datenbank und Java-Klasse zu beschreiben.
+Nun fehlt nur noch der Hinweis, in welcher Datenbank sich die entsprechenden
+Tabellen befinden. 
+
+<p>
+Nat&uuml;rlich k&ouml;nnten diese Informationen auch in der Java-Klasse
+selbst abgelegt werden, das w&uuml;rde aber zu unflexiblem Code f&uuml;hren,
+der nicht mit verschiedenen Datenbanken zusammenarbeiten w&uuml;rde.
+Um die Datenbank auch im Nachhinein flexibel austauschen und beispielsweise
+statt der HSQLDB- eine Access- oder MySQL-Datenbank verwenden zu k&ouml;nnen,
+werden diese Konfigurationsdaten in einer separaten Datei gespeichert,
+die als <a name="ixa103479"><i>Persistence Descriptor</i></a> bezeichnet
+wird. 
+<a name="persistence"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>&lt;?xml version=<font color="#0000FF">"1.0"</font> encoding=<font color="#0000FF">"ISO-8859-1"</font>?&gt;
+<font color="#555555">002 </font>
+<font color="#555555">003 </font>&lt;!-- Persistenz Descriptor zur Konfiguration --&gt;
+<font color="#555555">004 </font>&lt;persistence&gt;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font>  &lt;!-- Hinterlegen eines symbolischen Namens --&gt;
+<font color="#555555">007 </font>  &lt;persistence-unit name=<font color="#0000FF">"persistenceExample"</font> <a name="persistence.z"></a>
+<font color="#555555">008 </font>                    transaction-type=<font color="#0000FF">"RESOURCE_LOCAL"</font>&gt; <a name="persistence.t"></a>
+<font color="#555555">009 </font>
+<font color="#555555">010 </font>    &lt;!-- Zu verwendende Implementierung --&gt;
+<font color="#555555">011 </font>    &lt;provider&gt;org.hibernate.ejb.HibernatePersistence&lt;/provider&gt;
+<font color="#555555">012 </font>
+<font color="#555555">013 </font>    &lt;!-- Persistierbare Klassen --&gt;
+<font color="#555555">014 </font>    &lt;<font color="#0000AA">class</font>&gt;Verzeichnis&lt;/class&gt; <a name="persistence.a"></a>
+<font color="#555555">015 </font>
+<font color="#555555">016 </font>    &lt;!-- Konfiguration der Hibernate Implementierung --&gt;
+<font color="#555555">017 </font>    &lt;properties&gt;
+<font color="#555555">018 </font>      &lt;!-- Name des intern verwendeten JDBC-Treibers --&gt;
+<font color="#555555">019 </font>      &lt;property name=<font color="#0000FF">"hibernate.connection.driver_class"</font>
+<font color="#555555">020 </font>                value=<font color="#0000FF">"org.hsqldb.jdbcDriver"</font>/&gt; <a name="persistence.b"></a>
+<font color="#555555">021 </font>
+<font color="#555555">022 </font>      &lt;!-- URL der zu verwendenden Datenbank --&gt;
+<font color="#555555">023 </font>      &lt;property name=<font color="#0000FF">"hibernate.connection.url"</font>
+<font color="#555555">024 </font>                value=<font color="#0000FF">"jdbc:hsqldb:hsqldbtest"</font>/&gt; <a name="persistence.c"></a>
+<font color="#555555">025 </font>
+<font color="#555555">026 </font>      &lt;!-- SQL-Dialect, den Hibernate verwenden soll --&gt;
+<font color="#555555">027 </font>      &lt;property name=<font color="#0000FF">"hibernate.dialect"</font>
+<font color="#555555">028 </font>                value=<font color="#0000FF">"org.hibernate.dialect.HSQLDialect"</font>/&gt;
+<font color="#555555">029 </font>
+<font color="#555555">030 </font>      &lt;!-- Benutzername und Passwort; Standardwerte der HSQLDB --&gt;
+<font color="#555555">031 </font>      &lt;property name=<font color="#0000FF">"hibernate.connection.username"</font> value=<font color="#0000FF">"SA"</font>/&gt; <a name="persistence.d"></a>
+<font color="#555555">032 </font>      &lt;property name=<font color="#0000FF">"hibernate.connection.password"</font> value=<font color="#0000FF">""</font>/&gt; <a name="persistence.e"></a>
+<font color="#555555">033 </font>
+<font color="#555555">034 </font>      &lt;!-- Flag, ob Tabellen automatisch erzeugt werden sollen --&gt;
+<font color="#555555">035 </font>      &lt;property name=<font color="#0000FF">"hibernate.hbm2ddl.auto"</font> value=<font color="#0000FF">"create"</font>/&gt; <a name="persistence.f"></a>
+<font color="#555555">036 </font>
+<font color="#555555">037 </font>      &lt;!-- Flag, ob SQL-Statements ausgegeben werden sollen --&gt;
+<font color="#555555">038 </font>      &lt;property name=<font color="#0000FF">"hibernate.show_sql"</font> value=<font color="#0000FF">"true"</font>/&gt; <a name="persistence.g"></a>
+<font color="#555555">039 </font>
+<font color="#555555">040 </font>      &lt;!-- Flag, ob SQL-Statements formatiert werden sollen --&gt;
+<font color="#555555">041 </font>      &lt;property name=<font color="#0000FF">"hibernate.format_sql"</font> value=<font color="#0000FF">"true"</font>/&gt; <a name="persistence.h"></a>
+<font color="#555555">042 </font>    &lt;/properties&gt;
+<font color="#555555">043 </font>  &lt;/persistence-unit&gt;
+<font color="#555555">044 </font>&lt;/persistence&gt;</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/persistence.xml"><font color="#000055" size=-1>persistence.xml</font></a></td>
+</tr>
+</table>
+<i>
+Listing 47.3: Konfigurationsdatei f&uuml;r das Java Persistenz API</i></p>
+
+<p>
+Diese Datei muss unter dem Namen <font color="#660099">persistence.xml</font>
+im Klassenpfad abgelegt werden, damit das Persistenz API die Klasse
+<font color="#000077"><tt>Verzeichnis</tt></font> mit der Tabelle
+<font color="#000077"><tt>dir</tt></font> in der HSQLDB-Datenbank
+verkn&uuml;pfen kann. Am einfachsten ist dies zu bewerkstelligen,
+indem die Datei <font color="#660099">persistence.xml</font> im selben
+Verzeichnis gespeichert wird, in dem auch die kompilierte Class-Datei
+<font color="#000077"><tt>Verzeichnis.class</tt></font> zu finden
+ist. 
+
+<!-- Section -->
+
+<a name="sectlevel4id047002003001"></a>
+<h4>Aufbau der Konfigurationsdatei </h4>
+
+<p>
+Die Konfigurationsdatei ist in einzelne Segmente aufgeteilt, die verschiedene
+Aufgaben haben. <a href="k100302.html#persistence">Listing 47.3</a>
+ist so vorkonfiguriert, dass es mit der HSQLDB-Datenbank aus <a href="k100278.html#kapiteljdbc">Kapitel 44</a>
+verwendet werden kann. Um auf die Tabellen einer anderen Datenbank
+zuzugreifen, m&uuml;ssen der Datenbanktreiber, die URL und die Zugangsdaten
+angepasst werden. Vergleicht man dieses Listing mit <a href="k100281.html#jdbcconfig">Listing 44.3</a>,
+kommen einem viele Optionen vertraut vor. Sie sind nun aber nicht
+mehr fest in die Java-Klasse einkompiliert, sondern k&ouml;nnen in
+einer separaten Datei gewartet werden. <a name="tableid047004"></a>
+
+<p>
+<table cols=2 border width=66%>
+
+<tr>
+<td valign=top align=left width=25%><b>Zeile </b></td>
+<td valign=top align=left width=75%><b>Beschreibung der Konfigurationseinstellung</b></td></tr>
+<tr>
+<td valign=top align=left><a href="k100302.html#persistence.z">Zeile 007</a>
+</td>
+<td valign=top align=left>Ein symbolischer Name f&uuml;r die Konfiguration,
+der sp&auml;ter f&uuml;r den Zugriff verwenden wird</td></tr>
+<tr>
+<td valign=top align=left><a href="k100302.html#persistence.t">Zeile 008</a>
+</td>
+<td valign=top align=left>Steuerung der Transaktionen auf SQL-Ebene.
+Erlaubte Werte sind <font color="#000077"><tt>RESOURCE_LOCAL</tt></font>
+und <font color="#000077"><tt>JTA</tt></font> (Standardwert). F&uuml;r
+die Verwendung mit der Standard Edition ist <font color="#000077"><tt>RESOURCE_LOCAL</tt></font>
+notwendig.</td></tr>
+<tr>
+<td valign=top align=left><a href="k100302.html#persistence.a">Zeile 014</a>
+</td>
+<td valign=top align=left>Liste der Klassen, die mit der Datenbank
+verkn&uuml;pft werden sollen</td></tr>
+<tr>
+<td valign=top align=left><a href="k100302.html#persistence.b">Zeile 020</a>
+</td>
+<td valign=top align=left>Name des passenden mit der Datenbank kompatiblen
+JDBC-Treibers</td></tr>
+<tr>
+<td valign=top align=left><a href="k100302.html#persistence.c">Zeile 024</a>
+</td>
+<td valign=top align=left>Name der Datenbank</td></tr>
+<tr>
+<td valign=top align=left><a href="k100302.html#persistence.d">Zeile 031</a>
+</td>
+<td valign=top align=left>Benutzername f&uuml;r den Zugriff auf die
+Datenbank</td></tr>
+<tr>
+<td valign=top align=left><a href="k100302.html#persistence.e">Zeile 032</a>
+</td>
+<td valign=top align=left>Passwort f&uuml;r den Zugriff auf die Datenbank</td></tr>
+<tr>
+<td valign=top align=left><a href="k100302.html#persistence.f">Zeile 035</a>
+</td>
+<td valign=top align=left>Gibt an, ob die Tabellen bei Bedarf zur
+Laufzeit erzeugt werden sollen</td></tr>
+<tr>
+<td valign=top align=left><a href="k100302.html#persistence.g">Zeile 038</a>
+</td>
+<td valign=top align=left>Gibt an, ob die intern ausgef&uuml;hrten
+SQL-Statements auf der Kommandozeile ausgegeben werden sollen</td></tr>
+<tr>
+<td valign=top align=left><a href="k100302.html#persistence.h">Zeile 041</a>
+</td>
+<td valign=top align=left>Gibt an, ob die intern ausgef&uuml;hrten
+SQL-Statements formatiert ausgegeben werden sollen</td></tr>
+</table>
+<p><i>
+Tabelle 47.4: Anpassen der Konfigurationsdatei</i></p>
+
+<p>
+Die vorangegangenen Schritte erscheinen auf den ersten Blick aufw&auml;ndiger
+als die korrespondierenden Pendants in JDBC. Der Vorteil des Java
+Persistenz API liegt jedoch vor allem in der wesentlich einfacheren
+Anwendung im Programmcode. Nachdem wir die Verkn&uuml;pfung zwischen
+Java-Klasse und Datenbank konfiguriert haben, k&ouml;nnen wir einfach
+mit der <font color="#000077"><tt>Verzeichnis</tt></font>-Klasse arbeiten
+wie mit jeder anderen Java-Klasse auch, ohne uns weiter um SQL oder
+technische Aspekte der Datenbank k&uuml;mmern zu m&uuml;ssen. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100300.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100301.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100303.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100307.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

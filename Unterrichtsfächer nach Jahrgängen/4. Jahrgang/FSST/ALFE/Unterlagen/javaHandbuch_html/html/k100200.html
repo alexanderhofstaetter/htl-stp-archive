@@ -1,0 +1,334 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100193.html;106,k100199.html;107,k100201.html;108,k100202.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100193.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100199.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100201.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100202.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 30 - Men&uuml;s
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id030007"></a>
+<h2>30.7 Datenaustausch mit der <a name="ixa101986">Zwischenablage</a>
+</h2>
+<hr>
+<ul>
+<li><a href="k100200.html#sectlevel2id030007">30.7 Datenaustausch mit der Zwischenablage</a>
+<ul>
+<li><a href="k100200.html#sectlevel3id030007001">30.7.1 &Uuml;berblick</a>
+<li><a href="k100200.html#sectlevel3id030007002">30.7.2 Kommunikation mit der Zwischenablage</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id030007001"></a>
+<h3>30.7.1 &Uuml;berblick </h3>
+
+<p>
+Die Zwischenablage ist in grafischen Oberfl&auml;chen eines der wichtigsten
+Hilfsmittel, um Daten zwischen Dialogelementen oder &uuml;ber Anwendungsgrenzen
+hinweg auszutauschen. Im JDK gibt es ein allgemeines API, das Funktionen
+f&uuml;r den Datenaustausch mit der Zwischenablage zur Verf&uuml;gung
+stellt. Wir wollen es hier kurz beschreiben, weil es als typisches
+Element eines Kontextmen&uuml;s gut in den Rahmen dieses Kapitels
+passt. 
+
+<p>
+Die zugeh&ouml;rigen Klassen und Interfaces befinden sich im Paket
+<a name="ixa101987"><a href="index_j.html#ixb101519"><font color=#000080><tt>java.awt.datatransfer</tt></font></a></a>.
+Die f&uuml;r die Kommunikation mit der Zwischenablage interessanten
+Bestandteile dieses API sind: 
+<ul>
+<li>Das Interface <a name="ixa101988"><a href="index_t.html#ixb101520"><font color=#000080><tt>Transferable</tt></font></a></a>,
+das die Schnittstelle von Objekten festlegt, die mit der Zwischenablage
+ausgetauscht werden k&ouml;nnen
+<li>Die Definition der Datentypen, die ausgetauscht werden k&ouml;nnen.
+Diese werden in Java als <a name="ixa101989"><i>DataFlavors</i></a>
+bezeichnet und basieren auf der <a name="ixa101990"><i>MIME-Spezifikation</i></a>
+(<i>Multi-purpose Internet Mail Extensions</i>), die in <a name="ixa101991">RFC 1521</a>
+und <a name="ixa101992">1522</a> beschrieben wird (allgemeine Hinweise
+zu den RFCs finden sich in <a href="k100308.html#requestforcomments">Abschnitt 48.1.5</a>).
+<li>Die Klasse <a name="ixa101993"><a href="index_c.html#ixb101525"><font color=#000080><tt>Clipboard</tt></font></a></a>,
+mit der die Zwischenablage implementiert wird. Neben der systemweiten
+Zwischenablage k&ouml;nnen auch benutzerdefinierte Zwischenablagen
+verwendet werden.
+</ul>
+
+
+<!-- Section -->
+<a name="sectlevel3id030007002"></a>
+<h3>30.7.2 Kommunikation mit der Zwischenablage </h3>
+
+<p>
+Wir wollen uns nun ansehen, welche Schritte erforderlich sind, um
+einen <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+in die Zwischenablage zu kopieren. Zun&auml;chst muss ein Objekt erzeugt
+werden, das das Interface <a href="index_t.html#ixb101520"><font color=#000080><tt>Transferable</tt></font></a>
+implementiert. <a href="index_t.html#ixb101520"><font color=#000080><tt>Transferable</tt></font></a>
+spezifiziert die Schnittstelle f&uuml;r den Transportmechanismus von
+Daten, die &uuml;ber die Zwischenablage ausgetauscht werden k&ouml;nnen.
+Es verwaltet eine Liste der in Frage kommenden Datentypen, die es
+mit <a name="ixa101994"><a href="index_g.html#ixb101526"><font color=#000080><tt>getTransferDataFlavors</tt></font></a></a>
+auf Anfrage zur Verf&uuml;gung stellt. Mit <a name="ixa101995"><a href="index_i.html#ixb101527"><font color=#000080><tt>isDataFlavorSupported</tt></font></a></a>
+kann festgestellt werden, ob ein bestimmter Datentyp unterst&uuml;tzt
+wird, und <a name="ixa101996"><a href="index_g.html#ixb101528"><font color=#000080><tt>getTransferData</tt></font></a></a>
+liefert die zu &uuml;bertragenden Daten: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public DataFlavor[] getTransferDataFlavors()
+
+public boolean isDataFlavorSupported(DataFlavor flavor)
+
+public Object getTransferData(DataFlavor flavor)
+  throws UnsupportedFlavorException, IOException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/datatransfer/Transferable.html" onClick="this.href=getApiDoc('java.awt.datatransfer.Transferable')"><font color="#660066" size=-1>java.awt.datatransfer.Transferable</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Initialisierung eines <a href="index_t.html#ixb101520"><font color=#000080><tt>Transferable</tt></font></a>-Objekts
+ist nicht Bestandteil der Schnittstelle, sondern muss von den implementierenden
+Klassen in Eigenregie - beispielsweise bei der Instanzierung - vorgenommen
+werden. 
+
+<p>
+Im AWT gibt es eine vordefinierte Klasse <a name="ixa101997"><a href="index_s.html#ixb101529"><font color=#000080><tt>StringSelection</tt></font></a></a>,
+die das Interface <a href="index_t.html#ixb101520"><font color=#000080><tt>Transferable</tt></font></a>
+implementiert. Sie ist in der Lage, Strings auszutauschen, und unterst&uuml;tzt
+die aus <a name="ixa101998"><a href="index_d.html#ixb101530"><font color=#000080><tt>DataFlavor</tt></font></a></a>
+abgeleiteten Datentypen <a name="ixa101999"><a href="index_p.html#ixb101531"><font color=#000080><tt>plainTextFlavor</tt></font></a></a>
+und <a name="ixa102000"><a href="index_s.html#ixb101532"><font color=#000080><tt>stringFlavor</tt></font></a></a>.
+Beide liefern die Daten als Unicode-kodierte Zeichenkette. W&auml;hrend
+<a href="index_p.html#ixb101531"><font color=#000080><tt>plainTextFlavor</tt></font></a>
+sein Ergebnis als <a href="index_i.html#ixb100587"><font color=#000080><tt>InputStream</tt></font></a>
+zur Verf&uuml;gung stellt und den MIME-Typ <font color="#000077"><tt>text/plain</tt></font>
+repr&auml;sentiert, liefert <a href="index_s.html#ixb101532"><font color=#000080><tt>stringFlavor</tt></font></a>
+einen String und repr&auml;sentiert den MIME-Typ <font color="#000077"><tt>application/x-java-serialized-object</tt></font>.
+
+<p>
+Ein <a href="index_s.html#ixb101529"><font color=#000080><tt>StringSelection</tt></font></a>-Objekt
+wird initialisiert, indem die zu &uuml;bertragende Zeichenkette an
+den Konstruktor &uuml;bergeben wird. Anschlie&szlig;end kann es an
+die Zwischenablage &uuml;bergeben werden, die die Daten durch Aufruf
+von <a href="index_g.html#ixb101528"><font color=#000080><tt>getTransferData</tt></font></a>
+&uuml;bernimmt. Jeder Aufruf von <a href="index_g.html#ixb101528"><font color=#000080><tt>getTransferData</tt></font></a>
+muss in eine <a href="index_t.html#ixb100571"><font color=#000080><tt>try</tt></font></a>-<a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a>-Anweisung
+eingebunden werden und folgende Fehler abfangen: 
+<ul>
+<li>Das <a href="index_t.html#ixb101520"><font color=#000080><tt>Transferable</tt></font></a>-Objekt
+ist nicht in der Lage, die Daten in dem gew&uuml;nschten Format zu
+liefern.
+<li>Da der R&uuml;ckgabewert vom Typ <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+ist, muss er in der Regel in den tats&auml;chlich erforderlichen Typ
+konvertiert werden. Hierbei kann eine Ausnahme des Typs <a name="ixa102001"><a href="index_c.html#ixb100738"><font color=#000080><tt>ClassCastException</tt></font></a></a>
+auftreten.
+</ul>
+
+<p>
+Bevor die Zwischenablage die Daten aus dem <a href="index_t.html#ixb101520"><font color=#000080><tt>Transferable</tt></font></a>-Objekt
+entnehmen kann, muss dieses nat&uuml;rlich erst einmal an die Zwischenablage
+&uuml;bergeben werden. Eine Zwischenablage ist immer eine Instanz
+der Klasse <a href="index_c.html#ixb101525"><font color=#000080><tt>Clipboard</tt></font></a>
+oder einer ihrer Unterklassen. Zwar ist es m&ouml;glich, anwendungsspezifische
+Zwischenablagen anzulegen, wir wollen uns aber nur mit der systemweit
+g&uuml;ltigen Zwischenablage des Betriebssystems besch&auml;ftigen.
+
+<p>
+Im <a href="index_t.html#ixb100510"><font color=#000080><tt>Toolkit</tt></font></a>
+gibt es eine Methode <a name="ixa102002"><a href="index_g.html#ixb101533"><font color=#000080><tt>getSystemClipboard</tt></font></a></a>,
+mit der ein Objekt f&uuml;r die systemweite Zwischenablage beschafft
+werden kann: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Clipboard getSystemClipboard()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Toolkit.html" onClick="this.href=getApiDoc('java.awt.Toolkit')"><font color="#660066" size=-1>java.awt.Toolkit</font></a></td>
+</tr>
+</table>
+
+<p>
+Sie stellt im Wesentlichen einen Konstruktor und drei Methoden zur
+Verf&uuml;gung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public String getName()
+
+public Transferable getContents(Object requestor)
+
+public void setContents(
+   Transferable contents, ClipboardOwner owner
+)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/datatransfer/Clipboard.html" onClick="this.href=getApiDoc('java.awt.datatransfer.Clipboard')"><font color="#660066" size=-1>java.awt.datatransfer.Clipboard</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa102003"><a href="index_g.html#ixb100679"><font color=#000080><tt>getName</tt></font></a></a>
+kann der Name der Zwischenablage ermittelt werden, <a name="ixa102004"><a href="index_g.html#ixb101534"><font color=#000080><tt>getContents</tt></font></a></a>
+liefert den Inhalt der Zwischenablage und mit <a name="ixa102005"><a href="index_s.html#ixb101535"><font color=#000080><tt>setContents</tt></font></a></a>
+kann der Zwischenablage ein neues Objekt zugewiesen werden. Ein Aufruf
+von <a href="index_g.html#ixb101534"><font color=#000080><tt>getContents</tt></font></a>
+liefert null, wenn die Zwischenablage leer ist. Der R&uuml;ckgabewert
+ist ein <a href="index_t.html#ixb101520"><font color=#000080><tt>Transferable</tt></font></a>-Objekt,
+dessen Daten mit <a href="index_g.html#ixb101528"><font color=#000080><tt>getTransferData</tt></font></a>
+abgefragt werden k&ouml;nnen. Beim Aufruf von <a href="index_g.html#ixb101534"><font color=#000080><tt>getContents</tt></font></a>
+muss zus&auml;tzlich ein Objekt <font color="#000077"><tt>requestor</tt></font>
+&uuml;bergeben werden, das derzeit keine Funktion hat. 
+
+<p>
+Ein Objekt, das den Inhalt der Zwischenablage &auml;ndern will, tut
+dies &uuml;ber den Aufruf der Methode <a href="index_s.html#ixb101535"><font color=#000080><tt>setContents</tt></font></a>.
+Als erstes Argument ist ein <a href="index_t.html#ixb101520"><font color=#000080><tt>Transferable</tt></font></a>-Objekt
+zu &uuml;bergeben, das die Daten enth&auml;lt. Als zweites Argument
+muss ein Objekt &uuml;bergeben werden, das das Interface <a name="ixa102006"><a href="index_c.html#ixb101536"><font color=#000080><tt>ClipboardOwner</tt></font></a></a>
+implementiert. Da die Zwischenablage von verschiedenen Objekten verwendet
+wird, ist es unter Umst&auml;nden wichtig zu wissen, wann die &uuml;bergebenen
+Daten verworfen und durch ein neues Objekt ersetzt werden. Dazu definiert
+<a href="index_c.html#ixb101536"><font color=#000080><tt>ClipboardOwner</tt></font></a>
+die Methode <a name="ixa102007"><a href="index_l.html#ixb101537"><font color=#000080><tt>lostOwnership</tt></font></a></a>,
+die aufgerufen wird, wenn der Inhalt der Zwischenablage ver&auml;ndert
+wird: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void lostOwnership(
+   Clipboard clipboard, Transferable contents
+)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/datatransfer/ClipboardOwner.html" onClick="this.href=getApiDoc('java.awt.datatransfer.ClipboardOwner')"><font color="#660066" size=-1>java.awt.datatransfer.ClipboardOwner</font></a></td>
+</tr>
+</table>
+
+<p>
+Nach diesen Vor&uuml;berlegungen wollen wir uns ein Beispiel ansehen.
+Darin soll die Methode <a href="index_a.html#ixb101413"><font color=#000080><tt>actionPerformed</tt></font></a>
+des vorigen Beispiels erweitert werden, um die beiden Men&uuml;eintr&auml;ge
+&#187;Kopieren&#171; und &#187;Einfuegen&#171; mit Funktionalit&auml;t
+zum Datenaustausch auszustatten. Zus&auml;tzlich implementiert das
+Beispielprogramm das Interface <a href="index_c.html#ixb101536"><font color=#000080><tt>ClipboardOwner</tt></font></a>
+und definiert dazu die Methode <a href="index_l.html#ixb101537"><font color=#000080><tt>lostOwnership</tt></font></a>:
+<a name="listingid030007"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* clpbrd.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#006699">void</font> actionPerformed(ActionEvent event)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  Clipboard clip = getToolkit().getSystemClipboard();
+<font color="#555555">006 </font>  String cmd = event.getActionCommand();
+<font color="#555555">007 </font>  <font color="#0000AA">if</font> (cmd.equals(<font color="#0000FF">"Kopieren"</font>)) {
+<font color="#555555">008 </font>    String s = <font color="#0000FF">"Es ist "</font> + System.currentTimeMillis() + <font color="#0000FF">"Uhr"</font>;
+<font color="#555555">009 </font>    StringSelection cont = <font color="#0000AA">new</font> StringSelection(s);
+<font color="#555555">010 </font>    clip.setContents(cont, <font color="#006699">this</font>);
+<font color="#555555">011 </font>  } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (cmd.equals(<font color="#0000FF">"Einfuegen"</font>)) {
+<font color="#555555">012 </font>    Transferable cont = clip.getContents(<font color="#006699">this</font>);
+<font color="#555555">013 </font>    <font color="#0000AA">if</font> (cont == <font color="#006699">null</font>) {
+<font color="#555555">014 </font>      System.out.println(<font color="#0000FF">"Zwischenablage ist leer"</font>);
+<font color="#555555">015 </font>    } <font color="#0000AA">else</font> {
+<font color="#555555">016 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">017 </font>        String s = (String) cont.getTransferData(
+<font color="#555555">018 </font>          DataFlavor.stringFlavor
+<font color="#555555">019 </font>        );
+<font color="#555555">020 </font>        System.out.println(s);
+<font color="#555555">021 </font>      } <font color="#0000AA">catch</font> (Exception e) {
+<font color="#555555">022 </font>        System.out.println(
+<font color="#555555">023 </font>          <font color="#0000FF">"Zwischenablage enth&auml;lt keinen Text"</font>
+<font color="#555555">024 </font>        );
+<font color="#555555">025 </font>      }
+<font color="#555555">026 </font>    }
+<font color="#555555">027 </font>  }
+<font color="#555555">028 </font>}
+<font color="#555555">029 </font>
+<font color="#555555">030 </font><font color="#0000AA">public</font> <font color="#006699">void</font> lostOwnership(Clipboard clip, Transferable cont)
+<font color="#555555">031 </font>{
+<font color="#555555">032 </font>  System.out.println(<font color="#0000FF">"Inhalt der Zwischenablage ersetzt"</font>);
+<font color="#555555">033 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/clpbrd.inc"><font color="#000055" size=-1>clpbrd.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 30.7: Kommunikation mit der Zwischenablage</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100193.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100199.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100201.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100202.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

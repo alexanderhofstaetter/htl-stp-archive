@@ -1,0 +1,109 @@
+********************************************************************************
+***                            Micro-Cap 10.0.9.2                            ***
+***                                                                          ***
+***                                                                          ***
+***        Transient Analysis of PULSE AUF LTG 4AHELS v02 2014-03-27         ***
+***                                                                          ***
+********************************************************************************
+Limits
+======
+Time Range           50n
+Maximum Time Step    0.010n
+Number of Points     51
+Temperature          Linear 27
+Retrace Runs         1
+Run Options          Normal
+State Variables      Zero
+Operating Point      On
+Operating Point Only Off
+
+
+*****************************************************
+***                Temperature=27                 ***
+*****************************************************
+
+Temperature=27 
+
+Model parameters for devices of type Pulse
+==========================================
+Instance:            V1   
+Using model:      PULSE   
+P1               0.000    
+P2               0.000    
+P3               1.000n   
+P4               1.000n   
+P5               2.000n   
+VONE             3.000    
+VZERO            0.000 (*)
+(*) Default Parameter
+
+
+
+DC Operating Point Voltages
+===========================
+Node         Voltage  Node         Voltage  Node         Voltage 
+U0            0.000   2             0.000   UOUT          0.000  
+UM            0.000   UIN           0.000   6             0.000  
+
+
+Operating Point for Devices of Type Resistor
+============================================
+Instance:                R1            R2            R3            R4
+V                    0.000         0.000         0.000         0.000 
+Power DC Terms:
+PD                   0.000         0.000         0.000         0.000 
+
+DC Pin Currents:
+Ir                   0.000         0.000         0.000         0.000 
+
+Device Variables:
+tc1                  0.000         0.000         0.000         0.000 
+tc2                  0.000         0.000         0.000         0.000 
+
+
+
+Operating Point for Devices of Type Capacitor
+=============================================
+Instance:                C1            C2            C3
+V                    0.000         0.000         0.000 
+Power DC Terms:
+PS                   0.000         0.000         0.000 
+
+DC Pin Currents:
+Ic                   0.000         0.000         0.000 
+
+Device Variables:
+ic                   0.000         0.000         0.000 
+
+
+
+Operating Point for Devices of Type Transmission Line
+=====================================================
+Instance:                T2            T4
+Power DC Terms:
+PS                   0.000         0.000 
+
+DC Pin Currents:
+Input                0.000         0.000 
+Output               0.000         0.000 
+
+Device Variables:
+z0                 120.000       120.000 
+td                   1.000n      750.000p
+f                    0.000         0.000 
+nl                   0.000         0.000 
+
+
+
+Operating Point for Devices of Type Pulse
+=========================================
+Instance:                V1
+Using model:          PULSE
+V                    0.000 
+Power DC Terms:
+PG                   0.000 
+
+DC Pin Currents:
+ISource              0.000 
+
+

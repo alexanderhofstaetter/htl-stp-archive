@@ -1,0 +1,872 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100292.html;106,k100297.html;107,k100299.html;108,k100300.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100292.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100297.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100299.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100300.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 46 - Beans
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="beancustomization"></a>
+<h2>46.6 BeanInfo-Klassen und Property-Editoren </h2>
+<hr>
+<ul>
+<li><a href="k100298.html#beancustomization">46.6 BeanInfo-Klassen und Property-Editoren</a>
+<ul>
+<li><a href="k100298.html#sectlevel3id046006001">46.6.1 BeanInfo-Klassen</a>
+<ul>
+<li><a href="k100298.html#sectlevel4id046006001001">getIcon</a>
+<li><a href="k100298.html#sectlevel4id046006001002">getPropertyDescriptors</a>
+<li><a href="k100298.html#sectlevel4id046006001003">getMethodDescriptors</a>
+<li><a href="k100298.html#sectlevel4id046006001004">Die Klasse LightBulbBeanInfo</a>
+</ul>
+<li><a href="k100298.html#propertyeditoren">46.6.2 Property-Editoren</a>
+<ul>
+<li><a href="k100298.html#sectlevel4id046006002001">LightBulbLightOnEditor1</a>
+<li><a href="k100298.html#sectlevel4id046006002002">LightBulbLightOnEditor2</a>
+<li><a href="k100298.html#sectlevel4id046006002003">LightBulbLightOnEditor3</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id046006001"></a>
+<h3>46.6.1 BeanInfo-Klassen </h3>
+
+<p>
+Die bisher beschriebenen F&auml;higkeiten und Eigenschaften einer
+Bean wurden vom GUI-Designer automatisch erkannt, weil die Beans bestimmte
+Design-Konventionen eingehalten haben. Der GUI-Designer verwendet
+eine Instanz der Klasse <a name="ixa103441"><a href="index_i.html#ixb102576"><font color=#000080><tt>Introspector</tt></font></a></a>
+aus dem Paket <a href="index_j.html#ixb100609"><font color=#000080><tt>java.beans</tt></font></a>,
+um diese F&auml;higkeiten nach dem Laden der Bean zu bestimmen. 
+
+<p>
+Neben getter-/setter-Methoden und Registrierungsmethoden f&uuml;r
+Events k&ouml;nnen Beans aber noch weitere Eigenschaften besitzen.
+So kann beispielsweise in der Toolbox ein Icon angezeigt werden. Auch
+Methoden, die nicht den getter-/setter-Konventionen entsprechen, k&ouml;nnen
+bekanntgemacht werden. Zudem ist es m&ouml;glich, f&uuml;r Nicht-Standard-Eigenschaften
+spezielle Eigenschafteneditoren zur Verf&uuml;gung zu stellen. 
+
+<p>
+Diese M&ouml;glichkeiten stehen erst zur Verf&uuml;gung, wenn man
+die Bean mit einer expliziten <a name="ixa103442"><i>BeanInfo-Klasse</i></a>
+ausstattet. Sie hat denselben Namen wie die Bean, tr&auml;gt aber
+zus&auml;tzlich den Suffix &#187;BeanInfo&#171; am Ende ihres Namens.
+Zudem muss sie im selben Paket liegen wie die Bean-Klasse. Die BeanInfo-Klasse
+muss das Interface <a name="ixa103443"><a href="index_b.html#ixb102555"><font color=#000080><tt>BeanInfo</tt></font></a></a>
+implementieren oder aus <a name="ixa103444"><a href="index_s.html#ixb102578"><font color=#000080><tt>SimpleBeanInfo</tt></font></a></a>
+abgeleitet sein (Letzteres bietet den Vorteil, dass bereits alle erforderlichen
+Methoden vorhanden sind und bei Bedarf nur noch &uuml;berlagert werden
+m&uuml;ssen). 
+
+<p>
+<a href="index_b.html#ixb102555"><font color=#000080><tt>BeanInfo</tt></font></a>
+definiert eine Reihe von Methoden, die der GUI-Designer abfragt. Sie
+liefern jeweils ein Array von Descriptor-Objekten, von denen jedes
+Informationen &uuml;ber eine zu ver&ouml;ffentlichende Methode, Eigenschaft
+oder ein Icon zur Verf&uuml;gung stellt. Wir wollen uns die drei wichtigsten
+von ihnen in den nachfolgenden Abschnitten ansehen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+W&auml;hrend der GUI-Designer die ihm bekannten Beans l&auml;dt, sucht
+er f&uuml;r jede von ihnen zun&auml;chst nach einer passenden BeanInfo-Klasse.
+Findet er eine solche, wird sie verwendet und der Low-Level-Introspectionsvorgang
+wird gar nicht erst angesto&szlig;en. Daraus folgt insbesondere, dass
+in diesem Fall <i>nur die in der BeanInfo-Klasse angegebenen</i> Merkmale
+zur Verf&uuml;gung stehen.
+
+<p>
+Ist es beispielsweise n&ouml;tig, eine BeanInfo-Klasse zur Verf&uuml;gung
+zu stellen, weil dem Designer eine besondere Methode bekanntgemacht
+werden soll, die nicht den getter-/setter-Konventionen entspricht,
+muss die BeanInfo-Klasse auch alle anderen Eigenschaften der Bean
+explizit bekanntmachen. Andernfalls w&uuml;rde der GUI-Designer nur
+die spezielle Methode sehen, alle anderen Merkmale aber ignorieren.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id046006001001"></a>
+<h4>getIcon </h4>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Image getIcon(int iconKind)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/beans/BeanInfo.html" onClick="this.href=getApiDoc('java.beans.BeanInfo')"><font color="#660066" size=-1>java.beans.BeanInfo</font></a></td>
+</tr>
+</table>
+
+<p>
+Der GUI-Designer ruft <a name="ixa103445"><a href="index_g.html#ixb102579"><font color=#000080><tt>getIcon</tt></font></a></a>
+auf, um herauszufinden, ob die Bean ein Icon zur Darstellung in der
+Toolbox zur Verf&uuml;gung stellen kann. Als Parameter wird dabei
+eine der symbolischen Konstanten <a name="ixa103446"><a href="index_i.html#ixb102580"><font color=#000080><tt>ICON_COLOR_16x16</tt></font></a></a>,
+<a name="ixa103447"><a href="index_i.html#ixb102581"><font color=#000080><tt>ICON_MONO_16x16</tt></font></a></a>,
+<a name="ixa103448"><a href="index_i.html#ixb102582"><font color=#000080><tt>ICON_COLOR_32x32</tt></font></a></a>
+oder <a name="ixa103449"><a href="index_i.html#ixb102583"><font color=#000080><tt>ICON_MONO_32x32</tt></font></a></a>
+&uuml;bergeben. Kann die BeanInfo-Klasse ein Icon in der gew&uuml;nschten
+Form zur Verf&uuml;gung stellen, muss sie ein passendes <a href="index_i.html#ixb100655"><font color=#000080><tt>Image</tt></font></a>-Objekt
+erzeugen und an den Aufrufer zur&uuml;ckgeben. Ist das nicht der Fall,
+sollte <a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>
+zur&uuml;ckgegeben werden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Ist die BeanInfo-Klasse aus <a href="index_s.html#ixb102578"><font color=#000080><tt>SimpleBeanInfo</tt></font></a>
+abgeleitet, ist das Erzeugen eines <a href="index_i.html#ixb100655"><font color=#000080><tt>Image</tt></font></a>-Objekts
+einfach. <a href="index_s.html#ixb102578"><font color=#000080><tt>SimpleBeanInfo</tt></font></a>
+besitzt eine Methode <a name="ixa103450"><a href="index_l.html#ixb102584"><font color=#000080><tt>loadImage</tt></font></a></a>,
+die bei &Uuml;bergabe eines Dateinamens die ensprechende Bilddatei
+l&auml;dt und daraus ein <a href="index_i.html#ixb100655"><font color=#000080><tt>Image</tt></font></a>
+erzeugt.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id046006001002"></a>
+<h4>getPropertyDescriptors </h4>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public PropertyDescriptor[] getPropertyDescriptors()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/beans/BeanInfo.html" onClick="this.href=getApiDoc('java.beans.BeanInfo')"><font color="#660066" size=-1>java.beans.BeanInfo</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Methode <a name="ixa103451"><a href="index_g.html#ixb102585"><font color=#000080><tt>getPropertyDescriptors</tt></font></a></a>
+wird aufgerufen, um ein Array von <a name="ixa103452"><a href="index_p.html#ixb102586"><font color=#000080><tt>PropertyDescriptor</tt></font></a></a>-Objekten
+zur Verf&uuml;gung zu stellen. Es enth&auml;lt f&uuml;r jede &ouml;ffentliche
+Eigenschaft der Bean ein Element, das dessen Merkmale beschreibt.
+Ein <a href="index_p.html#ixb102586"><font color=#000080><tt>PropertyDescriptor</tt></font></a>
+kann recht einfach instanziert werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public PropertyDescriptor(String propertyName, Class&lt;?&gt; beanClass)
+  throws IntrospectionException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/beans/PropertyDescriptor.html" onClick="this.href=getApiDoc('java.beans.PropertyDescriptor')"><font color="#660066" size=-1>java.beans.PropertyDescriptor</font></a></td>
+</tr>
+</table>
+
+<p>
+Lediglich der Name der Eigenschaft und das Klassenobjekt der zugeh&ouml;rigen
+Bean sind anzugeben. Weitere Merkmale k&ouml;nnen durch Methodenaufrufe
+hinzugef&uuml;gt werden. Uns interessiert an dieser Stelle lediglich
+die Methode <a name="ixa103453"><a href="index_s.html#ixb102587"><font color=#000080><tt>setPropertyEditorClass</tt></font></a></a>,
+auf die wir in <a href="k100298.html#propertyeditoren">Abschnitt 46.6.2</a>
+zur&uuml;ckkommen werden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+F&uuml;r jedes von <a href="index_g.html#ixb102585"><font color=#000080><tt>getPropertyDescriptors</tt></font></a>
+zur&uuml;ckgegebene Element erwartet der GUI-Designer eine setter-
+und eine getter-Methode, deren Signatur dem bekannten Schema entsprechen
+muss.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id046006001003"></a>
+<h4>getMethodDescriptors </h4>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public MethodDescriptor[] getMethodDescriptors()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/beans/BeanInfo.html" onClick="this.href=getApiDoc('java.beans.BeanInfo')"><font color="#660066" size=-1>java.beans.BeanInfo</font></a></td>
+</tr>
+</table>
+
+<p>
+Zus&auml;tzliche Methoden k&ouml;nnen dem GUI-Designer durch &Uuml;berlagern
+von <a name="ixa103454"><a href="index_g.html#ixb102588"><font color=#000080><tt>getMethodDescriptors</tt></font></a></a>
+bekanntgemacht werden. Zur&uuml;ckgegeben wird ein Array, das f&uuml;r
+jede Methode ein Objekt des Typs <a name="ixa103455"><a href="index_m.html#ixb102589"><font color=#000080><tt>MethodDescriptor</tt></font></a></a>
+enth&auml;lt. Darin wird im Wesentlichen ein <a name="ixa103456"><a href="index_m.html#ixb102463"><font color=#000080><tt>Method</tt></font></a></a>-Objekt
+gekapselt (siehe <a href="k100287.html#reflectionmethodenaufrufe">Abschnitt 45.3</a>):
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public MethodDescriptor(Method method)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/beans/MethodDescriptor.html" onClick="this.href=getApiDoc('java.beans.MethodDescriptor')"><font color="#660066" size=-1>java.beans.MethodDescriptor</font></a></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id046006001004"></a>
+<h4>Die Klasse LightBulbBeanInfo </h4>
+
+<p>
+Nach diesen Vorbemerkungen k&ouml;nnen wir eine geeignete BeanInfo-Klasse
+f&uuml;r die <font color="#000077"><tt>LightBulb</tt></font>-Komponente
+entwickeln: 
+<a name="lightbulbbeaninfo"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* LightBulbBeanInfo.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.beans.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> java.lang.reflect.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> LightBulbBeanInfo
+<font color="#555555">008 </font><font color="#0000AA">extends</font> SimpleBeanInfo
+<font color="#555555">009 </font>{
+<font color="#555555">010 </font>  <font color="#0000AA">public</font> Image getIcon(<font color="#006699">int</font> iconKind)
+<font color="#555555">011 </font>  {
+<font color="#555555">012 </font>    String imgname = <font color="#0000FF">"bulbico16.gif"</font>;
+<font color="#555555">013 </font>    <font color="#0000AA">if</font> (iconKind == BeanInfo.ICON_MONO_32x32 ||
+<font color="#555555">014 </font>        iconKind == BeanInfo.ICON_COLOR_32x32) {
+<font color="#555555">015 </font>      imgname = <font color="#0000FF">"bulbico32.gif"</font>;
+<font color="#555555">016 </font>    }
+<font color="#555555">017 </font>    <font color="#0000AA">return</font> loadImage(imgname);
+<font color="#555555">018 </font>  }
+<font color="#555555">019 </font>
+<font color="#555555">020 </font>  <font color="#0000AA">public</font> PropertyDescriptor[] getPropertyDescriptors()
+<font color="#555555">021 </font>  {
+<font color="#555555">022 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">023 </font>      PropertyDescriptor pd1 = <font color="#0000AA">new</font> PropertyDescriptor(
+<font color="#555555">024 </font>        <font color="#0000FF">"lightOn"</font>,
+<font color="#555555">025 </font>        LightBulb.<font color="#0000AA">class</font>
+<font color="#555555">026 </font>      );
+<font color="#555555">027 </font>      <font color="#00AA00">//pd1.setPropertyEditorClass(LightBulbLightOnEditor1.class); <a name="lightbulbbeaninfo.a"></a></font>
+<font color="#555555">028 </font>      PropertyDescriptor[] ret = {pd1};
+<font color="#555555">029 </font>      <font color="#0000AA">return</font> ret;
+<font color="#555555">030 </font>    } <font color="#0000AA">catch</font> (IntrospectionException e) {
+<font color="#555555">031 </font>      System.err.println(e.toString());
+<font color="#555555">032 </font>      <font color="#0000AA">return</font> <font color="#006699">null</font>;
+<font color="#555555">033 </font>    }
+<font color="#555555">034 </font>  }
+<font color="#555555">035 </font>
+<font color="#555555">036 </font>  <font color="#0000AA">public</font> MethodDescriptor[] getMethodDescriptors()
+<font color="#555555">037 </font>  {
+<font color="#555555">038 </font>    MethodDescriptor[] ret = <font color="#006699">null</font>;
+<font color="#555555">039 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">040 </font>      Class&lt;LightBulb&gt; bulbclass = LightBulb.<font color="#0000AA">class</font>;
+<font color="#555555">041 </font>      Method meth1 = bulbclass.getMethod(<font color="#0000FF">"toggleLight"</font>, <font color="#006699">null</font>);
+<font color="#555555">042 </font>      ret = <font color="#0000AA">new</font> MethodDescriptor[1];
+<font color="#555555">043 </font>      ret[0] = <font color="#0000AA">new</font> MethodDescriptor(meth1);
+<font color="#555555">044 </font>    } <font color="#0000AA">catch</font> (NoSuchMethodException e) {
+<font color="#555555">045 </font>      <font color="#00AA00">//ret bleibt null</font>
+<font color="#555555">046 </font>    }
+<font color="#555555">047 </font>    <font color="#0000AA">return</font> ret;
+<font color="#555555">048 </font>  }
+<font color="#555555">049 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/LightBulbBeanInfo.java"><font color="#000055" size=-1>LightBulbBeanInfo.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 46.10: Die Klasse LightBulbBeanInfo</i></p>
+
+<p>
+Wird die Klasse &uuml;bersetzt und in die jar-Datei f&uuml;r die Beanbox
+aufgenommen, ver&auml;ndert sich die Pr&auml;sentation der <font color="#000077"><tt>LightBulb</tt></font>-Bean
+in der Beanbox: 
+<ul>
+<li>In der Toolbox wird neben dem Namen das 16x16-Icon angezeigt.
+<li>Der Eigenschafteneditor kennt nur noch die Eigenschaft &#187;lightOn&#171;.
+<li>Der GUI-Designer hat registriert, dass es in der Methodenliste
+von <font color="#000077"><tt>LightBulb</tt></font> zus&auml;tzlich
+eine parameterlose Methode <font color="#000077"><tt>toggleLigth</tt></font>
+gibt.
+</ul>
+
+<p>
+W&auml;hrend die ersten beiden Ver&auml;nderungen nach dem Starten
+der Beanbox offensichtlich sind, k&ouml;nnen wir die letzte &uuml;berpr&uuml;fen,
+indem wir den Aufruf von <font color="#000077"><tt>toggleLight</tt></font>
+auf das Ereignis einer anderen Bean legen. Dazu platzieren wir im
+GUI-Designer zun&auml;chst eine <font color="#000077"><tt>LightBulb</tt></font>-
+und eine <font color="#000077"><tt>LightedPushButton</tt></font>-Bean.
+Anschlie&szlig;end markieren wir die <font color="#000077"><tt>LightedPushButton</tt></font>-Bean
+und rufen den Men&uuml;punkt &#187;Edit.Events.PropertyChange.propertyChange&#171;
+auf. Die rote Verbindungslinie ziehen wir auf die <font color="#000077"><tt>LightBulb</tt></font>
+und fixieren sie dort mit einem Mausklick. 
+
+<p>
+Aus der Auswahlliste der verf&uuml;gbaren parameterlosen Methoden
+k&ouml;nnen wir <font color="#000077"><tt>toggleLight</tt></font>
+ausw&auml;hlen und &#187;OK&#171; dr&uuml;cken. Die Beanbox generiert
+und &uuml;bersetzt nun eine Adapterklasse, die bei jedem <a href="index_p.html#ixb102559"><font color=#000080><tt>PropertyChangeEvent</tt></font></a>
+des <font color="#000077"><tt>LightedPushButton</tt></font> die Methode
+<font color="#000077"><tt>toggleLight</tt></font> der <font color="#000077"><tt>LightBulb</tt></font>
+aufruft. Nach jedem Dr&uuml;cken des Buttons ver&auml;ndert die Lampe
+also ihren Zustand. Die Lampe kann nat&uuml;rlich nach wie vor auch
+im Eigenschaftenfenster an- und ausgeschaltet werden. 
+
+<!-- Section -->
+
+<a name="propertyeditoren"></a>
+<h3>46.6.2 Property-Editoren </h3>
+
+<p>
+Die Beanbox und andere GUI-Designer stellen f&uuml;r einfache Eigenschaften
+vordefinierte Editoren zur Verf&uuml;gung, mit denen ihr Wert ver&auml;ndert
+werden kann. Bereits bei indizierten Eigenschaften muss die Beanbox
+aber passen. Auch f&uuml;r Objekttypen kann ein GUI-Designer keinen
+Standardeditor zur Verf&uuml;gung stellen, weil er die Konfigurationsschnittstelle
+des Objekts nicht kennt. F&uuml;r diesen Zweck bietet die Beans-Architektur
+die M&ouml;glichkeit, eigene Editoren zu definieren und bestimmten
+Eigenschaften von Beans zuzuordnen. 
+
+<p>
+In <a href="k100298.html#lightbulbbeaninfo.a">Zeile 027</a> von <a href="k100298.html#lightbulbbeaninfo">Listing 46.10</a>
+ist der Aufruf von <font color="#000077"><tt>setPropertyEditorClass</tt></font>
+auskommentiert, damit die Beanbox den eingebauten Editor f&uuml;r
+boolesche Werte verwendet. Durch Entfernen des Kommentars erh&auml;lt
+der <a href="index_p.html#ixb102586"><font color=#000080><tt>PropertyDescriptor</tt></font></a>
+der Eigenschaft &#187;lightOn&#171; die Information, dass zum Editieren
+dieser Eigenschaft ein benutzerdefinierter Editor verwendet werden
+soll. 
+
+<p>
+Benutzerdefinierte Eigenschafteneditoren werden &uuml;blicherweise
+aus der Klasse <a name="ixa103457"><a href="index_p.html#ixb102590"><font color=#000080><tt>PropertyEditorSupport</tt></font></a></a>
+des Pakets <a href="index_j.html#ixb100609"><font color=#000080><tt>java.beans</tt></font></a>
+abgeleitet. Sie besitzt eine Reihe von Methoden, die in eigenen Editoren
+&uuml;berlagert werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setValue(Object value)
+public Object getValue()
+
+public String getAsText()
+
+public void setAsText(String text)
+  throws java.lang.IllegalArgumentException
+
+public String[] getTags()
+
+public boolean isPaintable()
+
+public boolean supportsCustomEditor()
+
+public void paintValue(Graphics g, Rectangle box)
+
+public Component getCustomEditor()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/beans/PropertyEditorSupport.html" onClick="this.href=getApiDoc('java.beans.PropertyEditorSupport')"><font color="#660066" size=-1>java.beans.PropertyEditorSupport</font></a></td>
+</tr>
+</table>
+
+<p>
+In den n&auml;chsten Abschnitten werden wir drei Editoren f&uuml;r
+die Eigenschaft &#187;lightOn&#171; vorstellen. Sie machen in unterschiedlicher
+Weise von diesen Methoden Gebrauch. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Eine weitere Variante zur Konfiguration von Beans (auf die wir hier
+nicht n&auml;her eingehen wollen) ist die Implementierung eines <a name="ixa103458"><i>Customizer</i></a>.
+Dieser erh&auml;lt volle Kontrolle &uuml;ber die Konfiguration der
+Bean. Er kann insbesondere auch mehrere Eigenschaften gleichzeitig
+ver&auml;ndern und auf diese Weise aufw&auml;ndige Editoren zur Verf&uuml;gung
+stellen, die den bekannten <i>Wizards</i> oder <i>Assistenten</i>
+moderner Entwicklungssysteme &auml;hneln.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id046006002001"></a>
+<h4>LightBulbLightOnEditor1 </h4>
+
+<p>
+Der erste Editor ist sehr einfach aufgebaut. Er stellt ein Textfeld
+zur Verf&uuml;gung, in dem die Werte &#187;an&#171; und &#187;aus&#171;
+eingegeben werden k&ouml;nnen, um den Zustand der Lampe umzuschalten.
+
+<p>
+Jeder der nachfolgend vorgestellten Editoren kapselt eine boolesche
+Membervariable <font color="#000077"><tt>currentvalue</tt></font>,
+die den aktuellen Zustand der Lampe festh&auml;lt. Sie wird vom GUI-Designer
+durch Aufruf von <a name="ixa103459"><a href="index_g.html#ixb100763"><font color=#000080><tt>getValue</tt></font></a></a>
+abgefragt und durch <a name="ixa103460"><a href="index_s.html#ixb101626"><font color=#000080><tt>setValue</tt></font></a></a>
+gesetzt. Beide Methoden operieren mit Objekttypen, d.h., es ist jeweils
+eine Konvertierung zwischen <a href="index_b.html#ixb100071"><font color=#000080><tt>boolean</tt></font></a>
+und <a href="index_b.html#ixb100472"><font color=#000080><tt>Boolean</tt></font></a>
+erforderlich. In unserem Beispiel werden zus&auml;tzlich die Methoden
+<a name="ixa103461"><a href="index_g.html#ixb102592"><font color=#000080><tt>getAsText</tt></font></a></a>
+und <a name="ixa103462"><a href="index_s.html#ixb102593"><font color=#000080><tt>setAsText</tt></font></a></a>
+&uuml;berlagert, um auf die textuelle Repr&auml;sentation (&#187;an&#171;
+und &#187;aus&#171;) des booleschen Werts zuzugreifen. 
+<a name="listingid046011"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* LightBulbLightOnEditor1.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.beans.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> LightBulbLightOnEditor1
+<font color="#555555">006 </font><font color="#0000AA">extends</font> PropertyEditorSupport
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#006699">boolean</font> currentvalue;
+<font color="#555555">009 </font>
+<font color="#555555">010 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setValue(Object value)
+<font color="#555555">011 </font>  {
+<font color="#555555">012 </font>    currentvalue = ((Boolean)value).booleanValue();
+<font color="#555555">013 </font>  }
+<font color="#555555">014 </font>
+<font color="#555555">015 </font>  <font color="#0000AA">public</font> Object getValue()
+<font color="#555555">016 </font>  {
+<font color="#555555">017 </font>    <font color="#0000AA">return</font> <font color="#0000AA">new</font> Boolean(currentvalue);
+<font color="#555555">018 </font>  }
+<font color="#555555">019 </font>
+<font color="#555555">020 </font>  <font color="#0000AA">public</font> String getAsText()
+<font color="#555555">021 </font>  {
+<font color="#555555">022 </font>    <font color="#0000AA">return</font> <font color="#0000FF">""</font> + (currentvalue ? <font color="#0000FF">"an"</font> : <font color="#0000FF">"aus"</font>);
+<font color="#555555">023 </font>  }
+<font color="#555555">024 </font>
+<font color="#555555">025 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setAsText(String text)
+<font color="#555555">026 </font>  <font color="#0000AA">throws</font> java.lang.IllegalArgumentException
+<font color="#555555">027 </font>  {
+<font color="#555555">028 </font>    <font color="#0000AA">if</font> (text.equalsIgnoreCase(<font color="#0000FF">"an"</font>)) {
+<font color="#555555">029 </font>      currentvalue = <font color="#006699">true</font>;
+<font color="#555555">030 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (text.equalsIgnoreCase(<font color="#0000FF">"aus"</font>)) {
+<font color="#555555">031 </font>      currentvalue = <font color="#006699">false</font>;
+<font color="#555555">032 </font>    } <font color="#0000AA">else</font> {
+<font color="#555555">033 </font>      <font color="#0000AA">throw</font> <font color="#0000AA">new</font> IllegalArgumentException(text);
+<font color="#555555">034 </font>    }
+<font color="#555555">035 </font>    firePropertyChange();
+<font color="#555555">036 </font>  }
+<font color="#555555">037 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/LightBulbLightOnEditor1.java"><font color="#000055" size=-1>LightBulbLightOnEditor1.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 46.11: Die Klasse LightBulbLightOnEditor1</i></p>
+
+<p>
+Der erste Editor sieht in der Beanbox so aus: 
+<p>
+<a name="imageid046008"></a>
+<img src="images/BulbEditor1.gif">
+<p>
+
+<p><i>
+Abbildung 46.8: LightBulbLightOnEditor1 in der Beanbox</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id046006002002"></a>
+<h4>LightBulbLightOnEditor2 </h4>
+
+<p>
+Ist der Wertevorrat f&uuml;r die zu editierende Eigenschaft endlich,
+kann es bequemer sein, dem Anwender alle m&ouml;glichen Varianten
+in einer Combox anzubieten. Dazu muss lediglich die Methode <a name="ixa103463"><a href="index_g.html#ixb102594"><font color=#000080><tt>getTags</tt></font></a></a>
+&uuml;berlagert und ein Array von Strings mit den m&ouml;glichen Werten
+zur&uuml;ckgegeben werden: 
+<a name="listingid046012"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* LightBulbLightOnEditor2.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.beans.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> LightBulbLightOnEditor2
+<font color="#555555">006 </font><font color="#0000AA">extends</font> PropertyEditorSupport
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#006699">boolean</font> currentvalue;
+<font color="#555555">009 </font>
+<font color="#555555">010 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setValue(Object value)
+<font color="#555555">011 </font>  {
+<font color="#555555">012 </font>    currentvalue = ((Boolean)value).booleanValue();
+<font color="#555555">013 </font>  }
+<font color="#555555">014 </font>
+<font color="#555555">015 </font>  <font color="#0000AA">public</font> Object getValue()
+<font color="#555555">016 </font>  {
+<font color="#555555">017 </font>    <font color="#0000AA">return</font> <font color="#0000AA">new</font> Boolean(currentvalue);
+<font color="#555555">018 </font>  }
+<font color="#555555">019 </font>
+<font color="#555555">020 </font>  <font color="#0000AA">public</font> String getAsText()
+<font color="#555555">021 </font>  {
+<font color="#555555">022 </font>    <font color="#0000AA">return</font> <font color="#0000FF">""</font> + (currentvalue ? <font color="#0000FF">"an"</font> : <font color="#0000FF">"aus"</font>);
+<font color="#555555">023 </font>  }
+<font color="#555555">024 </font>
+<font color="#555555">025 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setAsText(String text)
+<font color="#555555">026 </font>  <font color="#0000AA">throws</font> java.lang.IllegalArgumentException
+<font color="#555555">027 </font>  {
+<font color="#555555">028 </font>    System.out.println(<font color="#0000FF">"setAsText("</font> + text + <font color="#0000FF">")"</font>);
+<font color="#555555">029 </font>    <font color="#0000AA">if</font> (text.equalsIgnoreCase(<font color="#0000FF">"an"</font>)) {
+<font color="#555555">030 </font>      currentvalue = <font color="#006699">true</font>;
+<font color="#555555">031 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (text.equalsIgnoreCase(<font color="#0000FF">"aus"</font>)) {
+<font color="#555555">032 </font>      currentvalue = <font color="#006699">false</font>;
+<font color="#555555">033 </font>    } <font color="#0000AA">else</font> {
+<font color="#555555">034 </font>      <font color="#0000AA">throw</font> <font color="#0000AA">new</font> IllegalArgumentException(text);
+<font color="#555555">035 </font>    }
+<font color="#555555">036 </font>    firePropertyChange();
+<font color="#555555">037 </font>  }
+<font color="#555555">038 </font>
+<font color="#555555">039 </font>  <font color="#0000AA">public</font> String[] getTags()
+<font color="#555555">040 </font>  {
+<font color="#555555">041 </font>    <font color="#0000AA">return</font> <font color="#0000AA">new</font> String[]{<font color="#0000FF">"aus"</font>, <font color="#0000FF">"an"</font>};
+<font color="#555555">042 </font>  }
+<font color="#555555">043 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/LightBulbLightOnEditor2.java"><font color="#000055" size=-1>LightBulbLightOnEditor2.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 46.12: Die Klasse LightBulbLightOnEditor2</i></p>
+
+<p>
+Der zweite Editor sieht in der Beanbox so aus: 
+<p>
+<a name="imageid046009"></a>
+<img src="images/BulbEditor2.gif">
+<p>
+
+<p><i>
+Abbildung 46.9: LightBulbLightOnEditor2 in der Beanbox</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id046006002003"></a>
+<h4>LightBulbLightOnEditor3 </h4>
+
+<p>
+Zus&auml;tzlich zu den beiden einfachen Varianten kann die Bean aber
+auch einen vollkommen frei definierten Editor zur Verf&uuml;gung stellen.
+Sie ist in diesem Fall sowohl f&uuml;r die Darstellung der Eigenschaft
+in der Eigenschaftenliste als auch f&uuml;r das Ver&auml;ndern des
+aktuellen Werts mit Hilfe einer eigenen Komponente verantwortlich.
+Dazu werden weitere Methoden &uuml;berlagert: 
+<ul>
+<li><a name="ixa103464"><a href="index_i.html#ixb102595"><font color=#000080><tt>isPaintable</tt></font></a></a>
+gibt <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+zur&uuml;ck, um anzuzeigen, dass der Editor selbst f&uuml;r die Darstellung
+in der Eigenschaftenliste verantwortlich ist und daf&uuml;r die Methode
+<a name="ixa103465"><a href="index_p.html#ixb102596"><font color=#000080><tt>paintValue</tt></font></a></a>
+&uuml;berlagert.
+<li><a name="ixa103466"><a href="index_s.html#ixb102597"><font color=#000080><tt>supportsCustomEditor</tt></font></a></a>
+gibt ebenfalls <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+zur&uuml;ck, um anzuzeigen, dass ein eigener Eigenschafteneditor zur
+Verf&uuml;gung steht und durch Aufruf von <a name="ixa103467"><a href="index_g.html#ixb102598"><font color=#000080><tt>getCustomEditor</tt></font></a></a>
+beschafft werden kann. Der eigene Editor muss aus der Klasse <a href="index_c.html#ixb101293"><font color=#000080><tt>Component</tt></font></a>
+abgeleitet sein; er wird vom GUI-Designer automatisch in einem Editorfenster
+platziert.
+</ul>
+
+<p>
+Die folgende Klasse <font color="#000077"><tt>LightBulbLightOnEditor3</tt></font>
+stellt einen sehr einfachen Editor zur Verf&uuml;gung. Er besteht
+lediglich aus zwei nebeneinanderliegenden Rechtecken in den Farben
+Blau und Gelb. Die blaue Farbe symbolisiert den ausgeschalteten Zustand,
+die gelbe den eingeschalteten. Der aktuelle Zustand der Lampe wird
+durch einen schwarzen Rahmen um eines der beiden Rechtecke angezeigt.
+Durch einfaches Anklicken eines der beiden Farbfelder kann der Zustand
+umgeschaltet werden. 
+<a name="listingid046013"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* LightBulbLightOnEditor3.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> java.beans.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> LightBulbLightOnEditor3
+<font color="#555555">008 </font><font color="#0000AA">extends</font> PropertyEditorSupport
+<font color="#555555">009 </font>{
+<font color="#555555">010 </font>  <font color="#006699">boolean</font> currentvalue;
+<font color="#555555">011 </font>
+<font color="#555555">012 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setValue(Object value)
+<font color="#555555">013 </font>  {
+<font color="#555555">014 </font>    currentvalue = ((Boolean)value).booleanValue();
+<font color="#555555">015 </font>  }
+<font color="#555555">016 </font>
+<font color="#555555">017 </font>  <font color="#0000AA">public</font> Object getValue()
+<font color="#555555">018 </font>  {
+<font color="#555555">019 </font>    <font color="#0000AA">return</font> <font color="#0000AA">new</font> Boolean(currentvalue);
+<font color="#555555">020 </font>  }
+<font color="#555555">021 </font>
+<font color="#555555">022 </font>  <font color="#0000AA">public</font> <font color="#006699">boolean</font> isPaintable()
+<font color="#555555">023 </font>  {
+<font color="#555555">024 </font>    <font color="#0000AA">return</font> <font color="#006699">true</font>;
+<font color="#555555">025 </font>  }
+<font color="#555555">026 </font>
+<font color="#555555">027 </font>  <font color="#0000AA">public</font> <font color="#006699">boolean</font> supportsCustomEditor()
+<font color="#555555">028 </font>  {
+<font color="#555555">029 </font>    <font color="#0000AA">return</font> <font color="#006699">true</font>;
+<font color="#555555">030 </font>  }
+<font color="#555555">031 </font>
+<font color="#555555">032 </font>  <font color="#0000AA">public</font> Component getCustomEditor()
+<font color="#555555">033 </font>  {
+<font color="#555555">034 </font>    <font color="#0000AA">return</font> <font color="#0000AA">new</font> LightOnCustomEditor();
+<font color="#555555">035 </font>  }
+<font color="#555555">036 </font>
+<font color="#555555">037 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paintValue(Graphics g, Rectangle box)
+<font color="#555555">038 </font>  {
+<font color="#555555">039 </font>    <font color="#00AA00">//Linke Box: blau, Lampe ausgeschaltet</font>
+<font color="#555555">040 </font>    g.setColor(Color.blue);
+<font color="#555555">041 </font>    g.fillRect(box.x, box.y, box.width / 2, box.height);
+<font color="#555555">042 </font>    <font color="#00AA00">//Rechte Box: blau, Lampe angeschaltet</font>
+<font color="#555555">043 </font>    g.setColor(Color.yellow);
+<font color="#555555">044 </font>    g.fillRect(box.x + box.width / 2, box.y, box.width / 2, box.height);
+<font color="#555555">045 </font>    <font color="#00AA00">//Rahmen</font>
+<font color="#555555">046 </font>    g.setColor(Color.black);
+<font color="#555555">047 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; 2; ++i) {
+<font color="#555555">048 </font>      g.drawRect(
+<font color="#555555">049 </font>        box.x + (currentvalue ? box.width / 2 : 0) + i,
+<font color="#555555">050 </font>        box.y + i,
+<font color="#555555">051 </font>        box.width / 2 - 1 - (2 * i),
+<font color="#555555">052 </font>        box.height - 1 - (2 * i)
+<font color="#555555">053 </font>      );
+<font color="#555555">054 </font>    }
+<font color="#555555">055 </font>  }
+<font color="#555555">056 </font>
+<font color="#555555">057 </font>  <font color="#00AA00">//---Private Klassen----------------------------------------</font>
+<font color="#555555">058 </font>  <font color="#0000AA">class</font> LightOnCustomEditor
+<font color="#555555">059 </font>  <font color="#0000AA">extends</font> Canvas
+<font color="#555555">060 </font>  {
+<font color="#555555">061 </font>    <font color="#0000AA">public</font> LightOnCustomEditor()
+<font color="#555555">062 </font>    {
+<font color="#555555">063 </font>      addMouseListener(
+<font color="#555555">064 </font>        <font color="#0000AA">new</font> MouseAdapter() {
+<font color="#555555">065 </font>          <font color="#0000AA">public</font> <font color="#006699">void</font> mouseClicked(MouseEvent event)
+<font color="#555555">066 </font>            {
+<font color="#555555">067 </font>              currentvalue = (event.getX() &gt; getSize().width / 2);
+<font color="#555555">068 </font>              LightBulbLightOnEditor3.<font color="#006699">this</font>.firePropertyChange();
+<font color="#555555">069 </font>              repaint();
+<font color="#555555">070 </font>            }
+<font color="#555555">071 </font>          }
+<font color="#555555">072 </font>        );
+<font color="#555555">073 </font>    }
+<font color="#555555">074 </font>
+<font color="#555555">075 </font>    <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">076 </font>    {
+<font color="#555555">077 </font>      paintValue(g, <font color="#0000AA">new</font> Rectangle(0, 0, getSize().width, getSize().height));
+<font color="#555555">078 </font>    }
+<font color="#555555">079 </font>
+<font color="#555555">080 </font>    <font color="#0000AA">public</font> Dimension getPreferredSize()
+<font color="#555555">081 </font>    {
+<font color="#555555">082 </font>      <font color="#0000AA">return</font> <font color="#0000AA">new</font> Dimension(120, 60);
+<font color="#555555">083 </font>    }
+<font color="#555555">084 </font>  }
+<font color="#555555">085 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/LightBulbLightOnEditor3.java"><font color="#000055" size=-1>LightBulbLightOnEditor3.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 46.13: Die Klasse LightBulbLightOnEditor3</i></p>
+
+<p>
+Der Editor wird durch die aus <a href="index_c.html#ixb101652"><font color=#000080><tt>Canvas</tt></font></a>
+abgeleitete lokale Klasse <font color="#000077"><tt>LightOnCustomEditor</tt></font>
+implementiert. Ihre bevorzugte Gr&ouml;&szlig;e ist fest eingestellt
+und sie verwendet die <a href="index_p.html#ixb102596"><font color=#000080><tt>paintValue</tt></font></a>-Methode
+der umgebenden Klasse zur Bildschirmdarstellung. Bei einem Mausklick
+ver&auml;ndert sie deren Membervariable <font color="#000077"><tt>currentvalue</tt></font>
+und teilt dies dem GUI-Designer durch Aufruf von <a href="index_f.html#ixb102568"><font color=#000080><tt>firePropertyChange</tt></font></a>
+mit. Anschlie&szlig;end ruft sie <a href="index_r.html#ixb101449"><font color=#000080><tt>repaint</tt></font></a>
+auf, um den Rahmen neu zu zeichnen. 
+
+<p>
+Der dritte Editor sieht in der Eigenschaftenliste so aus: 
+<p>
+<a name="imageid046010"></a>
+<img src="images/BulbEditor3.gif">
+<p>
+
+<p><i>
+Abbildung 46.10: LightBulbLightOnEditor3 in der Beanbox</i></p>
+
+<p>
+Wird er angeklickt, erzeugt die Beanbox eine vergr&ouml;&szlig;erte
+Variante, in der der Wert ver&auml;ndert werden kann: 
+<p>
+<a name="imageid046011"></a>
+<img src="images/BulbEditor3a.gif">
+<p>
+
+<p><i>
+Abbildung 46.11: LightBulbLightOnEditor3 in der Eigenschaftenliste</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100292.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100297.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100299.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100300.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

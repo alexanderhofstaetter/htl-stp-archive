@@ -1,0 +1,381 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100257.html;106,k100260.html;107,k100262.html;108,k100263.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100257.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100260.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100262.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100263.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 40 - Applets I
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id040004"></a>
+<h2>40.4 <a name="ixa102948">Animation</a> in Applets </h2>
+<hr>
+<ul>
+<li><a href="k100261.html#sectlevel2id040004">40.4 Animation in Applets</a>
+</ul>
+<hr>
+
+<p>
+Animation ist in Applets ebenso m&ouml;glich wie in Applikationen.
+Alle Techniken, die in <a href="k100228.html#animation">Abschnitt 34.2</a>
+erkl&auml;rt wurden, sind grunds&auml;tzlich auch auf Applets anwendbar.
+Aufgrund der Tatsache, dass Applets in einem Browser laufen und &uuml;ber
+eine Netzwerk-Fernverbindung mit Daten versorgt werden m&uuml;ssen,
+sollten folgende Besonderheiten beachtet werden: 
+<ul>
+<li>Ein animiertes Applet sollte in einem eigenen Thread laufen. Andernfalls
+w&uuml;rde m&ouml;glicherweise der Browser lahmgelegt werden und nicht
+mehr auf Benutzereingaben reagieren.
+<li>Die Animation in Applets kann durch Sound unterst&uuml;tzt werden.
+<li>Das Laden von Sound- und Image-Dateien kann unter Umst&auml;nden
+lange dauern und liegt bei Internetverbindungen deutlich &uuml;ber
+den Ladezeiten im lokalen Betrieb. M&uuml;ssen w&auml;hrend der Applet-Initialisierung
+gr&ouml;&szlig;ere Dateien geladen werden, kann das Starten des Applets
+f&uuml;r Anwender mit langsamen Netzwerkverbindungen schwierig werden.
+</ul>
+
+<p>
+Wir wollen uns diese Regeln zu eigen machen und in diesem Abschnitt
+ein einfaches animiertes Applet entwickeln. Das Programm soll die
+Skyline einer Gro&szlig;stadt bei Nacht darstellen. Dabei gehen in
+den Wolkenkratzern die Lichter an und aus, auf einigen D&auml;chern
+gibt es rote Blinklichter und von Zeit zu Zeit schl&auml;gt der Blitz
+mit Krachen in einen der Wolkenkratzer ein. (Diese Aufgabenstellung
+erinnert nicht ganz zu Unrecht an einen bekannten Bildschirmschoner.)
+<a href="k100261.html#beispielwolkenkratzer">Abbildung 40.4</a> zeigt
+einen Schnappschuss des laufenden Programms. 
+<p>
+<a name="beispielwolkenkratzer"></a>
+<img src="images/Skyscraper.gif">
+<p>
+
+<p><i>
+Abbildung 40.4: Das Wolkenkratzer-Beispielprogramm</i></p>
+
+<p>
+Das Programm implementiert zwei Klassen, <font color="#000077"><tt>Skyscraper</tt></font>
+und <font color="#000077"><tt>SkyscraperApplet</tt></font>. <font color="#000077"><tt>Skyscraper</tt></font>
+repr&auml;sentiert einen Wolkenkratzer, der die Membervariablen <i>x</i>-
+und <i>y</i>-Position, <i>H&ouml;he</i>, <i>Breite</i> und <i>Anzahl
+der Fenster</i> in <i>x</i>- und <i>y</i>-Richtung besitzt. Zus&auml;tzlich
+kann ein <font color="#000077"><tt>Skyscraper</tt></font>-Objekt auf
+Simulations-Events reagieren, die durch den Aufruf der Methode <font color="#000077"><tt>lightEvent</tt></font>
+ausgel&ouml;st werden. In diesem Fall wird das Licht in einem der
+Fenster an- oder ausgeschaltet oder das rote Blinklicht auf dem Dach
+getriggert. 
+
+<p>
+Das eigentliche Applet wird durch die Klasse <font color="#000077"><tt>SkyscraperApplet</tt></font>
+realisiert. In der <a href="index_i.html#ixb101826"><font color=#000080><tt>init</tt></font></a>-Methode
+wird zun&auml;chst eine Reihe von <font color="#000077"><tt>Skyscraper</tt></font>-Objekten
+erzeugt und im <font color="#000077"><tt>Vector c</tt></font> abgelegt.
+Zus&auml;tzlich werden die Parameter <font color="#000077"><tt>DELAY</tt></font>,
+<font color="#000077"><tt>FLASH</tt></font> und <font color="#000077"><tt>THUNDER</tt></font>
+eingelesen, die zur Steuerung der Animationsverz&ouml;gerung, der
+Blitzwahrscheinlichkeit und der Sound-Datei f&uuml;r den Donner dienen.
+In der Methode <a href="index_s.html#ixb101113"><font color=#000080><tt>start</tt></font></a>
+wird ein Thread erzeugt, so dass die eigentliche Animation mit der
+<a href="index_r.html#ixb101449"><font color=#000080><tt>repaint</tt></font></a>-Schleife
+in <a href="index_r.html#ixb101111"><font color=#000080><tt>run</tt></font></a>
+abl&auml;uft. Um das Bildschirmflackern zu verringern, wird <a href="index_u.html#ixb101687"><font color=#000080><tt>update</tt></font></a>
+&uuml;berlagert, wie in <a href="k100226.html#kapitelbitmapsanimationen">Kapitel 34</a>
+erl&auml;utert. In <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>
+wird per Zufallszahlengenerator eines der in <font color="#000077"><tt>v</tt></font>
+gespeicherten <font color="#000077"><tt>Skyscraper</tt></font>-Objekte
+ausgew&auml;hlt und dessen <font color="#000077"><tt>LigthEvent</tt></font>-Methode
+aufgerufen, um ein Beleuchtungsereignis zu simulieren. 
+
+<p>
+Manchmal wird auch noch die Methode <font color="#000077"><tt>lightning</tt></font>
+aufgerufen, um einen Blitzeinschlag darzustellen. Ein Blitz wird dabei
+durch einen Streckenzug vom oberen Bildrand bis zur Dachspitze eines
+Hochhauses dargestellt. Dieser Streckenzug wird f&uuml;r einen kurzen
+Augenblick in wei&szlig;er Farbe auf den Bildschirm gezeichnet und
+anschlie&szlig;end durch erneutes Zeichnen in schwarzer Farbe wieder
+entfernt. Um ein realistisches Flackern zu erreichen, wird dieser
+Vorgang noch einmal wiederholt. Unmittelbar vor der Darstellung des
+Blitzes wird das zuvor geladene Donnerger&auml;usch abgespielt. 
+
+<p>
+Hier ist der Quellcode des Applets: 
+<a name="listingid040009"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* SkyscraperApplet.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> java.applet.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">class</font> Skyscraper
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> x;
+<font color="#555555">010 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> y;
+<font color="#555555">011 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> width;
+<font color="#555555">012 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> height;
+<font color="#555555">013 </font>  <font color="#006699">int</font>        wndcntx;
+<font color="#555555">014 </font>  <font color="#006699">int</font>        wndcnty;
+<font color="#555555">015 </font>  <font color="#006699">boolean</font>    blinkon = <font color="#006699">false</font>;
+<font color="#555555">016 </font>
+<font color="#555555">017 </font>  Skyscraper(<font color="#006699">int</font> x, <font color="#006699">int</font> y)
+<font color="#555555">018 </font>  {
+<font color="#555555">019 </font>    <font color="#006699">this</font>.x = x;
+<font color="#555555">020 </font>    <font color="#006699">this</font>.y = y;
+<font color="#555555">021 </font>    <font color="#006699">this</font>.width = (<font color="#006699">int</font>)(30*(0.5+Math.random()));
+<font color="#555555">022 </font>    <font color="#006699">this</font>.height = (<font color="#006699">int</font>)(100*(0.5+Math.random()));
+<font color="#555555">023 </font>    wndcntx = (width-4)/5;
+<font color="#555555">024 </font>    wndcnty = (height-4)/5;
+<font color="#555555">025 </font>  }
+<font color="#555555">026 </font>
+<font color="#555555">027 </font>  <font color="#006699">void</font> lightEvent(Graphics g)
+<font color="#555555">028 </font>  {
+<font color="#555555">029 </font>    <font color="#006699">double</font> rnd  = Math.random();
+<font color="#555555">030 </font>    <font color="#006699">int</font>    xwnd = (<font color="#006699">int</font>)(Math.random()*wndcntx);
+<font color="#555555">031 </font>    <font color="#006699">int</font>    ywnd = (<font color="#006699">int</font>)(Math.random()*wndcnty);
+<font color="#555555">032 </font>    <font color="#0000AA">if</font> (blinkon) {
+<font color="#555555">033 </font>      g.setColor(Color.black);
+<font color="#555555">034 </font>      g.fillRect(x+width/2,y-height-20,2,2);
+<font color="#555555">035 </font>      blinkon = <font color="#006699">false</font>;
+<font color="#555555">036 </font>    }
+<font color="#555555">037 </font>    <font color="#0000AA">if</font> (rnd &gt;= 0.9) {
+<font color="#555555">038 </font>      blinkon = <font color="#006699">true</font>;
+<font color="#555555">039 </font>      g.setColor(Color.red);
+<font color="#555555">040 </font>      g.fillRect(x+width/2,y-height-20,2,2);
+<font color="#555555">041 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (rnd &gt;= 0.7) {
+<font color="#555555">042 </font>      g.setColor(Color.black);
+<font color="#555555">043 </font>      g.fillRect(x+2+xwnd*5,y-height+2+ywnd*5,2,2);
+<font color="#555555">044 </font>    } <font color="#0000AA">else</font> {
+<font color="#555555">045 </font>      g.setColor(Color.yellow);
+<font color="#555555">046 </font>      g.fillRect(x+2+xwnd*5,y-height+2+ywnd*5,2,2);
+<font color="#555555">047 </font>    }
+<font color="#555555">048 </font>  }
+<font color="#555555">049 </font>}
+<font color="#555555">050 </font>
+<font color="#555555">051 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> SkyscraperApplet
+<font color="#555555">052 </font><font color="#0000AA">extends</font> Applet
+<font color="#555555">053 </font><font color="#0000AA">implements</font> Runnable
+<font color="#555555">054 </font>{
+<font color="#555555">055 </font>  <font color="#00AA00">//Membervariablen</font>
+<font color="#555555">056 </font>  Thread th;
+<font color="#555555">057 </font>  Vector&lt;Skyscraper&gt; v = <font color="#0000AA">new</font> Vector&lt;Skyscraper&gt;();
+<font color="#555555">058 </font>  AudioClip thunder;
+<font color="#555555">059 </font>  <font color="#006699">boolean</font> running;
+<font color="#555555">060 </font>
+<font color="#555555">061 </font>   <font color="#00AA00">//Parameter</font>
+<font color="#555555">062 </font>  <font color="#006699">int</font>    DELAY;
+<font color="#555555">063 </font>  <font color="#006699">float</font>  FLASH;
+<font color="#555555">064 </font>  String THUNDER;
+<font color="#555555">065 </font>
+<font color="#555555">066 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> init()
+<font color="#555555">067 </font>  {
+<font color="#555555">068 </font>    Skyscraper house;
+<font color="#555555">069 </font>    <font color="#006699">int</font> x = 5;
+<font color="#555555">070 </font>
+<font color="#555555">071 </font>    <font color="#00AA00">//H&auml;user erzeugen</font>
+<font color="#555555">072 </font>    <font color="#0000AA">while</font> (<font color="#006699">this</font>.getSize().width-x-1 &gt;= 30) {
+<font color="#555555">073 </font>      house = <font color="#0000AA">new</font> Skyscraper(x,<font color="#006699">this</font>.getSize().height-10);
+<font color="#555555">074 </font>      v.addElement(house);
+<font color="#555555">075 </font>      x += house.width + 5;
+<font color="#555555">076 </font>    }
+<font color="#555555">077 </font>    setBackground(Color.black);
+<font color="#555555">078 </font>
+<font color="#555555">079 </font>    <font color="#00AA00">//Parameter einlesen</font>
+<font color="#555555">080 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">081 </font>      DELAY = Integer.parseInt(getParameter(<font color="#0000FF">"delay"</font>));
+<font color="#555555">082 </font>    } <font color="#0000AA">catch</font> (NumberFormatException e) {
+<font color="#555555">083 </font>      DELAY = 75;
+<font color="#555555">084 </font>    }
+<font color="#555555">085 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">086 </font>      FLASH = (<font color="#0000AA">new</font> Float(getParameter(<font color="#0000FF">"flash"</font>))).floatValue();
+<font color="#555555">087 </font>    } <font color="#0000AA">catch</font> (NumberFormatException e) {
+<font color="#555555">088 </font>      FLASH = 0.01F;
+<font color="#555555">089 </font>    }
+<font color="#555555">090 </font>    THUNDER = getParameter(<font color="#0000FF">"thunder"</font>);
+<font color="#555555">091 </font>    <font color="#0000AA">if</font> (THUNDER != <font color="#006699">null</font>) {
+<font color="#555555">092 </font>      thunder = getAudioClip(getCodeBase(),THUNDER);
+<font color="#555555">093 </font>    }
+<font color="#555555">094 </font>    System.out.println(<font color="#0000FF">"DELAY = "</font>+DELAY);
+<font color="#555555">095 </font>    System.out.println(<font color="#0000FF">"FLASH = "</font>+FLASH);
+<font color="#555555">096 </font>    System.out.println(<font color="#0000FF">"THUNDER = "</font>+THUNDER);
+<font color="#555555">097 </font>  }
+<font color="#555555">098 </font>
+<font color="#555555">099 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> start()
+<font color="#555555">100 </font>  {
+<font color="#555555">101 </font>    <font color="#0000AA">if</font> (th == <font color="#006699">null</font>) {
+<font color="#555555">102 </font>      running = <font color="#006699">true</font>;
+<font color="#555555">103 </font>      th = <font color="#0000AA">new</font> Thread(<font color="#006699">this</font>);
+<font color="#555555">104 </font>      th.start();
+<font color="#555555">105 </font>    }
+<font color="#555555">106 </font>  }
+<font color="#555555">107 </font>
+<font color="#555555">108 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> stop()
+<font color="#555555">109 </font>  {
+<font color="#555555">110 </font>    <font color="#0000AA">if</font> (th != <font color="#006699">null</font>) {
+<font color="#555555">111 </font>      running = <font color="#006699">false</font>;
+<font color="#555555">112 </font>      th = <font color="#006699">null</font>;
+<font color="#555555">113 </font>    }
+<font color="#555555">114 </font>  }
+<font color="#555555">115 </font>
+<font color="#555555">116 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> run()
+<font color="#555555">117 </font>  {
+<font color="#555555">118 </font>    <font color="#0000AA">while</font> (running) {
+<font color="#555555">119 </font>      repaint();
+<font color="#555555">120 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">121 </font>        Thread.sleep(DELAY);
+<font color="#555555">122 </font>      } <font color="#0000AA">catch</font> (InterruptedException e) {
+<font color="#555555">123 </font>        <font color="#00AA00">//nothing</font>
+<font color="#555555">124 </font>      }
+<font color="#555555">125 </font>    }
+<font color="#555555">126 </font>  }
+<font color="#555555">127 </font>
+<font color="#555555">128 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> update(Graphics g)
+<font color="#555555">129 </font>  {
+<font color="#555555">130 </font>    paint(g);
+<font color="#555555">131 </font>  }
+<font color="#555555">132 </font>
+<font color="#555555">133 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">134 </font>  {
+<font color="#555555">135 </font>    <font color="#006699">int</font> i;
+<font color="#555555">136 </font>    Skyscraper house;
+<font color="#555555">137 </font>
+<font color="#555555">138 </font>    i = (<font color="#006699">int</font>)Math.floor(Math.random()*v.size());
+<font color="#555555">139 </font>    house = v.elementAt(i);
+<font color="#555555">140 </font>    house.lightEvent(g);
+<font color="#555555">141 </font>    <font color="#0000AA">if</font> (Math.random() &lt; FLASH) {
+<font color="#555555">142 </font>      lightning(g,house.x+10,house.y-house.height);
+<font color="#555555">143 </font>    }
+<font color="#555555">144 </font>  }
+<font color="#555555">145 </font>
+<font color="#555555">146 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> lightning(Graphics g, <font color="#006699">int</font> x, <font color="#006699">int</font> y)
+<font color="#555555">147 </font>  {
+<font color="#555555">148 </font>    Vector&lt;Point&gt; poly = <font color="#0000AA">new</font> Vector&lt;Point&gt;();
+<font color="#555555">149 </font>    <font color="#006699">int</font> dx, dy, i, polysize;
+<font color="#555555">150 </font>
+<font color="#555555">151 </font>    thunder.play();
+<font color="#555555">152 </font>    <font color="#00AA00">//Blitzpolygon berechnen</font>
+<font color="#555555">153 </font>    poly.addElement(<font color="#0000AA">new</font> Point(x,y));
+<font color="#555555">154 </font>    polysize = 1;
+<font color="#555555">155 </font>    <font color="#0000AA">while</font> (y &gt; 10) {
+<font color="#555555">156 </font>      dx = 10 - (<font color="#006699">int</font>)(Math.floor(Math.random()*20));
+<font color="#555555">157 </font>      dy = - (<font color="#006699">int</font>)(Math.floor(Math.random()*20));
+<font color="#555555">158 </font>      x += dx;
+<font color="#555555">159 </font>      y += dy;
+<font color="#555555">160 </font>      poly.addElement(<font color="#0000AA">new</font> Point(x,y));
+<font color="#555555">161 </font>      ++polysize;
+<font color="#555555">162 </font>    }
+<font color="#555555">163 </font>    <font color="#00AA00">//Blitzvector in Koordinaten-Arrays umwandeln</font>
+<font color="#555555">164 </font>    <font color="#006699">int</font>[] xpoints = <font color="#0000AA">new</font> <font color="#006699">int</font>[poly.size()];
+<font color="#555555">165 </font>    <font color="#006699">int</font>[] ypoints = <font color="#0000AA">new</font> <font color="#006699">int</font>[poly.size()];
+<font color="#555555">166 </font>    <font color="#0000AA">for</font> (i = 0; i &lt; polysize; ++i) {
+<font color="#555555">167 </font>      Point p = poly.elementAt(i);
+<font color="#555555">168 </font>      xpoints[i] = p.x;
+<font color="#555555">169 </font>      ypoints[i] = p.y;
+<font color="#555555">170 </font>    }
+<font color="#555555">171 </font>    <font color="#00AA00">//Blitz zeichnen</font>
+<font color="#555555">172 </font>    <font color="#0000AA">for</font> (i = 0; i &lt;= 1; ++i) {
+<font color="#555555">173 </font>      g.setColor(Color.white);
+<font color="#555555">174 </font>      g.drawPolyline(xpoints, ypoints, polysize);
+<font color="#555555">175 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">176 </font>        Thread.sleep(20);
+<font color="#555555">177 </font>      } <font color="#0000AA">catch</font> (InterruptedException e) {}
+<font color="#555555">178 </font>      g.setColor(Color.black);
+<font color="#555555">179 </font>      g.drawPolyline(xpoints, ypoints, polysize);
+<font color="#555555">180 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">181 </font>        Thread.sleep(20);
+<font color="#555555">182 </font>      } <font color="#0000AA">catch</font> (InterruptedException e) {}
+<font color="#555555">183 </font>    }
+<font color="#555555">184 </font>  }
+<font color="#555555">185 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/SkyscraperApplet.java"><font color="#000055" size=-1>SkyscraperApplet.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 40.9: Das Wolkenkratzer-Applet</i></p>
+
+<p>
+Zum Aufruf des Applets kann beispielsweise folgende HTML-Datei verwendet
+werden: 
+<a name="listingid040010"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">&lt;html&gt;</font>
+<font color="#555555">002 </font><font color="#0000AA">&lt;head&gt;</font>
+<font color="#555555">003 </font><font color="#0000AA">&lt;title&gt;</font>Skyscraper<font color="#0000AA">&lt;/title&gt;</font>
+<font color="#555555">004 </font><font color="#0000AA">&lt;/head&gt;</font>
+<font color="#555555">005 </font><font color="#0000AA">&lt;body&gt;</font>
+<font color="#555555">006 </font><font color="#0000AA">&lt;h1&gt;</font>Skyscraper<font color="#0000AA">&lt;/h1&gt;</font>
+<font color="#555555">007 </font><font color="#0000AA">&lt;applet code=SkyscraperApplet.class width=500 height=300&gt;</font>
+<font color="#555555">008 </font><font color="#0000AA">&lt;param name=</font><font color="#0000FF">"delay"</font><font color="#0000AA">   value=75&gt;</font>
+<font color="#555555">009 </font><font color="#0000AA">&lt;param name=</font><font color="#0000FF">"flash"</font><font color="#0000AA">   value=0.01&gt;</font>
+<font color="#555555">010 </font><font color="#0000AA">&lt;param name=</font><font color="#0000FF">"thunder"</font><font color="#0000AA"> value=</font><font color="#0000FF">"thunder.au"</font><font color="#0000AA">&gt;</font>
+<font color="#555555">011 </font>Hier steht das Applet Skyscraper.class
+<font color="#555555">012 </font><font color="#0000AA">&lt;/applet&gt;</font>
+<font color="#555555">013 </font><font color="#0000AA">&lt;/body&gt;</font>
+<font color="#555555">014 </font><font color="#0000AA">&lt;/html&gt;</font></pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/SkyscraperApplet.html"><font color="#000055" size=-1>SkyscraperApplet.html</font></a></td>
+</tr>
+</table>
+<i>
+Listing 40.10: Die HTML-Datei zum Aufrufen des Wolkenkratzer-Applets</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100257.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100260.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100262.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100263.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

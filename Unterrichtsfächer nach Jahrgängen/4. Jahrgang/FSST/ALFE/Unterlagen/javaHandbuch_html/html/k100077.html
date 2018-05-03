@@ -1,0 +1,125 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100076.html;106,k100076.html;107,k100078.html;108,k100084.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100076.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100076.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100078.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100084.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 12 - Strings
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id012001"></a>
+<h2>12.1 Grundlegende Eigenschaften </h2>
+<hr>
+<ul>
+<li><a href="k100077.html#sectlevel2id012001">12.1 Grundlegende Eigenschaften</a>
+</ul>
+<hr>
+
+<p>
+Wie in allen anderen Programmiersprachen gibt es auch in Java <a name="ixa100660"><i>Zeichenketten</i></a>.
+&Auml;hnlich wie in C und C++ kennt der Compiler nur einige ihrer
+elementaren Eigenschaften und &uuml;berl&auml;sst der Laufzeitbibliothek
+einen Gro&szlig;teil der Implementierung. Wir werden uns in diesem
+Kapitel die Implementierung und Verwendung von Zeichenketten in Java
+ansehen und uns dabei der &uuml;blichen Praxis anschlie&szlig;en,
+die Begriffe <i>String</i> und <i>Zeichenkette</i> synonym zu verwenden.
+
+<p>
+In Java werden Zeichenketten durch die Klasse <a name="ixa100661"><a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a></a>
+repr&auml;sentiert. Sie bietet Methoden zum Erzeugen von Zeichenketten,
+zur Extraktion von Teilstrings, zum Vergleich mit anderen Strings
+und zur Erzeugung von Strings aus primitiven Typen. Der Compiler erkennt
+und interpretiert <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Literale
+und ist in der Lage, <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Objekte
+zu erzeugen und zu verketten. 
+
+<p>
+Eine Zeichenkette hat in Java prinzipiell dieselbe Bedeutung wie in
+anderen Sprachen. Als Reihung von Elementen des Typs <a name="ixa100662"><a href="index_c.html#ixb100223"><font color=#000080><tt>char</tt></font></a></a>
+ist sie die wichtigste Datenstruktur f&uuml;r alle Aufgaben, die etwas
+mit der Ein- und Ausgabe oder der Verarbeitung von Zeichen zu tun
+haben. 
+
+<p>
+Da der <a href="index_c.html#ixb100223"><font color=#000080><tt>char</tt></font></a>-Typ
+in Java durch ein Unicode-Zeichen repr&auml;sentiert wird, besteht
+auch ein String aus einer Kette von Unicode-Zeichen. Abgesehen davon,
+dass er dadurch doppelt soviel Speicher belegt wie ein ASCII-String,
+braucht man sich dar&uuml;ber aber nicht allzu viele Gedanken zu machen.
+Wegen der bereits in <a href="k100028.html#kapiteldatentypen">Kapitel 5</a>
+erw&auml;hnten Kompatibilit&auml;t zwischen Unicode-Standard und ASCII-Zeichensatz
+sind die Unterschiede bei der normalen Verwendung von Strings ohne
+Belang. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Anders als in C braucht der Java-Programmierer keine Kenntnisse &uuml;ber
+den internen Aufbau von Strings zu haben. Insbesondere ist nicht davon
+auszugehen, dass ein String durch ein nullterminiertes Array von <a href="index_c.html#ixb100223"><font color=#000080><tt>char</tt></font></a>-Elementen
+dargestellt wird. Nat&uuml;rlich hei&szlig;t dies nicht, dass die
+interne Struktur von Strings <i>vollkommen</i> anonym ist, denn sowohl
+Compiler als auch Laufzeitsystem m&uuml;ssen sie kennen. F&uuml;r
+den Programmierer, der lediglich Java-Programme schreiben will, ist
+sie aber bedeutungslos.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100076.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100076.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100078.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100084.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

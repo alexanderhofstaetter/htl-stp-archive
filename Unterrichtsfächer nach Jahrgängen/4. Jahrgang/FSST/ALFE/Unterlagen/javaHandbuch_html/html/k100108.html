@@ -1,0 +1,261 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100104.html;106,k100107.html;107,k100109.html;108,k100114.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100104.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100107.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100109.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100114.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 16 - Collections II
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id016004"></a>
+<h2>16.4 Die Collection des Typs Set </h2>
+<hr>
+<ul>
+<li><a href="k100108.html#sectlevel2id016004">16.4 Die Collection des Typs Set</a>
+<ul>
+<li><a href="k100108.html#sectlevel3id016004001">16.4.1 Abstrakte Eigenschaften</a>
+<li><a href="k100108.html#sectlevel3id016004002">16.4.2 Implementierungen</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id016004001"></a>
+<h3>16.4.1 Abstrakte Eigenschaften </h3>
+
+<p>
+Ein <a name="ixa100958"><a href="index_s.html#ixb100728"><font color=#000080><tt>Set</tt></font></a></a>
+&auml;hnelt der <a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>,
+erlaubt aber im Gegensatz zu dieser keine doppelten Elemente. Genauer
+gesagt, in einem <a href="index_s.html#ixb100728"><font color=#000080><tt>Set</tt></font></a>
+darf es zu keinem Zeitpunkt zwei Elemente <font color="#000077"><tt>x</tt></font>
+und <font color="#000077"><tt>y</tt></font> geben, f&uuml;r die <font color="#000077"><tt>x.equals(y)</tt></font>
+wahr ist. Ein <a href="index_s.html#ixb100728"><font color=#000080><tt>Set</tt></font></a>
+entspricht damit im mathematischen Sinn einer <i>Menge</i>, in der
+ja ebenfalls jedes Element nur einmal vorkommen kann. Ein <a href="index_s.html#ixb100728"><font color=#000080><tt>Set</tt></font></a>
+hat allerdings keine spezielle Schnittstelle, sondern erbt seine Methoden
+von der Basisklasse <a href="index_c.html#ixb100730"><font color=#000080><tt>Collection</tt></font></a>.
+
+<p>
+Die Unterschiede zu <a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>
+treten zutage, wenn man versucht, mit <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+ein Element einzuf&uuml;gen, das bereits vorhanden ist (bei dem also
+die <a href="index_e.html#ixb100230"><font color=#000080><tt>equals</tt></font></a>-Methode
+wie zuvor beschrieben <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+ergibt). In diesem Fall wird es nicht erneut eingef&uuml;gt, sondern
+<a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+gibt <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>
+zur&uuml;ck. Auch f&uuml;r die Methoden <a href="index_a.html#ixb100737"><font color=#000080><tt>addAll</tt></font></a>
+und den Konstruktor <font color="#000077"><tt>Set(Collection c)</tt></font>
+gilt, dass sie kein Element doppelt einf&uuml;gen und damit insgesamt
+die Integrit&auml;tsbedingung einer Menge erhalten. 
+
+<p>
+Ein weiterer Unterschied zu <a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>
+ist, dass ein <a href="index_s.html#ixb100728"><font color=#000080><tt>Set</tt></font></a>
+keinen <a href="index_l.html#ixb100744"><font color=#000080><tt>ListIterator</tt></font></a>,
+sondern lediglich einen einfachen <a href="index_i.html#ixb100110"><font color=#000080><tt>Iterator</tt></font></a>
+erzeugen kann. Dessen Elemente haben keine definierte Reihenfolge.
+Sie kann sich durch wiederholtes Einf&uuml;gen von Elementen im Laufe
+der Zeit sogar &auml;ndern. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Besondere Vorsicht ist geboten, wenn ein <a href="index_s.html#ixb100728"><font color=#000080><tt>Set</tt></font></a>
+dazu benutzt wird, <a name="ixa100959"><i>ver&auml;nderliche Objekte</i></a>
+zu speichern (sie werden auch als <a name="ixa100960"><i>mutable</i></a>
+bezeichnet). Wird ein Objekt, das in einem <a href="index_s.html#ixb100728"><font color=#000080><tt>Set</tt></font></a>
+gespeichert ist, so ver&auml;ndert, dass der <a href="index_e.html#ixb100230"><font color=#000080><tt>equals</tt></font></a>-Vergleich
+mit einem anderen Element danach einen anderen Wert ergeben k&ouml;nnte,
+so gilt der komplette <a href="index_s.html#ixb100728"><font color=#000080><tt>Set</tt></font></a>
+als undefiniert und darf nicht mehr benutzt werden. 
+
+<p>
+Zentrale Ursache f&uuml;r dieses Problem ist die Tatsache, dass Objektvariablen
+intern als <i>Zeiger</i> auf die zugeh&ouml;rigen Objekte dargestellt
+werden. Auf ein Objekt, das in einem <a href="index_s.html#ixb100728"><font color=#000080><tt>Set</tt></font></a>
+enthalten ist, kann somit auch von au&szlig;en zugegriffen werden,
+wenn nach dem Einf&uuml;gen des Objekts noch ein Verweis darauf zur
+Verf&uuml;gung steht. Bei den in Java vordefinierten &#187;kleinen&#171;
+Klassen wie <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>,
+<a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>
+usw. ist das kein Problem, denn Objekte dieses Typs k&ouml;nnen nach
+ihrer Konstruktion nicht mehr ver&auml;ndert werden (sie sind <a name="ixa100961"><i>immutable</i></a>).
+Bei ver&auml;nderlichen Objekten k&ouml;nnten dagegen im <a href="index_s.html#ixb100728"><font color=#000080><tt>Set</tt></font></a>
+enthaltene Elemente unbemerkt ver&auml;ndert und dessen Integrit&auml;t
+verletzt werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id016004002"></a>
+<h3>16.4.2 Implementierungen </h3>
+
+<p>
+Das <a href="index_s.html#ixb100728"><font color=#000080><tt>Set</tt></font></a>-Interface
+wird im JDK beispielsweise von den Klassen <a name="ixa100962"><a href="index_h.html#ixb100751"><font color=#000080><tt>HashSet</tt></font></a></a>,
+<a name="ixa100963"><a href="index_t.html#ixb100752"><font color=#000080><tt>TreeSet</tt></font></a></a>
+und <a name="ixa100964"><a href="index_a.html#ixb100753"><font color=#000080><tt>AbstractSet</tt></font></a></a>
+implementiert. Die abstrakte Implementierung dient als Basisklasse
+f&uuml;r weitere Ableitungen. In der <a href="index_h.html#ixb100751"><font color=#000080><tt>HashSet</tt></font></a>-Implementierung
+werden die Elemente intern in einer <a name="ixa100965"><a href="index_h.html#ixb100754"><font color=#000080><tt>HashMap</tt></font></a></a>
+gespeichert, im <a href="index_t.html#ixb100752"><font color=#000080><tt>TreeSet</tt></font></a>
+als balancierter Baum. Vor jedem Einf&uuml;gen wird gepr&uuml;ft,
+ob das einzuf&uuml;gende Element bereits in der <a href="index_h.html#ixb100754"><font color=#000080><tt>HashMap</tt></font></a>
+enthalten ist. Die Performance der Einf&uuml;ge-, L&ouml;sch- und
+Zugriffsfunktionen ist im Mittel <i>konstant</i>. Neben den oben erw&auml;hnten
+Standardkonstruktoren besitzt die Klasse <a href="index_h.html#ixb100751"><font color=#000080><tt>HashSet</tt></font></a>
+zwei weitere Konstruktoren, deren Argumente direkt an den Konstruktor
+der <a href="index_h.html#ixb100754"><font color=#000080><tt>HashMap</tt></font></a>
+weitergereicht werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+HashSet(int initialCapacity)
+HashSet(int initialCapacity, float loadFactor)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/HashSet.html" onClick="this.href=getApiDoc('java.util.HashSet')"><font color="#660066" size=-1>java.util.HashSet</font></a></td>
+</tr>
+</table>
+
+<p>
+Wir wollen uns die Anwendung eines <a href="index_h.html#ixb100751"><font color=#000080><tt>HashSet</tt></font></a>
+am Beispiel der Generierung eines Lottotipps ansehen. Ein &auml;hnliches
+Beispiel gibt es in <a href="k100115.html#lottolisting1">Listing 17.1</a>.
+Dort wird ein <a href="index_b.html#ixb100688"><font color=#000080><tt>BitSet</tt></font></a>
+verwendet, um doppelte Zahlen zu verhindern. 
+<a name="lottolisting2"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1603.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1603
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    HashSet set = <font color="#0000AA">new</font> HashSet(10);
+<font color="#555555">010 </font>    <font color="#006699">int</font> dubletten = 0;
+<font color="#555555">011 </font>    <font color="#00AA00">//Lottozahlen erzeugen</font>
+<font color="#555555">012 </font>    <font color="#0000AA">while</font> (set.size() &lt; 6) {
+<font color="#555555">013 </font>      <font color="#006699">int</font> num = (<font color="#006699">int</font>)(Math.random() * 49) + 1;
+<font color="#555555">014 </font>      <font color="#0000AA">if</font> (!set.add(<font color="#0000AA">new</font> Integer(num))) {
+<font color="#555555">015 </font>        ++dubletten;
+<font color="#555555">016 </font>      }
+<font color="#555555">017 </font>    }
+<font color="#555555">018 </font>    <font color="#00AA00">//Lottozahlen ausgeben</font>
+<font color="#555555">019 </font>    Iterator it = set.iterator();
+<font color="#555555">020 </font>    <font color="#0000AA">while</font> (it.hasNext()) {
+<font color="#555555">021 </font>      System.out.println(((Integer)it.next()).toString());
+<font color="#555555">022 </font>    }
+<font color="#555555">023 </font>    System.out.println(<font color="#0000FF">"Ignorierte Dubletten: "</font> + dubletten);
+<font color="#555555">024 </font>  }
+<font color="#555555">025 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1603.java"><font color="#000055" size=-1>Listing1603.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 16.3: Generierung eines Lottotipps mit HashSet</i></p>
+
+<p>
+In diesem Listing wird ein <a href="index_h.html#ixb100751"><font color=#000080><tt>HashSet</tt></font></a>
+so lange mit Zufallszahlen zwischen 1 und 49 best&uuml;ckt, bis die
+Anzahl der Elemente 6 ist. Da in ein <a href="index_s.html#ixb100728"><font color=#000080><tt>Set</tt></font></a>
+keine Elemente eingef&uuml;gt werden k&ouml;nnen, die bereits darin
+enthalten sind, ist daf&uuml;r gesorgt, dass jede Zahl nur einmal
+im Tipp auftaucht. Der Z&auml;hler <font color="#000077"><tt>dubletten</tt></font>
+wird durch den R&uuml;ckgabewert <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>
+von <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+getriggert. Er z&auml;hlt, wie oft eine Zahl eingef&uuml;gt werden
+sollte, die bereits enthalten war. Die Ausgabe des Programms k&ouml;nnte
+beispielsweise so aussehen: 
+<font color="#333300">
+<pre>
+29
+17
+16
+35
+3
+30
+Ignorierte Dubletten: 2
+</pre>
+</font>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100104.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100107.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100109.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100114.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

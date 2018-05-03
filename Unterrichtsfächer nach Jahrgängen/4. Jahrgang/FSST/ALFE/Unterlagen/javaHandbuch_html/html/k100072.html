@@ -1,0 +1,619 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100070.html;106,k100071.html;107,k100073.html;108,k100076.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100070.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100071.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100073.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100076.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 11 - OOP IV: Verschiedenes
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="wrapperklassen"></a>
+<h2>11.2 <a name="ixa100576">Wrapper-Klassen</a></h2>
+<hr>
+<ul>
+<li><a href="k100072.html#wrapperklassen">11.2 Wrapper-Klassen</a>
+<ul>
+<li><a href="k100072.html#sectlevel3id011002001">11.2.1 Vordefinierte Wrapper-Klassen</a>
+<ul>
+<li><a href="k100072.html#sectlevel4id011002001001">Instanzierung</a>
+<li><a href="k100072.html#sectlevel4id011002001002">R&uuml;ckgabe des Werts</a>
+<li><a href="k100072.html#sectlevel4id011002001003">Parsen von Strings</a>
+<li><a href="k100072.html#sectlevel4id011002001004">Konstanten</a>
+</ul>
+<li><a href="k100072.html#sectlevel3id011002002">11.2.2 Call by Reference</a>
+<li><a href="k100072.html#autoboxing">11.2.3 Autoboxing und Autounboxing</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id011002001"></a>
+<h3>11.2.1 Vordefinierte Wrapper-Klassen </h3>
+
+<p>
+Zu jedem primitiven Datentyp in Java gibt es eine korrespondierende
+<i>Wrapper</i>-Klasse. Diese kapselt die primitive Variable in einer
+objektorientierten H&uuml;lle und stellt eine Reihe von Methoden zum
+Zugriff auf die Variable zur Verf&uuml;gung. Zwar wird man bei der
+Programmierung meist die primitiven Typen verwenden, doch gibt es
+einige Situationen, in denen die Anwendung einer Wrapper-Klasse sinnvoll
+sein kann: 
+<ul>
+<li>Das Paket <a href="index_j.html#ixb100149"><font color=#000080><tt>java.util</tt></font></a>
+stellt eine Reihe von Verbundklassen zur Verf&uuml;gung, die beliebige
+Objekttypen speichern k&ouml;nnen. Um darin auch elementare Typen
+ablegen zu k&ouml;nnen, ist es notwendig, anstelle der primitiven
+Typen ihre Wrapper-Klassen zu verwenden.
+<li>Da Objektreferenzen den Wert <font color="#000077"><tt>null</tt></font>
+haben k&ouml;nnen, kann die Verwendung der Wrapper-Klassen beispielsweise
+bei der Datenbankprogrammierung n&uuml;tzlich sein. Damit lassen sich
+primitive Feldtypen darstellen, die NULL-Werte enthalten k&ouml;nnen.
+<li>Das Reflection-API (siehe <a href="k100284.html#kapitelreflection">Kapitel 45</a>)
+verwendet Wrapper-Klassen zum Zugriff auf Membervariablen oder Methodenargumente
+primitiver Typen.
+</ul>
+
+<p>
+Wrapper-Klassen existieren zu allen numerischen Typen und zu den Typen
+<a href="index_c.html#ixb100223"><font color=#000080><tt>char</tt></font></a>
+und <a href="index_b.html#ixb100071"><font color=#000080><tt>boolean</tt></font></a>:
+<a name="tableid011001"></a>
+<p>
+<table cols=2 border width=66%>
+
+<tr>
+<td valign=top align=left width=50%><b>Wrapper-Klasse</b></td>
+<td valign=top align=left width=50%><b>Primitiver Typ </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100577"><a href="index_b.html#ixb100262"><font color=#000080><tt>Byte</tt></font></a></a></td>
+<td valign=top align=left><a name="ixa100578"><a href="index_b.html#ixb100249"><font color=#000080><tt>byte</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100579"><a href="index_s.html#ixb100263"><font color=#000080><tt>Short</tt></font></a></a></td>
+<td valign=top align=left><a name="ixa100580"><a href="index_s.html#ixb100250"><font color=#000080><tt>short</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100581"><a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a></a></td>
+<td valign=top align=left><a name="ixa100582"><a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100583"><a href="index_l.html#ixb100264"><font color=#000080><tt>Long</tt></font></a></a></td>
+<td valign=top align=left><a name="ixa100584"><a href="index_l.html#ixb100252"><font color=#000080><tt>long</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100585"><a href="index_d.html#ixb100268"><font color=#000080><tt>Double</tt></font></a></a></td>
+<td valign=top align=left><a name="ixa100586"><a href="index_d.html#ixb100254"><font color=#000080><tt>double</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100587"><a href="index_f.html#ixb100267"><font color=#000080><tt>Float</tt></font></a></a></td>
+<td valign=top align=left><a name="ixa100588"><a href="index_f.html#ixb100253"><font color=#000080><tt>float</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100589"><a href="index_b.html#ixb100472"><font color=#000080><tt>Boolean</tt></font></a></a></td>
+<td valign=top align=left><a name="ixa100590"><a href="index_b.html#ixb100071"><font color=#000080><tt>boolean</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100591"><a href="index_c.html#ixb100473"><font color=#000080><tt>Character</tt></font></a></a></td>
+<td valign=top align=left><a name="ixa100592"><a href="index_c.html#ixb100223"><font color=#000080><tt>char</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100593"><a href="index_v.html#ixb100474"><font color=#000080><tt>Void</tt></font></a></a></td>
+<td valign=top align=left><a name="ixa100594"><a href="index_v.html#ixb100345"><font color=#000080><tt>void</tt></font></a></a>
+</td></tr>
+</table>
+<p><i>
+Tabelle 11.1: Die Wrapper-Klassen </i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id011002001001"></a>
+<h4>Instanzierung </h4>
+
+<p>
+Die Instanzierung einer Wrapper-Klasse kann meist auf drei unterschiedliche
+Arten erfolgen: 
+<ul>
+<li>Es ist grunds&auml;tzlich m&ouml;glich, den korrespondierenden
+primitiven Typ an den Konstruktor zu &uuml;bergeben, um ein Objekt
+desselben Werts zu erzeugen. 
+<li>Daneben gibt es eine sogenannte <font color="#000077"><tt>valueOf</tt></font>-Fabrikmethode
+(vgl. <a href="k100074.html#factorypattern">Abschnitt 11.4.4</a>).
+Sie hat gegen&uuml;ber der Konstruktor-Variante den Vorteil, dass
+h&auml;ufig dahinter das Fliegengewicht-Pattern implementiert ist.
+Es sorgt daf&uuml;r, dass zu gleichen primitiven Werten identische
+Instanzen ausgegeben werden. Dies vermeidet das Instanzieren unn&ouml;tiger
+Objekte. 
+<li>Alternativ kann meist auch ein String an den Konstruktor &uuml;bergeben
+werden. Dieser wird in den entsprechenden primitiven Typ konvertiert
+und dann zur Initialisierung der Wrapper-Klasse verwendet.
+</ul>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Integer(int i)
+
+public Integer(String s)
+  throws NumberFormatException
+  
+public static Integer valueOf(int i)
+
+public Long(long l)
+
+public Long(String s)
+  throws NumberFormatException
+
+public static Long valueOf(long l)
+
+public Float(float f)
+
+public Float(double d)
+
+public Float(String s)
+  throws NumberFormatException
+
+public static Float valueOf(float f)
+
+public Double(double d)
+
+public Double(String s)
+  throws NumberFormatException
+
+public static Double valueOf(double d)
+
+public Boolean(boolean b)
+
+public Boolean(String s)
+
+public static Boolean valueOf(boolean b)
+
+public Character(char c)
+
+public static Character valueOf(char c)
+</pre>
+</font>
+</td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Das in diesem Beispiel mehrfach verwendete Schl&uuml;sselwort <a name="ixa100595"><a href="index_t.html#ixb100475"><font color=#000080><tt>throws</tt></font></a></a>
+deklariert <i>Ausnahmen</i>, die w&auml;hrend der Methodenausf&uuml;hrung
+auftreten k&ouml;nnen. Sie entstehen durch Programmfehler, undefinierte
+Zust&auml;nde oder treten auf, wenn unvorhergesehene Ereignisse eintreten
+(Datei nicht verf&uuml;gbar, Speicher ersch&ouml;pft oder &Auml;hnliches).
+Wir werden uns in <a href="k100084.html#kapitelexceptions">Kapitel 13</a>
+ausf&uuml;hrlich mit diesem Thema besch&auml;ftigen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id011002001002"></a>
+<h4>R&uuml;ckgabe des Werts </h4>
+
+<p>
+Die meisten Wrapper-Klassen besitzen zwei Methoden, um den internen
+Wert abzufragen. Eine der beiden liefert ihn passend zum korrespondierenden
+Grundtyp, die andere als <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>.
+Der Name von Methoden der ersten Art setzt sich aus dem Namen des
+Basistyps und der Erweiterung <font color="#000077"><tt>Value</tt></font>
+zusammen, beispielsweise <a name="ixa100596"><a href="index_c.html#ixb100476"><font color=#000080><tt>charValue</tt></font></a></a>,
+<a name="ixa100597"><a href="index_b.html#ixb100477"><font color=#000080><tt>booleanValue</tt></font></a></a>
+oder <a name="ixa100598"><a href="index_i.html#ixb100478"><font color=#000080><tt>intValue</tt></font></a></a>.
+Die numerischen Methoden <a href="index_i.html#ixb100478"><font color=#000080><tt>intValue</tt></font></a>,
+<a name="ixa100599"><a href="index_l.html#ixb100479"><font color=#000080><tt>longValue</tt></font></a></a>,
+<a name="ixa100600"><a href="index_f.html#ixb100480"><font color=#000080><tt>floatValue</tt></font></a></a>
+und <a name="ixa100601"><a href="index_d.html#ixb100481"><font color=#000080><tt>doubleValue</tt></font></a></a>
+stehen dabei f&uuml;r alle numerischen Wrapper-Klassen zur Verf&uuml;gung.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public boolean booleanValue()
+public char charValue()
+public int intValue()
+public long longValue()
+public float floatValue()
+public double doubleValue()
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+Der Name der Methode, die den internen Wert als <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+zur&uuml;ckgibt, ist <a name="ixa100602"><a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a></a>.
+Diese Methode steht in allen Wrapper-Klassen zur Verf&uuml;gung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public String toString()
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+Ein einfaches Beispiel f&uuml;r die Anwendung der Wrapper-Klassen
+zeigt folgendes Listing: 
+<a name="wrapperklassenohneab"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1105.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1105
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> ohneAutoboxing(<font color="#006699">int</font> arg)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    Integer i = <font color="#0000AA">new</font> Integer(arg);
+<font color="#555555">008 </font>    <font color="#006699">int</font> j = i.intValue() + 1;
+<font color="#555555">009 </font>    System.out.println(i + <font color="#0000FF">" "</font> + j);
+<font color="#555555">010 </font>  }
+<font color="#555555">011 </font>
+<font color="#555555">012 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">013 </font>  {
+<font color="#555555">014 </font>    ohneAutoboxing(17);
+<font color="#555555">015 </font>  }
+<font color="#555555">016 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1105.java"><font color="#000055" size=-1>Listing1105.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 11.5: Anwendung der Wrapper-Klassen</i></p>
+
+<p>
+Die Methode <font color="#000077"><tt>ohneAutoboxing</tt></font> (warum
+sie so hei&szlig;t, wird sp&auml;ter deutlich werden) erzeugt einen
+<a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>-Wrapper
+<font color="#000077"><tt>i</tt></font> aus dem als Argument &uuml;bergebenen
+<a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>.
+Dieser wird in einen <font color="#000077"><tt>int</tt></font> zur&uuml;ckkonvertiert
+und nach Addition von 1 der Variablen <font color="#000077"><tt>j</tt></font>
+zugewiesen. Anschlie&szlig;end werden beide Werte ausgegeben: 
+<font color="#333300">
+<pre>
+17 18
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="sectlevel4id011002001003"></a>
+<h4>Parsen von Strings </h4>
+
+<p>
+Neben der M&ouml;glichkeit, aus Strings Objekte zu erzeugen, k&ouml;nnen
+die meisten Wrapper-Klassen auch primitive Datentypen erzeugen. Dazu
+gibt es statische Methoden mit den Namen <a name="ixa100603"><a href="index_p.html#ixb100482"><font color=#000080><tt>parseByte</tt></font></a></a>,
+<a name="ixa100604"><a href="index_p.html#ixb100483"><font color=#000080><tt>parseInt</tt></font></a></a>,
+<a name="ixa100605"><a href="index_p.html#ixb100484"><font color=#000080><tt>parseLong</tt></font></a></a>,
+<a name="ixa100606"><a href="index_p.html#ixb100485"><font color=#000080><tt>parseFloat</tt></font></a></a>
+und <a name="ixa100607"><a href="index_p.html#ixb100486"><font color=#000080><tt>parseDouble</tt></font></a></a>
+in den zugeh&ouml;rigen Klassen <a href="index_b.html#ixb100262"><font color=#000080><tt>Byte</tt></font></a>,
+<a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>,
+<a href="index_l.html#ixb100264"><font color=#000080><tt>Long</tt></font></a>,
+<a href="index_f.html#ixb100267"><font color=#000080><tt>Float</tt></font></a>
+und <a href="index_d.html#ixb100268"><font color=#000080><tt>Double</tt></font></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static byte parseByte(String s)
+  throws NumberFormatException
+
+public static int parseInt(String s)
+  throws NumberFormatException
+
+public static long parseLong(String s)
+  throws NumberFormatException
+
+public static float parseFloat(String s)
+  throws NumberFormatException
+
+public static double parseDouble(String s)
+  throws NumberFormatException
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id011002001004"></a>
+<h4>Konstanten </h4>
+
+<p>
+Die numerischen Wrapper-Klassen stellen Konstanten zur Bezeichnung
+spezieller Elemente zur Verf&uuml;gung. So gibt es in jeder der Klassen
+<a href="index_b.html#ixb100262"><font color=#000080><tt>Byte</tt></font></a>,
+<a href="index_s.html#ixb100263"><font color=#000080><tt>Short</tt></font></a>,
+<a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>,
+<a href="index_l.html#ixb100264"><font color=#000080><tt>Long</tt></font></a>,
+<a href="index_f.html#ixb100267"><font color=#000080><tt>Float</tt></font></a>
+und <a href="index_d.html#ixb100268"><font color=#000080><tt>Double</tt></font></a>
+die Konstanten <a name="ixa100608"><a href="index_m.html#ixb100265"><font color=#000080><tt>MIN_VALUE</tt></font></a></a>
+und <a name="ixa100609"><a href="index_m.html#ixb100261"><font color=#000080><tt>MAX_VALUE</tt></font></a></a>,
+die das kleinste bzw. gr&ouml;&szlig;te Element des Wertebereichs
+darstellen. In den Klassen <a href="index_f.html#ixb100267"><font color=#000080><tt>Float</tt></font></a>
+und <a href="index_d.html#ixb100268"><font color=#000080><tt>Double</tt></font></a>
+gibt es zus&auml;tzlich die Konstanten <a name="ixa100610"><a href="index_n.html#ixb100271"><font color=#000080><tt>NEGATIVE_INFINITY</tt></font></a></a>,
+<a name="ixa100611"><a href="index_p.html#ixb100270"><font color=#000080><tt>POSITIVE_INFINITY</tt></font></a></a>
+und <a name="ixa100612"><a href="index_n.html#ixb100269"><font color=#000080><tt>NaN</tt></font></a></a>.
+Sie stellen die Werte <i>minus unendlich</i>, <i>plus unendlich</i>
+und <i>undefiniert</i> dar. 
+
+<!-- Section -->
+
+<a name="sectlevel3id011002002"></a>
+<h3>11.2.2 Call by Reference </h3>
+
+<p>
+Da Objektparameter im Gegensatz zu primitiven Typen per Referenz &uuml;bergeben
+werden, w&auml;ren Wrapper-Klassen <i>prinzipiell</i> geeignet, Methodenparameter
+per <a name="ixa100613"><i>call by reference</i></a> zu &uuml;bergeben.
+Damit k&ouml;nnten &Auml;nderungen von primitiven Parametern an den
+Aufrufer zur&uuml;ckgegeben werden. In der Praxis funktioniert das
+allerdings nicht, denn alle vordefinierten Wrapper-Klassen sind unver&auml;nderlich
+(das wird auch als <a name="ixa100614"><i>immutable</i></a> bezeichnet).
+
+<p>
+Sollen primitive Typen per Referenz &uuml;bergeben werden, bieten
+sich zwei M&ouml;glichkeiten an: 
+<ul>
+<li>Der primitive Typ kann in einen eigenen Wrapper verpackt werden,
+der das &Auml;ndern des Werts erlaubt.
+<li>Der primitive Typ kann als Element eines Array &uuml;bergeben
+werden. Da Arrays Objekte sind und somit stets per Referenz &uuml;bergeben
+werden, sind &Auml;nderungen an ihren Elementen auch f&uuml;r den
+Aufrufer sichtbar.
+</ul>
+
+<p>
+Beide Methoden sind nicht sehr elegant, werden aber in der Praxis
+mitunter ben&ouml;tigt. Das folgende Listing zeigt, wie es gemacht
+wird: 
+<a name="listingid011006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1106.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">class</font> IntWrapper
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> value;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> IntWrapper(<font color="#006699">int</font> value)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#006699">this</font>.value = value;
+<font color="#555555">010 </font>  }
+<font color="#555555">011 </font>}
+<font color="#555555">012 </font>
+<font color="#555555">013 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1106
+<font color="#555555">014 </font>{
+<font color="#555555">015 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> inc1(IntWrapper w)
+<font color="#555555">016 </font>  {
+<font color="#555555">017 </font>    ++w.value;
+<font color="#555555">018 </font>  }
+<font color="#555555">019 </font>
+<font color="#555555">020 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> inc2(<font color="#006699">int</font>[] i)
+<font color="#555555">021 </font>  {
+<font color="#555555">022 </font>    ++i[0];
+<font color="#555555">023 </font>  }
+<font color="#555555">024 </font>
+<font color="#555555">025 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">026 </font>  {
+<font color="#555555">027 </font>    <font color="#00AA00">//Variante 1: &Uuml;bergabe in einem ver&auml;nderlichen Wrapper</font>
+<font color="#555555">028 </font>    IntWrapper i = <font color="#0000AA">new</font> IntWrapper(10);
+<font color="#555555">029 </font>    System.out.println(<font color="#0000FF">"i = "</font> + i.value);
+<font color="#555555">030 </font>    inc1(i);
+<font color="#555555">031 </font>    System.out.println(<font color="#0000FF">"i = "</font> + i.value);
+<font color="#555555">032 </font>    <font color="#00AA00">//Variante 2: &Uuml;bergabe als Array-Element</font>
+<font color="#555555">033 </font>    <font color="#006699">int</font>[] j = <font color="#0000AA">new</font> <font color="#006699">int</font>[] {10};
+<font color="#555555">034 </font>    System.out.println(<font color="#0000FF">"j = "</font> + j[0]);
+<font color="#555555">035 </font>    inc2(j);
+<font color="#555555">036 </font>    System.out.println(<font color="#0000FF">"j = "</font> + j[0]);
+<font color="#555555">037 </font>  }
+<font color="#555555">038 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1106.java"><font color="#000055" size=-1>Listing1106.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 11.6: Call by Reference</i></p>
+
+
+<!-- Section -->
+<a name="autoboxing"></a>
+<h3>11.2.3 Autoboxing und Autounboxing </h3>
+
+<p>
+Seit der J2SE 5.0 gibt es einen Mechanismus, der das automatische
+Ein- und Auspacken von primitiven Typen in und aus Wrapper-Klassen
+unterst&uuml;tzt. Dieses als <a name="ixa100615"><i>Autoboxing</i></a>
+bzw. <a name="ixa100616"><i>Autounboxing</i></a> (&#187;automatisches
+Ein- und Auspacken&#171;) bezeichnete Verfahren sorgt daf&uuml;r,
+dass an vielen Stellen automatisch zwischen primitiven Typen und Wrapper-Objekten
+konvertiert wird. Erwartet eine Methode beispielsweise einen <a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>-Wert
+als Argument, kann au&szlig;er einem <a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>
+auch direkt ein <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>
+&uuml;bergeben werden; und er wird ohne Zutun des Entwicklers in einen
+gleichwertigen <a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>
+konvertiert. Auch in umgekehrter Richtung funktioniert das, etwa wenn
+in einem arithmetischen Ausdruck ein <a href="index_d.html#ixb100254"><font color=#000080><tt>double</tt></font></a>
+erwartet, aber ein <a href="index_d.html#ixb100268"><font color=#000080><tt>Double</tt></font></a>
+&uuml;bergeben wird. 
+
+<p>
+Das Beispiel aus <a href="k100072.html#wrapperklassenohneab">Listing 11.5</a>
+kann seit der J2SE 5.0 wie folgt vereinfacht werden: 
+<a name="listingid011007"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1107.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1107
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> mitAutoboxing(<font color="#006699">int</font> arg)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    Integer i = arg;
+<font color="#555555">008 </font>    <font color="#006699">int</font> j = i + 1;
+<font color="#555555">009 </font>    System.out.println(i + <font color="#0000FF">" "</font> + j);
+<font color="#555555">010 </font>  }
+<font color="#555555">011 </font>
+<font color="#555555">012 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">013 </font>  {
+<font color="#555555">014 </font>    mitAutoboxing(<font color="#0000AA">new</font> Integer(17));
+<font color="#555555">015 </font>  }
+<font color="#555555">016 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1107.java"><font color="#000055" size=-1>Listing1107.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 11.7: Autoboxing und Autounboxing</i></p>
+
+<p>
+Die Einf&uuml;hrung des Autoboxings und Autounboxings hat eine Vielzahl
+von Auswirkungen auf die Java-Sprachspezifikation gebracht. Primitive
+Typen und Wrapper-Objekte k&ouml;nnen nun in weiten Bereichen fast
+gleichberechtigt benutzt werden. Die mitunter kritisierte und in manchen
+reinen OO-Sprachen (wie etwa Smalltalk) nicht vorhandene Unterscheidung
+zwischen beiden Gruppen ist f&uuml;r die meisten praktischen Belange
+nun irrelevant. 
+
+<p>
+So wird das Autoboxing etwa bei Zuweisungen und Methodenaufrufen angewandt,
+wenn ein Wrapper-Objekt erwartet wird, aber nur ein primitiver Wert
+zur Verf&uuml;gung steht. Umgekehrt wird ein entsprechender Wrapper
+bei Bedarf automatisch ausgepackt, wenn ein primitiver Wert erwartet,
+aber ein Wrapper-Objekt &uuml;bergeben wird. Auch innerhalb von Ausdr&uuml;cken
+k&ouml;nnen Wrapper-Objekte meist nahtlos anstelle von (und zusammen
+mit) primitiven Werten verwendet werden. Ausnahme sind einige ver&auml;ndernde
+Operatoren wie ++ und -- oder die kombinierten Zuweisungsoperatoren
++= oder -=. Wegen der Nebeneffekte k&ouml;nnen diese nicht auf (die
+per Definition unver&auml;nderlichen) Wrapper-Objekte angewendet werden.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Das obige Beispiel wirkt zugegebenerma&szlig;en etwas konstruiert.
+Der wahre Nutzen des Autoboxings und Autounboxings kommt vor allem
+in Synergie mit der erweiterten <a href="index_f.html#ixb100077"><font color=#000080><tt>for</tt></font></a>-Schleife
+und den typisierten Collections zum Tragen. Beispiele finden sich
+etwa in <a href="k100112.html#einfachtypsicher">Listing 16.10</a>
+oder <a href="k100112.html#zweifachtypsicher">Listing 16.12</a>.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+In <a href="k100329.html#perfautoboxing">Abschnitt 52.2.6</a> gehen
+wir noch einmal auf das Thema Autoboxing ein, dort unter Performance-Gesichtspunkten.
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100070.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100071.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100073.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100076.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

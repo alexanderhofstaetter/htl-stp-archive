@@ -1,0 +1,173 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100174.html;106,k100174.html;107,k100176.html;108,k100181.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100174.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100174.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100176.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100181.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 27 - Fenster
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id027001"></a>
+<h2>27.1 Die verschiedenen <a name="ixa101671">Fensterklassen</a>
+</h2>
+<hr>
+<ul>
+<li><a href="k100175.html#sectlevel2id027001">27.1 Die verschiedenen Fensterklassen</a>
+</ul>
+<hr>
+
+<p>
+Das Abstract Windowing Toolkit von Java enth&auml;lt verschiedene
+Fensterklassen, die &uuml;ber eine gemeinsame Vererbungshierarchie
+miteinander in Verbindung stehen (siehe <a href="k100175.html#hierarchiefensterklassen">Abbildung 27.1</a>).
+Oberste Fensterklasse ist <a name="ixa101672"><a href="index_c.html#ixb101293"><font color=#000080><tt>Component</tt></font></a></a>,
+daraus wurde <a name="ixa101673"><a href="index_c.html#ixb101294"><font color=#000080><tt>Container</tt></font></a></a>
+abgeleitet. <a href="index_c.html#ixb101294"><font color=#000080><tt>Container</tt></font></a>
+ist die Oberklasse der beiden Klassen <a name="ixa101674"><a href="index_w.html#ixb101153"><font color=#000080><tt>Window</tt></font></a></a>
+und <a name="ixa101675"><a href="index_p.html#ixb101295"><font color=#000080><tt>Panel</tt></font></a></a>.
+W&auml;hrend <a href="index_w.html#ixb101153"><font color=#000080><tt>Window</tt></font></a>
+sich in die Unterklassen <a name="ixa101676"><a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a></a>
+und <a name="ixa101677"><a href="index_d.html#ixb101152"><font color=#000080><tt>Dialog</tt></font></a></a>
+verzweigt, wird aus <a href="index_p.html#ixb101295"><font color=#000080><tt>Panel</tt></font></a>
+die Klasse <a name="ixa101678"><a href="index_a.html#ixb100603"><font color=#000080><tt>Applet</tt></font></a></a>
+abgeleitet. Unterhalb von <a href="index_d.html#ixb101152"><font color=#000080><tt>Dialog</tt></font></a>
+gibt es noch den Standard-File-Dialog in der Klasse <a name="ixa101679"><a href="index_f.html#ixb101296"><font color=#000080><tt>FileDialog</tt></font></a></a>.
+<p>
+<a name="hierarchiefensterklassen"></a>
+<img src="images/VererbAWTFenster.gif">
+<p>
+
+<p><i>
+Abbildung 27.1: Hierarchie der Fensterklassen</i></p>
+
+<p>
+<a href="index_c.html#ixb101293"><font color=#000080><tt>Component</tt></font></a>
+ist eine abstrakte Klasse, deren Aufgabe darin besteht, ein Programmelement
+zu repr&auml;sentieren, das eine Gr&ouml;&szlig;e und Position hat
+und das in der Lage ist, eine Vielzahl von Ereignissen zu senden und
+auf diese zu reagieren. In den folgenden Abschnitten werden wir einige
+ihrer Eigenschaften vorstellen. 
+
+<p>
+<a href="index_c.html#ixb101294"><font color=#000080><tt>Container</tt></font></a>
+ist ebenfalls eine abstrakte Klasse. Sie ist daf&uuml;r zust&auml;ndig,
+innerhalb einer Komponente andere Komponenten aufzunehmen. <a href="index_c.html#ixb101294"><font color=#000080><tt>Container</tt></font></a>
+stellt Methoden zur Verf&uuml;gung, um Komponenten hinzuzuf&uuml;gen
+oder sie zu entfernen, und realisiert in Zusammenarbeit mit den <font color="#000077"><tt>LayoutManager</tt></font>-Klassen
+die Positionierung und Anordnung der Komponenten. <a href="index_c.html#ixb101294"><font color=#000080><tt>Container</tt></font></a>
+und <a href="index_c.html#ixb101293"><font color=#000080><tt>Component</tt></font></a>
+bilden zusammen ein Composite-Pattern, wie es in <a href="k100074.html#compositepattern">Abschnitt 11.4.7</a>
+beschrieben wurde. Weitere Informationen zur Klasse <a href="index_c.html#ixb101294"><font color=#000080><tt>Container</tt></font></a>
+finden sich in <a href="k100203.html#dialogerstellen">Abschnitt 31.1</a>
+bei der Beschreibung von Dialogen und Layoutmanagern. 
+
+<p>
+<a href="index_p.html#ixb101295"><font color=#000080><tt>Panel</tt></font></a>
+ist die einfachste konkrete Klasse mit den Eigenschaften von <a href="index_c.html#ixb101293"><font color=#000080><tt>Component</tt></font></a>
+und <a href="index_c.html#ixb101294"><font color=#000080><tt>Container</tt></font></a>.
+Sie wird verwendet, um eine Sammlung von Dialogelementen mit einem
+vorgegebenen Layout zu definieren und wiederverwendbar zu machen.
+N&uuml;tzlich ist die Klasse auch beim Layouten von Dialogen, weil
+sie es erm&ouml;glicht, Teildialoge zu schachteln und mit eigenen
+Layoutmanagern zu versehen. Wir werden auf die Verwendung der Klasse
+<a href="index_p.html#ixb101295"><font color=#000080><tt>Panel</tt></font></a>
+in <a href="k100202.html#kapitelguidialoge">Kapitel 31</a> bei der
+Beschreibung von Benutzerdialogen zur&uuml;ckkommen. 
+
+<p>
+Die f&uuml;r die Entwicklung von Applets wichtige Klasse <a href="index_a.html#ixb100603"><font color=#000080><tt>Applet</tt></font></a>
+ist eine direkte Unterklasse von <a href="index_p.html#ixb101295"><font color=#000080><tt>Panel</tt></font></a>.
+Sie erweitert zwar die Funktionalit&auml;t der Klasse <a href="index_p.html#ixb101295"><font color=#000080><tt>Panel</tt></font></a>
+um Methoden, die f&uuml;r das Ausf&uuml;hren von Applets von Bedeutung
+sind, bleibt aber letzlich ein Programmelement, das eine Gr&ouml;&szlig;e
+und Position hat, auf Ereignisse reagieren kann und in der Lage ist,
+weitere Komponenten aufzunehmen. Einerseits ist es bemerkenswert,
+dass eine Klasse wie <a href="index_a.html#ixb100603"><font color=#000080><tt>Applet</tt></font></a>,
+die f&uuml;r eine riesige Zahl von Anwendungen von elementarer Bedeutung
+ist, ganz unten in der Vererbungskette eines stark spezialisierten
+Zweigs der Klassenhierarchie steht. Andererseits liefert die Klasse
+<a href="index_a.html#ixb100603"><font color=#000080><tt>Applet</tt></font></a>
+jedoch mit der vorstehenden Beschreibung eine nahezu perfekte Charakterisierung
+von Applets. Wir werden in <a href="k100257.html#kapitelapplets1">Kapitel 40</a>
+auf die Eigenschaften dieser Klasse n&auml;her eingehen. 
+
+<p>
+Die Klasse <a href="index_w.html#ixb101153"><font color=#000080><tt>Window</tt></font></a>
+abstrahiert ein Top-Level-Window ohne Rahmen, Titelleiste und Men&uuml;.
+Sie ist f&uuml;r Anwendungen geeignet, die ihre Rahmenelemente selbst
+zeichnen oder die volle Kontrolle &uuml;ber das gesamte Fenster ben&ouml;tigen.
+
+<p>
+Die Klasse <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>
+repr&auml;sentiert ein Top-Level-Window mit Rahmen, Titelleiste und
+optionalem Men&uuml;. Einem <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>
+kann ein Icon zugeordnet werden, das angezeigt wird, wenn das Fenster
+minimiert wird. Es kann eingestellt werden, ob das Fenster vom Anwender
+in der Gr&ouml;&szlig;e ver&auml;ndert werden kann. Zus&auml;tzlich
+besteht die M&ouml;glichkeit, das Aussehen des Mauszeigers zu ver&auml;ndern.
+
+<p>
+Die zweite aus <a href="index_w.html#ixb101153"><font color=#000080><tt>Window</tt></font></a>
+abgeleitete Klasse ist <a href="index_d.html#ixb101152"><font color=#000080><tt>Dialog</tt></font></a>.
+Sie ist daf&uuml;r vorgesehen, modale oder nichtmodale Dialoge zu
+realisieren. Ein modaler Dialog ist ein Fenster, das immer im Vordergrund
+des Fensters bleibt, von dem es erzeugt wurde, und das alle &uuml;brigen
+Fensteraktivit&auml;ten und Ereignisse so lange blockiert, bis es
+geschlossen wird. Ein nichtmodaler Dialog kann mit anderen Fenstern
+koexistieren und erlaubt es, im aufrufenden Fenster weiterzuarbeiten.
+
+<p>
+Die unterste Klasse in der Hierarchie der Fenster ist <a href="index_f.html#ixb101296"><font color=#000080><tt>FileDialog</tt></font></a>.
+Sie stellt den Standard-Dateidialog des jeweiligen Betriebssystems
+zur Verf&uuml;gung. Dieser kann beim Laden oder Speichern einer Datei
+zur Eingabe oder Auswahl eines Dateinamens verwendet werden. Gegen&uuml;ber
+den M&ouml;glichkeiten des Standard-Dateidialogs, wie er vom Windows-API
+zur Verf&uuml;gung gestellt wird, sind die F&auml;higkeiten der Klasse
+<a href="index_f.html#ixb101296"><font color=#000080><tt>FileDialog</tt></font></a>
+allerdings etwas eingeschr&auml;nkt. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100174.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100174.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100176.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100181.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

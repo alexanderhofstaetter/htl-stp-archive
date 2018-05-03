@@ -1,0 +1,47 @@
+
+AINF 2   		C/C++ - Aufgabe 11 c
+__________________________________________________________________________
+
+
+C++ - Programm  "bildspeicher.cpp"
+
+Folgende Funktionen sollen für das Speichern und Laden 
+einer 2 dim. Grafikfläche definiert werden 
+( unter Verwendung der WinBGIm Bibliotheksfunktionen 
+  getpixel() u. putpixel() )
+  
+
+// Typdefinition für zweidim. Array 
+typedef int bitmap[N][M]; ( mit den Konstanten N u. M ) 
+
+
+void image_init (int x1, int y1, int x2, int y2, bitmap bm, int color )
+////////////////////////////////////////////////////////////////////////////
+//  soll den Rechteckbereich x1,y1,x2,y2 mit dem Farbwert color 
+//  setzen und im 2-dim Arrays "bm" speichern     
+
+
+void getimage (int x1, int y1, int x2, int y2, bitmap bm)
+////////////////////////////////////////////////////////////////////////////
+//  soll die Bilddaten (Farbwerte) des 2-dim Arrays "bm"
+//  auf den Rechteckbereich x1,y1,x2,y2 ausgeben    
+
+
+void putimage (int x1, int y1, int x2, int y2, bitmap bm)
+////////////////////////////////////////////////////////////////////////////
+//  soll die Bilddaten (Farbwerte) vom Rechteckbereich x1,y1,x2,y2
+//  in das 2-dim Arrays "bm" speichern     
+
+
+void getimage_rotate (int x1, int y1, int x2, int y2, bitmap bm)
+////////////////////////////////////////////////////////////////////////////
+//  soll die Bilddaten (Farbwerte) des 2-dim Arrays "bm"
+//  auf den Rechteckbereich x1,y1,x2,y2 um 90° gedeht ausgeben    
+
+
+
+Im Hauptprogramm sollen diese Funktionen 
+ausgetestet werden. 
+
+ 
+

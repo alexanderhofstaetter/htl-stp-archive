@@ -1,0 +1,182 @@
+   1               		.file	"main.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   8               		.text
+   9               	.Ltext0:
+ 104               	.global	sende
+ 106               	sende:
+   1:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c **** #include <avr/io.h>
+   2:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c **** #include <util/delay.h>
+   3:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c **** 
+   4:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c **** #define F_CPU 8000000
+   5:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c **** 
+   6:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c **** #define DIN0 PORTB=PORTB&~(1<<PB0); //DIN = 0
+   7:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c **** #define DIN1 PORTB=PORTB|(1<<PB0);  //DIN = 1
+   8:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c **** 
+   9:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c **** #define CLK0 PORTB=PORTB&~(1<<PB1); //CLK = 0
+  10:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c **** #define CLK1 PORTB=PORTB|(1<<PB1);  //CLK = 1
+  11:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c **** 
+  12:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c **** #define CS0  PORTB=PORTB&~(1<<PB2); //CS = 0
+  13:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c **** #define CS1  PORTB=PORTB|(1<<PB2);  //CS = 1
+  14:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c **** 
+  15:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c **** void sende (unsigned char adr, unsigned char daten)
+  16:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c **** {
+ 108               	.LM0:
+ 109               	.LFBB1:
+ 110               	/* prologue: function */
+ 111               	/* frame size = 0 */
+ 112               	/* stack size = 0 */
+ 113               	.L__stack_usage = 0
+  17:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****     unsigned char Maske = 0x80; // 1000 0000
+  18:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****     unsigned char i; // Zählvariable
+  19:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****     
+  20:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****     CS0;
+ 115               	.LM1:
+ 116 0000 2A98      		cbi 0x5,2
+  21:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****     CLK0;
+ 118               	.LM2:
+ 119 0002 2998      		cbi 0x5,1
+ 120 0004 98E0      		ldi r25,lo8(8)
+  17:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****     unsigned char Maske = 0x80; // 1000 0000
+ 122               	.LM3:
+ 123 0006 20E8      		ldi r18,lo8(-128)
+ 124               	.L5:
+  22:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****     
+  23:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****     for(i=1; i<=8; i++) // Schleife zur Ausgabe der 8 Daten-Bits
+  24:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****     {
+  25:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****         if(adr & Maske) // Parallel => Serienumwandlung
+ 126               	.LM4:
+ 127 0008 322F      		mov r19,r18
+ 128 000a 3823      		and r19,r24
+ 129 000c 01F0      		breq .L2
+  26:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****         {
+  27:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****             DIN1;
+ 131               	.LM5:
+ 132 000e 289A      		sbi 0x5,0
+ 133 0010 00C0      		rjmp .L3
+ 134               	.L2:
+  28:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****         }
+  29:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****         
+  30:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****         else
+  31:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****         {
+  32:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****             DIN0;
+ 136               	.LM6:
+ 137 0012 2898      		cbi 0x5,0
+ 138               	.L3:
+  33:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****         }
+  34:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****         
+  35:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****         CLK1;
+ 140               	.LM7:
+ 141 0014 299A      		sbi 0x5,1
+  36:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****         CLK0;
+ 143               	.LM8:
+ 144 0016 2998      		cbi 0x5,1
+  37:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****         Maske = Maske>>1; // Maske um 1 Bit nach rechts verschieben
+ 146               	.LM9:
+ 147 0018 2695      		lsr r18
+ 148 001a 9150      		subi r25,lo8(-(-1))
+  23:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****     for(i=1; i<=8; i++) // Schleife zur Ausgabe der 8 Daten-Bits
+ 150               	.LM10:
+ 151 001c 01F4      		brne .L5
+ 152 001e 88E0      		ldi r24,lo8(8)
+ 153 0020 90E8      		ldi r25,lo8(-128)
+ 154               	.L9:
+  38:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****     }
+  39:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****     
+  40:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****     
+  41:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****     Maske = 0x80;
+  42:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****     for(i=1; i<=8; i++) // Schleif zur Ausgabe der 8 Daten-Bits
+  43:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****     {
+  44:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****         if(daten & Maske){ DIN1;} // Parallel => Serienumwandlung
+ 156               	.LM11:
+ 157 0022 292F      		mov r18,r25
+ 158 0024 2623      		and r18,r22
+ 159 0026 01F0      		breq .L6
+ 161               	.LM12:
+ 162 0028 289A      		sbi 0x5,0
+ 163 002a 00C0      		rjmp .L7
+ 164               	.L6:
+  45:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****         else {DIN0;}
+ 166               	.LM13:
+ 167 002c 2898      		cbi 0x5,0
+ 168               	.L7:
+  46:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****         CLK1;
+ 170               	.LM14:
+ 171 002e 299A      		sbi 0x5,1
+  47:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****         CLK0;
+ 173               	.LM15:
+ 174 0030 2998      		cbi 0x5,1
+  48:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****         Maske = Maske>>1; // Maske um 1 Bit nach rechts verschieben
+ 176               	.LM16:
+ 177 0032 9695      		lsr r25
+ 178 0034 8150      		subi r24,lo8(-(-1))
+  42:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****     for(i=1; i<=8; i++) // Schleif zur Ausgabe der 8 Daten-Bits
+ 180               	.LM17:
+ 181 0036 01F4      		brne .L9
+  49:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****     }
+  50:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****     DIN0; // Serielle Datenleitung auf 0
+ 183               	.LM18:
+ 184 0038 2898      		cbi 0x5,0
+  51:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****     CS1; // Übernahme der Adr.- und Daten-Bits
+ 186               	.LM19:
+ 187 003a 2A9A      		sbi 0x5,2
+ 188 003c 0895      		ret
+ 190               	.Lscope1:
+ 191               		.section	.text.startup,"ax",@progbits
+ 193               	.global	main
+ 195               	main:
+  52:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c **** }
+  53:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c **** 
+  54:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c **** int main(void)
+  55:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c **** {
+ 197               	.LM20:
+ 198               	.LFBB2:
+ 199               	/* prologue: function */
+ 200               	/* frame size = 0 */
+ 201               	/* stack size = 0 */
+ 202               	.L__stack_usage = 0
+  56:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****     CLKPR=0x80;
+ 204               	.LM21:
+ 205 0000 E1E6      		ldi r30,lo8(97)
+ 206 0002 F0E0      		ldi r31,0
+ 207 0004 80E8      		ldi r24,lo8(-128)
+ 208 0006 8083      		st Z,r24
+  57:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****     CLKPR=0x01;
+ 210               	.LM22:
+ 211 0008 81E0      		ldi r24,lo8(1)
+ 212 000a 8083      		st Z,r24
+  58:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****     
+  59:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****     DDRB |= (1<<DDB0)|(1<<DDB1)|(1<<DDB2);
+ 214               	.LM23:
+ 215 000c 84B1      		in r24,0x4
+ 216 000e 8760      		ori r24,lo8(7)
+ 217 0010 84B9      		out 0x4,r24
+  60:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****     
+  61:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c ****     sende(7,7);
+ 219               	.LM24:
+ 220 0012 67E0      		ldi r22,lo8(7)
+ 221 0014 87E0      		ldi r24,lo8(7)
+ 222 0016 0E94 0000 		call sende
+  62:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/SPI-CRHA-Labor-Programm-1/SPI-CRHA-Labor-Programm-1/main.c **** }...
+ 224               	.LM25:
+ 225 001a 80E0      		ldi r24,0
+ 226 001c 90E0      		ldi r25,0
+ 227 001e 0895      		ret
+ 229               	.Lscope2:
+ 230               		.text
+ 232               	.Letext0:
+ 233               		.ident	"GCC: (GNU) 4.8.1"
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccI85FQn.s:2      *ABS*:0000003e __SP_H__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccI85FQn.s:3      *ABS*:0000003d __SP_L__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccI85FQn.s:4      *ABS*:0000003f __SREG__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccI85FQn.s:5      *ABS*:00000000 __tmp_reg__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccI85FQn.s:6      *ABS*:00000001 __zero_reg__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccI85FQn.s:106    .text:00000000 sende
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccI85FQn.s:195    .text.startup:00000000 main
+
+NO UNDEFINED SYMBOLS

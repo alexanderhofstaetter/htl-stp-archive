@@ -1,0 +1,59 @@
+
+AINF 2   		C/C++ - Aufgabe 05d
+__________________________________________________________________________
+
+
+C++ - Programm  "rotate.cpp",
+soll eine rotierende Linie mit der Länge r darstellen, 
+die an einem Ende fest am Punkt x,y liegt und 
+das andere Ende kreisförmig um den Punkt x,y als Mittelpunkt rotiert. 
+
+Das Programm soll folgenden Aufbau haben  
+und zur Berechnung der Linienposition die Funktion 
+     void line_rotate(int x,int y,int r, float phi); 
+verwenden.  
+	      
+
+/////////////////////////////////////////////////////////////////////////////
+//   Programmname : ZeigerRotation.cpp
+//    .... 
+
+void line_rotate(int x,int y,int r, float phi);
+
+int main()
+{
+    printf(" rotierende Linie \n");
+
+    // Grafikfenster  erzeugen mit Breite=600, Höhe=400 und Beschriftung
+    initwindow(600,500,"Rotationen ");
+
+    int bcol=COLOR(200,200,255);        // Hintergrundfarbe
+    int col =COLOR(100,200,200);        // Zeichenfarbe
+    
+	float phi,phi0;                     // Rotationswinkel
+
+    setcolor(col);
+    setbkcolor(bcol);
+    cleardevice();
+
+    phi0=phi=0;
+    do
+    {
+        setcolor(bcol);                  // mit Hintergrundfarbe
+        line_rotate(300,250,200,phi0);   // Linie löschen
+        setcolor(col);                   // mit Vordergrundfarbe
+        line_rotate(300,250,200,phi);    // Linie zeichnen
+        delay(10);
+        phi0=phi;                        // alten Winkel speichern
+        phi+=1;                          // Winkel erhöhen
+
+    }
+    while(!kbhit());                    // solange bis Taste gedrückt wird
+
+    closegraph();
+
+    return 0;
+}
+
+Dazu ist die Funktionsdefinition für line_rotate(...) zu erstellen und 
+diDie Angabe der Schnittstellenbeschreibung auszuführen. 

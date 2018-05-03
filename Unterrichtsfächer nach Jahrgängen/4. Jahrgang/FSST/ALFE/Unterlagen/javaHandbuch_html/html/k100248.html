@@ -1,0 +1,622 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100245.html;106,k100247.html;107,k100249.html;108,k100252.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100245.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100247.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100249.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100252.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 38 - Swing: Komponenten I
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="listenundcomboboxen"></a>
+<h2>38.3 Listen und Comboboxen </h2>
+<hr>
+<ul>
+<li><a href="k100248.html#listenundcomboboxen">38.3 Listen und Comboboxen</a>
+<ul>
+<li><a href="k100248.html#jlist">38.3.1 JList</a>
+<ul>
+<li><a href="k100248.html#sectlevel4id038003001001">Selektieren von Elementen</a>
+<li><a href="k100248.html#sectlevel4id038003001002">Den Listeninhalt dynamisch ver&auml;ndern</a>
+<li><a href="k100248.html#sectlevel4id038003001003">Beispiel</a>
+</ul>
+<li><a href="k100248.html#sectlevel3id038003002">38.3.2 JComboBox</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="jlist"></a>
+<h3>38.3.1 JList </h3>
+
+<p>
+Die Klasse <a name="ixa102636"><a href="index_j.html#ixb101789"><font color=#000080><tt>JList</tt></font></a></a>
+dient dazu, Listen von Werten darzustellen, aus denen der Anwender
+einen oder mehrere Eintr&auml;ge ausw&auml;hlen kann. Im Gegensatz
+zur AWT-Klasse <a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>
+kann sie nicht nur Strings, sondern beliebige Objekte vom generischen
+Typ E enthalten. Auch die Darstellung der Listenelemente auf dem Bildschirm
+kann weitgehend frei gestaltet werden. Wir wollen uns die wichtigsten
+Eigenschaften von <a href="index_j.html#ixb101789"><font color=#000080><tt>JList</tt></font></a>
+ansehen und dazu zun&auml;chst mit den Konstruktoren beginnen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public JList()
+public JList(E[] listData)
+public JList(Vector&lt;? extends E&gt; listData)
+public JList(ListModel&lt;E&gt; dataModel)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JList.html" onClick="this.href=getApiDoc('javax.swing.JList')"><font color="#660066" size=-1>javax.swing.JList</font></a></td>
+</tr>
+</table>
+
+<p>
+Der parameterlose Konstruktor erzeugt eine leere Liste. Wird ein Array
+oder <a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>
+&uuml;bergeben, erzeugt <a href="index_j.html#ixb101789"><font color=#000080><tt>JList</tt></font></a>
+aus dessen Daten ein Listenmodell und benutzt es zur Darstellung.
+Schlie&szlig;lich kann auch direkt eine Instanz der Klasse <a name="ixa102637"><a href="index_l.html#ixb101790"><font color=#000080><tt>ListModel</tt></font></a></a>
+&uuml;bergeben werden, um den Inhalt der Liste zu definieren. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+&Auml;hnlich wie <a href="index_j.html#ixb101932"><font color=#000080><tt>JTextArea</tt></font></a>
+und andere Swing-Komponenten besitzt <a href="index_j.html#ixb101789"><font color=#000080><tt>JList</tt></font></a>
+keine eigene Funktionalit&auml;t zum Scrollen der Daten, falls diese
+nicht vollst&auml;ndig auf den Bildschirm passen. Eine <a href="index_j.html#ixb101789"><font color=#000080><tt>JList</tt></font></a>
+wird daher meist in eine <a href="index_j.html#ixb101791"><font color=#000080><tt>JScrollPane</tt></font></a>
+eingebettet, bevor sie zu einem GUI-Container hinzugef&uuml;gt wird.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id038003001001"></a>
+<h4>Selektieren von Elementen </h4>
+
+<p>
+Die meisten Methoden der Klasse <a href="index_j.html#ixb101789"><font color=#000080><tt>JList</tt></font></a>
+haben mit der Selektion der Listenelemente zu tun. Eine Liste kann
+sowohl Einzel- als auch Mehrfachselektion unterst&uuml;tzen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int getSelectionMode()
+public void setSelectionMode(int selectionMode)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JList.html" onClick="this.href=getApiDoc('javax.swing.JList')"><font color="#660066" size=-1>javax.swing.JList</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa102638"><a href="index_s.html#ixb101960"><font color=#000080><tt>setSelectionMode</tt></font></a></a>
+wird der Selektionsmodus ver&auml;ndert. Als Argument kann eine der
+folgenden Konstanten der Klasse <a name="ixa102639"><a href="index_l.html#ixb101961"><font color=#000080><tt>ListSelectionModel</tt></font></a></a>
+&uuml;bergeben werden: 
+<ul>
+<li><a name="ixa102640"><a href="index_s.html#ixb101962"><font color=#000080><tt>SINGLE_SELECTION</tt></font></a></a>:
+Es kann maximal ein Element ausgew&auml;hlt werden.
+<li><a name="ixa102641"><a href="index_s.html#ixb101963"><font color=#000080><tt>SINGLE_INTERVAL_SELECTION</tt></font></a></a>:
+Es k&ouml;nnen mehrere Elemente eines zusammenh&auml;ngenden Bereichs
+ausgew&auml;hlt werden.
+<li><a name="ixa102642"><a href="index_m.html#ixb101964"><font color=#000080><tt>MULTIPLE_INTERVAL_SELECTION</tt></font></a></a>:
+Eine beliebige Auswahl von Elementen kann selektiert werden.
+</ul>
+
+<p>
+<a name="ixa102643"><a href="index_g.html#ixb101965"><font color=#000080><tt>getSelectionMode</tt></font></a></a>
+liefert den aktuellen Selektionsmodus. Es gibt eine Reihe von Methoden,
+um Informationen &uuml;ber die derzeit selektierten Elemente zu beschaffen:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int getSelectedIndex()
+public int[] getSelectedIndices()
+
+public Object getSelectedValue()
+public Object[] getSelectedValues()
+
+public boolean isSelectedIndex(int index)
+public boolean isSelectionEmpty()
+
+public int getAnchorSelectionIndex()
+public int getLeadSelectionIndex()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JList.html" onClick="this.href=getApiDoc('javax.swing.JList')"><font color="#660066" size=-1>javax.swing.JList</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa102644"><a href="index_g.html#ixb101616"><font color=#000080><tt>getSelectedIndex</tt></font></a></a>
+liefert den Index des selektierten Elements, falls der Selektionsmodus
+<a href="index_s.html#ixb101962"><font color=#000080><tt>SINGLE_SELECTION</tt></font></a>
+ist. K&ouml;nnen mehrere Elemente ausgew&auml;hlt werden, liefert
+<a name="ixa102645"><a href="index_g.html#ixb101966"><font color=#000080><tt>getSelectedIndices</tt></font></a></a>
+ein Array mit den Indizes aller selektierten Elemente. <a name="ixa102646"><a href="index_g.html#ixb101967"><font color=#000080><tt>getSelectedValue</tt></font></a></a>
+und <a name="ixa102647"><a href="index_g.html#ixb101968"><font color=#000080><tt>getSelectedValues</tt></font></a></a>
+arbeiten in analoger Weise, liefern aber statt der Indizes die selektierten
+Elemente zur&uuml;ck. Mit <a name="ixa102648"><a href="index_i.html#ixb101969"><font color=#000080><tt>isSelectedIndex</tt></font></a></a>
+kann gepr&uuml;ft werden, ob das Element mit dem angegebenen Index
+gerade selektiert ist, und <a name="ixa102649"><a href="index_i.html#ixb101970"><font color=#000080><tt>isSelectionEmpty</tt></font></a></a>
+pr&uuml;ft, ob mindestens ein Element selektiert wurde. 
+
+<p>
+Als &#187;Anchor&#171; und &#187;Lead&#171; bezeichnet Swing in einem
+zusammenh&auml;ngend markierten Bereich das jeweils zuerst und zuletzt
+markierte Element. Das zuletzt markierte Element ist gleichzeitig
+aktuelles Element. Mit <a name="ixa102650"><a href="index_g.html#ixb101971"><font color=#000080><tt>getAnchorSelectionIndex</tt></font></a></a>
+und <a name="ixa102651"><a href="index_g.html#ixb101972"><font color=#000080><tt>getLeadSelectionIndex</tt></font></a></a>
+kann auf &#187;Anchor&#171; und &#187;Lead&#171; zugegriffen werden,
+wenn der Selektionsmodus <a href="index_s.html#ixb101963"><font color=#000080><tt>SINGLE_INTERVAL_SELECTION</tt></font></a>
+ist. 
+
+<p>
+Zus&auml;tzlich gibt es Methoden, um die Selektion programmgesteuert
+zu ver&auml;ndern: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void clearSelection()
+
+public void setSelectedIndex(int index)
+public void setSelectedIndices(int[] indices)
+
+public void setSelectionInterval(int anchor, int lead)
+public void addSelectionInterval(int anchor, int lead)
+public void removeSelectionInterval(int index0, int index1)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JList.html" onClick="this.href=getApiDoc('javax.swing.JList')"><font color="#660066" size=-1>javax.swing.JList</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa102652"><a href="index_c.html#ixb101973"><font color=#000080><tt>clearSelection</tt></font></a></a>
+wird die Selektion gel&ouml;scht. Mit <a name="ixa102653"><a href="index_s.html#ixb101974"><font color=#000080><tt>setSelectedIndex</tt></font></a></a>
+kann ein einzelnes Element selektiert werden, mit <a name="ixa102654"><a href="index_s.html#ixb101975"><font color=#000080><tt>setSelectedIndices</tt></font></a></a>
+eine Menge von Elementen. Mit <a name="ixa102655"><a href="index_s.html#ixb101976"><font color=#000080><tt>setSelectionInterval</tt></font></a></a>,
+<a name="ixa102656"><a href="index_a.html#ixb101977"><font color=#000080><tt>addSelectionInterval</tt></font></a></a>
+und <a name="ixa102657"><a href="index_r.html#ixb101978"><font color=#000080><tt>removeSelectionInterval</tt></font></a></a>
+k&ouml;nnen Selektionen auch bereichsweise hinzugef&uuml;gt und gel&ouml;scht
+werden. 
+
+<p>
+Wird die Selektion ge&auml;ndert, versendet eine <a href="index_j.html#ixb101789"><font color=#000080><tt>JList</tt></font></a>
+ein <a name="ixa102658"><a href="index_l.html#ixb101979"><font color=#000080><tt>ListSelectionEvent</tt></font></a></a>
+an alle registrierten Listener. Um im Programm auf &Auml;nderungen
+zu reagieren, ist also lediglich das Interface <a name="ixa102659"><a href="index_l.html#ixb101980"><font color=#000080><tt>ListSelectionListener</tt></font></a></a>
+des Pakets <a name="ixa102660"><a href="index_j.html#ixb101981"><font color=#000080><tt>javax.swing.event</tt></font></a></a>
+zu implementieren und durch Aufruf von <a name="ixa102661"><a href="index_a.html#ixb101982"><font color=#000080><tt>addListSelectionListener</tt></font></a></a>
+bei der <a href="index_j.html#ixb101789"><font color=#000080><tt>JList</tt></font></a>
+zu registrieren. Jede Selektions&auml;nderung f&uuml;hrt dann zum
+Aufruf der Methode <a name="ixa102662"><a href="index_v.html#ixb101983"><font color=#000080><tt>valueChanged</tt></font></a></a>.
+
+
+<!-- Section -->
+<a name="sectlevel4id038003001002"></a>
+<h4>Den Listeninhalt dynamisch ver&auml;ndern </h4>
+
+<p>
+Etwas mehr Aufwand als beim AWT-Pendant muss getrieben werden, wenn
+der Inhalt einer <a href="index_j.html#ixb101789"><font color=#000080><tt>JList</tt></font></a>
+nach der Instanzierung modifiziert werden soll. In diesem Fall kann
+nicht mehr mit dem automatisch erzeugten Listenmodell gearbeitet werden,
+sondern es muss selbst eines erzeugt werden. Das Modell einer <a href="index_j.html#ixb101789"><font color=#000080><tt>JList</tt></font></a>
+muss stets das Interface <a name="ixa102663"><a href="index_l.html#ixb101790"><font color=#000080><tt>ListModel</tt></font></a></a>
+implementieren und der Liste durch Versenden eines <a name="ixa102664"><a href="index_l.html#ixb101984"><font color=#000080><tt>ListDataEvent</tt></font></a></a>
+jede Daten&auml;nderung mitteilen. Eine f&uuml;r viele Zwecke ausreichende
+Implementierung steht mit der Klasse <a name="ixa102665"><a href="index_d.html#ixb101985"><font color=#000080><tt>DefaultListModel</tt></font></a></a>
+zur Verf&uuml;gung. Ihre Schnittstelle entspricht der Klasse <a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>
+(siehe <a href="k100099.html#abschnittvector">Abschnitt 15.2</a>)
+und alle erforderlichen &Auml;nderungsbenachrichtigungen werden automatisch
+verschickt. Die wichtigsten Methoden von <a href="index_d.html#ixb101985"><font color=#000080><tt>DefaultListModel</tt></font></a>
+sind: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void clear()
+public void addElement(Object obj)
+public void removeElementAt(int index)
+
+public int size()
+public Object elementAt(int index)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/DefaultListModel.html" onClick="this.href=getApiDoc('javax.swing.DefaultListModel')"><font color="#660066" size=-1>javax.swing.DefaultListModel</font></a></td>
+</tr>
+</table>
+
+<p>
+Soll eine Liste mit einem benutzerdefinierten Modell arbeiten, wird
+dieses einfach manuell erzeugt und an den Konstruktor &uuml;bergeben.
+Alle Einf&uuml;gungen, L&ouml;schungen und &Auml;nderungen von Daten
+werden dann an diesem Modell vorgenommen. Durch Aufruf von <a name="ixa102666"><a href="index_g.html#ixb101986"><font color=#000080><tt>getModel</tt></font></a></a>
+kann auf einfache Weise auf das Modell einer <a href="index_j.html#ixb101789"><font color=#000080><tt>JList</tt></font></a>
+zugegriffen werden. 
+
+<!-- Section -->
+
+<a name="sectlevel4id038003001003"></a>
+<h4>Beispiel </h4>
+
+<p>
+Zum Abschluss wollen wir uns ein Beispiel ansehen. Das folgende Programm
+instanziert eine <a href="index_j.html#ixb101789"><font color=#000080><tt>JList</tt></font></a>
+durch &Uuml;bergabe eines String-Arrays. Bei jedem Dr&uuml;cken des
+Buttons &#187;Ausgabe&#171; gibt es die Liste der selektierten Elemente
+auf der Konsole aus: 
+<a name="listingid038010"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3810.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3810
+<font color="#555555">008 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">009 </font><font color="#0000AA">implements</font> ActionListener
+<font color="#555555">010 </font>{
+<font color="#555555">011 </font>  <font color="#0000AA">static</font> <font color="#0000AA">final</font> String[] DATA = {
+<font color="#555555">012 </font>    <font color="#0000FF">"Hund"</font>, <font color="#0000FF">"Katze"</font>, <font color="#0000FF">"Meerschweinchen"</font>, <font color="#0000FF">"Tiger"</font>, <font color="#0000FF">"Maus"</font>,
+<font color="#555555">013 </font>    <font color="#0000FF">"Fisch"</font>, <font color="#0000FF">"Leopard"</font>, <font color="#0000FF">"Schimpanse"</font>, <font color="#0000FF">"Kuh"</font>, <font color="#0000FF">"Pferd"</font>,
+<font color="#555555">014 </font>    <font color="#0000FF">"Reh"</font>, <font color="#0000FF">"Huhn"</font>, <font color="#0000FF">"Marder"</font>, <font color="#0000FF">"Adler"</font>, <font color="#0000FF">"Nilpferd"</font>
+<font color="#555555">015 </font>  };
+<font color="#555555">016 </font>
+<font color="#555555">017 </font>  <font color="#0000AA">private</font> JList&lt;String&gt; list;
+<font color="#555555">018 </font>
+<font color="#555555">019 </font>  <font color="#0000AA">public</font> Listing3810()
+<font color="#555555">020 </font>  {
+<font color="#555555">021 </font>    <font color="#006699">super</font>(<font color="#0000FF">"JList"</font>);
+<font color="#555555">022 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">023 </font>    Container cp = getContentPane();
+<font color="#555555">024 </font>    <font color="#00AA00">//Liste</font>
+<font color="#555555">025 </font>    list = <font color="#0000AA">new</font> JList&lt;String&gt;(DATA);
+<font color="#555555">026 </font>    list.setSelectionMode(
+<font color="#555555">027 </font>      ListSelectionModel.MULTIPLE_INTERVAL_SELECTION
+<font color="#555555">028 </font>    );
+<font color="#555555">029 </font>    list.setSelectedIndex(2);
+<font color="#555555">030 </font>    cp.add(<font color="#0000AA">new</font> JScrollPane(list), BorderLayout.CENTER);
+<font color="#555555">031 </font>    <font color="#00AA00">//Ausgabe-Button</font>
+<font color="#555555">032 </font>    JButton button = <font color="#0000AA">new</font> JButton(<font color="#0000FF">"Ausgabe"</font>);
+<font color="#555555">033 </font>    button.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">034 </font>    cp.add(button, BorderLayout.SOUTH);
+<font color="#555555">035 </font>  }
+<font color="#555555">036 </font>
+<font color="#555555">037 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> actionPerformed(ActionEvent event)
+<font color="#555555">038 </font>  {
+<font color="#555555">039 </font>    String cmd = event.getActionCommand();
+<font color="#555555">040 </font>    <font color="#0000AA">if</font> (cmd.equals(<font color="#0000FF">"Ausgabe"</font>)) {
+<font color="#555555">041 </font>      System.out.println(<font color="#0000FF">"---"</font>);
+<font color="#555555">042 </font>      ListModel&lt;String&gt; lm = list.getModel();
+<font color="#555555">043 </font>      <font color="#006699">int</font>[] sel = list.getSelectedIndices();
+<font color="#555555">044 </font>      <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; sel.length; ++i) {
+<font color="#555555">045 </font>        String value = lm.getElementAt(sel[i]);
+<font color="#555555">046 </font>        System.out.println(<font color="#0000FF">"  "</font> + value);
+<font color="#555555">047 </font>      }
+<font color="#555555">048 </font>    }
+<font color="#555555">049 </font>  }
+<font color="#555555">050 </font>
+<font color="#555555">051 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">052 </font>  {
+<font color="#555555">053 </font>    Listing3810 frame = <font color="#0000AA">new</font> Listing3810();
+<font color="#555555">054 </font>    frame.setLocation(100, 100);
+<font color="#555555">055 </font>    frame.setSize(200, 200);
+<font color="#555555">056 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">057 </font>  }
+<font color="#555555">058 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3810.java"><font color="#000055" size=-1>Listing3810.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 38.10: Die Klasse JList</i></p>
+
+<p>
+Die Programmausgabe ist: 
+<p>
+<a name="imageid038008"></a>
+<img src="images/JList1.gif">
+<p>
+
+<p><i>
+Abbildung 38.8: Die Klasse JList</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id038003002"></a>
+<h3>38.3.2 JComboBox </h3>
+
+<p>
+Eine <a name="ixa102667"><a href="index_j.html#ixb101987"><font color=#000080><tt>JComboBox</tt></font></a></a>
+ist das Swing-Pendant zur AWT-Klasse <a href="index_c.html#ixb101423"><font color=#000080><tt>Choice</tt></font></a>.
+Es stellt eine Kombination aus Textfeld und Liste dar. Die Liste ist
+normalerweise unsichtbar und wird vom Anwender nur dann ge&ouml;ffnet,
+wenn er einen Wert daraus ausw&auml;hlen will. Sie erlaubt grunds&auml;tzlich
+nur <i>einfache</i> Selektion. Die wichtigsten Konstruktoren von <a href="index_j.html#ixb101987"><font color=#000080><tt>JComboBox</tt></font></a>
+sind: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public JComboBox(Object[] items)
+public JComboBox(Vector items)
+public JComboBox(ComboBoxModel aModel)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JComboBox.html" onClick="this.href=getApiDoc('javax.swing.JComboBox')"><font color="#660066" size=-1>javax.swing.JComboBox</font></a></td>
+</tr>
+</table>
+
+<p>
+Sie entsprechen den korrespondierenden Konstruktoren der Klasse <a href="index_j.html#ixb101789"><font color=#000080><tt>JList</tt></font></a>.
+Ein wichtiges Merkmal einer <a href="index_j.html#ixb101987"><font color=#000080><tt>JComboBox</tt></font></a>
+ist die M&ouml;glichkeit, das Textfeld editieren zu k&ouml;nnen oder
+nicht. Ist das der Fall, kann der Anwender auch Werte eingeben, die
+nicht in der Liste stehen; andernfalls ist er auf Listenwerte beschr&auml;nkt.
+Mit den Methoden <a name="ixa102668"><a href="index_s.html#ixb101604"><font color=#000080><tt>setEditable</tt></font></a></a>
+und <a name="ixa102669"><a href="index_i.html#ixb101605"><font color=#000080><tt>isEditable</tt></font></a></a>
+kann auf diese Eigenschaft zugegriffen werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setEditable(boolean aFlag)
+public boolean isEditable()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JComboBox.html" onClick="this.href=getApiDoc('javax.swing.JComboBox')"><font color="#660066" size=-1>javax.swing.JComboBox</font></a></td>
+</tr>
+</table>
+
+<p>
+Zur Abfrage oder Auswahl des selektierten Elements stehen folgende
+Methoden zur Verf&uuml;gung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Object getSelectedItem()
+public void setSelectedItem(Object anObject)
+
+public int getSelectedIndex()
+public void setSelectedIndex(int anIndex)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JComboBox.html" onClick="this.href=getApiDoc('javax.swing.JComboBox')"><font color="#660066" size=-1>javax.swing.JComboBox</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa102670"><a href="index_g.html#ixb101617"><font color=#000080><tt>getSelectedItem</tt></font></a></a>
+kann das selektierte Element abgefragt werden, mit <a name="ixa102671"><a href="index_s.html#ixb101988"><font color=#000080><tt>setSelectedItem</tt></font></a></a>
+kann es gesetzt werden. Wurde bei einer editierbaren <a href="index_j.html#ixb101987"><font color=#000080><tt>JComboBox</tt></font></a>
+vom Anwender ein Wert eingegeben, der nicht in der Liste steht, liefert
+<a href="index_g.html#ixb101617"><font color=#000080><tt>getSelectedItem</tt></font></a>
+diesen Wert. Mit <a name="ixa102672"><a href="index_g.html#ixb101616"><font color=#000080><tt>getSelectedIndex</tt></font></a></a>
+und <a name="ixa102673"><a href="index_s.html#ixb101974"><font color=#000080><tt>setSelectedIndex</tt></font></a></a>
+kann auch &uuml;ber die Indizes der Liste auf deren Elemente zugegriffen
+werden. <a href="index_g.html#ixb101616"><font color=#000080><tt>getSelectedIndex</tt></font></a>
+liefert -1, wenn vom Anwender ein Wert eingegeben wurde, der nicht
+in der Liste steht. 
+
+<p>
+Im Gegensatz zu <a href="index_j.html#ixb101789"><font color=#000080><tt>JList</tt></font></a>
+stellt <a href="index_j.html#ixb101987"><font color=#000080><tt>JComboBox</tt></font></a>
+auch einige Methoden zur Verf&uuml;gung, mit denen die Elemente der
+Liste dynamisch ver&auml;ndert werden k&ouml;nnen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void addItem(Object anObject)
+public void insertItemAt(Object anObject, int index)
+public void removeItem(Object anObject)
+public void removeItemAt(int anIndex)
+public void removeAllItems()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JComboBox.html" onClick="this.href=getApiDoc('javax.swing.JComboBox')"><font color="#660066" size=-1>javax.swing.JComboBox</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa102674"><a href="index_a.html#ixb101615"><font color=#000080><tt>addItem</tt></font></a></a>
+wird ein neues Element an das Ende der Liste angeh&auml;ngt, mit <a name="ixa102675"><a href="index_i.html#ixb101989"><font color=#000080><tt>insertItemAt</tt></font></a></a>
+wird es an einer beliebigen Position eingef&uuml;gt. <a name="ixa102676"><a href="index_r.html#ixb101990"><font color=#000080><tt>removeItem</tt></font></a></a>
+entfernt das angegebene Element, <a name="ixa102677"><a href="index_r.html#ixb101991"><font color=#000080><tt>removeItemAt</tt></font></a></a>
+das Element mit dem angegebenen Index. <a name="ixa102678"><a href="index_r.html#ixb101992"><font color=#000080><tt>removeAllItems</tt></font></a></a>
+entfernt alle Elemente aus der Liste. 
+
+<p>
+Jedes Mal, wenn ein anderes Element selektiert wird, sendet eine <a href="index_j.html#ixb101987"><font color=#000080><tt>JComboBox</tt></font></a>
+ein <a href="index_i.html#ixb101345"><font color=#000080><tt>ItemEvent</tt></font></a>
+an registrierte <a href="index_i.html#ixb101420"><font color=#000080><tt>ItemListener</tt></font></a>
+(und zwar sowohl f&uuml;r das deselektierte als auch f&uuml;r das
+selektierte Element). Nach Abschluss der Selektion oder wenn der Anwender
+in einer editierbaren <a href="index_j.html#ixb101987"><font color=#000080><tt>JComboBox</tt></font></a>
+einen Wert per Hand eingegeben hat, wird zus&auml;tzlich ein <a href="index_a.html#ixb101343"><font color=#000080><tt>ActionEvent</tt></font></a>
+an registrierte <a href="index_a.html#ixb101408"><font color=#000080><tt>ActionListener</tt></font></a>
+versendet. 
+
+<p>
+Das folgende Programm enth&auml;lt zwei Comboboxen, von denen die
+erste editierbar ist und die zweite nicht. Ihre Elemente stammen aus
+einem <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Array
+mit Farbwerten, das direkt an den Konstruktor &uuml;bergeben wird:
+<a name="listingid038011"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3811.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3811
+<font color="#555555">008 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">009 </font>{
+<font color="#555555">010 </font>  <font color="#0000AA">private</font> <font color="#0000AA">static</font> <font color="#0000AA">final</font> String[] COLORS = {
+<font color="#555555">011 </font>    <font color="#0000FF">"rot"</font>, <font color="#0000FF">"gr&uuml;n"</font>, <font color="#0000FF">"blau"</font>, <font color="#0000FF">"gelb"</font>
+<font color="#555555">012 </font>  };
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>  <font color="#0000AA">public</font> Listing3811()
+<font color="#555555">015 </font>  {
+<font color="#555555">016 </font>    <font color="#006699">super</font>(<font color="#0000FF">"JComboBox"</font>);
+<font color="#555555">017 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">018 </font>    Container cp = getContentPane();
+<font color="#555555">019 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 1; i &lt;= 2; ++i) {
+<font color="#555555">020 </font>      JPanel panel = <font color="#0000AA">new</font> JPanel();
+<font color="#555555">021 </font>      panel.setLayout(<font color="#0000AA">new</font> FlowLayout(FlowLayout.LEFT, 10, 2));
+<font color="#555555">022 </font>      panel.add(<font color="#0000AA">new</font> JLabel(<font color="#0000FF">"Farbe "</font> + i + <font color="#0000FF">":"</font>));
+<font color="#555555">023 </font>      JComboBox combo = <font color="#0000AA">new</font> JComboBox(COLORS);
+<font color="#555555">024 </font>      combo.setEditable(i == 1);
+<font color="#555555">025 </font>      panel.add(combo);
+<font color="#555555">026 </font>      cp.add(panel, i == 1 ? BorderLayout.NORTH : BorderLayout.CENTER);
+<font color="#555555">027 </font>    }
+<font color="#555555">028 </font>  }
+<font color="#555555">029 </font>
+<font color="#555555">030 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">031 </font>  {
+<font color="#555555">032 </font>    Listing3811 frame = <font color="#0000AA">new</font> Listing3811();
+<font color="#555555">033 </font>    frame.setLocation(100, 100);
+<font color="#555555">034 </font>    frame.setSize(200, 200);
+<font color="#555555">035 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">036 </font>  }
+<font color="#555555">037 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3811.java"><font color="#000055" size=-1>Listing3811.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 38.11: Die Klasse JComboBox</i></p>
+
+<p>
+Die Programmausgabe ist: 
+<p>
+<a name="imageid038009"></a>
+<img src="images/JComboBox1.gif">
+<p>
+
+<p><i>
+Abbildung 38.9: Die Klasse JComboBox</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100245.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100247.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100249.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100252.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

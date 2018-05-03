@@ -1,0 +1,319 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100236.html;106,k100236.html;107,k100238.html;108,k100240.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100236.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100236.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100238.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100240.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 36 - Swing: Grundlagen
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id036001"></a>
+<h2>36.1 Eigenschaften und Architektur von Swing </h2>
+<hr>
+<ul>
+<li><a href="k100237.html#sectlevel2id036001">36.1 Eigenschaften und Architektur von Swing</a>
+<ul>
+<li><a href="k100237.html#sectlevel3id036001001">36.1.1 Einleitung</a>
+<li><a href="k100237.html#swingeigenschaften">36.1.2 Eigenschaften von Swing</a>
+<ul>
+<li><a href="k100237.html#sectlevel4id036001002001">Leichtgewichtige Komponenten</a>
+<li><a href="k100237.html#sectlevel4id036001002002">Pluggable Look-and-Feel</a>
+<li><a href="k100237.html#sectlevel4id036001002003">Das Model-View-Controller-Prinzip</a>
+</ul>
+<li><a href="k100237.html#sectlevel3id036001003">36.1.3 Wie geht es weiter?</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id036001001"></a>
+<h3>36.1.1 Einleitung </h3>
+
+<p>
+Bereits kurze Zeit nachdem mit dem JDK 1.0 das Abstract Windowing
+Toolkit eingef&uuml;hrt wurde, begannen die Entwickler bei SUN, &uuml;ber
+M&ouml;glichkeiten nachzudenken, die grafische Oberfl&auml;che von
+Java-Anwendungen zu verbessern. Als nachteilig sahen sie vor allem
+folgende Eigenschaften des AWT an: 
+<ul>
+<li>Da alle Fenster- und Dialogelemente von dem darunterliegenden
+Betriebssystem zur Verf&uuml;gung gestellt wurden, war es sehr schwierig,
+plattform&uuml;bergreifend ein einheitliches Look-and-Feel zu realisieren.
+Die Eigenarten jedes einzelnen Fenstersystems waren f&uuml;r den Anwender
+unmittelbar zu sp&uuml;ren.
+<li>Durch die Abh&auml;ngigkeit von den betriebssystemspezifischen
+Komponenten erwuchsen den JDK-Entwicklern erhebliche Portierungsprobleme.
+Dadurch musste teilweise viel Aufwand getrieben werden, um das Verhalten
+der Komponenten auf den unterschiedlichen Plattformen in hinreichendem
+Ma&szlig;e anzugleichen.
+<li>Zudem gibt es im AWT nur eine Grundmenge an Dialogelementen, mit
+denen sich aufw&auml;ndige grafische Benutzeroberfl&auml;chen nicht
+oder nur mit sehr viel Zusatzaufwand realisieren lie&szlig;en.
+</ul>
+
+<p>
+Erkl&auml;rtes Ziel der JDK-Entwickler war es, diese Nachteile zu
+beseitigen und mit der Entwicklung der <a name="ixa102351"><i>Java Foundation Classes</i></a>
+(deren wichtigster Bestandteil die als <a name="ixa102352"><i>Swing</i></a>
+bezeichnete Sammlung grafischer Dialogelemente werden sollte) eine
+echte Alternative zum AWT zu schaffen. 
+
+<!-- Section -->
+
+<a name="swingeigenschaften"></a>
+<h3>36.1.2 Eigenschaften von Swing </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id036001002001"></a>
+<h4>Leichtgewichtige Komponenten </h4>
+
+<p>
+Im Gegensatz zum AWT benutzen Swing-Komponenten nur noch in sehr eingeschr&auml;nkter
+Weise plattformspezifische GUI-Ressourcen. Abgesehen von Top-Level-Fenstern,
+Dialogen und grafischen Primitivoperationen werden alle GUI-Elemente
+von Swing selbst erzeugt. Ein Swing-Button unter Windows wird nicht
+mehr vom Windows-UI-Manager dargestellt, sondern von Swing selbst
+gezeichnet. 
+
+<p>
+Diese Vorgehensweise bietet einige Vorteile: 
+<ul>
+<li>Erstens fallen die plattformspezifischen Besonderheiten weg und
+der Code zur Implementierung der Dialogelemente vereinfacht sich deutlich.
+<li>Zweitens entfallen auch die Unterschiede in der Bedienung. Der
+Anwender findet auf allen Betriebssystemen dasselbe Aussehen und dieselbe
+Bedienung vor.
+<li>Drittens ist Swing nicht mehr darauf angewiesen, Features auf
+der Basis des kleinsten gemeinsamen Nenners aller unterst&uuml;tzten
+Plattformen zu realisieren. Komplexe Dialogelemente wie B&auml;ume,
+Tabellen oder Registerkarten k&ouml;nnen plattformunabh&auml;ngig
+realisiert werden und stehen nach der Implementierung ohne Portierungsaufwand
+auf allen Systemen zur Verf&uuml;gung. Tats&auml;chlich stellt Swing
+eine sehr viel umfassendere und anspruchsvollere Menge an Dialogelementen
+als das AWT zur Verf&uuml;gung.
+</ul>
+
+<p>
+Der Grundstein f&uuml;r Komponenten, die von Java selbst erzeugt und
+dargestellt werden k&ouml;nnen, wurde im JDK 1.1 mit der Einf&uuml;hrung
+der <a name="ixa102353"><i>Lightweight Components</i></a> (&#187;leichtgewichtige&#171;
+Komponenten) gelegt. Dabei wird die <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>-Methode
+eines <a href="index_c.html#ixb101293"><font color=#000080><tt>Component</tt></font></a>-Objekts
+nicht mehr an die betriebssystemspezifische Klasse weitergeleitet,
+sondern in den Komponentenklassen &uuml;berlagert und mit Hilfe grafischer
+Primitivoperationen selbst implementiert. Die im AWT vorhandenen Dialogelemente
+werden im Gegensatz dazu als <a name="ixa102354"><i>Heavyweight Components</i></a>
+bezeichnet (&#187;schwergewichtige&#171; Komponenten). 
+
+<p>
+Mit Hilfe der leichtgewichtigen Komponenten, die f&uuml;r alle Aspekte
+der Darstellung selbst verantwortlich sind, konnten einige interessante
+Features realisiert werden. So k&ouml;nnen beispielsweise zu allen
+Komponenten <a name="ixa102355"><i>Tooltips</i></a> erzeugt werden
+(also kleine Hilfetexte, die beim Verweilen mit der Maus &uuml;ber
+der Komponente angezeigt werden), ohne dass dazu Unterst&uuml;tzung
+seitens des zugrunde liegenden Grafikbetriebssystems erforderlich
+w&auml;re. 
+
+<p>
+Eine andere Eigenschaft, die nur mit Hilfe leichtgewichtiger Komponenten
+realisiert werden konnte, wird als <a name="ixa102356"><i>Debug-Grafik</i></a>
+bezeichnet. Dabei wird der Darstellungsvorgang beim Zeichnen der Komponente
+k&uuml;nstlich so verlangsamt, dass er wie in einer Zeitlupeneinstellung
+Schritt f&uuml;r Schritt verfolgt werden kann. Das ist insbesondere
+w&auml;hrend der Entwicklung eigener Komponenten n&uuml;tzlich, um
+den Bildaufbau studieren und auf Fehler hin untersuchen zu k&ouml;nnen.
+
+
+<!-- Section -->
+<a name="sectlevel4id036001002002"></a>
+<h4>Pluggable Look-and-Feel<a name="ixa102357"></a> </h4>
+
+<p>
+Die Swing-Entwickler gingen aber noch einen Schritt weiter. Eine der
+auf den ersten Blick bemerkenswertesten Eigenschaften von Swing ist
+die M&ouml;glichkeit, das Look-and-Feel (also das Aussehen und die
+Bedienung einer Anwendung) zur Laufzeit umzuschalten. Dieses als <a name="ixa102358"><i>Pluggable
+Look-and-Feel</i></a> bezeichnete Feature erm&ouml;glicht
+es beispielsweise einem Windows-Anwender, zwischen unterschiedlichen
+vordefinierten Look-and-Feels zu w&auml;hlen (z.B. Metal, Motif und
+Windows). Benutzer anderer Betriebssysteme k&ouml;nnen andere Auswahlm&ouml;glichkeiten
+haben; zudem ist es m&ouml;glich, eigene Look-and-Feels zu schreiben.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#FF9900"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#FF9900"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Seit Version 7 des JDK gibt es ein viertes Standard-Look-and-Feel,
+das Nimbus-Look-and-Feel<a name="ixa102359"></a>.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#FF9900">
+<tr>
+<td><font color="#FFFFFF">&nbsp;JDK6.0-7.0&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#FF9900"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Dabei muss die Entscheidung f&uuml;r oder gegen ein bestimmtes Look-and-Feel
+keineswegs bereits zum Design- oder Entwicklungszeitpunkt getroffen
+werden. Vielmehr wurden alle Swing-Komponenten so entworfen, dass
+es m&ouml;glich ist, das Look-and-Feel einer Anwendung <i>zur Laufzeit</i>
+umzuschalten. Das Programm besitzt dazu typischerweise einen speziellen
+Men&uuml;punkt oder eine Konfigurationsm&ouml;glichkeit, die es dem
+Anwender erm&ouml;glicht, ein Look-and-Feel nach seinem Geschmack
+auszuw&auml;hlen. Das Programm selbst muss praktisch keinen zus&auml;tzlichen
+Aufwand treiben, denn das Umschalten wird nach einem einzigen Methodenaufruf
+von einem User-Interface-Manager erledigt, der alle n&ouml;tigen Ma&szlig;nahmen
+koordiniert ausf&uuml;hrt. 
+
+<!-- Section -->
+
+<a name="sectlevel4id036001002003"></a>
+<h4>Das Model-View-Controller-Prinzip </h4>
+
+<p>
+Neben den &auml;u&szlig;erlichen Qualit&auml;ten wurde auch die Architektur
+des Gesamtsystems verbessert. Wichtigste &#187;Errungenschaft&#171;
+ist dabei das <a name="ixa102360"><i>Model-View-Controller-Prinzip</i></a>
+(kurz <a name="ixa102361"><i>MVC</i></a> genannt), dessen Struktur
+sich wie ein roter Faden durch den Aufbau der Dialogelemente zieht.
+Anstatt den gesamten Code in eine einzelne Klasse zu packen, werden
+beim MVC-Konzept drei unterschiedliche Bestandteile eines grafischen
+Elements sorgsam unterschieden: 
+<ul>
+<li>Das <i>Modell</i> enth&auml;lt die Daten des Dialogelements und
+speichert seinen Zustand.
+<li>Der <i>View</i> ist f&uuml;r die grafische Darstellung der Komponente
+verantwortlich.
+<li>Der <i>Controller</i> wirkt als Verbindungsglied zwischen beiden.
+Er empf&auml;ngt Tastatur- und Mausereignisse und st&ouml;&szlig;t
+die erforderlichen Ma&szlig;nahmen zur &Auml;nderung von Model und
+View an.
+</ul>
+
+<p>
+Das Modell enth&auml;lt praktisch die gesamte Verarbeitungslogik der
+Komponente. Ein wichtiger Aspekt ist dabei, dass ein Modell mehrere
+Views gleichzeitig haben kann. Damit Ver&auml;nderungen des Modells
+in allen Views sichtbar werden, wird ein Benachrichtigungsmechanismus
+implementiert, mit dem das Modell die zugeordneten Views &uuml;ber
+&Auml;nderungen informiert. Diese Vorgehensweise entspricht dem Observer-Pattern,
+wie es in <a href="k100074.html#observerpattern">Abschnitt 11.4.9</a>
+erl&auml;utert wurde. 
+
+<p>
+Bei den Swing-Dialogelementen wird eine vereinfachte Variante von
+MVC verwendet, die auch als <a name="ixa102362"><i>Model-Delegate-Prinzip</i></a>
+bezeichnet wird. Hierbei wird die Funktionalit&auml;t von View und
+Controller in einem <a name="ixa102363"><i>UI Delegate</i></a> zusammengefasst.
+Dadurch wird einerseits die Komplexit&auml;t reduziert (oft ist der
+Controller so einfach strukturiert, dass es sich nicht lohnt, ihn
+separat zu betrachten) und andererseits die in der Praxis mitunter
+unhandliche Trennung zwischen View und Controller aufgehoben. Es kann
+allerdings sein, dass ein Dialogelement mehr als ein Model besitzt.
+So haben beispielsweise Listen und Tabellen neben ihrem eigentlichen
+Datenmodell ein weiteres, das nur f&uuml;r die Selektion von Datenelementen
+zust&auml;ndig ist. 
+
+<!-- Section -->
+
+<a name="sectlevel3id036001003"></a>
+<h3>36.1.3 Wie geht es weiter? </h3>
+
+<p>
+Wir wollen uns in diesem und den n&auml;chsten Kapiteln mit den <i>grundlegenden</i>
+Eigenschaften von Swing besch&auml;ftigen. Der Schwerpunkt der Darstellung
+liegt dabei auf der Beschreibung der einzelnen Komponenten - mit dem
+Anspruch, zumindest ihre jeweils wichtigsten Merkmale zu behandeln.
+Die meisten Themen k&ouml;nnen dabei allerdings nur angerissen werden,
+denn eine einigerma&szlig;en vollst&auml;ndige Beschreibung von Swing
+ben&ouml;tigt ein eigenes Buch. 
+
+<p>
+Meist werden wir daher lediglich die wichtigsten Methoden einer Klasse
+vorstellen. Speziellere Eigenschaften m&uuml;ssen wir au&szlig;er
+Acht lassen. Auch auf die &uuml;brigen Komponenten der Java Foundation
+Classes, die <a name="ixa102364"><i>2D-</i></a> und <a name="ixa102365"><i>Accessibility-APIs</i></a>,
+das <a name="ixa102366"><i>Input Method Framework</i></a> und das
+<a name="ixa102367"><i>Drag-and-Drop API</i></a> werden wir allenfalls
+in Ans&auml;tzen eingehen. 
+
+<p>
+Es empfiehlt sich daher, nach den ersten Experimenten weitere Literatur
+zu Rate zu ziehen. Swing-B&uuml;cher sind mittlerweile in gro&szlig;er
+Zahl erh&auml;ltlich. Auch das frei erh&auml;ltliche Java-Tutorial
+von Oracle (siehe <a href="k100026.html#weitereinfos">Abschnitt 4.2.2</a>)
+enth&auml;lt einen Abschnitt &#187;Creating a GUI with JFC/Swing&#171;,
+der das Erstellen von Swing-Applikationen ausf&uuml;hrlich beschreibt.
+Am wichtigsten ist jedoch die API-Dokumentation. Sie ist <i>das</i>
+Hilfsmittel zum Erforschen der verborgenen M&ouml;glichkeiten einzelner
+Swing-Bestandteile. 
+
+<p>
+Bevor wir in den n&auml;chsten Kapiteln in die Beschreibung der Komponenten
+einsteigen, wollen wir in den beiden letzten Abschnitten dieses Kapitels
+noch etwas f&uuml;r die Ungeduldigen tun. Zun&auml;chst zeigen wir
+ein einfaches Beispiel, an dem die Grundstruktur eines Swing-Programms
+erl&auml;utert wird. Darin demonstrieren wir auch, wie das Look-and-Feel
+des Programms zur Laufzeit umgeschaltet werden kann. Anschlie&szlig;end
+geben wir einige Tipps zur Umstellung von AWT-Anwendungen auf Swing
+und zeigen wichtige Gemeinsamkeiten und Unterschiede zwischen den
+beiden Grafikbibliotheken auf. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100236.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100236.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100238.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100240.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

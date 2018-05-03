@@ -1,0 +1,314 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100207.html;106,k100217.html;107,k100219.html;108,k100221.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100207.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100217.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100219.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100221.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 32 - AWT-Dialogelemente
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="scrollbar"></a>
+<h2>32.11 Scrollbar </h2>
+<hr>
+<ul>
+<li><a href="k100218.html#scrollbar">32.11 Scrollbar</a>
+</ul>
+<hr>
+
+<p>
+Ein <a name="ixa102168"><a href="index_s.html#ixb101417"><font color=#000080><tt>Scrollbar</tt></font></a></a>
+ist ein <a name="ixa102169">Schieberegler</a>, der zur quasianalogen
+Anzeige und Eingabe eines Werts aus einem vorgegebenen Wertebereich
+verwendet werden kann. Der Schieberegler kann entweder horizontal
+oder vertikal angeordnet werden und besitzt einen Schieber, dessen
+Gr&ouml;&szlig;e ver&auml;nderlich ist. Der interne Wert eines Schiebereglers
+und die Anzeigeposition seines Schiebers sind untrennbar miteinander
+verbunden. &Auml;ndert der Anwender die Position des Schiebers, &auml;ndert
+sich automatisch auch sein interner Wert. Wird vom Programm der Wert
+ver&auml;ndert, f&uuml;hrt dies auch zu einer Repositionierung des
+Schiebers. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Scrollbar()
+
+public Scrollbar(int orientation)
+
+public Scrollbar(
+   int orientation, int value, int visible,
+   int minimum, int maximum
+)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Scrollbar.html" onClick="this.href=getApiDoc('java.awt.Scrollbar')"><font color="#660066" size=-1>java.awt.Scrollbar</font></a></td>
+</tr>
+</table>
+
+<p>
+Der parameterlose Konstruktor erzeugt einen vertikalen Schieberegler.
+Mit dem Parameter <font color="#000077"><tt>orientation</tt></font>
+kann die Orientierung festgelegt werden. Hier kann eine der Konstanten
+<a name="ixa102170"><a href="index_h.html#ixb101565"><font color=#000080><tt>Scrollbar.HORIZONTAL</tt></font></a></a>
+oder <a name="ixa102171"><a href="index_v.html#ixb101566"><font color=#000080><tt>Scrollbar.VERTICAL</tt></font></a></a>
+angegeben werden. 
+
+<p>
+Der dritte Konstruktor erlaubt die Angabe weiterer Eigenschaften.
+<font color="#000077"><tt>minimum</tt></font> und <font color="#000077"><tt>maximum</tt></font>
+spezifizieren die Grenzen des repr&auml;sentierten Wertebereichs.
+Die untere Grenze liegt bei einem vertikalen Schieberegler oben und
+bei einem horizontalen Schieberegler auf der linken Seite. Mit <font color="#000077"><tt>value</tt></font>
+kann der Anfangswert des Schiebers festgelegt werden. 
+
+<p>
+Der Parameter <font color="#000077"><tt>visible</tt></font> dient
+dazu, die <i>Seitengr&ouml;&szlig;e</i> des Schiebers zu bestimmen.
+Diese muss kleiner als der Wertebereich des Schiebereglers sein. Die
+Seitengr&ouml;&szlig;e bestimmt einerseits die visuelle Gr&ouml;&szlig;e
+des Schiebers und andererseits die Gr&ouml;&szlig;e der Ver&auml;nderung
+des Werts, wenn der Anwender auf die Schaltfl&auml;che zwischen Schieber
+und Button des Schiebereglers klickt. 
+
+<p>
+Die Methoden der Klasse <a href="index_s.html#ixb101417"><font color=#000080><tt>Scrollbar</tt></font></a>
+realisieren den Zugriff auf die Attribute des Schiebereglers. Die
+meisten von ihnen sind im Interface <a name="ixa102172"><a href="index_a.html#ixb101625"><font color=#000080><tt>Adjustable</tt></font></a></a>
+definiert, das von <a href="index_s.html#ixb101417"><font color=#000080><tt>Scrollbar</tt></font></a>
+implementiert wird. Mit <a name="ixa102173"><a href="index_g.html#ixb100763"><font color=#000080><tt>getValue</tt></font></a></a>
+und <a name="ixa102174"><a href="index_s.html#ixb101626"><font color=#000080><tt>setValue</tt></font></a></a>
+wird auf den aktuellen Wert des Schiebers zugegriffen, mit <a name="ixa102175"><a href="index_g.html#ixb101627"><font color=#000080><tt>getMinimum</tt></font></a></a>
+und <a name="ixa102176"><a href="index_g.html#ixb101628"><font color=#000080><tt>getMaximum</tt></font></a></a>
+auf die Grenzen des Wertebereichs und mit <a name="ixa102177"><a href="index_g.html#ixb101629"><font color=#000080><tt>getVisibleAmount</tt></font></a></a>
+auf die Gr&ouml;&szlig;e des Schiebers. Zus&auml;tzlich kann mit <a name="ixa102178"><a href="index_g.html#ixb101630"><font color=#000080><tt>getUnitIncrement</tt></font></a></a>
+und <a name="ixa102179"><a href="index_s.html#ixb101631"><font color=#000080><tt>setUnitIncrement</tt></font></a></a>
+sowie mit <a name="ixa102180"><a href="index_g.html#ixb101632"><font color=#000080><tt>getBlockIncrement</tt></font></a></a>
+und <a name="ixa102181"><a href="index_s.html#ixb101633"><font color=#000080><tt>setBlockIncrement</tt></font></a></a>
+auf die Parameter zugegriffen werden, die die St&auml;rke der Ver&auml;nderung
+des Werts beim Klicken auf die Buttons bzw. die Schaltfl&auml;che
+zwischen Schieber und Buttons bestimmen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int getValue()
+public void setValue(int value)
+
+public int getMinimum()
+public int getMaximum()
+
+public int getVisible()
+
+public int getUnitIncrement()
+public void setUnitIncrement(int l)
+
+public int getBlockIncrement()
+public void setBlockIncrement(int l)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Scrollbar.html" onClick="this.href=getApiDoc('java.awt.Scrollbar')"><font color="#660066" size=-1>java.awt.Scrollbar</font></a></td>
+</tr>
+</table>
+
+<p>
+Ein <a href="index_s.html#ixb101417"><font color=#000080><tt>Scrollbar</tt></font></a>
+sendet <a name="ixa102182"><i>Adjustment-Ereignisse</i></a> an seine
+Ereignisempf&auml;nger. Diese m&uuml;ssen das Interface <a name="ixa102183"><a href="index_a.html#ixb101415"><font color=#000080><tt>AdjustmentListener</tt></font></a></a>
+implementieren und sich durch Aufruf von <a name="ixa102184"><a href="index_a.html#ixb101416"><font color=#000080><tt>addAdjustmentListener</tt></font></a></a>
+registrieren: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void addAdjustmentListener(AdjustmentListener l)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Scrollbar.html" onClick="this.href=getApiDoc('java.awt.Scrollbar')"><font color="#660066" size=-1>java.awt.Scrollbar</font></a></td>
+</tr>
+</table>
+
+<p>
+Das Adjustment-Ereignis f&uuml;hrt im Ereignisempf&auml;nger zum Aufruf
+der Methode <a name="ixa102185"><a href="index_a.html#ixb101418"><font color=#000080><tt>adjustmentValueChanged</tt></font></a></a>,
+die ein <a name="ixa102186"><a href="index_a.html#ixb101344"><font color=#000080><tt>AdjustmentEvent</tt></font></a></a>
+&uuml;bergeben bekommt: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public abstract void adjustmentValueChanged(AdjustmentEvent e)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/event/AdjustmentListener.html" onClick="this.href=getApiDoc('java.awt.event.AdjustmentListener')"><font color="#660066" size=-1>java.awt.event.AdjustmentListener</font></a></td>
+</tr>
+</table>
+
+<p>
+Dieses besitzt die Methoden <a name="ixa102187"><a href="index_g.html#ixb101634"><font color=#000080><tt>getAdjustable</tt></font></a></a>
+und <a name="ixa102188"><a href="index_g.html#ixb100763"><font color=#000080><tt>getValue</tt></font></a></a>.
+Mit der erstgenannten kann der ausl&ouml;sende Scrollbar, mit letzterer
+der aktuelle Wert des Schiebereglers bestimmt werden. Zus&auml;tzlich
+gibt es die Methode <a name="ixa102189"><a href="index_g.html#ixb101635"><font color=#000080><tt>getAdjustmentType</tt></font></a></a>,
+die Auskunft dar&uuml;ber gibt, welche Benutzeraktion zur Ausl&ouml;sung
+des Ereignisses f&uuml;hrte. <a href="k100218.html#schiebekonstanten">Tabelle 32.1</a>
+listet die m&ouml;glichen Konstanten auf, die von <a href="index_g.html#ixb101635"><font color=#000080><tt>getAdjustmentType</tt></font></a>
+zur&uuml;ckgegeben werden k&ouml;nnen, und beschreibt ihre Bedeutung.
+<a name="schiebekonstanten"></a>
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=40%><b>Konstante</b></td>
+<td valign=top align=left width=60%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102190"><a href="index_u.html#ixb101636"><font color=#000080><tt>UNIT_INCREMENT</tt></font></a></a></td>
+<td valign=top align=left>Der Wert wurde durch Klicken eines Buttons
+um eine Einheit erh&ouml;ht. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102191"><a href="index_u.html#ixb101637"><font color=#000080><tt>UNIT_DECREMENT</tt></font></a></a></td>
+<td valign=top align=left>Der Wert wurde durch Klicken eines Buttons
+um eine Einheit vermindert. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102192"><a href="index_b.html#ixb101638"><font color=#000080><tt>BLOCK_INCREMENT</tt></font></a></a></td>
+<td valign=top align=left>Der Wert wurde durch Klicken der Schaltfl&auml;che
+zwischen Button und Schieber um eine Seite erh&ouml;ht. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102193"><a href="index_b.html#ixb101639"><font color=#000080><tt>BLOCK_DECREMENT</tt></font></a></a></td>
+<td valign=top align=left>Der Wert wurde durch Klicken der Schaltfl&auml;che
+zwischen Button und Schieber um eine Seite vermindert. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102194"><a href="index_t.html#ixb101640"><font color=#000080><tt>TRACK</tt></font></a></a></td>
+<td valign=top align=left>Der Wert wurde durch Ziehen des Schiebers
+ver&auml;ndert. </td></tr>
+</table>
+<p><i>
+Tabelle 32.1: Konstanten f&uuml;r Schieberegler-Ereignisse </i></p>
+
+<p>
+Eine beispielhafte Implementierung von <a href="index_a.html#ixb101418"><font color=#000080><tt>adjustmentValueChanged</tt></font></a>
+k&ouml;nnte etwa so aussehen: 
+<a name="listingid032015"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Scrollbar.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#006699">void</font> adjustmentValueChanged(AdjustmentEvent event)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  Adjustable sb = event.getAdjustable();
+<font color="#555555">006 </font>  <font color="#0000AA">if</font> (sb.getOrientation() == Scrollbar.HORIZONTAL) {
+<font color="#555555">007 </font>    System.out.print(<font color="#0000FF">"Horizontal: "</font>);
+<font color="#555555">008 </font>  } <font color="#0000AA">else</font> {
+<font color="#555555">009 </font>    System.out.print(<font color="#0000FF">"Vertikal: "</font>);
+<font color="#555555">010 </font>  }
+<font color="#555555">011 </font>  <font color="#0000AA">switch</font> (event.getAdjustmentType()) {
+<font color="#555555">012 </font>  <font color="#0000AA">case</font> AdjustmentEvent.UNIT_INCREMENT:
+<font color="#555555">013 </font>    System.out.println(<font color="#0000FF">"AdjustmentEvent.UNIT_INCREMENT"</font>);
+<font color="#555555">014 </font>    <font color="#0000AA">break</font>;
+<font color="#555555">015 </font>  <font color="#0000AA">case</font> AdjustmentEvent.UNIT_DECREMENT:
+<font color="#555555">016 </font>    System.out.println(<font color="#0000FF">"AdjustmentEvent.UNIT_DECREMENT"</font>);
+<font color="#555555">017 </font>    <font color="#0000AA">break</font>;
+<font color="#555555">018 </font>  <font color="#0000AA">case</font> AdjustmentEvent.BLOCK_DECREMENT:
+<font color="#555555">019 </font>    System.out.println(<font color="#0000FF">"AdjustmentEvent.BLOCK_DECREMENT"</font>);
+<font color="#555555">020 </font>    <font color="#0000AA">break</font>;
+<font color="#555555">021 </font>  <font color="#0000AA">case</font> AdjustmentEvent.BLOCK_INCREMENT:
+<font color="#555555">022 </font>    System.out.println(<font color="#0000FF">"AdjustmentEvent.BLOCK_INCREMENT"</font>);
+<font color="#555555">023 </font>    <font color="#0000AA">break</font>;
+<font color="#555555">024 </font>  <font color="#0000AA">case</font> AdjustmentEvent.TRACK:
+<font color="#555555">025 </font>    System.out.println(<font color="#0000FF">"AdjustmentEvent.TRACK"</font>);
+<font color="#555555">026 </font>    <font color="#0000AA">break</font>;
+<font color="#555555">027 </font>  }
+<font color="#555555">028 </font>  System.out.println(<font color="#0000FF">"  value: "</font> + event.getValue());
+<font color="#555555">029 </font>}
+<font color="#555555">030 </font>
+<font color="#555555">031 </font><font color="#0000AA">private</font> <font color="#006699">void</font> customizeLayout(Panel panel)
+<font color="#555555">032 </font>{
+<font color="#555555">033 </font>   panel.setLayout(<font color="#0000AA">new</font> BorderLayout());
+<font color="#555555">034 </font>   Scrollbar hsb=<font color="#0000AA">new</font> Scrollbar(Scrollbar.HORIZONTAL,1,10,1,100);
+<font color="#555555">035 </font>   hsb.addAdjustmentListener(<font color="#006699">this</font>);
+<font color="#555555">036 </font>   panel.add(hsb, BorderLayout.SOUTH);
+<font color="#555555">037 </font>   Scrollbar vsb=<font color="#0000AA">new</font> Scrollbar(Scrollbar.VERTICAL,  1,10,1,100);
+<font color="#555555">038 </font>   vsb.addAdjustmentListener(<font color="#006699">this</font>);
+<font color="#555555">039 </font>   panel.add(vsb, BorderLayout.EAST);
+<font color="#555555">040 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Scrollbar.inc"><font color="#000055" size=-1>Scrollbar.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 32.15: Verwendung von Scrollbars</i></p>
+<p>
+<a name="imageid032010"></a>
+<img src="images/Scrollbar.gif">
+<p>
+
+<p><i>
+Abbildung 32.10: Ein Dialog mit zwei Schiebereglern</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100207.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100217.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100219.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100221.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

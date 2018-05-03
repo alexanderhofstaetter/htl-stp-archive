@@ -1,0 +1,790 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100245.html;106,k100248.html;107,k100250.html;108,k100252.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100245.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100248.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100250.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100252.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 38 - Swing: Komponenten I
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id038004"></a>
+<h2>38.4 Quasi-analoge Komponenten </h2>
+<hr>
+<ul>
+<li><a href="k100249.html#sectlevel2id038004">38.4 Quasi-analoge Komponenten</a>
+<ul>
+<li><a href="k100249.html#sectlevel3id038004001">38.4.1 JScrollBar</a>
+<li><a href="k100249.html#sectlevel3id038004002">38.4.2 JSlider</a>
+<li><a href="k100249.html#sectlevel3id038004003">38.4.3 JProgressBar</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id038004001"></a>
+<h3>38.4.1 JScrollBar </h3>
+
+<p>
+<a name="ixa102679"><a href="index_j.html#ixb101993"><font color=#000080><tt>JScrollBar</tt></font></a></a>
+ist die leichtgewichtige Swing-Variante der AWT-Klasse <a href="index_s.html#ixb101417"><font color=#000080><tt>Scrollbar</tt></font></a>
+(siehe <a href="k100218.html#scrollbar">Abschnitt 32.11</a>). Sie
+dient dazu, mit Hilfe eines Schiebereglers einen Wert kontinuierlich
+innerhalb vorgegebener Grenzen einzustellen. Der wichtigste Konstruktor
+der Klasse <a href="index_j.html#ixb101993"><font color=#000080><tt>JScrollBar</tt></font></a>
+ist: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public JScrollBar(
+  int orientation,
+  int value,
+  int extent,
+  int min,
+  int max
+)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JScrollBar.html" onClick="this.href=getApiDoc('javax.swing.JScrollBar')"><font color="#660066" size=-1>javax.swing.JScrollBar</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <font color="#000077"><tt>orientation</tt></font> wird die Ausrichtung
+des Schiebereglers festgelegt. Sie kann entweder <a href="index_h.html#ixb101565"><font color=#000080><tt>HORIZONTAL</tt></font></a>
+oder <a href="index_v.html#ixb101566"><font color=#000080><tt>VERTICAL</tt></font></a>
+sein. <font color="#000077"><tt>min</tt></font> gibt den kleinsten,
+<font color="#000077"><tt>max</tt></font> den gr&ouml;&szlig;ten m&ouml;glichen
+Wert an. Mit <font color="#000077"><tt>extent</tt></font> wird die
+Ausdehnung des Schiebers festgelegt. Sie muss mindestens eins, kann
+aber auch gr&ouml;&szlig;er sein. <font color="#000077"><tt>value</tt></font>
+ist der Anfangswert des Schiebers. Er muss zwischen <font color="#000077"><tt>min</tt></font>
+und <font color="#000077"><tt>max - extent</tt></font> liegen. 
+
+<p>
+<a href="index_j.html#ixb101993"><font color=#000080><tt>JScrollBar</tt></font></a>
+stellt einige Methoden zur Verf&uuml;gung, mit denen nach der Instanzierung
+auf die numerischen Eigenschaften des Schiebereglers zugegriffen werden
+kann: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int getMinimum()
+public void setMinimum(int minimum)
+
+public int getMaximum()
+public void setMaximum(int maximum)
+
+public int getVisibleAmount()
+public void setVisibleAmount(int extent)
+
+public int getValue()
+public void setValue(int value)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JScrollBar.html" onClick="this.href=getApiDoc('javax.swing.JScrollBar')"><font color="#660066" size=-1>javax.swing.JScrollBar</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa102680"><a href="index_g.html#ixb101627"><font color=#000080><tt>getMinimum</tt></font></a></a>,
+<a name="ixa102681"><a href="index_g.html#ixb101628"><font color=#000080><tt>getMaximum</tt></font></a></a>,
+<a name="ixa102682"><a href="index_s.html#ixb101994"><font color=#000080><tt>setMinimum</tt></font></a></a>
+und <a name="ixa102683"><a href="index_s.html#ixb101995"><font color=#000080><tt>setMaximum</tt></font></a></a>
+kann auf das Minimum und Maximum des definierten Wertebereichs zugegriffen
+werden. <a name="ixa102684"><a href="index_g.html#ixb101629"><font color=#000080><tt>getVisibleAmount</tt></font></a></a>
+liefert die Ausdehnung des Schiebers und mit <a name="ixa102685"><a href="index_s.html#ixb101996"><font color=#000080><tt>setVisibleAmount</tt></font></a></a>
+kann diese abgefragt werden. Mit <a name="ixa102686"><a href="index_g.html#ixb100763"><font color=#000080><tt>getValue</tt></font></a></a>
+und <a name="ixa102687"><a href="index_s.html#ixb101626"><font color=#000080><tt>setValue</tt></font></a></a>
+kann auf den aktuellen Wert des Schiebereglers zugegriffen werden.
+
+<p>
+Auch auf die Seitengr&ouml;&szlig;e kann zugegriffen werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int getUnitIncrement()
+public void setUnitIncrement(int unitIncrement)
+
+public int getBlockIncrement()
+public void setBlockIncrement(int blockIncrement)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JScrollBar.html" onClick="this.href=getApiDoc('javax.swing.JScrollBar')"><font color="#660066" size=-1>javax.swing.JScrollBar</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa102688"><a href="index_g.html#ixb101630"><font color=#000080><tt>getUnitIncrement</tt></font></a></a>
+gibt an, um welchen Betrag der Wert des Schiebereglers ver&auml;ndert
+wird, wenn der Anwender einen der Pfeilbuttons bet&auml;tigt. <a name="ixa102689"><a href="index_g.html#ixb101632"><font color=#000080><tt>getBlockIncrement</tt></font></a></a>
+ermittelt analog dazu den Betrag der &Auml;nderung, wenn zwischen
+Schieber und Pfeilbuttons geklickt wird. Mit <a name="ixa102690"><a href="index_s.html#ixb101631"><font color=#000080><tt>setUnitIncrement</tt></font></a></a>
+und <a name="ixa102691"><a href="index_s.html#ixb101633"><font color=#000080><tt>setBlockIncrement</tt></font></a></a>
+k&ouml;nnen beide Werte ver&auml;ndert werden. 
+
+<p>
+Wird der Wert einer <a href="index_j.html#ixb101993"><font color=#000080><tt>JScrollBar</tt></font></a>
+ver&auml;ndert, sendet sie ein <a href="index_a.html#ixb101344"><font color=#000080><tt>AdjustmentEvent</tt></font></a>
+an registrierte Listener. Diese m&uuml;ssen das Interface <a href="index_a.html#ixb101415"><font color=#000080><tt>AdjustmentListener</tt></font></a>
+implementieren und werden durch Aufruf von <a name="ixa102692"><a href="index_a.html#ixb101416"><font color=#000080><tt>addAdjustmentListener</tt></font></a></a>
+registriert. Interessant ist in diesem Zusammenhang die Methode <a name="ixa102693"><a href="index_g.html#ixb101997"><font color=#000080><tt>getValueIsAdjusting()</tt></font></a></a>,
+mit der festgestellt werden kann, auf welche Weise der Wert ver&auml;ndert
+wird. Sie gibt genau dann <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+zur&uuml;ck, wenn die &Auml;nderung Bestandteil einer Kette von &Auml;nderungen
+ist, wenn also der Anwender den Schieber bet&auml;tigt. Wurde die
+&Auml;nderung dagegen durch einen Mausklick auf einen der Buttons
+oder auf die Fl&auml;che zwischen Buttons und Schieber ausgel&ouml;st,
+liefert <a href="index_g.html#ixb101997"><font color=#000080><tt>getValueIsAdjusting()</tt></font></a>
+den Wert <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>.
+
+<p>
+Das folgende Programm zeigt eine einfache Anwendung der Klasse <a href="index_j.html#ixb101993"><font color=#000080><tt>JScrollBar</tt></font></a>.
+Es stellt zwei Schieberegler zur Verf&uuml;gung, mit deren Hilfe die
+Hintergrundfarbe des in der Mitte angezeigten Panels ver&auml;ndert
+werden kann. Alle &Auml;nderungen werden durch einen <a href="index_a.html#ixb101415"><font color=#000080><tt>AdjustmentListener</tt></font></a>
+registriert und f&uuml;hren beim Panel zum Aufruf von <a href="index_s.html#ixb101166"><font color=#000080><tt>setBackground</tt></font></a>.
+Am Ende einer &Auml;nderungssequenz wird der aktuelle Farbwert auf
+der Konsole ausgegeben. 
+<a name="jscrollbarexample"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3812.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3812
+<font color="#555555">008 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">009 </font><font color="#0000AA">implements</font> AdjustmentListener
+<font color="#555555">010 </font>{
+<font color="#555555">011 </font>  <font color="#0000AA">private</font> JPanel coloredPanel;
+<font color="#555555">012 </font>  <font color="#0000AA">private</font> JScrollBar sbEast;
+<font color="#555555">013 </font>  <font color="#0000AA">private</font> JScrollBar sbSouth;
+<font color="#555555">014 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font>        blue = 0;
+<font color="#555555">015 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font>        red = 0;
+<font color="#555555">016 </font>
+<font color="#555555">017 </font>  <font color="#0000AA">public</font> Listing3812()
+<font color="#555555">018 </font>  {
+<font color="#555555">019 </font>    <font color="#006699">super</font>(<font color="#0000FF">"JScrollBar"</font>);
+<font color="#555555">020 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">021 </font>    Container cp = getContentPane();
+<font color="#555555">022 </font>    <font color="#00AA00">//Vertikaler Schieberegler</font>
+<font color="#555555">023 </font>    sbEast = <font color="#0000AA">new</font> JScrollBar(JScrollBar.VERTICAL, 0, 10, 0, 255);
+<font color="#555555">024 </font>    sbEast.addAdjustmentListener(<font color="#006699">this</font>);
+<font color="#555555">025 </font>    cp.add(sbEast, BorderLayout.EAST);
+<font color="#555555">026 </font>    <font color="#00AA00">//Horizontaler Schieberegler</font>
+<font color="#555555">027 </font>    sbSouth = <font color="#0000AA">new</font> JScrollBar(JScrollBar.HORIZONTAL, 0, 10, 0, 255);
+<font color="#555555">028 </font>    sbSouth.addAdjustmentListener(<font color="#006699">this</font>);
+<font color="#555555">029 </font>    cp.add(sbSouth, BorderLayout.SOUTH);
+<font color="#555555">030 </font>    <font color="#00AA00">//Farbiges Panel</font>
+<font color="#555555">031 </font>    coloredPanel = <font color="#0000AA">new</font> JPanel();
+<font color="#555555">032 </font>    coloredPanel.setBackground(<font color="#0000AA">new</font> Color(red, 0, blue));
+<font color="#555555">033 </font>    cp.add(coloredPanel, BorderLayout.CENTER);
+<font color="#555555">034 </font>  }
+<font color="#555555">035 </font>
+<font color="#555555">036 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> adjustmentValueChanged(AdjustmentEvent event)
+<font color="#555555">037 </font>  {
+<font color="#555555">038 </font>    JScrollBar sb = (JScrollBar)event.getSource();
+<font color="#555555">039 </font>    <font color="#0000AA">if</font> (sb == sbEast) {
+<font color="#555555">040 </font>      blue = event.getValue();
+<font color="#555555">041 </font>    } <font color="#0000AA">else</font> {
+<font color="#555555">042 </font>      red = event.getValue();
+<font color="#555555">043 </font>    }
+<font color="#555555">044 </font>    coloredPanel.setBackground(<font color="#0000AA">new</font> Color(red, 0, blue));
+<font color="#555555">045 </font>    <font color="#0000AA">if</font> (!sb.getValueIsAdjusting()) {
+<font color="#555555">046 </font>      System.out.println(<font color="#0000FF">"("</font> + red + <font color="#0000FF">",0,"</font> + blue + <font color="#0000FF">")"</font>);
+<font color="#555555">047 </font>    }
+<font color="#555555">048 </font>  }
+<font color="#555555">049 </font>
+<font color="#555555">050 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">051 </font>  {
+<font color="#555555">052 </font>    Listing3812 frame = <font color="#0000AA">new</font> Listing3812();
+<font color="#555555">053 </font>    frame.setLocation(100, 100);
+<font color="#555555">054 </font>    frame.setSize(200, 200);
+<font color="#555555">055 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">056 </font>  }
+<font color="#555555">057 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3812.java"><font color="#000055" size=-1>Listing3812.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 38.12: Die Klasse JScrollBar</i></p>
+
+<p>
+Die Programmausgabe ist: 
+<p>
+<a name="imageid038010"></a>
+<img src="images/JScrollBar1.gif">
+<p>
+
+<p><i>
+Abbildung 38.10: Die Klasse JScrollBar</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id038004002"></a>
+<h3>38.4.2 JSlider </h3>
+
+<p>
+Mit der Klasse <a name="ixa102694"><a href="index_j.html#ixb101998"><font color=#000080><tt>JSlider</tt></font></a></a>
+werden ebenso wie mit <a href="index_j.html#ixb101993"><font color=#000080><tt>JScrollBar</tt></font></a>
+Schieberegler erzeugt. Abgesehen von den unterschiedlichen Oberfl&auml;chen
+gibt es zwischen beiden Klassen zwei wichtige konzeptionelle Unterschiede:
+<ol type=1>
+<li>Ein <a href="index_j.html#ixb101998"><font color=#000080><tt>JSlider</tt></font></a>
+kann eine Anzeigeskala mit grober und feiner Einteilung und Beschriftung
+haben.
+<li>Ein <a href="index_j.html#ixb101998"><font color=#000080><tt>JSlider</tt></font></a>
+kennt keine unterschiedlichen Schiebergr&ouml;&szlig;en. Die Ausdehnung
+der Schieber ist immer 1.
+</ol>
+
+<p>
+Welche der beiden Klassen in der Praxis eingesetzt werden soll, l&auml;sst
+sich nicht eindeutig festlegen. Soll ein Bildschirminhalt verschoben
+werden, ist es sicher sinnvoll, bei <a href="index_j.html#ixb101993"><font color=#000080><tt>JScrollBar</tt></font></a>
+zu bleiben. Soll dagegen ein Wert ver&auml;ndert werden, der f&uuml;r
+den Anwender den Charakter einer Zahl hat, kann durchaus ein <a href="index_j.html#ixb101998"><font color=#000080><tt>JSlider</tt></font></a>
+verwendet werden. 
+
+<p>
+Der wichtigste Konstruktor von <a href="index_j.html#ixb101998"><font color=#000080><tt>JSlider</tt></font></a>
+ist: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public JSlider(int orientation, int min, int max, int value)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JSlider.html" onClick="this.href=getApiDoc('javax.swing.JSlider')"><font color="#660066" size=-1>javax.swing.JSlider</font></a></td>
+</tr>
+</table>
+
+<p>
+Der Parameter <font color="#000077"><tt>orientation</tt></font> gibt
+die Orientierung an. Hier k&ouml;nnen die Konstanten <a href="index_h.html#ixb101565"><font color=#000080><tt>HORIZONTAL</tt></font></a>
+und <a href="index_v.html#ixb101566"><font color=#000080><tt>VERTICAL</tt></font></a>
+&uuml;bergeben werden. <font color="#000077"><tt>min</tt></font> und
+<font color="#000077"><tt>max</tt></font> legen die Grenzen des Wertebereichs
+fest und mit <font color="#000077"><tt>value</tt></font> wird der
+Anfangswert des Schiebers festgelegt. &Auml;hnlich wie <a href="index_j.html#ixb101993"><font color=#000080><tt>JScrollBar</tt></font></a>
+stellt auch <a href="index_j.html#ixb101998"><font color=#000080><tt>JSlider</tt></font></a>
+Methoden zum Zugriff auf die numerischen Eigenschaften des Slider
+zur Verf&uuml;gung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int getMinimum()
+public void setMinimum(int minimum)
+
+public int getMaximum()
+public void setMaximum(int maximum)
+
+public int getValue()
+public void setValue(int n)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JSlider.html" onClick="this.href=getApiDoc('javax.swing.JSlider')"><font color="#660066" size=-1>javax.swing.JSlider</font></a></td>
+</tr>
+</table>
+
+<p>
+Sie haben dieselbe Bedeutung wie bei <a href="index_j.html#ixb101993"><font color=#000080><tt>JScrollBar</tt></font></a>.
+Zus&auml;tzlich gibt es Methoden zum Zugriff auf die Anzeigeskala
+und die Beschriftung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int getMajorTickSpacing()
+public void setMajorTickSpacing(int n)
+
+public int getMinorTickSpacing()
+public void setMinorTickSpacing(int n)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JSlider.html" onClick="this.href=getApiDoc('javax.swing.JSlider')"><font color="#660066" size=-1>javax.swing.JSlider</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Anzeigeskala eines <a href="index_j.html#ixb101998"><font color=#000080><tt>JSlider</tt></font></a>
+hat gro&szlig;e Markierungen, die das Grobraster vorgeben, und dazwischenstehende
+kleine, die das Feinraster vorgeben. Mit <a name="ixa102695"><a href="index_s.html#ixb101999"><font color=#000080><tt>setMajorTickSpacing</tt></font></a></a>
+wird der Abstand der gro&szlig;en Markierungen vorgegeben, mit <a name="ixa102696"><a href="index_s.html#ixb102000"><font color=#000080><tt>setMinorTickSpacing</tt></font></a></a>
+der Abstand der kleinen. Mit <a name="ixa102697"><a href="index_g.html#ixb102001"><font color=#000080><tt>getMajorTickSpacing</tt></font></a></a>
+und <a name="ixa102698"><a href="index_g.html#ixb102002"><font color=#000080><tt>getMinorTickSpacing</tt></font></a></a>
+k&ouml;nnen beide Werte abgefragt werden. 
+
+<p>
+Damit die Anzeigeskala tats&auml;chlich angezeigt wird, muss <a name="ixa102699"><a href="index_s.html#ixb102003"><font color=#000080><tt>setPaintTicks</tt></font></a></a>
+aufgerufen und <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+&uuml;bergeben werden. Soll auch die Beschriftung angezeigt werden,
+muss zus&auml;tzlich <a name="ixa102700"><a href="index_s.html#ixb102004"><font color=#000080><tt>setPaintLabels</tt></font></a></a>
+mit <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+als Argument aufgerufen werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setPaintTicks(boolean b)
+public void setPaintLabels(boolean b)
+
+public void setSnapToTicks(boolean b)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JSlider.html" onClick="this.href=getApiDoc('javax.swing.JSlider')"><font color="#660066" size=-1>javax.swing.JSlider</font></a></td>
+</tr>
+</table>
+
+<p>
+Ein Aufruf von <a name="ixa102701"><a href="index_s.html#ixb102005"><font color=#000080><tt>setSnapToTicks</tt></font></a></a>
+(mit &Uuml;bergabe von <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+als Argument) sorgt daf&uuml;r, dass der Schieber stets auf den Skalenmarkierungen
+einrastet. Zwischenpositionen k&ouml;nnen dann nicht mehr angew&auml;hlt
+werden. 
+
+<p>
+Im Gegensatz zu <a href="index_j.html#ixb101791"><font color=#000080><tt>JScrollPane</tt></font></a>
+sendet ein <a href="index_j.html#ixb101998"><font color=#000080><tt>JSlider</tt></font></a>
+kein <a href="index_a.html#ixb101344"><font color=#000080><tt>AdjustmentEvent</tt></font></a>,
+wenn sein Wert ver&auml;ndert wird, sondern ein <a name="ixa102702"><a href="index_c.html#ixb102006"><font color=#000080><tt>ChangeEvent</tt></font></a></a>
+(diese Klasse liegt im Paket <a name="ixa102703"><a href="index_j.html#ixb101981"><font color=#000080><tt>javax.swing.event</tt></font></a></a>).
+Um auf dieses Ereignis zu reagieren, ist das Interface <a name="ixa102704"><a href="index_c.html#ixb102007"><font color=#000080><tt>ChangeListener</tt></font></a></a>
+zu implementieren und das implementierende Objekt durch Aufruf von
+<a name="ixa102705"><a href="index_a.html#ixb102008"><font color=#000080><tt>addChangeListener</tt></font></a></a>
+zu registrieren. Wie bei <a href="index_j.html#ixb101791"><font color=#000080><tt>JScrollPane</tt></font></a>
+kann mit <a name="ixa102706"><a href="index_g.html#ixb102009"><font color=#000080><tt>getValueIsAdjusting</tt></font></a></a>
+festgestellt werden, ob die &Auml;nderung Bestandteil einer Kette
+von Wert&auml;nderungen ist oder ob sie einzeln aufgetreten ist. 
+
+<p>
+Das folgende Programm zeigt ein zu <a href="k100249.html#jscrollbarexample">Listing 38.12</a>
+&auml;quivalentes Beispiel, das zwei <a href="index_j.html#ixb101998"><font color=#000080><tt>JSlider</tt></font></a>
+anstelle der Scrollbars verwendet. 
+<a name="listingid038013"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3813.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">006 </font><font color="#0000AA">import</font> javax.swing.border.*;
+<font color="#555555">007 </font><font color="#0000AA">import</font> javax.swing.event.*;
+<font color="#555555">008 </font>
+<font color="#555555">009 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3813
+<font color="#555555">010 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">011 </font><font color="#0000AA">implements</font> ChangeListener
+<font color="#555555">012 </font>{
+<font color="#555555">013 </font>  <font color="#0000AA">private</font> JPanel coloredPanel;
+<font color="#555555">014 </font>  <font color="#0000AA">private</font> JSlider slEast;
+<font color="#555555">015 </font>  <font color="#0000AA">private</font> JSlider slSouth;
+<font color="#555555">016 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font>     blue = 0;
+<font color="#555555">017 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font>     red = 0;
+<font color="#555555">018 </font>
+<font color="#555555">019 </font>  <font color="#0000AA">public</font> Listing3813()
+<font color="#555555">020 </font>  {
+<font color="#555555">021 </font>    <font color="#006699">super</font>(<font color="#0000FF">"JSlider"</font>);
+<font color="#555555">022 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">023 </font>    Container cp = getContentPane();
+<font color="#555555">024 </font>    <font color="#00AA00">//Vertikaler Schieberegler</font>
+<font color="#555555">025 </font>    slEast = <font color="#0000AA">new</font> JSlider(JSlider.VERTICAL, 0, 255, 0);
+<font color="#555555">026 </font>    slEast.setMajorTickSpacing(50);
+<font color="#555555">027 </font>    slEast.setMinorTickSpacing(10);
+<font color="#555555">028 </font>    slEast.setPaintTicks(<font color="#006699">true</font>);
+<font color="#555555">029 </font>    slEast.setPaintLabels(<font color="#006699">true</font>);
+<font color="#555555">030 </font>    slEast.addChangeListener(<font color="#006699">this</font>);
+<font color="#555555">031 </font>    cp.add(slEast, BorderLayout.EAST);
+<font color="#555555">032 </font>    <font color="#00AA00">//Horizontaler Schieberegler</font>
+<font color="#555555">033 </font>    slSouth = <font color="#0000AA">new</font> JSlider(JSlider.HORIZONTAL, 0, 255, 0);
+<font color="#555555">034 </font>    slSouth.setMajorTickSpacing(100);
+<font color="#555555">035 </font>    slSouth.setMinorTickSpacing(25);
+<font color="#555555">036 </font>    slSouth.setPaintTicks(<font color="#006699">true</font>);
+<font color="#555555">037 </font>    slSouth.setPaintLabels(<font color="#006699">true</font>);
+<font color="#555555">038 </font>    slSouth.setSnapToTicks(<font color="#006699">true</font>);
+<font color="#555555">039 </font>    slSouth.addChangeListener(<font color="#006699">this</font>);
+<font color="#555555">040 </font>    cp.add(slSouth, BorderLayout.SOUTH);
+<font color="#555555">041 </font>    <font color="#00AA00">//Farbiges Panel</font>
+<font color="#555555">042 </font>    coloredPanel = <font color="#0000AA">new</font> JPanel();
+<font color="#555555">043 </font>    coloredPanel.setBackground(<font color="#0000AA">new</font> Color(red, 0, blue));
+<font color="#555555">044 </font>    cp.add(coloredPanel, BorderLayout.CENTER);
+<font color="#555555">045 </font>  }
+<font color="#555555">046 </font>
+<font color="#555555">047 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> stateChanged(ChangeEvent event)
+<font color="#555555">048 </font>  {
+<font color="#555555">049 </font>    JSlider sl = (JSlider)event.getSource();
+<font color="#555555">050 </font>    <font color="#0000AA">if</font> (sl == slEast) {
+<font color="#555555">051 </font>      blue = sl.getValue();
+<font color="#555555">052 </font>    } <font color="#0000AA">else</font> {
+<font color="#555555">053 </font>      red = sl.getValue();
+<font color="#555555">054 </font>    }
+<font color="#555555">055 </font>    coloredPanel.setBackground(<font color="#0000AA">new</font> Color(red, 0, blue));
+<font color="#555555">056 </font>    <font color="#0000AA">if</font> (!sl.getValueIsAdjusting()) {
+<font color="#555555">057 </font>      System.out.println(<font color="#0000FF">"("</font> + red + <font color="#0000FF">",0,"</font> + blue + <font color="#0000FF">")"</font>);
+<font color="#555555">058 </font>    }
+<font color="#555555">059 </font>  }
+<font color="#555555">060 </font>
+<font color="#555555">061 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">062 </font>  {
+<font color="#555555">063 </font>    Listing3813 frame = <font color="#0000AA">new</font> Listing3813();
+<font color="#555555">064 </font>    frame.setLocation(100, 100);
+<font color="#555555">065 </font>    frame.setSize(300, 250);
+<font color="#555555">066 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">067 </font>  }
+<font color="#555555">068 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3813.java"><font color="#000055" size=-1>Listing3813.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 38.13: Die Klasse JSlider</i></p>
+
+<p>
+Das Programm erzeugt einen horizontalen und einen vertikalen Slider,
+dessen Wertebereich jeweils von 0 bis 255 reicht. Beide werden mit
+Skalenmarken und Beschriftungen versehen, der horizontale Slider rastet
+auf den Skalenmarkierungen ein. Bei jeder &Auml;nderung wird <a name="ixa102707"><a href="index_s.html#ixb102010"><font color=#000080><tt>stateChanged</tt></font></a></a>
+aufgerufen und der aktuelle Sliderwert einer der beiden Farbvariablen
+zugewiesen. Anschlie&szlig;end wird der Hintergrund des farbigen Panels
+ver&auml;ndert und gegebenenfalls der Farbwert auf der Konsole ausgegeben.
+
+<p>
+Die Programmausgabe ist: 
+<p>
+<a name="imageid038011"></a>
+<img src="images/JSlider1.gif">
+<p>
+
+<p><i>
+Abbildung 38.11: Die Klasse JSlider</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id038004003"></a>
+<h3>38.4.3 JProgressBar </h3>
+
+<p>
+Ein weiteres Hilfsmittel zur Darstellung von kontinuierlichen Werten
+ist die Klasse <a name="ixa102708"><a href="index_j.html#ixb102011"><font color=#000080><tt>JProgressBar</tt></font></a></a>.
+Sie stellt eine Fortschrittsanzeige dar, wie sie auch das Betriebssystem
+oder ein Installationsprogramm bei l&auml;ngeren Kopiervorg&auml;ngen
+anzeigt. Die Fortschrittsanzeige hat einen aktuellen Wert, der grafisch
+mit einer F&uuml;llstandsanzeige dargestellt wird und sich schrittweise
+vom Minimal- zum Maximalwert fortentwickelt. 
+
+<p>
+Die wichtigsten Konstruktoren von <a href="index_j.html#ixb102011"><font color=#000080><tt>JProgressBar</tt></font></a>
+sind: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public JProgressBar(int orient)
+public JProgressBar(int min, int max)
+public JProgressBar(int orient, int min, int max)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JProgressBar.html" onClick="this.href=getApiDoc('javax.swing.JProgressBar')"><font color="#660066" size=-1>javax.swing.JProgressBar</font></a></td>
+</tr>
+</table>
+
+<p>
+Der Parameter <font color="#000077"><tt>orient</tt></font> gibt die
+Orientierung der Fortschrittsanzeige an, sie kann wahlweise <a href="index_h.html#ixb101565"><font color=#000080><tt>HORIZONTAL</tt></font></a>
+oder <a href="index_v.html#ixb101566"><font color=#000080><tt>VERTICAL</tt></font></a>
+sein. Wird sie ausgelassen, erzeugt Swing eine horizontale Darstellung.
+<font color="#000077"><tt>min</tt></font> und <font color="#000077"><tt>max</tt></font>
+geben die untere und obere Grenze des Wertebereichs an. Wenn sie ausgelassen
+werden, wird eine Voreinstellung von 0 bzw. 100 verwendet. 
+
+<p>
+Standardm&auml;&szlig;ig wird die Fortschrittsanzeige ohne Beschriftung
+dargestellt. Durch Aufruf von <a name="ixa102709"><a href="index_s.html#ixb102012"><font color=#000080><tt>setStringPainted</tt></font></a></a>
+und &Uuml;bergabe von <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+kann ein prozentualer Fortschrittswert angezeigt werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setStringPainted(boolean b)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JProgressBar.html" onClick="this.href=getApiDoc('javax.swing.JProgressBar')"><font color="#660066" size=-1>javax.swing.JProgressBar</font></a></td>
+</tr>
+</table>
+
+<p>
+Der Wert (und mit ihm die grafische Darstellung des Fortschritts)
+kann durch Aufruf von <a name="ixa102710"><a href="index_s.html#ixb101626"><font color=#000080><tt>setValue</tt></font></a></a>
+ver&auml;ndert werden. Mit <a name="ixa102711"><a href="index_g.html#ixb100763"><font color=#000080><tt>getValue</tt></font></a></a>
+kann dieser auch abgefragt werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setValue(int n)
+public int getValue()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JProgressBar.html" onClick="this.href=getApiDoc('javax.swing.JProgressBar')"><font color="#660066" size=-1>javax.swing.JProgressBar</font></a></td>
+</tr>
+</table>
+
+<p>
+Das folgende Programm zeigt eine einfache Anwendung von <a href="index_j.html#ixb102011"><font color=#000080><tt>JProgressBar</tt></font></a>.
+Es enth&auml;lt eine Fortschrittsanzeige mit einem Wertebereich von
+0 bis 100 und einem initialen Wert von 0. Durch Bet&auml;tigen des
+Buttons &#187;Weiter&#171; wird der Wert um f&uuml;nf erh&ouml;ht.
+Hat der Wert hundert erreicht, wird er wieder auf null gesetzt. 
+<a name="listingid038014"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3814.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3814
+<font color="#555555">008 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">009 </font><font color="#0000AA">implements</font> ActionListener
+<font color="#555555">010 </font>{
+<font color="#555555">011 </font>  <font color="#0000AA">private</font> JProgressBar pb;
+<font color="#555555">012 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font>          value = 0;
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>  <font color="#0000AA">public</font> Listing3814()
+<font color="#555555">015 </font>  {
+<font color="#555555">016 </font>    <font color="#006699">super</font>(<font color="#0000FF">"JProgressBar"</font>);
+<font color="#555555">017 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">018 </font>    Container cp = getContentPane();
+<font color="#555555">019 </font>    <font color="#00AA00">//Fortschrittsanzeige</font>
+<font color="#555555">020 </font>    pb = <font color="#0000AA">new</font> JProgressBar(JProgressBar.HORIZONTAL, 0, 100);
+<font color="#555555">021 </font>    pb.setStringPainted(<font color="#006699">true</font>);
+<font color="#555555">022 </font>    cp.add(pb, BorderLayout.NORTH);
+<font color="#555555">023 </font>    <font color="#00AA00">//Weiter-Button</font>
+<font color="#555555">024 </font>    JButton button = <font color="#0000AA">new</font> JButton(<font color="#0000FF">"Weiter"</font>);
+<font color="#555555">025 </font>    button.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">026 </font>    cp.add(button, BorderLayout.SOUTH);
+<font color="#555555">027 </font>  }
+<font color="#555555">028 </font>
+<font color="#555555">029 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> actionPerformed(ActionEvent event)
+<font color="#555555">030 </font>  {
+<font color="#555555">031 </font>    value = (value &gt;= 100 ? 0 : value + 5);
+<font color="#555555">032 </font>    pb.setValue(value);
+<font color="#555555">033 </font>  }
+<font color="#555555">034 </font>
+<font color="#555555">035 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">036 </font>  {
+<font color="#555555">037 </font>    Listing3814 frame = <font color="#0000AA">new</font> Listing3814();
+<font color="#555555">038 </font>    frame.setLocation(100, 100);
+<font color="#555555">039 </font>    frame.setSize(300, 150);
+<font color="#555555">040 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">041 </font>  }
+<font color="#555555">042 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3814.java"><font color="#000055" size=-1>Listing3814.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 38.14: Die Klasse JProgressBar</i></p>
+
+<p>
+Die Programmausgabe ist: 
+<p>
+<a name="imageid038012"></a>
+<img src="images/JProgressBar1.gif">
+<p>
+
+<p><i>
+Abbildung 38.12: Die Klasse JProgressBar</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Langdauernde Aktivit&auml;ten, die durch eine Fortschrittsanzeige
+verfolgt werden, laufen oft in einem eigenen Thread ab. Eine (im negativen
+Sinne) sehr wichtige Eigenschaft der Swing-Dialogelemente ist, dass
+sie nicht thread-sicher sind<a name="ixa102712"></a>. Nachdem sie
+einmal auf dem Bildschirm sichtbar gemacht wurden, d&uuml;rfen &Auml;nderungen,
+die die Darstellung der Komponente ver&auml;ndern k&ouml;nnten, nur
+noch aus dem GUI-Thread heraus vorgenommen werden. Anderen Threads
+sind sie dagegen nicht mehr erlaubt. Der Aufruf von <a href="index_s.html#ixb101626"><font color=#000080><tt>setValue</tt></font></a>
+im Beispielprogramm war also nur deshalb zul&auml;ssig, weil er aus
+der Methode <a href="index_a.html#ixb101413"><font color=#000080><tt>actionPerformed</tt></font></a>
+heraus erfolgte, denn diese wird vom GUI-Thread aufgerufen. Ein Aufruf
+aus <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>
+oder aus einem eigenen Thread w&auml;re dagegen nicht erlaubt gewesen.
+Andere Threads d&uuml;rfen nur noch solche Methoden aufrufen, die
+lediglich Grafik-Events erzeugen (beispielsweise <a href="index_r.html#ixb101449"><font color=#000080><tt>repaint</tt></font></a>).</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Seit dem JDK 1.4 gibt es die M&ouml;glichkeit, einen <a href="index_j.html#ixb102011"><font color=#000080><tt>JProgressBar</tt></font></a>
+mit einer dauerhaft ablaufenden Animation zu erzeugen. Dies ist immer
+dann n&uuml;tzlich, wenn die Gr&ouml;&szlig;e der zu erledigenden
+Aufgabe bei der Konstruktion des <a href="index_j.html#ixb102011"><font color=#000080><tt>JProgressBar</tt></font></a>
+noch nicht bekannt ist. Die Fortschrittsanzeige zeigt dann lediglich
+an, <i>dass</i> eine Aktivit&auml;t gerade l&auml;uft, sagt aber nichts
+dar&uuml;ber aus, wie lange sie noch andauern wird. Folgende Methoden
+sind dazu im JDK 1.4 hinzugekommen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setIndeterminate(boolean newValue);
+
+public boolean isIndeterminate()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JProgressBar.html" onClick="this.href=getApiDoc('javax.swing.JProgressBar')"><font color="#660066" size=-1>javax.swing.JProgressBar</font></a></td>
+</tr>
+</table>
+
+<p>
+Nach Aufruf von <a name="ixa102713"><a href="index_s.html#ixb102013"><font color=#000080><tt>setIndeterminate</tt></font></a></a>
+und &Uuml;bergabe von <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+wird die Fortschrittsanzeige in den kontinuierlichen Modus versetzt.
+Dann ist sie dauerhaft animiert und der aktuelle Wert sowie das eingestellte
+Minimum und Maximum werden ignoriert. Die Anwendung selbst braucht
+sich um die Animation nicht zu k&uuml;mmern, sie l&auml;uft automatisch.
+Durch Aufruf von <a href="index_s.html#ixb102013"><font color=#000080><tt>setIndeterminate</tt></font></a>
+mit <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>
+als Argument kann der <a href="index_j.html#ixb102011"><font color=#000080><tt>JProgressBar</tt></font></a>
+in den Standardmodus zur&uuml;ckgesetzt werden. <a name="ixa102714"><a href="index_i.html#ixb102014"><font color=#000080><tt>isIndeterminate</tt></font></a></a>
+liefert den aktuellen Wert dieser Eigenschaft. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100245.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100248.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100250.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100252.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

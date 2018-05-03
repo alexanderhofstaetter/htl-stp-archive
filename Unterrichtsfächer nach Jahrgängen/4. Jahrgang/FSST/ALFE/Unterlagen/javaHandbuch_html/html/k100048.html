@@ -1,0 +1,492 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100046.html;106,k100047.html;107,k100049.html;108,k100052.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100046.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100047.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100049.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100052.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 7 - Anweisungen
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id007002"></a>
+<h2>7.2 <a name="ixa100393">Verzweigungen</a></h2>
+<hr>
+<ul>
+<li><a href="k100048.html#sectlevel2id007002">7.2 Verzweigungen</a>
+<ul>
+<li><a href="k100048.html#dieifanweisung">7.2.1 Die if-Anweisung</a>
+<ul>
+<li><a href="k100048.html#sectlevel4id007002001001">Syntax</a>
+<li><a href="k100048.html#sectlevel4id007002001002">Bedeutung</a>
+<li><a href="k100048.html#sectlevel4id007002001003">Dangling else</a>
+<li><a href="k100048.html#sectlevel4id007002001004">Bedingtes Kompilieren</a>
+</ul>
+<li><a href="k100048.html#sectlevel3id007002002">7.2.2 Die switch-Anweisung</a>
+<ul>
+<li><a href="k100048.html#sectlevel4id007002002001">Syntax</a>
+<li><a href="k100048.html#sectlevel4id007002002002">Bedeutung</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+<p>
+Verzweigungen in Java dienen wie in allen Programmiersprachen dazu,
+bestimmte Programmteile nur beim Eintreten vorgegebener Bedingungen,
+die erst zur Laufzeit bekannt werden, auszuf&uuml;hren. An Verzweigungen
+bietet Java die <a name="ixa100394"><a href="index_i.html#ixb100074"><font color=#000080><tt>if</tt></font></a></a>-
+und <a name="ixa100395"><a href="index_i.html#ixb100353"><font color=#000080><tt>if-else</tt></font></a></a>-Anweisung
+sowie die <a name="ixa100396"><a href="index_s.html#ixb100078"><font color=#000080><tt>switch</tt></font></a></a>-Anweisung.
+
+
+<!-- Section -->
+<a name="dieifanweisung"></a>
+<h3>7.2.1 Die <a name="ixa100397">if-Anweisung</a> </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id007002001001"></a>
+<h4>Syntax </h4>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+if (ausdruck)
+  anweisung;
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+oder 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+if (ausdruck)
+  anweisung1;
+else
+  anweisung2;
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id007002001002"></a>
+<h4>Bedeutung </h4>
+
+<p>
+Die <a name="ixa100398"><a href="index_i.html#ixb100074"><font color=#000080><tt>if</tt></font></a></a>-Anweisung
+wertet zun&auml;chst den Ausdruck <font color="#000077"><tt>ausdruck</tt></font>
+aus. Danach f&uuml;hrt sie die Anweisung <font color="#000077"><tt>anweisung</tt></font>
+genau dann aus, wenn das Ergebnis des Ausdrucks <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+ist. Ist <font color="#000077"><tt>ausdruck</tt></font> hingegen <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>,
+so wird die Anweisung nicht ausgef&uuml;hrt, sondern mit der ersten
+Anweisung nach der <a href="index_i.html#ixb100074"><font color=#000080><tt>if</tt></font></a>-Anweisung
+fortgefahren. 
+
+<p>
+Mit der <a href="index_i.html#ixb100353"><font color=#000080><tt>if-else</tt></font></a>-Anweisung
+gibt es eine weitere Verzweigung in Java. Falls <font color="#000077"><tt>ausdruck</tt></font>
+wahr ist, wird <font color="#000077"><tt>anweisung1</tt></font> ausgef&uuml;hrt,
+andernfalls <font color="#000077"><tt>anweisung2</tt></font>. Eine
+der beiden Anweisungen wird also in jedem Fall ausgef&uuml;hrt. 
+
+<p>
+Anstelle einer einzelnen Anweisung kann jeweils auch eine Folge von
+Anweisungen angegeben werden, wenn sie innerhalb eines Blocks steht.
+Dieser wird als Einheit betrachtet und komplett ausgef&uuml;hrt, wenn
+die entsprechende Bedingung zutrifft. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Zu beachten ist, dass der Testausdruck in der Schleife vom Typ <a name="ixa100399"><a href="index_b.html#ixb100071"><font color=#000080><tt>boolean</tt></font></a></a>
+sein muss. Anders als in C ist es in Java nicht erlaubt, einen <i>numerischen</i>
+Ausdruck an seiner Stelle zu verwenden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id007002001003"></a>
+<h4><a name="ixa100400">Dangling else</a></h4>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Eine der Mehrdeutigkeiten, die in fast allen blockstrukturierten Programmiersprachen
+auftauchen k&ouml;nnen, wurde auch von den Java-Entwicklern nicht
+beseitigt. Als Beispiel wollen wir uns das folgende Codefragment ansehen,
+das leider nicht so ausgef&uuml;hrt wird, wie es die Einr&uuml;ckung
+erwarten l&auml;sst:</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<a name="listingid007002"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">if</font> (a)
+<font color="#555555">002 </font>  <font color="#0000AA">if</font> (b)
+<font color="#555555">003 </font>    s1;
+<font color="#555555">004 </font><font color="#0000AA">else</font>
+<font color="#555555">005 </font>  s2;</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 7.2: Dangling else</i></p>
+
+<p>
+Der <a href="index_e.html#ixb100152"><font color=#000080><tt>else</tt></font></a>-Zweig
+geh&ouml;rt zu der <i>innersten</i> Verzweigung <font color="#000077"><tt>if
+(b)...</tt></font>, und die korrekte Einr&uuml;ckung w&uuml;rde lauten:
+<a name="listingid007003"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">if</font> (a)
+<font color="#555555">002 </font>  <font color="#0000AA">if</font> (b)
+<font color="#555555">003 </font>    s1;
+<font color="#555555">004 </font>  <font color="#0000AA">else</font>
+<font color="#555555">005 </font>    s2;</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 7.3: Dangling else, ausgeschaltet</i></p>
+
+<p>
+Dieses Problem ist in der Literatur unter dem Namen <i>dangling else</i>
+bekannt und kann nur auftauchen, wenn eine <a href="index_i.html#ixb100074"><font color=#000080><tt>if</tt></font></a>-
+und eine <a href="index_i.html#ixb100353"><font color=#000080><tt>if-else</tt></font></a>-Verzweigung
+ineinander geschachtelt werden und beide Anweisungen nicht durch Blockklammern
+begrenzt wurden. Um die Mehrdeutigkeit zu beseitigen, wird in Java
+wie auch in C oder C++ ein &#187;freies&#171; <a name="ixa100401"><a href="index_e.html#ixb100152"><font color=#000080><tt>else</tt></font></a></a>
+immer an das am weitesten innen liegende <a href="index_i.html#ixb100074"><font color=#000080><tt>if</tt></font></a>
+angeh&auml;ngt. 
+
+<!-- Section -->
+
+<a name="sectlevel4id007002001004"></a>
+<h4><a name="ixa100402">Bedingtes Kompilieren</a></h4>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Eine weitere Besonderheit der Verzweigungen in Java r&uuml;hrt daher,
+dass die Sprache keinen Pr&auml;prozessor besitzt und deshalb kein
+<font color="#000077"><tt>#ifdef</tt></font> kennt. Um eine eingeschr&auml;nkte
+Form der bedingten Kompilierung zu verwirklichen, wird in Java das
+folgende Programmfragment in der Weise kompiliert, dass die Anweisung
+<font color="#000077"><tt>anweisung</tt></font> nicht mit&uuml;bersetzt
+wird, da der Testausdruck konstant <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>
+ist: 
+<a name="listingid007004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">if</font> (<font color="#006699">false</font>)
+<font color="#555555">002 </font>  anweisung;</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 7.4: Bedingtes Kompilieren</i></p>
+</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Allerdings sollte man hinzuf&uuml;gen, dass ein solches Verhalten
+in der Sprachspezifikation zwar dringend empfohlen wird, f&uuml;r
+die Compiler-Bauer aber nicht zwangsl&auml;ufig verpflichtend ist.
+
+<p>
+Das hier beschriebene Verhalten eines Java-Compilers steht im Widerspruch
+zu einer anderen Forderung, n&auml;mlich der, nur <a name="ixa100403"><i>erreichbare Anweisungen</i></a>
+zu akzeptieren. Gem&auml;&szlig; Sprachspezifikation soll der Compiler
+alle Anweisungen, die <i>nicht erreichbar</i> sind, ablehnen, also
+einen Fehler melden. 
+
+<p>
+Nicht erreichbar im technischen Sinne sind dabei Anweisungen in Schleifen,
+deren Testausdruck zur Compile-Zeit <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>
+ist, und Anweisungen, die hinter einer <a href="index_b.html#ixb100079"><font color=#000080><tt>break</tt></font></a>-,
+<a href="index_c.html#ixb100080"><font color=#000080><tt>continue</tt></font></a>-,
+<a href="index_t.html#ixb100358"><font color=#000080><tt>throw</tt></font></a>-
+oder <a href="index_r.html#ixb100344"><font color=#000080><tt>return</tt></font></a>-Anweisung
+liegen, die <i>unbedingt</i> angesprungen wird. Die einzige Ausnahme
+von dieser Regel ist die im vorigen Absatz erw&auml;hnte Variante
+der konstant unwahren Verzweigung, die zur bedingten Kompilierung
+verwendet werden kann. 
+
+<!-- Section -->
+
+<a name="sectlevel3id007002002"></a>
+<h3>7.2.2 Die switch-Anweisung </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id007002002001"></a>
+<h4>Syntax </h4>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+switch (ausdruck)
+{
+  case constant:
+    anweisung;
+  ...
+  default:
+}
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id007002002002"></a>
+<h4>Bedeutung </h4>
+
+<p>
+Die <a name="ixa100404"><a href="index_s.html#ixb100078"><font color=#000080><tt>switch</tt></font></a></a>-Anweisung
+ist eine <a name="ixa100405">Mehrfachverzweigung</a>. Zun&auml;chst
+wird der Ausdruck <font color="#000077"><tt>ausdruck</tt></font>,
+der vom Typ <a href="index_b.html#ixb100249"><font color=#000080><tt>byte</tt></font></a>,
+<a href="index_s.html#ixb100250"><font color=#000080><tt>short</tt></font></a>,
+<a href="index_c.html#ixb100223"><font color=#000080><tt>char</tt></font></a>,
+<a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>
+oder der Wert eines Aufz&auml;hlungstyps (siehe <a href="k100073.html#aufzaehlungstypen">Abschnitt 11.3</a>)
+sein muss, ausgewertet. In Abh&auml;ngigkeit vom Ergebnis wird dann
+die Sprungmarke angesprungen, deren Konstante mit dem Ergebnis des
+Ausdrucks &uuml;bereinstimmt. Die Konstante und der Ausdruck m&uuml;ssen
+dabei zuweisungskompatibel sein. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#FF9900"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#FF9900"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Ab Java Version 7 darf der Ausdruck auch vom Typ <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+sein.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#FF9900">
+<tr>
+<td><font color="#FFFFFF">&nbsp;JDK6.0-7.0&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#FF9900"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Das optionale <a name="ixa100406"><a href="index_d.html#ixb100360"><font color=#000080><tt>default</tt></font></a></a>-Label
+wird dann angesprungen, wenn keine passende Sprungmarke gefunden wird.
+Ist kein <a href="index_d.html#ixb100360"><font color=#000080><tt>default</tt></font></a>-Label
+vorhanden und wird auch keine passende Sprungmarke gefunden, so wird
+keine der Anweisungen innerhalb der <a href="index_s.html#ixb100078"><font color=#000080><tt>switch</tt></font></a>-Anweisung
+ausgef&uuml;hrt. Jede Konstante eines <a name="ixa100407"><a href="index_c.html#ixb100361"><font color=#000080><tt>case</tt></font></a></a>-Labels
+darf nur einmal auftauchen. Das <a href="index_d.html#ixb100360"><font color=#000080><tt>default</tt></font></a>-Label
+darf maximal einmal verwendet werden.
+
+<p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Nachdem ein <a href="index_c.html#ixb100361"><font color=#000080><tt>case</tt></font></a>-
+oder <a href="index_d.html#ixb100360"><font color=#000080><tt>default</tt></font></a>-Label
+angesprungen wurde, werden alle dahinterstehenden Anweisungen ausgef&uuml;hrt.
+Im Gegensatz zu Sprachen wie PASCAL erfolgt auch dann keine Unterbrechung,
+wenn das n&auml;chste Label erreicht wird. Wenn dies erw&uuml;nscht
+ist, muss der Kontrollfluss wie in C und C++ mit Hilfe einer <a name="ixa100408"><a href="index_b.html#ixb100079"><font color=#000080><tt>break</tt></font></a></a>-Anweisung
+unterbrochen werden. Jedes <a href="index_b.html#ixb100079"><font color=#000080><tt>break</tt></font></a>
+innerhalb einer <a href="index_s.html#ixb100078"><font color=#000080><tt>switch</tt></font></a>-Anweisung
+f&uuml;hrt dazu, dass zum Ende der <a href="index_s.html#ixb100078"><font color=#000080><tt>switch</tt></font></a>-Anweisung
+verzweigt wird.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Wie aus den bisherigen Ausf&uuml;hrungen deutlich wurde, ist die Semantik
+der <a href="index_s.html#ixb100078"><font color=#000080><tt>switch</tt></font></a>-Anweisung
+in Java der in C und C++ sehr &auml;hnlich. Ein wichtiger Unterschied
+besteht darin, dass in Java alle Anweisungen, die unmittelbar innerhalb
+des <a href="index_s.html#ixb100078"><font color=#000080><tt>switch</tt></font></a>
+liegen, <a href="index_c.html#ixb100361"><font color=#000080><tt>case</tt></font></a>-
+oder <a href="index_d.html#ixb100360"><font color=#000080><tt>default</tt></font></a>-Labels
+sein m&uuml;ssen. Der Trick, in <a href="index_s.html#ixb100078"><font color=#000080><tt>switch</tt></font></a>-Anweisungen
+Schleifen zu packen, die sich &uuml;ber mehrere Labels erstrecken,
+funktioniert in Java nicht. Die Sprachspezifikation erl&auml;utert
+dies am Beispiel von <a name="ixa100409"><i>Duff's Device</i></a>,
+das so in Java nicht kompilierbar ist: 
+<a name="listingid007005"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#006699">int</font> q = (n+7)/8;
+<font color="#555555">002 </font><font color="#0000AA">switch</font> (n%8) {
+<font color="#555555">003 </font><font color="#0000AA">case</font> 0: <font color="#0000AA">do</font> { foo();
+<font color="#555555">004 </font><font color="#0000AA">case</font> 1:      foo();
+<font color="#555555">005 </font><font color="#0000AA">case</font> 2:      foo();
+<font color="#555555">006 </font><font color="#0000AA">case</font> 3:      foo();
+<font color="#555555">007 </font><font color="#0000AA">case</font> 4:      foo();
+<font color="#555555">008 </font><font color="#0000AA">case</font> 5:      foo();
+<font color="#555555">009 </font><font color="#0000AA">case</font> 6:      foo();
+<font color="#555555">010 </font><font color="#0000AA">case</font> 7:      foo();
+<font color="#555555">011 </font>        } <font color="#0000AA">while</font> (--q &gt;= 0);
+<font color="#555555">012 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 7.5: Duff's Device</i></p>
+
+<p>
+Gl&uuml;cklicherweise ist derartiger Code mehr zur Verwirrung ahnungsloser
+Programmierer gedacht als zur ernsthaften Anwendung und kommt in der
+Praxis normalerweise kaum vor. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100046.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100047.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100049.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100052.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

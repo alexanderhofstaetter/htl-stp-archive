@@ -1,0 +1,101 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100284.html;106,k100284.html;107,k100286.html;108,k100292.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100284.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100284.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100286.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100292.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 45 - Reflection
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id045001"></a>
+<h2>45.1 Einleitung </h2>
+<hr>
+<ul>
+<li><a href="k100285.html#sectlevel2id045001">45.1 Einleitung</a>
+</ul>
+<hr>
+
+<p>
+Bei der Entwicklung des JDK 1.1 sahen sich die Entwickler mit einer
+Schw&auml;che von Java konfrontiert, die die Entwicklung bestimmter
+Typen von Tools und Bibliotheken unm&ouml;glich machte: der statischen
+Struktur von Klassen und Objekten. Um ein Objekt anzulegen, eine seiner
+Methoden aufzurufen oder auf eine seiner Membervariablen zuzugreifen,
+musste der Code der Klasse zur <i>Compile-Zeit</i> bekannt sein. W&auml;hrend
+dies f&uuml;r die meisten gew&ouml;hnlichen Anwendungen kein Problem
+darstellt, ist es f&uuml;r die Entwicklung generischer Werkzeuge und
+hochkonfigurierbarer Anwendungen, die durch Plugins erweiterbar sind,
+unzureichend. Insbesondere die Entwicklung der Beans- und Serialisierungs-APIs
+war mit den in der Version 1.0 verf&uuml;gbaren Spracheigenschaften
+nicht m&ouml;glich. 
+
+<p>
+Ben&ouml;tigt wurde vielmehr die M&ouml;glichkeit, Klassen zu laden
+und zu instanzieren (auch mit parametrisierten Konstruktoren), ohne
+dass bereits zur Compile-Zeit ihr Name bekannt sein musste. Weiterhin
+sollten statische oder instanzbasierte Methoden aufgerufen und auf
+Membervariablen auch dann zugegriffen werden k&ouml;nnen, wenn ihr
+Name erst zur Laufzeit des Programms bekannt ist. 
+
+<p>
+Gesucht wurde also ein Mechanismus, der diese normalerweise vom Compiler
+angeforderten F&auml;higkeiten des Laufzeitsystems auch &#187;normalen&#171;
+Anwendungen zur Verf&uuml;gung stellte. Mit dem Reflection-API des
+JDK 1.1 wurde eine Library-Schnittstelle geschaffen, die alle erw&auml;hnten
+F&auml;higkeiten (und noch einige mehr) implementiert und beliebigen
+Anwendungen als integralen Bestandteil der Java-Klassenbibliothek
+zur Verf&uuml;gung stellt. Erweiterungen am Sprachkern waren dazu
+nicht n&ouml;tig. 
+
+<p>
+Wir wollen uns in diesem Kapitel die wichtigsten Eigenschaften des
+Reflection-API ansehen und ein paar n&uuml;tzliche Anwendungen vorstellen.
+Die als <a name="ixa103283"><i>Introspection</i></a> bezeichneten
+Erweiterungen f&uuml;r die Beans-Behandlung werden in <a href="k100292.html#kapitelbeans">Kapitel 46</a>
+behandelt. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100284.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100284.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100286.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100292.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

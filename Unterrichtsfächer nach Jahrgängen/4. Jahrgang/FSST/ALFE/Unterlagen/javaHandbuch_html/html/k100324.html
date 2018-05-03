@@ -1,0 +1,604 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100322.html;106,k100323.html;107,k100325.html;108,k100327.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100322.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100323.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100325.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100327.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 51 - Sound
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id051002"></a>
+<h2>51.2 <a name="ixa103705">Gesampelter Sound</a></h2>
+<hr>
+<ul>
+<li><a href="k100324.html#sectlevel2id051002">51.2 Gesampelter Sound</a>
+<ul>
+<li><a href="k100324.html#sectlevel3id051002001">51.2.1 Was ist Sampling?</a>
+<li><a href="k100324.html#sectlevel3id051002002">51.2.2 Das Sampling-API</a>
+<ul>
+<li><a href="k100324.html#sectlevel4id051002002001">Zugriff auf Audio-Dateien</a>
+<li><a href="k100324.html#sectlevel4id051002002002">Audio-Ger&auml;te beschaffen</a>
+<li><a href="k100324.html#sectlevel4id051002002003">Die Steuerelemente eines Audio-Ger&auml;ts</a>
+<li><a href="k100324.html#sectlevel4id051002002004">Der Clip</a>
+</ul>
+<li><a href="k100324.html#sectlevel3id051002003">51.2.3 Abspielen einer Sample-Datei</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id051002001"></a>
+<h3>51.2.1 Was ist <a name="ixa103706">Sampling</a>? </h3>
+
+<p>
+Das Sound-API macht eine sehr grundlegende Unterscheidung zwischen
+<i>gesampeltem Sound</i> und <i>Midi-Sound</i>. Beim Sampling, das
+wir in diesem Abschnitt behandeln wollen, wird ein Audio-Signal in
+viele kleine St&uuml;cke zerlegt, deren Amplitude in sehr kurzen Abst&auml;nden
+mit Hilfe eines Analog-Digital-Konverters gemessen wird: 
+<p>
+<a name="imageid051001"></a>
+<img src="images/Sample1.gif">
+<p>
+
+<p><i>
+Abbildung 51.1: Samplen eines Audio-Signals</i></p>
+
+<p>
+Die Frequenz, mit der die Abtastung geschieht, bezeichnet man als
+<i>Sampling Rate</i> und sie sollte mindestens doppelt so hoch sein
+wie die gr&ouml;&szlig;te aufzuzeichnende Frequenz. Bei Audio-CDs
+betr&auml;gt sie 44100 Hz und die Aufl&ouml;sung des A/D-Konverters
+betr&auml;gt 16 Bit. Speichert man die so entstehenden Amplitudenwerte
+fortlaufend ab, so kann man bei Kenntnis der Sampling-Rate daraus
+sp&auml;ter das Originalsignal n&auml;herungsweise rekonstruieren.
+Sind Sampling-Rate und Aufl&ouml;sung hoch genug, kann das menschliche
+Ohr keinen Unterschied zwischen gesampeltem und Originalsignal feststellen:
+<p>
+<a name="imageid051002"></a>
+<img src="images/Sample2.gif">
+<p>
+
+<p><i>
+Abbildung 51.2: Ein gesampeltes Audio-Signal</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id051002002"></a>
+<h3>51.2.2 Das Sampling-API </h3>
+
+<p>
+Das Sound-API macht keine Annahmen &uuml;ber vorhandene Hardware oder
+angeschlossene Ger&auml;te. Stattdessen stellt es Methoden zur Verf&uuml;gung,
+mit denen die vorhandene Hardware zur Laufzeit ermittelt und Objekte
+zum Zugriff darauf beschafft werden k&ouml;nnen. Im Falle von gesampeltem
+Sound dient dazu die Klasse <a name="ixa103707"><a href="index_a.html#ixb102806"><font color=#000080><tt>AudioSystem</tt></font></a></a>
+aus dem Paket <a name="ixa103708"><a href="index_j.html#ixb102807"><font color=#000080><tt>javax.sound.sampled</tt></font></a></a>.
+Sie besitzt eine Reihe von statischen Methoden, mit denen die grundlegenden
+Hilfsmittel f&uuml;r den Umgang mit gesampeltem Sound beschafft werden
+k&ouml;nnen: 
+<ul>
+<li>Die Klasse <a name="ixa103709"><a href="index_a.html#ixb102808"><font color=#000080><tt>AudioFormat</tt></font></a></a>
+beschreibt das Format von gesampeltem Sound. Sie enth&auml;lt unter
+anderem Informationen &uuml;ber das Kodierungsverfahren, die Anzahl
+der Kan&auml;le, die Sampling Rate oder die Aufl&ouml;sung der einzelnen
+Samples.
+<li>Die Klasse <a name="ixa103710"><a href="index_a.html#ixb102809"><font color=#000080><tt>AudioFileFormat</tt></font></a></a>
+beschreibt das Format von Dateien, die gesampelten Sound enthalten.
+Im Wesentlichen wird dazu ein eingebettetes <a href="index_a.html#ixb102808"><font color=#000080><tt>AudioFormat</tt></font></a>-Objekt
+verwendet, das mit einigen Zusatzinformationen versehen ist. Die wichtigsten
+Dateiformate, die seit dem JDK 1.3 standardm&auml;&szlig;ig unterst&uuml;tzt
+werden, sind <a name="ixa103711"><i>wav</i></a>, <a name="ixa103712"><i>aiff</i></a>
+und <a name="ixa103713"><i>au</i></a>.
+<li>Eine weitere wichtige Abstraktion ist die der <a name="ixa103714"><a href="index_l.html#ixb102813"><font color=#000080><tt>Line</tt></font></a></a>.
+Sie repr&auml;sentiert die verschiedenen, miteinander verbundenen
+Elemente der Audio-Pipeline, mit denen die Sound-Daten erzeugt, transportiert
+oder modifiziert werden. Die abstrakten Eigenschaften einer <a href="index_l.html#ixb102813"><font color=#000080><tt>Line</tt></font></a>
+sind, dass sie entweder ge&ouml;ffnet oder geschlossen ist und dass
+sie eine Reihe von <a name="ixa103715"><a href="index_c.html#ixb102814"><font color=#000080><tt>Control</tt></font></a></a>-Objekten
+haben kann, um etwa die Lautst&auml;rke, das Stereo-Panorama oder
+den Hall zu ver&auml;ndern. Zudem sendet eine <a href="index_l.html#ixb102813"><font color=#000080><tt>Line</tt></font></a>
+bei wichtigen Status&auml;nderungen Events an registrierte Listener.
+<li>Wichtige Subinterfaces von <a href="index_l.html#ixb102813"><font color=#000080><tt>Line</tt></font></a>
+sind <a name="ixa103716"><a href="index_p.html#ixb102815"><font color=#000080><tt>Port</tt></font></a></a>
+und <a name="ixa103717"><a href="index_m.html#ixb102816"><font color=#000080><tt>Mixer</tt></font></a></a>.
+Ein <a href="index_p.html#ixb102815"><font color=#000080><tt>Port</tt></font></a>
+ist ein <i>Endpunkt</i> der Audio-Pipeline, also etwa ein Mikrofon
+oder CD-Laufwerk auf der Eingabeseite oder ein Kopfh&ouml;rer- oder
+Verst&auml;rkerausgang auf der Ausgabeseite. Ein <a href="index_m.html#ixb102816"><font color=#000080><tt>Mixer</tt></font></a>
+ist ein Audio-Element mit mehreren Ein-/Ausgabeleitungen. Er dient
+typischerweise dazu, verschiedene Eingangssignale getrennt aufzubereiten
+und zu einem Summensignal zusammenzumischen. Ein <a href="index_m.html#ixb102816"><font color=#000080><tt>Mixer</tt></font></a>
+kann auch Ver&auml;nderungen an den Eingangssignalen vornehmen, etwa
+einen Halleffekt hinzuf&uuml;gen oder mit Hilfe eines Equalizers den
+Klang ver&auml;ndern.
+<li>Mit <a name="ixa103718"><a href="index_d.html#ixb102817"><font color=#000080><tt>DataLine</tt></font></a></a>
+kommt das dritte Subinterface von <a href="index_l.html#ixb102813"><font color=#000080><tt>Line</tt></font></a>
+ins Spiel. Eine <a href="index_d.html#ixb102817"><font color=#000080><tt>DataLine</tt></font></a>
+ist das Vaterinterface f&uuml;r alle Lines, die explizit mit Datenstr&ouml;men
+umgehen. Eine <a name="ixa103719"><a href="index_s.html#ixb102818"><font color=#000080><tt>SourceDataLine</tt></font></a></a>
+versorgt einen <a href="index_m.html#ixb102816"><font color=#000080><tt>Mixer</tt></font></a>
+mit Eingabedaten und eine <a name="ixa103720"><a href="index_t.html#ixb102819"><font color=#000080><tt>TargetDataLine</tt></font></a></a>
+empf&auml;ngt Daten von ihm. Ein <a name="ixa103721"><a href="index_c.html#ixb102820"><font color=#000080><tt>Clip</tt></font></a></a>
+ist eine spezielle Datenquelle, die vor der Weitergabe alle Daten
+in einem St&uuml;ck liest und fortan im Hauptspeicher h&auml;lt. Ein
+<a href="index_c.html#ixb102820"><font color=#000080><tt>Clip</tt></font></a>
+kann dadurch wahlfrei auf die Daten zugreifen und beispielsweise nur
+einen Teil des Signals wiedergeben oder Ausschnitte beliebig oft wiederholen.
+Allerdings kommt er nur f&uuml;r relativ kleine Datenmengen in Betracht.
+</ul>
+
+
+<!-- Section -->
+<a name="sectlevel4id051002002001"></a>
+<h4>Zugriff auf Audio-Dateien </h4>
+
+<p>
+Die Klasse <a href="index_a.html#ixb102806"><font color=#000080><tt>AudioSystem</tt></font></a>
+stellt einige Methoden zum Zugriff auf Dateien mit gesampeltem Sound
+zur Verf&uuml;gung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static AudioFileFormat getAudioFileFormat(File file)
+  throws UnsupportedAudioFileException, IOException
+
+public static AudioFileFormat getAudioFileFormat(InputStream stream)
+  throws UnsupportedAudioFileException, IOException
+
+public static AudioFileFormat getAudioFileFormat(URL url)
+  throws UnsupportedAudioFileException, IOException
+
+
+public static AudioInputStream getAudioInputStream(File file)
+  throws UnsupportedAudioFileException, IOException
+
+public static AudioInputStream getAudioInputStream(InputStream stream)
+  throws UnsupportedAudioFileException, IOException
+
+public static AudioInputStream getAudioInputStream(URL url)
+  throws UnsupportedAudioFileException, IOException
+
+
+public static boolean isConversionSupported(
+  AudioFormat targetFormat,
+  AudioFormat sourceFormat
+)
+
+public static AudioInputStream getAudioInputStream(
+  AudioFormat targetFormat,
+  AudioInputStream sourceStream
+)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/sound/sampled/AudioSystem.html" onClick="this.href=getApiDoc('javax.sound.sampled.AudioSystem')"><font color="#660066" size=-1>javax.sound.sampled.AudioSystem</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa103722"><a href="index_g.html#ixb102821"><font color=#000080><tt>getAudioFileFormat</tt></font></a></a>
+kann das <a href="index_a.html#ixb102809"><font color=#000080><tt>AudioFileFormat</tt></font></a>
+einer Sound-Datei ermittelt werden. Die Eingabedatei kann entweder
+als <a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a>,
+<a href="index_i.html#ixb100587"><font color=#000080><tt>InputStream</tt></font></a>
+oder <a href="index_u.html#ixb102209"><font color=#000080><tt>URL</tt></font></a>
+&uuml;bergeben werden. Mit <a name="ixa103723"><a href="index_g.html#ixb102822"><font color=#000080><tt>getAudioInputStream</tt></font></a></a>
+kann ein <a name="ixa103724"><a href="index_a.html#ixb102823"><font color=#000080><tt>AudioInputStream</tt></font></a></a>
+beschafft werden, mit dem der Inhalt der Sound-Datei gelesen werden
+kann. Auch hier darf der Parameter wahlweise vom Typ <a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a>,
+<a href="index_i.html#ixb100587"><font color=#000080><tt>InputStream</tt></font></a>
+oder <a href="index_u.html#ixb102209"><font color=#000080><tt>URL</tt></font></a>
+sein. 
+
+<p>
+Die Klasse <a href="index_a.html#ixb102806"><font color=#000080><tt>AudioSystem</tt></font></a>
+unterst&uuml;tzt sogar Konvertierungen zwischen verschiedenen Formaten.
+Ob eine bestimmte Konvertierung verf&uuml;gbar ist, kann mit <a name="ixa103725"><a href="index_i.html#ixb102824"><font color=#000080><tt>isConversionSupported</tt></font></a></a>
+abgefragt werden. Wird <a href="index_g.html#ixb102822"><font color=#000080><tt>getAudioInputStream</tt></font></a>
+mit einem Zielformat und einem anderen <a href="index_a.html#ixb102823"><font color=#000080><tt>AudioInputStream</tt></font></a>
+als Parameter aufgerufen, f&uuml;hrt die Methode die Konvertierung
+durch und liefert einen <a href="index_a.html#ixb102823"><font color=#000080><tt>AudioInputStream</tt></font></a>,
+der das gew&uuml;nschte Zielformat hat. 
+
+<!-- Section -->
+
+<a name="sectlevel4id051002002002"></a>
+<h4>Audio-Ger&auml;te beschaffen </h4>
+
+<p>
+Die Klasse <a href="index_a.html#ixb102806"><font color=#000080><tt>AudioSystem</tt></font></a>
+stellt auch Methoden zum Zugriff auf Audio-Ger&auml;te zur Verf&uuml;gung:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static Mixer.Info[] getMixerInfo()
+
+public static Mixer getMixer(Mixer.Info info)
+
+public static Line getLine(Line.Info info)
+  throws LineUnavailableException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/sound/sampled/AudioSystem.html" onClick="this.href=getApiDoc('javax.sound.sampled.AudioSystem')"><font color="#660066" size=-1>javax.sound.sampled.AudioSystem</font></a></td>
+</tr>
+</table>
+
+<p>
+Um herauszufinden, welche <a href="index_m.html#ixb102816"><font color=#000080><tt>Mixer</tt></font></a>
+verf&uuml;gbar sind, muss zun&auml;chst <a name="ixa103726"><a href="index_g.html#ixb102825"><font color=#000080><tt>getMixerInfo</tt></font></a></a>
+aufgerufen werden. Der R&uuml;ckgabewert ist ein Array mit <a name="ixa103727"><a href="index_m.html#ixb102826"><font color=#000080><tt>Mixer.Info</tt></font></a></a>-Objekten,
+das je vorhandenem <a href="index_m.html#ixb102816"><font color=#000080><tt>Mixer</tt></font></a>
+ein Element enth&auml;lt. Durch &Uuml;bergabe eines <a href="index_m.html#ixb102826"><font color=#000080><tt>Mixer.Info</tt></font></a>-Objekts
+an <a name="ixa103728"><a href="index_g.html#ixb102827"><font color=#000080><tt>getMixer</tt></font></a></a>
+kann der zugeh&ouml;rige <a href="index_m.html#ixb102816"><font color=#000080><tt>Mixer</tt></font></a>
+beschafft werden. Man kann allerdings auch ohne explizite Verwendung
+eines Mixers gesampelten Sound ausgeben, wenn mit <a name="ixa103729"><a href="index_g.html#ixb102828"><font color=#000080><tt>getLine</tt></font></a></a>
+direkt ein geeignetes Audio-Ger&auml;t beschafft wird. Dazu muss ein
+<a name="ixa103730"><a href="index_l.html#ixb102829"><font color=#000080><tt>Line.Info</tt></font></a></a>-Objekt
+&uuml;bergeben werden, das dessen Eigenschaften beschreibt. Wir werden
+in <a href="k100324.html#playsamplefile">Listing 51.1</a> zeigen,
+wie das <a href="index_l.html#ixb102829"><font color=#000080><tt>Line.Info</tt></font></a>-Objekt
+konstruiert werden muss, um einen <a href="index_c.html#ixb102820"><font color=#000080><tt>Clip</tt></font></a>
+zu erzeugen. 
+
+<!-- Section -->
+
+<a name="sectlevel4id051002002003"></a>
+<h4>Die Steuerelemente eines Audio-Ger&auml;ts </h4>
+
+<p>
+Wir hatten eingangs erw&auml;hnt, dass eine <a href="index_l.html#ixb102813"><font color=#000080><tt>Line</tt></font></a>
+eine Reihe von Steuerlementen zur Verf&uuml;gung stellt, mit denen
+Parameter wie Lautst&auml;rke, Stereo-Panorama oder Hall eingestellt
+werden k&ouml;nnen. Auf diese kann mit folgenden Methoden zugegriffen
+werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Control[] getControls()
+
+public boolean isControlSupported(Control.Type control)
+
+public Control getControl(Control.Type control)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/sound/sampled/Line.html" onClick="this.href=getApiDoc('javax.sound.sampled.Line')"><font color="#660066" size=-1>javax.sound.sampled.Line</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa103731"><a href="index_g.html#ixb102830"><font color=#000080><tt>getControls</tt></font></a></a>
+liefert ein Array aller verf&uuml;gbaren Steuerelemente, die durch
+Instanzen der Klasse <a name="ixa103732"><a href="index_c.html#ixb102814"><font color=#000080><tt>Control</tt></font></a></a>
+repr&auml;sentiert werden. Mit <a name="ixa103733"><a href="index_i.html#ixb102831"><font color=#000080><tt>isControlSupported</tt></font></a></a>
+kann durch &Uuml;bergabe eines <a name="ixa103734"><a href="index_c.html#ixb102832"><font color=#000080><tt>Control.Type</tt></font></a></a>-Objekts
+festgestellt werden, ob ein bestimmter Typ vorhanden ist. Mit <a name="ixa103735"><a href="index_g.html#ixb102833"><font color=#000080><tt>getControl</tt></font></a></a>
+kann dieser schlie&szlig;lich beschafft werden. 
+
+<p>
+<a href="index_c.html#ixb102814"><font color=#000080><tt>Control</tt></font></a>
+ist die Basisklasse einer ganzen Gruppe von Kontrollelementen, die
+sich durch den Datentyp des zu ver&auml;ndernden Parameters unterscheiden.
+Es gibt die Unterklassen <a name="ixa103736"><a href="index_b.html#ixb102834"><font color=#000080><tt>BooleanControl</tt></font></a></a>,
+<a name="ixa103737"><a href="index_e.html#ixb102835"><font color=#000080><tt>EnumControl</tt></font></a></a>,
+<a name="ixa103738"><a href="index_f.html#ixb102836"><font color=#000080><tt>FloatControl</tt></font></a></a>
+und <a name="ixa103739"><a href="index_c.html#ixb102837"><font color=#000080><tt>CompoundControl</tt></font></a></a>.
+Ein <a href="index_f.html#ixb102836"><font color=#000080><tt>FloatControl</tt></font></a>
+beispielsweise dient zur Ver&auml;nderung eines Flie&szlig;kommawerts
+(wie etwa der Lautst&auml;rke), w&auml;hrend ein <a href="index_b.html#ixb102834"><font color=#000080><tt>BooleanControl</tt></font></a>
+einen An-/Aus-Wert ver&auml;ndern kann (beispielsweise die Stummschaltung
+eines Elements). Die wichtigsten Methoden der Klasse <a href="index_f.html#ixb102836"><font color=#000080><tt>FloatControl</tt></font></a>
+sind: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public float getMaximum()
+public float getMinimum()
+
+public float getValue()
+public void setValue(float newValue)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/sound/sampled/FloatControl.html" onClick="this.href=getApiDoc('javax.sound.sampled.FloatControl')"><font color="#660066" size=-1>javax.sound.sampled.FloatControl</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa103740"><a href="index_g.html#ixb101627"><font color=#000080><tt>getMinimum</tt></font></a></a>
+und <a name="ixa103741"><a href="index_g.html#ixb101628"><font color=#000080><tt>getMaximum</tt></font></a></a>
+k&ouml;nnen der kleinste und der gr&ouml;&szlig;te einstellbare Wert
+abgefragt werden, mit <a name="ixa103742"><a href="index_g.html#ixb100763"><font color=#000080><tt>getValue</tt></font></a></a>
+der aktuelle. Mit <a name="ixa103743"><a href="index_s.html#ixb101626"><font color=#000080><tt>setValue</tt></font></a></a>
+kann der Wert des Controls ver&auml;ndert werden. 
+
+<p>
+Die <font color="#000077"><tt>Type</tt></font>-Klassen der einzelnen
+Steuerelemente besitzen jeweils eine Reihe von vordefinierten Konstanten,
+die an <a href="index_g.html#ixb102833"><font color=#000080><tt>getControl</tt></font></a>
+&uuml;bergeben werden k&ouml;nnen. F&uuml;r <a name="ixa103744"><a href="index_f.html#ixb102838"><font color=#000080><tt>FloatControl.TYPE</tt></font></a></a>
+sind das beispielsweise <a name="ixa103745"><a href="index_m.html#ixb102839"><font color=#000080><tt>MASTER_GAIN</tt></font></a></a>
+zur Einstellung der Lautst&auml;rke oder <a name="ixa103746"><a href="index_p.html#ixb102840"><font color=#000080><tt>PAN</tt></font></a></a>
+zur Ver&auml;nderung des Stereo-Panoramas. 
+
+<p>
+Ein Steuerelement des Typs <a href="index_m.html#ixb102839"><font color=#000080><tt>MASTER_GAIN</tt></font></a>
+bestimmt die Gesamtverst&auml;rkung, die das Audio-Element dem Ursprungssignal
+hinzuf&uuml;gt. Ihr Wert wird in <a name="ixa103747"><i>Dezibel</i></a>
+(<a name="ixa103748"><i>dB</i></a>) angegeben, wobei positive Werte
+eine Verst&auml;rkung und negative eine Abschw&auml;chung des Eingangssignals
+anzeigen. Das Dezibel ist eine logarithmische Ma&szlig;einheit, die
+den Verst&auml;rkungsfaktor durch die Formel 10<sup>dB/20</sup> ausdr&uuml;ckt.
+20 dB entsprechen also einer 10-fachen Verst&auml;rkung, -40 dB einer
+100-fachen Abschw&auml;chung. 0 dB bedeutet, dass die St&auml;rke
+des Ausgangs- im Verh&auml;ltnis zum Eingangssignal unver&auml;ndert
+bleibt. 
+
+<p>
+Ein Steuerelement des Typs <a href="index_p.html#ixb102840"><font color=#000080><tt>PAN</tt></font></a>
+bestimmt die Lage des Audio-Signals im Stereo-Panorama. Es kann Werte
+von -1.0 (ganz links) bis +1.0 (ganz rechts) annehmen. Ein Wert von
+0 legt das Signal in die Mitte. 
+
+<!-- Section -->
+
+<a name="sectlevel4id051002002004"></a>
+<h4>Der Clip </h4>
+
+<p>
+Ein <a href="index_c.html#ixb102820"><font color=#000080><tt>Clip</tt></font></a>
+ist eine besondere Form einer <a href="index_d.html#ixb102817"><font color=#000080><tt>DataLine</tt></font></a>,
+der alle Audiodaten komplett im Hauptspeicher h&auml;lt. Wie jede
+<a href="index_l.html#ixb102813"><font color=#000080><tt>Line</tt></font></a>
+muss er vor der Verwendung durch Aufruf von <a name="ixa103749"><a href="index_o.html#ixb102843"><font color=#000080><tt>open</tt></font></a></a>
+ge&ouml;ffnet werden und nach Gebrauch mit <a name="ixa103750"><a href="index_c.html#ixb100596"><font color=#000080><tt>close</tt></font></a></a>
+geschlossen werden. Zum Abspielen stellt er folgende Methoden zur
+Verf&uuml;gung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void start()
+public void stop()
+
+public boolean isRunning()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/sound/sampled/Clip.html" onClick="this.href=getApiDoc('javax.sound.sampled.Clip')"><font color="#660066" size=-1>javax.sound.sampled.Clip</font></a></td>
+</tr>
+</table>
+
+<p>
+Ein Aufruf von <a name="ixa103751"><a href="index_s.html#ixb101113"><font color=#000080><tt>start</tt></font></a></a>
+startet das Abspielen des Clips, mit <a name="ixa103752"><a href="index_s.html#ixb101118"><font color=#000080><tt>stop</tt></font></a></a>
+wird er angehalten. Mit <a name="ixa103753"><a href="index_i.html#ixb102844"><font color=#000080><tt>isRunning</tt></font></a></a>
+kann &uuml;berpr&uuml;ft werden, ob die Wiedergabe noch l&auml;uft
+oder bereits beendet wurde. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Methode <a href="index_s.html#ixb101113"><font color=#000080><tt>start</tt></font></a>
+ist nicht <i>modal</i>, d.h., sie wartet beim Aufruf nicht, bis der
+Clip vollst&auml;ndig abgespielt ist. Sie initiiert lediglich den
+Abspielvorgang und kehrt dann sofort zum Aufrufer zur&uuml;ck. Falls
+dieser auf das Ende warten will, muss er entweder durch wiederholten
+Aufruf von <a href="index_i.html#ixb102844"><font color=#000080><tt>isRunning</tt></font></a>
+den Status des Clips abfragen oder sich bei diesem als Listener registrieren
+und auf das <font color="#000077"><tt>STOP</tt></font>-Signal warten.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id051002003"></a>
+<h3>51.2.3 Abspielen einer Sample-Datei </h3>
+
+<p>
+Nach den Erkl&auml;rungen der vorangegangenen Abschnitte wollen wir
+nun das Beispielprogramm zum Abspielen einer Sample-Datei vorstellen:
+<a name="playsamplefile"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing5101.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> javax.sound.sampled.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing5101
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">private</font> <font color="#0000AA">static</font> <font color="#006699">void</font> playSampleFile(String name, <font color="#006699">float</font> pan, <font color="#006699">float</font> gain)
+<font color="#555555">009 </font>  <font color="#0000AA">throws</font> Exception
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    <font color="#00AA00">//AudioInputStream &ouml;ffnen</font>
+<font color="#555555">012 </font>    AudioInputStream ais = AudioSystem.getAudioInputStream(
+<font color="#555555">013 </font>      <font color="#0000AA">new</font> File(name)
+<font color="#555555">014 </font>    );
+<font color="#555555">015 </font>    AudioFormat format = ais.getFormat();
+<font color="#555555">016 </font>    <font color="#00AA00">//ALAW/ULAW samples in PCM konvertieren</font>
+<font color="#555555">017 </font>    <font color="#0000AA">if</font> ((format.getEncoding() == AudioFormat.Encoding.ULAW) ||
+<font color="#555555">018 </font>        (format.getEncoding() == AudioFormat.Encoding.ALAW))
+<font color="#555555">019 </font>    {
+<font color="#555555">020 </font>      AudioFormat tmp = <font color="#0000AA">new</font> AudioFormat(
+<font color="#555555">021 </font>        AudioFormat.Encoding.PCM_SIGNED,
+<font color="#555555">022 </font>        format.getSampleRate(),
+<font color="#555555">023 </font>        format.getSampleSizeInBits() * 2,
+<font color="#555555">024 </font>        format.getChannels(),
+<font color="#555555">025 </font>        format.getFrameSize() * 2,
+<font color="#555555">026 </font>        format.getFrameRate(),
+<font color="#555555">027 </font>        <font color="#006699">true</font>
+<font color="#555555">028 </font>      );
+<font color="#555555">029 </font>      ais = AudioSystem.getAudioInputStream(tmp, ais);
+<font color="#555555">030 </font>      format = tmp;
+<font color="#555555">031 </font>    }
+<font color="#555555">032 </font>    <font color="#00AA00">//Clip erzeugen und &ouml;ffnen</font>
+<font color="#555555">033 </font>    DataLine.Info info = <font color="#0000AA">new</font> DataLine.Info(
+<font color="#555555">034 </font>      Clip.<font color="#0000AA">class</font>,
+<font color="#555555">035 </font>      format,
+<font color="#555555">036 </font>      ((<font color="#006699">int</font>) ais.getFrameLength() * format.getFrameSize())
+<font color="#555555">037 </font>    );
+<font color="#555555">038 </font>    Clip clip = (Clip)AudioSystem.getLine(info); <a name="playsamplefile.a"></a>
+<font color="#555555">039 </font>    clip.open(ais);
+<font color="#555555">040 </font>    <font color="#00AA00">//PAN einstellen</font>
+<font color="#555555">041 </font>    FloatControl panControl = (FloatControl)clip.getControl(
+<font color="#555555">042 </font>      FloatControl.Type.PAN
+<font color="#555555">043 </font>    );
+<font color="#555555">044 </font>    panControl.setValue(pan);
+<font color="#555555">045 </font>    <font color="#00AA00">//MASTER_GAIN einstellen</font>
+<font color="#555555">046 </font>    FloatControl gainControl = (FloatControl)clip.getControl(
+<font color="#555555">047 </font>      FloatControl.Type.MASTER_GAIN
+<font color="#555555">048 </font>    );
+<font color="#555555">049 </font>    gainControl.setValue(gain);
+<font color="#555555">050 </font>    <font color="#00AA00">//Clip abspielen</font>
+<font color="#555555">051 </font>    clip.start(); <a name="playsamplefile.b"></a>
+<font color="#555555">052 </font>    <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">053 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">054 </font>        Thread.sleep(100);
+<font color="#555555">055 </font>      } <font color="#0000AA">catch</font> (Exception e) {
+<font color="#555555">056 </font>        <font color="#00AA00">//nothing</font>
+<font color="#555555">057 </font>      }
+<font color="#555555">058 </font>      <font color="#0000AA">if</font> (!clip.isRunning()) {
+<font color="#555555">059 </font>        <font color="#0000AA">break</font>;
+<font color="#555555">060 </font>      }
+<font color="#555555">061 </font>    }
+<font color="#555555">062 </font>    clip.stop();
+<font color="#555555">063 </font>    clip.close();
+<font color="#555555">064 </font>  }
+<font color="#555555">065 </font>
+<font color="#555555">066 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">067 </font>  {
+<font color="#555555">068 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">069 </font>      playSampleFile(
+<font color="#555555">070 </font>        args[0],
+<font color="#555555">071 </font>        Float.parseFloat(args[1]),
+<font color="#555555">072 </font>        Float.parseFloat(args[2])
+<font color="#555555">073 </font>      );
+<font color="#555555">074 </font>    } <font color="#0000AA">catch</font> (Exception e) {
+<font color="#555555">075 </font>      e.printStackTrace();
+<font color="#555555">076 </font>      System.exit(1);
+<font color="#555555">077 </font>    }
+<font color="#555555">078 </font>    System.exit(0);
+<font color="#555555">079 </font>  }
+<font color="#555555">080 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing5101.java"><font color="#000055" size=-1>Listing5101.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 51.1: Abspielen einer Sample-Datei</i></p>
+
+<p>
+Die Methode <font color="#000077"><tt>playSampleFile</tt></font> &ouml;ffnet
+zun&auml;chst einen <a href="index_a.html#ixb102823"><font color=#000080><tt>AudioInputStream</tt></font></a>
+und bestimmt dessen <a href="index_a.html#ixb102808"><font color=#000080><tt>AudioFormat</tt></font></a>.
+Ist dessen Kodierung <a name="ixa103754"><a href="index_u.html#ixb102845"><font color=#000080><tt>ULAW</tt></font></a></a>
+oder <a name="ixa103755"><a href="index_a.html#ixb102846"><font color=#000080><tt>ALAW</tt></font></a></a>
+konvertiert es den Stream in das <a name="ixa103756"><a href="index_p.html#ixb102847"><font color=#000080><tt>PCM</tt></font></a></a>-Format,
+denn die anderen beiden Formate werden standardm&auml;&szlig;ig nicht
+unterst&uuml;tzt. Anschlie&szlig;end wird ein <a name="ixa103757"><a href="index_d.html#ixb102848"><font color=#000080><tt>DataLine.Info</tt></font></a></a>-Objekt
+instanziert und in <a href="k100324.html#playsamplefile.a">Zeile 038</a>
+ein <a href="index_c.html#ixb102820"><font color=#000080><tt>Clip</tt></font></a>
+damit erzeugt. Dieser wird ge&ouml;ffnet und <a href="index_m.html#ixb102839"><font color=#000080><tt>MASTER_GAIN</tt></font></a>
+und <a href="index_p.html#ixb102840"><font color=#000080><tt>PAN</tt></font></a>
+werden auf die als Methodenparameter &uuml;bergebenen Werte eingestellt.
+In <a href="k100324.html#playsamplefile.b">Zeile 051</a> wird der
+<a href="index_c.html#ixb102820"><font color=#000080><tt>Clip</tt></font></a>
+gestartet und anschlie&szlig;end gewartet, bis er vollst&auml;ndig
+abgespielt ist. 
+
+<p>
+Das Programm wird mit dem Namen der Datei und den Werten f&uuml;r
+<a href="index_p.html#ixb102840"><font color=#000080><tt>PAN</tt></font></a>
+und <a href="index_m.html#ixb102839"><font color=#000080><tt>MASTER_GAIN</tt></font></a>
+als Kommandozeilenparameter aufgerufen. Es kann zum Abspielen von
+<i>wav</i>-, <i>aiff</i>- und <i>au</i>-Dateien verwendet werden.
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100322.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100323.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100325.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100327.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

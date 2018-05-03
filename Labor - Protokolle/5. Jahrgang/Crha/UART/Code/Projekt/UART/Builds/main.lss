@@ -1,0 +1,427 @@
+
+Builds/main.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         0000002e  00800100  0000029a  0000032e  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         0000029a  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          0000002a  0080012e  0080012e  0000035c  2**0
+                  ALLOC
+  3 .stab         00000738  00000000  00000000  0000035c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  4 .stabstr      00000cde  00000000  00000000  00000a94  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .comment      00000011  00000000  00000000  00001772  2**0
+                  CONTENTS, READONLY
+  6 .debug_aranges 00000060  00000000  00000000  00001788  2**3
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_info   0000023a  00000000  00000000  000017e8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_abbrev 0000003c  00000000  00000000  00001a22  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_line   00000117  00000000  00000000  00001a5e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 56 00 	jmp	0xac	; 0xac <__ctors_end>
+   4:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+   8:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+   c:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  10:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  14:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  18:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  1c:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  20:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  24:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  28:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  2c:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  30:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  34:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  38:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  3c:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  40:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  44:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  48:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  4c:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  50:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  54:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  58:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  5c:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  60:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  64:	0c 94 bb 00 	jmp	0x176	; 0x176 <__vector_25>
+  68:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  6c:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  70:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  74:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  78:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  7c:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  80:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  84:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  88:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  8c:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  90:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  94:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  98:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  9c:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  a0:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  a4:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  a8:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+
+000000ac <__ctors_end>:
+  ac:	11 24       	eor	r1, r1
+  ae:	1f be       	out	0x3f, r1	; 63
+  b0:	cf ef       	ldi	r28, 0xFF	; 255
+  b2:	da e0       	ldi	r29, 0x0A	; 10
+  b4:	de bf       	out	0x3e, r29	; 62
+  b6:	cd bf       	out	0x3d, r28	; 61
+
+000000b8 <__do_copy_data>:
+  b8:	11 e0       	ldi	r17, 0x01	; 1
+  ba:	a0 e0       	ldi	r26, 0x00	; 0
+  bc:	b1 e0       	ldi	r27, 0x01	; 1
+  be:	ea e9       	ldi	r30, 0x9A	; 154
+  c0:	f2 e0       	ldi	r31, 0x02	; 2
+  c2:	02 c0       	rjmp	.+4      	; 0xc8 <__do_copy_data+0x10>
+  c4:	05 90       	lpm	r0, Z+
+  c6:	0d 92       	st	X+, r0
+  c8:	ae 32       	cpi	r26, 0x2E	; 46
+  ca:	b1 07       	cpc	r27, r17
+  cc:	d9 f7       	brne	.-10     	; 0xc4 <__do_copy_data+0xc>
+
+000000ce <__do_clear_bss>:
+  ce:	21 e0       	ldi	r18, 0x01	; 1
+  d0:	ae e2       	ldi	r26, 0x2E	; 46
+  d2:	b1 e0       	ldi	r27, 0x01	; 1
+  d4:	01 c0       	rjmp	.+2      	; 0xd8 <.do_clear_bss_start>
+
+000000d6 <.do_clear_bss_loop>:
+  d6:	1d 92       	st	X+, r1
+
+000000d8 <.do_clear_bss_start>:
+  d8:	a8 35       	cpi	r26, 0x58	; 88
+  da:	b2 07       	cpc	r27, r18
+  dc:	e1 f7       	brne	.-8      	; 0xd6 <.do_clear_bss_loop>
+  de:	0e 94 05 01 	call	0x20a	; 0x20a <main>
+  e2:	0c 94 4b 01 	jmp	0x296	; 0x296 <_exit>
+
+000000e6 <__bad_interrupt>:
+  e6:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+000000ea <uart_getc>:
+
+
+/* Zeichen empfangen */
+uint8_t uart_getc(void)
+{
+    while (!(UCSR1A & (1<<RXC1)))   // warten bis Zeichen verfuegbar
+  ea:	80 91 c8 00 	lds	r24, 0x00C8
+  ee:	87 ff       	sbrs	r24, 7
+  f0:	fc cf       	rjmp	.-8      	; 0xea <uart_getc>
+        ;
+    return UDR1;                   // Zeichen aus UDR an Aufrufer zurueckgeben
+  f2:	80 91 ce 00 	lds	r24, 0x00CE
+}
+  f6:	08 95       	ret
+
+000000f8 <init_usart>:
+char eingang;       //Variable für empf. Zeichen
+char Line[40];      // String mit maximal 39 zeichen
+
+void init_usart (void)
+{
+    UBRR1H = (unsigned char)(UBRR_CALC>>8); //Baudrate einstellen
+  f8:	10 92 cd 00 	sts	0x00CD, r1
+    UBRR1L = (unsigned char)(UBRR_CALC);
+  fc:	87 e0       	ldi	r24, 0x07	; 7
+  fe:	80 93 cc 00 	sts	0x00CC, r24
+    
+    UCSR1B |= (1<<RXEN1)|(1<<RXCIE1)|(1<<TXEN1);//Empf. ein, Empf.-Interr. ein, Sender ein
+ 102:	e9 ec       	ldi	r30, 0xC9	; 201
+ 104:	f0 e0       	ldi	r31, 0x00	; 0
+ 106:	80 81       	ld	r24, Z
+ 108:	88 69       	ori	r24, 0x98	; 152
+ 10a:	80 83       	st	Z, r24
+    UCSR1C |= (1<<UCSZ11)|(1<<UCSZ10); //asynchr., 8 Daten-, kein Parity-, 1 Stop
+ 10c:	ea ec       	ldi	r30, 0xCA	; 202
+ 10e:	f0 e0       	ldi	r31, 0x00	; 0
+ 110:	80 81       	ld	r24, Z
+ 112:	86 60       	ori	r24, 0x06	; 6
+ 114:	80 83       	st	Z, r24
+ 116:	08 95       	ret
+
+00000118 <uart_gets>:
+        ;
+    return UDR1;                   // Zeichen aus UDR an Aufrufer zurueckgeben
+}
+
+void uart_gets( char* Buffer, uint8_t MaxLen )
+{
+ 118:	cf 92       	push	r12
+ 11a:	df 92       	push	r13
+ 11c:	ff 92       	push	r15
+ 11e:	0f 93       	push	r16
+ 120:	1f 93       	push	r17
+ 122:	cf 93       	push	r28
+ 124:	df 93       	push	r29
+ 126:	1f 92       	push	r1
+ 128:	cd b7       	in	r28, 0x3d	; 61
+ 12a:	de b7       	in	r29, 0x3e	; 62
+ 12c:	18 2f       	mov	r17, r24
+ 12e:	06 2f       	mov	r16, r22
+    uint8_t NextChar;
+    uint8_t StringLen = 0;
+    
+    NextChar = uart_getc();         // Warte auf und empfange das nächste Zeichen
+ 130:	99 83       	std	Y+1, r25	; 0x01
+ 132:	0e 94 75 00 	call	0xea	; 0xea <uart_getc>
+ 136:	f1 2e       	mov	r15, r17
+    
+    // Sammle solange Zeichen, bis:
+    // * entweder das String Ende Zeichen kam
+    // * oder das aufnehmende Array voll ist
+    while( NextChar != '.' && StringLen < MaxLen - 1 ) {
+ 138:	c1 2e       	mov	r12, r17
+ 13a:	99 81       	ldd	r25, Y+1	; 0x01
+ 13c:	d9 2e       	mov	r13, r25
+ 13e:	10 e0       	ldi	r17, 0x00	; 0
+ 140:	01 50       	subi	r16, 0x01	; 1
+ 142:	11 09       	sbc	r17, r1
+ 144:	2c 2d       	mov	r18, r12
+ 146:	2f 19       	sub	r18, r15
+ 148:	8e 32       	cpi	r24, 0x2E	; 46
+ 14a:	59 f4       	brne	.+22     	; 0x162 <uart_gets+0x4a>
+        NextChar = uart_getc();
+    }
+    
+    // Noch ein '\0' anhängen um einen Standard
+    // C-String daraus zu machen
+    *Buffer = '\0';
+ 14c:	f6 01       	movw	r30, r12
+ 14e:	10 82       	st	Z, r1
+}
+ 150:	0f 90       	pop	r0
+ 152:	df 91       	pop	r29
+ 154:	cf 91       	pop	r28
+ 156:	1f 91       	pop	r17
+ 158:	0f 91       	pop	r16
+ 15a:	ff 90       	pop	r15
+ 15c:	df 90       	pop	r13
+ 15e:	cf 90       	pop	r12
+ 160:	08 95       	ret
+    NextChar = uart_getc();         // Warte auf und empfange das nächste Zeichen
+    
+    // Sammle solange Zeichen, bis:
+    // * entweder das String Ende Zeichen kam
+    // * oder das aufnehmende Array voll ist
+    while( NextChar != '.' && StringLen < MaxLen - 1 ) {
+ 162:	30 e0       	ldi	r19, 0x00	; 0
+ 164:	20 17       	cp	r18, r16
+ 166:	31 07       	cpc	r19, r17
+ 168:	8c f7       	brge	.-30     	; 0x14c <uart_gets+0x34>
+        *Buffer++ = NextChar;
+ 16a:	f6 01       	movw	r30, r12
+ 16c:	81 93       	st	Z+, r24
+ 16e:	6f 01       	movw	r12, r30
+        StringLen++;
+        NextChar = uart_getc();
+ 170:	0e 94 75 00 	call	0xea	; 0xea <uart_getc>
+ 174:	e7 cf       	rjmp	.-50     	; 0x144 <uart_gets+0x2c>
+
+00000176 <__vector_25>:
+    *Buffer = '\0';
+}
+
+
+ISR(USART1_RX_vect) //Interrupt für UART empfang
+{
+ 176:	1f 92       	push	r1
+ 178:	0f 92       	push	r0
+ 17a:	0f b6       	in	r0, 0x3f	; 63
+ 17c:	0f 92       	push	r0
+ 17e:	11 24       	eor	r1, r1
+ 180:	2f 93       	push	r18
+ 182:	3f 93       	push	r19
+ 184:	4f 93       	push	r20
+ 186:	5f 93       	push	r21
+ 188:	6f 93       	push	r22
+ 18a:	7f 93       	push	r23
+ 18c:	8f 93       	push	r24
+ 18e:	9f 93       	push	r25
+ 190:	af 93       	push	r26
+ 192:	bf 93       	push	r27
+ 194:	ef 93       	push	r30
+ 196:	ff 93       	push	r31
+    eingang = uart_getc;
+ 198:	85 e7       	ldi	r24, 0x75	; 117
+ 19a:	90 e0       	ldi	r25, 0x00	; 0
+ 19c:	80 93 2f 01 	sts	0x012F, r24
+    
+    if (eingang == '1') {
+ 1a0:	81 33       	cpi	r24, 0x31	; 49
+ 1a2:	09 f4       	brne	.+2      	; 0x1a6 <__vector_25+0x30>
+        PORTD &=~(1<<PD7);
+ 1a4:	5f 98       	cbi	0x0b, 7	; 11
+    }
+    if (eingang == '2') {
+ 1a6:	80 91 2f 01 	lds	r24, 0x012F
+ 1aa:	82 33       	cpi	r24, 0x32	; 50
+ 1ac:	09 f4       	brne	.+2      	; 0x1b0 <__vector_25+0x3a>
+        PORTD |= (1<<PD7);
+ 1ae:	5f 9a       	sbi	0x0b, 7	; 11
+    }
+    
+   
+    
+    if (eingang != '1' && eingang != '2') {
+ 1b0:	80 91 2f 01 	lds	r24, 0x012F
+ 1b4:	81 53       	subi	r24, 0x31	; 49
+ 1b6:	82 30       	cpi	r24, 0x02	; 2
+ 1b8:	b8 f0       	brcs	.+46     	; 0x1e8 <__vector_25+0x72>
+        uart_gets(Line, 40);
+ 1ba:	68 e2       	ldi	r22, 0x28	; 40
+ 1bc:	80 e3       	ldi	r24, 0x30	; 48
+ 1be:	91 e0       	ldi	r25, 0x01	; 1
+ 1c0:	0e 94 8c 00 	call	0x118	; 0x118 <uart_gets>
+        
+        if (!(strcmp(Line,"ein"))) {  // prüfen ob string passt
+ 1c4:	60 e0       	ldi	r22, 0x00	; 0
+ 1c6:	71 e0       	ldi	r23, 0x01	; 1
+ 1c8:	80 e3       	ldi	r24, 0x30	; 48
+ 1ca:	91 e0       	ldi	r25, 0x01	; 1
+ 1cc:	0e 94 42 01 	call	0x284	; 0x284 <strcmp>
+ 1d0:	89 2b       	or	r24, r25
+ 1d2:	09 f4       	brne	.+2      	; 0x1d6 <__vector_25+0x60>
+            PORTD &= ~(1<<PD7);
+ 1d4:	5f 98       	cbi	0x0b, 7	; 11
+        }
+    
+        if (!(strcmp(Line,"aus"))) { // prüfen ob string passt
+ 1d6:	64 e0       	ldi	r22, 0x04	; 4
+ 1d8:	71 e0       	ldi	r23, 0x01	; 1
+ 1da:	80 e3       	ldi	r24, 0x30	; 48
+ 1dc:	91 e0       	ldi	r25, 0x01	; 1
+ 1de:	0e 94 42 01 	call	0x284	; 0x284 <strcmp>
+ 1e2:	89 2b       	or	r24, r25
+ 1e4:	09 f4       	brne	.+2      	; 0x1e8 <__vector_25+0x72>
+            PORTD |= (1<<PD7);
+ 1e6:	5f 9a       	sbi	0x0b, 7	; 11
+        }
+    }
+
+}
+ 1e8:	ff 91       	pop	r31
+ 1ea:	ef 91       	pop	r30
+ 1ec:	bf 91       	pop	r27
+ 1ee:	af 91       	pop	r26
+ 1f0:	9f 91       	pop	r25
+ 1f2:	8f 91       	pop	r24
+ 1f4:	7f 91       	pop	r23
+ 1f6:	6f 91       	pop	r22
+ 1f8:	5f 91       	pop	r21
+ 1fa:	4f 91       	pop	r20
+ 1fc:	3f 91       	pop	r19
+ 1fe:	2f 91       	pop	r18
+ 200:	0f 90       	pop	r0
+ 202:	0f be       	out	0x3f, r0	; 63
+ 204:	0f 90       	pop	r0
+ 206:	1f 90       	pop	r1
+ 208:	18 95       	reti
+
+0000020a <main>:
+
+int main(void)
+{
+ 20a:	cf 93       	push	r28
+ 20c:	df 93       	push	r29
+ 20e:	cd b7       	in	r28, 0x3d	; 61
+ 210:	de b7       	in	r29, 0x3e	; 62
+ 212:	a5 97       	sbiw	r28, 0x25	; 37
+ 214:	0f b6       	in	r0, 0x3f	; 63
+ 216:	f8 94       	cli
+ 218:	de bf       	out	0x3e, r29	; 62
+ 21a:	0f be       	out	0x3f, r0	; 63
+ 21c:	cd bf       	out	0x3d, r28	; 61
+DDRD |= (1<<DDD7); //PB0 OUTPUT
+ 21e:	57 9a       	sbi	0x0a, 7	; 10
+    PORTD |= (1<<PD7); // standard: led aus
+ 220:	5f 9a       	sbi	0x0b, 7	; 11
+    
+    CLKPR = 0x80;
+ 222:	80 e8       	ldi	r24, 0x80	; 128
+ 224:	80 93 61 00 	sts	0x0061, r24
+    CLKPR = 0x00; //CLK-Prescaler 1
+ 228:	10 92 61 00 	sts	0x0061, r1
+    
+    
+    init_usart(); //USART initialisieren
+ 22c:	0e 94 7c 00 	call	0xf8	; 0xf8 <init_usart>
+    
+    sei(); //Interrupts global freigeben
+ 230:	78 94       	sei
+    
+    UDR1 = 'C';
+ 232:	83 e4       	ldi	r24, 0x43	; 67
+ 234:	80 93 ce 00 	sts	0x00CE, r24
+    
+    char text[]="\n\r\n\rWir sollten im labor sein...\n\r\n\r";
+ 238:	85 e2       	ldi	r24, 0x25	; 37
+ 23a:	e8 e0       	ldi	r30, 0x08	; 8
+ 23c:	f1 e0       	ldi	r31, 0x01	; 1
+ 23e:	de 01       	movw	r26, r28
+ 240:	11 96       	adiw	r26, 0x01	; 1
+ 242:	01 90       	ld	r0, Z+
+ 244:	0d 92       	st	X+, r0
+ 246:	8a 95       	dec	r24
+ 248:	e1 f7       	brne	.-8      	; 0x242 <main+0x38>
+    
+    while(text[i]!='\0') {
+ 24a:	80 91 2e 01 	lds	r24, 0x012E
+ 24e:	e1 e0       	ldi	r30, 0x01	; 1
+ 250:	f0 e0       	ldi	r31, 0x00	; 0
+ 252:	ec 0f       	add	r30, r28
+ 254:	fd 1f       	adc	r31, r29
+ 256:	e8 0f       	add	r30, r24
+ 258:	f1 1d       	adc	r31, r1
+ 25a:	80 81       	ld	r24, Z
+ 25c:	88 23       	and	r24, r24
+ 25e:	61 f0       	breq	.+24     	; 0x278 <main+0x6e>
+        while(!(UCSR1A & (1<<UDRE1))); //warten bis fertig
+ 260:	90 91 c8 00 	lds	r25, 0x00C8
+ 264:	95 ff       	sbrs	r25, 5
+ 266:	fc cf       	rjmp	.-8      	; 0x260 <main+0x56>
+        UDR1 = text[i]; //Zeichen and UDR senden
+ 268:	80 93 ce 00 	sts	0x00CE, r24
+        i++;
+ 26c:	80 91 2e 01 	lds	r24, 0x012E
+ 270:	8f 5f       	subi	r24, 0xFF	; 255
+ 272:	80 93 2e 01 	sts	0x012E, r24
+ 276:	e9 cf       	rjmp	.-46     	; 0x24a <main+0x40>
+    }
+    
+    uart_gets( Line, sizeof( Line ) );
+ 278:	68 e2       	ldi	r22, 0x28	; 40
+ 27a:	80 e3       	ldi	r24, 0x30	; 48
+ 27c:	91 e0       	ldi	r25, 0x01	; 1
+ 27e:	0e 94 8c 00 	call	0x118	; 0x118 <uart_gets>
+ 282:	ff cf       	rjmp	.-2      	; 0x282 <main+0x78>
+
+00000284 <strcmp>:
+ 284:	fb 01       	movw	r30, r22
+ 286:	dc 01       	movw	r26, r24
+ 288:	8d 91       	ld	r24, X+
+ 28a:	01 90       	ld	r0, Z+
+ 28c:	80 19       	sub	r24, r0
+ 28e:	01 10       	cpse	r0, r1
+ 290:	d9 f3       	breq	.-10     	; 0x288 <strcmp+0x4>
+ 292:	99 0b       	sbc	r25, r25
+ 294:	08 95       	ret
+
+00000296 <_exit>:
+ 296:	f8 94       	cli
+
+00000298 <__stop_program>:
+ 298:	ff cf       	rjmp	.-2      	; 0x298 <__stop_program>

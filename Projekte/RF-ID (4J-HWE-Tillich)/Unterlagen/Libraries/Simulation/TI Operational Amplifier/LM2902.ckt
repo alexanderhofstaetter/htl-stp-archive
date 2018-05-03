@@ -1,0 +1,45 @@
+*LM2902
+*Quad LoPwr SnglSup OpAmp pkg:DIP14 (A:3,2,4,11,1)(B:5,6,4,11,7)(C:10,9,4,11,8)(D:12,13,4,11,14)
+*
+* Connections: 
+*              Non-Inverting Input
+*              |   Inverting Input
+*              |   |   Positive Power Supply
+*              |   |   |   Negative Power Supply
+*              |   |   |   |   Output
+*              |   |   |   |   |
+.SUBCKT LM2902 1   2   3   4   5
+C1   11 12 2.000E-12
+C2    6  7 6.000E-12
+CEE  10 99 388.6E-15
+DC    5 53 DX
+DE   54  5 DX
+DLP  90 91 DX
+DLN  92 90 DX
+DP    4  3 DX
+BEGND 99 0 V=0.5*V(3)+0.5*V(4)
+BFB 7 99 I=4.823E+7*I(VB)-5E+7*I(VC)+5E+7*I(VE)+5E+7*I(VLP)-5E+7*I(VLN)
+GA    6  0 11 12 41.47E-6
+GCM   0  6 10 99 414.7E-12
+IEE   3 10 DC 2.543E-6
+HLIM 90  0 VLIM 1K
+Q1   11  2 13 QX
+Q2   12  1 14 QX
+R2    6  9 100.0E3
+RC1   4 11 24.11E3
+RC2   4 12 24.11E3
+RE1  13 10 3.043E3
+RE2  14 10 3.043E3
+REE  10 99 78.65E6
+RO1   8  5 50
+RO2   7 99 25
+RP    3  4 37.62E3
+VB    9  0 DC 0
+VC    3 53 DC 1.800
+VE   54  4 DC .88
+VLIM  7  8 DC 0
+VLP  91  0 DC 40
+VLN   0 92 DC 40
+.MODEL DX D(IS=800.0E-18)
+.MODEL QX PNP(IS=800.0E-18 BF=32.03)
+.ENDS LM2902

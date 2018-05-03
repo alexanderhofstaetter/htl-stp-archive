@@ -1,0 +1,246 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100150.html;106,k100154.html;107,k100156.html;108,k100157.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100150.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100154.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100156.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100157.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 23 - Multithreading
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id023005"></a>
+<h2>23.5 <a name="ixa101506">Verwalten von Threads</a></h2>
+<hr>
+<ul>
+<li><a href="k100155.html#sectlevel2id023005">23.5 Verwalten von Threads</a>
+<ul>
+<li><a href="k100155.html#sectlevel3id023005001">23.5.1 Priorit&auml;t und Name</a>
+<li><a href="k100155.html#sectlevel3id023005002">23.5.2 Thread-Gruppen</a>
+</ul>
+</ul>
+<hr>
+
+<p>
+Threads k&ouml;nnen in Java nicht nur ausgef&uuml;hrt und synchronisiert
+werden, sondern besitzen auch eine Reihe administrativer Eigenschaften,
+die besonders dann n&uuml;tzlich sind, wenn das Thread-Konzept stark
+genutzt wird. Diese administrativen Eigenschaften lassen sich in zwei
+Gruppen unterteilen. Zum einen gibt es Eigenschaften, die bei den
+Threads selbst zu finden sind, beispielsweise die <i>Priorit&auml;t</i>
+oder der <i>Name</i> eines Threads. Zum anderen gibt es Eigenschaften,
+die darauf begr&uuml;ndet sind, dass jeder Thread in Java zu einer
+<i>Thread-Gruppe</i> geh&ouml;rt, die untereinander &uuml;ber Vater-Kind-Beziehungen
+miteinander in Verbindung stehen. Beide Gruppen von Eigenschaften
+sollen im Folgenden kurz erkl&auml;rt werden. 
+
+<!-- Section -->
+
+<a name="sectlevel3id023005001"></a>
+<h3>23.5.1 Priorit&auml;t und Name </h3>
+
+<p>
+Jeder Thread in Java hat einen eindeutigen Namen. Wird dieser nicht
+explizit vergeben (beispielsweise im Konstruktor), so vergibt Java
+einen automatisch generierten Namen der Form <font color="#000077"><tt>"Thread-"</tt></font>
++ n, wobei <font color="#000077"><tt>n</tt></font> ein <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>
+ist. Alternativ kann einem Thread mit der Methode <a name="ixa101507"><a href="index_s.html#ixb101140"><font color=#000080><tt>setName</tt></font></a></a>
+auch vom Programm selbst ein Name zugewiesen werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setName(String name)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/Thread.html" onClick="this.href=getApiDoc('java.lang.Thread')"><font color="#660066" size=-1>java.lang.Thread</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit Hilfe der Methode <a name="ixa101508"><a href="index_g.html#ixb100679"><font color=#000080><tt>getName</tt></font></a></a>
+kann der Name eines Threads abgefragt werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public String getName()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/Thread.html" onClick="this.href=getApiDoc('java.lang.Thread')"><font color="#660066" size=-1>java.lang.Thread</font></a></td>
+</tr>
+</table>
+
+<p>
+Neben einem Namen besitzt ein Thread auch eine <i>Priorit&auml;t</i>.
+Die Priorit&auml;t steuert den Scheduler in der Weise, dass bei Vorhandensein
+mehrerer bereiter Threads diejenigen mit h&ouml;herer Priorit&auml;t
+vor denen mit niedrigerer Priorit&auml;t ausgef&uuml;hrt werden. Beim
+Anlegen eines neuen Threads bekommt dieser die Priorit&auml;t des
+aktuellen Threads. Mit Hilfe der Methode <a name="ixa101509"><a href="index_s.html#ixb101141"><font color=#000080><tt>setPriority</tt></font></a></a>
+kann die Priorit&auml;t gesetzt und mit <a name="ixa101510"><a href="index_g.html#ixb101142"><font color=#000080><tt>getPriority</tt></font></a></a>
+abgefragt werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setPriority(int newPriority)
+
+public int getPriority()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/Thread.html" onClick="this.href=getApiDoc('java.lang.Thread')"><font color="#660066" size=-1>java.lang.Thread</font></a></td>
+</tr>
+</table>
+
+<p>
+Als Parameter kann an <a href="index_s.html#ixb101141"><font color=#000080><tt>setPriority</tt></font></a>
+ein Wert &uuml;bergeben werden, der zwischen den Konstanten <font color="#000077"><tt>Thread.MIN_PRIORITY</tt></font>
+und <a name="ixa101511"><a href="index_m.html#ixb101143"><font color=#000080><tt>Thread.MAX_PRIORITY</tt></font></a></a>
+liegt. Der Normalwert wird durch die Konstante <a name="ixa101512"><a href="index_n.html#ixb101144"><font color=#000080><tt>Thread.NORM_PRIORITY</tt></font></a></a>
+festgelegt. In der aktuellen Version des JDK haben diese Konstanten
+die Werte 1, 5 und 10. 
+
+<!-- Section -->
+
+<a name="sectlevel3id023005002"></a>
+<h3>23.5.2 <a name="ixa101513">Thread-Gruppen</a></h3>
+
+<p>
+<i>Thread-Gruppen</i> dienen dazu, Informationen zu verwalten, die
+nicht nur f&uuml;r einen einzelnen Thread von Bedeutung sind, sondern
+f&uuml;r eine ganze Gruppe. Weiterhin bieten sie Methoden, die auf
+alle Threads einer Gruppe angewendet werden k&ouml;nnen, und sie erlauben
+es, die Threads einer Gruppe aufzuz&auml;hlen. In der Java-Klassenbibliothek
+gibt es zu diesem Zweck eine eigene Klasse <a name="ixa101514"><a href="index_t.html#ixb101146"><font color=#000080><tt>ThreadGroup</tt></font></a></a>.
+
+<p>
+Der Einstieg zur Anwendung von Objekten der Klasse <a href="index_t.html#ixb101146"><font color=#000080><tt>ThreadGroup</tt></font></a>
+ist die Methode <a name="ixa101515"><a href="index_g.html#ixb101147"><font color=#000080><tt>getThreadGroup</tt></font></a></a>
+der Klasse <a href="index_t.html#ixb100606"><font color=#000080><tt>Thread</tt></font></a>.
+Sie liefert das <a href="index_t.html#ixb101146"><font color=#000080><tt>ThreadGroup</tt></font></a>-Objekt,
+dem der aktuelle <a href="index_t.html#ixb100606"><font color=#000080><tt>Thread</tt></font></a>
+angeh&ouml;rt. Alle Thread-Gruppen sind &uuml;ber eine Vater-Kind-Beziehung
+miteinander verkettet. Mit Hilfe der Methode <a name="ixa101516"><a href="index_g.html#ixb101087"><font color=#000080><tt>getParent</tt></font></a></a>
+von <a href="index_t.html#ixb101146"><font color=#000080><tt>ThreadGroup</tt></font></a>
+kann die Vater-Thread-Gruppe ermittelt werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public ThreadGroup getParent()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/ThreadGroup.html" onClick="this.href=getApiDoc('java.lang.ThreadGroup')"><font color="#660066" size=-1>java.lang.ThreadGroup</font></a></td>
+</tr>
+</table>
+
+<p>
+Durch mehrfache Anwendung kann so die Wurzel aller Thread-Gruppen
+ermittelt werden. Steht eine <a href="index_t.html#ixb101146"><font color=#000080><tt>ThreadGroup</tt></font></a>
+ganz oben in der Hierarchie, so liefert die Methode <a href="index_g.html#ixb101087"><font color=#000080><tt>getParent</tt></font></a>
+den Wert <a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>.
+
+<p>
+Um die Menge aller Threads zu bestimmen, die in der aktuellen Thread-Gruppe
+und ihren Untergruppen enthalten sind, kann die Methode <a name="ixa101517"><a href="index_e.html#ixb101148"><font color=#000080><tt>enumerate</tt></font></a></a>
+verwendet werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int enumerate(Thread[] list)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/ThreadGroup.html" onClick="this.href=getApiDoc('java.lang.ThreadGroup')"><font color="#660066" size=-1>java.lang.ThreadGroup</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_e.html#ixb101148"><font color=#000080><tt>enumerate</tt></font></a>
+erwartet ein Array von Threads, das beim Aufruf mit allen Threads,
+die zu dieser Thread-Gruppe oder einer ihrer Untergruppen geh&ouml;ren,
+gef&uuml;llt wird. Das Array sollte vor dem Aufruf bereits auf die
+erforderliche Gr&ouml;&szlig;e dimensioniert werden. Als Anhaltspunkt
+kann dabei das Ergebnis der Methode <a name="ixa101518"><a href="index_a.html#ixb101149"><font color=#000080><tt>activeCount</tt></font></a></a>
+dienen, die die Anzahl der aktiven Threads in der aktuellen Thread-Gruppe
+und allen Thread-Gruppen, die die aktuelle Thread-Gruppe als Vorfahr
+haben, angibt: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int activeCount()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/ThreadGroup.html" onClick="this.href=getApiDoc('java.lang.ThreadGroup')"><font color="#660066" size=-1>java.lang.ThreadGroup</font></a></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100150.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100154.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100156.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100157.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

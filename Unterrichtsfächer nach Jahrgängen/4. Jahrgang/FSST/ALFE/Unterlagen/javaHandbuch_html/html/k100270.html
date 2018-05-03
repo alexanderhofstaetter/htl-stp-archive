@@ -1,0 +1,730 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100269.html;106,k100269.html;107,k100271.html;108,k100274.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100269.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100269.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100271.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100274.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 42 - Serialisierung
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id042001"></a>
+<h2>42.1 Grundlagen </h2>
+<hr>
+<ul>
+<li><a href="k100270.html#sectlevel2id042001">42.1 Grundlagen</a>
+<ul>
+<li><a href="k100270.html#sectlevel3id042001001">42.1.1 Begriffsbestimmung</a>
+<li><a href="k100270.html#objectoutputstream">42.1.2 Schreiben von Objekten</a>
+<li><a href="k100270.html#lesenvonobjekten">42.1.3 Lesen von Objekten</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id042001001"></a>
+<h3>42.1.1 Begriffsbestimmung </h3>
+
+<p>
+Unter <a name="ixa102981"><i>Serialisierung</i></a> wollen wir die
+F&auml;higkeit verstehen, ein Objekt, das im Hauptspeicher der Anwendung
+existiert, in ein Format zu konvertieren, das es erlaubt, das Objekt
+in eine Datei zu schreiben oder &uuml;ber eine Netzwerkverbindung
+zu transportieren. Dabei wollen wir nat&uuml;rlich auch den umgekehrten
+Weg einschlie&szlig;en, also das Rekonstruieren eines in serialisierter
+Form vorliegenden Objekts in das interne Format der laufenden Java-Maschine.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Serialisierung wird h&auml;ufig mit dem Begriff <a name="ixa102982"><i>Persistenz</i></a>
+gleichgesetzt, vor allem in objektorientierten Programmiersprachen.
+Das ist nur bedingt richtig, denn <i>Persistenz</i> bezeichnet genaugenommen
+das <i>dauerhafte</i> Speichern von Daten auf einem externen Datentr&auml;ger,
+so dass sie auch nach dem Beenden des Programms erhalten bleiben.
+Obwohl die persistente Speicherung von Objekten sicherlich eine der
+Hauptanwendungen der Serialisierung ist, ist sie nicht ihre einzige.
+Wir werden sp&auml;ter Anwendungen sehen, bei der die Serialisierung
+von Objekten nicht zum Zweck ihrer persistenten Speicherung genutzt
+werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="objectoutputstream"></a>
+<h3>42.1.2 Schreiben von Objekten </h3>
+
+<p>
+Das Paket <a href="index_j.html#ixb100197"><font color=#000080><tt>java.io</tt></font></a>
+enth&auml;lt die Klasse <a name="ixa102983"><a href="index_o.html#ixb101012"><font color=#000080><tt>ObjectOutputStream</tt></font></a></a>,
+mit der Objekte serialisiert werden k&ouml;nnen. <a href="index_o.html#ixb101012"><font color=#000080><tt>ObjectOutputStream</tt></font></a>
+besitzt einen Konstruktor, der einen <a href="index_o.html#ixb100588"><font color=#000080><tt>OutputStream</tt></font></a>
+als Argument erwartet: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public ObjectOutputStream(OutputStream out)
+  throws IOException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/ObjectOutputStream.html" onClick="this.href=getApiDoc('java.io.ObjectOutputStream')"><font color="#660066" size=-1>java.io.ObjectOutputStream</font></a></td>
+</tr>
+</table>
+
+<p>
+Der an den Konstruktor &uuml;bergebene <a href="index_o.html#ixb100588"><font color=#000080><tt>OutputStream</tt></font></a>
+dient als Ziel der Ausgabe. Hier kann ein beliebiges Objekt der Klasse
+<a href="index_o.html#ixb100588"><font color=#000080><tt>OutputStream</tt></font></a>
+oder einer daraus abgeleiteten Klasse &uuml;bergeben werden. Typischerweise
+wird ein <a name="ixa102984"><a href="index_f.html#ixb101010"><font color=#000080><tt>FileOutputStream</tt></font></a></a>
+verwendet, um die serialisierten Daten in eine Datei zu schreiben.
+
+<p>
+<a href="index_o.html#ixb101012"><font color=#000080><tt>ObjectOutputStream</tt></font></a>
+besitzt sowohl Methoden, um primitive Typen zu serialisieren, als
+auch die wichtige Methode <a name="ixa102985"><a href="index_w.html#ixb102227"><font color=#000080><tt>writeObject</tt></font></a></a>,
+mit der ein komplettes Objekt serialisiert werden kann: <a name="ixa102986"></a>
+<a name="ixa102987"></a> <a name="ixa102988"></a> <a name="ixa102989"></a>
+<a name="ixa102990"></a> <a name="ixa102991"></a> <a name="ixa102992"></a>
+<a name="ixa102993"></a> <a name="ixa102994"></a> <a name="ixa102995"></a>
+<a name="ixa102996"></a> 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public final void writeObject(Object obj)
+  throws IOException
+public void writeBoolean(boolean data)
+  throws IOException
+public void writeByte(int data)
+  throws IOException
+public void writeShort(int data)
+  throws IOException
+public void writeChar(int data)
+  throws IOException
+public void writeInt(int data)
+  throws IOException
+public void writeLong(long data)
+  throws IOException
+public void writeFloat(float data)
+  throws IOException
+public void writeDouble(double data)
+  throws IOException
+public void writeBytes(String data)
+  throws IOException
+public void writeChars(String data)
+  throws IOException
+public void writeUTF(String data)
+  throws IOException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/ObjectOutputStream.html" onClick="this.href=getApiDoc('java.io.ObjectOutputStream')"><font color="#660066" size=-1>java.io.ObjectOutputStream</font></a></td>
+</tr>
+</table>
+
+<p>
+W&auml;hrend die Methoden zum Schreiben der primitiven Typen &auml;hnlich
+funktionieren wie die gleichnamigen Methoden der Klasse <a href="index_r.html#ixb101021"><font color=#000080><tt>RandomAccessFile</tt></font></a>
+(siehe <a href="k100141.html#schreibrandomaccess">Abschnitt 21.4</a>),
+ist die Funktionsweise von <a href="index_w.html#ixb102227"><font color=#000080><tt>writeObject</tt></font></a>
+wesentlich komplexer. <a href="index_w.html#ixb102227"><font color=#000080><tt>writeObject</tt></font></a>
+schreibt folgende Daten in den <a href="index_o.html#ixb100588"><font color=#000080><tt>OutputStream</tt></font></a>:
+<ul>
+<li>Die Klasse des als Argument &uuml;bergebenen Objekts
+<li>Die Signatur der Klasse
+<li>Alle <i>nichtstatischen</i>, <i>nichttransienten</i> Membervariablen
+des &uuml;bergebenen Objekts inkl. der aus allen Vaterklassen geerbten
+Membervariablen
+</ul>
+
+<p>
+Insbesondere der letzte Punkt verdient dabei besondere Beachtung.
+Die Methode <a href="index_w.html#ixb102227"><font color=#000080><tt>writeObject</tt></font></a>
+durchsucht also das &uuml;bergebene Objekt nach Membervariablen und
+&uuml;berpr&uuml;ft deren Attribute. Ist eine Membervariable vom Typ
+<a href="index_s.html#ixb100431"><font color=#000080><tt>static</tt></font></a>,
+wird sie nicht serialisiert, denn sie geh&ouml;rt nicht zum Objekt,
+sondern zur Klasse des Objekts. Weiterhin werden alle Membervariablen
+ignoriert, die mit dem Schl&uuml;sselwort <a name="ixa102997"><a href="index_t.html#ixb100438"><font color=#000080><tt>transient</tt></font></a></a>
+deklariert wurden. Auf diese Weise kann das Objekt Membervariablen
+definieren, die aufgrund ihrer Natur nicht serialisiert werden sollen
+oder d&uuml;rfen. Wichtig ist weiterhin, dass ein Objekt nur dann
+mit <a href="index_w.html#ixb102227"><font color=#000080><tt>writeObject</tt></font></a>
+serialisiert werden kann, wenn es das Interface <a name="ixa102998"><a href="index_s.html#ixb100461"><font color=#000080><tt>Serializable</tt></font></a></a>
+implementiert. 
+
+<p>
+Aufw&auml;ndiger als auf den ersten Blick ersichtlich ist das Serialisieren
+von Objekten vor allem aus zwei Gr&uuml;nden: 
+<ul>
+<li>Erstens muss zur Laufzeit ermittelt werden, welche Membervariablen
+das zu serialisierende Objekt besitzt (bzw. geerbt hat) und welche
+von ihnen serialisiert werden sollen. Dazu wird das <a name="ixa102999"><i>Reflection</i></a>-API
+verwendet (siehe <a href="k100284.html#kapitelreflection">Kapitel 45</a>).
+<li>Zweitens kann eine Membervariable nat&uuml;rlich selbst ein Objekt
+sein, das seinerseits serialisiert werden muss. Insbesondere muss
+<a href="index_w.html#ixb102227"><font color=#000080><tt>writeObject</tt></font></a>
+dabei korrekt mit zyklischen Verweisen umgehen und daf&uuml;r sorgen,
+dass Objektreferenzen erhalten bleiben (siehe <a href="k100271.html#objektreferenzen">Abschnitt 42.2.3</a>).
+</ul>
+
+<p>
+Wir wollen uns zun&auml;chst ein Beispiel ansehen. Dazu konstruieren
+wir eine einfache Klasse <font color="#000077"><tt>Time</tt></font>,
+die eine Uhrzeit, bestehend aus Stunden und Minuten, kapselt: 
+<a name="timelisting"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Time.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Time
+<font color="#555555">006 </font><font color="#0000AA">implements</font> Serializable
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font> hour;
+<font color="#555555">009 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font> minute;
+<font color="#555555">010 </font>
+<font color="#555555">011 </font>  <font color="#0000AA">public</font> Time(<font color="#006699">int</font> hour, <font color="#006699">int</font> minute)
+<font color="#555555">012 </font>  {
+<font color="#555555">013 </font>    <font color="#006699">this</font>.hour = hour;
+<font color="#555555">014 </font>    <font color="#006699">this</font>.minute = minute;
+<font color="#555555">015 </font>  }
+<font color="#555555">016 </font>
+<font color="#555555">017 </font>  <font color="#0000AA">public</font> String toString()
+<font color="#555555">018 </font>  {
+<font color="#555555">019 </font>    <font color="#0000AA">return</font> hour + <font color="#0000FF">":"</font> + minute;
+<font color="#555555">020 </font>  }
+<font color="#555555">021 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Time.java"><font color="#000055" size=-1>Time.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 42.1: Eine serialisierbare Uhrzeitklasse</i></p>
+
+<p>
+<font color="#000077"><tt>Time</tt></font> besitzt einen &ouml;ffentlichen
+Konstruktor und eine <font color="#000077"><tt>toString</tt></font>-Methode
+zur Ausgabe der Uhrzeit. Die Membervariablen <font color="#000077"><tt>hour</tt></font>
+und <font color="#000077"><tt>minute</tt></font> wurden als <a href="index_p.html#ixb100084"><font color=#000080><tt>private</tt></font></a>
+deklariert und sind nach au&szlig;en nicht sichtbar. Die Sichtbarkeit
+einer Membervariable hat keinen Einfluss darauf, ob es von <a href="index_w.html#ixb102227"><font color=#000080><tt>writeObject</tt></font></a>
+serialisiert wird oder nicht. Mit Hilfe eines Objekts vom Typ <a href="index_o.html#ixb101012"><font color=#000080><tt>ObjectOutputStream</tt></font></a>
+kann ein <font color="#000077"><tt>Time</tt></font>-Objekt serialisiert
+werden: 
+<a name="timeseri1"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4202.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4202
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">011 </font>      FileOutputStream fs = <font color="#0000AA">new</font> FileOutputStream(<font color="#0000FF">"test1.ser"</font>);
+<font color="#555555">012 </font>      ObjectOutputStream os = <font color="#0000AA">new</font> ObjectOutputStream(fs);
+<font color="#555555">013 </font>      Time time = <font color="#0000AA">new</font> Time(10,20);
+<font color="#555555">014 </font>      os.writeObject(time);
+<font color="#555555">015 </font>      os.close();
+<font color="#555555">016 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">017 </font>      System.err.println(e.toString());
+<font color="#555555">018 </font>    }
+<font color="#555555">019 </font>  }
+<font color="#555555">020 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4202.java"><font color="#000055" size=-1>Listing4202.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 42.2: Serialisieren eines Time-Objekts</i></p>
+
+<p>
+Wir konstruieren zun&auml;chst einen <a href="index_f.html#ixb101010"><font color=#000080><tt>FileOutputStream</tt></font></a>,
+der das serialisierte Objekt in die Datei <font color="#660099">test1.ser</font>
+schreiben soll. Anschlie&szlig;end erzeugen wir einen <a href="index_o.html#ixb101012"><font color=#000080><tt>ObjectOutputStream</tt></font></a>
+durch &Uuml;bergabe des <a href="index_f.html#ixb101010"><font color=#000080><tt>FileOutputStream</tt></font></a>
+an dessen Konstruktor. Nun wird ein <font color="#000077"><tt>Time</tt></font>-Objekt
+f&uuml;r die Uhrzeit 10:20 konstruiert und mit <a href="index_w.html#ixb102227"><font color=#000080><tt>writeObject</tt></font></a>
+serialisiert. Nach dem Schlie&szlig;en des Streams steht das serialisierte
+Objekt in &#187;test1.ser&#171;. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Wichtig an der Deklaration von <font color="#000077"><tt>Time</tt></font>
+ist das Implementieren des <a href="index_s.html#ixb100461"><font color=#000080><tt>Serializable</tt></font></a>-Interface.
+Zwar definiert <a href="index_s.html#ixb100461"><font color=#000080><tt>Serializable</tt></font></a>
+keine Methoden, <a href="index_w.html#ixb102227"><font color=#000080><tt>writeObject</tt></font></a>
+testet jedoch, ob das zu serialisierende Objekt dieses Interface implementiert.
+Ist das nicht der Fall, wird eine Ausnahme des Typs <a name="ixa103000"><a href="index_n.html#ixb102228"><font color=#000080><tt>NotSerializableException</tt></font></a></a>
+ausgel&ouml;st.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Ein <a href="index_o.html#ixb101012"><font color=#000080><tt>ObjectOutputStream</tt></font></a>
+kann nicht nur ein Objekt serialisieren, sondern beliebig viele, sie
+werden nacheinander in den zugrunde liegenden <a href="index_o.html#ixb100588"><font color=#000080><tt>OutputStream</tt></font></a>
+geschrieben. Das folgende Programm zeigt, wie zun&auml;chst ein <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>,
+dann ein <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+und schlie&szlig;lich zwei <font color="#000077"><tt>Time</tt></font>-Objekte
+serialisiert werden: 
+<a name="timeseri2"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4203.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4203
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">011 </font>      FileOutputStream fs = <font color="#0000AA">new</font> FileOutputStream(<font color="#0000FF">"test2.ser"</font>);
+<font color="#555555">012 </font>      ObjectOutputStream os = <font color="#0000AA">new</font> ObjectOutputStream(fs);
+<font color="#555555">013 </font>      os.writeInt(123);
+<font color="#555555">014 </font>      os.writeObject(<font color="#0000FF">"Hallo"</font>);
+<font color="#555555">015 </font>      os.writeObject(<font color="#0000AA">new</font> Time(10, 30));
+<font color="#555555">016 </font>      os.writeObject(<font color="#0000AA">new</font> Time(11, 25));
+<font color="#555555">017 </font>      os.close();
+<font color="#555555">018 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">019 </font>      System.err.println(e.toString());
+<font color="#555555">020 </font>    }
+<font color="#555555">021 </font>  }
+<font color="#555555">022 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4203.java"><font color="#000055" size=-1>Listing4203.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 42.3: Serialisieren mehrerer Objekte</i></p>
+
+<p>
+Da ein <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>
+ein primitiver Typ ist, muss er mit <a name="ixa102990"><a href="index_w.html#ixb101080"><font color=#000080><tt>writeInt</tt></font></a></a>
+serialisiert werden. Bei den &uuml;brigen Aufrufen kann <a href="index_w.html#ixb102227"><font color=#000080><tt>writeObject</tt></font></a>
+verwendet werden, denn alle &uuml;bergebenen Argumente sind Objekte.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Es gibt keine verbindlichen Konventionen f&uuml;r die Benennung von
+Dateien mit serialisierten Objekten. Die in den Beispielen verwendete
+Erweiterung <font color="#660099">.ser</font> ist allerdings recht
+h&auml;ufig zu finden, ebenso wie Dateierweiterungen des Typs <font color="#660099">.dat</font>.
+Wenn eine Anwendung viele unterschiedliche Dateien mit serialisierten
+Objekten h&auml;lt, kann es auch sinnvoll sein, die Namen nach dem
+Typ der serialisierten Objekte zu vergeben.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="lesenvonobjekten"></a>
+<h3>42.1.3 Lesen von Objekten </h3>
+
+<p>
+Nachdem ein Objekt serialisiert wurde, kann es mit Hilfe der Klasse
+<a name="ixa103001"><a href="index_o.html#ixb101041"><font color=#000080><tt>ObjectInputStream</tt></font></a></a>
+wieder rekonstruiert werden. Analog zu <a href="index_o.html#ixb101012"><font color=#000080><tt>ObjectOutputStream</tt></font></a>
+gibt es Methoden zum Wiedereinlesen von primitiven Typen und eine
+Methode <a name="ixa103002"><a href="index_r.html#ixb102229"><font color=#000080><tt>readObject</tt></font></a></a>,
+mit der ein serialisiertes Objekt wieder hergestellt werden kann:
+<a name="ixa103003"></a> <a name="ixa103004"></a> <a name="ixa103005"></a>
+<a name="ixa103006"></a> <a name="ixa103007"></a> <a name="ixa103008"></a>
+<a name="ixa103009"></a> <a name="ixa103010"></a> <a name="ixa103011"></a>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public final Object readObject()
+  throws OptionalDataException,
+         ClassNotFoundException,
+         IOException
+public boolean readBoolean()
+  throws IOException
+public byte readByte()
+  throws IOException
+public short readShort()
+  throws IOException
+public char readChar()
+  throws IOException
+public int readInt()
+  throws IOException
+public long readLong()
+  throws IOException
+public float readFloat()
+  throws IOException
+public double readDouble()
+  throws IOException
+public String readUTF()
+  throws IOException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/ObjectInputStream.html" onClick="this.href=getApiDoc('java.io.ObjectInputStream')"><font color="#660066" size=-1>java.io.ObjectInputStream</font></a></td>
+</tr>
+</table>
+
+<p>
+Zudem besitzt die Klasse <a href="index_o.html#ixb101041"><font color=#000080><tt>ObjectInputStream</tt></font></a>
+einen Konstruktor, der einen <a href="index_i.html#ixb100587"><font color=#000080><tt>InputStream</tt></font></a>
+als Argument erwartet, der zum Einlesen der serialisierten Objekte
+verwendet wird: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public ObjectInputStream(InputStream in)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/ObjectInputStream.html" onClick="this.href=getApiDoc('java.io.ObjectInputStream')"><font color="#660066" size=-1>java.io.ObjectInputStream</font></a></td>
+</tr>
+</table>
+
+<p>
+Das <i>Deserialisieren</i> eines Objekts kann man sich stark vereinfacht
+aus den folgenden beiden Schritten bestehend vorstellen: 
+<ul>
+<li>Zun&auml;chst wird ein neues Objekt des zu deserialisierenden
+Typs angelegt und die Membervariablen werden mit Default-Werten vorbelegt.
+Zudem wird der Default-Konstruktor der ersten nichtserialisierbaren
+Superklasse aufgerufen.
+<li>Anschlie&szlig;end werden die serialisierten Daten gelesen und
+den entsprechenden Membervariablen des angelegten Objekts zugewiesen.
+</ul>
+
+<p>
+Das erzeugte Objekt hat anschlie&szlig;end dieselbe Struktur und denselben
+Zustand, den das serialisierte Objekt hatte (abgesehen von den nicht
+serialisierten Membervariablen des Typs <a href="index_s.html#ixb100431"><font color=#000080><tt>static</tt></font></a>
+oder <a href="index_t.html#ixb100438"><font color=#000080><tt>transient</tt></font></a>).
+Da der R&uuml;ckgabewert von <a href="index_r.html#ixb102229"><font color=#000080><tt>readObject</tt></font></a>
+vom Typ <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+ist, muss das erzeugte Objekt in den tats&auml;chlichen Typ (oder
+eine seiner Oberklassen) umgewandelt werden. Das folgende Programm
+zeigt das Deserialisieren am Beispiel des in <a href="k100270.html#timeseri1">Listing 42.2</a>
+serialisierten und in die Datei <font color="#660099">test1.ser</font>
+geschriebenen <font color="#000077"><tt>Time</tt></font>-Objekts:
+<a name="listingid042004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4204.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4204
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">011 </font>      FileInputStream fs = <font color="#0000AA">new</font> FileInputStream(<font color="#0000FF">"test1.ser"</font>);
+<font color="#555555">012 </font>      ObjectInputStream is = <font color="#0000AA">new</font> ObjectInputStream(fs);
+<font color="#555555">013 </font>      Time time = (Time)is.readObject();
+<font color="#555555">014 </font>      System.out.println(time.toString());
+<font color="#555555">015 </font>      is.close();
+<font color="#555555">016 </font>    } <font color="#0000AA">catch</font> (ClassNotFoundException e) {
+<font color="#555555">017 </font>      System.err.println(e.toString());
+<font color="#555555">018 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">019 </font>      System.err.println(e.toString());
+<font color="#555555">020 </font>    }
+<font color="#555555">021 </font>  }
+<font color="#555555">022 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4204.java"><font color="#000055" size=-1>Listing4204.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 42.4: Deserialisieren eines Time-Objekts</i></p>
+
+<p>
+Hier wird zun&auml;chst ein <a name="ixa103012"><a href="index_f.html#ixb100595"><font color=#000080><tt>FileInputStream</tt></font></a></a>
+f&uuml;r die Datei <font color="#660099">test1.ser</font> ge&ouml;ffnet
+und an den Konstruktor des <a href="index_o.html#ixb101041"><font color=#000080><tt>ObjectInputStream</tt></font></a>-Objekts
+<font color="#000077"><tt>is</tt></font> &uuml;bergeben. Alle lesenden
+Aufrufe von <font color="#000077"><tt>is</tt></font> beschaffen ihre
+Daten damit aus <font color="#660099">test1.ser</font>. Jeder Aufruf
+von <a href="index_r.html#ixb102229"><font color=#000080><tt>readObject</tt></font></a>
+liest immer das n&auml;chste gespeicherte Objekt aus dem Eingabestream.
+Das Programm zum Deserialisieren muss also genau wissen, welche Objekttypen
+in welcher Reihenfolge serialisiert wurden, um sie erfolgreich deserialisieren
+zu k&ouml;nnen. In unserem Beispiel ist die Entscheidung einfach,
+denn in der Eingabedatei steht nur ein einziges <font color="#000077"><tt>Time</tt></font>-Objekt.
+<a href="index_r.html#ixb102229"><font color=#000080><tt>readObject</tt></font></a>
+deserialisiert es und liefert ein neu erzeugtes <font color="#000077"><tt>Time</tt></font>-Objekt,
+dessen Membervariablen mit den Werten aus dem serialisierten Objekt
+belegt werden. Die Ausgabe des Programms ist demnach: 
+<font color="#333300">
+<pre>
+10:20
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Es ist wichtig zu verstehen, dass beim Deserialisieren nicht der Konstruktor
+des erzeugten Objekts aufgerufen wird. Lediglich bei einer serialisierbaren
+Klasse, die in ihrer Vererbungshierarchie Superklassen hat, die nicht
+das Interface <a name="ixa103013"><a href="index_s.html#ixb100461"><font color=#000080><tt>Serializable</tt></font></a></a>
+implementieren, wird der parameterlose Konstruktor der n&auml;chsth&ouml;heren
+nichtserialisierbaren Vaterklasse aufgerufen. Da die aus der nichtserialisierbaren
+Vaterklasse geerbten Membervariablen nicht serialisiert werden, soll
+auf diese Weise sichergestellt sein, dass sie wenigstens sinnvoll
+initialisiert werden. 
+
+<p>
+Auch eventuell vorhandene Initialisierungen einzelner Membervariablen
+werden nicht ausgef&uuml;hrt. Wir k&ouml;nnten beispielsweise die
+<font color="#000077"><tt>Time</tt></font>-Klasse aus <a href="k100270.html#timelisting">Listing 42.1</a>
+um eine Membervariable <font color="#000077"><tt>seconds</tt></font>
+erweitern: 
+<font color="#000077">
+<pre>
+private transient int seconds = 11;
+</pre>
+</font>
+
+<p>
+Dann w&auml;re zwar bei allen mit <a href="index_n.html#ixb100088"><font color=#000080><tt>new</tt></font></a>
+konstruierten Objekten der Sekundenwert mit 11 vorbelegt. Bei Objekten,
+die durch Deserialisieren erzeugt wurden, bleibt er aber 0 (das ist
+der Standardwert eines <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>,
+siehe <a href="k100030.html#primitivedatentypen">Tabelle 5.1</a>),
+denn der Initialisierungscode wird in diesem Fall nicht ausgef&uuml;hrt.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Beim Deserialisieren von Objekten k&ouml;nnen einige Fehler passieren.
+Damit ein Aufruf von <a href="index_r.html#ixb102229"><font color=#000080><tt>readObject</tt></font></a>
+erfolgreich ist, m&uuml;ssen mehrere Kriterien erf&uuml;llt sein:
+<ul>
+<li>Das n&auml;chste Element des Eingabestreams ist tats&auml;chlich
+ein <i>Objekt</i> (kein primitiver Typ).
+<li>Das Objekt muss sich vollst&auml;ndig und fehlerfrei aus der Eingabedatei
+lesen lassen.
+<li>Es muss eine Konvertierung auf den gew&uuml;nschten Typ erlauben,
+also entweder zu derselben oder einer daraus abgeleiteten Klasse geh&ouml;ren.
+<li>Der Bytecode f&uuml;r die Klasse des zu deserialisierenden Objekts
+muss vorhanden sein. Er wird beim Serialisieren nicht mitgespeichert,
+sondern muss dem Empf&auml;ngerprogramm wie &uuml;blich als kompilierter
+Bytecode zur Verf&uuml;gung stehen.
+<li>Die Klasseninformation des serialisierten Objekts und die im deserialisierenden
+Programm als Bytecode vorhandene Klasse m&uuml;ssen zueinander kompatibel
+sein. Wir werden auf diesen Aspekt in <a href="k100271.html#versionierung">Abschnitt 42.2.1</a>
+detailliert eingehen.
+</ul>
+
+<p>
+Soll beispielsweise die in <a href="k100270.html#timeseri2">Listing 42.3</a>
+erzeugte Datei <font color="#660099">test2.ser</font> deserialisiert
+werden, so m&uuml;ssen die Aufrufe der <font color="#000077"><tt>read</tt></font>-Methoden
+in Typ und Reihenfolge denen des serialisierenden Programms entsprechen:
+<a name="listingid042005"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4205.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4205
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">011 </font>      FileInputStream fs = <font color="#0000AA">new</font> FileInputStream(<font color="#0000FF">"test2.ser"</font>);
+<font color="#555555">012 </font>      ObjectInputStream is = <font color="#0000AA">new</font> ObjectInputStream(fs);
+<font color="#555555">013 </font>      System.out.println(<font color="#0000FF">""</font> + is.readInt());
+<font color="#555555">014 </font>      System.out.println((String)is.readObject());
+<font color="#555555">015 </font>      Time time = (Time)is.readObject();
+<font color="#555555">016 </font>      System.out.println(time.toString());
+<font color="#555555">017 </font>      time = (Time)is.readObject();
+<font color="#555555">018 </font>      System.out.println(time.toString());
+<font color="#555555">019 </font>      is.close();
+<font color="#555555">020 </font>    } <font color="#0000AA">catch</font> (ClassNotFoundException e) {
+<font color="#555555">021 </font>      System.err.println(e.toString());
+<font color="#555555">022 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">023 </font>      System.err.println(e.toString());
+<font color="#555555">024 </font>    }
+<font color="#555555">025 </font>  }
+<font color="#555555">026 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4205.java"><font color="#000055" size=-1>Listing4205.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 42.5: Deserialisieren mehrerer Elemente</i></p>
+
+<p>
+Das Programm rekonstruiert alle serialisierten Elemente aus &#187;test2.ser&#171;.
+Seine Ausgabe ist: 
+<font color="#333300">
+<pre>
+123
+Hallo
+10:30
+11:25
+</pre>
+</font>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100269.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100269.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100271.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100274.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

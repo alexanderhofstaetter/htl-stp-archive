@@ -1,0 +1,66 @@
+/////////////////////////////////////////////////////////////////////////////
+//   Programmname : textbuffer.cpp
+//   Autor: Alex Hofstätter
+//
+//   Aufgabe :  Text-Area
+//
+/////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////
+//   Header-Dateien
+/////////////////////////////////////////////////////////////////////////////
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <iostream>
+ #include <iomanip>
+ #include <time.h>
+ #include <conio.h>
+ #include "conio2.h"
+ #include <string>
+ #include <windows.h>
+
+ using namespace std;
+
+/////////////////////////////////////////////////////////////////////////////
+//   globale Definitionen von Feldern
+/////////////////////////////////////////////////////////////////////////////
+ const int RMAX=24;
+ const int CMAX=80;
+ char textarea[RMAX][CMAX];
+/////////////////////////////////////////////////////////////////////////////
+//   globale Definitionen von Variablen
+/////////////////////////////////////////////////////////////////////////////
+ int j,i,control;
+ char key;
+/////////////////////////////////////////////////////////////////////////////
+//   Hauptprogramm
+/////////////////////////////////////////////////////////////////////////////RRG
+int main()
+{
+
+   //system("mode con cols=80 lines=25");    // Konsolen-Fenstergröße einstellen
+
+   textcolor(BLUE);                         // Textfarbe einstellen
+   textbackground(DARKGRAY);               // Hintergrund einstellen
+   do
+   {
+       clrscr();                                // Bildschirm löschen
+       control=0;
+       gotoxy(1,25);
+       printf(" Eingabemodus -- [c] clear  -- [r] reload  -- [q] quit  --");
+       gotoxy(1,1);
+
+       for (i=0;i<RMAX;i++)
+       {   for(j=0;j<CMAX;j++)
+           {   textarea[i][j]=getch();
+               putch(textarea[i][j]);
+               if(wherex()>=80) printf("\n");
+
+           }
+       }
+       key=getch();
+
+   } while(key!=27);
+}
+
+/////////////////////////////////////////////////////////////////////////////

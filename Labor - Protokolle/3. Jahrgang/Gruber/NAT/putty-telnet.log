@@ -1,0 +1,322 @@
+=~=~=~=~=~=~=~=~=~=~=~= PuTTY log 2014.01.23 08:53:22 =~=~=~=~=~=~=~=~=~=~=~=
+
+
+User Access Verification
+
+Password: 
+Password: 
+R0>ena
+R0>enable 
+Password: 
+Password: 
+R0#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R0(config)#ip address            ip rou
+R0(config)#ip rout
+R0(config)#ip route
+R0(config)#ip route 
+% Incomplete command.
+
+R0(config)#ip route 0.0.0.0                defau
+R0(config)#default-
+R0(config)#default-value               e e ip route st
+R0(config)#ip route static 
+R0(config)#ip route static 
+R0(config)#ip route static 0.0.00 .0 0.0.0.0 Gi
+R0(config)#ip route static 0.0.0.0 0.0.0.0 Gi
+R0(config)#ip route static 0.0.0.0 0.0.0.0 Gi
+R0(config)#ip route static 0.0.0.0 0.0.0.0 GiGa
+R0(config)#ip route static 0.0.0.0 0.0.0.0 GiGa   i                        tat
+R0(config)#ip route static ?
+  adjust-time  Time period for adjusting static routes
+  bfd          BFD tracked
+  inter-vrf    Across VRF interfaces
+
+R0(config)#ip route static        192   0.0.0.0     0.0.0                     0 0.0.00 .0 10.48.0.1
+R0(config)#ip    aaa
+R0(config)#aaa au
+R0(config)#aaa auth
+R0(config)#aaa auth
+R0(config)#aaa authent
+R0(config)#aaa authent
+R0(config)#aaa authent
+R0(config)#aaa authent       ?
+  new-model  Enable NEW access control commands and functions.(Disables OLD
+             commands.)
+
+R0(config)#aaa n     ip h
+R0(config)#ip htt
+R0(config)#ip http au
+R0(config)#ip http authentication aaa
+Warning: AAA access control is not enabled.
+R0(config)#aaa
+R0(config)#aaa au
+R0(config)#aaa auth
+R0(config)#aaa auth        ip h
+R0(config)#ip h
+R0(config)#ip h    en  ip
+R0(config)#ip htt
+R0(config)#ip http au
+R0(config)#ip http authentication loc
+R0(config)#ip http authentication local 
+R0(config)#ping      ip http authentication local       ena
+R0(config)#ip http authentication enable 
+R0(config)#ip http authentication enable 
+R0(config)#no ip route 0.0.00 .0 Gi
+R0(config)#no ip route 0.0.0.0 Gi  0.0.0.0 Gi
+R0(config)#no ip route 0.0.0.0 0.0.0.0 GigabitEthernet 
+% Incomplete command.
+
+R0(config)#no ip route 0.0.0.0 0.0.0.0 GigabitEthernet 0/0
+R0(config)#router rip
+R0(config-router)#no aut
+R0(config-router)#no auto-summary 
+R0(config-router)#
+R0(config-router)#exit+ 
+R0(config)#show run
+R0(config)#show runn
+R0(config)#show runn
+R0(config)#show running.c              exit
+R0#show rnn
+R0#show rnn  unn
+R0#show running-config 
+Building configuration...
+
+Current configuration : 1963 bytes
+!
+! Last configuration change at 08:20:05 UTC Thu Jan 23 2014
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R0
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 4 EHKebQ4sEeNHreV4Y1rPZPyslO2AI2dzcKsEj15FzT.
+enable password alex
+!
+no aaa new-model
+!
+ip cef
+!
+!
+!
+ip dhcp excluded-address 172.16.15.1
+!
+ip dhcp pool LABOR
+ network 172.16.15.0 255.255.255.0
+ default-router 172.16.15.1 
+ domain-name labor.local
+ dns-server 10.48.0.2 
+!
+!
+!
+no ip domain lookup
+no ipv6 cef
+multilink bundle-name authenticated
+!
+!
+!
+!
+license udi pid CISCO2901/K9 sn FCZ17466126
+!
+!
+!
+!
+!
+!
+!
+!
+interface Embedded-Service-Engine0/0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/0
+ ip address dhcp
+ ip nat outside
+ ip virtual-reassembly in
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1
+ ip address 172.16.15.1 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface Serial0/0/0
+ ip address 172.16.0.253 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ clock rate 125000
+!
+interface Serial0/0/1
+ ip address 172.16.0.249 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ clock rate 125000
+!
+interface Serial0/1/0
+ ip address 172.16.0.245 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+!
+interface Serial0/1/1
+ no ip address
+ shutdown
+ clock rate 2000000
+!
+router rip
+ version 2
+ network 172.16.0.0
+ no auto-summary
+!
+ip forward-protocol nd
+!
+ip http server
+no ip http secure-server
+!
+ip nat inside source list 1 interface GigabitEthernet0/0 overload
+ip route 0.0.0.0 0.0.0.0 10.48.0.1
+!
+access-list 1 permit 172.16.0.0 0.0.255.255
+!
+!
+!
+control-plane
+!
+!
+!
+line con 0
+ logging synchronous
+line aux 0
+line 2
+ no activation-character
+ no exec
+
+R0#i config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R0(config)#i inter
+R0(config)#interface ser
+R0(config)#interface serial 05 /0/  1/0
+R0(config-if)#clock
+R0(config-if)#clock  -r
+R0(config-if)#clock-ra
+R0(config-if)#clock-ra    r
+R0(config-if)#clock rate 125000
+%Error: This command applies only to DCE interfaces
+R0(config-if)#exit
+R0(config)#inter
+R0(config)#interface 
+R0(config)#interface seri
+R0(config)#interface serial  /  0/0/1
+R0(config-if)#cloc
+R0(config-if)#clock ra
+R0(config-if)#clock rate 1 ?
+	Speed (bits per second)
+  1200
+  2400
+  4800
+  9600
+  14400
+  19200
+  28800
+  32000
+  38400
+  48000
+  56000
+  57600
+  64000
+  72000
+  115200
+  125000
+  128000
+  148000
+  192000
+  250000
+  256000
+  384000
+  500000
+  512000
+  768000
+  800000
+  1000000
+  2000000
+  4000000
+  5300000
+  8000000
+
+  <300-8000000>    Choose clockrate from list above
+
+R0(config-if)#clock rate 8000000
+R0(config-if)#n exit
+R0(config)#exit
+R0#no ip    debug ip nat
+IP NAT debugging is off
+R0#no debug ip nat   dh 
+R0#no debug ip dc
+R0#no debug ip dcmp
+                ^
+% Invalid input detected at '^' marker.
+
+R0#no debug ip dcmp    icmp
+ICMP packet debugging is off
+R0#no debug ip icmp    rip
+RIP protocol debugging is off
+R0#i config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R0(config)#inter
+R0(config)#interface seria
+R0(config)#interface serial 0/0
+R0(config)#interface serial 0/0/0
+R0(config-if)#clock
+R0(config-if)#clock ra
+R0(config-if)#clock rate 8000000
+R0(config-if)#ip http server
+R0(config)#ip aut
+R0(config)#ip authe
+R0(config)#ip authe
+R0(config)#ip authe
+R0(config)#ip authe
+R0(config)#ip authe
+R0(config)#ip authe
+R0(config)#ip authe
+R0(config)#ip authe
+R0(config)#ip authe
+R0(config)#ip authe
+R0(config)#ip authe        ip htt
+R0(config)#ip http au
+R0(config)#ip http authentication aaa
+Warning: AAA access control is not enabled.
+R0(config)#ip http authentication aaa lo      local
+R0(config)#ip http authentication local     enable
+R0(config)#enabl
+R0(config)#enable oa  pass
+R0(config)#enable password alex
+The enable password you have chosen is the same as your enable secret.
+This is not recommended.  Re-enter the enable password.
+
+R0(config)#enable password alex
+The enable password you have chosen is the same as your enable secret.
+This is not recommended.  Re-enter the enable password.
+
+R0(config)#enable password alex
+The enable password you have chosen is the same as your enable secret.
+This is not recommended.  Re-enter the enable password.
+
+R0(config)#alex
+             ^
+% Invalid input detected at '^' marker.
+
+R0(config)#enable secre
+R0(config)#enable secret               no eba
+R0(config)#no eba  na
+R0(config)#no enable sec
+R0(config)#no enable secret 
+R0(config)#no enable secret alex             enable password alex
+R0(config)#int
+R0(config)#interface Gig
+R0(config)#interface GigabitEthernet 

@@ -1,0 +1,864 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100114.html;106,k100116.html;107,k100118.html;108,k100121.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100114.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100116.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100118.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100121.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 17 - Utility-Klassen I
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id017003"></a>
+<h2>17.3 Die Klasse System </h2>
+<hr>
+<ul>
+<li><a href="k100117.html#sectlevel2id017003">17.3 Die Klasse System</a>
+<ul>
+<li><a href="k100117.html#systemproperties">17.3.1 System-Properties</a>
+<li><a href="k100117.html#inerrout">17.3.2 in, err und out</a>
+<li><a href="k100117.html#sectlevel3id017003003">17.3.3 exit</a>
+<li><a href="k100117.html#sectlevel3id017003004">17.3.4 gc</a>
+<li><a href="k100117.html#currenttimemillis">17.3.5 currentTimeMillis</a>
+<li><a href="k100117.html#sectlevel3id017003006">17.3.6 arraycopy</a>
+</ul>
+</ul>
+<hr>
+
+<p>
+Neben den bisher vorgestellten Datenstrukturen des Pakets <a href="index_j.html#ixb100149"><font color=#000080><tt>java.util</tt></font></a>
+gibt es in <a href="index_j.html#ixb100196"><font color=#000080><tt>java.lang</tt></font></a>
+eine Klasse <a name="ixa101072"><a href="index_s.html#ixb100182"><font color=#000080><tt>System</tt></font></a></a>,
+die eine Reihe n&uuml;tzlicher Hilfsmittel zur Verf&uuml;gung stellt.
+Die wichtigsten von ihnen sollen in den folgenden Abschnitten besprochen
+werden. 
+
+<!-- Section -->
+
+<a name="systemproperties"></a>
+<h3>17.3.1 <a name="ixa101073">System-Properties</a></h3>
+
+<p>
+In Java gibt es keine M&ouml;glichkeit, direkt auf die <i>Umgebungsvariablen</i>
+eines Programms zuzugreifen. Ein solcher Zugriff wurde von den Java-Designern
+als nichtportabel angesehen und stattdessen durch das Konzept der
+<i>Properties</i> ersetzt. Properties sind Listen von <i>Eigenschaften</i>,
+die dem Programm vom Java-Laufzeitsystem zur Verf&uuml;gung gestellt
+werden. Jede Eigenschaft besitzt einen Namen, unter dem auf sie zugegriffen
+werden kann. Das Java-Laufzeitsystem stellt standardm&auml;&szlig;ig
+die folgenden Properties zur Verf&uuml;gung: <a name="tableid017002"></a>
+
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=25%><b>Property</b></td>
+<td valign=top align=left width=75%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101074"><a href="index_j.html#ixb100831"><font color=#000080><tt>java.version</tt></font></a></a></td>
+<td valign=top align=left>Java-Versionsnummer </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101075"><a href="index_j.html#ixb100832"><font color=#000080><tt>java.vendor</tt></font></a></a></td>
+<td valign=top align=left>Herstellerspezifische Zeichenkette </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101076"><a href="index_j.html#ixb100833"><font color=#000080><tt>java.vendor.url</tt></font></a></a></td>
+<td valign=top align=left>URL (also ein Internet-Link) zum Hersteller
+</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101077"><a href="index_j.html#ixb100834"><font color=#000080><tt>java.home</tt></font></a></a></td>
+<td valign=top align=left>Installationsverzeichnis </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101078"><a href="index_j.html#ixb100835"><font color=#000080><tt>java.class.version</tt></font></a></a></td>
+<td valign=top align=left>Versionsnummer der Java-Klassenbibliothek
+</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101079"><a href="index_j.html#ixb100836"><font color=#000080><tt>java.class.path</tt></font></a></a></td>
+<td valign=top align=left>Aktueller Klassenpfad </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101080"><a href="index_o.html#ixb100837"><font color=#000080><tt>os.name</tt></font></a></a></td>
+<td valign=top align=left>Name des Betriebssystems </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101081"><a href="index_o.html#ixb100838"><font color=#000080><tt>os.arch</tt></font></a></a></td>
+<td valign=top align=left>Betriebssystem-Architektur </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101082"><a href="index_o.html#ixb100839"><font color=#000080><tt>os.version</tt></font></a></a></td>
+<td valign=top align=left>Versionsnummer des Betriebssystems </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101083"><a href="index_f.html#ixb100840"><font color=#000080><tt>file.separator</tt></font></a></a></td>
+<td valign=top align=left>Trennzeichen f&uuml;r die Bestandteile eines
+Pfadnamens </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101084"><a href="index_f.html#ixb100841"><font color=#000080><tt>file.encoding</tt></font></a></a></td>
+<td valign=top align=left>Default-Zeichensatz der Virtual Machine
+</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101085"><a href="index_p.html#ixb100842"><font color=#000080><tt>path.separator</tt></font></a></a></td>
+<td valign=top align=left>Trennzeichen f&uuml;r die Laufwerksangabe
+eines Pfadnamens </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101086"><a href="index_l.html#ixb100843"><font color=#000080><tt>line.separator</tt></font></a></a></td>
+<td valign=top align=left>Zeichenkette f&uuml;r Zeilenschaltung </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101087"><a href="index_u.html#ixb100844"><font color=#000080><tt>user.name</tt></font></a></a></td>
+<td valign=top align=left>Name des angemeldeten Benutzers </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101088"><a href="index_u.html#ixb100845"><font color=#000080><tt>user.home</tt></font></a></a></td>
+<td valign=top align=left>Home-Verzeichnis </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101089"><a href="index_u.html#ixb100846"><font color=#000080><tt>user.dir</tt></font></a></a></td>
+<td valign=top align=left>Aktuelles Arbeitsverzeichnis </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101090"><a href="index_j.html#ixb100847"><font color=#000080><tt>java.vm.specification.version</tt></font></a></a></td>
+<td valign=top align=left>Version der VM-Spezifikation </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101091"><a href="index_j.html#ixb100848"><font color=#000080><tt>java.vm.specification.vendor</tt></font></a></a></td>
+<td valign=top align=left>Hersteller der VM-Spezifikation </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101092"><a href="index_j.html#ixb100849"><font color=#000080><tt>java.vm.specification.name</tt></font></a></a></td>
+<td valign=top align=left>Bezeichnung der VM-Spezifikation </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101093"><a href="index_j.html#ixb100850"><font color=#000080><tt>java.vm.version</tt></font></a></a></td>
+<td valign=top align=left>VM-Version </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101094"><a href="index_j.html#ixb100851"><font color=#000080><tt>java.vm.vendor</tt></font></a></a></td>
+<td valign=top align=left>Hersteller der VM </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101095"><a href="index_j.html#ixb100852"><font color=#000080><tt>java.vm.name</tt></font></a></a></td>
+<td valign=top align=left>Name der VM-Implementierung </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101096"><a href="index_j.html#ixb100853"><font color=#000080><tt>java.specification.version</tt></font></a></a></td>
+<td valign=top align=left>Version der Spezifikation der Laufzeitumgebung
+</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101097"><a href="index_j.html#ixb100854"><font color=#000080><tt>java.specification.vendor</tt></font></a></a></td>
+<td valign=top align=left>Hersteller der Spezifikation der Laufzeitumgebung
+</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101098"><a href="index_j.html#ixb100855"><font color=#000080><tt>java.specification.name</tt></font></a></a></td>
+<td valign=top align=left>Bezeichnung der Spezifikation der Laufzeitumgebung
+</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101099"><a href="index_j.html#ixb100856"><font color=#000080><tt>java.io.tmpdir</tt></font></a></a></td>
+<td valign=top align=left>Pfad zum Verzeichnis f&uuml;r tempor&auml;re
+Dateien auf diesem System </td></tr>
+</table>
+<p><i>
+Tabelle 17.2: Standard-Properties </i></p>
+
+<p>
+F&uuml;r den Zugriff auf diese Eigenschaften steht die Klasse <a name="ixa101100"><a href="index_p.html#ixb100717"><font color=#000080><tt>Properties</tt></font></a></a>
+aus dem Paket <a href="index_j.html#ixb100149"><font color=#000080><tt>java.util</tt></font></a>
+zur Verf&uuml;gung. Sie bietet die M&ouml;glichkeit, Property-Listen
+zu erzeugen, mit Werten zu f&uuml;llen und vorhandene Werte auszulesen.
+Die Klasse <a href="index_p.html#ixb100717"><font color=#000080><tt>Properties</tt></font></a>
+ist eine Ableitung der Klasse <a href="index_h.html#ixb100428"><font color=#000080><tt>Hashtable</tt></font></a>
+und stellt damit eine Tabelle von Schl&uuml;ssel-/Wertepaaren dar.
+
+<p>
+F&uuml;r den Zugriff auf einzelne Properties reicht meist die einfach
+zu bedienende Klassenmethode <a name="ixa101101"><a href="index_g.html#ixb100718"><font color=#000080><tt>getProperty</tt></font></a></a>
+der Klasse <a href="index_s.html#ixb100182"><font color=#000080><tt>System</tt></font></a>
+in <a href="index_j.html#ixb100196"><font color=#000080><tt>java.lang</tt></font></a>
+aus: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static String getProperty(String key)
+public static String getProperty(String key, String def)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/System.html" onClick="this.href=getApiDoc('java.lang.System')"><font color="#660066" size=-1>java.lang.System</font></a></td>
+</tr>
+</table>
+
+<p>
+Die erste Variante liefert die Eigenschaft mit dem Namen <font color="#000077"><tt>key</tt></font>
+in Form einer Zeichenkette. Falls keine Eigenschaft mit diesem Namen
+gefunden wurde, wird <a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>
+zur&uuml;ckgegeben. Die zweite Variante erlaubt die &Uuml;bergabe
+eines Standardwerts. Der Unterschied zur ersten Variante besteht darin,
+dass nicht <a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>,
+sondern der Standardwert zur&uuml;ckgegeben wird, wenn die gesuchte
+Eigenschaft nicht gefunden wurde. 
+
+<p>
+Die Methode <a name="ixa101102"><a href="index_g.html#ixb100857"><font color=#000080><tt>getProperties</tt></font></a></a>
+liefert das komplette <a href="index_p.html#ixb100717"><font color=#000080><tt>Properties</tt></font></a>-Objekt
+mit den System-Properties: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static Properties getProperties()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/System.html" onClick="this.href=getApiDoc('java.lang.System')"><font color="#660066" size=-1>java.lang.System</font></a></td>
+</tr>
+</table>
+
+<p>
+Das folgende Programm gibt eine Liste aller System-Properties auf
+dem Bildschirm aus. Es verwendet dazu zun&auml;chst die Methode <a href="index_g.html#ixb100857"><font color=#000080><tt>getProperties</tt></font></a>,
+um das System-<a href="index_p.html#ixb100717"><font color=#000080><tt>Properties</tt></font></a>-Objekt
+zu beschaffen. Anschlie&szlig;end erzeugt es durch Aufruf von <a name="ixa101103"><a href="index_p.html#ixb100719"><font color=#000080><tt>propertyNames</tt></font></a></a>
+einen Enumerator, mit dem alle Schl&uuml;sselwerte durchlaufen werden
+k&ouml;nnen und mit dem durch Aufruf von <a href="index_g.html#ixb100718"><font color=#000080><tt>getProperty</tt></font></a>
+der zugeh&ouml;rige Wert ermittelt werden kann. Auf diese Weise listet
+das Programm alle verf&uuml;gbaren System-Properties auf (das sind
+in der Regel sehr viel mehr als die plattform&uuml;bergreifend spezifizierten):
+<a name="listingid017004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1704.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1704
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    Properties sysprops   = System.getProperties();
+<font color="#555555">010 </font>    Enumeration&lt;?&gt; propnames = sysprops.propertyNames();
+<font color="#555555">011 </font>    <font color="#0000AA">while</font> (propnames.hasMoreElements()) {
+<font color="#555555">012 </font>      String propname = (String)propnames.nextElement();
+<font color="#555555">013 </font>      System.out.println(
+<font color="#555555">014 </font>        propname + <font color="#0000FF">"="</font> + System.getProperty(propname)
+<font color="#555555">015 </font>      );
+<font color="#555555">016 </font>    }
+<font color="#555555">017 </font>  }
+<font color="#555555">018 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1704.java"><font color="#000055" size=-1>Listing1704.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 17.4: Ausgeben der System-Properties</i></p>
+
+
+<!-- Section -->
+<a name="inerrout"></a>
+<h3>17.3.2 in, err und out </h3>
+
+<p>
+In den vorangegangenen Kapiteln wurde schon h&auml;ufig der Aufruf
+<a name="ixa101104"><a href="index_s.html#ixb100141"><font color=#000080><tt>System.out.println</tt></font></a></a>
+verwendet, um Daten auf die Standardausgabe bzw. in ein Debug-Fenster
+auszugeben. Diese Anweisung ruft die Methode <a name="ixa101105"><a href="index_p.html#ixb100181"><font color=#000080><tt>println</tt></font></a></a>
+des Objekts <a name="ixa101106"><a href="index_o.html#ixb100858"><font color=#000080><tt>out</tt></font></a></a>
+der Klasse <a href="index_s.html#ixb100182"><font color=#000080><tt>System</tt></font></a>
+auf. Dabei ist <a href="index_o.html#ixb100858"><font color=#000080><tt>out</tt></font></a>
+eine statische Variable vom Typ <a name="ixa101107"><a href="index_p.html#ixb100562"><font color=#000080><tt>PrintStream</tt></font></a></a>,
+die beim Starten des Programms so initialisiert wird, dass ihre Ausgabe
+auf die Standardausgabe geleitet wird. 
+
+<p>
+Analog zu <a href="index_o.html#ixb100858"><font color=#000080><tt>out</tt></font></a>
+gibt es die statischen Variablen <a name="ixa101108"><a href="index_e.html#ixb100859"><font color=#000080><tt>err</tt></font></a></a>
+und <a name="ixa101109"><a href="index_i.html#ixb100860"><font color=#000080><tt>in</tt></font></a></a>.
+Dabei dient <a href="index_e.html#ixb100859"><font color=#000080><tt>err</tt></font></a>
+zur Ausgabe von Fehlermeldungen und <a href="index_i.html#ixb100860"><font color=#000080><tt>in</tt></font></a>
+ist ein Standardeingabekanal, der dazu verwendet werden kann, Eingaben
+von der Tastatur zu lesen. 
+
+<p>
+Mit Hilfe der Methoden <a name="ixa101110"><a href="index_s.html#ixb100861"><font color=#000080><tt>setIn</tt></font></a></a>,
+<a name="ixa101111"><a href="index_s.html#ixb100862"><font color=#000080><tt>setOut</tt></font></a></a>
+und <a name="ixa101112"><a href="index_s.html#ixb100863"><font color=#000080><tt>setErr</tt></font></a></a>
+ist es sogar m&ouml;glich, die Standardein- und -ausgabe aus dem Programm
+heraus umzuleiten: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static void setIn(InputStream in)
+
+public static void setOut(PrintStream out)
+
+public static void setErr(PrintStream err)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/System.html" onClick="this.href=getApiDoc('java.lang.System')"><font color="#660066" size=-1>java.lang.System</font></a></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Verwendung dieser Klassenvariablen ist im Grunde genommen nicht
+konform mit dem Dialogkonzept einer GUI-Anwendung. Ihr Einsatz kann
+aber immer dann sinnvoll sein, wenn Java-Programme geschrieben werden
+sollen, die keine ausgefeilte Oberfl&auml;che ben&ouml;tigen. In diesem
+Fall sind sie ein n&uuml;tzliches Hilfsmittel, um einfache Ein-/Ausgaben
+ohne gro&szlig;en Aufwand realisieren zu k&ouml;nnen. Bereits in <a href="k100024.html#kapitelwieweiter">Kapitel 4</a>
+wurde gezeigt, wie man diese Routinen zur Ein- und Ausgabe verwenden
+kann. Weitere Informationen dar&uuml;ber sind in <a href="k100132.html#kapitelbytestreams">Kapitel 20</a>
+zu finden, das sich mit Byte-Streams besch&auml;ftigt.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id017003003"></a>
+<h3>17.3.3 exit </h3>
+
+<p>
+Auch Aufrufe der Methode <a name="ixa101113"><a href="index_e.html#ixb100663"><font color=#000080><tt>System.exit</tt></font></a></a>
+sind uns schon begegnet: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static void exit(int status)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/System.html" onClick="this.href=getApiDoc('java.lang.System')"><font color="#660066" size=-1>java.lang.System</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a href="index_e.html#ixb100663"><font color=#000080><tt>System.exit</tt></font></a>
+wird das laufende Programm beendet. Der Aufrufparameter <font color="#000077"><tt>status</tt></font>
+dient als Fehleranzeige und wird als Exitcode an den Aufrufer des
+Programms zur&uuml;ckgegeben. Gem&auml;&szlig; Konvention zeigt dabei
+ein Wert gr&ouml;&szlig;er oder gleich 1 einen Fehler w&auml;hrend
+der Programmausf&uuml;hrung an, w&auml;hrend 0 ein fehlerfreies Programmende
+signalisiert. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Neben der Methode <font color="#000077"><tt>System.exit</tt></font>
+bietet die weiter unten beschriebene Klasse <font color="#000077"><tt>Runtime</tt></font>
+auch die Methode <a name="ixa101114"><a href="index_h.html#ixb100864"><font color=#000080><tt>System.halt</tt></font></a></a>
+an, bei der die Virtual Machine sofort angehalten wird. Im Unterschied
+zu <font color="#000077"><tt>Runtime.halt</tt></font> werden dabei
+weder <font color="#000077"><tt>finalize</tt></font> -Methoden noch
+<font color="#000077"><tt>finally</tt></font>-Zweige abgearbeitet.
+Dies kann z.B. beim Zugriff auf eine Datenbank dazu f&uuml;hren, dass
+externe Ressourcen nicht zur&uuml;ckgegeben werden. Sie sollten deshalb
+auf die Verwendung von <font color="#000077"><tt>Runtime.halt</tt></font>
+verzichten. </td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id017003004"></a>
+<h3>17.3.4 gc </h3>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static void gc()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/System.html" onClick="this.href=getApiDoc('java.lang.System')"><font color="#660066" size=-1>java.lang.System</font></a></td>
+</tr>
+</table>
+
+<p>
+Ein Aufruf der Methode <a name="ixa101115"><a href="index_g.html#ixb100865"><font color=#000080><tt>gc</tt></font></a></a>
+f&uuml;hrt einen expliziten Aufruf des <a name="ixa101116">Garbage Collectors</a>
+durch. Dieser sucht dann nach freiem Speicher und gibt diesen an das
+Laufzeitsystem zur&uuml;ck. Normalerweise ist ein Aufruf dieser Methode
+nicht erforderlich, denn der Garbage Collector l&auml;uft st&auml;ndig
+als niedrig priorisierter Thread im Hintergrund. Der Aufruf von <a href="index_g.html#ixb100865"><font color=#000080><tt>gc</tt></font></a>
+ist immer dann sinnvoll, wenn eine explizite Kontrolle &uuml;ber den
+Zeitpunkt der Speicherfreigabe gew&uuml;nscht ist. 
+
+<!-- Section -->
+
+<a name="currenttimemillis"></a>
+<h3>17.3.5 currentTimeMillis </h3>
+
+<p>
+Die Methode <a name="ixa101117"><a href="index_c.html#ixb100866"><font color=#000080><tt>currentTimeMillis</tt></font></a></a>
+liefert die Anzahl der Millisekunden, die zum Zeitpunkt des Aufrufs
+seit Mitternacht des 1.1.1970 vergangen sind: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static long currentTimeMillis()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/System.html" onClick="this.href=getApiDoc('java.lang.System')"><font color="#660066" size=-1>java.lang.System</font></a></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Ob dabei tats&auml;chlich eine Aufl&ouml;sung von einer Millisekunde
+erreicht wird, ist z.B. von dem Betriebssystem und der konkreten Java-Implementierung
+abh&auml;ngig. In PC-basierten Java-Systemen orientiert sie sich meist
+an der Aufl&ouml;sung des System-Timers. </td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Mit dem folgenden Beispielprogramm kann die Aufl&ouml;sung des System-Timers
+ermittelt werden: 
+<a name="listingid017005"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1705.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1705
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#006699">long</font> t1, t2;
+<font color="#555555">008 </font>    <font color="#006699">int</font>  actres, sumres = 0, i = 0;
+<font color="#555555">009 </font>    <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">010 </font>      ++i;
+<font color="#555555">011 </font>      t1 = System.currentTimeMillis();
+<font color="#555555">012 </font>      <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">013 </font>        t2 = System.currentTimeMillis();
+<font color="#555555">014 </font>        <font color="#0000AA">if</font> (t2 != t1) {
+<font color="#555555">015 </font>          actres = (<font color="#006699">int</font>)(t2 - t1);
+<font color="#555555">016 </font>          <font color="#0000AA">break</font>;
+<font color="#555555">017 </font>        }
+<font color="#555555">018 </font>      }
+<font color="#555555">019 </font>      sumres += actres;
+<font color="#555555">020 </font>      System.out.print(<font color="#0000FF">"it="</font>+i+<font color="#0000FF">", "</font>);
+<font color="#555555">021 </font>      System.out.print(<font color="#0000FF">"actres="</font>+actres+<font color="#0000FF">" msec., "</font>);
+<font color="#555555">022 </font>      System.out.print(<font color="#0000FF">"avgres="</font>+(sumres/i)+<font color="#0000FF">" msec."</font>);
+<font color="#555555">023 </font>      System.out.println(<font color="#0000FF">""</font>);
+<font color="#555555">024 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">025 </font>        Thread.sleep(500);
+<font color="#555555">026 </font>      } <font color="#0000AA">catch</font> (InterruptedException e) {
+<font color="#555555">027 </font>        <font color="#00AA00">//nichts</font>
+<font color="#555555">028 </font>      }
+<font color="#555555">029 </font>    }
+<font color="#555555">030 </font>  }
+<font color="#555555">031 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1705.java"><font color="#000055" size=-1>Listing1705.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 17.5: Die Aufl&ouml;sung des System-Timers bestimmen</i></p>
+
+<p>
+Das Programm bestimmt zun&auml;chst die aktuelle Systemzeit und merkt
+sich den Wert in der Variablen <font color="#000077"><tt>t1</tt></font>.
+Nun wird die Systemzeit in einer Schleife erneut so oft gemessen,
+bis sie sich ge&auml;ndert hat. Die Differenz zwischen beiden Werten
+wird als Aufl&ouml;sung des aktuellen Durchgangs angesehen und der
+Variablen <font color="#000077"><tt>actres</tt></font> zugewiesen.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Um eine gr&ouml;&szlig;ere Genauigkeit zu erzielen, f&uuml;hrt das
+Programm die Bestimmung der Aufl&ouml;sung mit Hilfe der &auml;u&szlig;eren
+Schleife viele Male durch. Die dabei jeweils ermittelte Aufl&ouml;sung
+wird in der Variablen <font color="#000077"><tt>sumres</tt></font>
+addiert und durch Division durch die Anzahl der Schleifendurchl&auml;ufe
+zur Ermittlung des gleitenden Durchschnitts verwendet. </td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Das so errechnete Ergebnis pendelt sich bereits nach wenigen Durchl&auml;ufen
+unter Windows 7 auf einen Wert von 15 ms. ein: 
+<font color="#333300">
+<pre>
+it=1, actres=16 msec., avgres=16 msec.
+it=2, actres=15 msec., avgres=15 msec.
+it=3, actres=16 msec., avgres=15 msec.
+it=4, actres=15 msec., avgres=15 msec.
+...
+it=23, actres=16 msec., avgres=15 msec.
+it=24, actres=15 msec., avgres=15 msec.
+it=25, actres=16 msec., avgres=15 msec.
+it=26, actres=15 msec., avgres=15 msec.
+</pre>
+</font>
+
+<p>
+Tats&auml;chlich erreichen wir auf einer anderen Testmaschine unter
+Ubuntu 10 eine Aufl&ouml;sung von ca. 1 ms. 
+<font color="#333300">
+<pre>
+it=1, actres=1 msec., avgres=1 msec.
+it=2, actres=1 msec., avgres=1 msec.
+it=3, actres=1 msec., avgres=1 msec.
+it=4, actres=1 msec., avgres=1 msec.
+...
+it=61, actres=1 msec., avgres=1 msec.
+it=62, actres=1 msec., avgres=1 msec.
+it=63, actres=1 msec., avgres=1 msec.
+it=64, actres=1 msec., avgres=1 msec.
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Interessanterweise bietet die Methode <a name="ixa101118"><a href="index_s.html#ixb100867"><font color=#000080><tt>sleep</tt></font></a></a>
+der Klasse <a href="index_t.html#ixb100606"><font color=#000080><tt>Thread</tt></font></a>
+(sie wird in <a href="k100152.html#weiterethreadmethoden">Abschnitt 23.2.3</a>
+beschrieben) auf aktuellen Oracle-JDKs unter Windows mit etwa 1 ms.
+eine wesentlich h&ouml;here Aufl&ouml;sung als <a href="index_c.html#ixb100866"><font color=#000080><tt>currentTimeMillis</tt></font></a>.
+Diese Eigenschaft ist allerdings nicht dokumentiert und kann von Interpreter
+zu Interpreter sehr unterschiedlich sein. Selbst auf ein und derselben
+Java-Maschine kann es durch unterschiedliche Lastsituationen zu Abweichungen
+kommen. Das folgende Programm ermittelt die Aufl&ouml;sung von <a href="index_s.html#ixb100867"><font color=#000080><tt>sleep</tt></font></a>:</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<a name="listingid017006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1706.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1706
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">long</font> testSleep(<font color="#006699">int</font> millis)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#0000AA">final</font> <font color="#006699">int</font> MINDURATION = 3000;
+<font color="#555555">008 </font>    <font color="#006699">int</font> cnt = (millis &gt;= MINDURATION ? 1 : MINDURATION/millis);
+<font color="#555555">009 </font>    <font color="#006699">long</font> start = System.currentTimeMillis();
+<font color="#555555">010 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; cnt; ++i) {
+<font color="#555555">011 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">012 </font>        Thread.sleep(millis);
+<font color="#555555">013 </font>      } <font color="#0000AA">catch</font> (InterruptedException e) {
+<font color="#555555">014 </font>      }
+<font color="#555555">015 </font>    }
+<font color="#555555">016 </font>    <font color="#006699">long</font> end = System.currentTimeMillis();
+<font color="#555555">017 </font>    <font color="#0000AA">return</font> (end - start) / cnt;
+<font color="#555555">018 </font>  }
+<font color="#555555">019 </font>
+<font color="#555555">020 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">021 </font>  {
+<font color="#555555">022 </font>    <font color="#0000AA">final</font> <font color="#006699">int</font> DATA[] = {345, 27, 1, 1962, 2, 8111, 6, 89, 864};
+<font color="#555555">023 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; DATA.length; ++i) {
+<font color="#555555">024 </font>      System.out.println(<font color="#0000FF">"Aufruf von sleep("</font> + DATA[i] + <font color="#0000FF">")"</font>);
+<font color="#555555">025 </font>      <font color="#006699">long</font> result = testSleep(DATA[i]);
+<font color="#555555">026 </font>      System.out.print(<font color="#0000FF">"  Ergebnis: "</font> + result);
+<font color="#555555">027 </font>      <font color="#006699">double</font> prec = ((<font color="#006699">double</font>)result / DATA[i] - 1.0) * 100;
+<font color="#555555">028 </font>      System.out.println(<font color="#0000FF">" ("</font> + (prec &gt; 0 ? <font color="#0000FF">"+"</font>: <font color="#0000FF">""</font>) + prec + <font color="#0000FF">" %)"</font>);
+<font color="#555555">029 </font>    }
+<font color="#555555">030 </font>  }
+<font color="#555555">031 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1706.java"><font color="#000055" size=-1>Listing1706.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 17.6: Die Aufl&ouml;sung von Thread.sleep bestimmen</i></p>
+
+<p>
+Ein Aufruf unter dem JDK 1.7 auf einem Ubuntu-System im Leerlauf ergab
+folgendes Ergebnis: 
+<font color="#333300">
+<pre>
+Aufruf von sleep(345)
+  Ergebnis: 345 (0.0 %)
+Aufruf von sleep(27)
+  Ergebnis: 27 (0.0 %)
+Aufruf von sleep(1)
+  Ergebnis: 1 (0.0 %)
+Aufruf von sleep(1962)
+  Ergebnis: 1962 (0.0 %)
+Aufruf von sleep(2)
+  Ergebnis: 2 (0.0 %)
+Aufruf von sleep(8111)
+  Ergebnis: 8111 (0.0 %)
+Aufruf von sleep(6)
+  Ergebnis: 6 (0.0 %)
+Aufruf von sleep(89)
+  Ergebnis: 89 (0.0 %)
+Aufruf von sleep(864)
+  Ergebnis: 864 (0.0 %)
+</pre>
+</font>
+
+<p>
+Der gleiche Lauf unter Windows 7 unter Java 6 erzeugt folgendes Ergebnis:
+<font color="#333300">
+<pre>
+Aufruf von sleep(345)
+  Ergebnis: 345 (0.0 %)
+Aufruf von sleep(27)
+  Ergebnis: 27 (0.0 %)
+Aufruf von sleep(1)
+  Ergebnis: 1 (0.0 %)
+Aufruf von sleep(1962)
+  Ergebnis: 1962 (0.0 %)
+Aufruf von sleep(2)
+  Ergebnis: 2 (0.0 %)
+Aufruf von sleep(8111)
+  Ergebnis: 8112 (+0.012328936012817593 %)
+Aufruf von sleep(6)
+  Ergebnis: 6 (0.0 %)
+Aufruf von sleep(89)
+  Ergebnis: 89 (0.0 %)
+Aufruf von sleep(864)
+  Ergebnis: 864 (0.0 %)
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="sectlevel3id017003006"></a>
+<h3>17.3.6 arraycopy </h3>
+
+<p>
+Als letzte Methode der Klasse <a href="index_s.html#ixb100182"><font color=#000080><tt>System</tt></font></a>
+soll <a name="ixa101119"><a href="index_a.html#ixb100868"><font color=#000080><tt>arraycopy</tt></font></a></a>
+vorgestellt werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static native void arraycopy(
+   Object src, int src_position,
+   Object dst, int dst_position,
+   int length
+)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/System.html" onClick="this.href=getApiDoc('java.lang.System')"><font color="#660066" size=-1>java.lang.System</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_a.html#ixb100868"><font color=#000080><tt>arraycopy</tt></font></a>
+kann dazu verwendet werden, Arrays oder Teile davon zu kopieren. Dabei
+k&ouml;nnen die Elemente sowohl innerhalb desselben Arrays als auch
+in ein anderes Array kopiert werden. Falls innerhalb desselben Arrays
+kopiert wird, d&uuml;rfen sich Quell- und Zielbereich auch &uuml;berlappen.
+Die Methode arbeitet sowohl mit elementaren als auch mit Objekttypen,
+Ziel- und Quellarray m&uuml;ssen lediglich zuweisungskompatibel sein.
+Da die Methode in C bzw. Assembler implementiert ist, arbeitet sie
+recht performant. 
+
+<p>
+Als erste Argumente werden das Quellarray <font color="#000077"><tt>src</tt></font>
+und die Startposition <font color="#000077"><tt>src_position</tt></font>
+angegeben. Anschlie&szlig;end folgen das Zielarray <font color="#000077"><tt>dst</tt></font>
+und die Zielposition <font color="#000077"><tt>dst_position</tt></font>.
+Als letztes Argument wird die L&auml;nge <a href="index_l.html#ixb100286"><font color=#000080><tt>length</tt></font></a>
+des zu kopierenden Bereichs angegeben. Falls die Argumente auf Elemente
+zeigen, die au&szlig;erhalb des Arrays liegen, wird eine Ausnahme
+des Typs <a name="ixa101120"><a href="index_a.html#ixb100869"><font color=#000080><tt>ArrayIndexOutOfBoundsException</tt></font></a></a>
+ausgel&ouml;st. Falls ein Element aufgrund eines Typfehlers nicht
+gespeichert werden kann, gibt es eine Ausnahme des Typs <a name="ixa101121"><a href="index_a.html#ixb100870"><font color=#000080><tt>ArrayStoreException</tt></font></a></a>.
+
+<p>
+Das folgende Programm zeigt die Verwendung von <a href="index_a.html#ixb100868"><font color=#000080><tt>arraycopy</tt></font></a>
+an einem einfachen Beispiel: 
+<a name="listingid017007"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1707.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1707
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#006699">int</font>[] ar = {0,0,0,0,0,0,0,0,0,0};
+<font color="#555555">008 </font>
+<font color="#555555">009 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; 10; ++i) {
+<font color="#555555">010 </font>      System.arraycopy(ar,0,ar,1,9);
+<font color="#555555">011 </font>      ar[0] = i;
+<font color="#555555">012 </font>    }
+<font color="#555555">013 </font>    System.out.print(<font color="#0000FF">"ar = "</font>);
+<font color="#555555">014 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; 10; ++i) {
+<font color="#555555">015 </font>      System.out.print(ar[i] + <font color="#0000FF">" "</font>);
+<font color="#555555">016 </font>    }
+<font color="#555555">017 </font>    System.out.println(<font color="#0000FF">""</font>);
+<font color="#555555">018 </font>  }
+<font color="#555555">019 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1707.java"><font color="#000055" size=-1>Listing1707.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 17.7: Verwendung von System.arraycopy</i></p>
+
+<p>
+Das Programm f&uuml;llt ein zehnelementiges Array von Ganzzahlen,
+das zun&auml;chst nur Nullen enth&auml;lt, mit den Zahlen 0 bis 9.
+Dabei wird jeweils durch Kopieren der ersten neun Elemente an die
+zweite Position des Arrays an der ersten Position Platz gemacht, um
+dort den Inhalt des fortlaufenden Schleifenz&auml;hlers abzulegen.
+Nach zehn Durchl&auml;ufen stehen somit die Zahlen 0 bis 9 verkehrt
+herum im Array. Die Ausgabe des Programms ist: 
+<font color="#333300">
+<pre>
+ar = 9 8 7 6 5 4 3 2 1 0
+</pre>
+</font>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100114.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100116.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100118.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100121.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

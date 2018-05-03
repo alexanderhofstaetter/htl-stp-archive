@@ -1,0 +1,220 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100163.html;106,k100163.html;107,k100165.html;108,k100168.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100163.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100163.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100165.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100168.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 25 - Textausgabe
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id025001"></a>
+<h2>25.1 Ausgabefunktionen </h2>
+<hr>
+<ul>
+<li><a href="k100164.html#sectlevel2id025001">25.1 Ausgabefunktionen</a>
+</ul>
+<hr>
+
+<p>
+Neben den Methoden zur Ausgabe von Linien- oder Fl&auml;chengrafiken
+gibt es in Java die M&ouml;glichkeit, <i>Text</i> in einem Fenster
+auszugeben. Die daf&uuml;r vorgesehenen Methoden <a name="ixa101575"><a href="index_d.html#ixb101200"><font color=#000080><tt>drawString</tt></font></a></a>,
+<a name="ixa101576"><a href="index_d.html#ixb101201"><font color=#000080><tt>drawChars</tt></font></a></a>
+und <a name="ixa101577"><a href="index_d.html#ixb101202"><font color=#000080><tt>drawBytes</tt></font></a></a>
+geh&ouml;ren ebenfalls zur Klasse <a href="index_g.html#ixb101156"><font color=#000080><tt>Graphics</tt></font></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void drawString(
+   String str, int x, int y
+)
+
+public void drawChars(
+   char[] data, int offset, int length, int x, int y
+)
+
+public void drawBytes(
+   byte[] data, int offset, int length, int x, int y
+)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Graphics.html" onClick="this.href=getApiDoc('java.awt.Graphics')"><font color="#660066" size=-1>java.awt.Graphics</font></a></td>
+</tr>
+</table>
+
+<p>
+Die einfachste Methode, Text auszugeben, besteht darin, <a href="index_d.html#ixb101200"><font color=#000080><tt>drawString</tt></font></a>
+aufzurufen und dadurch den String <font color="#000077"><tt>str</tt></font>
+im Grafikfenster an der Position <font color="#000077"><tt>(x,y)</tt></font>
+auszugeben. Das Koordinatenpaar <font color="#000077"><tt>(x,y)</tt></font>
+bezeichnet dabei das linke Ende der <i>Basislinie</i> des ersten Zeichens
+in <font color="#000077"><tt>str</tt></font>. Die Bedeutung der Basislinie
+wird sp&auml;ter bei der Beschreibung der Font-Metriken erl&auml;utert.
+
+<p>
+In dem folgenden Beispiel wird versucht, einen String, der die Gr&ouml;&szlig;e
+der Client-Area angibt, zentriert im Ausgabefenster auszugeben (wir
+verwenden immer noch <a href="k100160.html#grafikrahmenprog">Listing 24.4</a>
+aus <a href="k100157.html#kapitelgrafikausgabe">Kapitel 24</a>): 
+<a name="textausgabebsp"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Textausgabe.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#006699">int</font> maxX=getSize().width-getInsets().left-getInsets().right;
+<font color="#555555">006 </font>  <font color="#006699">int</font> maxY=getSize().height-getInsets().top-getInsets().bottom;
+<font color="#555555">007 </font>
+<font color="#555555">008 </font>  g.drawString(
+<font color="#555555">009 </font>    <font color="#0000FF">"Die Client-Area ist "</font>+maxX+<font color="#0000FF">"*"</font>+maxY+<font color="#0000FF">" Pixel gro&szlig;"</font>,
+<font color="#555555">010 </font>    getInsets().left + maxX/2,
+<font color="#555555">011 </font>    getInsets().top + maxY/2
+<font color="#555555">012 </font>  );
+<font color="#555555">013 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Textausgabe.inc"><font color="#000055" size=-1>Textausgabe.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 25.1: Einfache Textausgabe im Grafikfenster</i></p>
+<p>
+<a name="imageid025001"></a>
+<img src="images/TextAusgabe.gif">
+<p>
+
+<p><i>
+Abbildung 25.1: Einfache Textausgabe</i></p>
+
+<p>
+Man kann an diesem Beispiel gut sehen, wie die Gr&ouml;&szlig;e der
+Client-Area ermittelt werden kann. Zun&auml;chst wird durch Aufruf
+von <a name="ixa101578"><a href="index_g.html#ixb101203"><font color=#000080><tt>getSize</tt></font></a></a>
+die Gr&ouml;&szlig;e des gesamten Fensters bestimmt. Anschlie&szlig;end
+werden die Teile des Fensters herausgerechnet, die nicht der Client-Area
+zur Verf&uuml;gung stehen, n&auml;mlich der Rahmen und die Titelzeile.
+Auf diese Informationen kann mit Hilfe der Methode <a name="ixa101579"><a href="index_g.html#ixb101160"><font color=#000080><tt>getInsets</tt></font></a></a>
+zugegriffen werden. Sie gibt die Abmessungen der Elemente an, die
+um die Client-Area herum platziert sind. 
+
+<p>
+<a href="k100164.html#randelementefenster">Abbildung 25.2</a> erweitert
+das in <a href="k100157.html#kapitelgrafikausgabe">Kapitel 24</a>
+erl&auml;uterte Koordinatensystem des AWT um die erw&auml;hnten Randelemente.
+Dabei ist insbesondere zu erkennen, dass der Punkt (0,0) nicht den
+Ursprung der Client-Area bezeichnet, sondern die linke obere Ecke
+des Fensters. Der Ursprung der Client-Area hat die <i>x</i>-Koordinate
+<font color="#000077"><tt>getInsets().left</tt></font> und die <i>y</i>-Koordinate
+<font color="#000077"><tt>getInsets().top</tt></font>. 
+<p>
+<a name="randelementefenster"></a>
+<img src="images/FensterRand.gif">
+<p>
+
+<p><i>
+Abbildung 25.2: Die Randelemente eines Fensters</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Leider hat das Programm einen kleinen Sch&ouml;nheitsfehler, denn
+der Mittelpunkt des Fensters wird zur Ausgabe des <i>ersten</i> Zeichens
+verwendet, obwohl dort eigentlich der Mittelpunkt des gesamten Strings
+liegen sollte. Wir werden dieses Beispiel sp&auml;ter komplettieren,
+wenn uns mit Hilfe von <i>Font-Metriken</i> die M&ouml;glichkeit zur
+Verf&uuml;gung steht, die Breite und H&ouml;he eines Strings zu messen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Die Methode <a href="index_d.html#ixb101200"><font color=#000080><tt>drawString</tt></font></a>
+ist leider nicht besonders vielseitig, denn sie kann Text weder drehen
+noch clippen. Sie interpretiert auch keine eingebetteten Formatierungen,
+wie beispielsweise einen Zeilenumbruch oder einen Tabulator. Da es
+im Windows-API all diese und noch weitere M&ouml;glichkeiten gibt,
+zeigt sich hier wie auch an anderen Stellen des AWT, dass eine Java-Portierung
+in der Regel nicht alle Funktionen des darunterliegenden Betriebssystems
+zur Verf&uuml;gung stellen kann. Das <a name="ixa101580"><i>2D-API</i></a>
+des JDK stellt dar&uuml;ber hinaus viele zus&auml;tzliche Grafikfunktionen
+plattform&uuml;bergreifend zur Verf&uuml;gung. 
+
+<p>
+Die Methoden <a href="index_d.html#ixb101201"><font color=#000080><tt>drawChars</tt></font></a>
+und <a href="index_d.html#ixb101202"><font color=#000080><tt>drawBytes</tt></font></a>
+sind leichte Variationen von <a href="index_d.html#ixb101200"><font color=#000080><tt>drawString</tt></font></a>.
+Anstelle eines Strings erwarten sie ein Array von Zeichen bzw. Bytes
+als Quelle f&uuml;r den auszugebenden Text. Mit <font color="#000077"><tt>offset</tt></font>
+und <font color="#000077"><tt>length</tt></font> stehen zwei zus&auml;tzliche
+Parameter zur Verf&uuml;gung, die zur Angabe der Startposition bzw.
+der Anzahl der auszugebenden Zeichen verwendet werden k&ouml;nnen.
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100163.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100163.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100165.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100168.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

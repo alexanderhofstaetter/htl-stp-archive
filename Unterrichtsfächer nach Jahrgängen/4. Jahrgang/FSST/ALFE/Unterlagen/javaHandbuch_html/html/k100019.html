@@ -1,0 +1,570 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100017.html;106,k100018.html;107,k100020.html;108,k100024.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100017.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100018.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100020.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100024.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 3 - Integrierte Entwicklungsumgebungen
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id003002"></a>
+<h2>3.2 Eclipse<a name="ixa100174"></a> </h2>
+<hr>
+<ul>
+<li><a href="k100019.html#sectlevel2id003002">3.2 Eclipse</a>
+<ul>
+<li><a href="k100019.html#sectlevel3id003002001">3.2.1 &Uuml;berblick</a>
+<li><a href="k100019.html#sectlevel3id003002002">3.2.2 Installation</a>
+<li><a href="k100019.html#sectlevel3id003002003">3.2.3 Erste Schritte</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id003002001"></a>
+<h3>3.2.1 &Uuml;berblick </h3>
+
+<p>
+Eclipse ging urspr&uuml;nglich aus <a name="ixa100175"><i>Visual Age for Java</i></a>
+hervor, einer Entwicklungsumgebung von IBM, deren Sourcecode 2001
+der Eclipse Foundation &uuml;bergeben wurde. Mit diesem Schritt wurde
+der Markt der Entwicklungsumgebungen mit einem Schlag nachhaltig ver&auml;ndert.
+Eclipse war von nun an unter der offenen EPL (Eclipse Public License)
+frei verf&uuml;gbar und tat sich durch eine Reihe innovativer Funktionen
+hervor, die bis dahin den kostenpflichtigen IDEs vorbehalten waren.
+Eclipse wird seitdem von einer starken Community getragen und unerm&uuml;dlich
+weiterentwickelt, auch von vielen namhaften Firmen der Branche. 
+
+<p>
+Eclipse selbst ist in Java entwickelt und steht f&uuml;r Windows,
+Linux und Mac OS X zur Verf&uuml;gung. Die Eclipse IDE besteht aus
+der sogenannten &#187;Plattform&#171; und der eigentlichen IDE, die
+auf der Plattform gr&uuml;ndet. Eclipse unterst&uuml;tzt auch andere
+Programmier- und Skriptsprachen (beispielsweise C/C++ oder PHP) und
+ist aufgrund seiner offenen Architektur sehr flexibel. 
+
+<!-- Section -->
+
+<a name="sectlevel3id003002002"></a>
+<h3>3.2.2 Installation </h3>
+
+<p>
+Sie k&ouml;nnen Eclipse von der Buch-DVD oder von der offiziellen
+Projektseite unter <a href="http://www.eclipse.org/downloads">http://www.eclipse.org/downloads</a>
+herunterladen. W&auml;hlen Sie auf der Internetseite gegebenenfalls
+das Paket &#187;Eclipse IDE for Java Developers&#171; aus und beachten
+Sie, dass Eclipse eine vorinstallierte Java-Runtime-Umgebung ben&ouml;tigt.
+Wie diese zu installieren ist, k&ouml;nnen Sie in <a href="k100013.html#jdkinstallationdetails">Abschnitt 2.1.2</a>
+nachlesen. 
+
+<p>
+Im Folgenden wird die Installation unter Windows beschrieben. Legen
+Sie dazu einfach ein Verzeichnis an, in dem Sie Eclipse ablegen m&ouml;chten,
+z.B. <font color="#660099">c:\Programme\Eclipse</font>. Entpacken
+Sie in diesem Verzeichnis die heruntergeladene Datei, z.B mit <font color="#000077"><tt>Filzip</tt></font>
+oder mit <font color="#000077"><tt>WinZip</tt></font>. Legen Sie nun
+ein weiteres Verzeichnis an, in dem Eclipse die Quelltexte aller Projekte
+verwalten soll, z.B. <font color="#660099">c:\workspace</font>. Dies
+ist der sogenannte <a name="ixa100176"><i>Workspace</i></a>. 
+
+<!-- Section -->
+
+<a name="sectlevel3id003002003"></a>
+<h3>3.2.3 Erste Schritte </h3>
+
+<p>
+Starten Sie anschlie&szlig;end das Programm <font color="#660099">eclipse.exe</font>
+aus dem Installationsverzeichnis. Um in Zukunft die IDE bequemer starten
+zu k&ouml;nnen, k&ouml;nnen Sie eine Verkn&uuml;pfung anlegen und
+diese auf Ihren Desktop legen. Wenn Sie beim ersten Start nach dem
+Ort Ihres Workspace gefragt werden, geben Sie <font color="#660099">c:\workspace</font>
+an. 
+<p>
+<a name="imageid003001"></a>
+<img src="images/Eclipse_Workspacewahl.gif">
+<p>
+
+<p><i>
+Abbildung 3.1: Auswahl des Workspace</i></p>
+
+<p>
+Nun startet die Eclipse IDE mit einem Willkommensbildschirm, den Sie
+einfach schlie&szlig;en, anschlie&szlig;end kommt die Arbeitsoberfl&auml;che
+zum Vorschein, wie ihn die n&auml;chste Abbildung zeigt. Diese Arbeitsfl&auml;che
+hei&szlig;t <a name="ixa100177"><i>Perspektive</i></a>; konkret befinden
+Sie sich zun&auml;chst auf der Java-Perspektive. Perspektiven lassen
+sich &uuml;ber die Togglebuttons oben rechts wechseln. Anfangs befindet
+sich dort nur ein Togglebutton, n&auml;mlich der f&uuml;r die Java-Perspektive.
+
+<p>
+Die Java-Perspektive teilt sich in vier Bereiche auf, in denen sich
+die sogenannten &#187;Views&#171; befinden. Links sehen Sie beispielsweise
+die <i>Package Explorer View</i> und unten befindet sich eine View,
+die eine Liste mit Compiler-Fehlern zeigt. Die Perspektiven und Views
+lassen sich nach Belieben konfigurieren. 
+<p>
+<a name="imageid003002"></a>
+<img src="images/Eclipse_Init.gif">
+<p>
+
+<p><i>
+Abbildung 3.2: Die Eclipse IDE nach dem ersten &Ouml;ffnen</i></p>
+
+<p>
+Nachdem wir uns mit der Oberfl&auml;che ein wenig vertraut gemacht
+haben, wollen wir im Folgenden mit Hilfe des <font color="#000077"><tt>HelloWorld</tt></font>-Programms
+(siehe <a href="k100014.html#helloworld">Listing 2.1</a>) etwas tiefer
+in die Features der IDE einsteigen und die folgenden beiden Schritte
+ausf&uuml;hren: 
+<ul>
+<li>Da die Arbeiten in <i>Projekten</i> organisiert sind, legen wir
+zun&auml;chst ein neues Java-Projekt an. 
+<li>Innerhalb des neu angelegten Projekts legen wir die neue Java-Klasse
+an, implementieren diese und experimentieren ein wenig mit ihr herum.
+</ul>
+
+<p>
+Bewegen Sie zun&auml;chst die Maus in den Package Explorer und &ouml;ffnen
+Sie per Rechtsklick das Kontextmen&uuml;. W&auml;hlen Sie &#187;New&#171;
+und &#187;Java-Project&#171; und geben Sie im folgenden Dialog den
+Namen f&uuml;r das Projekt ein, z.B. <font color="#000077"><tt>HelloWorld</tt></font>.
+Best&auml;tigen Sie Ihre Eingaben, indem Sie den Dialog &uuml;ber
+&#187;Okay&#171; verlassen. 
+
+<p>
+In der Baumstruktur des Package Explorers sehen Sie das neue <font color="#000077"><tt>HelloWorld</tt></font>-Projekt.
+Klappen Sie nun den Knoten des Baums auf. Eclipse hat darin bereits
+einen <font color="#660099">src</font>-Ordner angelegt, der Ausgangspunkt
+f&uuml;r alle Klassen des Projekts ist. 
+
+<p>
+Als N&auml;chstes legen wir die Klasse <font color="#000077"><tt>HelloWorld</tt></font>
+an, und zwar der Einfachheit halber direkt im Default-Package, also
+direkt im <font color="#660099">src</font>-Verzeichnis selbst, nicht
+in einem seiner Unterverzeichnisse. &Ouml;ffnen Sie dazu auf dem <font color="#660099">src</font>-Verzeichnis
+das Kontextmen&uuml; per rechtem Mausklick und w&auml;hlen Sie &#187;New&#171;
+und &#187;Class&#171;. Nun &ouml;ffnet sich ein Wizard, in dem Sie
+als Klassennamen <font color="#000077"><tt>HelloWorld</tt></font>
+eingeben. Best&auml;tigen Sie Ihre Eingaben, indem Sie den Dialog
+&uuml;ber &#187;Okay&#171; verlassen. 
+
+<p>
+Eclipse hat nun wie erwartet die Datei <font color="#660099">HelloWorld.java</font>
+angelegt: 
+<a name="helloworldeclipse1"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> HelloWorld {
+<font color="#555555">002 </font><a name="helloworldeclipse1.a"></a>
+<font color="#555555">003 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 3.1: HelloWorld nach dem Anlegen der Klasse durch den Wizard
+</i></p>
+
+<p>
+Das Syntaxhighlighting hebt die Schl&uuml;sselw&ouml;rter <a href="index_p.html#ixb100083"><font color=#000080><tt>public</tt></font></a>
+und <a href="index_c.html#ixb100178"><font color=#000080><tt>class</tt></font></a>
+farblich und durch Fettschrift hervor; der Code l&auml;sst sich dadurch
+leichter lesen. 
+
+<p>
+Eclipse bietet einige hilfreiche vorkonfigurierte Codevervollst&auml;ndigungen,
+die mit dem Tastenk&uuml;rzel <font color="#007700"><tt>[STRG]</tt></font>+<font color="#007700"><tt>[LEER]</tt></font>
+ausgel&ouml;st werden k&ouml;nnen. Setzen Sie dazu den Cursor in den
+Klassenrumpf (in <a href="k100019.html#helloworldeclipse1.a">Zeile 002</a>
+von <a href="k100019.html#helloworldeclipse1">Listing 3.1</a>) und
+geben Sie <font color="#000077"><tt>main</tt></font> ein. Dr&uuml;cken
+Sie direkt nach der Eingabe <font color="#007700"><tt>[STRG]</tt></font>+<font color="#007700"><tt>[LEER]</tt></font>.
+Nun &ouml;ffnet sich ein Kontextmen&uuml;, das die M&ouml;glichkeit
+bietet, eine <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>-Methode
+zu generieren. Nach Dr&uuml;cken von <font color="#007700"><tt>[ENTER]</tt></font>
+wird die Methode generiert. 
+<a name="helloworldeclipse2"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> HelloWorld {
+<font color="#555555">002 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args) {
+<font color="#555555">003 </font><a name="helloworldeclipse2.a"></a>	
+<font color="#555555">004 </font>}
+<font color="#555555">005 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 3.2: HelloWorld nach dem Erzeugen der main-Methode </i></p>
+
+<p>
+Setzen Sie anschlie&szlig;end den Cursor in den Rumpf der <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>-Methode
+(in <a href="k100019.html#helloworldeclipse2.a">Zeile 003</a> von
+<a href="k100019.html#helloworldeclipse2">Listing 3.2</a>). Wenn Sie
+<font color="#000077"><tt>sysout</tt></font> eingeben und <font color="#007700"><tt>[STRG]</tt></font>+<font color="#007700"><tt>[LEER]</tt></font>
+dr&uuml;cken, ersetzt der Editor dieses K&uuml;rzel durch <font color="#000077"><tt>System.out.println();</tt></font>.
+<a name="helloworldeclipse3"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> HelloWorld {
+<font color="#555555">002 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args) {
+<font color="#555555">003 </font>  System.out.println();	
+<font color="#555555">004 </font>}
+<font color="#555555">005 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 3.3: HelloWorld nach dem Generieren der Konsolenausgabe </i></p>
+
+<p>
+Vervollst&auml;ndigen Sie den Code, indem Sie zwischen den Klammern
+<font color="#000077"><tt>"Hello, world"</tt></font> einf&uuml;gen:
+<a name="listingid003004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> HelloWorld {
+<font color="#555555">002 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args) {
+<font color="#555555">003 </font>  System.out.println(<font color="#0000FF">"Hello, world"</font>);	
+<font color="#555555">004 </font>}
+<font color="#555555">005 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 3.4: HelloWorld </i></p>
+
+<p>
+Und speichern Sie das Programm, indem Sie <font color="#007700"><tt>[STRG]</tt></font>+<font color="#007700"><tt>[S]</tt></font>
+dr&uuml;cken. 
+
+<p>
+Um das Programm auszuf&uuml;hren, w&auml;hlen Sie im Run-Men&uuml;
+&#187;Run As...&#171;, &#187;Java Application&#171; aus. In der unteren
+View tritt die Konsole in den Vordergrund und zeigt die Ausgabe: 
+<font color="#333300">
+<pre>
+Hello, world
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Unter Eclipse braucht man Java-Klassen nicht explizit zu kompilieren,
+denn sobald eine Klasse nach einer &Auml;nderung gespeichert wird,
+kompiliert Eclipse diese und alle abh&auml;ngigen Klassen automatisch
+im Hintergrund.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Wir haben nun mit relativ wenig Aufwand ein voll funktionsf&auml;higes
+Programm erzeugt, das allerdings optisch noch nicht ganz unseren Erwartungen
+entspricht. Gl&uuml;cklicherweise besitzt der Editor einen <a name="ixa100178"><i>Codeformatter</i></a>,
+der Zeilen automatisch einr&uuml;ckt und Klammerungen korrigiert.
+Diesen ruft man mit dem Tastenk&uuml;rzel <font color="#007700"><tt>[UMSCHALT]</tt></font>+<font color="#007700"><tt>[STRG]</tt></font>+<font color="#007700"><tt>[F]</tt></font>
+auf. 
+<a name="listingid003005"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> HelloWorld {
+<font color="#555555">002 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args) {
+<font color="#555555">003 </font>    System.out.println(<font color="#0000FF">"Hello, world"</font>);
+<font color="#555555">004 </font>	}
+<font color="#555555">005 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 3.5: Formatierte HelloWorld-Implementation </i></p>
+
+<p>
+Als N&auml;chstes wollen wir Javadoc-Tooltips kennenlernen. Dokumentieren
+Sie dazu die <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>-Methode,
+indem Sie zwischen Zeile 1 und 2 des vorigen Listings eine weitere
+Zeile einf&uuml;gen, <a href="index_0.html#ixb100180"><font color=#000080><tt>/**</tt></font></a>
+hineinschreiben und <font color="#007700"><tt>[ENTER]</tt></font>
+dr&uuml;cken. Nun wird ein Methodenkommentar erzeugt: 
+<a name="listingid003006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> HelloWorld {
+<font color="#555555">002 </font>  <font color="#00AA00">/**
+<font color="#555555">003 </font>   * 
+<font color="#555555">004 </font>   * @param args
+<font color="#555555">005 </font>   */</font>
+<font color="#555555">006 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args) {
+<font color="#555555">007 </font>    System.out.println(<font color="#0000FF">"Hello, world"</font>);
+<font color="#555555">008 </font>  }
+<font color="#555555">009 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 3.6: HelloWorld mit generierter main-Dokumentation </i></p>
+
+<p>
+Dokumentieren Sie nun die <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>-Methode
+wie folgt: 
+<a name="helloworldeclipse4"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> HelloWorld {
+<font color="#555555">002 </font>  <font color="#00AA00">/**
+<font color="#555555">003 </font>   * Gibt "Hello, world" auf der Konsole aus.
+<font color="#555555">004 </font>   *
+<font color="#555555">005 </font>   * @param args   Kommandozeilenparameter werden ignoriert
+<font color="#555555">006 </font>   */</font>
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args) {
+<font color="#555555">008 </font>	  System.out.println(<font color="#0000FF">"Hello, world"</font>); <a name="helloworldeclipse4.a"></a>
+<font color="#555555">009 </font>  }
+<font color="#555555">010 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 3.7: HelloWorld mit main-Dokumentation </i></p>
+
+<p>
+Wenn man nun mit der Maus auf das Wort <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>
+im Quelltext zeigt, &ouml;ffnet sich ein Tooltip mit der zugeh&ouml;rigen
+Dokumentation. 
+<p>
+<a name="imageid003003"></a>
+<img src="images/Eclipse_JavaDoc.gif">
+<p>
+
+<p><i>
+Abbildung 3.3: Javadoc-Tooltip unter Eclipse</i></p>
+
+<p>
+Das Gleiche funktioniert auch f&uuml;r Klassen- und Felddokumentationen
+und f&uuml;r alle im Klassenpfad eingelinkten Bibliotheken, insbesondere
+auch f&uuml;r alle Klassen des JDK. Dies gilt allerdings nur, sofern
+der Sourcecode zur Verf&uuml;gung steht. Sie k&ouml;nnen das ausprobieren,
+indem Sie den Mauszeiger beispielsweise &uuml;ber die <a href="index_p.html#ixb100181"><font color=#000080><tt>println</tt></font></a>-Methode
+oder die <a href="index_s.html#ixb100182"><font color=#000080><tt>System</tt></font></a>-Klasse
+bewegen, um die passende Dokumentation aus dem JDK anzuzeigen. Dieses
+Feature ist praktisch und schnell und erspart den Medienbruch durch
+das Nachschlagen in einem externen Browser. 
+
+<p>
+Gehen Sie nun mit dem Cursor in <a href="k100019.html#helloworldeclipse4.a">Zeile 008</a>
+des obigen Programms und dr&uuml;cken Sie gleichzeitig <font color="#007700"><tt>[STRG]</tt></font>+<font color="#007700"><tt>[ALT]</tt></font>+<font color="#007700"><tt>[CURSORRUNTER]</tt></font>.
+Halten Sie danach <font color="#007700"><tt>[STRG]</tt></font>+<font color="#007700"><tt>[ALT]</tt></font>
+gedr&uuml;ckt und dr&uuml;cken Sie mehrfach hintereinander <font color="#007700"><tt>[CURSORRUNTER]</tt></font>.
+Diese Tastenkombination kopiert jeweils die aktuelle Zeile und legt
+die neue Zeile darunter an. Das Programm sieht nun wie folgt aus:
+<a name="helloworldeclipse5"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> HelloWorld {
+<font color="#555555">002 </font>  <font color="#00AA00">/**
+<font color="#555555">003 </font>   * Gibt "Hello, world" auf der Konsole aus.
+<font color="#555555">004 </font>   *
+<font color="#555555">005 </font>   * @param args   Kommandozeilenparameter werden ignoriert
+<font color="#555555">006 </font>   */</font>
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args) {
+<font color="#555555">008 </font>    System.out.println(<font color="#0000FF">"Hello, world"</font>);
+<font color="#555555">009 </font>    System.out.println(<font color="#0000FF">"Hello, world"</font>); <a name="helloworldeclipse5.a"></a>
+<font color="#555555">010 </font>    System.out.println(<font color="#0000FF">"Hello, world"</font>);
+<font color="#555555">011 </font>    System.out.println(<font color="#0000FF">"Hello, world"</font>);
+<font color="#555555">012 </font>    System.out.println(<font color="#0000FF">"Hello, world"</font>);
+<font color="#555555">013 </font>  }
+<font color="#555555">014 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 3.8: Kopierte Zeilen </i></p>
+
+<p>
+F&uuml;hren Sie das Programm wie oben beschrieben aus oder dr&uuml;cken
+Sie in der Toolbar auf den Run-Button. Im Konsolenfenster erscheint
+folgende Ausgabe: 
+<font color="#333300">
+<pre>
+Hello, world
+Hello, world
+Hello, world
+Hello, world
+Hello, world
+</pre>
+</font>
+
+<p>
+Gehen Sie nun in <a href="k100019.html#helloworldeclipse5.a">Zeile 009</a>
+des obigen Programms und dr&uuml;cken Sie <font color="#007700"><tt>[STRG]</tt></font>+<font color="#007700"><tt>[UMSCHALT]</tt></font>+<font color="#007700"><tt>[B]</tt></font>.
+Am linken Rand des Editors sehen Sie einen blauen Punkt, denn Sie
+haben soeben einen Breakpoint<a name="ixa100179"></a> gesetzt, also
+eine Zeile markiert, an der das Programm w&auml;hrend der Ausf&uuml;hrung
+anhalten soll. Sie k&ouml;nnen einen Breakpoint auch mit der Maus
+setzen, indem Sie neben der betreffenden Zeile doppelklicken, also
+dort, wo der blaue Punkt steht. 
+
+<p>
+Eclipse bietet einen integrierten Debugger<a name="ixa100180"></a>
+zur Fehlersuche an. Er ist leistungsf&auml;hig, einfach zu bedienen
+und erlaubt es sogar, Programmcode im laufenden Programm zu &auml;ndern.
+Startet man die Anwendung im Debugger, bewirkt ein Breakpoint, dass
+der Debugger die Anwendung an dieser Stelle anh&auml;lt und die Kontrolle
+an den Programmer zur&uuml;ckgibt. Dieser kann dann den Zustand der
+Variablen untersuchen oder zeilenweise weiter durch das Programm laufen.
+
+<p>
+Wir f&uuml;hren das Programm im Debugger aus, indem wir im Men&uuml;
+&#187;Run&#171;, &#187;Debug As&#171;, &#187;Java Application&#171;
+w&auml;hlen. Der Debugger startet das Programm und h&auml;lt die Ausf&uuml;hrung
+an dem definierten Breakpoint an. Eclipse fragt nun, ob es in die
+Debug-Perspektive wechseln soll, was wir mit &#187;Yes&#171; beantworten.
+Rechts oben in der Toolbar sind nun zwei Togglebuttons &#187;Debug&#171;
+und &#187;Java&#171; zu sehen. Um sp&auml;ter in die Java-Ansicht
+zur&uuml;ckzukehren, dr&uuml;cken Sie auf den Java-Togglebutton. Zun&auml;chst
+bleiben wir aber in der Debug-Ansicht. 
+<p>
+<a name="imageid003004"></a>
+<img src="images/Eclipse_Debug.gif">
+<p>
+
+<p><i>
+Abbildung 3.4: Eclipse IDE in der Debug-Perspektive</i></p>
+
+<p>
+Man kann nun leicht erkennen, dass der Debugger an einem Breakpoint
+stehen geblieben ist: 
+<ul>
+<li>In der oberen View sehen Sie den Stacktrace des unterbrochenen
+Threads. Er zeigt hervorgehoben <font color="#000077"><tt>HelloWorld.main(String[])
+line: 9</tt></font>. 
+<li>In der mittleren View, also im Editor, ist <a href="k100019.html#helloworldeclipse5.a">Zeile 009</a>
+durch eine transparente Hintergrundfarbe hervorgehoben.
+<li>In der Konsole sehen wir bislang nur eine Ausgabezeile <font color="#000077"><tt>Hello,
+world</tt></font>. 
+</ul>
+
+<p>
+Bitte beachten Sie, dass <a href="k100019.html#helloworldeclipse5.a">Zeile 009</a>,
+also die Zeile, in der wir den Breakpoint gesetzt haben, noch nicht
+ausgef&uuml;hrt wurde. Dr&uuml;cken Sie einfach <font color="#007700"><tt>[F6]</tt></font>,
+um die n&auml;chste Zeile auszuf&uuml;hren und eine weitere &#187;Hello,
+world&#171;-Zeile auf der Konsole auszugeben. Wiederholen Sie diesen
+Schritt, bis das Programm vollst&auml;ndig abgearbeitet wurde. 
+
+<p>
+Wir wollen es hier bei dieser kleinen Einf&uuml;hrung bewenden lassen.
+Weitere Informationen finden sich in der Dokumentation zu Eclipse
+selbst oder in einem der zahlreichen Artikel und Dokumente, die frei
+im Internet verf&uuml;gbar sind. Daneben gibt es eine Reihe auch deutschsprachiger
+B&uuml;cher, die sich Eclipse widmen und diese Entwicklungsumgebung
+mit all ihren Facetten viel umfassender behandeln, als wir das hier
+k&ouml;nnen. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100017.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100018.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100020.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100024.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

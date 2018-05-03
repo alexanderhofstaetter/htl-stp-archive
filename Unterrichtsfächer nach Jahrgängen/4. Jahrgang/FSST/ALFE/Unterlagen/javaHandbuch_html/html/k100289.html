@@ -1,0 +1,440 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100284.html;106,k100288.html;107,k100290.html;108,k100292.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100284.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100288.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100290.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100292.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 45 - Reflection
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="arraysmitreflection"></a>
+<h2>45.5 Arrays </h2>
+<hr>
+<ul>
+<li><a href="k100289.html#arraysmitreflection">45.5 Arrays</a>
+<ul>
+<li><a href="k100289.html#sectlevel3id045005001">45.5.1 Erzeugen von Arrays</a>
+<li><a href="k100289.html#sectlevel3id045005002">45.5.2 Zugriff auf Array-Elemente</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id045005001"></a>
+<h3>45.5.1 Erzeugen von Arrays </h3>
+
+<p>
+Auch f&uuml;r das Erzeugen von Arrays und den Zugriff auf ihre Elemente
+stellt Reflection Mechanismen zur Verf&uuml;gung. Wichtige Voraussetzung
+daf&uuml;r ist, dass Arrays in Java <i>Objekte</i> sind und ein Array
+somit immer eine Instanz der Klasse <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+ist, gleich welchen Typs seine Elemente sind. Alle Methoden zum dynamischen
+Zugriff auf Arrays sind in der Klasse <a name="ixa103355"><a href="index_a.html#ixb102509"><font color=#000080><tt>Array</tt></font></a></a>
+geb&uuml;ndelt, die sich ebenfalls im Paket <a href="index_j.html#ixb100611"><font color=#000080><tt>java.lang.reflect</tt></font></a>
+befindet. <a href="index_a.html#ixb102509"><font color=#000080><tt>Array</tt></font></a>
+enth&auml;lt ausschlie&szlig;lich statische Methoden, die sich grob
+in die beiden Gruppen <i>Erzeugen von Arrays</i> und <i>Zugriff auf
+Array-Elemente</i> einteilen lassen. 
+
+<p>
+Um ein Array dynamisch zu erzeugen, gibt es in <a href="index_a.html#ixb102509"><font color=#000080><tt>Array</tt></font></a>
+zwei Methoden mit dem Namen <a name="ixa103356"><a href="index_n.html#ixb102293"><font color=#000080><tt>newInstance</tt></font></a></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static Object newInstance(Class&lt;?&gt; componentType, int length)
+  throws NegativeArraySizeException
+
+public static Object newInstance(Class&lt;?&gt; componentType, int[] dimensions)
+  throws IllegalArgumentException, NegativeArraySizeException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/reflect/Array.html" onClick="this.href=getApiDoc('java.lang.reflect.Array')"><font color="#660066" size=-1>java.lang.reflect.Array</font></a></td>
+</tr>
+</table>
+
+<p>
+Beide Methoden erwarten als erstes Argument ein Klassenobjekt, das
+den Typ der Array-Elemente bestimmt. Dieses kann mit der Methode <a href="index_g.html#ixb100792"><font color=#000080><tt>getClass</tt></font></a>
+oder - wie in <a href="k100287.html#reflectionmethodenaufrufe">Abschnitt 45.3</a>
+gezeigt - mit der .TYPE- oder .class-Notation erzeugt werden. Als
+zweites Element wird entweder ein einzelner Wert des Typs <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>
+angegeben, wenn ein eindimensionales Array erzeugt werden soll. Er
+gibt die Anzahl der zu erzeugenden Array-Elemente an. Alternativ kann
+ein <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>-Array
+&uuml;bergeben werden, dessen Elementzahl die Anzahl der Dimensionen
+des zu erzeugenden Arrays bestimmt. Jedes Element definiert seinerseits,
+wie viele Elemente die korrespondierende Dimension hat. Der R&uuml;ckgabewert
+von <a href="index_n.html#ixb102293"><font color=#000080><tt>newInstance</tt></font></a>
+ist das neu erzeugte Array, typisiert als <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>.
+
+<p>
+Wir wollen uns ein einfaches Beispiel ansehen: 
+<a name="reflarrays1"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4508.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.lang.reflect.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4508
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> createArray1()
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#00AA00">//Erzeugt ein eindimensionales int-Array</font>
+<font color="#555555">010 </font>    Object ar = Array.newInstance(Integer.TYPE, 3); <a name="reflarrays1.a"></a>
+<font color="#555555">011 </font>    <font color="#006699">int</font>[] iar = (<font color="#006699">int</font>[])ar;
+<font color="#555555">012 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; iar.length; ++i) {
+<font color="#555555">013 </font>      iar[i] = i;
+<font color="#555555">014 </font>      System.out.println(iar[i]);
+<font color="#555555">015 </font>    };
+<font color="#555555">016 </font>  }
+<font color="#555555">017 </font>
+<font color="#555555">018 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> createArray2()
+<font color="#555555">019 </font>  {
+<font color="#555555">020 </font>    <font color="#00AA00">//Erzeugt ein zweidimensionales String-Array</font>
+<font color="#555555">021 </font>    Object ar = Array.newInstance(String.<font color="#0000AA">class</font>, <font color="#0000AA">new</font> <font color="#006699">int</font>[]{7, 4}); <a name="reflarrays1.b"></a>
+<font color="#555555">022 </font>    String[][] sar = (String[][])ar;
+<font color="#555555">023 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; sar.length; ++i) {
+<font color="#555555">024 </font>      <font color="#0000AA">for</font> (<font color="#006699">int</font> j = 0; j &lt; sar[i].length; ++j) {
+<font color="#555555">025 </font>        sar[i][j] = <font color="#0000FF">"("</font> + i + <font color="#0000FF">","</font> + j + <font color="#0000FF">")"</font>;
+<font color="#555555">026 </font>        System.out.print(sar[i][j] + <font color="#0000FF">" "</font>);
+<font color="#555555">027 </font>      }
+<font color="#555555">028 </font>      System.out.println();
+<font color="#555555">029 </font>    };
+<font color="#555555">030 </font>  }
+<font color="#555555">031 </font>
+<font color="#555555">032 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">033 </font>  {
+<font color="#555555">034 </font>    createArray1();
+<font color="#555555">035 </font>    System.out.println(<font color="#0000FF">"--"</font>);
+<font color="#555555">036 </font>    createArray2();
+<font color="#555555">037 </font>  }
+<font color="#555555">038 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4508.java"><font color="#000055" size=-1>Listing4508.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 45.8: Erzeugen von Arrays per Reflection</i></p>
+
+<p>
+In <a href="k100289.html#reflarrays1.a">Zeile 010</a> wird ein eindimensionales
+<a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>-Array
+mit drei Elementen erzeugt, das zun&auml;chst vom Typ <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+ist. Um zu zeigen, dass es sich tats&auml;chlich um ein derartiges
+Array handelt, f&uuml;hren wir in der n&auml;chsten Zeile eine Typkonvertierung
+auf <font color="#000077"><tt>int[]</tt></font> durch und weisen es
+der Hilfsvariablen <font color="#000077"><tt>iar</tt></font> zu, auf
+der auch alle weiteren Zugriffe auf das Array erfolgen. 
+
+<p>
+Analog wird in <a href="k100289.html#reflarrays1.b">Zeile 021</a>
+ein weiteres Array erzeugt. Es ist ein zweidimensionales Array vom
+Typ <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>,
+das sieben Zeilen und vier Spalten besitzt. Auch hier wird in der
+n&auml;chsten Zeile eine Typkonvertierung vorgenommen, damit die anschlie&szlig;enden
+Zugriffe bequem erfolgen k&ouml;nnen. Die Ausgabe des Programms lautet:
+<font color="#333300">
+<pre>
+0
+1
+2
+--
+(0,0) (0,1) (0,2) (0,3)
+(1,0) (1,1) (1,2) (1,3)
+(2,0) (2,1) (2,2) (2,3)
+(3,0) (3,1) (3,2) (3,3)
+(4,0) (4,1) (4,2) (4,3)
+(5,0) (5,1) (5,2) (5,3)
+(6,0) (6,1) (6,2) (6,3)
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="sectlevel3id045005002"></a>
+<h3>45.5.2 Zugriff auf Array-Elemente </h3>
+
+<p>
+W&auml;hrend wir im vorigen Beispiel noch mit der schon aus <a href="k100043.html#objektoperatoren">Abschnitt 6.7.2</a>
+bekannten []-Notation auf die Elemente der per Reflection erzeugten
+Arrays zugegriffen haben, wollen wir uns in diesem Abschnitt ansehen,
+wie auch die Elementzugriffe vollkommen dynamisch durchgef&uuml;hrt
+werden k&ouml;nnen. Dazu stellt die Klasse <a href="index_a.html#ixb102509"><font color=#000080><tt>Array</tt></font></a>
+folgende Methoden zur Verf&uuml;gung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static Object get(Object array, int index)
+  throws IllegalArgumentException, ArrayIndexOutOfBoundsException
+
+public static void set(Object array, int index, object value)
+  throws IllegalArgumentException, ArrayIndexOutOfBoundsException
+
+public static int getLength(Object array)
+  throws IllegalArgumentException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/reflect/Array.html" onClick="this.href=getApiDoc('java.lang.reflect.Array')"><font color="#660066" size=-1>java.lang.reflect.Array</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa103357"><a href="index_g.html#ixb100713"><font color=#000080><tt>get</tt></font></a></a>
+kann auf das Element mit dem Index <font color="#000077"><tt>index</tt></font>
+des Arrays <font color="#000077"><tt>array</tt></font> zugegriffen
+werden. Es wird stets als <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+zur&uuml;ckgegeben, primitive Typen werden in ein Wrapper-Objekt verpackt.
+Die Methode <a name="ixa103358"><a href="index_s.html#ixb100160"><font color=#000080><tt>set</tt></font></a></a>
+f&uuml;hrt die umgekehrte Funktion aus. Sie speichert den Wert <font color="#000077"><tt>value</tt></font>
+an der durch <font color="#000077"><tt>index</tt></font> bezeichneten
+Position im Array <font color="#000077"><tt>array</tt></font>. Auch
+hier m&uuml;ssen primitive Werte vor der &Uuml;bergabe in ein Wrapper-Objekt
+verpackt werden. Beide Methoden l&ouml;sen eine Ausnahme aus, wenn
+das &uuml;bergebene Objekt kein Array ist oder ein ung&uuml;ltiger
+Index angegeben wird. Schlie&szlig;lich gibt es die Methode <a name="ixa103359"><a href="index_g.html#ixb100680"><font color=#000080><tt>getLength</tt></font></a></a>,
+mit der die Anzahl der Elemente eines Arrays ermittelt werden kann.
+
+<p>
+Der Zugriff auf mehrdimensionale Arrays erfolgt analog. Auch hier
+gilt, dass mehrdimensionale Arrays als (ggfs. mehrfach) geschachtelte
+eindimensionale Arrays dargestellt werden (siehe <a href="k100032.html#mehrdimarrays">Abschnitt 5.4.3</a>).
+Soll also beispielsweise ein Element eines zweidimensionalen Arrays
+gelesen werden, so sind dazu zwei Aufrufe von <a href="index_g.html#ixb100713"><font color=#000080><tt>get</tt></font></a>
+n&ouml;tig. Der erste liefert das geschachtelte innere Array, der
+zweite wird auf eben dieses Array angewendet und liefert das gew&uuml;nschte
+Element. Bei mehr als zwei Dimensionen sind entsprechend weitere <a href="index_g.html#ixb100713"><font color=#000080><tt>get</tt></font></a>-Aufrufe
+n&ouml;tig. 
+
+<p>
+Neben den einfachen <a href="index_g.html#ixb100713"><font color=#000080><tt>get</tt></font></a>-
+und <a href="index_s.html#ixb100160"><font color=#000080><tt>set</tt></font></a>-Methoden
+gibt es weitere, die eine automatische Konvertierung zu primitiven
+Datentypen durchf&uuml;hren: <a name="ixa103360"></a> <a name="ixa103361"></a>
+<a name="ixa103362"></a> <a name="ixa103363"></a> <a name="ixa103364"></a>
+<a name="ixa103365"></a> <a name="ixa103366"></a> <a name="ixa103367"></a>
+<a name="ixa103368"></a> <a name="ixa103369"></a> <a name="ixa103370"></a>
+<a name="ixa103371"></a> <a name="ixa103372"></a> <a name="ixa103373"></a>
+<a name="ixa103374"></a> <a name="ixa103375"></a> 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static boolean getBoolean(Object array, int index)
+  throws IllegalArgumentException, ArrayIndexOutOfBoundsException
+
+public static byte getByte(Object array, int index)
+  throws IllegalArgumentException, ArrayIndexOutOfBoundsException
+
+public static char getChar(Object array, int index)
+  throws IllegalArgumentException, ArrayIndexOutOfBoundsException
+
+public static short getShort(Object array, int index)
+  throws IllegalArgumentException, ArrayIndexOutOfBoundsException
+
+public static int getInt(Object array, int index)
+  throws IllegalArgumentException, ArrayIndexOutOfBoundsException
+
+public static long getLong(Object array, int index)
+  throws IllegalArgumentException, ArrayIndexOutOfBoundsException
+
+public static float getFloat(Object array, int index)
+  throws IllegalArgumentException, ArrayIndexOutOfBoundsException
+
+public static double getDouble(Object array, int index)
+  throws IllegalArgumentException, ArrayIndexOutOfBoundsException
+
+public static void setBoolean(Object array, int index, boolean z)
+  throws IllegalArgumentException, ArrayIndexOutOfBoundsException
+
+public static void setByte(Object array, int index, byte b)
+  throws IllegalArgumentException, ArrayIndexOutOfBoundsException
+
+public static void setChar(Object array, int index, char c)
+  throws IllegalArgumentException, ArrayIndexOutOfBoundsException
+
+public static void setShort(Object array, int index, short s)
+  throws IllegalArgumentException, ArrayIndexOutOfBoundsException
+
+public static void setInt(Object array, int index, int i)
+  throws IllegalArgumentException, ArrayIndexOutOfBoundsException
+
+public static void setLong(Object array, int index, long l)
+  throws IllegalArgumentException, ArrayIndexOutOfBoundsException
+
+public static void setFloat(Object array, int index, float f)
+  throws IllegalArgumentException, ArrayIndexOutOfBoundsException
+
+public static void setDouble(Object array, int index, double d)
+  throws IllegalArgumentException, ArrayIndexOutOfBoundsException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/reflect/Array.html" onClick="this.href=getApiDoc('java.lang.reflect.Array')"><font color="#660066" size=-1>java.lang.reflect.Array</font></a></td>
+</tr>
+</table>
+
+<p>
+Das folgende Beispiel zeigt die Anwendung der <a href="index_g.html#ixb100713"><font color=#000080><tt>get</tt></font></a>-
+und <a href="index_s.html#ixb100160"><font color=#000080><tt>set</tt></font></a>-Methoden
+auf ein dynamisch erzeugtes Array: 
+<a name="listingid045009"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4509.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.lang.reflect.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4509
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> createArray1()
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#00AA00">//Erzeugt ein eindimensionales int-Array</font>
+<font color="#555555">010 </font>    Object ar = Array.newInstance(Integer.TYPE, 3);
+<font color="#555555">011 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; Array.getLength(ar); ++i) {
+<font color="#555555">012 </font>      Array.set(ar, i, <font color="#0000AA">new</font> Integer(i));
+<font color="#555555">013 </font>      System.out.println(Array.getInt(ar, i));
+<font color="#555555">014 </font>    };
+<font color="#555555">015 </font>  }
+<font color="#555555">016 </font>
+<font color="#555555">017 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> createArray2()
+<font color="#555555">018 </font>  {
+<font color="#555555">019 </font>    <font color="#00AA00">//Erzeugt ein zweidimensionales String-Array</font>
+<font color="#555555">020 </font>    Object ar = Array.newInstance(String.<font color="#0000AA">class</font>, <font color="#0000AA">new</font> <font color="#006699">int</font>[]{7, 4});
+<font color="#555555">021 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; Array.getLength(ar); ++i) {
+<font color="#555555">022 </font>      Object subArray = Array.get(ar, i);
+<font color="#555555">023 </font>      <font color="#0000AA">for</font> (<font color="#006699">int</font> j = 0; j &lt; Array.getLength(subArray); ++j) {
+<font color="#555555">024 </font>        String value = <font color="#0000FF">"("</font> + i + <font color="#0000FF">","</font> + j + <font color="#0000FF">")"</font>;
+<font color="#555555">025 </font>        Array.set(subArray, j, value);
+<font color="#555555">026 </font>        System.out.print(Array.get(subArray, j) + <font color="#0000FF">" "</font>);
+<font color="#555555">027 </font>      }
+<font color="#555555">028 </font>      System.out.println();
+<font color="#555555">029 </font>    };
+<font color="#555555">030 </font>  }
+<font color="#555555">031 </font>
+<font color="#555555">032 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">033 </font>  {
+<font color="#555555">034 </font>    createArray1();
+<font color="#555555">035 </font>    System.out.println(<font color="#0000FF">"--"</font>);
+<font color="#555555">036 </font>    createArray2();
+<font color="#555555">037 </font>  }
+<font color="#555555">038 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4509.java"><font color="#000055" size=-1>Listing4509.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 45.9: Zugriff auf Array-Elemente per Reflection</i></p>
+
+<p>
+Der Hauptunterschied zum vorigen Beispiel liegt darin, dass die Elemente
+der Arrays nunmehr ausschlie&szlig;lich mit Methoden der Klasse <a href="index_a.html#ixb102509"><font color=#000080><tt>Array</tt></font></a>
+gesetzt und abgefragt werden. In <font color="#000077"><tt>createArray1</tt></font>
+ist es n&ouml;tig, den <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>-Wert
+beim Aufruf der <a href="index_s.html#ixb100160"><font color=#000080><tt>set</tt></font></a>-Methode
+in einen <a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>-Wrapper
+zu verpacken; das Auslesen erfolgt dagegen typkonform mit der Methode
+<a href="index_g.html#ixb102380"><font color=#000080><tt>getInt</tt></font></a>.
+
+<p>
+In <font color="#000077"><tt>createArray2</tt></font> wird jedes Element
+des &auml;u&szlig;eren Arrays zun&auml;chst in der Variablen <font color="#000077"><tt>subArray</tt></font>
+gespeichert. Da das Hauptarray <font color="#000077"><tt>ar</tt></font>
+zweidimensional ist, stellt <font color="#000077"><tt>subArray</tt></font>
+de facto ein eindimensionales <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Array
+dar, auf das in den folgenden Zeilen direkt mit <a href="index_g.html#ixb100713"><font color=#000080><tt>get</tt></font></a>
+und <a href="index_s.html#ixb100160"><font color=#000080><tt>set</tt></font></a>
+zugegriffen werden kann. 
+
+<p>
+Die Ausgabe des Programms ist identisch mit der des vorigen Beispiels:
+<font color="#333300">
+<pre>
+0
+1
+2
+--
+(0,0) (0,1) (0,2) (0,3)
+(1,0) (1,1) (1,2) (1,3)
+(2,0) (2,1) (2,2) (2,3)
+(3,0) (3,1) (3,2) (3,3)
+(4,0) (4,1) (4,2) (4,3)
+(5,0) (5,1) (5,2) (5,3)
+(6,0) (6,1) (6,2) (6,3)
+</pre>
+</font>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100284.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100288.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100290.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100292.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

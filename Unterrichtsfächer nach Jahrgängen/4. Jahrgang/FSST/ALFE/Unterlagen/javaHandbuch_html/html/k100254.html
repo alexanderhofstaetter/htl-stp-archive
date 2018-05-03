@@ -1,0 +1,1557 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100252.html;106,k100253.html;107,k100255.html;108,k100257.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100252.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100253.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100255.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100257.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 39 - Swing: Komponenten II
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id039002"></a>
+<h2>39.2 JTable </h2>
+<hr>
+<ul>
+<li><a href="k100254.html#sectlevel2id039002">39.2 JTable</a>
+<ul>
+<li><a href="k100254.html#sectlevel3id039002001">39.2.1 Erzeugen von Tabellen</a>
+<li><a href="k100254.html#sectlevel3id039002002">39.2.2 Konfiguration der Tabelle</a>
+<li><a href="k100254.html#sectlevel3id039002003">39.2.3 Selektieren von Elementen</a>
+<ul>
+<li><a href="k100254.html#sectlevel4id039002003001">Selektionsmodi</a>
+<li><a href="k100254.html#sectlevel4id039002003002">Abfragen der Selektion</a>
+<li><a href="k100254.html#sectlevel4id039002003003">Ver&auml;ndern der Selektion</a>
+</ul>
+<li><a href="k100254.html#sectlevel3id039002004">39.2.4 Zugriff auf den Inhalt der Tabelle</a>
+<ul>
+<li><a href="k100254.html#sectlevel4id039002004001">Die Daten in der Tabelle</a>
+<li><a href="k100254.html#sectlevel4id039002004002">Editieren von Tabellenelementen</a>
+</ul>
+<li><a href="k100254.html#sectlevel3id039002005">39.2.5 Das Tabellenmodell</a>
+<ul>
+<li><a href="k100254.html#sectlevel4id039002005001">Beispiel</a>
+</ul>
+<li><a href="k100254.html#sectlevel3id039002006">39.2.6 Das Spaltenmodell</a>
+<li><a href="k100254.html#sectlevel3id039002007">39.2.7 Rendering der Zellen</a>
+<li><a href="k100254.html#sectlevel3id039002008">39.2.8 Reaktion auf Ereignisse</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id039002001"></a>
+<h3>39.2.1 Erzeugen von Tabellen </h3>
+
+<p>
+Eines der in anspruchsvollen Benutzeroberfl&auml;chen am h&auml;ufigsten
+gebrauchten Dialogelemente ist die <i>Tabelle</i>, also eine mehrzeilige,
+mehrspaltige Darstellung von Daten. Diese im AWT fehlende Komponente
+wird in Swing durch die Klasse <a name="ixa102756"><a href="index_j.html#ixb102049"><font color=#000080><tt>JTable</tt></font></a></a>
+zur Verf&uuml;gung gestellt. Mit ihrer Hilfe lassen sich unterschiedlichste
+Arten von textuellen oder grafischen Daten tabellarisch darstellen
+und editieren. Das Programm hat dabei weitreichende M&ouml;glichkeiten,
+die Tabelle zu konfigurieren, ihren Inhalt anzupassen und auf Benutzerereignisse
+zu reagieren. 
+
+<p>
+Die wichtigsten Konstruktoren von <a href="index_j.html#ixb102049"><font color=#000080><tt>JTable</tt></font></a>
+sind: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public JTable(Object[][] rowData, Object[] columnNames)
+public JTable(Vector rowData, Vector columnNames)
+public JTable(TableModel dm, TableColumnModel cm, ListSelectionModel sm)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTable.html" onClick="this.href=getApiDoc('javax.swing.JTable')"><font color="#660066" size=-1>javax.swing.JTable</font></a></td>
+</tr>
+</table>
+
+<p>
+An den ersten Konstruktor werden die darzustellenden Daten in Form
+eines zweidimensionalen Arrays &uuml;bergeben. Dessen erste Dimension
+enth&auml;lt die Zeilen, die zweite die Spalten. Zur Darstellung in
+der Tabelle werden die Array-Elemente mit <a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a>
+in Strings umgewandelt. Das zweite Argument enth&auml;lt ein Array
+mit Strings, die als Spaltenk&ouml;pfe angezeigt werden. 
+
+<p>
+Statt der &Uuml;bergabe von Arrays l&auml;sst sich auch der zweite
+Konstruktor verwenden und die Daten und Spaltenk&ouml;pfe k&ouml;nnen
+in einem <a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>
+&uuml;bergeben werden. In diesem Fall muss der Datenvektor <font color="#000077"><tt>rowData</tt></font>
+f&uuml;r jede Zeile einen Untervektor mit den Datenelementen dieser
+Zeile enthalten. 
+
+<p>
+Der dritte Konstruktor stellt die allgemeinste M&ouml;glichkeit dar,
+eine <a href="index_j.html#ixb102049"><font color=#000080><tt>JTable</tt></font></a>
+zu konstruieren. Hierbei werden alle drei Modelle der Tabelle explizit
+an den Konstruktor &uuml;bergeben. Das <a name="ixa102757"><a href="index_t.html#ixb102050"><font color=#000080><tt>TableModel</tt></font></a></a>
+stellt dabei die Daten zur Verf&uuml;gung, das <a name="ixa102758"><a href="index_t.html#ixb102051"><font color=#000080><tt>TableColumnModel</tt></font></a></a>
+definiert die Spalten und das <a name="ixa102759"><a href="index_l.html#ixb101961"><font color=#000080><tt>ListSelectionModel</tt></font></a></a>
+ist f&uuml;r die Selektion von Tabellenelementen zust&auml;ndig. Werden
+alle drei Modelle separat instanziert und &uuml;bergeben, hat das
+Programm die volle Kontrolle &uuml;ber alle Aspekte der Tabellendarstellung
+und -verarbeitung. 
+
+<p>
+Eine einfache Tabelle l&auml;sst sich also sehr schnell erzeugen:
+<a name="jtableexample1"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3904.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3904
+<font color="#555555">008 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">009 </font><font color="#0000AA">implements</font> TableData
+<font color="#555555">010 </font>{
+<font color="#555555">011 </font>  <font color="#0000AA">public</font> Listing3904()
+<font color="#555555">012 </font>  {
+<font color="#555555">013 </font>    <font color="#006699">super</font>(<font color="#0000FF">"JTable 1"</font>);
+<font color="#555555">014 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">015 </font>    JTable table = <font color="#0000AA">new</font> JTable(DATA, COLHEADS);
+<font color="#555555">016 </font>    Container cp = getContentPane();
+<font color="#555555">017 </font>    cp.add(<font color="#0000AA">new</font> JLabel(<font color="#0000FF">"Alte c\'t-Ausgaben:"</font>), BorderLayout.NORTH);
+<font color="#555555">018 </font>    cp.add(<font color="#0000AA">new</font> JScrollPane(table), BorderLayout.CENTER);
+<font color="#555555">019 </font>  }
+<font color="#555555">020 </font>
+<font color="#555555">021 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">022 </font>  {
+<font color="#555555">023 </font>    Listing3904 frame = <font color="#0000AA">new</font> Listing3904();
+<font color="#555555">024 </font>    frame.setLocation(100, 100);
+<font color="#555555">025 </font>    frame.setSize(300, 200);
+<font color="#555555">026 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">027 </font>  }
+<font color="#555555">028 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3904.java"><font color="#000055" size=-1>Listing3904.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 39.4: Eine einfache Tabelle</i></p>
+
+<p>
+Die Ausgabe des Programms ist: 
+<p>
+<a name="imageid039005"></a>
+<img src="images/JTable1.gif">
+<p>
+
+<p><i>
+Abbildung 39.5: Eine einfache Tabelle</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Wie in anderen gro&szlig;en Dialogelementen haben wir die <a href="index_j.html#ixb102049"><font color=#000080><tt>JTable</tt></font></a>
+vor der &Uuml;bergabe an ihren GUI-Container in eine <a href="index_j.html#ixb101791"><font color=#000080><tt>JScrollPane</tt></font></a>
+verpackt. Neben dem Effekt, die Daten vertikal oder horizontal scrollen
+zu k&ouml;nnen, hat das vor allem zur Folge, dass die Spaltenk&ouml;pfe
+angezeigt werden. Ohne <a href="index_j.html#ixb101791"><font color=#000080><tt>JScrollPane</tt></font></a>
+w&auml;ren sie dagegen nicht sichtbar.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+In <a href="k100254.html#jtableexample1">Listing 39.4</a> wurden zwei
+Konstanten <font color="#000077"><tt>DATA</tt></font> und <font color="#000077"><tt>COLHEADS</tt></font>
+verwendet. Sie dienen als Beispieldaten f&uuml;r die Programme dieses
+Abschnitts und wurden als Konstanten in dem Interface <font color="#000077"><tt>TableData</tt></font>
+definiert: 
+<a name="listingid039005"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* TableData.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">interface</font> TableData
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#0000AA">final</font> String[][] DATA = {
+<font color="#555555">006 </font>    {<font color="#0000FF">" 1/1987"</font>, <font color="#0000FF">"195"</font>, <font color="#0000FF">"Vergleichstest EGA-Karten"</font>},
+<font color="#555555">007 </font>    {<font color="#0000FF">" 2/1987"</font>, <font color="#0000FF">"171"</font>, <font color="#0000FF">"Schneider PC: Bew&auml;hrungsprobe"</font>},
+<font color="#555555">008 </font>    {<font color="#0000FF">" 3/1987"</font>, <font color="#0000FF">"235"</font>, <font color="#0000FF">"Luxus-Textsyteme im Vergleich"</font>},
+<font color="#555555">009 </font>    {<font color="#0000FF">" 4/1987"</font>, <font color="#0000FF">"195"</font>, <font color="#0000FF">"Turbo BASIC"</font>},
+<font color="#555555">010 </font>    {<font color="#0000FF">" 5/1987"</font>, <font color="#0000FF">"211"</font>, <font color="#0000FF">"640-K-Grenze durchbrochen"</font>},
+<font color="#555555">011 </font>    {<font color="#0000FF">" 6/1987"</font>, <font color="#0000FF">"211"</font>, <font color="#0000FF">"Expertensysteme"</font>},
+<font color="#555555">012 </font>    {<font color="#0000FF">" 7/1987"</font>, <font color="#0000FF">"199"</font>, <font color="#0000FF">"IBM Model 30 im Detail"</font>},
+<font color="#555555">013 </font>    {<font color="#0000FF">" 8/1987"</font>, <font color="#0000FF">"211"</font>, <font color="#0000FF">"PAK-68: Tuning f&uuml;r 68000er"</font>},
+<font color="#555555">014 </font>    {<font color="#0000FF">" 9/1987"</font>, <font color="#0000FF">"215"</font>, <font color="#0000FF">"Desktop Publishing"</font>},
+<font color="#555555">015 </font>    {<font color="#0000FF">"10/1987"</font>, <font color="#0000FF">"279"</font>, <font color="#0000FF">"2,5 MByte im ST"</font>},
+<font color="#555555">016 </font>    {<font color="#0000FF">"11/1987"</font>, <font color="#0000FF">"279"</font>, <font color="#0000FF">"Transputer-Praxis"</font>},
+<font color="#555555">017 </font>    {<font color="#0000FF">"12/1987"</font>, <font color="#0000FF">"271"</font>, <font color="#0000FF">"Preiswert mit 24 Nadeln"</font>},
+<font color="#555555">018 </font>    {<font color="#0000FF">" 1/1988"</font>, <font color="#0000FF">"247"</font>, <font color="#0000FF">"Schnelle 386er"</font>},
+<font color="#555555">019 </font>    {<font color="#0000FF">" 2/1988"</font>, <font color="#0000FF">"231"</font>, <font color="#0000FF">"Hayes-kompatible Modems"</font>},
+<font color="#555555">020 </font>    {<font color="#0000FF">" 3/1988"</font>, <font color="#0000FF">"295"</font>, <font color="#0000FF">"TOS/GEM auf 68020"</font>},
+<font color="#555555">021 </font>    {<font color="#0000FF">" 4/1988"</font>, <font color="#0000FF">"263"</font>, <font color="#0000FF">"Projekt Super-EGA"</font>},
+<font color="#555555">022 </font>    {<font color="#0000FF">" 5/1988"</font>, <font color="#0000FF">"263"</font>, <font color="#0000FF">"Neuheiten auf der CeBIT 88"</font>},
+<font color="#555555">023 </font>    {<font color="#0000FF">" 6/1988"</font>, <font color="#0000FF">"231"</font>, <font color="#0000FF">"9600-Baud-Modem am Postnetz"</font>}
+<font color="#555555">024 </font>  };
+<font color="#555555">025 </font>
+<font color="#555555">026 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#0000AA">final</font> String[] COLHEADS = {
+<font color="#555555">027 </font>    <font color="#0000FF">"Ausgabe"</font>, <font color="#0000FF">"Seiten"</font>, <font color="#0000FF">"Titelthema"</font>
+<font color="#555555">028 </font>  };
+<font color="#555555">029 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/TableData.java"><font color="#000055" size=-1>TableData.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 39.5: Das Interface TableData</i></p>
+
+<p>
+Auf diese Weise k&ouml;nnen die Daten in den folgenden Beispielen
+dieses Abschnitts einfach mit der Anweisung <font color="#000077"><tt>implements
+TableData</tt></font> importiert und dem Programm zur Verf&uuml;gung
+gestellt werden. Diese - auf den ersten Blick - etwas ungew&ouml;hnliche
+Verwendung eines Interface ist ein Standard-Idiom in Java und wurde
+in <a href="k100067.html#konstininterfaces">Abschnitt 10.4.1</a> erl&auml;utert.
+
+
+<!-- Section -->
+<a name="sectlevel3id039002002"></a>
+<h3>39.2.2 Konfiguration der Tabelle </h3>
+
+<p>
+Eine <a href="index_j.html#ixb102049"><font color=#000080><tt>JTable</tt></font></a>
+l&auml;sst sich auf vielf&auml;ltige Weise konfigurieren. Mit <a name="ixa102760"><a href="index_s.html#ixb102052"><font color=#000080><tt>setRowHeight</tt></font></a></a>
+wird die Gesamth&ouml;he einer Zeile festgelegt, alle Zeilen sind
+dabei gleich hoch. Mit <a name="ixa102761"><a href="index_s.html#ixb102053"><font color=#000080><tt>setRowMargin</tt></font></a></a>
+wird der am oberen und unteren Rand jeder Zelle freibleibende Platz
+bestimmt. Der f&uuml;r den Inhalt der Zelle verf&uuml;gbare Platz
+ergibt sich aus der Zellenh&ouml;he minus oberem und unterem Rand.
+Durch Aufruf von <a name="ixa102762"><a href="index_s.html#ixb102054"><font color=#000080><tt>setIntercellSpacing</tt></font></a></a>
+kann (zusammen mit dem vertikalen) auch der horizontale Rand der Zellenelemente
+festgelegt werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setRowHeight(int newHeight)
+public void setRowMargin(int rowMargin)
+public void setIntercellSpacing(Dimension newSpacing)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTable.html" onClick="this.href=getApiDoc('javax.swing.JTable')"><font color="#660066" size=-1>javax.swing.JTable</font></a></td>
+</tr>
+</table>
+
+<p>
+Standardm&auml;&szlig;ig werden die Zellen einer <a href="index_j.html#ixb102049"><font color=#000080><tt>JTable</tt></font></a>
+mit senkrechten und waagerechten Begrenzungslinien voneinander getrennt.
+Mit <a name="ixa102763"><a href="index_s.html#ixb102055"><font color=#000080><tt>setShowGrid</tt></font></a></a>
+k&ouml;nnen beide Linienarten zugleich an- oder ausgeschaltet werden.
+Sollen die horizontalen oder vertikalen Linien separat aktiviert oder
+deaktiviert werden, k&ouml;nnen die Methoden <a name="ixa102764"><a href="index_s.html#ixb102056"><font color=#000080><tt>setShowHorizontalLines</tt></font></a></a>
+und <a name="ixa102765"><a href="index_s.html#ixb102057"><font color=#000080><tt>setShowVerticalLines</tt></font></a></a>
+verwendet werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setShowGrid(boolean b)
+public void setShowHorizontalLines(boolean b)
+public void setShowVerticalLines(boolean b)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTable.html" onClick="this.href=getApiDoc('javax.swing.JTable')"><font color="#660066" size=-1>javax.swing.JTable</font></a></td>
+</tr>
+</table>
+
+<p>
+Das Ver&auml;ndern der Farben der Zellen ist in begrenzter Weise mit
+folgenden Methoden m&ouml;glich: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setGridColor(Color newColor)
+public void setSelectionForeground(Color selectionForeground)
+public void setSelectionBackground(Color selectionBackground)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTable.html" onClick="this.href=getApiDoc('javax.swing.JTable')"><font color="#660066" size=-1>javax.swing.JTable</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa102766"><a href="index_s.html#ixb102058"><font color=#000080><tt>setGridColor</tt></font></a></a>
+ver&auml;ndert die Farbe, in der die Gitterlinien angezeigt werden.
+Mit <a name="ixa102767"><a href="index_s.html#ixb102059"><font color=#000080><tt>setSelectionForeground</tt></font></a></a>
+und <a name="ixa102768"><a href="index_s.html#ixb102060"><font color=#000080><tt>setSelectionBackground</tt></font></a></a>
+wird die Vorder- und Hintergrundfarbe des selektierten Bereichs festgelegt.
+
+<p>
+Als letzte der Konfigurationsmethoden wollen wir uns <a name="ixa102769"><a href="index_s.html#ixb102061"><font color=#000080><tt>setAutoResizeMode</tt></font></a></a>
+ansehen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setAutoResizeMode(int mode)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTable.html" onClick="this.href=getApiDoc('javax.swing.JTable')"><font color="#660066" size=-1>javax.swing.JTable</font></a></td>
+</tr>
+</table>
+
+<p>
+Sie bestimmt das Verhalten der Tabelle, nachdem die Breite einer einzelnen
+Spalte ver&auml;ndert wurde. Der dadurch freiwerdende oder zus&auml;tzlich
+ben&ouml;tigte Platz kann n&auml;mlich auf unterschiedliche Weise
+den &uuml;brigen Spalten zugeordnet werden. Der Parameter <font color="#000077"><tt>mode</tt></font>
+kann folgende Werte annehmen: <a name="tableid039002"></a>
+
+<p>
+<table cols=2 border width=66%>
+
+<tr>
+<td valign=top align=left width=25%><b>Modus</b></td>
+<td valign=top align=left width=75%><b>Bedeutung</b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102770"><a href="index_a.html#ixb102062"><font color=#000080><tt>AUTO_RESIZE_OFF</tt></font></a></a></td>
+<td valign=top align=left>Es erfolgt keine automatische Gr&ouml;&szlig;enanpassung
+der &uuml;brigen Spalten. Wurde die Tabelle in <a href="index_j.html#ixb101791"><font color=#000080><tt>JScrollPane</tt></font></a>
+verpackt, bekommt sie n&ouml;tigenfalls einen horizontalen Schieberegler.</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102771"><a href="index_a.html#ixb102063"><font color=#000080><tt>AUTO_RESIZE_LAST_COLUMN</tt></font></a></a></td>
+<td valign=top align=left>Die letzte Spalte wird zum Gr&ouml;&szlig;enausgleich
+verwendet. Dadurch reduziert sich der Platz f&uuml;r die letzte Spalte,
+wenn eine andere Spalte vergr&ouml;&szlig;ert wird, und er erh&ouml;ht
+sich, wenn sie verkleinert wird.</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102772"><a href="index_a.html#ixb102064"><font color=#000080><tt>AUTO_RESIZE_NEXT_COLUMN</tt></font></a></a></td>
+<td valign=top align=left>Die rechts neben der modifizierten Spalte
+liegende Spalte wird zum Gr&ouml;&szlig;enausgleich verwendet.</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102773"><a href="index_a.html#ixb102065"><font color=#000080><tt>AUTO_RESIZE_SUBSEQUENT_COLUMNS</tt></font></a></a></td>
+<td valign=top align=left>Die Gr&ouml;&szlig;en&auml;nderung wird
+gleichm&auml;&szlig;ig auf alle nachfolgenden Spalten verteilt.</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102774"><a href="index_a.html#ixb102066"><font color=#000080><tt>AUTO_RESIZE_ALL_COLUMNS</tt></font></a></a></td>
+<td valign=top align=left>Die Gr&ouml;&szlig;en&auml;nderung wird
+auf alle Spalten der Tabelle verteilt.</td></tr>
+</table>
+<p><i>
+Tabelle 39.2: Parameter f&uuml;r setAutoResizeMode</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id039002003"></a>
+<h3>39.2.3 Selektieren von Elementen </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id039002003001"></a>
+<h4>Selektionsmodi </h4>
+
+<p>
+Die Elemente einer <a href="index_j.html#ixb102049"><font color=#000080><tt>JTable</tt></font></a>
+k&ouml;nnen auf unterschiedliche Weise selektiert werden. Welche M&ouml;glichkeiten
+der Selektion dem Anwender zur Verf&uuml;gung gestellt werden, regeln
+die folgenden Methoden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setRowSelectionAllowed(boolean flag)
+public void setColumnSelectionAllowed(boolean flag)
+public void setSelectionMode(int selectionMode)
+public void setCellSelectionEnabled(boolean flag)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTable.html" onClick="this.href=getApiDoc('javax.swing.JTable')"><font color="#660066" size=-1>javax.swing.JTable</font></a></td>
+</tr>
+</table>
+
+<p>
+Soll zeilenweise selektiert werden, ist <a name="ixa102775"><a href="index_s.html#ixb102067"><font color=#000080><tt>setRowSelectionAllowed</tt></font></a></a>
+mit <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+als Argument aufzurufen. Soll spaltenweise selektiert werden, ist
+analog <a name="ixa102776"><a href="index_s.html#ixb102068"><font color=#000080><tt>setColumnSelectionAllowed</tt></font></a></a>
+aufzurufen. Durch &Uuml;bergabe von <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>
+k&ouml;nnen beide Selektionsarten ausgeschaltet werden und nur noch
+einzelne Zellen selektiert werden. Standardm&auml;&szlig;ig kann zeilen-,
+aber nicht spaltenweise selektiert werden. 
+
+<p>
+Mit <a name="ixa102777"><a href="index_s.html#ixb101960"><font color=#000080><tt>setSelectionMode</tt></font></a></a>
+wird festgelegt, ob ein einzelnes Element, ein zusammenh&auml;ngender
+Bereich oder mehrere Bereiche selektiert werden k&ouml;nnen. Hier
+ist eine der in <a href="k100248.html#jlist">Abschnitt 38.3.1</a>
+beschriebenen Konstanten <a name="ixa102778"><a href="index_s.html#ixb101962"><font color=#000080><tt>SINGLE_SELECTION</tt></font></a></a>,
+<a name="ixa102779"><a href="index_s.html#ixb101963"><font color=#000080><tt>SINGLE_INTERVAL_SELECTION</tt></font></a></a>
+oder <a name="ixa102780"><a href="index_m.html#ixb101964"><font color=#000080><tt>MULTIPLE_INTERVAL_SELECTION</tt></font></a></a>
+der Klasse <a name="ixa102781"><a href="index_l.html#ixb101961"><font color=#000080><tt>ListSelectionModel</tt></font></a></a>
+zu &uuml;bergeben. Wird <a name="ixa102782"><a href="index_s.html#ixb102069"><font color=#000080><tt>setCellSelectionEnabled</tt></font></a></a>
+mit <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+als Argument aufgerufen, k&ouml;nnen Zeilen und Spalten gleichzeitig
+markiert und so zusammenh&auml;ngende rechteckige Bereiche von Zellen
+(einschlie&szlig;lich einer einzelnen) selektiert werden. 
+
+<!-- Section -->
+
+<a name="sectlevel4id039002003002"></a>
+<h4>Abfragen der Selektion </h4>
+
+<p>
+Um herauszufinden, welche Elemente selektiert wurden, k&ouml;nnen
+folgende Methoden verwendet werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int getSelectedRow()
+public int getSelectedColumn()
+
+public int[] getSelectedRows()
+public int[] getSelectedColumns()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTable.html" onClick="this.href=getApiDoc('javax.swing.JTable')"><font color="#660066" size=-1>javax.swing.JTable</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa102783"><a href="index_g.html#ixb102070"><font color=#000080><tt>getSelectedRow</tt></font></a></a>
+und <a name="ixa102784"><a href="index_g.html#ixb102071"><font color=#000080><tt>getSelectedColumn</tt></font></a></a>
+liefern die selektierte Zeile bzw. Spalte, wenn der Selektionsmodus
+<a href="index_s.html#ixb101962"><font color=#000080><tt>SINGLE_SELECTION</tt></font></a>
+ist. Die erste Zeile und Spalte haben dabei jeweils den Index 0. Erlaubt
+der aktuelle Selektionsmodus das Selektieren ganzer Zeilen oder Spalten,
+impliziert das Ergebnis, dass <i>alle</i> Elemente dieser Zeile bzw.
+Spalte selektiert sind. Ist einer der Mehrfachselektionsmodi aktiviert,
+k&ouml;nnen mit <a name="ixa102785"><a href="index_g.html#ixb102072"><font color=#000080><tt>getSelectedRows</tt></font></a></a>
+und <a name="ixa102786"><a href="index_g.html#ixb102073"><font color=#000080><tt>getSelectedColumns</tt></font></a></a>
+Arrays mit allen selektierten Zeilen und Spalten beschafft werden.
+
+<p>
+Falls keine Elemente selektiert sind, geben <a href="index_g.html#ixb102070"><font color=#000080><tt>getSelectedRow</tt></font></a>
+und <a href="index_g.html#ixb102071"><font color=#000080><tt>getSelectedColumn</tt></font></a>
+-1 und <a href="index_g.html#ixb102072"><font color=#000080><tt>getSelectedRows</tt></font></a>
+und <a href="index_g.html#ixb102073"><font color=#000080><tt>getSelectedColumns</tt></font></a>
+ein leeres Array zur&uuml;ck. 
+
+<!-- Section -->
+
+<a name="sectlevel4id039002003003"></a>
+<h4>Ver&auml;ndern der Selektion </h4>
+
+<p>
+<a href="index_j.html#ixb102049"><font color=#000080><tt>JTable</tt></font></a>
+stellt auch Methoden zur Verf&uuml;gung, mit denen die Selektion programmgesteuert
+ver&auml;ndert werden kann: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void selectAll()
+public void clearSelection()
+
+public void setRowSelectionInterval(int index0, int index1)
+public void addRowSelectionInterval(int index0, int index1)
+public void removeRowSelectionInterval(int index0, int index1)
+
+public void setColumnSelectionInterval(int index0, int index1)
+public void addColumnSelectionInterval(int index0, int index1)
+public void removeColumnSelectionInterval(int index0, int index1)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTable.html" onClick="this.href=getApiDoc('javax.swing.JTable')"><font color="#660066" size=-1>javax.swing.JTable</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa102787"><a href="index_s.html#ixb101597"><font color=#000080><tt>selectAll</tt></font></a></a>
+kann die komplette Tabelle markiert werden, mit <a name="ixa102788"><a href="index_c.html#ixb101973"><font color=#000080><tt>clearSelection</tt></font></a></a>
+wird die Selektion entfernt. Mit <a name="ixa102789"><a href="index_s.html#ixb102074"><font color=#000080><tt>setRowSelectionInterval</tt></font></a></a>
+kann ein zusammenh&auml;ngender Bereich von Zeilen markiert werden.
+Mit <a name="ixa102790"><a href="index_a.html#ixb102075"><font color=#000080><tt>addRowSelectionInterval</tt></font></a></a>
+wird ein solcher zur aktuellen Selektion hinzugef&uuml;gt und mit
+<a name="ixa102791"><a href="index_r.html#ixb102076"><font color=#000080><tt>removeRowSelectionInterval</tt></font></a></a>
+daraus entfernt. F&uuml;r die Selektion von Spalten stehen die analogen
+Methoden <a name="ixa102792"><a href="index_s.html#ixb102077"><font color=#000080><tt>setColumnSelectionInterval</tt></font></a></a>,
+<a name="ixa102793"><a href="index_a.html#ixb102078"><font color=#000080><tt>addColumnSelectionInterval</tt></font></a></a>
+und <a name="ixa102794"><a href="index_r.html#ixb102079"><font color=#000080><tt>removeColumnSelectionInterval</tt></font></a></a>
+zur Verf&uuml;gung. Damit die beschriebenen Methoden korrekt funktionieren,
+sollte ihr Aufruf in Einklang mit den aktuell gew&auml;hlten Selektionsmodi
+stehen. 
+
+<!-- Section -->
+
+<a name="sectlevel3id039002004"></a>
+<h3>39.2.4 Zugriff auf den Inhalt der Tabelle </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id039002004001"></a>
+<h4>Die Daten in der Tabelle </h4>
+
+<p>
+Unabh&auml;ngig von der aktuellen Selektion kann nat&uuml;rlich auch
+auf den Inhalt der Tabelle zugegriffen werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int getRowCount()
+public int getColumnCount()
+
+public Object getValueAt(int row, int column)
+public void setValueAt(Object aValue, int row, int column)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTable.html" onClick="this.href=getApiDoc('javax.swing.JTable')"><font color="#660066" size=-1>javax.swing.JTable</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa102795"><a href="index_g.html#ixb102080"><font color=#000080><tt>getRowCount</tt></font></a></a>
+und <a name="ixa102796"><a href="index_g.html#ixb102081"><font color=#000080><tt>getColumnCount</tt></font></a></a>
+liefern die aktuelle Zeilen- bzw. Spaltenzahl der Tabelle. Mit <a name="ixa102797"><a href="index_g.html#ixb102082"><font color=#000080><tt>getValueAt</tt></font></a></a>
+kann auf das Element an der Position <i>(row, column)</i> zugegriffen
+werden. Beide Indices beginnen bei 0, ein Zugriff au&szlig;erhalb
+der Grenzen wird mit einer <a href="index_a.html#ixb100869"><font color=#000080><tt>ArrayIndexOutOfBoundsException</tt></font></a>
+quittiert. Mit <a name="ixa102798"><a href="index_s.html#ixb102083"><font color=#000080><tt>setValueAt</tt></font></a></a>
+kann ein Zellenelement ver&auml;ndert werden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Bei der Verwendung der Methoden <a href="index_g.html#ixb102082"><font color=#000080><tt>getValueAt</tt></font></a>
+und <a href="index_s.html#ixb102083"><font color=#000080><tt>setValueAt</tt></font></a>
+ist es wichtig zu wissen, dass die angegebenen Zeilen- und Spaltenwerte
+sich auf die aktuelle Ansicht der Tabelle beziehen, nicht auf ihr
+Modell. Hat der Anwender beispielsweise die Spalten eins und zwei
+vertauscht, w&uuml;rde ein Zugriff auf ein Element in Spalte eins
+den Modellwert in Spalte zwei ver&auml;ndern und umgekehrt. W&auml;hrend
+dieses Verhalten erwartungskonform ist, wenn der Wert durch den <i>Anwender</i>
+editiert wird, w&uuml;rde es bei programmgesteuertem Aufruf zu einem
+logischen Fehler kommen, denn das Programm hat nat&uuml;rlich zun&auml;chst
+einmal keine Kenntnis davon, dass der Anwender die Spaltenreihenfolge
+ver&auml;ndert hat. In aller Regel werden programmgesteuerte Zugriffe
+auf einzelne Zellen daher nicht mit <a href="index_g.html#ixb102082"><font color=#000080><tt>getValueAt</tt></font></a>
+und <a href="index_s.html#ixb102083"><font color=#000080><tt>setValueAt</tt></font></a>
+ausgef&uuml;hrt, sondern an die gleichnamigen Methoden des <a href="index_t.html#ixb102050"><font color=#000080><tt>TableModel</tt></font></a>
+delegiert.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id039002004002"></a>
+<h4>Editieren von Tabellenelementen </h4>
+
+<p>
+Nach einem Doppelklick auf eine Zelle kann der Anwender die in diesem
+Element enthaltenen Daten ver&auml;ndern. <a href="index_j.html#ixb102049"><font color=#000080><tt>JTable</tt></font></a>
+besitzt einige Methoden, mit denen das Programm abfragen kann, ob
+und in welcher Zelle die Tabelle gerade editiert wird: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public boolean isEditing()
+public int getEditingRow()
+public int getEditingColumn()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTable.html" onClick="this.href=getApiDoc('javax.swing.JTable')"><font color="#660066" size=-1>javax.swing.JTable</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa102799"><a href="index_i.html#ixb102084"><font color=#000080><tt>isEditing</tt></font></a></a>
+gibt genau dann <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+zur&uuml;ck, wenn gerade ein Element der Tabelle ge&auml;ndert wird.
+Mit <a name="ixa102800"><a href="index_g.html#ixb102085"><font color=#000080><tt>getEditingRow</tt></font></a></a>
+und <a name="ixa102801"><a href="index_g.html#ixb102086"><font color=#000080><tt>getEditingColumn</tt></font></a></a>
+kann das Programm herausfinden, welches Element betroffen ist. Wird
+keine Zelle editiert, geben die Methoden -1 zur&uuml;ck. Zudem kann
+das Programm durch Aufruf von <a name="ixa102802"><a href="index_e.html#ixb102087"><font color=#000080><tt>editCellAt</tt></font></a></a>
+selbst das Editieren eines Tabellenelements einleiten: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public boolean editCellAt(int row, int column)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTable.html" onClick="this.href=getApiDoc('javax.swing.JTable')"><font color="#660066" size=-1>javax.swing.JTable</font></a></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Unabh&auml;ngig von seinem bisherigen Typ wird der ge&auml;nderte
+Wert nach Abschluss des &Auml;nderungsvorgangs als <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+in das Modell zur&uuml;ckgeschrieben. Wird - wie im letzten Beispiel
+- ein <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>-Array
+als Modell verwendet, ist diese Typkonvertierung zwar korrekt, kann
+aber bei der Weiterverarbeitung des Modells zu &Uuml;berraschungen
+f&uuml;hren. Besser ist es, Eingaben des Anwenders direkt nach der
+Eingabe zu pr&uuml;fen und vor der Speicherung in den passenden Typ
+umzuwandeln. Wir werden im n&auml;chsten Abschnitt zeigen, wie man
+das mit Hilfe eines eigenen Tabellenmodells erreichen kann.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id039002005"></a>
+<h3>39.2.5 Das Tabellenmodell </h3>
+
+<p>
+F&uuml;r einfache Anwendungen reicht es aus, mit den automatisch erzeugten
+Tabellenmodellen zu arbeiten. F&uuml;r Anwendungen mit komplexer strukturierten
+Daten oder solchen, die f&uuml;r ein Array zu umfangreich oder an
+externe Quellen gebunden sind, ist es dagegen sinnvoll, ein eigenes
+Tabellenmodell zu implementieren. Dieses muss das Interface <a name="ixa102803"><a href="index_t.html#ixb102050"><font color=#000080><tt>TableModel</tt></font></a></a>
+aus dem Paket <a name="ixa102804"><a href="index_j.html#ixb102088"><font color=#000080><tt>javax.swing.table</tt></font></a></a>
+implementieren und bei der Instanzierung an den Konstruktor der <a href="index_j.html#ixb102049"><font color=#000080><tt>JTable</tt></font></a>
+&uuml;bergeben. Wahlweise kann auch nach der Instanzierung auf das
+Modell zugegriffen werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setModel(TableModel newModel)
+public TableModel getModel()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTable.html" onClick="this.href=getApiDoc('javax.swing.JTable')"><font color="#660066" size=-1>javax.swing.JTable</font></a></td>
+</tr>
+</table>
+
+<p>
+Das Interface <a href="index_t.html#ixb102050"><font color=#000080><tt>TableModel</tt></font></a>
+definiert folgende Methoden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int getRowCount()
+public int getColumnCount()
+
+public String getColumnName(int columnIndex)
+public Class&lt;?&gt; getColumnClass(int columnIndex)
+
+public boolean isCellEditable(int rowIndex, int columnIndex)
+
+public Object getValueAt(int rowIndex, int columnIndex)
+public void setValueAt(Object aValue, int rowIndex, int columnIndex)
+
+public void addTableModelListener(TableModelListener l)
+public void removeTableModelListener(TableModelListener l)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/table/TableModel.html" onClick="this.href=getApiDoc('javax.swing.table.TableModel')"><font color="#660066" size=-1>javax.swing.table.TableModel</font></a></td>
+</tr>
+</table>
+
+<p>
+Die meisten von ihnen sind Service-Methoden. Sie werden von <a href="index_j.html#ixb102049"><font color=#000080><tt>JTable</tt></font></a>
+aufgerufen, um Informationen zur Darstellung der Tabelle zu erhalten.
+<a name="ixa102805"><a href="index_g.html#ixb102080"><font color=#000080><tt>getRowCount</tt></font></a></a>
+und <a name="ixa102806"><a href="index_g.html#ixb102081"><font color=#000080><tt>getColumnCount</tt></font></a></a>
+liefern die Anzahl der Zeilen und Spalten, <a name="ixa102807"><a href="index_g.html#ixb102089"><font color=#000080><tt>getColumnName</tt></font></a></a>
+die Spalten&uuml;berschrift und <a name="ixa102808"><a href="index_g.html#ixb102090"><font color=#000080><tt>getColumnClass</tt></font></a></a>
+den Typ der Elemente einer Spalte. Mit <a name="ixa102809"><a href="index_i.html#ixb102091"><font color=#000080><tt>isCellEditable</tt></font></a></a>
+wird abgefragt, ob eine bestimmte Zelle editiert werden darf oder
+nicht. Mit <a name="ixa102810"><a href="index_g.html#ixb102082"><font color=#000080><tt>getValueAt</tt></font></a></a>
+fragt die Tabelle beim Modell nach dem Wert einer bestimmten Zelle
+und mit <a name="ixa102811"><a href="index_s.html#ixb102083"><font color=#000080><tt>setValueAt</tt></font></a></a>
+wird ein ge&auml;nderter Wert in das Modell zur&uuml;ckgeschrieben.
+
+<p>
+Mit den Methoden <a name="ixa102812"><a href="index_a.html#ixb102092"><font color=#000080><tt>addTableModelListener</tt></font></a></a>
+und <a name="ixa102813"><a href="index_r.html#ixb102093"><font color=#000080><tt>removeTableModelListener</tt></font></a></a>
+kann ein <a name="ixa102814"><a href="index_t.html#ixb102094"><font color=#000080><tt>TableModelListener</tt></font></a></a>
+registriert bzw. deregistriert werden. Er wird &uuml;ber alle &Auml;nderungen
+des Modells unterrichtet und damit insbesondere aufgerufen, wenn eine
+Zeile oder Spalte eingef&uuml;gt oder gel&ouml;scht wurde, wenn der
+Inhalt einer Zelle modifiziert wurde oder wenn die Gesamtstruktur
+des Modells sich ge&auml;ndert hat. Typischerweise registriert sich
+die <a href="index_j.html#ixb102049"><font color=#000080><tt>JTable</tt></font></a>
+bei ihrem Modell, um auf Modell&auml;nderungen mit entsprechenden
+&Auml;nderungen der Benutzeroberfl&auml;che reagieren zu k&ouml;nnen.
+
+
+<!-- Section -->
+<a name="sectlevel4id039002005001"></a>
+<h4>Beispiel </h4>
+
+<p>
+Als Beispiel wollen wir ein Modell konstruieren, das eine sehr gro&szlig;e
+Tabelle repr&auml;sentieren kann (z.B. mit 1000 mal 1000 Elementen),
+von denen aber nur sehr wenige tats&auml;chlich einen Wert enthalten
+und alle anderen leer sind. Statt einer speicherintensiven Darstellung
+mittels eines entsprechend dimensionierten Arrays sollen nur die tats&auml;chlich
+belegten Elemente gespeichert werden. Wir wollen dazu eine <a href="index_h.html#ixb100428"><font color=#000080><tt>Hashtable</tt></font></a>
+verwenden, deren Elemente die tats&auml;chlich vorhandenen Werte sind.
+Als Schl&uuml;ssel verwenden wir eine String-Darstellung der Koordinaten
+des Elements. Der Zugriff auf ein Element erfolgt dann, indem dessen
+Koordinatenschl&uuml;ssel in der <a href="index_h.html#ixb100428"><font color=#000080><tt>Hashtable</tt></font></a>
+gesucht und der zugeh&ouml;rige Wert zur&uuml;ckgegeben bzw. gespeichert
+wird. 
+
+<p>
+Um das Tabellenmodell nicht von Grund auf neu entwickeln zu m&uuml;ssen,
+leiten wir es aus der Klasse <a name="ixa102815"><a href="index_a.html#ixb102095"><font color=#000080><tt>AbstractTableModel</tt></font></a></a>
+des Pakets <a href="index_j.html#ixb102088"><font color=#000080><tt>javax.swing.table</tt></font></a>
+ab. Diese bietet f&uuml;r fast alle erforderlichen Methoden Standardimplementierungen
+und stellt dar&uuml;ber hinaus einige n&uuml;tzliche Hilfsmethoden
+zur Verf&uuml;gung: 
+<a name="listingid039006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* SparseTableModel.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> javax.swing.table.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> SparseTableModel
+<font color="#555555">007 </font><font color="#0000AA">extends</font> AbstractTableModel 
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font> size;
+<font color="#555555">010 </font>  <font color="#0000AA">private</font> Hashtable&lt;String, String&gt; data;
+<font color="#555555">011 </font>
+<font color="#555555">012 </font>  <font color="#00AA00">//Konstruktor</font>
+<font color="#555555">013 </font>  <font color="#0000AA">public</font> SparseTableModel(<font color="#006699">int</font> size)
+<font color="#555555">014 </font>  {
+<font color="#555555">015 </font>    <font color="#006699">this</font>.size = size;
+<font color="#555555">016 </font>    <font color="#006699">this</font>.data = <font color="#0000AA">new</font> Hashtable&lt;String, String&gt;();
+<font color="#555555">017 </font>  }
+<font color="#555555">018 </font>
+<font color="#555555">019 </font>  <font color="#00AA00">//Methoden f&uuml;r das TableModel-Interface</font>
+<font color="#555555">020 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> getRowCount()
+<font color="#555555">021 </font>  {
+<font color="#555555">022 </font>    <font color="#0000AA">return</font> size;
+<font color="#555555">023 </font>  }
+<font color="#555555">024 </font>
+<font color="#555555">025 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> getColumnCount()
+<font color="#555555">026 </font>  {
+<font color="#555555">027 </font>    <font color="#0000AA">return</font> size;
+<font color="#555555">028 </font>  }
+<font color="#555555">029 </font>
+<font color="#555555">030 </font>  <font color="#0000AA">public</font> String getColumnName(<font color="#006699">int</font> columnIndex)
+<font color="#555555">031 </font>  {
+<font color="#555555">032 </font>    <font color="#0000AA">return</font> <font color="#0000FF">"C"</font> + columnIndex;
+<font color="#555555">033 </font>  }
+<font color="#555555">034 </font>
+<font color="#555555">035 </font>  <font color="#0000AA">public</font> Class&lt;?&gt; getColumnClass(<font color="#006699">int</font> columnIndex)
+<font color="#555555">036 </font>  {
+<font color="#555555">037 </font>    <font color="#0000AA">return</font> String.<font color="#0000AA">class</font>;
+<font color="#555555">038 </font>  }
+<font color="#555555">039 </font>
+<font color="#555555">040 </font>  <font color="#0000AA">public</font> <font color="#006699">boolean</font> isCellEditable(<font color="#006699">int</font> rowIndex, <font color="#006699">int</font> columnIndex)
+<font color="#555555">041 </font>  {
+<font color="#555555">042 </font>    <font color="#0000AA">return</font> rowIndex &lt; size &amp;&amp; columnIndex &lt; size;
+<font color="#555555">043 </font>  }
+<font color="#555555">044 </font>
+<font color="#555555">045 </font>  <font color="#0000AA">public</font> Object getValueAt(<font color="#006699">int</font> rowIndex, <font color="#006699">int</font> columnIndex)
+<font color="#555555">046 </font>  {
+<font color="#555555">047 </font>    String key = <font color="#0000FF">"["</font> + rowIndex + <font color="#0000FF">","</font> + columnIndex + <font color="#0000FF">"]"</font>;
+<font color="#555555">048 </font>    String value = data.get(key);
+<font color="#555555">049 </font>    <font color="#0000AA">return</font> value == <font color="#006699">null</font> ? <font color="#0000FF">"-"</font> : value;
+<font color="#555555">050 </font>  }
+<font color="#555555">051 </font>
+<font color="#555555">052 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setValueAt(Object aValue, <font color="#006699">int</font> rowIndex, <font color="#006699">int</font> columnIndex)
+<font color="#555555">053 </font>  {
+<font color="#555555">054 </font>    String key = <font color="#0000FF">"["</font> + rowIndex + <font color="#0000FF">","</font> + columnIndex + <font color="#0000FF">"]"</font>;
+<font color="#555555">055 </font>    String value = (String)aValue;
+<font color="#555555">056 </font>    <font color="#0000AA">if</font> (value.length() &lt;= 0) {
+<font color="#555555">057 </font>      data.remove(key);
+<font color="#555555">058 </font>    } <font color="#0000AA">else</font> {
+<font color="#555555">059 </font>      data.put(key, value);
+<font color="#555555">060 </font>    }
+<font color="#555555">061 </font>  }
+<font color="#555555">062 </font>
+<font color="#555555">063 </font>  <font color="#00AA00">//Zus&auml;tzliche Methoden</font>
+<font color="#555555">064 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> printData()
+<font color="#555555">065 </font>  {
+<font color="#555555">066 </font>    Enumeration&lt;String&gt; e = data.keys();
+<font color="#555555">067 </font>    <font color="#0000AA">while</font> (e.hasMoreElements()) {
+<font color="#555555">068 </font>      String key = e.nextElement();
+<font color="#555555">069 </font>      System.out.println(
+<font color="#555555">070 </font>        <font color="#0000FF">"At "</font> + key + <font color="#0000FF">": "</font> + data.get(key)
+<font color="#555555">071 </font>      );
+<font color="#555555">072 </font>    }
+<font color="#555555">073 </font>  }
+<font color="#555555">074 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/SparseTableModel.java"><font color="#000055" size=-1>SparseTableModel.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 39.6: Ein Modell f&uuml;r schwach besetzte Tabellen</i></p>
+
+<p>
+Die Klasse wird durch &Uuml;bergabe der Anzahl der Zeilen und Spalten
+instanziert. <a href="index_g.html#ixb102080"><font color=#000080><tt>getRowCount</tt></font></a>
+und <a href="index_g.html#ixb102081"><font color=#000080><tt>getColumnCount</tt></font></a>
+liefern genau diesen Wert zur&uuml;ck. Als Spaltenname wird ein &#187;C&#171;,
+gefolgt von der Nummer der Spalte angegeben. Alle Spalten sind vom
+Typ <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+und alle Zellen sind editierbar. Wird mit <a href="index_g.html#ixb102082"><font color=#000080><tt>getValueAt</tt></font></a>
+der Inhalt einer bestimmten Tabellenzelle abgefragt, so bildet die
+Methode den Schl&uuml;ssel aus Zeilen- und Spaltenindex und sucht
+damit in der <a href="index_h.html#ixb100428"><font color=#000080><tt>Hashtable</tt></font></a>
+<font color="#000077"><tt>data</tt></font>. Falls ein Eintrag gefunden
+wird, gibt <a href="index_g.html#ixb102082"><font color=#000080><tt>getValueAt</tt></font></a>
+diesen an den Aufrufer zur&uuml;ck, andernfalls wird nur ein Minuszeichen
+geliefert. <a href="index_s.html#ixb102083"><font color=#000080><tt>setValueAt</tt></font></a>
+arbeitet analog. Auch hier wird zun&auml;chst der Schl&uuml;ssel gebildet
+und dann zusammen mit dem zugeh&ouml;rigen Wert in der <a href="index_h.html#ixb100428"><font color=#000080><tt>Hashtable</tt></font></a>
+gespeichert. Die Hilfemethode <font color="#000077"><tt>printData</tt></font>
+dient dazu, alle vorhandenen Werte samt Koordinatenschl&uuml;sseln
+auf der Konsole auszugeben. 
+
+<p>
+Mit Hilfe dieses Modells Tabellen zu bauen, die auch bei gro&szlig;en
+Abmessungen noch effizient arbeiten, ist nicht mehr schwer. Das folgende
+Programm zeigt das am Beispiel einer Tabelle mit einer Million Zellen.
+Neben der Tabelle enth&auml;lt es einen Button &#187;Drucken&#171;,
+mit dem die aktuelle Belegung der Tabelle ausgegeben werden kann.
+<a name="listingid039007"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3907.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3907
+<font color="#555555">008 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">009 </font><font color="#0000AA">implements</font> ActionListener
+<font color="#555555">010 </font>{
+<font color="#555555">011 </font>  JTable table;
+<font color="#555555">012 </font>  SparseTableModel tableModel;
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>  <font color="#0000AA">public</font> Listing3907()
+<font color="#555555">015 </font>  {
+<font color="#555555">016 </font>    <font color="#006699">super</font>(<font color="#0000FF">"JTable 2"</font>);
+<font color="#555555">017 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">018 </font>    tableModel = <font color="#0000AA">new</font> SparseTableModel(1000);
+<font color="#555555">019 </font>    table = <font color="#0000AA">new</font> JTable(tableModel, <font color="#006699">null</font>);
+<font color="#555555">020 </font>    table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+<font color="#555555">021 </font>    table.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+<font color="#555555">022 </font>    table.setCellSelectionEnabled(<font color="#006699">true</font>);
+<font color="#555555">023 </font>    Container cp = getContentPane();
+<font color="#555555">024 </font>    cp.add(<font color="#0000AA">new</font> JScrollPane(table), BorderLayout.CENTER);
+<font color="#555555">025 </font>    JButton button = <font color="#0000AA">new</font> JButton(<font color="#0000FF">"Drucken"</font>);
+<font color="#555555">026 </font>    button.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">027 </font>    cp.add(button, BorderLayout.SOUTH);
+<font color="#555555">028 </font>  }
+<font color="#555555">029 </font>
+<font color="#555555">030 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> actionPerformed(ActionEvent event)
+<font color="#555555">031 </font>  {
+<font color="#555555">032 </font>    tableModel.printData();
+<font color="#555555">033 </font>  }
+<font color="#555555">034 </font>
+<font color="#555555">035 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">036 </font>  {
+<font color="#555555">037 </font>    Listing3907 frame = <font color="#0000AA">new</font> Listing3907();
+<font color="#555555">038 </font>    frame.setLocation(100, 100);
+<font color="#555555">039 </font>    frame.setSize(320, 200);
+<font color="#555555">040 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">041 </font>  }
+<font color="#555555">042 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3907.java"><font color="#000055" size=-1>Listing3907.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 39.7: Eine JTable mit einer Million Zellen</i></p>
+
+<p>
+Die Ausgabe des Programms sieht nach einigen Einf&uuml;gungen so aus:
+<p>
+<a name="imageid039006"></a>
+<img src="images/JTable2.gif">
+<p>
+
+<p><i>
+Abbildung 39.6: Eine JTable mit einer Million Zellen</i></p>
+
+<p>
+Wenn in diesem Zustand der &#187;Drucken&#171;-Button bet&auml;tigt
+wird, gibt das Programm folgende Liste auf der Konsole aus: 
+<font color="#333300">
+<pre>
+At [997,998]: gro&szlig;e
+At [994,997]: Hallo
+At [999,999]: Welt
+At [996,999]: Tabellen-
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="sectlevel3id039002006"></a>
+<h3>39.2.6 Das Spaltenmodell </h3>
+
+<p>
+Neben dem Tabellenmodell, das die Daten der Tabelle enth&auml;lt,
+besitzt eine <a href="index_j.html#ixb102049"><font color=#000080><tt>JTable</tt></font></a>
+ein weiteres Modell, das f&uuml;r die Eigenschaften der Spalten verantwortlich
+ist. In unseren bisherigen Beispielen wurde es implizit aus dem Tabellenmodell
+und den angegebenen Spaltennamen erzeugt. Sollen neben den Namen weitere
+Eigenschaften der Spalten kontrolliert werden, reicht das nicht aus
+und ein eigenes Spaltenmodell muss geschrieben werden. 
+
+<p>
+Das Spaltenmodell einer <a href="index_j.html#ixb102049"><font color=#000080><tt>JTable</tt></font></a>
+muss das Interface <a name="ixa102816"><a href="index_t.html#ixb102051"><font color=#000080><tt>TableColumnModel</tt></font></a></a>
+aus dem Paket <a href="index_j.html#ixb102088"><font color=#000080><tt>javax.swing.table</tt></font></a>
+implementieren und wird bei der Instanzierung einer <a href="index_j.html#ixb102049"><font color=#000080><tt>JTable</tt></font></a>
+an deren Konstruktor &uuml;bergeben. Da die Implementierung eines
+Spaltenmodells recht aufw&auml;ndig ist, wurde mit der Klasse <a name="ixa102817"><a href="index_d.html#ixb102096"><font color=#000080><tt>DefaultTableColumnModel</tt></font></a></a>
+eine Standardimplementierung geschaffen, die ohne weitere Ableitung
+verwendet werden kann. Das zun&auml;chst leere Modell stellt Methoden
+zur Verf&uuml;gung, mit denen Spaltenobjekte (sie sind vom Typ <a name="ixa102818"><a href="index_t.html#ixb102097"><font color=#000080><tt>TableColumn</tt></font></a></a>)
+hinzugef&uuml;gt oder entfernt werden k&ouml;nnen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void addColumn(TableColumn aColumn)
+public void removeColumn(TableColumn column)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/table/DefaultTableColumnModel.html" onClick="this.href=getApiDoc('javax.swing.table.DefaultTableColumnModel')"><font color="#660066" size=-1>javax.swing.table.DefaultTableColumnModel</font></a></td>
+</tr>
+</table>
+
+<p>
+Jede an das Modell &uuml;bergebene Instanz der Klasse <a href="index_t.html#ixb102097"><font color=#000080><tt>TableColumn</tt></font></a>
+repr&auml;sentiert dabei die Eigenschaften einer einzelnen Tabellenspalte.
+Mit einer <a href="index_t.html#ixb102097"><font color=#000080><tt>TableColumn</tt></font></a>
+k&ouml;nnen praktisch alle visuellen Eigenschaften der Spalte kontrolliert
+werden. So kann die Breite ebenso wie die Spaltenposition festgelegt
+werden und es k&ouml;nnen beliebige Komponenten zur Darstellung und
+zum Editieren der Zellen definiert werden. Wie wollen uns auf ein
+einfaches Beispiel beschr&auml;nken und lediglich zeigen, wie die
+anf&auml;ngliche Breite der Spalten explizit festgelegt werden kann.
+
+<p>
+Dazu instanzieren wir ein <a href="index_d.html#ixb102096"><font color=#000080><tt>DefaultTableColumnModel</tt></font></a>
+und f&uuml;gen drei <a href="index_t.html#ixb102097"><font color=#000080><tt>TableColumn</tt></font></a>-Objekte
+hinzu. Sie werden jeweils mit folgendem Konstruktor initialisiert:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public TableColumn(int modelIndex, int width)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/table/TableColumn.html" onClick="this.href=getApiDoc('javax.swing.table.TableColumn')"><font color="#660066" size=-1>javax.swing.table.TableColumn</font></a></td>
+</tr>
+</table>
+
+<p>
+Der erste Parameter gibt den Modellindex an, also die Spalte im Tabellenmodell,
+zu der die visuelle Spalte korrespondiert. Der zweite Parameter gibt
+die initiale Breite der Spalte an. Anschlie&szlig;end rufen wir die
+Methode <a name="ixa102819"><a href="index_s.html#ixb102098"><font color=#000080><tt>setHeaderValue</tt></font></a></a>
+auf, um die Spaltenbeschriftung zu definieren, und f&uuml;gen die
+Spalte in das Spaltenmodell ein. Das wiederholen wir f&uuml;r alle
+drei Spalten und &uuml;bergeben das Spaltenmodell an den Konstruktor
+der Tabelle. Da bei &Uuml;bergabe eines Spaltenmodells auch das Tabellenmodell
+explizit &uuml;bergeben werden muss, definieren wir es aus unserem
+vorhandenen Datenarray durch eine lokale Ableitung der Klasse <a href="index_a.html#ixb102095"><font color=#000080><tt>AbstractTableModel</tt></font></a>:
+<a name="listingid039008"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3908.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> javax.swing.table.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3908
+<font color="#555555">008 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">009 </font><font color="#0000AA">implements</font> TableData
+<font color="#555555">010 </font>{
+<font color="#555555">011 </font>  <font color="#0000AA">public</font> Listing3908()
+<font color="#555555">012 </font>  {
+<font color="#555555">013 </font>    <font color="#006699">super</font>(<font color="#0000FF">"JTable 3"</font>);
+<font color="#555555">014 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">015 </font>    <font color="#00AA00">//Spaltenmodell erzeugen</font>
+<font color="#555555">016 </font>    DefaultTableColumnModel cm = <font color="#0000AA">new</font> DefaultTableColumnModel();
+<font color="#555555">017 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; COLHEADS.length; ++i) {
+<font color="#555555">018 </font>      TableColumn col = <font color="#0000AA">new</font> TableColumn(i, i == 2 ? 150 : 60);
+<font color="#555555">019 </font>      col.setHeaderValue(COLHEADS[i]);
+<font color="#555555">020 </font>      cm.addColumn(col);
+<font color="#555555">021 </font>    }
+<font color="#555555">022 </font>    <font color="#00AA00">//Tabellenmodell erzeugen</font>
+<font color="#555555">023 </font>    TableModel tm = <font color="#0000AA">new</font> AbstractTableModel() {
+<font color="#555555">024 </font>      <font color="#0000AA">public</font> <font color="#006699">int</font> getRowCount()
+<font color="#555555">025 </font>      {
+<font color="#555555">026 </font>        <font color="#0000AA">return</font> DATA.length;
+<font color="#555555">027 </font>      }
+<font color="#555555">028 </font>      <font color="#0000AA">public</font> <font color="#006699">int</font> getColumnCount()
+<font color="#555555">029 </font>      {
+<font color="#555555">030 </font>        <font color="#0000AA">return</font> DATA[0].length;
+<font color="#555555">031 </font>      }
+<font color="#555555">032 </font>      <font color="#0000AA">public</font> Object getValueAt(<font color="#006699">int</font> row, <font color="#006699">int</font> column)
+<font color="#555555">033 </font>      {
+<font color="#555555">034 </font>        <font color="#0000AA">return</font> DATA[row][column];
+<font color="#555555">035 </font>      }
+<font color="#555555">036 </font>    };
+<font color="#555555">037 </font>    <font color="#00AA00">//Tabelle erzeugen und ContentPane f&uuml;llen</font>
+<font color="#555555">038 </font>    JTable table = <font color="#0000AA">new</font> JTable(tm, cm);
+<font color="#555555">039 </font>    Container cp = getContentPane();
+<font color="#555555">040 </font>    cp.add(<font color="#0000AA">new</font> JLabel(<font color="#0000FF">"Alte c\'t-Ausgaben:"</font>), BorderLayout.NORTH);
+<font color="#555555">041 </font>    cp.add(<font color="#0000AA">new</font> JScrollPane(table), BorderLayout.CENTER);
+<font color="#555555">042 </font>  }
+<font color="#555555">043 </font>
+<font color="#555555">044 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">045 </font>  {
+<font color="#555555">046 </font>    Listing3908 frame = <font color="#0000AA">new</font> Listing3908();
+<font color="#555555">047 </font>    frame.setLocation(100, 100);
+<font color="#555555">048 </font>    frame.setSize(350, 200);
+<font color="#555555">049 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">050 </font>  }
+<font color="#555555">051 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3908.java"><font color="#000055" size=-1>Listing3908.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 39.8: Eine JTable mit einem eigenen Spaltenmodell</i></p>
+
+<p>
+Die initialen Spaltenbreiten wurden auf 60 bzw. 150 Zeichen festgelegt
+und die Ausgabe des Programms sieht so aus: 
+<p>
+<a name="imageid039007"></a>
+<img src="images/JTable3.gif">
+<p>
+
+<p><i>
+Abbildung 39.7: Eine JTable mit eigenem Spaltenmodell</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id039002007"></a>
+<h3>39.2.7 Rendering der Zellen </h3>
+
+<p>
+Als Rendering<a name="ixa102820"></a> bezeichnet man den Vorgang,
+der daf&uuml;r sorgt, dass die Zellen auf dem Bildschirm dargestellt
+werden. Die daf&uuml;r verantwortlichen Komponenten werden als <i>Renderer</i>
+bezeichnet. Eine <a href="index_j.html#ixb102049"><font color=#000080><tt>JTable</tt></font></a>
+besitzt einen Standard-Renderer, auf den mit den Methoden <a name="ixa102821"><a href="index_g.html#ixb102100"><font color=#000080><tt>getDefaultRenderer</tt></font></a></a>
+und <a name="ixa102822"><a href="index_s.html#ixb102101"><font color=#000080><tt>setDefaultRenderer</tt></font></a></a>
+zugegriffen werden kann: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public TableCellRenderer getDefaultRenderer(Class&lt;?&gt; columnClass)
+public void setDefaultRenderer(Class&lt;?&gt; columnClass, TableCellRenderer renderer)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTable.html" onClick="this.href=getApiDoc('javax.swing.JTable')"><font color="#660066" size=-1>javax.swing.JTable</font></a></td>
+</tr>
+</table>
+
+<p>
+Sofern nicht in den Tabellenspalten ein eigener Renderer bestimmt
+wird, ist der Standard-Renderer f&uuml;r die Darstellung aller Tabellenelemente
+zust&auml;ndig. Er muss das Interface <a name="ixa102823"><a href="index_t.html#ixb102102"><font color=#000080><tt>TableCellRenderer</tt></font></a></a>
+implementieren. Es enth&auml;lt nur eine einzige Methode: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Component getTableCellRendererComponent(
+  JTable table,
+  Object value,
+  boolean isSelected,
+  boolean hasFocus,
+  int row,
+  int column
+)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/table/TableCellRenderer.html" onClick="this.href=getApiDoc('javax.swing.table.TableCellRenderer')"><font color="#660066" size=-1>javax.swing.table.TableCellRenderer</font></a></td>
+</tr>
+</table>
+
+<p>
+Diese arbeitet als Factory-Methode und wird immer dann aufgerufen,
+wenn zur Darstellung einer Zelle ein Renderer ben&ouml;tigt wird.
+Mit Hilfe der &uuml;bergebenen Argumente kann der Renderer bestimmen,
+f&uuml;r welche Zelle er aktiv werden soll, welchen Inhalt diese hat
+und ob sie gerade selektiert ist oder den Fokus hat. Zus&auml;tzlich
+wird die Tabelle selbst &uuml;bergeben, so dass der Renderer Zugriff
+auf deren Eigenschaften und Modelle hat. 
+
+<p>
+Standardm&auml;&szlig;ig wird als Renderer eine Instanz der Klasse
+<a name="ixa102824"><a href="index_d.html#ixb102103"><font color=#000080><tt>DefaultTableCellRenderer</tt></font></a></a>
+verwendet. Sie ist eine Ableitung von <a href="index_j.html#ixb101781"><font color=#000080><tt>JLabel</tt></font></a>,
+mit deren Hilfe Farbe, Font und Hintergrund an das Look-and-Feel der
+Tabelle und die Erfordernisse der jeweiligen Zelle anpasst werden.
+Interessanterweise wird pro Tabelle lediglich eine einzige Instanz
+erzeugt und zur Darstellung <i>aller</i> Zellen verwendet. Dazu wird
+das Label jeweils an die Position der darzustellenden Tabelle verschoben
+und dann mit den erforderlichen visuellen Eigenschaften versehen.
+
+<p>
+Da ein <a href="index_j.html#ixb101781"><font color=#000080><tt>JLabel</tt></font></a>
+f&uuml;r diese Art von Anwendung eigentlich nicht vorgesehen wurde,
+muss <a href="index_d.html#ixb102103"><font color=#000080><tt>DefaultTableCellRenderer</tt></font></a>
+aus Performance-Gr&uuml;nden einige der Standardmechanismen von Swing-Komponenten
+deaktivieren oder umdefinieren. Aus diesem Grunde ist das Ableiten
+einer eigenen Klasse aus <a href="index_d.html#ixb102103"><font color=#000080><tt>DefaultTableCellRenderer</tt></font></a>
+problematisch. 
+
+<p>
+Das folgende Beispiel zeigt einen Renderer, dessen Aufgabe darin besteht,
+die Zellen unserer schon bekannten Tabelle in unterschiedlichen Farben
+darzustellen. Die Klasse <a href="index_d.html#ixb102103"><font color=#000080><tt>DefaultTableCellRenderer</tt></font></a>
+wird dazu weder per Ableitung noch per Delegation verwendet. 
+<a name="colorrenderer"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* ColoredTableCellRenderer.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> javax.swing.border.*;
+<font color="#555555">006 </font><font color="#0000AA">import</font> javax.swing.table.*;
+<font color="#555555">007 </font>
+<font color="#555555">008 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> ColoredTableCellRenderer
+<font color="#555555">009 </font><font color="#0000AA">implements</font> TableCellRenderer
+<font color="#555555">010 </font>{
+<font color="#555555">011 </font>  <font color="#0000AA">private</font> Color lightBlue = <font color="#0000AA">new</font> Color(160, 160, 255);
+<font color="#555555">012 </font>  <font color="#0000AA">private</font> Color darkBlue  = <font color="#0000AA">new</font> Color( 64,  64, 128);
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>  <font color="#0000AA">public</font> Component getTableCellRendererComponent(
+<font color="#555555">015 </font>    JTable table,
+<font color="#555555">016 </font>    Object value,
+<font color="#555555">017 </font>    <font color="#006699">boolean</font> isSelected,
+<font color="#555555">018 </font>    <font color="#006699">boolean</font> hasFocus,
+<font color="#555555">019 </font>    <font color="#006699">int</font> row,
+<font color="#555555">020 </font>    <font color="#006699">int</font> column
+<font color="#555555">021 </font>  )
+<font color="#555555">022 </font>  {
+<font color="#555555">023 </font>    <font color="#00AA00">//Label erzeugen</font>
+<font color="#555555">024 </font>    JLabel label = <font color="#0000AA">new</font> JLabel((String)value);
+<font color="#555555">025 </font>    label.setOpaque(<font color="#006699">true</font>);
+<font color="#555555">026 </font>    Border b = BorderFactory.createEmptyBorder(1, 1, 1, 1);
+<font color="#555555">027 </font>    label.setBorder(b);
+<font color="#555555">028 </font>    label.setFont(table.getFont());
+<font color="#555555">029 </font>    label.setForeground(table.getForeground());
+<font color="#555555">030 </font>    label.setBackground(table.getBackground());
+<font color="#555555">031 </font>    <font color="#0000AA">if</font> (hasFocus) { <a name="colorrenderer.a"></a>
+<font color="#555555">032 </font>      label.setBackground(darkBlue);
+<font color="#555555">033 </font>      label.setForeground(Color.white);
+<font color="#555555">034 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (isSelected) {
+<font color="#555555">035 </font>      label.setBackground(lightBlue);
+<font color="#555555">036 </font>    } <font color="#0000AA">else</font> {
+<font color="#555555">037 </font>      <font color="#00AA00">//Angezeigte Spalte in Modellspalte umwandeln</font>
+<font color="#555555">038 </font>      column = table.convertColumnIndexToModel(column); <a name="colorrenderer.b"></a>
+<font color="#555555">039 </font>      <font color="#0000AA">if</font> (column == 1) {
+<font color="#555555">040 </font>        <font color="#006699">int</font> numpages = Integer.parseInt((String)value);
+<font color="#555555">041 </font>        <font color="#0000AA">if</font> (numpages &gt;= 250) {
+<font color="#555555">042 </font>          label.setBackground(Color.red);
+<font color="#555555">043 </font>        } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (numpages &gt;= 200) {
+<font color="#555555">044 </font>          label.setBackground(Color.orange);
+<font color="#555555">045 </font>        } <font color="#0000AA">else</font> {
+<font color="#555555">046 </font>          label.setBackground(Color.yellow);
+<font color="#555555">047 </font>        }
+<font color="#555555">048 </font>      }
+<font color="#555555">049 </font>    }
+<font color="#555555">050 </font>    <font color="#0000AA">return</font> label;
+<font color="#555555">051 </font>  }
+<font color="#555555">052 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/ColoredTableCellRenderer.java"><font color="#000055" size=-1>ColoredTableCellRenderer.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 39.9: Ein eigener Zellrenderer</i></p>
+
+<p>
+<a name="ixa102825"><a href="index_g.html#ixb102104"><font color=#000080><tt>getTableCellRendererComponent</tt></font></a></a>
+erzeugt bei jedem Aufruf ein neues <a href="index_j.html#ixb101781"><font color=#000080><tt>JLabel</tt></font></a>,
+dessen Beschriftung dem Zelleninhalt entspricht. Es bekommt einen
+nichttransparenten Hintergrund und einen unsichtbaren Rahmen von einem
+Pixel Breite (damit die Zellen nicht direkt aneinandersto&szlig;en).
+Anschlie&szlig;end werden Schriftart, Vorder- und Hintergrundfarbe
+von der Tabelle &uuml;bernommen. 
+
+<p>
+Ab <a href="k100254.html#colorrenderer.a">Zeile 031</a> beginnt die
+Definition der Vorder- und Hintergrundfarbe. Hat das Element den Fokus,
+wird es in Dunkelblau auf Wei&szlig; gezeichnet. Ist es lediglich
+selektiert, wird der Hintergrund hellblau eingef&auml;rbt. Ist beides
+nicht der Fall, pr&uuml;ft die Methode, ob das darzustellende Element
+aus der Spalte mit den Seitenzahlen stammt. Dazu ist es zun&auml;chst
+n&ouml;tig, in <a href="k100254.html#colorrenderer.b">Zeile 038</a>
+den visuellen Spaltenwert in die korrespondierende Modellspalte umzurechnen
+(vertauscht der Anwender Spalten, unterscheiden sich beide Werte).
+Abh&auml;ngig von der vorgefundenen Seitenzahl wird der Hintergrund
+dann gelb, orange oder rot dargestellt. 
+
+<p>
+Dieser Renderer kann sehr leicht durch Aufruf von <a href="index_s.html#ixb102101"><font color=#000080><tt>setDefaultRenderer</tt></font></a>
+in die Tabelle integriert werden: 
+<a name="listingid039010"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3910.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3910
+<font color="#555555">007 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">008 </font><font color="#0000AA">implements</font> TableData
+<font color="#555555">009 </font>{
+<font color="#555555">010 </font>  <font color="#0000AA">public</font> Listing3910()
+<font color="#555555">011 </font>  {
+<font color="#555555">012 </font>    <font color="#006699">super</font>(<font color="#0000FF">"JTable 4"</font>);
+<font color="#555555">013 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">014 </font>    JTable table = <font color="#0000AA">new</font> JTable(DATA, COLHEADS);
+<font color="#555555">015 </font>    table.setDefaultRenderer(
+<font color="#555555">016 </font>      Object.<font color="#0000AA">class</font>,
+<font color="#555555">017 </font>      <font color="#0000AA">new</font> ColoredTableCellRenderer()
+<font color="#555555">018 </font>    );
+<font color="#555555">019 </font>    Container cp = getContentPane();
+<font color="#555555">020 </font>    cp.add(<font color="#0000AA">new</font> JLabel(<font color="#0000FF">"Alte c\'t-Ausgaben:"</font>), BorderLayout.NORTH);
+<font color="#555555">021 </font>    cp.add(<font color="#0000AA">new</font> JScrollPane(table), BorderLayout.CENTER);
+<font color="#555555">022 </font>  }
+<font color="#555555">023 </font>
+<font color="#555555">024 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">025 </font>  {
+<font color="#555555">026 </font>    Listing3910 frame = <font color="#0000AA">new</font> Listing3910();
+<font color="#555555">027 </font>    frame.setLocation(100, 100);
+<font color="#555555">028 </font>    frame.setSize(350, 200);
+<font color="#555555">029 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">030 </font>  }
+<font color="#555555">031 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3910.java"><font color="#000055" size=-1>Listing3910.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 39.10: Eine Tabelle mit einem eigenen Zellrenderer</i></p>
+
+<p>
+Die Ausgabe des Programms sieht nun so aus: 
+<p>
+<a name="imageid039008"></a>
+<img src="images/JTable4.gif">
+<p>
+
+<p><i>
+Abbildung 39.8: Eine Tabelle mit einem eigenen Zellrenderer</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Der Renderer erzeugt bei jedem Aufruf von <a href="index_g.html#ixb102104"><font color=#000080><tt>getTableCellRendererComponent</tt></font></a>
+eine neue Instanz der Klasse <a href="index_j.html#ixb101781"><font color=#000080><tt>JLabel</tt></font></a>.
+Da das w&auml;hrend der Arbeit mit der Tabelle sehr h&auml;ufig erfolgt
+(schon das Bewegen des Mauszeigers &uuml;ber der Tabelle l&ouml;st
+etliche Aufrufe aus), ist diese Vorgehensweise recht ineffizient und
+belastet den Garbage Collector. In &#187;echten&#171; Programmen sollte
+daher mehr Aufwand getrieben werden. So k&ouml;nnten beispielsweise
+Renderer in einem Cache zwischengespeichert und bei erneutem Bedarf
+wiederverwendet werden. Oder das Programm k&ouml;nnte eine Technik
+&auml;hnlich der von <a href="index_d.html#ixb102103"><font color=#000080><tt>DefaultTableCellRenderer</tt></font></a>
+verwenden und nur eine einzige Instanz erzeugen. Die Lekt&uuml;re
+des Quelltextes der Klasse zeigt, wie es gemacht wird.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id039002008"></a>
+<h3>39.2.8 Reaktion auf Ereignisse </h3>
+
+<p>
+Eine <a href="index_j.html#ixb102049"><font color=#000080><tt>JTable</tt></font></a>
+generiert eine Vielzahl von Ereignissen, um registrierte Listener
+&uuml;ber &Auml;nderungen des Tabellenzustands zu informieren. Will
+ein Objekt beispielsweise dar&uuml;ber informiert werden, dass sich
+die Selektion ge&auml;ndert hat, muss es zwei <a href="index_l.html#ixb101980"><font color=#000080><tt>ListSelectionListener</tt></font></a>
+registrieren. Einer davon wird auf dem Selektionsmodell registriert,
+das mit <a name="ixa102826"><a href="index_g.html#ixb102105"><font color=#000080><tt>getSelectionModel</tt></font></a></a>
+ermittelt werden kann. Da dieser nur Informationen &uuml;ber &Auml;nderungen
+an der Zeilenselektion versendet, muss ein zweiter Listener auf dem
+Modell f&uuml;r die Spaltenselektion registriert werden. Es kann durch
+Aufruf von <a name="ixa102827"><a href="index_g.html#ixb102106"><font color=#000080><tt>getColumnModel</tt></font></a></a>
+beschafft werden und auf sein Selektionsmodell kann ebenfalls mit
+<a name="ixa102826"><a href="index_g.html#ixb102105"><font color=#000080><tt>getSelectionModel</tt></font></a></a>
+zugegriffen werden. Bei jeder &Auml;nderung der Selektion wird nun
+<a href="index_v.html#ixb101983"><font color=#000080><tt>valueChanged</tt></font></a>
+aufgerufen und kann mit Hilfe der oben erl&auml;uterten Methoden herausfinden,
+welche Zeilen und Spalten selektiert sind. 
+
+<p>
+Die Tabelle informiert auch &uuml;ber &Auml;nderungen ihrer Daten.
+Dazu muss auf dem Tabellenmodell (das mit <a href="index_g.html#ixb101986"><font color=#000080><tt>getModel</tt></font></a>
+beschafft wird) durch Aufruf von <a href="index_a.html#ixb102092"><font color=#000080><tt>addTableModelListener</tt></font></a>
+ein <a href="index_t.html#ixb102094"><font color=#000080><tt>TableModelListener</tt></font></a>
+registriert werden. Bei jeder &Auml;nderung des Modells wird dann
+dessen Methode <a name="ixa102828"><a href="index_t.html#ixb102107"><font color=#000080><tt>tableChanged</tt></font></a></a>
+aufgerufen. 
+
+<p>
+Schlie&szlig;lich k&ouml;nnen auch alle in den Vaterklassen von <a href="index_j.html#ixb102049"><font color=#000080><tt>JTable</tt></font></a>
+definierten Listener registriert werden. Soll beispielsweise auf einen
+Klick mit der rechten Maustaste reagiert werden, kann durch Aufruf
+von <a href="index_a.html#ixb101361"><font color=#000080><tt>addMouseListener</tt></font></a>
+ein <a href="index_m.html#ixb101355"><font color=#000080><tt>MouseListener</tt></font></a>
+registriert werden. Innerhalb seiner Ereignismethoden kann mit <a href="index_g.html#ixb101451"><font color=#000080><tt>getX</tt></font></a>
+und <a href="index_g.html#ixb101452"><font color=#000080><tt>getY</tt></font></a>
+die aktuelle Mausposition abgefragt und mit den Methoden <a name="ixa102829"><a href="index_r.html#ixb102108"><font color=#000080><tt>rowAtPoint</tt></font></a></a>
+und <a name="ixa102830"><a href="index_c.html#ixb102109"><font color=#000080><tt>columnAtPoint</tt></font></a></a>
+in Zeilen- und Spaltenwerte der Tabelle umgerechnet werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int rowAtPoint(Point point)
+public int columnAtPoint(Point point)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTable.html" onClick="this.href=getApiDoc('javax.swing.JTable')"><font color="#660066" size=-1>javax.swing.JTable</font></a></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100252.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100253.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100255.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100257.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

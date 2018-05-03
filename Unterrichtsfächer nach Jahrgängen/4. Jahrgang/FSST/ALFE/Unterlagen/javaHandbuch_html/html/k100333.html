@@ -1,0 +1,228 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100332.html;106,k100332.html;107,k100334.html;108,index.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100332.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100332.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100334.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 53 - Hilfsprogramme des JDK
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id053001"></a>
+<h2>53.1 javac - der <a name="ixa103850">Compiler</a> </h2>
+<hr>
+<ul>
+<li><a href="k100333.html#sectlevel2id053001">53.1 javac - der Compiler</a>
+<ul>
+<li><a href="k100333.html#sectlevel3id053001001">53.1.1 Aufruf</a>
+<li><a href="k100333.html#sectlevel3id053001002">53.1.2 Beschreibung</a>
+<li><a href="k100333.html#sectlevel3id053001003">53.1.3 Optionen</a>
+</ul>
+</ul>
+<hr>
+
+<p>
+In diesem Kapitel wollen wir die wichtigsten Hilfsprogramme des Java
+Development Kit bzw. Java Runtime Environment vorstellen. Die meisten
+Programme arbeiten kommandozeilenorientiert und werden aus einer DOS-Box
+oder einer Shell heraus aufgerufen. Einige von ihnen sind interaktiv
+und haben eine einfache grafische Oberfl&auml;che. Wir wollen die
+Aufrufsyntax und wichtigsten Optionen der folgenden Programme vorstellen:
+<ul>
+<li><a href="index_j.html#ixb100131"><font color=#000080><tt>javac</tt></font></a>
+- der Compiler
+<li><a href="index_j.html#ixb100134"><font color=#000080><tt>java</tt></font></a>
+- der Interpreter
+<li><a href="index_a.html#ixb100135"><font color=#000080><tt>appletviewer</tt></font></a>
+- der Applet-Interpreter
+<li><a href="index_j.html#ixb102907"><font color=#000080><tt>jdb</tt></font></a>
+- der Debugger
+<li><a href="index_j.html#ixb100194"><font color=#000080><tt>javadoc</tt></font></a>
+- der Dokumentationsgenerator
+<li><a href="index_j.html#ixb100124"><font color=#000080><tt>jar</tt></font></a>
+- das Archivierungswerkzeug
+<li><a href="index_j.html#ixb102908"><font color=#000080><tt>javap</tt></font></a>
+- der Disassembler
+<li><a href="index_s.html#ixb102232"><font color=#000080><tt>serialver</tt></font></a>
+- Zugriff auf die <a href="index_s.html#ixb102231"><font color=#000080><tt>serialVersionUID</tt></font></a>
+<li><a href="index_k.html#ixb102757"><font color=#000080><tt>keytool</tt></font></a>
+- Verwaltung von kryptografischen Schl&uuml;sseln
+<li><a href="index_p.html#ixb102786"><font color=#000080><tt>policytool</tt></font></a>
+- Bearbeiten von Policy-Dateien
+<li><a href="index_j.html#ixb102782"><font color=#000080><tt>jarsigner</tt></font></a>
+- Signieren von Archiven
+<li><a href="index_r.html#ixb102707"><font color=#000080><tt>rmic</tt></font></a>
+- Erzeugen von RMI-Stubs und -Skeletons
+<li><a href="index_r.html#ixb102708"><font color=#000080><tt>rmiregistry</tt></font></a>
+- RMI-Namensservice
+<li><a name="ixa103851"><a href="index_j.html#ixb102909"><font color=#000080><tt>jvisualvm</tt></font></a></a>
+- der Profiler mit grafischer Oberfl&auml;che
+<li><a href="index_x.html#ixb102341"><font color=#000080><tt>xjc</tt></font></a>
+- der XSD Binding-Compiler
+</ul>
+
+
+<!-- Section -->
+<a name="sectlevel3id053001001"></a>
+<h3>53.1.1 Aufruf </h3>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+javac [ options ] [ @filelist | { filename.java } ]
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id053001002"></a>
+<h3>53.1.2 Beschreibung </h3>
+
+<p>
+Der Compiler <a name="ixa103852"><a href="index_j.html#ixb100131"><font color=#000080><tt>javac</tt></font></a></a>
+&uuml;bersetzt Sourcecode in Bytecode. Zu jeder Klasse, die innerhalb
+einer <font color="#660099">.java</font>-Datei<a name="ixa103853"></a>
+definiert wurde, wird eine eigene <font color="#660099">.class</font>-Datei<a name="ixa103854"></a>
+erzeugt. Der Compiler wacht automatisch &uuml;ber die <a name="ixa103855">Abh&auml;ngigkeiten
+zwischen den Quelldateien</a>. Wird beispielsweise
+in einer Klasse <font color="#000077"><tt>X</tt></font> in der Datei
+<font color="#660099">X.java</font> eine Klasse <font color="#000077"><tt>Y</tt></font>,
+die in <font color="#660099">Y.java</font> liegt, verwendet, so wird
+<font color="#660099">Y.java</font> automatisch mit &uuml;bersetzt,
+wenn es erforderlich ist. Anstelle der Liste von Dateinamen kann nach
+einem @ auch eine Textdatei angegeben werden, in der die zu &uuml;bersetzenden
+Dateien durch Whitespaces getrennt angegeben werden. 
+
+<!-- Section -->
+
+<a name="sectlevel3id053001003"></a>
+<h3>53.1.3 Optionen </h3>
+<a name="tableid053001"></a>
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=33%><b>Option</b></td>
+<td valign=top align=left width=66%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103856"><a href="index_0.html#ixb100126"><font color=#000080><tt>-version</tt></font></a></a></td>
+<td valign=top align=left>Ausgabe der Versionsnummer </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103857"><a href="index_0.html#ixb100162"><font color=#000080><tt>-classpath path</tt></font></a></a></td>
+<td valign=top align=left>Gibt die Liste der Pfade zur Suche von Klassendateien
+an. Dieser Schalter &uuml;bersteuert den Wert einer eventuell gesetzten
+Umgebungsvariable <a href="index_c.html#ixb100137"><font color=#000080><tt>CLASSPATH</tt></font></a>.
+Bez&uuml;glich der Auswirkungen des Klassenpfads in den unterschiedlichen
+JDK-Versionen lesen Sie bitte <a href="k100092.html#bedeutungpaketnamen">Abschnitt 14.2.2</a>.
+Alternativ kann auch die Abk&uuml;rzung <a href="index_0.html#ixb100161"><font color=#000080><tt>-cp</tt></font></a>
+angegeben werden. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103858"><a href="index_0.html#ixb102911"><font color=#000080><tt>-sourcepath path</tt></font></a></a></td>
+<td valign=top align=left>Gibt die Liste der Pfade zur Suche von Quelldateien
+an. </td></tr>
+<tr>
+<td valign=top align=left><a href="index_0.html#ixb100647"><font color=#000080><tt>-d path</tt></font></a></td>
+<td valign=top align=left>Gibt den Pfad an, in dem die Klassendateien
+abgelegt werden sollen. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103859"><a href="index_0.html#ixb102912"><font color=#000080><tt>-g</tt></font></a></a></td>
+<td valign=top align=left>Aktiviert die Erzeugung von Debug-Informationen.
+Dieser Schalter sollte aktiviert werden, bevor ein Programm debugt
+wird. Mit <font color="#000077"><tt>-g:[ lines | vars | source ]</tt></font>
+k&ouml;nnen Sie den Detailgrad n&auml;her spezifizieren. Mit <font color="#000077"><tt>-g:none</tt></font>
+k&ouml;nnen Sie die Erzeugung explizit ausschalten. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103860"><a href="index_0.html#ixb102913"><font color=#000080><tt>-nowarn</tt></font></a></a></td>
+<td valign=top align=left>Deaktiviert die Ausgabe von Warnungen. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103861"><a href="index_0.html#ixb102914"><font color=#000080><tt>-verbose</tt></font></a></a></td>
+<td valign=top align=left>Aktiviert die Ausgabe von Meldungen &uuml;ber
+geladene Quell- und Klassendateien w&auml;hrend der &Uuml;bersetzung.
+</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103862"><a href="index_0.html#ixb102915"><font color=#000080><tt>-implicit:[ none | class ]</tt></font></a></a></td>
+<td valign=top align=left>Implizit referenzierte Klassen k&ouml;nnen
+mit diesem Schalter wahlweise mitgeneriert werden. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103863"><a href="index_0.html#ixb102916"><font color=#000080><tt>-encoding encoding</tt></font></a></a></td>
+<td valign=top align=left>Setzt das Encoding des Quellcodes. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103864"><a href="index_0.html#ixb102917"><font color=#000080><tt>-deprecation</tt></font></a></a></td>
+<td valign=top align=left>Sorgt daf&uuml;r, dass bei jedem Aufruf
+einer als <a name="ixa103865"><a href="index_d.html#ixb100139"><font color=#000080><tt>deprecated</tt></font></a></a>
+markierten Methode (<a name="ixa103866"><a href="index_0.html#ixb102918"><font color=#000080><tt>@deprecated</tt></font></a></a>-Marke
+im Dokumentationskommentar) zus&auml;tzliche Informationen &uuml;ber
+m&ouml;gliche Workarounds ausgegegeben werden. Alle Methoden aus &auml;lteren
+JDKs, die im aktuellen JDK nicht mehr verwendet werden sollen, werden
+mit diesem Flag markiert. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103867"><a href="index_0.html#ixb102919"><font color=#000080><tt>-target version</tt></font></a></a></td>
+<td valign=top align=left>Es wird Bytecode erstellt, der zu der angegebenen
+Version des Laufzeitsystems kompatibel ist. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103868"><a href="index_0.html#ixb102920"><font color=#000080><tt>-source version</tt></font></a></a></td>
+<td valign=top align=left>Es wird Sourcecode akzeptiert, der zu der
+angegebenen Version kompatibel ist. Dieser Schalter ist ab JDK-Version
+1.4 verf&uuml;gbar. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103869"><a href="index_0.html#ixb100794"><font color=#000080><tt>-Xlint</tt></font></a></a></td>
+<td valign=top align=left>Steht ab der J2SE 5.0 zur Verf&uuml;gung
+und aktiviert eine Reihe von Warnungen, die anzeigen, dass der Quelltext
+Konstrukte enth&auml;lt, die zwar legal, aber unter Umst&auml;nden
+problematisch sind. Als Beispiel wird in der Dokumentation eine Klasse
+genannt, die zwar das Interface <a href="index_s.html#ixb100461"><font color=#000080><tt>Serializable</tt></font></a>
+implementiert, aber keine eigene <a href="index_s.html#ixb102231"><font color=#000080><tt>serialVersionUID</tt></font></a>
+zur Verf&uuml;gung stellt. </td></tr>
+</table>
+<p><i>
+Tabelle 53.1: Optionen von javac </i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100332.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100332.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100334.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

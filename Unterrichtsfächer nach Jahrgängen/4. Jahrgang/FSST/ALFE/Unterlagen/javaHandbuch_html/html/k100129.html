@@ -1,0 +1,1127 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100127.html;106,k100128.html;107,k100130.html;108,k100132.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100127.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100128.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100130.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100132.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 19 - Character-Streams
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id019002"></a>
+<h2>19.2 <a name="ixa101239">Ausgabe-Streams</a></h2>
+<hr>
+<ul>
+<li><a href="k100129.html#sectlevel2id019002">19.2 Ausgabe-Streams</a>
+<ul>
+<li><a href="k100129.html#sectlevel3id019002001">19.2.1 Die abstrakte Klasse Writer</a>
+<li><a href="k100129.html#sectlevel3id019002002">19.2.2 Auswahl des Ausgabeger&auml;ts</a>
+<ul>
+<li><a href="k100129.html#sectlevel4id019002002001">OutputStreamWriter und FileWriter</a>
+<li><a href="k100129.html#sectlevel4id019002002002">StringWriter und CharArrayWriter</a>
+</ul>
+<li><a href="k100129.html#charausgabestreamsschachteln">19.2.3 Schachteln von Ausgabe-Streams </a>
+<ul>
+<li><a href="k100129.html#sectlevel4id019002003001">BufferedWriter</a>
+<li><a href="k100129.html#sectlevel4id019002003002">PrintWriter</a>
+<li><a href="k100129.html#sectlevel4id019002003003">FilterWriter</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id019002001"></a>
+<h3>19.2.1 Die abstrakte Klasse Writer </h3>
+
+<p>
+Basis aller sequenziellen Ausgaben ist die abstrakte Klasse <a name="ixa101240"><a href="index_w.html#ixb100594"><font color=#000080><tt>Writer</tt></font></a></a>
+des Pakets <a href="index_j.html#ixb100197"><font color=#000080><tt>java.io</tt></font></a>,
+die eine Schnittstelle f&uuml;r stream-basierte Ausgaben zur Verf&uuml;gung
+stellt: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+protected Writer()
+
+public void close()
+public void flush()
+
+public void write(int c)
+public void write(char[] cbuf)
+abstract public void write(char[] cbuf, int off, int len)
+public void write(String str)
+public void write(String str, int off, int len)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/Writer.html" onClick="this.href=getApiDoc('java.io.Writer')"><font color="#660066" size=-1>java.io.Writer</font></a></td>
+</tr>
+</table>
+
+<p>
+Neben einem parameterlosen Konstruktor definiert sie die Methoden
+<a name="ixa101241"><a href="index_c.html#ixb100596"><font color=#000080><tt>close</tt></font></a></a>
+und <a name="ixa101242"><a href="index_f.html#ixb100966"><font color=#000080><tt>flush</tt></font></a></a>
+und eine Reihe &uuml;berladener <a name="ixa101243"><a href="index_w.html#ixb100967"><font color=#000080><tt>write</tt></font></a></a>-Methoden.
+Die Bedeutung des Konstruktors liegt darin, den Ausgabestrom zu &ouml;ffnen
+und f&uuml;r einen nachfolgenden Aufruf von <a href="index_w.html#ixb100967"><font color=#000080><tt>write</tt></font></a>
+vorzubereiten, bevor er schlie&szlig;lich mit <a href="index_c.html#ixb100596"><font color=#000080><tt>close</tt></font></a>
+wieder geschlossen wird. In der Grundform erwartet <a href="index_w.html#ixb100967"><font color=#000080><tt>write</tt></font></a>
+einen einzigen <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>-Parameter
+und schreibt diesen als Byte in den Ausgabestrom. Daneben gibt es
+weitere Varianten, die ein Array von Bytes oder ein <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Objekt
+als Parameter erwarten und dieses durch wiederholten Aufruf der primitiven
+<a href="index_w.html#ixb100967"><font color=#000080><tt>write</tt></font></a>-Methode
+ausgeben. Durch Aufruf von <a href="index_f.html#ixb100966"><font color=#000080><tt>flush</tt></font></a>
+werden eventuell vorhandene Puffer geleert und die darin enthaltenen
+Daten an das Ausgabeger&auml;t weitergegeben. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Von abgeleiteten Klassen wird erwartet, dass sie mindestens die Methoden
+<a href="index_f.html#ixb100966"><font color=#000080><tt>flush</tt></font></a>
+und <a href="index_c.html#ixb100596"><font color=#000080><tt>close</tt></font></a>
+sowie <font color="#000077"><tt>write(char, int, int)</tt></font>
+&uuml;berlagern. Aus Gr&uuml;nden der Performance ist es aber oftmals
+sinnvoll, auch die &uuml;brigen <a href="index_w.html#ixb100967"><font color=#000080><tt>write</tt></font></a>-Methoden
+zu &uuml;berlagern.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id019002002"></a>
+<h3>19.2.2 Auswahl des Ausgabeger&auml;ts </h3>
+
+<p>
+Als abstrakte Basisklasse kann <a href="index_w.html#ixb100594"><font color=#000080><tt>Writer</tt></font></a>
+nicht instanziert werden. Stattdessen gibt es eine Reihe konkreter
+Klassen, die aus <a href="index_w.html#ixb100594"><font color=#000080><tt>Writer</tt></font></a>
+abgeleitet wurden und deren Aufgabe es ist, die Verbindung zu einem
+konkreten Ausgabeger&auml;t herzustellen oder Filterfunktionen zu
+&uuml;bernehmen. <a href="k100129.html#writerkindklassen">Tabelle 19.1</a>
+enth&auml;lt eine &Uuml;bersicht dieser abgeleiteten Klassen. <a name="writerkindklassen"></a>
+
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=25%><b>Klasse</b></td>
+<td valign=top align=left width=75%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101244"><a href="index_o.html#ixb100968"><font color=#000080><tt>OutputStreamWriter</tt></font></a></a></td>
+<td valign=top align=left>Basisklasse f&uuml;r alle Writer, die einen
+Character-Stream in einen Byte-Stream umwandeln</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101245"><a href="index_f.html#ixb100969"><font color=#000080><tt>FileWriter</tt></font></a></a></td>
+<td valign=top align=left>Konkrete Ableitung von <a href="index_o.html#ixb100968"><font color=#000080><tt>OutputStreamWriter</tt></font></a>
+zur Ausgabe in eine Datei </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101246"><a href="index_f.html#ixb100970"><font color=#000080><tt>FilterWriter</tt></font></a></a></td>
+<td valign=top align=left>Abstrakte Basisklasse f&uuml;r die Konstruktion
+von Ausgabefiltern </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101247"><a href="index_p.html#ixb100561"><font color=#000080><tt>PrintWriter</tt></font></a></a></td>
+<td valign=top align=left>Ausgabe aller Basistypen im Textformat </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101248"><a href="index_b.html#ixb100971"><font color=#000080><tt>BufferedWriter</tt></font></a></a></td>
+<td valign=top align=left>Writer zur Ausgabepufferung </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101249"><a href="index_s.html#ixb100972"><font color=#000080><tt>StringWriter</tt></font></a></a></td>
+<td valign=top align=left>Writer zur Ausgabe in einen <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101250"><a href="index_c.html#ixb100973"><font color=#000080><tt>CharArrayWriter</tt></font></a></a></td>
+<td valign=top align=left>Writer zur Ausgabe in ein Zeichen-Array
+</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101251"><a href="index_p.html#ixb100974"><font color=#000080><tt>PipedWriter</tt></font></a></a></td>
+<td valign=top align=left>Writer zur Ausgabe in einen <a name="ixa101252"><a href="index_p.html#ixb100975"><font color=#000080><tt>PipedReader</tt></font></a></a>
+</td></tr>
+</table>
+<p><i>
+Tabelle 19.1: Aus Writer abgeleitete Klassen </i></p>
+
+<p>
+In den folgenden Unterabschnitten werden die Klassen <a href="index_o.html#ixb100968"><font color=#000080><tt>OutputStreamWriter</tt></font></a>,
+<a href="index_f.html#ixb100969"><font color=#000080><tt>FileWriter</tt></font></a>,
+<a href="index_s.html#ixb100972"><font color=#000080><tt>StringWriter</tt></font></a>
+und <a href="index_c.html#ixb100973"><font color=#000080><tt>CharArrayWriter</tt></font></a>
+erl&auml;utert. Die Klassen <a href="index_b.html#ixb100971"><font color=#000080><tt>BufferedWriter</tt></font></a>,
+<a href="index_p.html#ixb100561"><font color=#000080><tt>PrintWriter</tt></font></a>
+und <a href="index_f.html#ixb100970"><font color=#000080><tt>FilterWriter</tt></font></a>
+sind Thema des n&auml;chsten Abschnitts. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Klasse <a name="ixa101251"><a href="index_p.html#ixb100974"><font color=#000080><tt>PipedWriter</tt></font></a></a>
+soll hier nicht erl&auml;utert werden. In <a href="k100154.html#pipedthreads">Abschnitt 23.4.5</a>
+findet sich jedoch ein Beispiel zur Anwendung der Klassen <a href="index_p.html#ixb100976"><font color=#000080><tt>PipedInputStream</tt></font></a>
+und <a href="index_p.html#ixb100977"><font color=#000080><tt>PipedOutputStream</tt></font></a>,
+das auf <a href="index_p.html#ixb100975"><font color=#000080><tt>PipedReader</tt></font></a>
+und <a href="index_p.html#ixb100974"><font color=#000080><tt>PipedWriter</tt></font></a>
+&uuml;bertragbar ist.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id019002002001"></a>
+<h4>OutputStreamWriter und FileWriter </h4>
+
+<p>
+Die Klasse <a name="ixa101253"><a href="index_o.html#ixb100968"><font color=#000080><tt>OutputStreamWriter</tt></font></a></a>
+ist die Basisklasse f&uuml;r alle Writer, die eine Konvertierung zwischen
+Character- und Byte-Streams vornehmen. Sie enth&auml;lt ein Objekt
+des Typs <a name="ixa101254"><a href="index_c.html#ixb100978"><font color=#000080><tt>CharToByteConverter</tt></font></a></a>
+(aus dem undokumentierten Paket <a name="ixa101255"><a href="index_s.html#ixb100979"><font color=#000080><tt>sun.io</tt></font></a></a>),
+das die Konvertierung der Ausgabezeichen bei allen schreibenden Zugriffen
+vornimmt. Als &uuml;bergeordnete Basisklasse ist <a href="index_o.html#ixb100968"><font color=#000080><tt>OutputStreamWriter</tt></font></a>
+f&uuml;r uns allerdings nicht so interessant wie die daraus abgeleitete
+Klasse <a name="ixa101256"><a href="index_f.html#ixb100969"><font color=#000080><tt>FileWriter</tt></font></a></a>,
+die die Ausgabe in eine Datei erm&ouml;glicht. Sie implementiert die
+abstrakten Eigenschaften von <a href="index_w.html#ixb100594"><font color=#000080><tt>Writer</tt></font></a>
+und bietet vier zus&auml;tzliche Konstruktoren, die es erlauben, eine
+Datei zu &ouml;ffnen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public FileWriter(String fileName)
+  throws IOException
+
+public FileWriter(String fileName, boolean append)
+  throws IOException
+
+public FileWriter(File file)
+  throws IOException
+
+public FileWriter(FileDescriptor fd)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/FileWriter.html" onClick="this.href=getApiDoc('java.io.FileWriter')"><font color="#660066" size=-1>java.io.FileWriter</font></a></td>
+</tr>
+</table>
+
+<p>
+Am einfachsten kann eine Datei g&ouml;ffnet werden, indem der Dateiname
+als <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Parameter
+<font color="#000077"><tt>fileName</tt></font> &uuml;bergeben wird.
+Falls <font color="#000077"><tt>fileName</tt></font> eine bereits
+vorhandene Datei bezeichnet, wird sie ge&ouml;ffnet und ihr bisheriger
+Inhalt gel&ouml;scht, andernfalls wird eine neue Datei mit diesem
+Namen angelegt. Sukzessive Aufrufe von <a href="index_w.html#ixb100967"><font color=#000080><tt>write</tt></font></a>
+schreiben weitere Bytes in diese Datei. Wird zus&auml;tzlich der Parameter
+<font color="#000077"><tt>append</tt></font> mit dem Wert <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+an den Konstruktor &uuml;bergeben, so werden die Ausgabezeichen an
+die Datei angeh&auml;ngt, falls sie bereits existiert. 
+
+<p>
+Das folgende Programm erstellt eine Datei <font color="#660099">hallo.txt</font>
+und schreibt die Zeile &#187;Hallo JAVA&#171; hinein: 
+<a name="listingid019001"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1901.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1901
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    String hello = <font color="#0000FF">"Hallo JAVA\r\n"</font>;
+<font color="#555555">010 </font>    FileWriter f1;
+<font color="#555555">011 </font>
+<font color="#555555">012 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">013 </font>      f1 = <font color="#0000AA">new</font> FileWriter(<font color="#0000FF">"hallo.txt"</font>);
+<font color="#555555">014 </font>      f1.write(hello);
+<font color="#555555">015 </font>      f1.close();
+<font color="#555555">016 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">017 </font>      System.out.println(<font color="#0000FF">"Fehler beim Erstellen der Datei"</font>);
+<font color="#555555">018 </font>    }
+<font color="#555555">019 </font>  }
+<font color="#555555">020 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1901.java"><font color="#000055" size=-1>Listing1901.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 19.1: Erstellen einer Datei</i></p>
+
+<p>
+Fast alle Methoden der Klassen <a href="index_o.html#ixb100968"><font color=#000080><tt>OutputStreamWriter</tt></font></a>
+und <a href="index_f.html#ixb100969"><font color=#000080><tt>FileWriter</tt></font></a>
+deklarieren die Ausnahme <a name="ixa101257"><a href="index_i.html#ixb100597"><font color=#000080><tt>IOException</tt></font></a></a>,
+die als allgemeine Fehleranzeige im Paket <a href="index_j.html#ixb100197"><font color=#000080><tt>java.io</tt></font></a>
+verwendet wird. <a href="index_i.html#ixb100597"><font color=#000080><tt>IOException</tt></font></a>
+kann von einer Vielzahl von Methoden ausgel&ouml;st werden und hat
+dabei teilweise sehr unterschiedliche Bedeutungen. So bedeutet sie
+beim Aufruf des Konstruktors, dass es nicht m&ouml;glich war, die
+Datei anzulegen, was wiederum eine ganze Reihe von Gr&uuml;nden haben
+kann. Beim Aufruf von <a href="index_w.html#ixb100967"><font color=#000080><tt>write</tt></font></a>
+signalisiert sie einen Schreibfehler und bei <a href="index_c.html#ixb100596"><font color=#000080><tt>close</tt></font></a>
+zeigt sie einen nicht n&auml;her spezifizierten I/O-Fehler an. 
+
+<p>
+In unserem Beispiel wurden alle Ausnahmen dieses Typs von einer einzigen
+<a href="index_t.html#ixb100571"><font color=#000080><tt>try</tt></font></a>-<a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a>-Anweisung
+behandelt. Falls eine differenziertere Fehlererkennung n&ouml;tig
+ist, macht es Sinn, f&uuml;r die unterschiedlichen I/O-Operationen
+verschiedene <a href="index_t.html#ixb100571"><font color=#000080><tt>try</tt></font></a>-<a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a>-Anweisungen
+vorzusehen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die anderen Konstruktoren von <a href="index_f.html#ixb100969"><font color=#000080><tt>FileWriter</tt></font></a>
+erwarten ein <a name="ixa101258"><a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a></a>-Objekt
+bzw. ein Objekt vom Typ <a name="ixa101259"><a href="index_f.html#ixb100981"><font color=#000080><tt>FileDescriptor</tt></font></a></a>.
+W&auml;hrend wir auf die Klasse <a href="index_f.html#ixb100981"><font color=#000080><tt>FileDescriptor</tt></font></a>
+nicht n&auml;her eingehen werden, ist ein <a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a>
+die Repr&auml;sentation einer Datei im Kontext ihres Verzeichnisses.
+Wir werden sp&auml;ter in <a href="k100143.html#verzeichnisse">Kapitel 22</a>
+darauf zur&uuml;ckkommen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id019002002002"></a>
+<h4>StringWriter und CharArrayWriter </h4>
+
+<p>
+Die Klassen <a name="ixa101260"><a href="index_s.html#ixb100972"><font color=#000080><tt>StringWriter</tt></font></a></a>
+und <a name="ixa101261"><a href="index_c.html#ixb100973"><font color=#000080><tt>CharArrayWriter</tt></font></a></a>
+sind ebenfalls aus <a href="index_w.html#ixb100594"><font color=#000080><tt>Writer</tt></font></a>
+abgeleitet. Im Gegensatz zu <a href="index_f.html#ixb100969"><font color=#000080><tt>FileWriter</tt></font></a>
+schreiben sie ihre Ausgabe jedoch nicht in eine Datei, sondern in
+einen dynamisch wachsenden <a href="index_s.html#ixb100289"><font color=#000080><tt>StringBuffer</tt></font></a>
+bzw. in ein Zeichen-Array. 
+
+<p>
+<a href="index_s.html#ixb100972"><font color=#000080><tt>StringWriter</tt></font></a>
+besitzt zwei Konstruktoren: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public StringWriter()
+
+public StringWriter(int initialSize)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/StringWriter.html" onClick="this.href=getApiDoc('java.io.StringWriter')"><font color="#660066" size=-1>java.io.StringWriter</font></a></td>
+</tr>
+</table>
+
+<p>
+Der parameterlose Konstruktor legt einen <a href="index_s.html#ixb100972"><font color=#000080><tt>StringWriter</tt></font></a>
+mit der Standardgr&ouml;&szlig;e eines <a href="index_s.html#ixb100289"><font color=#000080><tt>StringBuffer</tt></font></a>-Objekts
+an, w&auml;hrend der zweite Konstruktor es erlaubt, die initiale Gr&ouml;&szlig;e
+selbst festzulegen. Wie schon erw&auml;hnt, w&auml;chst der interne
+Puffer automatisch, wenn fortgesetzte Aufrufe von <a href="index_w.html#ixb100967"><font color=#000080><tt>write</tt></font></a>
+dies erforderlich machen. Die schreibenden Zugriffe auf den Puffer
+erfolgen mit den von <a href="index_w.html#ixb100594"><font color=#000080><tt>Writer</tt></font></a>
+bekannten <a href="index_w.html#ixb100967"><font color=#000080><tt>write</tt></font></a>-Methoden.
+
+<p>
+F&uuml;r den Zugriff auf den Inhalt des Puffers stehen die Methoden
+<a name="ixa101262"><a href="index_g.html#ixb100982"><font color=#000080><tt>getBuffer</tt></font></a></a>
+und <a name="ixa101263"><a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a></a>
+zur Verf&uuml;gung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public StringBuffer getBuffer()
+
+public String toString()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/StringWriter.html" onClick="this.href=getApiDoc('java.io.StringWriter')"><font color="#660066" size=-1>java.io.StringWriter</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Methode <a href="index_g.html#ixb100982"><font color=#000080><tt>getBuffer</tt></font></a>
+liefert den internen <a href="index_s.html#ixb100289"><font color=#000080><tt>StringBuffer</tt></font></a>,
+w&auml;hrend <a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a>
+den Puffer in einen <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+kopiert und diesen an den Aufrufer liefert. 
+
+<p>
+Die Klasse <a name="ixa101261"><a href="index_c.html#ixb100973"><font color=#000080><tt>CharArrayWriter</tt></font></a></a>
+arbeitet &auml;hnlich wie <a href="index_s.html#ixb100972"><font color=#000080><tt>StringWriter</tt></font></a>,
+schreibt die Zeichen allerdings in ein Character-Array. Analog zu
+<a href="index_s.html#ixb100972"><font color=#000080><tt>StringWriter</tt></font></a>
+w&auml;chst dieses automatisch bei fortgesetzten Aufrufen von <a href="index_w.html#ixb100967"><font color=#000080><tt>write</tt></font></a>.
+Die Konstruktoren haben dieselbe Struktur wie bei <a href="index_s.html#ixb100972"><font color=#000080><tt>StringWriter</tt></font></a>
+und auch die dort verf&uuml;gbaren <a href="index_w.html#ixb100967"><font color=#000080><tt>write</tt></font></a>-Methoden
+stehen allesamt hier zur Verf&uuml;gung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public CharArrayWriter()
+
+public CharArrayWriter(int initialSize)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/CharArrayWriter.html" onClick="this.href=getApiDoc('java.io.CharArrayWriter')"><font color="#660066" size=-1>java.io.CharArrayWriter</font></a></td>
+</tr>
+</table>
+
+<p>
+Auf den aktuellen Inhalt des Arrays kann mit Hilfe der Methoden <a name="ixa101264"><a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a></a>
+und <a name="ixa101265"><a href="index_t.html#ixb100983"><font color=#000080><tt>toCharArray</tt></font></a></a>
+zugegriffen werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public String toString()
+
+public char[] toCharArray()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/CharArrayWriter.html" onClick="this.href=getApiDoc('java.io.CharArrayWriter')"><font color="#660066" size=-1>java.io.CharArrayWriter</font></a></td>
+</tr>
+</table>
+
+<p>
+Zus&auml;tzlich stehen die Methoden <a name="ixa101266"><a href="index_r.html#ixb100984"><font color=#000080><tt>reset</tt></font></a></a>
+und <a name="ixa101267"><a href="index_s.html#ixb100691"><font color=#000080><tt>size</tt></font></a></a>
+zur Verf&uuml;gung, mit denen der interne Puffer geleert bzw. die
+aktuelle Gr&ouml;&szlig;e des Zeichen-Arrays ermittelt werden kann.
+Durch Aufruf von <a name="ixa101268"><a href="index_w.html#ixb100985"><font color=#000080><tt>writeTo</tt></font></a></a>
+kann des Weiteren der komplette Inhalt des Arrays an einen anderen
+<a href="index_w.html#ixb100594"><font color=#000080><tt>Writer</tt></font></a>
+&uuml;bergeben und so beispielsweise mit einem einzigen Funktionsaufruf
+in eine Datei geschrieben werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void reset()
+
+public int size()
+
+public void writeTo(Writer out)
+  throws IOException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/CharArrayWriter.html" onClick="this.href=getApiDoc('java.io.CharArrayWriter')"><font color="#660066" size=-1>java.io.CharArrayWriter</font></a></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="charausgabestreamsschachteln"></a>
+<h3>19.2.3 Schachteln von Ausgabe-Streams <a name="ixa101269"></a>
+</h3>
+
+<p>
+Wie eingangs erw&auml;hnt, ist es in Java m&ouml;glich, Streams zu
+schachteln. Dazu gibt es die aus <a href="index_w.html#ixb100594"><font color=#000080><tt>Writer</tt></font></a>
+abgeleiteten Klassen <a name="ixa101270"><a href="index_b.html#ixb100971"><font color=#000080><tt>BufferedWriter</tt></font></a></a>,
+<a name="ixa101271"><a href="index_p.html#ixb100561"><font color=#000080><tt>PrintWriter</tt></font></a></a>
+und <a name="ixa101272"><a href="index_f.html#ixb100970"><font color=#000080><tt>FilterWriter</tt></font></a></a>,
+deren wesentlicher Unterschied zu <a href="index_w.html#ixb100594"><font color=#000080><tt>Writer</tt></font></a>
+darin besteht, dass sie als Membervariable einen zus&auml;tzlichen
+<a href="index_w.html#ixb100594"><font color=#000080><tt>Writer</tt></font></a>
+besitzen, der im Konstruktor &uuml;bergeben wird. Wenn nun die <a href="index_w.html#ixb100967"><font color=#000080><tt>write</tt></font></a>-Methode
+eines derart geschachtelten Writer aufgerufen wird, gibt sie die Daten
+nicht direkt an den internen <a href="index_w.html#ixb100594"><font color=#000080><tt>Writer</tt></font></a>
+weiter, sondern f&uuml;hrt zuvor erst die erforderlichen Filterfunktionen
+aus. Damit lassen sich beliebige Filterfunktionen transparent realisieren.
+
+
+<!-- Section -->
+<a name="sectlevel4id019002003001"></a>
+<h4>BufferedWriter </h4>
+
+<p>
+Diese Klasse hat die Aufgabe, Stream-Ausgaben zu puffern. Dazu enth&auml;lt
+sie einen internen Puffer, in dem die Ausgaben von <a href="index_w.html#ixb100967"><font color=#000080><tt>write</tt></font></a>
+zwischengespeichert werden. Erst wenn der Puffer voll ist oder die
+Methode <a name="ixa101273"><a href="index_f.html#ixb100966"><font color=#000080><tt>flush</tt></font></a></a>
+aufgerufen wird, werden alle gepufferten Ausgaben in den echten Stream
+geschrieben. Das Puffern der Ausgabe ist immer dann n&uuml;tzlich,
+wenn die Ausgabe in eine Datei geschrieben werden soll. Durch die
+Verringerung der <a href="index_w.html#ixb100967"><font color=#000080><tt>write</tt></font></a>-Aufrufe
+reduziert sich die Anzahl der Zugriffe auf das externe Ger&auml;t
+und die Performance wird erh&ouml;ht. 
+
+<p>
+<a href="index_b.html#ixb100971"><font color=#000080><tt>BufferedWriter</tt></font></a>
+besitzt zwei Konstruktoren: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public BufferedWriter(Writer out)
+
+public BufferedWriter(Writer out, int size)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/BufferedWriter.html" onClick="this.href=getApiDoc('java.io.BufferedWriter')"><font color="#660066" size=-1>java.io.BufferedWriter</font></a></td>
+</tr>
+</table>
+
+<p>
+In beiden F&auml;llen wird ein bereits existierender <a href="index_w.html#ixb100594"><font color=#000080><tt>Writer</tt></font></a>
+&uuml;bergeben, an den die gepufferten Ausgaben weitergereicht werden.
+Falls die Gr&ouml;&szlig;e des Puffers nicht explizit angegeben wird,
+legt <a href="index_b.html#ixb100971"><font color=#000080><tt>BufferedWriter</tt></font></a>
+einen Standardpuffer an, dessen Gr&ouml;&szlig;e f&uuml;r die meisten
+Zwecke ausreichend ist. Die <a href="index_w.html#ixb100967"><font color=#000080><tt>write</tt></font></a>-Methoden
+von <a href="index_b.html#ixb100971"><font color=#000080><tt>BufferedWriter</tt></font></a>
+entsprechen denen der Klasse <a href="index_w.html#ixb100594"><font color=#000080><tt>Writer</tt></font></a>.
+
+<p>
+Zus&auml;tzlich gibt es eine Methode <a name="ixa101274"><a href="index_n.html#ixb100987"><font color=#000080><tt>newLine</tt></font></a></a>,
+mit der eine Zeilenschaltung in den Stream geschrieben werden kann.
+Diese wird dem System-Property <a name="ixa101275"><a href="index_l.html#ixb100843"><font color=#000080><tt>line.separator</tt></font></a></a>
+entnommen und entspricht damit den lokalen Konventionen. 
+
+<p>
+Das nachfolgende Beispiel demonstriert die gepufferte Ausgabe einer
+Reihe von Textzeilen in eine Datei <font color="#660099">buffer.txt</font>:
+<a name="listingid019002"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1902.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1902
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>     Writer f1;
+<font color="#555555">010 </font>     BufferedWriter f2;
+<font color="#555555">011 </font>     String s;
+<font color="#555555">012 </font>
+<font color="#555555">013 </font>     <font color="#0000AA">try</font> {
+<font color="#555555">014 </font>       f1 = <font color="#0000AA">new</font> FileWriter(<font color="#0000FF">"buffer.txt"</font>);
+<font color="#555555">015 </font>       f2 = <font color="#0000AA">new</font> BufferedWriter(f1);
+<font color="#555555">016 </font>       <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 1; i &lt;= 10000; ++i) {
+<font color="#555555">017 </font>         s = <font color="#0000FF">"Dies ist die "</font> + i + <font color="#0000FF">". Zeile"</font>;
+<font color="#555555">018 </font>         f2.write(s);
+<font color="#555555">019 </font>         f2.newLine();
+<font color="#555555">020 </font>       }
+<font color="#555555">021 </font>       f2.close();
+<font color="#555555">022 </font>       f1.close();
+<font color="#555555">023 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">024 </font>      System.out.println(<font color="#0000FF">"Fehler beim Erstellen der Datei"</font>);
+<font color="#555555">025 </font>    }
+<font color="#555555">026 </font>  }
+<font color="#555555">027 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1902.java"><font color="#000055" size=-1>Listing1902.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 19.2: Gepufferte Ausgabe in eine Datei</i></p>
+
+<p>
+Dieses Beispiel erzeugt zun&auml;chst einen neuen <a href="index_w.html#ixb100594"><font color=#000080><tt>Writer</tt></font></a>
+<font color="#000077"><tt>f1</tt></font>, um die Datei <font color="#660099">buffer.txt</font>
+anzulegen. Dieser wird anschlie&szlig;end als Parameter an den <font color="#000077"><tt>BufferedWriter
+f2</tt></font> &uuml;bergeben, der dann f&uuml;r den Aufruf der Ausgaberoutinen
+verwendet wird. 
+
+<p>
+Die etwas umst&auml;ndliche Verwendung zweier Stream-Variablen l&auml;sst
+sich vereinfachen, indem die Konstruktoren direkt beim Aufruf geschachtelt
+werden. Das ist die unter Java &uuml;bliche Methode, die auch zuk&uuml;nftig
+bevorzugt verwendet werden soll: 
+<a name="listingid019003"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1903.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1903
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    BufferedWriter f;
+<font color="#555555">010 </font>    String s;
+<font color="#555555">011 </font>
+<font color="#555555">012 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">013 </font>      f = <font color="#0000AA">new</font> BufferedWriter(
+<font color="#555555">014 </font>          <font color="#0000AA">new</font> FileWriter(<font color="#0000FF">"buffer.txt"</font>));
+<font color="#555555">015 </font>      <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 1; i &lt;= 10000; ++i) {
+<font color="#555555">016 </font>        s = <font color="#0000FF">"Dies ist die "</font> + i + <font color="#0000FF">". Zeile"</font>;
+<font color="#555555">017 </font>        f.write(s);
+<font color="#555555">018 </font>        f.newLine();
+<font color="#555555">019 </font>      }
+<font color="#555555">020 </font>      f.close();
+<font color="#555555">021 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">022 </font>      System.out.println(<font color="#0000FF">"Fehler beim Erstellen der Datei"</font>);
+<font color="#555555">023 </font>    }
+<font color="#555555">024 </font>  }
+<font color="#555555">025 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1903.java"><font color="#000055" size=-1>Listing1903.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 19.3: Schachteln von Writer-Konstruktoren</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id019002003002"></a>
+<h4>PrintWriter </h4>
+
+<p>
+Die stream-basierten Ausgaberoutinen in anderen Programmiersprachen
+bieten meistens die M&ouml;glichkeit, alle primitiven Datentypen in
+textueller Form auszugeben. Java realisiert dieses Konzept &uuml;ber
+die Klasse <a name="ixa101276"><a href="index_p.html#ixb100561"><font color=#000080><tt>PrintWriter</tt></font></a></a>,
+die Ausgabemethoden f&uuml;r alle primitiven Datentypen und f&uuml;r
+Objekttypen zur Verf&uuml;gung stellt. <a href="index_p.html#ixb100561"><font color=#000080><tt>PrintWriter</tt></font></a>
+besitzt folgende Konstruktoren: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public PrintWriter(Writer out)
+
+public PrintWriter(Writer out, boolean autoflush)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/PrintWriter.html" onClick="this.href=getApiDoc('java.io.PrintWriter')"><font color="#660066" size=-1>java.io.PrintWriter</font></a></td>
+</tr>
+</table>
+
+<p>
+Der erste Konstruktor instanziert ein PrintWriter-Objekt durch &Uuml;bergabe
+eines Writer-Objekts, auf das die Ausgabe umgeleitet werden soll.
+Beim zweiten Konstruktor gibt zus&auml;tzlich der Parameter <font color="#000077"><tt>autoflush</tt></font>
+an, ob nach der Ausgabe einer Zeilenschaltung automatisch die Methode
+<a href="index_f.html#ixb100966"><font color=#000080><tt>flush</tt></font></a>
+aufgerufen werden soll. 
+
+<p>
+Die Ausgabe von primitiven Datentypen wird durch eine Reihe &uuml;berladener
+Methoden mit dem Namen <a name="ixa101277"><a href="index_p.html#ixb100934"><font color=#000080><tt>print</tt></font></a></a>
+realisiert. Zus&auml;tzlich gibt es alle Methoden in einer Variante
+<a name="ixa101278"><a href="index_p.html#ixb100181"><font color=#000080><tt>println</tt></font></a></a>,
+bei der automatisch an das Ende der Ausgabe eine Zeilenschaltung angeh&auml;ngt
+wird. <a href="index_p.html#ixb100181"><font color=#000080><tt>println</tt></font></a>
+existiert dar&uuml;ber hinaus parameterlos, um lediglich eine einzelne
+Zeilenschaltung auszugeben. Damit stehen folgende <a href="index_p.html#ixb100934"><font color=#000080><tt>print</tt></font></a>-Methoden
+zur Verf&uuml;gung (analog f&uuml;r <a href="index_p.html#ixb100181"><font color=#000080><tt>println</tt></font></a>):
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void print(boolean b)
+public void print(char c)
+public void print(char[] s)
+public void print(double d)
+public void print(float f)
+public void print(int i)
+public void print(long l)
+public void print(Object obj)
+public void print(String s)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/PrintWriter.html" onClick="this.href=getApiDoc('java.io.PrintWriter')"><font color="#660066" size=-1>java.io.PrintWriter</font></a></td>
+</tr>
+</table>
+
+<p>
+Daneben gibt es seit der Version 5 des JDK die Methode <a name="ixa101279"><a href="index_p.html#ixb100143"><font color=#000080><tt>printf</tt></font></a></a>,
+die in Anlehnung an die gleichnamige Funktion aus C/C++ mit nur einem
+Aufruf mehrere Werte unterschiedlichen Typs formatiert ausgeben kann
+(Details siehe <a href="k100082.html#ausgabeformatierung">Abschnitt 12.6</a>):
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public PrintWriter printf(String format, Object... args)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/PrintWriter.html" onClick="this.href=getApiDoc('java.io.PrintWriter')"><font color="#660066" size=-1>java.io.PrintWriter</font></a></td>
+</tr>
+</table>
+
+<p>
+Das folgende Beispiel berechnet die Zahlenfolge 1 + 1/2 + 1/4 + ...
+und gibt die Folge der Summanden und die aktuelle Summe unter Verwendung
+mehrerer unterschiedlicher <a href="index_p.html#ixb100934"><font color=#000080><tt>print</tt></font></a>-Routinen
+in die Datei <font color="#660099">zwei.txt</font> aus: 
+<a name="printfbeispiel"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1904.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1904
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    PrintWriter f;
+<font color="#555555">010 </font>    <font color="#006699">double</font> sum = 0.0;
+<font color="#555555">011 </font>    <font color="#006699">int</font> nenner;
+<font color="#555555">012 </font>
+<font color="#555555">013 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">014 </font>      f = <font color="#0000AA">new</font> PrintWriter(
+<font color="#555555">015 </font>          <font color="#0000AA">new</font> BufferedWriter(
+<font color="#555555">016 </font>          <font color="#0000AA">new</font> FileWriter(<font color="#0000FF">"zwei.txt"</font>)));
+<font color="#555555">017 </font>
+<font color="#555555">018 </font>      <font color="#0000AA">for</font> (nenner = 1; nenner &lt;= 1024; nenner *= 2) {
+<font color="#555555">019 </font>        sum += 1.0 / nenner;
+<font color="#555555">020 </font>        f.printf(<font color="#0000FF">"Summand: 1/%-4d"</font>, nenner);
+<font color="#555555">021 </font>        f.printf(<font color="#0000FF">"  Summe: %.4f%n"</font>, sum);
+<font color="#555555">022 </font>      }
+<font color="#555555">023 </font>      f.close();
+<font color="#555555">024 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">025 </font>      System.out.println(<font color="#0000FF">"Fehler beim Erstellen der Datei"</font>);
+<font color="#555555">026 </font>    }
+<font color="#555555">027 </font>  }
+<font color="#555555">028 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1904.java"><font color="#000055" size=-1>Listing1904.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 19.4: Die Klasse PrintWriter</i></p>
+
+<p>
+Das Programm verwendet die Methode <a href="index_p.html#ixb100143"><font color=#000080><tt>printf</tt></font></a>
+zur Ausgabe von Strings, Ganz- und Flie&szlig;kommazahlen und zur
+Generierung einer Zeilenschaltung. Nach Ende des Programms hat die
+Datei <font color="#660099">zwei.txt</font> folgenden Inhalt: 
+<font color="#333300">
+<pre>
+Summand: 1/1     Summe: 1,0000
+Summand: 1/2     Summe: 1,5000
+Summand: 1/4     Summe: 1,7500
+Summand: 1/8     Summe: 1,8750
+Summand: 1/16    Summe: 1,9375
+Summand: 1/32    Summe: 1,9688
+Summand: 1/64    Summe: 1,9844
+Summand: 1/128   Summe: 1,9922
+Summand: 1/256   Summe: 1,9961
+Summand: 1/512   Summe: 1,9980
+Summand: 1/1024  Summe: 1,9990
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Das vorliegende Beispiel realisiert sogar eine doppelte Schachtelung
+von <a href="index_w.html#ixb100594"><font color=#000080><tt>Writer</tt></font></a>-Objekten.
+Das <a href="index_p.html#ixb100561"><font color=#000080><tt>PrintWriter</tt></font></a>-Objekt
+schreibt in einen <a href="index_b.html#ixb100971"><font color=#000080><tt>BufferedWriter</tt></font></a>,
+der seinerseits in den <a href="index_f.html#ixb100969"><font color=#000080><tt>FileWriter</tt></font></a>
+schreibt. Auf diese Weise werden Datentypen im ASCII-Format gepuffert
+in eine Textdatei geschrieben. Eine solche Schachtelung ist durchaus
+&uuml;blich in Java und kann in einer beliebigen Tiefe ausgef&uuml;hrt
+werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id019002003003"></a>
+<h4>FilterWriter </h4>
+
+<p>
+Wie bereits mehrfach angedeutet, bietet die Architektur der <a href="index_w.html#ixb100594"><font color=#000080><tt>Writer</tt></font></a>-Klassen
+die M&ouml;glichkeit, eigene Filter zu konstruieren. Dies kann beispielsweise
+durch &Uuml;berlagern der Klasse <a href="index_w.html#ixb100594"><font color=#000080><tt>Writer</tt></font></a>
+geschehen, so wie es etwa bei <a href="index_p.html#ixb100561"><font color=#000080><tt>PrintWriter</tt></font></a>
+oder <a href="index_b.html#ixb100971"><font color=#000080><tt>BufferedWriter</tt></font></a>
+realisiert wurde. Der offizielle Weg besteht allerdings darin, die
+abstrakte Klasse <a name="ixa101280"><a href="index_f.html#ixb100970"><font color=#000080><tt>FilterWriter</tt></font></a></a>
+zu &uuml;berlagern. <a href="index_f.html#ixb100970"><font color=#000080><tt>FilterWriter</tt></font></a>
+besitzt ein internes <a href="index_w.html#ixb100594"><font color=#000080><tt>Writer</tt></font></a>-Objekt
+<font color="#000077"><tt>out</tt></font>, das bei der Instanzierung
+an den Konstruktor &uuml;bergeben wird. Zus&auml;tzlich &uuml;berlagert
+es drei der vier <a href="index_w.html#ixb100967"><font color=#000080><tt>write</tt></font></a>-Methoden,
+um die Ausgabe auf <font color="#000077"><tt>out</tt></font> umzuleiten.
+Die vierte <a href="index_w.html#ixb100967"><font color=#000080><tt>write</tt></font></a>-Methode
+(<font color="#000077"><tt>write(String)</tt></font>) wird dagegen
+nicht &uuml;berlagert, sondern ruft gem&auml;&szlig; ihrer Implementierung
+in <a href="index_w.html#ixb100594"><font color=#000080><tt>Writer</tt></font></a>
+die Variante <font color="#000077"><tt>write(String, int, int)</tt></font>
+auf. 
+
+<p>
+Soll eine eigene Filterklasse konstruiert werden, so ist wie folgt
+vorzugehen: 
+<ul>
+<li> Die Klasse wird aus <a href="index_f.html#ixb100970"><font color=#000080><tt>FilterWriter</tt></font></a>
+abgeleitet.
+<li> Im Konstruktor wird der Superklassen-Konstruktor aufgerufen,
+um <font color="#000077"><tt>out</tt></font> zu initialisieren.
+<li> Die drei <a href="index_w.html#ixb100967"><font color=#000080><tt>write</tt></font></a>-Methoden
+werden separat &uuml;berlagert. Dabei wird jeweils vor der &Uuml;bergabe
+der Ausgabezeichen an die Superklassenmethode die eigene Filterfunktion
+ausgef&uuml;hrt.
+</ul>
+
+<p>
+Anschlie&szlig;end kann die neue Filterklasse wie gewohnt in einer
+Kette von geschachtelten <a href="index_w.html#ixb100594"><font color=#000080><tt>Writer</tt></font></a>-Objekten
+verwendet werden. 
+
+<p>
+Wir wollen uns die Konstruktion einer Filterklasse anhand der folgenden
+Beispielklasse <font color="#000077"><tt>UpCaseWriter</tt></font>
+ansehen, deren Aufgabe es ist, innerhalb eines Streams alle Zeichen
+in Gro&szlig;schrift zu konvertieren: 
+<a name="filterwriterbsp"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1905.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">class</font> UpCaseWriter
+<font color="#555555">006 </font><font color="#0000AA">extends</font> FilterWriter
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> UpCaseWriter(Writer out)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    <font color="#006699">super</font>(out);
+<font color="#555555">011 </font>  }
+<font color="#555555">012 </font>
+<font color="#555555">013 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> write(<font color="#006699">int</font> c)
+<font color="#555555">014 </font>  <font color="#0000AA">throws</font> IOException
+<font color="#555555">015 </font>  {
+<font color="#555555">016 </font>    <font color="#006699">super</font>.write(Character.toUpperCase((<font color="#006699">char</font>)c));
+<font color="#555555">017 </font>  }
+<font color="#555555">018 </font>
+<font color="#555555">019 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> write(<font color="#006699">char</font>[] cbuf, <font color="#006699">int</font> off, <font color="#006699">int</font> len)
+<font color="#555555">020 </font>  <font color="#0000AA">throws</font> IOException
+<font color="#555555">021 </font>  {
+<font color="#555555">022 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; len; ++i) {
+<font color="#555555">023 </font>      write(cbuf[off + i]);
+<font color="#555555">024 </font>    }
+<font color="#555555">025 </font>  }
+<font color="#555555">026 </font>
+<font color="#555555">027 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> write(String str, <font color="#006699">int</font> off, <font color="#006699">int</font> len)
+<font color="#555555">028 </font>  <font color="#0000AA">throws</font> IOException
+<font color="#555555">029 </font>  {
+<font color="#555555">030 </font>    write(str.toCharArray(), off, len);
+<font color="#555555">031 </font>   }
+<font color="#555555">032 </font>}
+<font color="#555555">033 </font>
+<font color="#555555">034 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1905
+<font color="#555555">035 </font>{
+<font color="#555555">036 </font>   <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">037 </font>   {
+<font color="#555555">038 </font>      PrintWriter f;
+<font color="#555555">039 </font>      String s = <font color="#0000FF">"und dieser String auch"</font>;
+<font color="#555555">040 </font>
+<font color="#555555">041 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">042 </font>         f = <font color="#0000AA">new</font> PrintWriter(
+<font color="#555555">043 </font>             <font color="#0000AA">new</font> UpCaseWriter(
+<font color="#555555">044 </font>             <font color="#0000AA">new</font> FileWriter(<font color="#0000FF">"upcase.txt"</font>)));
+<font color="#555555">045 </font>         <font color="#00AA00">//Aufruf von au&szlig;en</font>
+<font color="#555555">046 </font>         f.println(<font color="#0000FF">"Diese Zeile wird sch&ouml;n gro&szlig; geschrieben"</font>);
+<font color="#555555">047 </font>         <font color="#00AA00">//Test von write(int)</font>
+<font color="#555555">048 </font>         f.write(<font color="#0000FF">'a'</font>);
+<font color="#555555">049 </font>         f.println();
+<font color="#555555">050 </font>         <font color="#00AA00">//Test von write(String)</font>
+<font color="#555555">051 </font>         f.write(s);
+<font color="#555555">052 </font>         f.println();
+<font color="#555555">053 </font>         <font color="#00AA00">//Test von write(String, int, int)</font>
+<font color="#555555">054 </font>         f.write(s,0,17);
+<font color="#555555">055 </font>         f.println();
+<font color="#555555">056 </font>         <font color="#00AA00">//Test von write(char[], int, int)</font>
+<font color="#555555">057 </font>         f.write(s.toCharArray(),0,10);
+<font color="#555555">058 </font>         f.println();
+<font color="#555555">059 </font>         <font color="#00AA00">//---</font>
+<font color="#555555">060 </font>         f.close();
+<font color="#555555">061 </font>      } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">062 </font>         System.out.println(<font color="#0000FF">"Fehler beim Erstellen der Datei"</font>);
+<font color="#555555">063 </font>      }
+<font color="#555555">064 </font>   }
+<font color="#555555">065 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1905.java"><font color="#000055" size=-1>Listing1905.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 19.5: Konstruktion einer eigenen FilterWriter-Klasse</i></p>
+
+<p>
+Im Konstruktor wird lediglich der Superklassen-Konstruktor aufgerufen,
+da keine weiteren Aufgaben zu erledigen sind. Die drei <a href="index_w.html#ixb100967"><font color=#000080><tt>write</tt></font></a>-Methoden
+werden so &uuml;berlagert, dass jeweils zun&auml;chst die Ausgabezeichen
+in Gro&szlig;schrift konvertiert werden und anschlie&szlig;end die
+passende Superklassenmethode aufgerufen wird, um die Daten an den
+internen <a href="index_w.html#ixb100594"><font color=#000080><tt>Writer</tt></font></a>
+<font color="#000077"><tt>out</tt></font> zu &uuml;bergeben. 
+
+<p>
+Der Test von <font color="#000077"><tt>UpCaseWriter</tt></font> erfolgt
+mit der Klasse <font color="#000077"><tt>Listing1905</tt></font>.
+Sie schachtelt einen <font color="#000077"><tt>UpCaseWriter</tt></font>
+innerhalb eines <a href="index_f.html#ixb100969"><font color=#000080><tt>FileWriter</tt></font></a>-
+und eines <a href="index_p.html#ixb100561"><font color=#000080><tt>PrintWriter</tt></font></a>-Objekts.
+Die verschiedenen Aufrufe der <a href="index_w.html#ixb100967"><font color=#000080><tt>write</tt></font></a>-
+und <a href="index_p.html#ixb100181"><font color=#000080><tt>println</tt></font></a>-Methoden
+rufen dann jede der vier unterschiedlichen <a href="index_w.html#ixb100967"><font color=#000080><tt>write</tt></font></a>-Methoden
+des <font color="#000077"><tt>UpCaseWriter</tt></font>-Objekts mindestens
+einmal auf, um zu testen, ob die Konvertierung in jedem Fall vorgenommen
+wird. Die Ausgabe des Programms ist: 
+<font color="#333300">
+<pre>
+DIESE ZEILE WIRD SCH&Ouml;N GRO&szlig; GESCHRIEBEN
+A
+UND DIESER STRING AUCH
+UND DIESER STRING
+UND DIESER
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Wenn man sich die Implementierung der <a href="index_w.html#ixb100967"><font color=#000080><tt>write</tt></font></a>-Methoden
+von <font color="#000077"><tt>UpCaseWriter</tt></font> genauer ansieht,
+k&ouml;nnte man auf die Idee kommen, dass sie wesentlich performanter
+implementiert werden k&ouml;nnten, wenn nicht alle Ausgaben einzeln
+an <font color="#000077"><tt>write(int)</tt></font> gesendet w&uuml;rden.
+So scheint es nahezuliegen, beispielsweise <font color="#000077"><tt>write(String,
+int, int)</tt></font> in der folgenden Form zu implementieren, denn
+die Methode <a name="ixa101281"><a href="index_t.html#ixb100539"><font color=#000080><tt>toUpperCase</tt></font></a></a>
+existiert auch in der Klasse <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>:
+<font color="#000077">
+<pre>
+super.write(str.toUpperCase(), off, len);
+</pre>
+</font>
+
+<p>
+Die Sache hat nur leider den Haken, dass <font color="#000077"><tt>String.toUpperCase</tt></font>
+m&ouml;glicherweise die L&auml;nge des &uuml;bergebenen Strings ver&auml;ndert.
+So wird beispielsweise das &#187;&szlig;&#171; in ein &#187;SS&#171;
+umgewandelt und durch die unver&auml;nderlichen Konstanten <font color="#000077"><tt>off</tt></font>
+und <font color="#000077"><tt>len</tt></font> geht ein Zeichen verloren.
+Der hier beschrittene Workaround besteht darin, grunds&auml;tzlich
+die Methode <font color="#000077"><tt>Character.toUpperCase</tt></font>
+zu verwenden. Sie kann immer nur ein einzelnes Zeichen zur&uuml;ckgeben
+und l&auml;sst damit beispielsweise ein &#187;&szlig;&#171; bei Umwandlung
+unangetastet.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Als interessante Erkenntnis am Rande lernen wir dabei, dass <font color="#000077"><tt>String.toUpperCase</tt></font>
+und <font color="#000077"><tt>Character.toUpperCase</tt></font> unterschiedlich
+implementiert sind. <font color="#000077"><tt>Character.toUpperCase</tt></font>
+kann schon allein wegen des R&uuml;ckgabewerts der Methode nicht das
+sogenannte 1:M-Mapping durchf&uuml;hren. Die API-Dokumentation des
+JDK r&auml;t aus diesem Grund, die <font color="#000077"><tt>toUpperCase</tt></font>-Methode
+der Klasse <font color="#000077"><tt>String</tt></font> zu verwenden.
+Das Gegenst&uuml;ck <a name="ixa101282"><a href="index_t.html#ixb100538"><font color=#000080><tt>toLowerCase</tt></font></a></a>
+hat diese Besonderheit &uuml;brigens nicht. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100127.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100128.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100130.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100132.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

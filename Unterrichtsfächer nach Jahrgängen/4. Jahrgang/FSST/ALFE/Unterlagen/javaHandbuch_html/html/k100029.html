@@ -1,0 +1,263 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100028.html;106,k100028.html;107,k100030.html;108,k100036.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100028.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100028.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100030.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100036.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 5 - Datentypen
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id005001"></a>
+<h2>5.1 <a name="ixa100215">Lexikalische Elemente</a> eines Java-Programms
+</h2>
+<hr>
+<ul>
+<li><a href="k100029.html#sectlevel2id005001">5.1 Lexikalische Elemente eines Java-Programms</a>
+<ul>
+<li><a href="k100029.html#sectlevel3id005001001">5.1.1 Eingabezeichen</a>
+<li><a href="k100029.html#sectlevel3id005001002">5.1.2 Kommentare</a>
+<li><a href="k100029.html#sectlevel3id005001003">5.1.3 Bezeichner</a>
+<li><a href="k100029.html#sectlevel3id005001004">5.1.4 Weitere Unterschiede zu C</a>
+</ul>
+</ul>
+<hr>
+
+<p>
+Bevor wir uns in diesem Kapitel mit den Datentypen von Java befassen,
+sollen zun&auml;chst einmal die wichtigsten lexikalischen Eigenschaften
+der Sprache vorgestellt werden. Hierzu z&auml;hlen der Eingabezeichensatz,
+die Kommentare und die Struktur von Bezeichnern. 
+
+<!-- Section -->
+
+<a name="sectlevel3id005001001"></a>
+<h3>5.1.1 Eingabezeichen </h3>
+
+<p>
+Ein Java-Programm besteht aus einer Folge von <a name="ixa100216">Unicode</a>-Zeichen.
+Der Unicode-Zeichensatz fasst eine gro&szlig;e Zahl internationaler
+Zeichens&auml;tze zusammen und integriert sie in einem einheitlichen
+Darstellungsmodell. Da die 256 verf&uuml;gbaren Zeichen eines 8-Bit-Worts
+bei weitem nicht ausreichen, um die &uuml;ber 30.000 unterschiedlichen
+Zeichen des Unicode-Zeichensatzes darzustellen, ist ein Unicode-Zeichen
+2 Byte, also 16 Bit, lang. Der Unicode ist mit den ersten 128 Zeichen
+des ASCII- und mit den ersten 256 Zeichen des <a name="ixa100217">ISO-8859-1</a>-Zeichensatzes
+kompatibel. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Integration des Unicode-Zeichensatzes geht in Java so weit, dass
+neben <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-
+und <a href="index_c.html#ixb100223"><font color=#000080><tt>char</tt></font></a>-Typen
+auch die literalen Symbole und Bezeichner der Programmiersprache im
+Unicode realisiert sind. Es ist daher ohne Weiteres m&ouml;glich,
+Variablen- oder Klassennamen mit nationalen Sonderzeichen oder anderen
+Symbolen zu versehen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id005001002"></a>
+<h3>5.1.2 <a name="ixa100218">Kommentare</a></h3>
+
+<p>
+Es gibt in Java drei Arten von Kommentaren: 
+<ul>
+<li><a name="ixa100219"><i>Einzeilige Kommentare</i></a> beginnen
+mit <a name="ixa100220"><a href="index_0.html#ixb100226"><font color=#000080><tt>//</tt></font></a></a>
+und enden am Ende der aktuellen Zeile.
+<li><a name="ixa100221"><i>Mehrzeilige Kommentare</i></a> beginnen
+mit <a name="ixa100222"><a href="index_0.html#ixb100228"><font color=#000080><tt>/*</tt></font></a></a>
+und enden mit <font color="#000077"><tt>*/</tt></font>. Sie k&ouml;nnen
+sich &uuml;ber mehrere Zeilen erstrecken.
+<li><a name="ixa100223"><i>Dokumentationskommentare</i></a> beginnen
+mit <a name="ixa100224"><a href="index_0.html#ixb100180"><font color=#000080><tt>/**</tt></font></a></a>
+und enden mit <font color="#000077"><tt>*/</tt></font> und k&ouml;nnen
+sich ebenfalls &uuml;ber mehrere Zeilen erstrecken.
+</ul>
+
+<p>
+Kommentare derselben Art sind nicht schachtelbar. Ein Java-Compiler
+akzeptiert aber einen einzeiligen innerhalb eines mehrzeiligen Kommentars
+und umgekehrt. 
+
+<p>
+<a name="ixa100223">Dokumentationskommentare</a> dienen dazu, Programme
+im Quelltext zu dokumentieren. Mit Hilfe des Tools <a name="ixa100225"><a href="index_j.html#ixb100194"><font color=#000080><tt>javadoc</tt></font></a></a>
+werden sie aus der Quelle extrahiert und in ein HTML-Dokument umgewandelt
+(siehe <a href="k100332.html#kapitelwerkzeuge">Kapitel 53</a>). Kapitel
+18 der Sprachspezifikation erkl&auml;rt die Verwendung von Dokumentationskommentaren
+ausf&uuml;hrlich. Wir wollen uns hier lediglich auf ein kleines Beispiel
+beschr&auml;nken, das besagter Beschreibung entnommen wurde: 
+<a name="listingid005001"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/**
+<font color="#555555">002 </font> * Compares two Objects for equality.
+<font color="#555555">003 </font> * Returns a boolean that indicates whether this Object
+<font color="#555555">004 </font> * is equivalent to the specified Object. This method is
+<font color="#555555">005 </font> * used when an Object is stored in a hashtable.
+<font color="#555555">006 </font> * @param  obj     the Object to compare with
+<font color="#555555">007 </font> * @return         true if these Objects are equal;
+<font color="#555555">008 </font> *                 false otherwise.
+<font color="#555555">009 </font> * @see            java.util.Hashtable
+<font color="#555555">010 </font> */</font>
+<font color="#555555">011 </font><font color="#0000AA">public</font> <font color="#006699">boolean</font> equals(Object obj)
+<font color="#555555">012 </font>{
+<font color="#555555">013 </font>  <font color="#0000AA">return</font> (<font color="#006699">this</font> == obj);
+<font color="#555555">014 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 5.1: Verwendung eines Dokumentationskommentars im Java-API</i></p>
+
+<p>
+Dokumentationskommentare stehen immer <i>vor</i> dem Element, das
+sie beschreiben sollen. In diesem Fall ist das die Methode <a href="index_e.html#ixb100230"><font color=#000080><tt>equals</tt></font></a>
+der Klasse <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>.
+Der erste Satz ist eine &Uuml;berschrift, dann folgt eine l&auml;ngere
+Beschreibung der Funktionsweise. Die durch <font color="#000077"><tt>@</tt></font>
+eingeleiteten Elemente sind Makros, die eine besondere Bedeutung haben.
+<a name="ixa100226"><a href="index_0.html#ixb100232"><font color=#000080><tt>@param</tt></font></a></a>
+spezifiziert Methodenparameter, <a name="ixa100227"><a href="index_0.html#ixb100233"><font color=#000080><tt>@return</tt></font></a></a>
+den R&uuml;ckgabewert und <a name="ixa100228"><a href="index_0.html#ixb100234"><font color=#000080><tt>@see</tt></font></a></a>
+einen Verweis. Daneben gibt es noch die Makros <a name="ixa100229"><a href="index_0.html#ixb100235"><font color=#000080><tt>@exception</tt></font></a></a>,
+<a name="ixa100230"><a href="index_0.html#ixb100236"><font color=#000080><tt>@version</tt></font></a></a>
+und <a name="ixa100231"><a href="index_0.html#ixb100237"><font color=#000080><tt>@author</tt></font></a></a>,
+die hier aber nicht auftauchen. 
+
+<p>
+Weitere Informationen zu <a href="index_j.html#ixb100194"><font color=#000080><tt>javadoc</tt></font></a>
+und den anderen Hilfsprogrammen des JDK finden Sie in <a href="k100332.html#kapitelwerkzeuge">Kapitel 53</a>.
+
+
+<!-- Section -->
+<a name="sectlevel3id005001003"></a>
+<h3>5.1.3 <a name="ixa100232">Bezeichner</a></h3>
+
+<p>
+Ein Bezeichner ist eine Sequenz von Zeichen, die dazu dient, die Namen
+von Variablen, Klassen oder Methoden zu spezifizieren. Ein Bezeichner
+in Java kann beliebig lang sein und alle Stellen sind signifikant.
+Bezeichner m&uuml;ssen mit einem <i>Unicode-Buchstaben</i> beginnen
+(das sind die Zeichen 'A' bis 'Z', 'a' bis 'z', '_' und '$') und d&uuml;rfen
+dann weitere Buchstaben oder Ziffern enthalten. Unterstrich und Dollarzeichen
+sollen nur aus historischen Gr&uuml;nden bzw. bei maschinell generiertem
+Java-Code verwendet werden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Ein Buchstabe im Sinne des Unicode-Zeichensatzes muss nicht zwangsl&auml;ufig
+aus dem lateinischen Alphabet stammen. Es ist auch zul&auml;ssig,
+Buchstaben aus anderen Landessprachen zu verwenden. Java-Programme
+k&ouml;nnen daher ohne Weiteres Bezeichner enthalten, die nationalen
+Konventionen folgen. Java-Bezeichner d&uuml;rfen jedoch nicht mit
+<a name="ixa100233">Schl&uuml;sselw&ouml;rtern</a>, den booleschen
+Literalen <a name="ixa100234"><a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a></a>
+und <a name="ixa100235"><a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a></a>
+oder dem Literal <a name="ixa100236"><a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a></a>
+kollidieren.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id005001004"></a>
+<h3>5.1.4 Weitere Unterschiede zu C </h3>
+
+<p>
+Nachfolgend seien noch einige weitere Unterschiede zu C und C++ aufgelistet,
+die auf der lexikalischen Ebene von Bedeutung sind: 
+<ul>
+<li>Es gibt keinen <a name="ixa100237">Pr&auml;prozessor</a> in Java
+und damit auch keine <font color="#000077"><tt>#define</tt></font>-,
+<font color="#000077"><tt>#include</tt></font>- und <font color="#000077"><tt>#ifdef</tt></font>-Anweisungen.
+<li>Der Backslash <font color="#000077"><tt>\</tt></font> darf nicht
+zur Verkettung von zwei aufeinanderfolgenden Zeilen verwendet werden.
+<li>Konstante Strings, die mit <font color="#000077"><tt>+</tt></font>
+verkettet werden, fasst der Compiler zu einem einzigen String zusammen.
+</ul>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100028.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100028.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100030.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100036.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

@@ -1,0 +1,658 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100245.html;106,k100246.html;107,k100248.html;108,k100252.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100245.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100246.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100248.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100252.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 38 - Swing: Komponenten I
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id038002"></a>
+<h2>38.2 Buttons </h2>
+<hr>
+<ul>
+<li><a href="k100247.html#sectlevel2id038002">38.2 Buttons</a>
+<ul>
+<li><a href="k100247.html#sectlevel3id038002001">38.2.1 JButton</a>
+<li><a href="k100247.html#sectlevel3id038002002">38.2.2 JCheckBox</a>
+<li><a href="k100247.html#sectlevel3id038002003">38.2.3 JRadioButton</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id038002001"></a>
+<h3>38.2.1 JButton </h3>
+
+<p>
+Swing-Buttons sind uns in den vorangegangenen Abschnitten schon mehrfach
+begegnet. Sie sind Instanzen der Klasse <a name="ixa102611"><a href="index_j.html#ixb101792"><font color=#000080><tt>JButton</tt></font></a></a>
+und dienen dazu, Schaltfl&auml;chen zu erzeugen. Die wichtigsten Konstruktoren
+von <a href="index_j.html#ixb101792"><font color=#000080><tt>JButton</tt></font></a>
+sind: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public JButton(String text)
+public JButton(Icon icon)
+public JButton(String text, Icon icon)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JButton.html" onClick="this.href=getApiDoc('javax.swing.JButton')"><font color="#660066" size=-1>javax.swing.JButton</font></a></td>
+</tr>
+</table>
+
+<p>
+Ein Button kann also wahlweise mit Beschriftung, mit Icon oder mit
+beidem instanziert werden. Auf die Anordnung eines Buttons und seiner
+Bestandteile kann mit Hilfe der schon aus <a href="k100246.html#jlabel">Abschnitt 38.1.1</a>
+bekannten Methoden zugegriffen werden: <a name="ixa102612"></a> <a name="ixa102613"></a>
+<a name="ixa102614"></a> <a name="ixa102615"></a> <a name="ixa102616"></a>
+<a name="ixa102617"></a> 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setHorizontalTextPosition(int textPosition)
+public int getHorizontalTextPosition()
+
+public void setHorizontalAlignment(int alignment)
+public int getHorizontalAlignment()
+
+public void setVerticalAlignment(int alignment)
+public int getVerticalAlignment()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JButton.html" onClick="this.href=getApiDoc('javax.swing.JButton')"><font color="#660066" size=-1>javax.swing.JButton</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_j.html#ixb101792"><font color=#000080><tt>JButton</tt></font></a>
+ist wie <a href="index_j.html#ixb101842"><font color=#000080><tt>JMenuItem</tt></font></a>
+(siehe <a href="k100242.html#einfachemenues">Abschnitt 37.2.1</a>)
+aus <a name="ixa102618"><a href="index_a.html#ixb101793"><font color=#000080><tt>AbstractButton</tt></font></a></a>
+abgeleitet und stellt ebenfalls die Methoden <a name="ixa102619"><a href="index_s.html#ixb101843"><font color=#000080><tt>setMnemonic</tt></font></a></a>,
+<a name="ixa102620"><a href="index_g.html#ixb101844"><font color=#000080><tt>getMnemonic</tt></font></a></a>,
+<a name="ixa102621"><a href="index_s.html#ixb101301"><font color=#000080><tt>setEnabled</tt></font></a></a>
+und <a name="ixa102622"><a href="index_i.html#ixb101302"><font color=#000080><tt>isEnabled</tt></font></a></a>
+zur Verf&uuml;gung. Wird ein <a href="index_j.html#ixb101792"><font color=#000080><tt>JButton</tt></font></a>
+per Mausklick bet&auml;tigt, sendet er ein <a href="index_a.html#ixb101343"><font color=#000080><tt>ActionEvent</tt></font></a>
+an alle registrierten Listener. Durch Aufruf von <a name="ixa102623"><a href="index_d.html#ixb101950"><font color=#000080><tt>doClick</tt></font></a></a>
+kann ein Buttonklick auch programmgesteuert ausgel&ouml;st werden.
+
+<p>
+Das Beispielprogramm in <a href="k100247.html#jbuttonbeispiel">Listing 38.7</a>
+erzeugt drei Buttons und ordnet sie nebeneinander in einem <a href="index_j.html#ixb100513"><font color=#000080><tt>JFrame</tt></font></a>
+an: 
+<ul>
+<li>Der &#187;OK&#171;-Button ist eine Instanz unserer eigenen (aus
+<a href="index_j.html#ixb101792"><font color=#000080><tt>JButton</tt></font></a>
+abgeleiteten) Klasse <a name="ixa102624"><a href="index_d.html#ixb101951"><font color=#000080><tt>DefaultButton</tt></font></a></a>.
+Seine Besonderheit besteht darin, dass er sich durch Aufruf von <a name="ixa102625"><a href="index_s.html#ixb101952"><font color=#000080><tt>setDefaultButton</tt></font></a></a>
+bei der an den Konstruktor &uuml;bergebenen RootPane registriert.
+Dadurch kann er unabh&auml;ngig davon, welches Dialogelement gerade
+den Fokus hat, auch durch Dr&uuml;cken von <font color="#007700"><tt>[ENTER]</tt></font>
+bet&auml;tigt werden.
+<li>Der &#187;Abbrechen&#171;-Button ist eine Instanz der ebenfalls
+selbst definierten und aus <a href="index_j.html#ixb101792"><font color=#000080><tt>JButton</tt></font></a>
+abgeleiteten Klasse <a name="ixa102626"><a href="index_c.html#ixb101953"><font color=#000080><tt>CancelButton</tt></font></a></a>.
+Seine Besonderheit besteht darin, dass er beim Dr&uuml;cken von <font color="#007700"><tt>[ESCAPE]</tt></font>
+die Methode <a href="index_d.html#ixb101950"><font color=#000080><tt>doClick</tt></font></a>
+aufruft und dadurch einen Buttonklick simuliert.
+<li>Der &#187;Hilfe&#171;-Button ist eine direkte Instanzierung von
+<a href="index_j.html#ixb101792"><font color=#000080><tt>JButton</tt></font></a>.
+Er definiert ein Mnemonic f&uuml;r die Tastenkombination <font color="#007700"><tt>[ALT]</tt></font>+<font color="#007700"><tt>[H]</tt></font>,
+registriert den <a href="index_a.html#ixb101408"><font color=#000080><tt>ActionListener</tt></font></a>
+und wird dann der ContentPane hinzugef&uuml;gt.
+</ul>
+
+<p>
+Wir wollen uns zun&auml;chst den Code f&uuml;r die Klasse <a href="index_d.html#ixb101951"><font color=#000080><tt>DefaultButton</tt></font></a>
+ansehen: 
+<a name="listingid038005"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* DefaultButton.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> DefaultButton
+<font color="#555555">006 </font><font color="#0000AA">extends</font> JButton
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> DefaultButton(String title, JRootPane rootpane)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    <font color="#006699">super</font>(title);
+<font color="#555555">011 </font>    rootpane.setDefaultButton(<font color="#006699">this</font>);
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/DefaultButton.java"><font color="#000055" size=-1>DefaultButton.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 38.5: Die Klasse DefaultButton</i></p>
+
+<p>
+Auch die Klasse <a href="index_c.html#ixb101953"><font color=#000080><tt>CancelButton</tt></font></a>
+ist &auml;hnlich einfach aufgebaut: 
+<a name="listingid038006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* CancelButton.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> CancelButton
+<font color="#555555">007 </font><font color="#0000AA">extends</font> JButton
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> CancelButton(String title)
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    <font color="#006699">super</font>(title);
+<font color="#555555">012 </font>    ActionListener al = <font color="#0000AA">new</font> ActionListener()
+<font color="#555555">013 </font>    {
+<font color="#555555">014 </font>      <font color="#0000AA">public</font> <font color="#006699">void</font> actionPerformed(ActionEvent event)
+<font color="#555555">015 </font>      {
+<font color="#555555">016 </font>        String cmd = event.getActionCommand();
+<font color="#555555">017 </font>        <font color="#0000AA">if</font> (cmd.equals(<font color="#0000FF">"PressedESCAPE"</font>)) {
+<font color="#555555">018 </font>          doClick();
+<font color="#555555">019 </font>        }
+<font color="#555555">020 </font>      }
+<font color="#555555">021 </font>    };
+<font color="#555555">022 </font>    registerKeyboardAction(
+<font color="#555555">023 </font>      al,
+<font color="#555555">024 </font>      <font color="#0000FF">"PressedESCAPE"</font>,
+<font color="#555555">025 </font>      KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+<font color="#555555">026 </font>      JButton.WHEN_IN_FOCUSED_WINDOW
+<font color="#555555">027 </font>    );
+<font color="#555555">028 </font>  }
+<font color="#555555">029 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/CancelButton.java"><font color="#000055" size=-1>CancelButton.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 38.6: Die Klasse CancelButton</i></p>
+
+<p>
+Nun k&ouml;nnen wir uns den Programmcode unseres Beispielprogramms
+ansehen: 
+<a name="jbuttonbeispiel"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3807.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3807
+<font color="#555555">008 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">009 </font><font color="#0000AA">implements</font> ActionListener
+<font color="#555555">010 </font>{
+<font color="#555555">011 </font>  <font color="#0000AA">public</font> Listing3807()
+<font color="#555555">012 </font>  {
+<font color="#555555">013 </font>    <font color="#006699">super</font>(<font color="#0000FF">"JButton"</font>);
+<font color="#555555">014 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">015 </font>    Container cp = getContentPane();
+<font color="#555555">016 </font>    cp.setLayout(<font color="#0000AA">new</font> FlowLayout());
+<font color="#555555">017 </font>    JPanel panel = <font color="#0000AA">new</font> JPanel();
+<font color="#555555">018 </font>    <font color="#00AA00">//OK-Button</font>
+<font color="#555555">019 </font>    JButton okButton = <font color="#0000AA">new</font> DefaultButton(<font color="#0000FF">"OK"</font>, getRootPane());
+<font color="#555555">020 </font>    okButton.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">021 </font>    panel.add(okButton);
+<font color="#555555">022 </font>    <font color="#00AA00">//Abbrechen-Button</font>
+<font color="#555555">023 </font>    JButton cancelButton = <font color="#0000AA">new</font> CancelButton(<font color="#0000FF">"Abbrechen"</font>);
+<font color="#555555">024 </font>    cancelButton.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">025 </font>    panel.add(cancelButton);
+<font color="#555555">026 </font>    <font color="#00AA00">//Hilfe-Button</font>
+<font color="#555555">027 </font>    JButton helpButton = <font color="#0000AA">new</font> JButton(<font color="#0000FF">"Hilfe"</font>);
+<font color="#555555">028 </font>    helpButton.setMnemonic(<font color="#0000FF">'H'</font>);
+<font color="#555555">029 </font>    helpButton.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">030 </font>    panel.add(helpButton);
+<font color="#555555">031 </font>    <font color="#00AA00">//Panel hinzuf&uuml;gen</font>
+<font color="#555555">032 </font>    cp.add(panel);
+<font color="#555555">033 </font>  }
+<font color="#555555">034 </font>
+<font color="#555555">035 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> actionPerformed(ActionEvent event)
+<font color="#555555">036 </font>  {
+<font color="#555555">037 </font>    System.out.println(event.getActionCommand());
+<font color="#555555">038 </font>  }
+<font color="#555555">039 </font>
+<font color="#555555">040 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">041 </font>  {
+<font color="#555555">042 </font>    Listing3807 frame = <font color="#0000AA">new</font> Listing3807();
+<font color="#555555">043 </font>    frame.setLocation(100, 100);
+<font color="#555555">044 </font>    frame.setSize(300, 100);
+<font color="#555555">045 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">046 </font>  }
+<font color="#555555">047 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3807.java"><font color="#000055" size=-1>Listing3807.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 38.7: Die Klasse JButton</i></p>
+
+<p>
+Die Ausgabe des Programms ist: 
+<p>
+<a name="imageid038005"></a>
+<img src="images/JButton1.gif">
+<p>
+
+<p><i>
+Abbildung 38.5: Die Klasse JButton</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id038002002"></a>
+<h3>38.2.2 JCheckBox </h3>
+
+<p>
+Die Klasse <a name="ixa102627"><a href="index_j.html#ixb101954"><font color=#000080><tt>JCheckBox</tt></font></a></a>
+stellt einen Button dar, der vom Anwender wahlweise an- oder ausgeschaltet
+werden kann. Er wird meist verwendet, um boolesche Werte auf einer
+GUI-Oberfl&auml;che darzustellen. <a href="index_j.html#ixb101954"><font color=#000080><tt>JCheckBox</tt></font></a>
+ist von der Klasse <a name="ixa102628"><a href="index_j.html#ixb101955"><font color=#000080><tt>JToggleButton</tt></font></a></a>
+abgeleitet, die als Abstraktion von Buttons, die ihren Zustand &auml;ndern
+k&ouml;nnen, auch Basisklasse von <a href="index_j.html#ixb101956"><font color=#000080><tt>JRadioButton</tt></font></a>
+ist. 
+
+<p>
+<a href="index_j.html#ixb101954"><font color=#000080><tt>JCheckBox</tt></font></a>
+kann eine textuelle Beschriftung oder ein Icon oder beides enthalten.
+Die wichtigsten Konstruktoren sind: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public JCheckBox(String text)
+public JCheckBox(String text, boolean selected)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JCheckBox.html" onClick="this.href=getApiDoc('javax.swing.JCheckBox')"><font color="#660066" size=-1>javax.swing.JCheckBox</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit dem Parameter <font color="#000077"><tt>selected</tt></font> kann
+bereits bei der Instanzierung angegeben werden, ob die Checkbox aktiviert
+oder deaktiviert sein soll. Sp&auml;ter kann der Aktivierungszustand
+mit <a name="ixa102629"><a href="index_s.html#ixb101868"><font color=#000080><tt>setSelected</tt></font></a></a>
+gesetzt und mit <a name="ixa102630"><a href="index_i.html#ixb101867"><font color=#000080><tt>isSelected</tt></font></a></a>
+abgefragt werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setSelected(boolean b)
+public boolean isSelected()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JCheckBox.html" onClick="this.href=getApiDoc('javax.swing.JCheckBox')"><font color="#660066" size=-1>javax.swing.JCheckBox</font></a></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Bei der Instanzierung einer <a href="index_j.html#ixb101954"><font color=#000080><tt>JCheckBox</tt></font></a>
+kann auch ein Icon &uuml;bergeben werden. Das ist allerdings nur in
+Ausnahmef&auml;llen sinnvoll, denn es wird nicht zus&auml;tzlich zum
+Ankreuzfeld angezeigt, sondern stattdessen. Das Ankreuzfeld einer
+<a href="index_j.html#ixb101954"><font color=#000080><tt>JCheckBox</tt></font></a>
+ist also gerade ihr (automatisch angezeigtes) Icon. Durch Aufruf von
+<a href="index_s.html#ixb101854"><font color=#000080><tt>setHorizontalTextPosition</tt></font></a>
+und &Uuml;bergabe der Konstante <a href="index_l.html#ixb101555"><font color=#000080><tt>LEFT</tt></font></a>
+k&ouml;nnen Ankreuzfeld und Text vertauscht werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Wie ein <a href="index_j.html#ixb101792"><font color=#000080><tt>JButton</tt></font></a>
+sendet eine <a href="index_j.html#ixb101954"><font color=#000080><tt>JCheckBox</tt></font></a>
+bei jeder Bet&auml;tigung ein <a href="index_a.html#ixb101343"><font color=#000080><tt>ActionEvent</tt></font></a>
+an registrierte Listener. Zudem wird bei Zustands&auml;nderungen ein
+<a href="index_i.html#ixb101345"><font color=#000080><tt>ItemEvent</tt></font></a>
+versendet, auf das ein <a href="index_i.html#ixb101420"><font color=#000080><tt>ItemListener</tt></font></a>
+reagieren kann. 
+
+<p>
+Das folgende Programm erzeugt drei Checkboxen in einem Panel und gibt
+alle Zustands&auml;nderungen auf der Konsole aus: 
+<a name="listingid038008"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3808.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">006 </font><font color="#0000AA">import</font> javax.swing.event.*;
+<font color="#555555">007 </font>
+<font color="#555555">008 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3808
+<font color="#555555">009 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">010 </font><font color="#0000AA">implements</font> ItemListener
+<font color="#555555">011 </font>{
+<font color="#555555">012 </font>  <font color="#0000AA">public</font> Listing3808()
+<font color="#555555">013 </font>  {
+<font color="#555555">014 </font>    <font color="#006699">super</font>(<font color="#0000FF">"JCheckBox"</font>);
+<font color="#555555">015 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">016 </font>    JPanel panel = <font color="#0000AA">new</font> JPanel();
+<font color="#555555">017 </font>    panel.setLayout(<font color="#0000AA">new</font> GridLayout(3, 1));
+<font color="#555555">018 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 1; i &lt;= 3; ++i) {
+<font color="#555555">019 </font>      JCheckBox cb = <font color="#0000AA">new</font> JCheckBox(<font color="#0000FF">"Checkbox"</font> + i, i == 2);
+<font color="#555555">020 </font>      cb.addItemListener(<font color="#006699">this</font>);
+<font color="#555555">021 </font>      panel.add(cb);
+<font color="#555555">022 </font>    }
+<font color="#555555">023 </font>    getContentPane().add(panel, BorderLayout.CENTER);
+<font color="#555555">024 </font>  }
+<font color="#555555">025 </font>
+<font color="#555555">026 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> itemStateChanged(ItemEvent e)
+<font color="#555555">027 </font>  {
+<font color="#555555">028 </font>    JCheckBox cb = (JCheckBox)e.getSource();
+<font color="#555555">029 </font>    <font color="#006699">int</font> change = e.getStateChange();
+<font color="#555555">030 </font>    <font color="#0000AA">if</font> (change == ItemEvent.SELECTED) {
+<font color="#555555">031 </font>      System.out.println(cb.getText() + <font color="#0000FF">": SELECTED"</font>);
+<font color="#555555">032 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (change == ItemEvent.DESELECTED) {
+<font color="#555555">033 </font>      System.out.println(cb.getText() + <font color="#0000FF">": DESELECTED"</font>);
+<font color="#555555">034 </font>    }
+<font color="#555555">035 </font>  }
+<font color="#555555">036 </font>
+<font color="#555555">037 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">038 </font>  {
+<font color="#555555">039 </font>    Listing3808 frame = <font color="#0000AA">new</font> Listing3808();
+<font color="#555555">040 </font>    frame.setLocation(100, 100);
+<font color="#555555">041 </font>    frame.setSize(300, 100);
+<font color="#555555">042 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">043 </font>  }
+<font color="#555555">044 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3808.java"><font color="#000055" size=-1>Listing3808.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 38.8: Die Klasse JCheckbox</i></p>
+
+<p>
+Die Programmausgabe ist: 
+<p>
+<a name="imageid038006"></a>
+<img src="images/JCheckBox1.gif">
+<p>
+
+<p><i>
+Abbildung 38.6: Die Klasse JCheckBox</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Vorsicht, Schreibfehler! Anders als in der Checkbox-Klasse des AWT
+(sie hei&szlig;t <a href="index_c.html#ixb101422"><font color=#000080><tt>Checkbox</tt></font></a>),
+wird das &#187;Box&#171; in <a href="index_j.html#ixb101954"><font color=#000080><tt>JCheckBox</tt></font></a>
+nicht klein-, sondern gro&szlig;geschrieben.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id038002003"></a>
+<h3>38.2.3 JRadioButton </h3>
+
+<p>
+Die Klasse <a name="ixa102631"><a href="index_j.html#ixb101956"><font color=#000080><tt>JRadioButton</tt></font></a></a>
+&auml;hnelt der Klasse <a href="index_j.html#ixb101954"><font color=#000080><tt>JCheckBox</tt></font></a>.
+Auch sie stellt einen Button dar, der wahlweise an- oder ausgeschaltet
+werden kann. Anders als bei <a href="index_j.html#ixb101954"><font color=#000080><tt>JCheckBox</tt></font></a>
+ist in einer Gruppe von Radiobuttons allerdings immer nur ein Button
+zur Zeit aktiviert, alle anderen sind deaktiviert. Die wichtigsten
+Konstruktoren von <a href="index_j.html#ixb101956"><font color=#000080><tt>JRadioButton</tt></font></a>
+sind: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public JRadioButton(String text)
+public JRadioButton(String text, boolean selected)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JRadioButton.html" onClick="this.href=getApiDoc('javax.swing.JRadioButton')"><font color="#660066" size=-1>javax.swing.JRadioButton</font></a></td>
+</tr>
+</table>
+
+<p>
+Die &uuml;brigen Methoden k&ouml;nnen so verwendet werden, wie es
+bei <a href="index_j.html#ixb101954"><font color=#000080><tt>JCheckBox</tt></font></a>
+beschrieben wurde. Um die Buttons zu gruppieren, ist eine <a name="ixa102632"><a href="index_b.html#ixb101866"><font color=#000080><tt>ButtonGroup</tt></font></a></a>
+zu instanzieren und die Buttons sind durch Aufruf von <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+hinzuzuf&uuml;gen. Mit <a name="ixa102633"><a href="index_g.html#ixb101957"><font color=#000080><tt>getSelection</tt></font></a></a>
+kann auf das <a name="ixa102634"><a href="index_b.html#ixb101958"><font color=#000080><tt>ButtonModel</tt></font></a></a>
+des selektierten Elements zugegriffen werden, <a name="ixa102635"><a href="index_g.html#ixb101959"><font color=#000080><tt>getElements</tt></font></a></a>
+liefert alle Buttons der Gruppe: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void add(AbstractButton b)
+public ButtonModel getSelection()
+public Enumeration getElements()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/ButtonGroup.html" onClick="this.href=getApiDoc('javax.swing.ButtonGroup')"><font color="#660066" size=-1>javax.swing.ButtonGroup</font></a></td>
+</tr>
+</table>
+
+<p>
+Das folgende Programm enth&auml;lt drei Radiobuttons, die &uuml;ber
+eine <a href="index_b.html#ixb101866"><font color=#000080><tt>ButtonGroup</tt></font></a>
+gruppiert werden. Der zus&auml;tzliche Button &#187;Selektion&#171;
+ermittelt das selektierte Element und gibt dessen Kommandonamen auf
+der Konsole aus: 
+<a name="listingid038009"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3809.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3809
+<font color="#555555">008 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">009 </font><font color="#0000AA">implements</font> ActionListener
+<font color="#555555">010 </font>{
+<font color="#555555">011 </font>  <font color="#0000AA">private</font> ButtonGroup group = <font color="#0000AA">new</font> ButtonGroup();
+<font color="#555555">012 </font>
+<font color="#555555">013 </font>  <font color="#0000AA">public</font> Listing3809()
+<font color="#555555">014 </font>  {
+<font color="#555555">015 </font>    <font color="#006699">super</font>(<font color="#0000FF">"JRadioButton"</font>);
+<font color="#555555">016 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">017 </font>    <font color="#00AA00">//RadioButton-Panel</font>
+<font color="#555555">018 </font>    JPanel panel = <font color="#0000AA">new</font> JPanel();
+<font color="#555555">019 </font>    panel.setLayout(<font color="#0000AA">new</font> GridLayout(3, 1));
+<font color="#555555">020 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 1; i &lt;= 3; ++i) {
+<font color="#555555">021 </font>      JRadioButton rb = <font color="#0000AA">new</font> JRadioButton(<font color="#0000FF">"RadioButton"</font> + i, i == 2);
+<font color="#555555">022 </font>      rb.setActionCommand(rb.getText());
+<font color="#555555">023 </font>      panel.add(rb);
+<font color="#555555">024 </font>      group.add(rb);
+<font color="#555555">025 </font>    }
+<font color="#555555">026 </font>    getContentPane().add(panel, BorderLayout.CENTER);
+<font color="#555555">027 </font>    <font color="#00AA00">//Selektion-Button</font>
+<font color="#555555">028 </font>    JButton button = <font color="#0000AA">new</font> JButton(<font color="#0000FF">"Selektion"</font>);
+<font color="#555555">029 </font>    button.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">030 </font>    getContentPane().add(button, BorderLayout.SOUTH);
+<font color="#555555">031 </font>  }
+<font color="#555555">032 </font>
+<font color="#555555">033 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> actionPerformed(ActionEvent event)
+<font color="#555555">034 </font>  {
+<font color="#555555">035 </font>    String cmd = event.getActionCommand();
+<font color="#555555">036 </font>    <font color="#0000AA">if</font> (cmd.equals(<font color="#0000FF">"Selektion"</font>)) {
+<font color="#555555">037 </font>      ButtonModel selected = group.getSelection();
+<font color="#555555">038 </font>      System.out.print(<font color="#0000FF">"Selektiert: "</font>);
+<font color="#555555">039 </font>      <font color="#0000AA">if</font> (selected != <font color="#006699">null</font>) {
+<font color="#555555">040 </font>        System.out.println(selected.getActionCommand());
+<font color="#555555">041 </font>      }
+<font color="#555555">042 </font>    }
+<font color="#555555">043 </font>  }
+<font color="#555555">044 </font>
+<font color="#555555">045 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">046 </font>  {
+<font color="#555555">047 </font>    Listing3809 frame = <font color="#0000AA">new</font> Listing3809();
+<font color="#555555">048 </font>    frame.setLocation(100, 100);
+<font color="#555555">049 </font>    frame.setSize(300, 120);
+<font color="#555555">050 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">051 </font>  }
+<font color="#555555">052 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3809.java"><font color="#000055" size=-1>Listing3809.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 38.9: Die Klasse JRadioButton</i></p>
+
+<p>
+Die Programmausgabe ist: 
+<p>
+<a name="imageid038007"></a>
+<img src="images/JRadioButton1.gif">
+<p>
+
+<p><i>
+Abbildung 38.7: Die Klasse JRadioButton</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100245.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100246.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100248.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100252.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

@@ -1,0 +1,253 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100185.html;106,k100185.html;107,k100187.html;108,k100193.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100185.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100185.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100187.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100193.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 29 - Low-Level-Events
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id029001"></a>
+<h2>29.1 <a name="ixa101859">Window-Events</a></h2>
+<hr>
+<ul>
+<li><a href="k100186.html#sectlevel2id029001">29.1 Window-Events</a>
+</ul>
+<hr>
+
+<p>
+Ein Window-Event wird immer dann generiert, wenn sich am Status eines
+Fensters eine &Auml;nderung ergeben hat, die f&uuml;r das Anwendungsprogramm
+von Interesse sein k&ouml;nnte. So erlangt das Programm beispielsweise
+Kenntnis davon, wenn ein Fenster erstellt oder zerst&ouml;rt, aktiviert
+oder deaktiviert oder wenn es symbolisiert oder wiederhergestellt
+wird. 
+
+<p>
+Ein Empf&auml;nger f&uuml;r Window-Events muss das Interface <a name="ixa101860"><a href="index_w.html#ixb101162"><font color=#000080><tt>WindowListener</tt></font></a></a>
+implementieren und bekommt Events des Typs <a name="ixa101861"><a href="index_w.html#ixb101400"><font color=#000080><tt>WindowEvent</tt></font></a></a>
+&uuml;bergeben. <a href="index_w.html#ixb101400"><font color=#000080><tt>WindowEvent</tt></font></a>
+erweitert die Klasse <a href="index_c.html#ixb101342"><font color=#000080><tt>ComponentEvent</tt></font></a>
+und stellt neben <a name="ixa101862"><a href="index_g.html#ixb101348"><font color=#000080><tt>getID</tt></font></a></a>
+und <a name="ixa101863"><a href="index_g.html#ixb101340"><font color=#000080><tt>getSource</tt></font></a></a>
+die Methode <a name="ixa101864"><a href="index_g.html#ixb101446"><font color=#000080><tt>getWindow</tt></font></a></a>
+zur Verf&uuml;gung, mit der das Fenster ermittelt werden kann, das
+die Nachricht ausgel&ouml;st hat. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Window getWindow()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/event/WindowEvent.html" onClick="this.href=getApiDoc('java.awt.event.WindowEvent')"><font color="#660066" size=-1>java.awt.event.WindowEvent</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Registrierung der Empf&auml;ngerklasse erfolgt mit der Methode
+<a name="ixa101865"><a href="index_a.html#ixb101164"><font color=#000080><tt>addWindowListener</tt></font></a></a>,
+die in den Klassen <a href="index_d.html#ixb101152"><font color=#000080><tt>Dialog</tt></font></a>
+und <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>
+zur Verf&uuml;gung steht: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void addWindowListener(WindowListener l)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Frame.html" onClick="this.href=getApiDoc('java.awt.Frame')"><font color="#660066" size=-1>java.awt.Frame</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="k100186.html#methodenwindowlistener">Tabelle 29.1</a> gibt
+eine &Uuml;bersicht der Methoden von <a href="index_w.html#ixb101162"><font color=#000080><tt>WindowListener</tt></font></a>
+und erkl&auml;rt ihre Bedeutung: <a name="methodenwindowlistener"></a>
+
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=25%><b>Ereignismethode</b></td>
+<td valign=top align=left width=75%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101866"><a href="index_w.html#ixb101401"><font color=#000080><tt>windowActivated</tt></font></a></a></td>
+<td valign=top align=left>Das Fenster wurde aktiviert. Diese Methode
+wird nach dem Erstellen des Fensters aufgerufen und wenn ein Fenster,
+das im Hintergrund stand, erneut in den Vordergrund gelangt. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101867"><a href="index_w.html#ixb101402"><font color=#000080><tt>windowClosed</tt></font></a></a></td>
+<td valign=top align=left>Das Fenster wurde geschlossen. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101868"><a href="index_w.html#ixb101163"><font color=#000080><tt>windowClosing</tt></font></a></a></td>
+<td valign=top align=left>Das Fenster soll geschlossen werden. Diese
+Methode wird aufgerufen, wenn der Anwender das Fenster &uuml;ber die
+Titelleiste, das Systemmen&uuml; oder die Tastenkombination <font color="#007700"><tt>[ALT]</tt></font>+<font color="#007700"><tt>[F4]</tt></font>
+schlie&szlig;en will. Es liegt in der Verantwortung der Anwendung,
+in diesem Fall Code zur Verf&uuml;gung zu stellen, der das Fenster
+tats&auml;chlich schlie&szlig;t. Standardm&auml;&szlig;ig reagiert
+das Programm nicht auf diese Benutzeraktionen. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101869"><a href="index_w.html#ixb101403"><font color=#000080><tt>windowDeactivated</tt></font></a></a></td>
+<td valign=top align=left>Das Fenster wurde deaktiviert, also in den
+Hintergrund gestellt. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101870"><a href="index_w.html#ixb101404"><font color=#000080><tt>windowDeiconified</tt></font></a></a></td>
+<td valign=top align=left>Das Fenster wurde wiederhergestellt, nachdem
+es zuvor auf Symbolgr&ouml;&szlig;e verkleinert worden war. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101871"><a href="index_w.html#ixb101405"><font color=#000080><tt>windowIconified</tt></font></a></a></td>
+<td valign=top align=left>Das Fenster wurde auf Symbolgr&ouml;&szlig;e
+verkleinert. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101872"><a href="index_w.html#ixb101406"><font color=#000080><tt>windowOpened</tt></font></a></a></td>
+<td valign=top align=left>Das Fenster wurde ge&ouml;ffnet. </td></tr>
+</table>
+<p><i>
+Tabelle 29.1: Methoden von WindowListener </i></p>
+
+<p>
+Das folgende Programm demonstriert die Anwendung der Methode <a href="index_w.html#ixb101163"><font color=#000080><tt>windowClosing</tt></font></a>,
+deren Verwendung bereits in <a href="k100159.html#fensterschliessen">Abschnitt 24.2.4</a>
+gezeigt wurde. Dazu leitet es aus <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>
+eine neue Klasse <font color="#000077"><tt>CloseableFrame</tt></font>
+ab und registriert im Konstruktor einen anonymen <a href="index_w.html#ixb101368"><font color=#000080><tt>WindowAdapter</tt></font></a>,
+der <a href="index_w.html#ixb101163"><font color=#000080><tt>windowClosing</tt></font></a>
+&uuml;berlagert und das Fenster durch Aufrufe von <font color="#000077"><tt>setVisible(false)</tt></font>
+und <font color="#000077"><tt>dispose()</tt></font> schlie&szlig;t.
+Alle Ableitungen von <font color="#000077"><tt>CloseableFrame</tt></font>
+besitzen nun die F&auml;higkeit, vom Anwender per Systemmen&uuml;,
+per Schlie&szlig;en-Button oder (unter Windows) durch Dr&uuml;cken
+von <font color="#007700"><tt>[ALT]</tt></font>+<font color="#007700"><tt>[F4]</tt></font>
+beendet zu werden.
+
+<p>
+Die Klasse <font color="#000077"><tt>Listing2901</tt></font> demonstriert
+die Anwendung der neuen Klasse und erzeugt ein Fenster <font color="#000077"><tt>wnd</tt></font>
+aus <font color="#000077"><tt>CloseableFrame</tt></font>. Um das Programm
+nach dem Schlie&szlig;en des Fensters zu beenden, registriert es bei
+der Fensterklasse zus&auml;tzlich einen anonymen <a name="ixa101873"><a href="index_w.html#ixb101368"><font color=#000080><tt>WindowAdapter</tt></font></a></a>,
+der bei Aufruf von <a href="index_w.html#ixb101402"><font color=#000080><tt>windowClosed</tt></font></a>
+(also nach dem Schlie&szlig;en des Fensters) das Programm per Aufruf
+von <a href="index_e.html#ixb100663"><font color=#000080><tt>System.exit</tt></font></a>
+beendet: 
+<a name="closeableframedemo"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2901.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">class</font> CloseableFrame
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> CloseableFrame()
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    <font color="#006699">this</font>(<font color="#0000FF">""</font>);
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>  <font color="#0000AA">public</font> CloseableFrame(String title)
+<font color="#555555">015 </font>  {
+<font color="#555555">016 </font>    <font color="#006699">super</font>(title);
+<font color="#555555">017 </font>    addWindowListener(
+<font color="#555555">018 </font>      <font color="#0000AA">new</font> WindowAdapter() {
+<font color="#555555">019 </font>        <font color="#0000AA">public</font> <font color="#006699">void</font> windowClosing(WindowEvent event)
+<font color="#555555">020 </font>        {
+<font color="#555555">021 </font>          setVisible(<font color="#006699">false</font>);
+<font color="#555555">022 </font>          dispose();
+<font color="#555555">023 </font>        }
+<font color="#555555">024 </font>      }
+<font color="#555555">025 </font>    );
+<font color="#555555">026 </font>  }
+<font color="#555555">027 </font>}
+<font color="#555555">028 </font>
+<font color="#555555">029 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2901
+<font color="#555555">030 </font>{
+<font color="#555555">031 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">032 </font>  {
+<font color="#555555">033 </font>    CloseableFrame wnd = <font color="#0000AA">new</font> CloseableFrame(<font color="#0000FF">"CloseableFrame"</font>);
+<font color="#555555">034 </font>    wnd.setBackground(Color.lightGray);
+<font color="#555555">035 </font>    wnd.setSize(300,200);
+<font color="#555555">036 </font>    wnd.setLocation(200,100);
+<font color="#555555">037 </font>    wnd.setVisible(<font color="#006699">true</font>);
+<font color="#555555">038 </font>    wnd.addWindowListener(
+<font color="#555555">039 </font>      <font color="#0000AA">new</font> WindowAdapter() {
+<font color="#555555">040 </font>        <font color="#0000AA">public</font> <font color="#006699">void</font> windowClosed(WindowEvent event)
+<font color="#555555">041 </font>        {
+<font color="#555555">042 </font>          System.out.println(<font color="#0000FF">"terminating program..."</font>);
+<font color="#555555">043 </font>          System.exit(0);
+<font color="#555555">044 </font>        }
+<font color="#555555">045 </font>      }
+<font color="#555555">046 </font>    );
+<font color="#555555">047 </font>  }
+<font color="#555555">048 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2901.java"><font color="#000055" size=-1>Listing2901.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 29.1: Die Klasse CloseableFrame</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100185.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100185.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100187.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100193.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

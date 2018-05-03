@@ -1,0 +1,505 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100185.html;106,k100190.html;107,k100192.html;108,k100193.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100185.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100190.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100192.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100193.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 29 - Low-Level-Events
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id029006"></a>
+<h2>29.6 <a name="ixa101901">Key-Events</a></h2>
+<hr>
+<ul>
+<li><a href="k100191.html#sectlevel2id029006">29.6 Key-Events</a>
+</ul>
+<hr>
+
+<p>
+Unter Windows werden alle Tastatureingaben an die fokussierte Komponente
+gesendet. Ein Empf&auml;nger f&uuml;r Key-Events muss das Interface
+<a name="ixa101902"><a href="index_k.html#ixb101376"><font color=#000080><tt>KeyListener</tt></font></a></a>
+implementieren und bekommt Events des Typs <a name="ixa101903"><a href="index_k.html#ixb101351"><font color=#000080><tt>KeyEvent</tt></font></a></a>
+&uuml;bergeben. <a href="index_k.html#ixb101351"><font color=#000080><tt>KeyEvent</tt></font></a>
+erweitert die Klasse <a name="ixa101904"><a href="index_i.html#ixb101353"><font color=#000080><tt>InputEvent</tt></font></a></a>,
+die ihrerseits aus <a href="index_c.html#ixb101342"><font color=#000080><tt>ComponentEvent</tt></font></a>
+abgeleitet ist, und stellt neben <a href="index_g.html#ixb101348"><font color=#000080><tt>getID</tt></font></a>
+und <a href="index_g.html#ixb101340"><font color=#000080><tt>getSource</tt></font></a>
+eine ganze Reihe von Methoden zur Verf&uuml;gung, mit denen die Erkennung
+und Bearbeitung der Tastencodes vereinfacht wird. 
+
+<p>
+Die Registrierung von Key-Events erfolgt mit der Methode <a name="ixa101905"><a href="index_a.html#ixb101304"><font color=#000080><tt>addKeyListener</tt></font></a></a>,
+die auf allen Objekten des Typs <a href="index_c.html#ixb101293"><font color=#000080><tt>Component</tt></font></a>
+oder daraus abgeleiteten Klassen zur Verf&uuml;gung steht: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void addKeyListener(KeyListener l)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Component.html" onClick="this.href=getApiDoc('java.awt.Component')"><font color="#660066" size=-1>java.awt.Component</font></a></td>
+</tr>
+</table>
+
+<p>
+Das Interface <a href="index_k.html#ixb101376"><font color=#000080><tt>KeyListener</tt></font></a>
+definiert drei unterschiedliche Methoden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public abstract void keyPressed(KeyEvent e)
+public abstract void keyReleased(KeyEvent e)
+public abstract void keyTyped(KeyEvent e)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/event/KeyListener.html" onClick="this.href=getApiDoc('java.awt.event.KeyListener')"><font color="#660066" size=-1>java.awt.event.KeyListener</font></a></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Um die Funktionsweise dieser Methoden im Zusammenspiel mit den Methoden
+der Klasse <a href="index_k.html#ixb101351"><font color=#000080><tt>KeyEvent</tt></font></a>
+besser verstehen zu k&ouml;nnen, wollen wir zwischen <a name="ixa101906"><i>Zeichentasten</i></a>
+und <a name="ixa101907"><i>Funktionstasten</i></a> unterscheiden.
+Zeichentasten sind dabei solche Tasten, mit denen Buchstaben, Ziffern
+oder sonstige g&uuml;ltige Unicode-Zeichen eingegeben werden, wie
+z.B. <font color="#007700"><tt>[a]</tt></font>, <font color="#007700"><tt>[A]</tt></font>,
+<font color="#007700"><tt>[B]</tt></font>, <font color="#007700"><tt>[1]</tt></font>,
+<font color="#007700"><tt>[2]</tt></font>, <font color="#007700"><tt>[%]</tt></font>,
+<font color="#007700"><tt>[+]</tt></font>, aber auch <font color="#007700"><tt>[ESC]</tt></font>,
+<font color="#007700"><tt>[LEER]</tt></font> oder <font color="#007700"><tt>[TAB]</tt></font>.
+Zu den Funktionstasten geh&ouml;ren beispielsweise <font color="#007700"><tt>[F1]</tt></font>,
+<font color="#007700"><tt>[F2]</tt></font>, <font color="#007700"><tt>[POS1]</tt></font>
+oder <font color="#007700"><tt>[CURSORLINKS]</tt></font>, aber auch
+die Umschalttasten <font color="#007700"><tt>[STRG]</tt></font>, <font color="#007700"><tt>[ALT]</tt></font>
+und <font color="#007700"><tt>[UMSCHALT]</tt></font>.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Die Methode <a name="ixa101908"><a href="index_k.html#ixb101379"><font color=#000080><tt>keyTyped</tt></font></a></a>
+wird immer dann aufgerufen, wenn eine Zeichentaste gedr&uuml;ckt wurde.
+Beim Dr&uuml;cken einer Funktionstaste wird sie dagegen nicht aufgerufen.
+Im Gegensatz dazu wird <a name="ixa101909"><a href="index_k.html#ixb101377"><font color=#000080><tt>keyPressed</tt></font></a></a>
+bei jedem Tastendruck aufgerufen, unabh&auml;ngig davon, ob es sich
+um eine Zeichentaste oder eine Funktionstaste handelt. Mit <a href="index_k.html#ixb101377"><font color=#000080><tt>keyPressed</tt></font></a>
+k&ouml;nnen sogar in beschr&auml;nktem Umfang die Feststelltasten
+wie <font color="#007700"><tt>[NUMLOCK]</tt></font> oder <font color="#007700"><tt>[CAPSLOCK]</tt></font>
+erkannt werden. Beide Methoden erhalten auch Tastatur-Repeats, werden
+also bei l&auml;ngerem Festhalten einer Taste wiederholt aufgerufen.
+Die Methode <a name="ixa101910"><a href="index_k.html#ixb101378"><font color=#000080><tt>keyReleased</tt></font></a></a>
+wird aufgerufen, wenn eine gedr&uuml;ckte Taste losgelassen wurde,
+unabh&auml;ngig davon, ob es sich um eine Zeichen- oder Funktionstaste
+handelt. 
+
+<p>
+Um beim Auftreten eines Tastatur-Events zu erkennen, welche Taste
+gedr&uuml;ckt wurde, stellt die Klasse <a href="index_k.html#ixb101351"><font color=#000080><tt>KeyEvent</tt></font></a>
+die Methoden <a name="ixa101911"><a href="index_g.html#ixb101430"><font color=#000080><tt>getKeyCode</tt></font></a></a>
+und <a name="ixa101912"><a href="index_g.html#ixb101352"><font color=#000080><tt>getKeyChar</tt></font></a></a>
+und zus&auml;tzlich die aus <a href="index_i.html#ixb101353"><font color=#000080><tt>InputEvent</tt></font></a>
+geerbten Methoden <a name="ixa101913"><a href="index_i.html#ixb101468"><font color=#000080><tt>isShiftDown</tt></font></a></a>,
+<a name="ixa101914"><a href="index_i.html#ixb101469"><font color=#000080><tt>isControlDown</tt></font></a></a>,
+<a name="ixa101915"><a href="index_i.html#ixb101458"><font color=#000080><tt>isMetaDown</tt></font></a></a>
+und <a name="ixa101916"><a href="index_i.html#ixb101470"><font color=#000080><tt>isAltDown</tt></font></a></a>
+zur Verf&uuml;gung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int getKeyCode()
+
+public char getKeyChar()
+
+public boolean isShiftDown()
+public boolean isControlDown()
+public boolean isMetaDown()
+public boolean isAltDown()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/event/KeyEvent.html" onClick="this.href=getApiDoc('java.awt.event.KeyEvent')"><font color="#660066" size=-1>java.awt.event.KeyEvent</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_g.html#ixb101352"><font color=#000080><tt>getKeyChar</tt></font></a>
+liefert das Zeichen, das der gedr&uuml;ckten Zeichentaste entspricht,
+also ein 'a', wenn die Taste <font color="#007700"><tt>[A]</tt></font>
+gedr&uuml;ckt wurde, und ein 'A', wenn die Tastenkombination <font color="#007700"><tt>[UMSCHALT]</tt></font>+<font color="#007700"><tt>[A]</tt></font>
+gedr&uuml;ckt wurde. <a href="index_g.html#ixb101430"><font color=#000080><tt>getKeyCode</tt></font></a>
+liefert dagegen <i>virtuelle Tastencodes</i>, die in <a href="index_k.html#ixb101351"><font color=#000080><tt>KeyEvent</tt></font></a>
+als symbolische Konstanten definiert wurden. Hier wird beim Dr&uuml;cken
+der Taste <font color="#007700"><tt>[A]</tt></font> immer der Code
+<a name="ixa101917"><a href="index_v.html#ixb101471"><font color=#000080><tt>VK_A</tt></font></a></a>
+geliefert, unabh&auml;ngig davon, ob <font color="#007700"><tt>[UMSCHALT]</tt></font>
+gedr&uuml;ckt wurde oder nicht. <a href="k100191.html#virtualkeycodes">Tabelle 29.4</a>
+gibt eine &Uuml;bersicht der wichtigsten virtuellen Keycodes der Klasse
+<a href="index_k.html#ixb101351"><font color=#000080><tt>KeyEvent</tt></font></a>.
+<a name="virtualkeycodes"></a>
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=50%><b>Symbolischer Name</b></td>
+<td valign=top align=left width=50%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101918"><a href="index_v.html#ixb101472"><font color=#000080><tt>VK_0</tt></font></a></a>
+... <a name="ixa101919"><a href="index_v.html#ixb101473"><font color=#000080><tt>VK_9</tt></font></a></a></td>
+<td valign=top align=left><font color="#007700"><tt>[0]</tt></font>
+... <font color="#007700"><tt>[9]</tt></font> </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101917"><a href="index_v.html#ixb101471"><font color=#000080><tt>VK_A</tt></font></a></a>
+... <a name="ixa101920"><a href="index_v.html#ixb101474"><font color=#000080><tt>VK_Z</tt></font></a></a></td>
+<td valign=top align=left><font color="#007700"><tt>[A]</tt></font>
+... <font color="#007700"><tt>[Z]</tt></font> </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101921"><a href="index_v.html#ixb101475"><font color=#000080><tt>VK_ENTER</tt></font></a></a></td>
+<td valign=top align=left><font color="#007700"><tt>[ENTER]</tt></font>
+</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101922"><a href="index_v.html#ixb101476"><font color=#000080><tt>VK_SPACE</tt></font></a></a></td>
+<td valign=top align=left><font color="#007700"><tt>[LEER]</tt></font>
+</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101923"><a href="index_v.html#ixb101477"><font color=#000080><tt>VK_TAB</tt></font></a></a></td>
+<td valign=top align=left><font color="#007700"><tt>[TAB]</tt></font>
+</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101924"><a href="index_v.html#ixb101431"><font color=#000080><tt>VK_ESCAPE</tt></font></a></a></td>
+<td valign=top align=left><font color="#007700"><tt>[ESC]</tt></font>
+</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101925"><a href="index_v.html#ixb101478"><font color=#000080><tt>VK_BACK_SPACE</tt></font></a></a></td>
+<td valign=top align=left><font color="#007700"><tt>[R&Uuml;CK]</tt></font>
+</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101926"><a href="index_v.html#ixb101479"><font color=#000080><tt>VK_F1</tt></font></a></a>
+... <a name="ixa101927"><a href="index_v.html#ixb101480"><font color=#000080><tt>VK_F12</tt></font></a></a></td>
+<td valign=top align=left>Die Funktionstasten <font color="#007700"><tt>[F1]</tt></font>
+... <font color="#007700"><tt>[F12]</tt></font> </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101928"><a href="index_v.html#ixb101481"><font color=#000080><tt>VK_HOME</tt></font></a></a>,
+<a name="ixa101929"><a href="index_v.html#ixb101482"><font color=#000080><tt>VK_END</tt></font></a></a></td>
+<td valign=top align=left><font color="#007700"><tt>[HOME]</tt></font>,
+<font color="#007700"><tt>[END]</tt></font> </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101930"><a href="index_v.html#ixb101483"><font color=#000080><tt>VK_INSERT</tt></font></a></a>,
+<a name="ixa101931"><a href="index_v.html#ixb101484"><font color=#000080><tt>VK_DELETE</tt></font></a></a></td>
+<td valign=top align=left><font color="#007700"><tt>[EINFG]</tt></font>,
+<font color="#007700"><tt>[ENTF]</tt></font> </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101932"><a href="index_v.html#ixb101485"><font color=#000080><tt>VK_PAGE_UP</tt></font></a></a>,
+<a name="ixa101933"><a href="index_v.html#ixb101486"><font color=#000080><tt>VK_PAGE_DOWN</tt></font></a></a></td>
+<td valign=top align=left><font color="#007700"><tt>[BILDHOCH]</tt></font>,
+<font color="#007700"><tt>[BILDRUNTER]</tt></font> </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101934"><a href="index_v.html#ixb101487"><font color=#000080><tt>VK_DOWN</tt></font></a></a>,
+<a name="ixa101935"><a href="index_v.html#ixb101488"><font color=#000080><tt>VK_UP</tt></font></a></a></td>
+<td valign=top align=left><font color="#007700"><tt>[CURSORHOCH]</tt></font>,
+<font color="#007700"><tt>[CURSORRUNTER]</tt></font> </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101936"><a href="index_v.html#ixb101489"><font color=#000080><tt>VK_LEFT</tt></font></a></a>,
+<a name="ixa101937"><a href="index_v.html#ixb101490"><font color=#000080><tt>VK_RIGHT</tt></font></a></a></td>
+<td valign=top align=left><font color="#007700"><tt>[CURSORLINKS]</tt></font>,
+<font color="#007700"><tt>[CURSORRECHTS]</tt></font> </td></tr>
+</table>
+<p><i>
+Tabelle 29.4: Virtuelle Key-Codes </i></p>
+
+<p>
+Am einfachsten ist es, innerhalb von <a href="index_k.html#ixb101379"><font color=#000080><tt>keyTyped</tt></font></a>
+mit <a href="index_g.html#ixb101352"><font color=#000080><tt>getKeyChar</tt></font></a>
+die Zeichentasten abzufragen. Dabei liefert <a href="index_g.html#ixb101352"><font color=#000080><tt>getKeyChar</tt></font></a>
+stets den ASCII-Code der gedr&uuml;ckten Zeichentaste, Funktionstasten
+werden nicht &uuml;bertragen. Der R&uuml;ckgabewert von <a href="index_g.html#ixb101430"><font color=#000080><tt>getKeyCode</tt></font></a>
+ist in diesem Fall immer <a name="ixa101938"><a href="index_v.html#ixb101491"><font color=#000080><tt>KeyEvent.VK_UNDEFINED</tt></font></a></a>.
+Sollen dagegen auch Funktionstasten abgefragt werden, muss die Methode
+<a href="index_k.html#ixb101377"><font color=#000080><tt>keyPressed</tt></font></a>
+&uuml;berlagert werden. Hier ist etwas Vorsicht geboten, denn es wird
+auf <i>alle</i> Tastendr&uuml;cke reagiert und sowohl <a href="index_g.html#ixb101430"><font color=#000080><tt>getKeyCode</tt></font></a>
+als auch <a href="index_g.html#ixb101352"><font color=#000080><tt>getKeyChar</tt></font></a>
+liefern Werte zur&uuml;ck. Die Unterscheidung von Zeichen- und Funktionstasten
+kann in diesem Fall mit Hilfe von <a href="index_g.html#ixb101352"><font color=#000080><tt>getKeyChar</tt></font></a>
+vorgenommen werden, deren R&uuml;ckgabewert die Konstante <a name="ixa101939"><a href="index_c.html#ixb101492"><font color=#000080><tt>KeyEvent.CHAR_UNDEFINED</tt></font></a></a>
+ist, wenn eine Funktionstaste gedr&uuml;ckt wurde. 
+
+<p>
+Die <font color="#000077"><tt>is</tt></font>-Methoden sind bereits
+bekannt, mit ihnen k&ouml;nnen die Umschalttasten abgefragt werden.
+Das ist beispielsweise sinnvoll, um bei einer Funktionstaste herauszufinden,
+ob sie mit gedr&uuml;ckter Umschalttaste ausgel&ouml;st wurde oder
+nicht. Allerdings sind die Umschalttasten im Event-Modell des JDK
+keine <i>Tottasten</i>, sondern liefern selbst ein Key-Event und l&ouml;sen
+die Methode <a href="index_k.html#ixb101377"><font color=#000080><tt>keyPressed</tt></font></a>
+aus. 
+
+<p>
+Insgesamt ist das Handling von Tastatur-Events nicht ganz trivial
+und erfordert ein wenig Aufwand bei der Unterscheidung von Zeichen-,
+Funktions-, Umschalt- oder Feststelltasten. <a href="k100191.html#keyeventrueck">Tabelle 29.5</a>
+fasst die bisherigen Ausf&uuml;hrungen noch einmal zusammen. Die erste
+<i>Zeile</i> zeigt das Verhalten beim Aufruf der Listener-Methode
+<a href="index_k.html#ixb101379"><font color=#000080><tt>keyTyped</tt></font></a>
+an, die zweite beim Aufruf von <a href="index_k.html#ixb101377"><font color=#000080><tt>keyPressed</tt></font></a>.
+Die <i>erste</i> Spalte liefert dazu den R&uuml;ckgabewert von <a href="index_g.html#ixb101430"><font color=#000080><tt>getKeyCode</tt></font></a>,
+die zweite den von <a href="index_g.html#ixb101352"><font color=#000080><tt>getKeyChar</tt></font></a>.
+Jedes Element beschreibt in der oberen H&auml;lfte den R&uuml;ckgabewert
+beim Dr&uuml;cken einer Zeichentaste und in der unteren den beim Dr&uuml;cken
+einer Funktionstaste. <a name="keyeventrueck"></a>
+
+<p>
+<table cols=3 border width=100%>
+
+<tr>
+<td valign=top align=left width=14%><b></b></td>
+<td valign=top align=left width=42%><b><a name="ixa101911"><a href="index_g.html#ixb101430"><font color=#000080><tt>getKeyCode</tt></font></a></a></b></td>
+<td valign=top align=left width=42%><b><a name="ixa101912"><a href="index_g.html#ixb101352"><font color=#000080><tt>getKeyChar</tt></font></a></a>
+</b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101908"><a href="index_k.html#ixb101379"><font color=#000080><tt>keyTyped</tt></font></a></a></td>
+<td valign=top align=left>Zeichentaste: <a name="ixa101938"><a href="index_v.html#ixb101491"><font color=#000080><tt>VK_UNDEFINED</tt></font></a></a>
+<br>
+Funktionstaste: --</td>
+<td valign=top align=left>Zeichentaste: Taste als <a href="index_c.html#ixb100223"><font color=#000080><tt>char</tt></font></a>
+<br>
+Funktionstaste: -- </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101909"><a href="index_k.html#ixb101377"><font color=#000080><tt>keyPressed</tt></font></a></a></td>
+<td valign=top align=left>Zeichentaste: <font color="#000077"><tt>VK_...</tt></font>
+<br>
+Funktionstaste: <font color="#000077"><tt>VK_...</tt></font></td>
+<td valign=top align=left>Zeichentaste: Taste als <a href="index_c.html#ixb100223"><font color=#000080><tt>char</tt></font></a>
+<br>
+Funktionstaste: <a name="ixa101939"><a href="index_c.html#ixb101492"><font color=#000080><tt>CHAR_UNDEFINED</tt></font></a></a>
+</td></tr>
+</table>
+<p><i>
+Tabelle 29.5: R&uuml;ckgabecodes bei Tastaturereignissen </i></p>
+
+<p>
+Das folgende Beispiel demonstriert die Abfrage der Tastaturereignisse.
+Es implementiert <a href="index_k.html#ixb101377"><font color=#000080><tt>keyPressed</tt></font></a>,
+um die Funktionstasten <font color="#007700"><tt>[F1]</tt></font>
+bis <font color="#007700"><tt>[F3]</tt></font> und den Status der
+Umschalttasten abzufragen. Jeder Tastendruck wird in einen String
+&uuml;bersetzt, in <font color="#000077"><tt>msg1</tt></font> gespeichert
+und durch Aufruf von <a href="index_r.html#ixb101449"><font color=#000080><tt>repaint</tt></font></a>
+auf dem Bildschirm angezeigt. Nach dem Loslassen der Taste wird die
+Anzeige wieder vom Bildschirm entfernt. Weiterhin wurde <a href="index_k.html#ixb101379"><font color=#000080><tt>keyTyped</tt></font></a>
+&uuml;berlagert, um die Zeichentasten abzufragen. Jeder Tastendruck
+wird in <font color="#000077"><tt>msg2</tt></font> gespeichert und
+ebenfalls auf dem Bildschirm angezeigt. Im Gegensatz zu den Funktionstasten
+bleibt die Ausgabe auch erhalten, wenn die Taste losgelassen wird.
+Bei jedem weiteren Tastendruck wird sie um ein Zeichen erg&auml;nzt.
+Zus&auml;tzlich werden die einzelnen Ereignisse auf der Konsole dokumentiert.
+<a name="listingid029006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2906.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2906
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">008 </font><font color="#0000AA">implements</font> KeyListener
+<font color="#555555">009 </font>{
+<font color="#555555">010 </font>  String msg1 = <font color="#0000FF">""</font>;
+<font color="#555555">011 </font>  String msg2 = <font color="#0000FF">""</font>;
+<font color="#555555">012 </font>
+<font color="#555555">013 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">014 </font>  {
+<font color="#555555">015 </font>    Listing2906 wnd = <font color="#0000AA">new</font> Listing2906();
+<font color="#555555">016 </font>  }
+<font color="#555555">017 </font>
+<font color="#555555">018 </font>  <font color="#0000AA">public</font> Listing2906()
+<font color="#555555">019 </font>  {
+<font color="#555555">020 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Tastaturereignisse"</font>);
+<font color="#555555">021 </font>    addKeyListener(<font color="#006699">this</font>);
+<font color="#555555">022 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">023 </font>    setBackground(Color.lightGray);
+<font color="#555555">024 </font>    setSize(300,200);
+<font color="#555555">025 </font>    setLocation(200,100);
+<font color="#555555">026 </font>    setVisible(<font color="#006699">true</font>);
+<font color="#555555">027 </font>  }
+<font color="#555555">028 </font>
+<font color="#555555">029 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">030 </font>  {
+<font color="#555555">031 </font>    <font color="#0000AA">if</font> (msg1.length() &gt; 0) {
+<font color="#555555">032 </font>      draw3DRect(g,20,50,250,30);
+<font color="#555555">033 </font>      g.setColor(Color.black);
+<font color="#555555">034 </font>      g.drawString(msg1,30,70);
+<font color="#555555">035 </font>    }
+<font color="#555555">036 </font>    <font color="#0000AA">if</font> (msg2.length() &gt; 0) {
+<font color="#555555">037 </font>      draw3DRect(g,20,100,250,30);
+<font color="#555555">038 </font>      g.setColor(Color.black);
+<font color="#555555">039 </font>      g.drawString(msg2,30,120);
+<font color="#555555">040 </font>    }
+<font color="#555555">041 </font>  }
+<font color="#555555">042 </font>
+<font color="#555555">043 </font>  <font color="#006699">void</font> draw3DRect(Graphics g,<font color="#006699">int</font> x,<font color="#006699">int</font> y,<font color="#006699">int</font> width,<font color="#006699">int</font> height)
+<font color="#555555">044 </font>  {
+<font color="#555555">045 </font>    g.setColor(Color.darkGray);
+<font color="#555555">046 </font>    g.drawLine(x,y,x,y+height);
+<font color="#555555">047 </font>    g.drawLine(x,y,x+width,y);
+<font color="#555555">048 </font>    g.setColor(Color.white);
+<font color="#555555">049 </font>    g.drawLine(x+width,y+height,x,y+height);
+<font color="#555555">050 </font>    g.drawLine(x+width,y+height,x+width,y);
+<font color="#555555">051 </font>  }
+<font color="#555555">052 </font>
+<font color="#555555">053 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> keyPressed(KeyEvent event)
+<font color="#555555">054 </font>  {
+<font color="#555555">055 </font>    msg1 = <font color="#0000FF">""</font>;
+<font color="#555555">056 </font>    System.out.println(
+<font color="#555555">057 </font>      <font color="#0000FF">"key pressed: "</font> +
+<font color="#555555">058 </font>      <font color="#0000FF">"key char = "</font> + event.getKeyChar() + <font color="#0000FF">"  "</font> +
+<font color="#555555">059 </font>      <font color="#0000FF">"key code = "</font> + event.getKeyCode()
+<font color="#555555">060 </font>    );
+<font color="#555555">061 </font>    <font color="#0000AA">if</font> (event.getKeyChar() == KeyEvent.CHAR_UNDEFINED) {
+<font color="#555555">062 </font>      <font color="#006699">int</font> key = event.getKeyCode();
+<font color="#555555">063 </font>      <font color="#00AA00">//Funktionstaste abfragen</font>
+<font color="#555555">064 </font>      <font color="#0000AA">if</font> (key == KeyEvent.VK_F1) {
+<font color="#555555">065 </font>        msg1 = <font color="#0000FF">"F1"</font>;
+<font color="#555555">066 </font>      } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (key == KeyEvent.VK_F2) {
+<font color="#555555">067 </font>        msg1 = <font color="#0000FF">"F2"</font>;
+<font color="#555555">068 </font>      } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (key == KeyEvent.VK_F3) {
+<font color="#555555">069 </font>        msg1 = <font color="#0000FF">"F3"</font>;
+<font color="#555555">070 </font>      }
+<font color="#555555">071 </font>      <font color="#00AA00">//Modifier abfragen</font>
+<font color="#555555">072 </font>      <font color="#0000AA">if</font> (msg1.length() &gt; 0) {
+<font color="#555555">073 </font>        <font color="#0000AA">if</font> (event.isAltDown()) {
+<font color="#555555">074 </font>          msg1 = <font color="#0000FF">"ALT + "</font> + msg1;
+<font color="#555555">075 </font>        }
+<font color="#555555">076 </font>        <font color="#0000AA">if</font> (event.isControlDown()) {
+<font color="#555555">077 </font>          msg1 = <font color="#0000FF">"STRG + "</font> + msg1;
+<font color="#555555">078 </font>        }
+<font color="#555555">079 </font>        <font color="#0000AA">if</font> (event.isShiftDown()) {
+<font color="#555555">080 </font>          msg1 = <font color="#0000FF">"UMSCHALT + "</font> + msg1;
+<font color="#555555">081 </font>        }
+<font color="#555555">082 </font>      }
+<font color="#555555">083 </font>    }
+<font color="#555555">084 </font>    repaint();
+<font color="#555555">085 </font>  }
+<font color="#555555">086 </font>
+<font color="#555555">087 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> keyReleased(KeyEvent event)
+<font color="#555555">088 </font>  {
+<font color="#555555">089 </font>    System.out.println(<font color="#0000FF">"key released"</font>);
+<font color="#555555">090 </font>    msg1 = <font color="#0000FF">""</font>;
+<font color="#555555">091 </font>    repaint();
+<font color="#555555">092 </font>  }
+<font color="#555555">093 </font>
+<font color="#555555">094 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> keyTyped(KeyEvent event)
+<font color="#555555">095 </font>  {
+<font color="#555555">096 </font>    <font color="#006699">char</font> key = event.getKeyChar();
+<font color="#555555">097 </font>    System.out.println(<font color="#0000FF">"key typed: "</font> + key);
+<font color="#555555">098 </font>    <font color="#0000AA">if</font> (key == KeyEvent.VK_BACK_SPACE) {
+<font color="#555555">099 </font>      <font color="#0000AA">if</font> (msg2.length() &gt; 0) {
+<font color="#555555">100 </font>        msg2 = msg2.substring(0,msg2.length() - 1);
+<font color="#555555">101 </font>      }
+<font color="#555555">102 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (key &gt;= KeyEvent.VK_SPACE) {
+<font color="#555555">103 </font>      <font color="#0000AA">if</font> (msg2.length() &lt; 40) {
+<font color="#555555">104 </font>        msg2 += event.getKeyChar();
+<font color="#555555">105 </font>      }
+<font color="#555555">106 </font>    }
+<font color="#555555">107 </font>    repaint();
+<font color="#555555">108 </font>  }
+<font color="#555555">109 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2906.java"><font color="#000055" size=-1>Listing2906.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 29.6: Reaktion auf Tastaturereignisse</i></p>
+
+<p>
+Eine beispielhafte Ausgabe des Programms ist: 
+<p>
+<a name="imageid029005"></a>
+<img src="images/Tastatur.gif">
+<p>
+
+<p><i>
+Abbildung 29.5: Darstellung von Tastaturereignissen</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100185.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100190.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100192.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100193.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

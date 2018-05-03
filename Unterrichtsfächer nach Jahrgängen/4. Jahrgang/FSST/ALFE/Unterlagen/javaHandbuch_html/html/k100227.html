@@ -1,0 +1,592 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100226.html;106,k100226.html;107,k100228.html;108,k100230.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100226.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100226.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100228.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100230.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 34 - Bitmaps und Animationen
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id034001"></a>
+<h2>34.1 Bitmaps </h2>
+<hr>
+<ul>
+<li><a href="k100227.html#sectlevel2id034001">34.1 Bitmaps</a>
+<ul>
+<li><a href="k100227.html#bitmapladenanzeigen">34.1.1 Laden und Anzeigen einer Bitmap</a>
+<ul>
+<li><a href="k100227.html#sectlevel4id034001001001">Die Klasse MediaTracker</a>
+</ul>
+<li><a href="k100227.html#entwicklungbitmapkomponente">34.1.2 Entwicklung einer eigenen Bitmap-Komponente</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="bitmapladenanzeigen"></a>
+<h3>34.1.1 Laden und Anzeigen einer Bitmap<a name="ixa102236"></a>
+</h3>
+
+<p>
+Das Anzeigen einer Bitmap kann in zwei Schritte unterteilt werden:
+<ul>
+<li>das Laden der Bitmap von einem externen Speichermedium oder aus
+dem Netz
+<li>die eigentliche Ausgabe auf den Bildschirm
+</ul>
+
+<p>
+Das Laden erfolgt mit der Methode <a name="ixa102237"><a href="index_g.html#ixb101670"><font color=#000080><tt>getImage</tt></font></a></a>,
+die eine Instanz der Klasse <a name="ixa102238"><a href="index_i.html#ixb100655"><font color=#000080><tt>Image</tt></font></a></a>
+zur&uuml;ckgibt. Das <a href="index_i.html#ixb100655"><font color=#000080><tt>Image</tt></font></a>-Objekt
+kann dann mit der Methode <a name="ixa102239"><a href="index_d.html#ixb101671"><font color=#000080><tt>drawImage</tt></font></a></a>
+der Klasse <a href="index_g.html#ixb101156"><font color=#000080><tt>Graphics</tt></font></a>
+angezeigt werden. 
+
+<p>
+<a href="index_g.html#ixb101670"><font color=#000080><tt>getImage</tt></font></a>
+gibt es in verschiedenen Varianten, die sich dadurch unterscheiden,
+aus welcher Quelle sie die Bitmap-Daten laden. In einer Java-<i>Applikation</i>
+wird in der Regel die Methode <a href="index_g.html#ixb101670"><font color=#000080><tt>getImage</tt></font></a>
+aus der Klasse <a href="index_t.html#ixb100510"><font color=#000080><tt>Toolkit</tt></font></a>
+verwendet. Sie erwartet den Namen einer lokalen Datei als Parameter:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Image getImage(String filename)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Toolkit.html" onClick="this.href=getApiDoc('java.awt.Toolkit')"><font color="#660066" size=-1>java.awt.Toolkit</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_g.html#ixb101670"><font color=#000080><tt>getImage</tt></font></a>
+versteht in der aktuellen Version die Bitmap-Typen <a name="ixa102240"><i>gif</i></a>,
+<a name="ixa102241"><i>png</i></a> und <a name="ixa102242"><i>jpeg</i></a>.
+<a name="ixa102243"></a> <a name="ixa102244"></a> Andere Grafikformate,
+wie etwa das unter Windows gebr&auml;uchliche <a name="ixa102245"><i>bmp</i></a>-Format,
+werden nicht unterst&uuml;tzt, sondern m&uuml;ssen bei Bedarf konvertiert
+werden. 
+
+<p>
+Neben den <a href="index_g.html#ixb101670"><font color=#000080><tt>getImage</tt></font></a>-Methoden
+gibt es seit dem JDK 1.2 auch zwei Methoden mit dem Namen <a name="ixa102246"><a href="index_c.html#ixb100656"><font color=#000080><tt>createImage</tt></font></a></a>
+in der Klasse <a href="index_t.html#ixb100510"><font color=#000080><tt>Toolkit</tt></font></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public abstract Image createImage(String filename)
+public abstract Image createImage(URL url)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Toolkit.html" onClick="this.href=getApiDoc('java.awt.Toolkit')"><font color="#660066" size=-1>java.awt.Toolkit</font></a></td>
+</tr>
+</table>
+
+<p>
+Sie laden ein Image bei jeder Verwendung neu und f&uuml;hren (im Gegensatz
+zu <a href="index_g.html#ixb101670"><font color=#000080><tt>getImage</tt></font></a>)
+kein Caching des Bilds durch. Die JDK-Dokumentation empfiehlt sie
+gegen&uuml;ber <a href="index_g.html#ixb101670"><font color=#000080><tt>getImage</tt></font></a>,
+weil bei deren Verwendung Speicherlecks durch das unbegrenzte Zwischenspeichern
+der Bilddaten entstehen k&ouml;nnen. 
+
+<p>
+Das <a name="ixa102247"><a href="index_t.html#ixb100510"><font color=#000080><tt>Toolkit</tt></font></a></a>
+f&uuml;r die aktuelle Umgebung kann mit der Methode <a name="ixa102248"><a href="index_g.html#ixb101676"><font color=#000080><tt>getToolkit</tt></font></a></a>
+der Klasse <a href="index_c.html#ixb101293"><font color=#000080><tt>Component</tt></font></a>
+beschafft werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Toolkit getToolkit()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Component.html" onClick="this.href=getApiDoc('java.awt.Component')"><font color="#660066" size=-1>java.awt.Component</font></a></td>
+</tr>
+</table>
+
+<p>
+Der gesamte Code zum Laden einer Bitmap <font color="#660099">duke.gif</font>
+sieht daher so aus: 
+<a name="listingid034001"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>Image img;
+<font color="#555555">002 </font>img = getToolkit().getImage(<font color="#0000FF">"duke.gif"</font>);</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 34.1: Laden einer Bitmap-Datei</i></p>
+
+<p>
+Um das <a href="index_i.html#ixb100655"><font color=#000080><tt>Image</tt></font></a>
+anzuzeigen, kann die Methode <a name="ixa102239"><a href="index_d.html#ixb101671"><font color=#000080><tt>drawImage</tt></font></a></a>
+der Klasse <a href="index_g.html#ixb101156"><font color=#000080><tt>Graphics</tt></font></a>
+aufgerufen werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public boolean drawImage(
+   Image img, int x, int y, ImageObserver observer
+)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Graphics.html" onClick="this.href=getApiDoc('java.awt.Graphics')"><font color="#660066" size=-1>java.awt.Graphics</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_d.html#ixb101671"><font color=#000080><tt>drawImage</tt></font></a>
+gibt es in unterschiedlichen Auspr&auml;gungen. Die hier vorgestellte
+Variante erwartet das anzuzeigende <a href="index_i.html#ixb100655"><font color=#000080><tt>Image</tt></font></a>-Objekt
+und die Position <font color="#000077"><tt>(x,y)</tt></font>, an der
+die linke obere Ecke der Bitmap platziert werden soll. Das zus&auml;tzlich
+angegebene Objekt <font color="#000077"><tt>observer</tt></font> dient
+zur &Uuml;bergabe eines <a name="ixa102249"><a href="index_i.html#ixb101677"><font color=#000080><tt>ImageObserver</tt></font></a></a>-Objekts,
+mit dem der Ladezustand der Bitmaps &uuml;berwacht werden kann. Hier
+kann der <a href="index_t.html#ixb100284"><font color=#000080><tt>this</tt></font></a>-Zeiger,
+also eine Referenz auf das Fensterobjekt, &uuml;bergeben werden. Weitere
+Varianten von <a href="index_d.html#ixb101671"><font color=#000080><tt>drawImage</tt></font></a>,
+die ein Bild sogar skalieren und spiegeln k&ouml;nnen, werden in der
+API-Dokumentation beschrieben. 
+
+<p>
+Das folgende Listing ist ein einfaches Beispiel f&uuml;r das Laden
+und Anzeigen der Bitmap <font color="#660099">duke.gif</font>. Alle
+erforderlichen Aktionen erfolgen innerhalb von <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>:
+<a name="listingid034002"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  Image img;
+<font color="#555555">004 </font>  img = getToolkit().getImage(<font color="#0000FF">"duke.gif"</font>);
+<font color="#555555">005 </font>  g.drawImage(img,40,40,<font color="#006699">this</font>);
+<font color="#555555">006 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 34.2: Laden und Anzeigen einer Bitmap</i></p>
+
+<p>
+Die Ausgabe des Programms ist: 
+<p>
+<a name="imageid034001"></a>
+<img src="images/Bitmap.gif">
+<p>
+
+<p><i>
+Abbildung 34.1: Laden und Anzeigen einer Bitmap</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id034001001001"></a>
+<h4>Die Klasse MediaTracker </h4>
+
+<p>
+Manchmal kann es sinnvoll sein, den tats&auml;chlichen Ladevorgang
+des Bilds abzuwarten, bevor im Programm fortgefahren wird. Wird zum
+Beispiel die Gr&ouml;&szlig;e der Bitmap ben&ouml;tigt, um sie korrekt
+auf dem Bildschirm anordnen oder skalieren zu k&ouml;nnen, muss das
+Programm warten, bis das <a href="index_i.html#ixb100655"><font color=#000080><tt>Image</tt></font></a>
+vollst&auml;ndig erzeugt ist. 
+
+<p>
+F&uuml;r diese Zwecke steht die Klasse <a name="ixa102250"><a href="index_m.html#ixb101678"><font color=#000080><tt>MediaTracker</tt></font></a></a>
+zur Verf&uuml;gung, die das Laden eines oder mehrerer Bilder &uuml;berwacht.
+Dazu wird zun&auml;chst eine Instanz der Klasse angelegt: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public MediaTracker(Component comp)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/MediaTracker.html" onClick="this.href=getApiDoc('java.awt.MediaTracker')"><font color="#660066" size=-1>java.awt.MediaTracker</font></a></td>
+</tr>
+</table>
+
+<p>
+Als Komponente wird der <a href="index_t.html#ixb100284"><font color=#000080><tt>this</tt></font></a>-Zeiger
+des aktuellen Fensters &uuml;bergeben. Anschlie&szlig;end werden durch
+Aufruf von <a name="ixa102251"><a href="index_a.html#ixb101679"><font color=#000080><tt>addImage</tt></font></a></a>
+alle Bilder, deren Ladevorgang &uuml;berwacht werden soll, an den
+<a href="index_m.html#ixb101678"><font color=#000080><tt>MediaTracker</tt></font></a>
+&uuml;bergeben: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void addImage(Image img, int id)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/MediaTracker.html" onClick="this.href=getApiDoc('java.awt.MediaTracker')"><font color="#660066" size=-1>java.awt.MediaTracker</font></a></td>
+</tr>
+</table>
+
+<p>
+Der zus&auml;tzlich &uuml;bergebene Parameter <font color="#000077"><tt>id</tt></font>
+kann dazu verwendet werden, einen Namen zu vergeben, unter dem auf
+das <a href="index_i.html#ixb100655"><font color=#000080><tt>Image</tt></font></a>
+zugegriffen werden kann. Zus&auml;tzlich bestimmt er die Reihenfolge,
+in der die Images geladen werden. Bitmaps mit kleineren Werten werden
+zuerst geladen. 
+
+<p>
+Der <a href="index_m.html#ixb101678"><font color=#000080><tt>MediaTracker</tt></font></a>
+bietet eine Reihe von Methoden, um den Ladezustand der Bilder zu &uuml;berwachen.
+Wir wollen hier nur die Methode <a name="ixa102252"><a href="index_w.html#ixb101680"><font color=#000080><tt>waitForAll</tt></font></a></a>
+betrachten. Sie wartet, bis alle Images vollst&auml;ndig geladen sind:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void waitForAll()
+  throws InterruptedException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/MediaTracker.html" onClick="this.href=getApiDoc('java.awt.MediaTracker')"><font color="#660066" size=-1>java.awt.MediaTracker</font></a></td>
+</tr>
+</table>
+
+<p>
+Das vollst&auml;ndige Beispielprogramm zur Anzeige von <font color="#660099">duke.gif</font>
+sieht nun so aus: 
+<a name="listingid034003"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3403.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3403
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">private</font> Image img;
+<font color="#555555">010 </font>
+<font color="#555555">011 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">012 </font>  {
+<font color="#555555">013 </font>    Listing3403 wnd = <font color="#0000AA">new</font> Listing3403();
+<font color="#555555">014 </font>  }
+<font color="#555555">015 </font>
+<font color="#555555">016 </font>  <font color="#0000AA">public</font> Listing3403()
+<font color="#555555">017 </font>  {
+<font color="#555555">018 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Bitmap"</font>);
+<font color="#555555">019 </font>    setBackground(Color.lightGray);
+<font color="#555555">020 </font>    setSize(250,150);
+<font color="#555555">021 </font>    setVisible(<font color="#006699">true</font>);
+<font color="#555555">022 </font>    <font color="#00AA00">//WindowListener</font>
+<font color="#555555">023 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">024 </font>    <font color="#00AA00">//Bild laden</font>
+<font color="#555555">025 </font>    img = getToolkit().getImage(<font color="#0000FF">"duke.gif"</font>);
+<font color="#555555">026 </font>    MediaTracker mt = <font color="#0000AA">new</font> MediaTracker(<font color="#006699">this</font>);
+<font color="#555555">027 </font>    mt.addImage(img, 0);
+<font color="#555555">028 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">029 </font>      <font color="#00AA00">//Warten, bis das Image vollst&auml;ndig geladen ist,</font>
+<font color="#555555">030 </font>      mt.waitForAll();
+<font color="#555555">031 </font>    } <font color="#0000AA">catch</font> (InterruptedException e) {
+<font color="#555555">032 </font>      <font color="#00AA00">//nothing</font>
+<font color="#555555">033 </font>    }
+<font color="#555555">034 </font>    repaint();
+<font color="#555555">035 </font>  }
+<font color="#555555">036 </font>
+<font color="#555555">037 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">038 </font>  {
+<font color="#555555">039 </font>    <font color="#0000AA">if</font> (img != <font color="#006699">null</font>) {
+<font color="#555555">040 </font>      g.drawImage(img,40,40,<font color="#006699">this</font>);
+<font color="#555555">041 </font>    }
+<font color="#555555">042 </font>  }
+<font color="#555555">043 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3403.java"><font color="#000055" size=-1>Listing3403.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 34.3: Programm zum Laden und Anzeigen einer Bitmap</i></p>
+
+
+<!-- Section -->
+<a name="entwicklungbitmapkomponente"></a>
+<h3>34.1.2 Entwicklung einer eigenen Bitmap-Komponente </h3>
+
+<p>
+Ein sch&ouml;nes Beispiel f&uuml;r die Verwendung von Bitmaps ist
+die Konstruktion einer Komponente <a name="ixa102253"><a href="index_b.html#ixb101681"><font color=#000080><tt>BitmapComponent</tt></font></a></a>,
+die in Dialogboxen zur Anzeige von Bitmaps verwendet werden kann.
+Die Verwendung soll dabei so einfach wie m&ouml;glich sein, d.h.,
+au&szlig;er der &Uuml;bergabe des Dateinamens an den Konstruktor soll
+kein zus&auml;tzlicher Aufwand entstehen. 
+
+<p>
+Zur Konstruktion der Komponente gehen wir in folgenden Schritten vor:
+<ul>
+<li>Ableiten einer neuen Klasse <a href="index_b.html#ixb101681"><font color=#000080><tt>BitmapComponent</tt></font></a>
+aus <a name="ixa102254"><a href="index_c.html#ixb101652"><font color=#000080><tt>Canvas</tt></font></a></a>
+<li>&Uuml;berlagern des Konstruktors, um dort die Bitmap zu laden
+<li>&Uuml;berlagern von <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>,
+um das Image auf dem Bildschirm auszugeben
+<li>&Uuml;berlagern von <a href="index_g.html#ixb101646"><font color=#000080><tt>getPreferredSize</tt></font></a>
+und <a href="index_g.html#ixb101655"><font color=#000080><tt>getMinimumSize</tt></font></a>,
+um dem Layoutmanager die Gr&ouml;&szlig;e der Komponente mitzuteilen
+</ul>
+
+<p>
+Nach diesen Ausf&uuml;hrungen ist die Implementierung einfach: 
+<a name="listingid034004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* BitmapComponent.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">class</font> BitmapComponent
+<font color="#555555">006 </font><font color="#0000AA">extends</font> Canvas
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">private</font> Image img;
+<font color="#555555">009 </font>
+<font color="#555555">010 </font>  <font color="#0000AA">public</font> BitmapComponent(String fname)
+<font color="#555555">011 </font>  {
+<font color="#555555">012 </font>    img = getToolkit().getImage(fname);
+<font color="#555555">013 </font>    MediaTracker mt = <font color="#0000AA">new</font> MediaTracker(<font color="#006699">this</font>);
+<font color="#555555">014 </font>
+<font color="#555555">015 </font>    mt.addImage(img, 0);
+<font color="#555555">016 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">017 </font>      <font color="#00AA00">//Warten, bis das Image vollst&auml;ndig geladen ist,</font>
+<font color="#555555">018 </font>      <font color="#00AA00">//damit getWidth() und getHeight() funktionieren</font>
+<font color="#555555">019 </font>      mt.waitForAll();
+<font color="#555555">020 </font>    } <font color="#0000AA">catch</font> (InterruptedException e) {
+<font color="#555555">021 </font>      <font color="#00AA00">//nothing</font>
+<font color="#555555">022 </font>    }
+<font color="#555555">023 </font>  }
+<font color="#555555">024 </font>
+<font color="#555555">025 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">026 </font>  {
+<font color="#555555">027 </font>    g.drawImage(img,1,1,<font color="#006699">this</font>);
+<font color="#555555">028 </font>  }
+<font color="#555555">029 </font>
+<font color="#555555">030 </font>  <font color="#0000AA">public</font> Dimension getPreferredSize()
+<font color="#555555">031 </font>  {
+<font color="#555555">032 </font>    <font color="#0000AA">return</font> <font color="#0000AA">new</font> Dimension(
+<font color="#555555">033 </font>      img.getWidth(<font color="#006699">this</font>),
+<font color="#555555">034 </font>      img.getHeight(<font color="#006699">this</font>)
+<font color="#555555">035 </font>    );
+<font color="#555555">036 </font>  }
+<font color="#555555">037 </font>
+<font color="#555555">038 </font>  <font color="#0000AA">public</font> Dimension getMinimumSize()
+<font color="#555555">039 </font>  {
+<font color="#555555">040 </font>    <font color="#0000AA">return</font> <font color="#0000AA">new</font> Dimension(
+<font color="#555555">041 </font>      img.getWidth(<font color="#006699">this</font>),
+<font color="#555555">042 </font>      img.getHeight(<font color="#006699">this</font>)
+<font color="#555555">043 </font>    );
+<font color="#555555">044 </font>  }
+<font color="#555555">045 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/BitmapComponent.java"><font color="#000055" size=-1>BitmapComponent.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 34.4: Eine Komponente zum Anzeigen einer Bitmap</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Bei diesem Beispiel ist die Verwendung des <font color="#000077"><tt>MediaTracker</tt></font>
+obligatorisch. Andernfalls k&ouml;nnte es passieren, dass zum Zeitpunkt
+des Aufrufs von <a href="index_g.html#ixb101646"><font color=#000080><tt>getPreferredSize</tt></font></a>
+oder <a href="index_g.html#ixb101655"><font color=#000080><tt>getMinimumSize</tt></font></a>
+die Bitmap noch nicht geladen ist und die Methoden <a name="ixa102255"><a href="index_g.html#ixb101682"><font color=#000080><tt>getWidth</tt></font></a></a>
+und <a name="ixa102256"><a href="index_g.html#ixb101242"><font color=#000080><tt>getHeight</tt></font></a></a>
+0 zur&uuml;ckgeben. Dies w&uuml;rde dann dazu f&uuml;hren, dass der
+Layoutmanager den ben&ouml;tigten Platz fehlerhaft berechnet und die
+Komponente falsch oder gar nicht angezeigt wird.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Die Einbindung von <a href="index_b.html#ixb101681"><font color=#000080><tt>BitmapComponent</tt></font></a>
+in einen Dialog erfolgt analog zur Einbindung jeder anderen Komponente
+durch Aufruf der Methode <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+der Klasse <a href="index_c.html#ixb101293"><font color=#000080><tt>Component</tt></font></a>.
+Das folgende Listing gibt ein Beispiel f&uuml;r die Einbindung der
+neuen Komponente: 
+<a name="listingid034005"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3405.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3405
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    Listing3405 wnd = <font color="#0000AA">new</font> Listing3405();
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>  <font color="#0000AA">public</font> Listing3405()
+<font color="#555555">015 </font>  {
+<font color="#555555">016 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Bitmap-Komponente"</font>);
+<font color="#555555">017 </font>    setBackground(Color.lightGray);
+<font color="#555555">018 </font>    setSize(250,150);
+<font color="#555555">019 </font>    setVisible(<font color="#006699">true</font>);
+<font color="#555555">020 </font>    <font color="#00AA00">//Hinzuf&uuml;gen der Komponenten</font>
+<font color="#555555">021 </font>    setLayout(<font color="#0000AA">new</font> GridLayout(2,2));
+<font color="#555555">022 </font>    add(<font color="#0000AA">new</font> BitmapComponent(<font color="#0000FF">"duke.gif"</font>));
+<font color="#555555">023 </font>    add(<font color="#0000AA">new</font> BitmapComponent(<font color="#0000FF">"duke.gif"</font>));
+<font color="#555555">024 </font>    add(<font color="#0000AA">new</font> BitmapComponent(<font color="#0000FF">"duke.gif"</font>));
+<font color="#555555">025 </font>    add(<font color="#0000AA">new</font> BitmapComponent(<font color="#0000FF">"duke.gif"</font>));
+<font color="#555555">026 </font>    pack();
+<font color="#555555">027 </font>    <font color="#00AA00">//WindowListener</font>
+<font color="#555555">028 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">029 </font>  }
+<font color="#555555">030 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3405.java"><font color="#000055" size=-1>Listing3405.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 34.5: Verwenden der Bitmap-Komponente</i></p>
+
+<p>
+Die Ausgabe des Programms ist: 
+<p>
+<a name="imageid034002"></a>
+<img src="images/BitmapComponent.gif">
+<p>
+
+<p><i>
+Abbildung 34.2: Verwendung von BitmapComponent</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100226.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100226.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100228.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100230.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

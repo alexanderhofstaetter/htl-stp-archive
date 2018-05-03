@@ -1,0 +1,244 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100052.html;106,k100053.html;107,k100055.html;108,k100057.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100052.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100053.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100055.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100057.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 8 - OOP I: Grundlagen
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id008002"></a>
+<h2>8.2 Klassen und Objekte in Java </h2>
+<hr>
+<ul>
+<li><a href="k100054.html#sectlevel2id008002">8.2 Klassen und Objekte in Java</a>
+<ul>
+<li><a href="k100054.html#sectlevel3id008002001">8.2.1 Klassen</a>
+<li><a href="k100054.html#sectlevel3id008002002">8.2.2 Objekte</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id008002001"></a>
+<h3>8.2.1 Klassen </h3>
+
+<p>
+Eine Klassendefinition in Java wird durch das Schl&uuml;sselwort <a name="ixa100465"><a href="index_c.html#ixb100178"><font color=#000080><tt>class</tt></font></a></a>
+eingeleitet. Anschlie&szlig;end folgt innerhalb von geschweiften Klammern
+eine beliebige Anzahl an Variablen- und Methodendefinitionen. Das
+folgende Listing ist ein Beispiel f&uuml;r eine einfache Klassendefinition:
+<a name="autoklasse"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Auto.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Auto
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> String name;
+<font color="#555555">006 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font>    erstzulassung;
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font>    leistung;
+<font color="#555555">008 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Auto.java"><font color="#000055" size=-1>Auto.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 8.1: Eine einfache Klassendefinition</i></p>
+
+<p>
+Diese Klasse enth&auml;lt keine Methoden, sondern lediglich die Variablen
+<font color="#000077"><tt>name</tt></font>, <font color="#000077"><tt>erstzulassung</tt></font>
+und <font color="#000077"><tt>leistung</tt></font>. Eine solche methodenlose
+Klassendefinition entspricht dem Konzept des Verbunddatentyps aus
+C oder PASCAL (<font color="#000077"><tt>struct</tt></font> bzw. <font color="#000077"><tt>record</tt></font>).
+Die innerhalb einer Klasse definierten Variablen werden wir im Folgenden
+(analog zu C++) meist als <a name="ixa100466"><i>Membervariablen</i></a>
+bezeichnen. Die in <a href="k100053.html#kapselung">Abschnitt 8.1.3</a>
+erw&auml;hnten Begriffe <i>Instanzvariablen</i> oder <i>Instanzmerkmal</i>
+sind aber ebenso g&uuml;ltig. 
+
+<!-- Section -->
+
+<a name="sectlevel3id008002002"></a>
+<h3>8.2.2 Objekte </h3>
+
+<p>
+Um von einer Klasse ein Objekt anzulegen, muss eine Variable vom Typ
+der Klasse deklariert und ihr mit Hilfe des <a name="ixa100467"><a href="index_n.html#ixb100088"><font color=#000080><tt>new</tt></font></a></a>-Operators
+ein neu erzeugtes Objekt zugewiesen werden: 
+<a name="listingid008002"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>Auto meinWagen;
+<font color="#555555">002 </font>meinWagen = <font color="#0000AA">new</font> Auto();</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 8.2: Erzeugen eines Objekts mit new</i></p>
+
+<p>
+Die erste Anweisung ist eine normale Variablendeklaration, wie sie
+aus <a href="k100028.html#kapiteldatentypen">Kapitel 5</a> bekannt
+ist. Anstelle eines primitiven Typs wird hier der Typname einer zuvor
+definierten Klasse verwendet. Im Unterschied zu primitiven Datentypen
+wird die Objektvariable <font color="#000077"><tt>meinWagen</tt></font>
+als <i>Referenz</i> gespeichert. Die zweite Anweisung generiert mit
+Hilfe des <a href="index_n.html#ixb100088"><font color=#000080><tt>new</tt></font></a>-Operators
+eine neue Instanz der Klasse <font color="#000077"><tt>Auto</tt></font>
+und weist sie der Variablen <font color="#000077"><tt>meinWagen</tt></font>
+zu. 
+
+<p>
+In Java wird jede <i>selbst definierte</i> Klasse mit Hilfe des <a href="index_n.html#ixb100088"><font color=#000080><tt>new</tt></font></a>-Operators
+instanziert. Mit Ausnahme von Strings und Arrays, bei denen der Compiler
+auch <i>Literale</i> zur Objekterzeugung zur Verf&uuml;gung stellt,
+gilt dies auch f&uuml;r alle vordefinierten Klassen der Java-Klassenbibliothek.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Wie bei primitiven Variablen lassen sich beide Anweisungen auch kombinieren.
+Das nachfolgende Beispiel deklariert und initialisiert die Variable
+<font color="#000077"><tt>meinWagen</tt></font>:</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<a name="listingid008003"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>Auto meinWagen = <font color="#0000AA">new</font> Auto();</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 8.3: Kombinierte Deklaration und Initialisierung einer Objektvariablen</i></p>
+
+<p>
+Nach der Initialisierung haben alle Variablen des Objekts zun&auml;chst
+Standardwerte. Referenztypen haben den Standardwert <a name="ixa100468"><a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a></a>,
+die Standardwerte der primitiven Typen k&ouml;nnen <a href="k100030.html#primitivedatentypen">Tabelle 5.1</a>
+entnommen werden. Der Zugriff auf sie erfolgt mit Hilfe der Punktnotation
+<font color="#000077"><tt>Objekt.Variable</tt></font>. Um unser <font color="#000077"><tt>Auto</tt></font>-Objekt
+in einen 250 PS starken Mercedes 600 des Baujahrs 1972 zu verwandeln,
+m&uuml;ssten folgende Anweisungen ausgef&uuml;hrt werden: 
+<a name="listingid008004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>meinWagen.name = <font color="#0000FF">"Mercedes 600"</font>;
+<font color="#555555">002 </font>meinWagen.erstzulassung = 1972;
+<font color="#555555">003 </font>meinWagen.leistung = 250;</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 8.4: Zuweisen von Werten an die Variablen eines Objekts</i></p>
+
+<p>
+Ebenso wie der schreibende erfolgt auch der lesende Zugriff mit Hilfe
+der Punktnotation. Die Ausgabe des aktuellen Objekts auf dem Bildschirm
+k&ouml;nnte also mit den folgenden Anweisungen erledigt werden: 
+<a name="listingid008005"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>System.out.println(<font color="#0000FF">"Name........: "</font>+meinWagen.name);
+<font color="#555555">002 </font>System.out.println(<font color="#0000FF">"Zugelassen..: "</font>+meinWagen.erstzulassung);
+<font color="#555555">003 </font>System.out.println(<font color="#0000FF">"Leistung....: "</font>+meinWagen.leistung);</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 8.5: Lesender Zugriff auf die Variablen eines Objekts</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100052.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100053.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100055.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100057.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

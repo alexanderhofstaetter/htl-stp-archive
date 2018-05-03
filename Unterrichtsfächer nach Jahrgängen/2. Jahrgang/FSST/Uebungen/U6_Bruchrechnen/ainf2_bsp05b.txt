@@ -1,0 +1,65 @@
+
+AINF 2   		C/C++ - Aufgabe 05b
+__________________________________________________________________________
+
+
+C++ - Programm  "bruch.cpp",
+Erstelle eine C/C++ Bibliothek für die Bruchrechnung.  
+Die Bibliothek soll Funktionen für die Bruchaddition, ,-subtraktion, 
+-multiplikation und -division enthalten.
+
+Die Angabe der Prototypen ist mit Schnittstellenbeschreibung
+in folgender Form auszuführen :
+
+float bruch(int z,int n );  
+///////////////////////////////////////////////////////////
+//   Bruch 
+//   Import : int z    ...  Zaehler
+//            int n    ...  Nenner
+//   Return   float    ...  Quotient 
+///////////////////////////////////////////////////////////
+
+
+void bruch_add(int z1,int n1,int z2,int n2,int &z,int &n);  
+///////////////////////////////////////////////////////////
+//   Berechnung der Bruchaddition 
+//   Import : int z1   ...  Zaehler1
+//            int n1   ...  Nenner1
+//            int z2   ...  Zaehler2
+//            int n2   ...  Nenner2
+//   Export   int z    ...  Zaehler der Addition 
+//            int n    ...  Nenner der Addition 
+///////////////////////////////////////////////////////////
+
+void bruch_sub(int z1,int n1,int z2,int n2,int &z,int &n);    
+//   Bruchsubtraktion 
+
+void bruch_mul(int z1,int n1,int z2,int n2,int &z,int &n);    
+//   Bruchmultiplikation 
+
+void bruch_div(int z1,int n1,int z2,int n2,int &z,int &n);    
+//   Bruchdivision 
+
+int  ggt(int z,int n); 
+//   größter gemeinsamer Teiler  
+
+void bruch_kuerzen(int &zk,int &nk);
+//   Bruch kürzen  
+
+
+Im Hauptprogramm sollen diese Funktionen für eine Bruchrechhung aufgerufen werden.
+
+
+
+// Hinweis - 
+// Berechnung - größter gemeinsamer Teiler von i und j  
+// wie in AINF1 besprochen
+//
+   while ( j>0 )  
+   {  if (j>i) 
+      {  hilf=i; i=j; j=hilf;        // i u. j tauschen
+      }
+      i=i-j;
+   }
+   cout << i << endl;                // ggT ausgeben  
+

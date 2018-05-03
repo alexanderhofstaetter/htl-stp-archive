@@ -1,0 +1,1011 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100278.html;106,k100281.html;107,k100283.html;108,k100284.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100278.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100281.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100283.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100284.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 44 - Datenbankzugriffe mit JDBC
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id044004"></a>
+<h2>44.4 Weiterf&uuml;hrende Themen </h2>
+<hr>
+<ul>
+<li><a href="k100282.html#sectlevel2id044004">44.4 Weiterf&uuml;hrende Themen</a>
+<ul>
+<li><a href="k100282.html#sectlevel3id044004001">44.4.1 Metadaten</a>
+<li><a href="k100282.html#sectlevel3id044004002">44.4.2 Escape-Kommandos</a>
+<li><a href="k100282.html#subsectiontransaktionen">44.4.3 Transaktionen</a>
+<li><a href="k100282.html#sectlevel3id044004004">44.4.4 JDBC-Datentypen</a>
+<li><a href="k100282.html#jdbcobjekte">44.4.5 Umgang mit JDBC-Objekten</a>
+<li><a href="k100282.html#jdbcpreparedstatement">44.4.6 Prepared Statements</a>
+<li><a href="k100282.html#subsectionsqlkurzreferenz">44.4.7 SQL-Kurzreferenz</a>
+<ul>
+<li><a href="k100282.html#sectlevel4id044004007001">&Auml;ndern von Datenstrukturen</a>
+<li><a href="k100282.html#sectlevel4id044004007002">&Auml;ndern von Daten</a>
+<li><a href="k100282.html#subsubsqlreadqueries">Lesen von Daten</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+<p>
+In diesem Abschnitt wollen wir eine Reihe von Themen ansprechen, die
+bei der bisherigen Darstellung zu kurz gekommen sind. Aufgrund des
+beschr&auml;nkten Platzes werden wir jedes Thema allerdings nur kurz
+ansprechen und verweisen f&uuml;r genauere Informationen auf die JDBC-Beschreibung
+(sie ist Bestandteil der seit dem JDK 1.2 ausgelieferten Online-Dokumentation)
+und auf weiterf&uuml;hrende Literatur zum Thema JDBC. 
+
+<!-- Section -->
+
+<a name="sectlevel3id044004001"></a>
+<h3>44.4.1 Metadaten </h3>
+
+<p>
+In <a href="k100281.html#verbindungherstellen">Abschnitt 44.3.3</a>
+sind wir bereits kurz auf die Verwendung von Metadaten eingegangen.
+Neben den Datenbankmetadaten gibt es die Methode <a name="ixa103228"><a href="index_g.html#ixb102406"><font color=#000080><tt>getMetaData</tt></font></a></a>
+der Klasse <a href="index_r.html#ixb100592"><font color=#000080><tt>ResultSet</tt></font></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+ResultSetMetaData getMetaData()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/sql/ResultSet.html" onClick="this.href=getApiDoc('java.sql.ResultSet')"><font color="#660066" size=-1>java.sql.ResultSet</font></a></td>
+</tr>
+</table>
+
+<p>
+Sie liefert ein Objekt vom Typ <a name="ixa103229"><a href="index_r.html#ixb102410"><font color=#000080><tt>ResultSetMetaData</tt></font></a></a>,
+das Meta-Informationen &uuml;ber die Ergebnismenge zur Verf&uuml;gung
+stellt. Wichtige Methoden sind: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+int getColumnCount()
+
+String getColumnName(int column)
+
+String getTableName(int column)
+
+int getColumnType(int column)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/sql/ResultSetMetaData.html" onClick="this.href=getApiDoc('java.sql.ResultSetMetaData')"><font color="#660066" size=-1>java.sql.ResultSetMetaData</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa103230"><a href="index_g.html#ixb102081"><font color=#000080><tt>getColumnCount</tt></font></a></a>
+kann die Anzahl der Spalten in der Ergebnismenge abgefragt werden.
+<a name="ixa103231"><a href="index_g.html#ixb102089"><font color=#000080><tt>getColumnName</tt></font></a></a>
+und <a name="ixa103232"><a href="index_g.html#ixb102411"><font color=#000080><tt>getTableName</tt></font></a></a>
+liefern den Namen der Spalte bzw. den Namen der Tabelle, zu der diese
+Spalte in der Ergebnismenge geh&ouml;rt, wenn man ihren numerischen
+Index angibt. Mit <a name="ixa103233"><a href="index_g.html#ixb102412"><font color=#000080><tt>getColumnType</tt></font></a></a>
+kann der Datentyp einer Spalte abgefragt werden. Als Ergebnis wird
+eine der statischen Konstanten aus der Klasse <a name="ixa103234"><a href="index_t.html#ixb102413"><font color=#000080><tt>java.sql.Types</tt></font></a></a>
+zur&uuml;ckgegeben. 
+
+<!-- Section -->
+
+<a name="sectlevel3id044004002"></a>
+<h3>44.4.2 Escape-Kommandos </h3>
+
+<p>
+Mit den <a name="ixa103235"><i>Escape-Kommandos</i></a> wurde ein
+Feature eingef&uuml;hrt, das die Portierbarkeit von Datenbankanwendungen
+verbessern soll. In Anlehnung an ODBC fordert die JDBC-Spezifikation
+dazu, dass die JDBC-Treiber in der Lage sein m&uuml;ssen, <i>besondere</i>
+Zeichenfolgen in SQL-Anweisungen zu erkennen und in die spezifische
+Darstellung der jeweiligen Datenbank zu &uuml;bersetzen. Auf diese
+Weise k&ouml;nnen beispielsweise Datums- und Zeitliterale portabel
+&uuml;bergeben oder eingebaute Funktionen aufgerufen werden. Die Escape-Kommandos
+haben folgende Syntax: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+"{" &lt;Kommandoname&gt; [&lt;Argumente&gt;] "}"
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+Am Anfang steht eine geschweifte Klammer, dann folgen der Name des
+Escape-Kommandos und m&ouml;gliche Argumente und am Ende wird das
+Kommando durch eine weitere geschweifte Klammer abgeschlossen. 
+
+<p>
+Um beispielsweise unabh&auml;ngig von seiner konkreten Darstellung
+einen Datumswert einzuf&uuml;gen, kann das Escape-Kommando &#187;d&#171;
+verwendet werden. Es erwartet als Argument eine SQL-Zeichenkette im
+Format &#187;yyyy-mm-dd&#171; und erzeugt daraus das zur jeweiligen
+Datenbank passende Datumsliteral. In <a href="k100281.html#tabellenfuellen">Listing 44.5</a>
+haben wir dieses Kommando verwendet, um das &Auml;nderungsdatum der
+Datei in die Tabelle <i>file</i> zu schreiben. 
+
+<!-- Section -->
+
+<a name="subsectiontransaktionen"></a>
+<h3>44.4.3 <a name="ixa103236">Transaktionen</a></h3>
+
+<p>
+Die drei Methoden <a name="ixa103237"><a href="index_c.html#ixb102416"><font color=#000080><tt>commit</tt></font></a></a>,
+<a name="ixa103238"><a href="index_r.html#ixb102417"><font color=#000080><tt>rollback</tt></font></a></a>
+und <a name="ixa103239"><a href="index_s.html#ixb102418"><font color=#000080><tt>setAutoCommit</tt></font></a></a>
+des <a href="index_c.html#ixb100590"><font color=#000080><tt>Connection</tt></font></a>-Objekts
+steuern das Transaktionsverhalten der Datenbank: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+void commit()
+
+void rollback()
+
+void setAutoCommit(boolean autoCommit)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/sql/Connection.html" onClick="this.href=getApiDoc('java.sql.Connection')"><font color="#660066" size=-1>java.sql.Connection</font></a></td>
+</tr>
+</table>
+
+<p>
+Nach dem Aufbauen einer JDBC-Verbindung ist die Datenbank (gem&auml;&szlig;
+JDBC-Spezifikation) zun&auml;chst im <a name="ixa103240"><i>Auto-Commit-Modus</i></a>.
+Dabei gilt jede einzelne Anweisung als separate Transaktion, die nach
+Ende des Kommandos automatisch best&auml;tigt wird. Durch Aufruf von
+<a href="index_s.html#ixb102418"><font color=#000080><tt>setAutoCommit</tt></font></a>
+und &Uuml;bergabe von <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>
+kann das ge&auml;ndert werden. Danach m&uuml;ssen alle Transaktionen
+explizit durch Aufruf von <a href="index_c.html#ixb102416"><font color=#000080><tt>commit</tt></font></a>
+best&auml;tigt bzw. durch <a href="index_r.html#ixb102417"><font color=#000080><tt>rollback</tt></font></a>
+zur&uuml;ckgesetzt werden. Nach dem Abschluss einer Transaktion beginnt
+automatisch die n&auml;chste. 
+
+<p>
+Wichtig ist auch der <a name="ixa103241"><i>Transaction Isolation Level</i></a>,
+mit dem der Grad der Parallelit&auml;t von Datenbanktransaktionen
+gesteuert wird. Je h&ouml;her der Level, desto weniger Konsistenzprobleme
+k&ouml;nnen durch gleichzeitigen Zugriff mehrerer Transaktionen auf
+dieselben Daten entstehen. Umso geringer ist aber auch der Durchsatz
+bei einer gro&szlig;en Anzahl von gleichzeitigen Zugriffen. Transaction
+Isolation Levels werden von der Datenbank &uuml;blicherweise mit Hilfe
+von gemeinsamen und exklusiven Sperren realisiert. JDBC unterst&uuml;tzt
+die folgenden Levels: 
+<ul>
+<li><a name="ixa103242"><a href="index_t.html#ixb102421"><font color=#000080><tt>Connection.TRANSACTION_NONE</tt></font></a></a>
+<li><a name="ixa103243"><a href="index_t.html#ixb102422"><font color=#000080><tt>Connection.TRANSACTION_READ_UNCOMMITTED</tt></font></a></a>
+<li><a name="ixa103244"><a href="index_t.html#ixb102423"><font color=#000080><tt>Connection.TRANSACTION_READ_COMMITTED</tt></font></a></a>
+<li><a name="ixa103245"><a href="index_t.html#ixb102424"><font color=#000080><tt>Connection.TRANSACTION_REPEATABLE_READ</tt></font></a></a>
+<li><a name="ixa103246"><a href="index_t.html#ixb102425"><font color=#000080><tt>Connection.TRANSACTION_SERIALIZABLE</tt></font></a></a>
+</ul>
+
+<p>
+Mit Hilfe der beiden Methoden <a name="ixa103247"><a href="index_g.html#ixb102426"><font color=#000080><tt>getTransactionIsolation</tt></font></a></a>
+und <a name="ixa103248"><a href="index_s.html#ixb102427"><font color=#000080><tt>setTransactionIsolation</tt></font></a></a>
+des <a href="index_c.html#ixb100590"><font color=#000080><tt>Connection</tt></font></a>-Objekts
+kann der aktuelle Transaction Isolation Level abgefragt bzw. ver&auml;ndert
+werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+int getTransactionIsolation()
+
+void setTransactionIsolation(int level)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/sql/Connection.html" onClick="this.href=getApiDoc('java.sql.Connection')"><font color="#660066" size=-1>java.sql.Connection</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit der Methode <a name="ixa103249"><a href="index_s.html#ixb102428"><font color=#000080><tt>supportsTransactionIsolationLevel</tt></font></a></a>
+des <a href="index_d.html#ixb102407"><font color=#000080><tt>DatabaseMetaData</tt></font></a>-Objekts
+kann abgefragt werden, ob eine Datenbank einen bestimmten Transaction
+Isolation Level unterst&uuml;tzt oder nicht. 
+
+<!-- Section -->
+
+<a name="sectlevel3id044004004"></a>
+<h3>44.4.4 JDBC-Datentypen </h3>
+
+<p>
+In den meisten F&auml;llen braucht man keine <i>exakte</i> Kenntnis
+des Datentyps einer Tabellenspalte, wenn man diese abfragt. Die oben
+beschriebenen <font color="#000077"><tt>get</tt></font>-Methoden des
+<a href="index_r.html#ixb100592"><font color=#000080><tt>ResultSet</tt></font></a>-Objekts
+f&uuml;hren geeignete Konvertierungen durch. Soll dagegen mit <font color="#000077"><tt>CREATE
+TABLE</tt></font> eine neue Datenbank definiert werden, muss zu jeder
+Spalte der genaue Datentyp angegeben werden. Leider unterscheiden
+sich die Datenbanken bez&uuml;glich der unterst&uuml;tzten Typen erheblich
+und die <font color="#000077"><tt>CREATE TABLE</tt></font>-Anweisung
+ist wenig portabel. Die Klasse <a href="index_t.html#ixb102413"><font color=#000080><tt>java.sql.Types</tt></font></a>
+listet alle JDBC-Typen auf und gibt f&uuml;r jeden eine symbolische
+Konstante an. Mit der Methode <a name="ixa103250"><a href="index_g.html#ixb102429"><font color=#000080><tt>getTypeInfo</tt></font></a></a>
+der Klasse <a href="index_d.html#ixb102407"><font color=#000080><tt>DatabaseMetaData</tt></font></a>
+kann ein <a href="index_r.html#ixb100592"><font color=#000080><tt>ResultSet</tt></font></a>
+mit allen Typen der zugrunde liegenden Datenbank und ihren spezifischen
+Eigenschaften beschafft werden. In <a href="k100282.html#sqldatentypen">Tabelle 44.4</a>
+findet sich eine &Uuml;bersicht der wichtigsten SQL-Datentypen. 
+
+<!-- Section -->
+
+<a name="jdbcobjekte"></a>
+<h3>44.4.5 Umgang mit JDBC-Objekten </h3>
+
+<p>
+Wie zuvor erw&auml;hnt, sind die JDBC-Objekte des Typs <a href="index_c.html#ixb100590"><font color=#000080><tt>Connection</tt></font></a>
+und <a href="index_s.html#ixb100591"><font color=#000080><tt>Statement</tt></font></a>
+m&ouml;glicherweise kostspielig bez&uuml;glich ihres Rechenzeit- oder
+Speicherverbrauchs. Es empfiehlt sich daher, nicht unn&ouml;tig viele
+von ihnen anzulegen. 
+
+<p>
+W&auml;hrend das bei <a href="index_c.html#ixb100590"><font color=#000080><tt>Connection</tt></font></a>-Objekten
+einfach ist, kann es bei <a href="index_s.html#ixb100591"><font color=#000080><tt>Statement</tt></font></a>-Objekten
+unter Umst&auml;nden problematisch werden. Wird beispielsweise in
+einer Schleife mit vielen Durchl&auml;ufen immer wieder eine Methode
+aufgerufen, die eine Datenbankabfrage durchf&uuml;hrt, so stellt sich
+die Frage, woher sie das daf&uuml;r erforderliche <a href="index_s.html#ixb100591"><font color=#000080><tt>Statement</tt></font></a>-Objekt
+nehmen soll. Wird es jedes Mal lokal angelegt, kann schnell der Speicher
+knapp werden. Wird es dagegen als statische oder als Klassenvariable
+angelegt, kann es zu Konflikten mit konkurrierenden Methoden kommen
+(die &uuml;blichen Probleme globaler Variablen). 
+
+<p>
+Eine gut funktionierende L&ouml;sung f&uuml;r dieses Problem besteht
+darin, <a href="index_s.html#ixb100591"><font color=#000080><tt>Statement</tt></font></a>-Objekte
+auf der <a href="index_c.html#ixb100590"><font color=#000080><tt>Connection</tt></font></a>
+zu <i>cachen</i>, also zwischenzuspeichern. Das kann etwa mit einer
+Queue erfolgen, in die nicht mehr ben&ouml;tigte <a href="index_s.html#ixb100591"><font color=#000080><tt>Statement</tt></font></a>-Objekte
+eingestellt werden. Anstelle eines Aufrufs von <a href="index_c.html#ixb102376"><font color=#000080><tt>createStatement</tt></font></a>
+wird dann zun&auml;chst in der Queue nachgesehen, ob ein recyclebares
+Objekt vorhanden ist, und dieses gegebenenfalls wiederverwendet. Es
+sind dann zu keinem Zeitpunkt mehr <a href="index_s.html#ixb100591"><font color=#000080><tt>Statement</tt></font></a>-Objekte
+angelegt, als <i>parallel</i> ben&ouml;tigt werden. Nat&uuml;rlich
+d&uuml;rfen nur Objekte in die Queue gestellt werden, die nicht mehr
+ben&ouml;tigt werden; ihr <a href="index_r.html#ixb100592"><font color=#000080><tt>ResultSet</tt></font></a>
+sollte also vorher m&ouml;glichst geschlossen werden. Das <a href="index_s.html#ixb100591"><font color=#000080><tt>Statement</tt></font></a>-Objekt
+selbst darf nicht geschlossen werden, wenn es noch verwendet werden
+soll. 
+
+<p>
+Eine einfache Implementierung wird in dem folgendem Listing vorgestellt.
+Das Objekt vom Typ <font color="#000077"><tt>CachedConnection</tt></font>
+wird mit einem <a href="index_c.html#ixb100590"><font color=#000080><tt>Connection</tt></font></a>-Objekt
+instanziert. Die Methoden <font color="#000077"><tt>getStatement</tt></font>
+und <font color="#000077"><tt>releaseStatement</tt></font> dienen
+dazu, <a href="index_s.html#ixb100591"><font color=#000080><tt>Statement</tt></font></a>-Objekte
+zu beschaffen bzw. wieder freizugeben. 
+<a name="listingid044011"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* CachedConnection.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.sql.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> CachedConnection
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">private</font> Connection             con;
+<font color="#555555">009 </font>  <font color="#0000AA">private</font> LinkedList&lt;Statement&gt;  cache;
+<font color="#555555">010 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font>                    stmtcnt;
+<font color="#555555">011 </font>
+<font color="#555555">012 </font>  <font color="#0000AA">public</font> CachedConnection(Connection con)
+<font color="#555555">013 </font>  {
+<font color="#555555">014 </font>    <font color="#006699">this</font>.con     = con;
+<font color="#555555">015 </font>    <font color="#006699">this</font>.cache   = <font color="#0000AA">new</font> LinkedList&lt;Statement&gt;();
+<font color="#555555">016 </font>    <font color="#006699">this</font>.stmtcnt = 0;
+<font color="#555555">017 </font>  }
+<font color="#555555">018 </font>
+<font color="#555555">019 </font>  <font color="#0000AA">public</font> Statement getStatement()
+<font color="#555555">020 </font>  <font color="#0000AA">throws</font> SQLException
+<font color="#555555">021 </font>  {
+<font color="#555555">022 </font>    <font color="#0000AA">if</font> (cache.size() &lt;= 0) {
+<font color="#555555">023 </font>      <font color="#0000AA">return</font> con.createStatement();
+<font color="#555555">024 </font>    } <font color="#0000AA">else</font> {
+<font color="#555555">025 </font>      <font color="#0000AA">return</font> cache.poll();
+<font color="#555555">026 </font>    }
+<font color="#555555">027 </font>  }
+<font color="#555555">028 </font>
+<font color="#555555">029 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> releaseStatement(Statement statement)
+<font color="#555555">030 </font>  {
+<font color="#555555">031 </font>    cache.add(statement);
+<font color="#555555">032 </font>  }
+<font color="#555555">033 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/CachedConnection.java"><font color="#000055" size=-1>CachedConnection.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 44.11: Die Klasse CachedConnection</i></p>
+
+<p>
+Es ist wichtig, die JDBC-Objekte auch dann zu schlie&szlig;en, wenn
+eine Ausnahme w&auml;hrend der Bearbeitung aufgetreten ist. Andernfalls
+w&uuml;rden m&ouml;glicherweise Ressourcen nicht freigegeben und das
+Programm w&uuml;rde so nach und nach mehr Speicher oder Rechenzeit
+verbrauchen. Am einfachsten kann dazu die <a href="index_f.html#ixb100581"><font color=#000080><tt>finally</tt></font></a>-Klausel
+der <a href="index_t.html#ixb100571"><font color=#000080><tt>try</tt></font></a>-<a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a>-Anweisung
+verwendet werden. Ab Version 7 des JDK bietet es sich an, die <a href="index_a.html#ixb100585"><font color=#000080><tt>AutoCloseable</tt></font></a>-Funktionalit&auml;t
+der Ressourcen zu nutzen (wie in <a href="k100088.html#trywithresources">Abschnitt 13.4</a>
+beschrieben). 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Eine weitere Eigenschaft der Klasse <a href="index_r.html#ixb100592"><font color=#000080><tt>ResultSet</tt></font></a>
+verdient besondere Beachtung. Bei manchen JDBC-Treibern erlauben die
+zur&uuml;ckgegebenen <a href="index_r.html#ixb100592"><font color=#000080><tt>ResultSet</tt></font></a>-Objekte
+das Lesen einer bestimmten Tabellenspalte nur einmal. Der zweite Versuch
+wird mit einer Fehlermeldung &#187;No data&#171; (oder &auml;hnlich)
+quittiert. Manche Treiber erfordern sogar, dass die Spalten des <a href="index_r.html#ixb100592"><font color=#000080><tt>ResultSet</tt></font></a>
+in der Reihenfolge ihrer Definition gelesen werden. In beiden F&auml;llen
+ist es gef&auml;hrlich, einen <a href="index_r.html#ixb100592"><font color=#000080><tt>ResultSet</tt></font></a>
+als Parameter an eine Methode zu &uuml;bergeben, denn die Methode
+wei&szlig; nicht, welche Spalten bereits vom Aufrufer gelesen wurden
+und umgekehrt. Eine L&ouml;sung k&ouml;nnte darin bestehen, einen
+<a href="index_r.html#ixb100592"><font color=#000080><tt>ResultSet</tt></font></a>
+mit integriertem Cache zu entwickeln, der sich bereits gelesene Spaltenwerte
+merkt. Alternativ k&ouml;nnte man auch einen objekt-relationalen Ansatz
+versuchen, bei dem jeder gelesene Satz der Ergebnismenge direkt ein
+passendes Laufzeitobjekt erzeugt, das dann beliebig oft gelesen werden
+kann. Wir wollen auf beide Varianten an dieser Stelle nicht weiter
+eingehen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="jdbcpreparedstatement"></a>
+<h3>44.4.6 Prepared Statements </h3>
+
+<p>
+<a name="ixa103251"><i>Prepared Statements</i></a> sind parametrisierte
+SQL-Anweisungen. Sie werden zun&auml;chst deklariert und zum Vorkompilieren
+an die Datenbank &uuml;bergeben. Sp&auml;ter k&ouml;nnen sie dann
+beliebig oft ausgef&uuml;hrt werden, indem die formalen Parameter
+durch aktuelle Werte ersetzt werden und die so parametrisierte Anweisung
+an die Datenbank &uuml;bergeben wird. Der Vorteil von Prepared Statements
+ist, dass die Vorbereitungsarbeiten nur einmal erledigt werden m&uuml;ssen
+(Syntaxanalyse, Vorbereitung der Abfragestrategie und -optimierung)
+und die tats&auml;chliche Abfrage dann wesentlich schneller ausgef&uuml;hrt
+werden kann. Das bringt Laufzeitvorteile bei der wiederholten Ausf&uuml;hrung
+der vorkompilierten Anweisung. 
+
+<p>
+JDBC stellt Prepared Statements mit dem Interface <a name="ixa103252"><a href="index_p.html#ixb102431"><font color=#000080><tt>PreparedStatement</tt></font></a></a>,
+das aus <a href="index_s.html#ixb100591"><font color=#000080><tt>Statement</tt></font></a>
+abgeleitet ist, zur Verf&uuml;gung. Die Methode <a name="ixa103253"><a href="index_p.html#ixb102432"><font color=#000080><tt>prepareStatement</tt></font></a></a>
+des <a href="index_c.html#ixb100590"><font color=#000080><tt>Connection</tt></font></a>-Objekts
+liefert ein <a href="index_p.html#ixb102431"><font color=#000080><tt>PreparedStatement</tt></font></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public PreparedStatement prepareStatement(String sql)
+  throws SQLException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/sql/Connection.html" onClick="this.href=getApiDoc('java.sql.Connection')"><font color="#660066" size=-1>java.sql.Connection</font></a></td>
+</tr>
+</table>
+
+<p>
+Als Argument wird ein String &uuml;bergeben, der die gew&uuml;nschte
+SQL-Anweisung enth&auml;lt. Die formalen Parameter werden durch Fragezeichen
+dargestellt. Bei den meisten Datenbanken d&uuml;rfen sowohl &Auml;nderungs-
+als auch Abfrageanweisungen vorkompiliert werden. Sie werden dann
+sp&auml;ter mit <a href="index_e.html#ixb102377"><font color=#000080><tt>executeQuery</tt></font></a>
+bzw. <a href="index_e.html#ixb102378"><font color=#000080><tt>executeUpdate</tt></font></a>
+ausgef&uuml;hrt. Anders als im Basisinterface sind diese Methoden
+im Interface <a href="index_p.html#ixb102431"><font color=#000080><tt>PreparedStatement</tt></font></a>
+parameterlos: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public ResultSet executeQuery()
+  throws SQLException
+
+public int executeUpdate()
+  throws SQLException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/sql/PreparedStatement.html" onClick="this.href=getApiDoc('java.sql.PreparedStatement')"><font color="#660066" size=-1>java.sql.PreparedStatement</font></a></td>
+</tr>
+</table>
+
+<p>
+Bevor eine dieser Methoden aufgerufen werden darf, ist es erforderlich,
+die vorkompilierte Anweisung zu parametrisieren. Dazu muss f&uuml;r
+jedes Fragezeichen eine passende <font color="#000077"><tt>set</tt></font>-Methode
+aufgerufen und das gew&uuml;nschte Argument &uuml;bergeben werden.
+Die <font color="#000077"><tt>set</tt></font>-Methoden gibt es f&uuml;r
+alle JDBC-Typen (siehe beispielsweise die analoge Liste der <font color="#000077"><tt>get</tt></font>-Methoden
+in <a href="k100280.html#resultsetgetmethoden">Tabelle 44.1</a>):
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setBoolean(int parameterIndex, boolean x)
+  throws SQLException
+
+public void setByte(int parameterIndex, byte x)
+  throws SQLException
+
+...
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/sql/PreparedStatement.html" onClick="this.href=getApiDoc('java.sql.PreparedStatement')"><font color="#660066" size=-1>java.sql.PreparedStatement</font></a></td>
+</tr>
+</table>
+
+<p>
+Der erste Parameter gibt die Position des Arguments in der Argumentliste
+an. Das erste Fragezeichen hat den Index 1, das zweite den Index 2
+usw. Der zweite Parameter liefert den jeweiligen Wert, der anstelle
+des Fragezeichens eingesetzt werden soll. 
+
+<p>
+Als Beispiel wollen wir uns eine abgewandelte Form der in <a href="k100281.html#zaehlenverzdateien">Abschnitt 44.3.5</a>
+vorgestellten Methode <font color="#000077"><tt>countRecords</tt></font>
+ansehen, bei der anstelle eines <a href="index_s.html#ixb100591"><font color=#000080><tt>Statement</tt></font></a>-Objekts
+ein <a href="index_p.html#ixb102431"><font color=#000080><tt>PreparedStatement</tt></font></a>
+verwendet wird: 
+<a name="listingid044012"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> countRecords()
+<font color="#555555">002 </font><font color="#0000AA">throws</font> SQLException
+<font color="#555555">003 </font>{
+<font color="#555555">004 </font>  PreparedStatement pstmt = con.prepareStatement(
+<font color="#555555">005 </font>    <font color="#0000FF">"SELECT count(*) FROM ?"</font>
+<font color="#555555">006 </font>  );
+<font color="#555555">007 </font>  String[] aTables = {<font color="#0000FF">"dir"</font>, <font color="#0000FF">"file"</font>};
+<font color="#555555">008 </font>  <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; aTables.length; ++i) {
+<font color="#555555">009 </font>    pstmt.setString(1, aTables[i]);
+<font color="#555555">010 </font>    ResultSet rs = pstmt.executeQuery();
+<font color="#555555">011 </font>    <font color="#0000AA">if</font> (!rs.next()) {
+<font color="#555555">012 </font>      <font color="#0000AA">throw</font> <font color="#0000AA">new</font> SQLException(<font color="#0000FF">"SELECT COUNT(*): no result"</font>);
+<font color="#555555">013 </font>    }
+<font color="#555555">014 </font>    System.out.println(aTables[i] + <font color="#0000FF">": "</font> + rs.getInt(1));
+<font color="#555555">015 </font>  }
+<font color="#555555">016 </font>  pstmt.close();
+<font color="#555555">017 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 44.12: Verwenden eines PreparedStatement</i></p>
+
+<p>
+Das <a href="index_p.html#ixb102431"><font color=#000080><tt>PreparedStatement</tt></font></a>
+enth&auml;lt hier den Namen der Tabelle als Parameter. In einer Schleife
+nehmen wir nun f&uuml;r die Tabellen &#187;dir&#171; und &#187;file&#171;
+jeweils eine Parametrisierung vor und f&uuml;hren dann die eigentliche
+Abfrage durch. Der R&uuml;ckgabewert von <a href="index_e.html#ixb102377"><font color=#000080><tt>executeQuery</tt></font></a>
+entspricht dem der Basisklasse, so dass der obige Code sich prinzipiell
+nicht von dem in <a href="k100281.html#zaehlenverzdateien">Abschnitt 44.3.5</a>
+unterscheidet. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Nicht alle Datenbanken erlauben es, <i>Tabellennamen</i> zu parametrisieren,
+sondern beschr&auml;nken diese F&auml;higkeit auf Argumente von Such-
+oder &Auml;nderungsausdr&uuml;cken. Unser Programm l&auml;uft beispielsweise
+nicht mit MS Access 95.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="subsectionsqlkurzreferenz"></a>
+<h3>44.4.7 SQL-Kurzreferenz </h3>
+
+<p>
+Dieser Abschnitt gibt eine kurze &Uuml;bersicht der gebr&auml;uchlichsten
+SQL-Anweisungen in ihren grundlegenden Auspr&auml;gungen. Er ersetzt
+weder ein Tutorial noch eine Referenz und ist zu keinem der bekannten
+SQL-Standards vollst&auml;ndig kompatibel. Trotzdem mag er f&uuml;r
+einfache Experimente n&uuml;tzlich sein und helfen, die ersten JDBC-Anbindungen
+zum Laufen zu bringen. F&uuml;r &#187;ernsthafte&#171; Datenbankanwendungen
+sollte zus&auml;tzliche Literatur konsultiert und dabei insbesondere
+auf die Spezialit&auml;ten der verwendeten Datenbank geachtet werden.
+
+<p>
+Die nachfolgenden Syntaxbeschreibungen sind an die bei SQL-Anweisungen
+&uuml;bliche Backus-Naur-Form angelehnt: 
+<ul>
+<li>Terminalsymbole (Schl&uuml;sselw&ouml;rter) sind gro&szlig;geschrieben.
+<li>Weitere Terminalsymbole sind die runden Klammern, das Komma und
+die in den Suchausdr&uuml;cken verwendeten Operatoren.
+<li>Nichtterminalsymbole sind kursiv geschrieben.
+<li>Optionale Teile stehen in eckigen Klammern.
+<li>Der senkrechte Strich trennt Alternativen. Stehen sie in eckigen
+Klammern, k&ouml;nnen sie auch ganz weggelassen werden. Stehen sie
+in geschweiften Klammern, muss genau eine der Alternativen verwendet
+werden.
+<li>Drei Punkte zeigen an, dass die davorstehende Anweisungsfolge
+wiederholt werden kann.
+</ul>
+
+
+<!-- Section -->
+<a name="sectlevel4id044004007001"></a>
+<h4>&Auml;ndern von Datenstrukturen </h4>
+
+<p>
+Mit <a name="ixa103254"><a href="index_c.html#ixb102433"><font color=#000080><tt>CREATE TABLE</tt></font></a></a>
+kann eine neue Tabelle angelegt werden. Mit <a name="ixa103255"><a href="index_d.html#ixb102434"><font color=#000080><tt>DROP TABLE</tt></font></a></a>
+kann sie gel&ouml;scht und mit <a name="ixa103256"><a href="index_a.html#ixb102435"><font color=#000080><tt>ALTER TABLE</tt></font></a></a>
+ihre Struktur ge&auml;ndert werden. Mit <a name="ixa103257"><a href="index_c.html#ixb102436"><font color=#000080><tt>CREATE INDEX</tt></font></a></a>
+kann ein neuer Index angelegt, mit <a name="ixa103258"><a href="index_d.html#ixb102437"><font color=#000080><tt>DROP INDEX</tt></font></a></a>
+wieder gel&ouml;scht werden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+CREATE TABLE <i>TabName</i>
+  (<i>ColName</i> <i>DataType</i> [DEFAULT <i>ConstExpr</i>]
+  [<i>ColName</i> <i>DataType</i> [DEFAULT <i>ConstExpr</i>]]...)
+
+ALTER TABLE <i>TabName</i>
+  ADD (<i>ColName</i> <i>DataType</i>
+      [<i>ColName</i> <i>DataType</i>]...)
+
+CREATE [UNIQUE] INDEX <i>IndexName</i>
+  ON <i>TabName</i>
+  (<i>ColName</i> [ASC|DESC]
+  [, <i>ColName</i> [ASC|DESC]]...)
+
+DROP TABLE <i>TabName</i>
+
+DROP INDEX <i>IndexName</i>
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+<i>TabName</i>, <i>ColName</i> und <i>IndexName</i> sind SQL-Bezeichner.
+<i>ConstExpr</i> ist ein konstanter Ausdruck, der einen Standardwert
+f&uuml;r eine Spalte vorgibt. <i>DataType</i> gibt den Datentyp der
+Spalte an, die gebr&auml;uchlichsten von ihnen k&ouml;nnen <a href="k100282.html#sqldatentypen">Tabelle 44.4</a>
+entnommen werden. <a name="sqldatentypen"></a>
+
+<p>
+<table cols=2 border width=66%>
+
+<tr>
+<td valign=top align=left width=33%><b>Bezeichnung </b></td>
+<td valign=top align=left width=66%><b>Bedeutung</b></td></tr>
+<tr>
+<td valign=top align=left>CHAR(n) </td>
+<td valign=top align=left>Zeichenkette der (festen) L&auml;nge <i>n</i></td></tr>
+<tr>
+<td valign=top align=left>VARCHAR(n) </td>
+<td valign=top align=left>Zeichenkette variabler L&auml;nge mit max.
+<i>n</i> Zeichen</td></tr>
+<tr>
+<td valign=top align=left>SMALLINT </td>
+<td valign=top align=left>16-Bit-Ganzzahl mit Vorzeichen</td></tr>
+<tr>
+<td valign=top align=left>INTEGER </td>
+<td valign=top align=left>32-Bit-Ganzzahl mit Vorzeichen</td></tr>
+<tr>
+<td valign=top align=left>REAL </td>
+<td valign=top align=left>Flie&szlig;kommazahl mit etwa 7 signifikanten
+Stellen</td></tr>
+<tr>
+<td valign=top align=left>FLOAT </td>
+<td valign=top align=left>Flie&szlig;kommazahl mit etwa 15 signifikanten
+Stellen; auch als DOUBLE oder DOUBLE PRECISION bezeichnet</td></tr>
+<tr>
+<td valign=top align=left>DECIMAL(n,m) </td>
+<td valign=top align=left>Festkommazahl mit <i>n</i> Stellen, davon
+<i>m</i> Nachkommastellen; &auml;hnlich NUMERIC</td></tr>
+<tr>
+<td valign=top align=left>DATE </td>
+<td valign=top align=left>Datum (evtl. mit Uhrzeit). Verwandte Typen
+sind TIME und TIMESTAMP.</td></tr>
+</table>
+<p><i>
+Tabelle 44.4: SQL-Datentypen</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id044004007002"></a>
+<h4>&Auml;ndern von Daten </h4>
+
+<p>
+Ein neuer Datensatz kann mit <a name="ixa103259"><a href="index_i.html#ixb102394"><font color=#000080><tt>INSERT INTO</tt></font></a></a>
+angelegt werden. Soll ein bestehender Datensatz ge&auml;ndert werden,
+ist dazu <a name="ixa103260"><a href="index_u.html#ixb102395"><font color=#000080><tt>UPDATE</tt></font></a></a>
+zu verwenden. Mit <a name="ixa103261"><a href="index_d.html#ixb102396"><font color=#000080><tt>DELETE FROM</tt></font></a></a>
+kann er gel&ouml;scht werden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+INSERT INTO <i>TabName</i>
+  [( <i>ColName</i> [,<i>ColName</i>] )]
+  VALUES (<i>Expr</i> [,<i>Expr</i>]...)
+
+UPDATE <i>TabName</i>
+  SET <i>ColName</i> = {<i>Expr</i>|NULL}
+    [,<i>ColName</i> = {<i>Expr</i>|NULL}]...
+  [WHERE <i>SearchCond</i>]
+
+DELETE FROM <i>TabName</i>
+  [WHERE <i>SearchCond</i>]
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+<i>TabName</i> und <i>ColName</i> sind die Bezeichner der gew&uuml;nschten
+Tabelle bzw. Spalte. <i>Expr</i> kann eine literale Konstante oder
+ein passender Ausdruck sein. <i>SearchCond</i> ist eine Suchbedingung,
+mit der angegeben wird, auf welche S&auml;tze die <a href="index_u.html#ixb102395"><font color=#000080><tt>UPDATE</tt></font></a>-
+oder <a href="index_d.html#ixb102396"><font color=#000080><tt>DELETE FROM</tt></font></a>-Anweisung
+angewendet werden soll. Wird sie ausgelassen, wirken die &Auml;nderungen
+auf alle S&auml;tze. Wir kommen im n&auml;chsten Abschnitt auf die
+Syntax der Suchbedingung zur&uuml;ck. Wird bei der <a href="index_i.html#ixb102394"><font color=#000080><tt>INSERT INTO</tt></font></a>-Anweisung
+die optionale Feldliste ausgelassen, m&uuml;ssen Ausdr&uuml;cke f&uuml;r
+<i>alle</i> Felder angegeben werden. 
+
+<!-- Section -->
+
+<a name="subsubsqlreadqueries"></a>
+<h4>Lesen von Daten </h4>
+
+<p>
+Das Lesen von Daten erfolgt mit der <a name="ixa103262"><a href="index_s.html#ixb102438"><font color=#000080><tt>SELECT</tt></font></a></a>-Anweisung.
+Ihre festen Bestandteile sind die Liste der Spalten <i>ColList</i>
+und die Liste der Tabellen, die in der Abfrage verwendet werden sollen.
+Daneben gibt es eine Reihe von optionalen Bestandteilen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+SELECT [ALL|DISTINCT] <i>ColList</i>
+  FROM  <i>TabName</i> [,<i>TabName</i>]...
+  [WHERE  <i>SearchCond</i>]
+  [GROUP BY <i>ColName</i> [,<i>ColName</i>]...]
+  [HAVING <i>SearchCond</i>]
+  [UNION <i>SubQuery</i>]
+  [ORDER BY <i>ColName</i> [ASC|DESC]
+            [,<i>ColName</i> [ASC|DESC]]...]
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+Die Spaltenliste kann entweder einzelne Felder aufz&auml;hlen oder
+es k&ouml;nnen durch Angabe eines Sternchens &#187;*&#171; alle Spalten
+angegeben werden. Wurde mehr als eine Tabelle angegeben und sind die
+Spaltennamen nicht eindeutig, kann ein Spaltenname durch Voranstellen
+des Tabellennamens und eines Punkts qualifiziert werden. Zus&auml;tzlich
+k&ouml;nnen die Spaltennamen mit dem Schl&uuml;sselwort &#187;AS&#171;
+ein (m&ouml;glicherweise handlicheres) Synonym erhalten. Die Syntax
+von <i>ColList</i> ist: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+<i>ColExpr</i> [AS <i>ResultName</i>]
+[,<i>ColExpr</i> AS <i>ResultName</i>]]...
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+Zus&auml;tzlich gibt es einige numerische Aggregatfunktionen, mit
+denen der Wert der als Argument angegebenen Spalte &uuml;ber alle
+S&auml;tze der Ergebnismenge kumuliert werden kann: <a name="tableid044005"></a>
+
+<p>
+<table cols=2 border width=66%>
+
+<tr>
+<td valign=top align=left width=33%><b>Bezeichnung</b></td>
+<td valign=top align=left width=66%><b>Bedeutung</b></td></tr>
+<tr>
+<td valign=top align=left>COUNT </td>
+<td valign=top align=left>Anzahl der S&auml;tze</td></tr>
+<tr>
+<td valign=top align=left>AVG </td>
+<td valign=top align=left>Durchschnitt</td></tr>
+<tr>
+<td valign=top align=left>SUM </td>
+<td valign=top align=left>Summe</td></tr>
+<tr>
+<td valign=top align=left>MIN </td>
+<td valign=top align=left>Kleinster Wert</td></tr>
+<tr>
+<td valign=top align=left>MAX </td>
+<td valign=top align=left>Gr&ouml;&szlig;ter Wert</td></tr>
+</table>
+<p><i>
+Tabelle 44.5: SQL-Aggregatfunktionen</i></p>
+
+<p>
+Die <a name="ixa103263"><a href="index_w.html#ixb102439"><font color=#000080><tt>WHERE</tt></font></a></a>-Klausel
+definiert die Suchbedingung. Wurde sie nicht angegeben, liefert die
+Anweisung alle vorhandenen S&auml;tze. Der Suchausdruck <i>SearchCond</i>
+kann sehr unterschiedliche Formen annehmen. Zun&auml;chst kann eine
+Spalte mit Hilfe der relationalen Operatoren &lt;, &lt;=, &gt;, &gt;=,
+= und &lt;&gt; mit einer anderen Spalte oder einem Ausdruck verglichen
+werden. Die Teilausdr&uuml;cke k&ouml;nnen mit den logischen Operatoren
+<a name="ixa103264"><a href="index_a.html#ixb102440"><font color=#000080><tt>AND</tt></font></a></a>,
+<a name="ixa103265"><a href="index_o.html#ixb102441"><font color=#000080><tt>OR</tt></font></a></a>
+und <a name="ixa103266"><a href="index_n.html#ixb102442"><font color=#000080><tt>NOT</tt></font></a></a>
+verkn&uuml;pft werden, die Auswertungsreihenfolge kann in der &uuml;blichen
+Weise durch Klammerung gesteuert werden. 
+
+<p>
+Mit Hilfe des Schl&uuml;sselworts <a name="ixa103267"><a href="index_l.html#ixb102443"><font color=#000080><tt>LIKE</tt></font></a></a>
+kann eine &Auml;hnlichkeitssuche durchgef&uuml;hrt werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+<i>Expr</i> LIKE <i>Pattern</i>
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+Mit Hilfe der Wildcards &#187;%&#171; und &#187;_&#171; k&ouml;nnen
+auch unscharf definierte Begriffe gesucht werden. Jedes Vorkommen
+von &#187;%&#171; passt auf eine beliebige Anzahl beliebiger Zeichen,
+jedes &#187;_&#171; steht f&uuml;r genau ein beliebiges Zeichen. Manche
+Datenbanken unterscheiden zwischen Gro&szlig;- und Kleinschreibung,
+andere nicht. 
+
+<p>
+Mit Hilfe der Klauseln <a name="ixa103268"><a href="index_i.html#ixb102444"><font color=#000080><tt>IS NULL</tt></font></a></a>
+und <a name="ixa103269"><a href="index_i.html#ixb102445"><font color=#000080><tt>IS NOT NULL</tt></font></a></a>
+kann getestet werden, ob der Inhalt einer Spalte den Wert NULL enth&auml;lt
+oder nicht: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+<i>ColName</i> IS [NOT] NULL
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+Mit dem <a name="ixa103270"><a href="index_b.html#ixb102446"><font color=#000080><tt>BETWEEN</tt></font></a></a>-Operator
+kann bequem festgestellt werden, ob ein Ausdruck innerhalb eines vorgegebenen
+Wertebereichs liegt oder nicht: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+<i>Expr</i> BETWEEN <i>Expr</i> AND <i>Expr</i>
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+Neben den einfachen Abfragen gibt es eine Reihe von Abfragen, die
+mit <a name="ixa103271"><i>Subqueries</i></a> (Unterabfragen) arbeiten:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+EXISTS (<i>SubQuery</i>)
+
+<i>Expr</i> [NOT] IN (<i>SubQuery</i>)
+
+<i>Expr</i> <i>RelOp</i> {ALL|ANY} (<i>SubQuery</i>)
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+Die Syntax von <i>SubQuery</i> entspricht der einer normalen <a href="index_s.html#ixb102438"><font color=#000080><tt>SELECT</tt></font></a>-Anweisung.
+Sie definiert eine separat definierte Menge von Daten, die als Teilausdruck
+in einer Suchbedingung angegeben wird. Der <a name="ixa103272"><a href="index_e.html#ixb102448"><font color=#000080><tt>EXISTS</tt></font></a></a>-Operator
+testet, ob die Unterabfrage mindestens ein Element enth&auml;lt. Mit
+dem <a name="ixa103273"><a href="index_i.html#ixb102449"><font color=#000080><tt>IN</tt></font></a></a>-Operator
+wird getestet, ob der angegebene Ausdruck in der Ergebnismenge enthalten
+ist. Die Ergebnismenge kann auch literal als komma-separierte Liste
+von Werten angegeben werden. Schlie&szlig;lich kann durch Angabe eines
+relationalen Operators getestet werden, ob der Ausdruck zu mindestens
+einem (<a name="ixa103274"><a href="index_a.html#ixb102450"><font color=#000080><tt>ANY</tt></font></a></a>)
+oder allen (<a name="ixa103275"><a href="index_a.html#ixb102451"><font color=#000080><tt>ALL</tt></font></a></a>)
+S&auml;tzen der Unterabfrage in der angegebenen Beziehung steht. Bei
+den beiden letzten Unterabfragen sollte jeweils nur eine einzige Spalte
+angegeben werden. 
+
+<p>
+Die <a name="ixa103276"><a href="index_g.html#ixb102452"><font color=#000080><tt>GROUP BY</tt></font></a></a>-Klausel
+dient dazu, die S&auml;tze der Ergebnismenge zu Gruppen zusammenzufassen,
+bei denen die Werte der angegebenen Spalten gleich sind. Sie wird
+typischerweise zusammen mit den oben erw&auml;hnten Aggregatfunktionen
+verwendet. Mit <a name="ixa103277"><a href="index_h.html#ixb102453"><font color=#000080><tt>HAVING</tt></font></a></a>
+kann zus&auml;tzlich eine Bedingung angegeben werden, mit der die
+gruppierten Ergebniss&auml;tze &#187;nachgefiltert&#171; werden. 
+
+<p>
+Mit dem <a name="ixa103278"><a href="index_u.html#ixb102454"><font color=#000080><tt>UNION</tt></font></a></a>-Operator
+k&ouml;nnen die Ergebnismengen zweier <a href="index_s.html#ixb102438"><font color=#000080><tt>SELECT</tt></font></a>-Anweisungen
+zusammengefasst werden. Das wird typischerweise gemacht, wenn die
+gesuchten Ergebniss&auml;tze aus mehr als einer Tabelle stammen (andernfalls
+k&ouml;nnte der <a href="index_o.html#ixb102441"><font color=#000080><tt>OR</tt></font></a>-Operator
+verwendet werden). 
+
+<p>
+Die <a name="ixa103279"><a href="index_o.html#ixb102455"><font color=#000080><tt>ORDER BY</tt></font></a></a>-Klausel
+kann angegeben werden, um die Reihenfolge der S&auml;tze in der Ergebnismenge
+festzulegen. Die S&auml;tze werden zun&auml;chst nach der ersten angegebenen
+Spalte sortiert, bei Wertegleichheit nach der zweiten, der dritten
+usw. Mit Hilfe der Schl&uuml;sselw&ouml;rter <a name="ixa103280"><a href="index_a.html#ixb102456"><font color=#000080><tt>ASC</tt></font></a></a>
+und <a name="ixa103281"><a href="index_d.html#ixb102457"><font color=#000080><tt>DESC</tt></font></a></a>
+kann angegeben werden, ob die Werte auf- oder absteigend sortiert
+werden sollen. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100278.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100281.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100283.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100284.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

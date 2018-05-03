@@ -1,0 +1,336 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100114.html;106,k100114.html;107,k100116.html;108,k100121.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100114.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100114.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100116.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100121.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 17 - Utility-Klassen I
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="zufallszahlen"></a>
+<h2>17.1 Die Klasse Random </h2>
+<hr>
+<ul>
+<li><a href="k100115.html#zufallszahlen">17.1 Die Klasse Random</a>
+<ul>
+<li><a href="k100115.html#sectlevel3id017001001">17.1.1 Initialisierung des Zufallszahlengenerators</a>
+<li><a href="k100115.html#sectlevel3id017001002">17.1.2 Erzeugen von Zufallszahlen</a>
+<ul>
+<li><a href="k100115.html#sectlevel4id017001002001">Gleichverteilte Zufallszahlen</a>
+<li><a href="k100115.html#sectlevel4id017001002002">Normalverteilte Zufallszahlen</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id017001001"></a>
+<h3>17.1.1 Initialisierung des Zufallszahlengenerators </h3>
+
+<p>
+<a name="ixa101030">Zufallszahlen</a> werden beim Programmieren erstaunlich
+h&auml;ufig gebraucht, beispielsweise f&uuml;r Simulationen, f&uuml;r
+Spiele oder zum Aufbau von Testszenarien. Java stellt zu diesem Zweck
+eine Klasse <a name="ixa101031"><a href="index_r.html#ixb100798"><font color=#000080><tt>Random</tt></font></a></a>
+zur Verf&uuml;gung, mit der Zufallszahlen erzeugt werden k&ouml;nnen.
+Sie basiert auf dem <i>Linear-Kongruenz-Algorithmus</i>, wie er beispielsweise
+in D.E. Knuths &#187;The Art Of Computer Programming, Vol. 2&#171;
+beschrieben ist. 
+
+<p>
+Die Klasse <a href="index_r.html#ixb100798"><font color=#000080><tt>Random</tt></font></a>
+erlaubt das Instanzieren eines Zufallszahlengenerators mit oder ohne
+manuelles Setzen des <font color="#000077"><tt>seed</tt></font>-Werts
+(also der internen Zufallsvariable): 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Random()
+
+public Random(long seed)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Random.html" onClick="this.href=getApiDoc('java.util.Random')"><font color="#660066" size=-1>java.util.Random</font></a></td>
+</tr>
+</table>
+
+<p>
+Wird der <font color="#000077"><tt>seed</tt></font>-Parameter &uuml;bergeben,
+initialisiert der Zufallszahlengenerator seinen internen Z&auml;hler
+mit diesem Wert und die anschlie&szlig;end erzeugte Folge von Zufallszahlen
+ist <i>reproduzierbar</i>. Wird dagegen der parameterlose Konstruktor
+aufgerufen, initialisiert er den Zufallszahlengenerator auf der Basis
+der aktuellen Systemzeit. Die Zufallszahlenfolge ist in diesem Fall
+nicht reproduzierbar. 
+
+<!-- Section -->
+
+<a name="sectlevel3id017001002"></a>
+<h3>17.1.2 Erzeugen von Zufallszahlen </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id017001002001"></a>
+<h4>Gleichverteilte Zufallszahlen </h4>
+
+<p>
+Der Zufallszahlengenerator kann Zufallszahlen f&uuml;r die numerischen
+Grundtypen <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>,
+<a href="index_l.html#ixb100252"><font color=#000080><tt>long</tt></font></a>,
+<a href="index_f.html#ixb100253"><font color=#000080><tt>float</tt></font></a>
+oder <a href="index_d.html#ixb100254"><font color=#000080><tt>double</tt></font></a>
+erzeugen. Durch Aufruf einer der Methoden <a name="ixa101032"><a href="index_n.html#ixb100799"><font color=#000080><tt>nextInt</tt></font></a></a>,
+<a name="ixa101033"><a href="index_n.html#ixb100800"><font color=#000080><tt>nextLong</tt></font></a></a>,
+<a name="ixa101034"><a href="index_n.html#ixb100801"><font color=#000080><tt>nextFloat</tt></font></a></a>
+oder <a name="ixa101035"><a href="index_n.html#ixb100802"><font color=#000080><tt>nextDouble</tt></font></a></a>
+wird die jeweils n&auml;chste Zufallszahl des entsprechenden Typs
+ermittelt und an den Aufrufer zur&uuml;ckgegeben: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int nextInt()
+public int nextInt(int n)
+
+public long nextLong()
+
+public float nextFloat()
+
+public double nextDouble()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Random.html" onClick="this.href=getApiDoc('java.util.Random')"><font color="#660066" size=-1>java.util.Random</font></a></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Anders als in vielen anderen Programmiersprachen liefern diese Methoden
+Ergebnisse aus dem gesamten Wertebereich des entsprechenden Grundtyps,
+also auch negative Zufallszahlen. Soll der R&uuml;ckgabewert auf Werte
+gr&ouml;&szlig;er gleich null beschr&auml;nkt werden, kann das Ergebnis
+mit <font color="#000077"><tt>Math.abs</tt></font> in einen positiven
+Wert umgewandelt werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Sollen nur ganzzahlige Zufallswerte unterhalb einer bestimmten Obergrenze
+<i>n</i> erzeugt werden, kann das Ergebnis zus&auml;tzlich modulo
+<i>n</i> genommen werden. Sollen nur positive Ganzzahlen (inklusive
+0) erzeugt werden, kann die mit einem <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>
+parametrisierte Variante von <a href="index_n.html#ixb100799"><font color=#000080><tt>nextInt</tt></font></a>
+verwendet werden. Zur&uuml;ckgegeben werden gleichverteilte Zufallszahlen
+zwischen 0 (inklusive) und <font color="#000077"><tt>n</tt></font>
+(exklusive). 
+
+<p>
+Das folgende Beispiel zeigt die Verwendung von Zufallszahlen zur Generierung
+eines Lottotipps. Hierbei werden durch Aufruf von <a href="index_n.html#ixb100799"><font color=#000080><tt>nextInt</tt></font></a>
+ganzzahlige Zufallszahlen erzeugt und mit Hilfe der <a name="ixa101036"><a href="index_a.html#ixb100803"><font color=#000080><tt>abs</tt></font></a></a>-Methode
+und des Modulo-Operators auf den Wertebereich von 1 bis 49 beschr&auml;nkt.
+<font color="#000077"><tt>BitSet b</tt></font> verhindert, dass Zahlen
+doppelt in den Tipp eingehen, und wird zur sortierten Ausgabe des
+Ergebnisses verwendet: 
+<a name="lottolisting1"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1701.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1701
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    BitSet b = <font color="#0000AA">new</font> BitSet();
+<font color="#555555">010 </font>    Random r = <font color="#0000AA">new</font> Random();
+<font color="#555555">011 </font>
+<font color="#555555">012 </font>    System.out.print(<font color="#0000FF">"Mein Lottotip: "</font>);
+<font color="#555555">013 </font>    <font color="#006699">int</font> cnt = 0;
+<font color="#555555">014 </font>    <font color="#0000AA">while</font> (cnt &lt; 6) {
+<font color="#555555">015 </font>      <font color="#006699">int</font> num = 1 + Math.abs(r.nextInt()) % 49;
+<font color="#555555">016 </font>      <font color="#0000AA">if</font> (!b.get(num)) {
+<font color="#555555">017 </font>        b.set(num);
+<font color="#555555">018 </font>        ++cnt;
+<font color="#555555">019 </font>      }
+<font color="#555555">020 </font>    }
+<font color="#555555">021 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 1; i &lt;= 49; ++i) {
+<font color="#555555">022 </font>      <font color="#0000AA">if</font> (b.get(i)) {
+<font color="#555555">023 </font>        System.out.print(i + <font color="#0000FF">" "</font>);
+<font color="#555555">024 </font>      }
+<font color="#555555">025 </font>    }
+<font color="#555555">026 </font>    System.out.println(<font color="#0000FF">""</font>);
+<font color="#555555">027 </font>  }
+<font color="#555555">028 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1701.java"><font color="#000055" size=-1>Listing1701.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 17.1: Zufallszahlen zur Generierung eines Lottotipps</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Eine etwas einfacher zu handhabende Methode zur Erzeugung von Flie&szlig;komma-Zufallszahlen
+befindet sich in der Klasse <a name="ixa101037"><a href="index_m.html#ixb100444"><font color=#000080><tt>Math</tt></font></a></a>.
+Die Klassenmethode <font color="#000077"><tt>Math.random</tt></font>
+kann als Klassenmethode ohne Instanzierung eines Objekts verwendet
+werden und erzeugt gleichverteilte Zufallszahlen auf der Basis von
+<a href="index_n.html#ixb100802"><font color=#000080><tt>nextDouble</tt></font></a>.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Weitere Informationen zu Zufallszahlen finden sich in <a href="k100318.html#kryptozufallszahlen">Abschnitt 50.1.4</a>,
+in dem kryptografische Zufallszahlen erl&auml;utert werden. 
+
+<!-- Section -->
+
+<a name="sectlevel4id017001002002"></a>
+<h4>Normalverteilte Zufallszahlen </h4>
+
+<p>
+W&auml;hrend diese Methoden <i>gleichverteilte</i> Zufallszahlen erzeugen,
+liefert die Methode <a name="ixa101038"><a href="index_n.html#ixb100804"><font color=#000080><tt>nextGaussian</tt></font></a></a>
+die Zufallszahlen auf der Basis einer <i>Normalverteilung</i> mit
+einem Mittelwert von 0.0 und einer Standardabweichung von 1.0 (sogenannte
+<i>standard</i>normalverteilte Zufallszahlen): 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public double nextGaussian()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Random.html" onClick="this.href=getApiDoc('java.util.Random')"><font color="#660066" size=-1>java.util.Random</font></a></td>
+</tr>
+</table>
+
+<p>
+Auch hier erzeugt jeder weitere Aufruf die jeweils n&auml;chste Zufallszahl
+auf der Basis des vorherigen Werts. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Sollen normalverteilte Zufallszahlen mit einem von 0 verschiedenen
+Mittelwert und/oder einer von 1 verschiedenen Standardabweichung erzeugt
+werden, kann ebenfalls <a href="index_n.html#ixb100804"><font color=#000080><tt>nextGaussian</tt></font></a>
+verwendet werden. Dazu ist lediglich das jeweilige Ergebnis mit der
+gew&uuml;nschten Standardabweichung zu multiplizieren und anschlie&szlig;end
+zum gew&uuml;nschten Mittelwert zu addieren. </td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100114.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100114.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100116.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100121.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

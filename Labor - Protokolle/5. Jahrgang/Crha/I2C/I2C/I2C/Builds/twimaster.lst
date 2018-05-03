@@ -1,0 +1,475 @@
+   1               		.file	"twimaster.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   8               		.text
+   9               	.Ltext0:
+ 104               	.global	i2c_init
+ 106               	i2c_init:
+   1:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** /*************************************************************************
+   2:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** * Title:    I2C master library using hardware TWI interface
+   3:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** * Author:   Peter Fleury <pfleury@gmx.ch>  http://jump.to/fleury
+   4:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** * File:     $Id: twimaster.c,v 1.3 2005/07/02 11:14:21 Peter Exp $
+   5:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** * Software: AVR-GCC 3.4.3 / avr-libc 1.2.3
+   6:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** * Target:   any AVR device with hardware TWI 
+   7:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** * Usage:    API compatible with I2C Software Library i2cmaster.h
+   8:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** **************************************************************************/
+   9:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** #include <inttypes.h>
+  10:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** #include <compat/twi.h>
+  11:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+  12:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** #include "i2cmaster.h"
+  13:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+  14:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+  15:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** /* define CPU frequency in Mhz here if not defined in Makefile */
+  16:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** #ifndef F_CPU
+  17:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** #define F_CPU 4000000UL
+  18:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** #endif
+  19:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+  20:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** /* I2C clock in Hz */
+  21:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** #define SCL_CLOCK  10000L
+  22:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+  23:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+  24:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** /*************************************************************************
+  25:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****  Initialization of the I2C bus interface. Need to be called only once
+  26:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** *************************************************************************/
+  27:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** void i2c_init(void)
+  28:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** {
+ 108               	.LM0:
+ 109               	.LFBB1:
+ 110               	/* prologue: function */
+ 111               	/* frame size = 0 */
+ 112               	/* stack size = 0 */
+ 113               	.L__stack_usage = 0
+  29:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****   /* initialize TWI clock: 100 kHz clock, TWPS = 0 => prescaler = 1 */
+  30:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****   
+  31:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****   TWSR = 0;                         /* no prescaler */
+ 115               	.LM1:
+ 116 0000 1092 B900 		sts 185,__zero_reg__
+  32:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****   TWBR = ((F_CPU/SCL_CLOCK)-16)/2;  /* must be > 10 for stable operation */
+ 118               	.LM2:
+ 119 0004 88E1      		ldi r24,lo8(24)
+ 120 0006 8093 B800 		sts 184,r24
+ 121 000a 0895      		ret
+ 123               	.Lscope1:
+ 126               	.global	i2c_start
+ 128               	i2c_start:
+  33:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+  34:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** }/* i2c_init */
+  35:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+  36:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+  37:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** /*************************************************************************	
+  38:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****   Issues a start condition and sends address and transfer direction.
+  39:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****   return 0 = device accessible, 1= failed to access device
+  40:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** *************************************************************************/
+  41:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** unsigned char i2c_start(unsigned char address)
+  42:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** {
+ 130               	.LM3:
+ 131               	.LFBB2:
+ 132               	/* prologue: function */
+ 133               	/* frame size = 0 */
+ 134               	/* stack size = 0 */
+ 135               	.L__stack_usage = 0
+  43:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     uint8_t   twst;
+  44:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+  45:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	// send START condition
+  46:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	TWCR = (1<<TWINT) | (1<<TWSTA) | (1<<TWEN);
+ 137               	.LM4:
+ 138 000c 94EA      		ldi r25,lo8(-92)
+ 139 000e 9093 BC00 		sts 188,r25
+ 140               	.L4:
+  47:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+  48:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	// wait until transmission completed
+  49:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	while(!(TWCR & (1<<TWINT)));
+ 142               	.LM5:
+ 143 0012 9091 BC00 		lds r25,188
+ 144 0016 97FF      		sbrs r25,7
+ 145 0018 00C0      		rjmp .L4
+  50:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+  51:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	// check value of TWI Status Register. Mask prescaler bits.
+  52:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	twst = TW_STATUS & 0xF8;
+ 147               	.LM6:
+ 148 001a 9091 B900 		lds r25,185
+ 149 001e 987F      		andi r25,lo8(-8)
+  53:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	if ( (twst != TW_START) && (twst != TW_REP_START)) return 1;
+ 151               	.LM7:
+ 152 0020 9830      		cpi r25,lo8(8)
+ 153 0022 01F0      		breq .L5
+ 155               	.LM8:
+ 156 0024 9031      		cpi r25,lo8(16)
+ 157 0026 01F0      		breq .L5
+ 158               	.L9:
+ 160               	.LM9:
+ 161 0028 81E0      		ldi r24,lo8(1)
+ 162 002a 0895      		ret
+ 163               	.L5:
+  54:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+  55:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	// send device address
+  56:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	TWDR = address;
+ 165               	.LM10:
+ 166 002c 8093 BB00 		sts 187,r24
+  57:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	TWCR = (1<<TWINT) | (1<<TWEN);
+ 168               	.LM11:
+ 169 0030 84E8      		ldi r24,lo8(-124)
+ 170 0032 8093 BC00 		sts 188,r24
+ 171               	.L8:
+  58:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+  59:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	// wail until transmission completed and ACK/NACK has been received
+  60:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	while(!(TWCR & (1<<TWINT)));
+ 173               	.LM12:
+ 174 0036 8091 BC00 		lds r24,188
+ 175 003a 87FF      		sbrs r24,7
+ 176 003c 00C0      		rjmp .L8
+  61:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+  62:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	// check value of TWI Status Register. Mask prescaler bits.
+  63:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	twst = TW_STATUS & 0xF8;
+ 178               	.LM13:
+ 179 003e 8091 B900 		lds r24,185
+ 180 0042 887F      		andi r24,lo8(-8)
+  64:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	if ( (twst != TW_MT_SLA_ACK) && (twst != TW_MR_SLA_ACK) ) return 1;
+ 182               	.LM14:
+ 183 0044 8831      		cpi r24,lo8(24)
+ 184 0046 01F0      		breq .L10
+ 186               	.LM15:
+ 187 0048 8034      		cpi r24,lo8(64)
+ 188 004a 01F4      		brne .L9
+ 189               	.L10:
+  65:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+  66:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	return 0;
+ 191               	.LM16:
+ 192 004c 80E0      		ldi r24,0
+  67:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+  68:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** }/* i2c_start */
+ 194               	.LM17:
+ 195 004e 0895      		ret
+ 197               	.Lscope2:
+ 200               	.global	i2c_start_wait
+ 202               	i2c_start_wait:
+  69:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+  70:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+  71:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** /*************************************************************************
+  72:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****  Issues a start condition and sends address and transfer direction.
+  73:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****  If device is busy, use ack polling to wait until device is ready
+  74:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****  
+  75:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****  Input:   address and transfer direction of I2C device
+  76:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** *************************************************************************/
+  77:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** void i2c_start_wait(unsigned char address)
+  78:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** {
+ 204               	.LM18:
+ 205               	.LFBB3:
+ 206               	/* prologue: function */
+ 207               	/* frame size = 0 */
+ 208               	/* stack size = 0 */
+ 209               	.L__stack_usage = 0
+  79:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     uint8_t   twst;
+  80:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+  81:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+  82:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     while ( 1 )
+  83:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     {
+  84:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	    // send START condition
+  85:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	    TWCR = (1<<TWINT) | (1<<TWSTA) | (1<<TWEN);
+ 211               	.LM19:
+ 212 0050 24EA      		ldi r18,lo8(-92)
+  86:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     
+  87:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     	// wait until transmission completed
+  88:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     	while(!(TWCR & (1<<TWINT)));
+  89:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     
+  90:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     	// check value of TWI Status Register. Mask prescaler bits.
+  91:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     	twst = TW_STATUS & 0xF8;
+  92:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     	if ( (twst != TW_START) && (twst != TW_REP_START)) continue;
+  93:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     
+  94:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     	// send device address
+  95:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     	TWDR = address;
+  96:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     	TWCR = (1<<TWINT) | (1<<TWEN);
+ 214               	.LM20:
+ 215 0052 34E8      		ldi r19,lo8(-124)
+  97:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     
+  98:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     	// wail until transmission completed
+  99:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     	while(!(TWCR & (1<<TWINT)));
+ 100:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     
+ 101:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     	// check value of TWI Status Register. Mask prescaler bits.
+ 102:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     	twst = TW_STATUS & 0xF8;
+ 103:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     	if ( (twst == TW_MT_SLA_NACK )||(twst ==TW_MR_DATA_NACK) ) 
+ 104:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     	{    	    
+ 105:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     	    /* device busy, send stop condition to terminate write operation */
+ 106:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	        TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWSTO);
+ 217               	.LM21:
+ 218 0054 44E9      		ldi r20,lo8(-108)
+ 219               	.L20:
+  85:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	    TWCR = (1<<TWINT) | (1<<TWSTA) | (1<<TWEN);
+ 221               	.LM22:
+ 222 0056 2093 BC00 		sts 188,r18
+ 223               	.L19:
+  88:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     	while(!(TWCR & (1<<TWINT)));
+ 225               	.LM23:
+ 226 005a 9091 BC00 		lds r25,188
+ 227 005e 97FF      		sbrs r25,7
+ 228 0060 00C0      		rjmp .L19
+  91:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     	twst = TW_STATUS & 0xF8;
+ 230               	.LM24:
+ 231 0062 9091 B900 		lds r25,185
+ 232 0066 987F      		andi r25,lo8(-8)
+  92:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     	if ( (twst != TW_START) && (twst != TW_REP_START)) continue;
+ 234               	.LM25:
+ 235 0068 9830      		cpi r25,lo8(8)
+ 236 006a 01F0      		breq .L22
+  92:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     	if ( (twst != TW_START) && (twst != TW_REP_START)) continue;
+ 238               	.LM26:
+ 239 006c 9031      		cpi r25,lo8(16)
+ 240 006e 01F4      		brne .L20
+ 241               	.L22:
+  95:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     	TWDR = address;
+ 243               	.LM27:
+ 244 0070 8093 BB00 		sts 187,r24
+  96:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     	TWCR = (1<<TWINT) | (1<<TWEN);
+ 246               	.LM28:
+ 247 0074 3093 BC00 		sts 188,r19
+ 248               	.L25:
+  99:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     	while(!(TWCR & (1<<TWINT)));
+ 250               	.LM29:
+ 251 0078 9091 BC00 		lds r25,188
+ 252 007c 97FF      		sbrs r25,7
+ 253 007e 00C0      		rjmp .L25
+ 102:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     	twst = TW_STATUS & 0xF8;
+ 255               	.LM30:
+ 256 0080 9091 B900 		lds r25,185
+ 257 0084 987F      		andi r25,lo8(-8)
+ 103:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     	if ( (twst == TW_MT_SLA_NACK )||(twst ==TW_MR_DATA_NACK) ) 
+ 259               	.LM31:
+ 260 0086 9032      		cpi r25,lo8(32)
+ 261 0088 01F0      		breq .L26
+ 103:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     	if ( (twst == TW_MT_SLA_NACK )||(twst ==TW_MR_DATA_NACK) ) 
+ 263               	.LM32:
+ 264 008a 9835      		cpi r25,lo8(88)
+ 265 008c 01F4      		brne .L18
+ 266               	.L26:
+ 268               	.LM33:
+ 269 008e 4093 BC00 		sts 188,r20
+ 270               	.L28:
+ 107:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	        
+ 108:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	        // wait until stop condition is executed and bus released
+ 109:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	        while(TWCR & (1<<TWSTO));
+ 272               	.LM34:
+ 273 0092 9091 BC00 		lds r25,188
+ 274 0096 94FD      		sbrc r25,4
+ 275 0098 00C0      		rjmp .L28
+ 276 009a 00C0      		rjmp .L20
+ 277               	.L18:
+ 278 009c 0895      		ret
+ 280               	.Lscope3:
+ 283               	.global	i2c_rep_start
+ 285               	i2c_rep_start:
+ 110:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	        
+ 111:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     	    continue;
+ 112:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     	}
+ 113:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     	//if( twst != TW_MT_SLA_ACK) return 1;
+ 114:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     	break;
+ 115:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****      }
+ 116:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+ 117:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** }/* i2c_start_wait */
+ 118:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+ 119:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+ 120:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** /*************************************************************************
+ 121:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****  Issues a repeated start condition and sends address and transfer direction 
+ 122:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+ 123:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****  Input:   address and transfer direction of I2C device
+ 124:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****  
+ 125:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****  Return:  0 device accessible
+ 126:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****           1 failed to access device
+ 127:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** *************************************************************************/
+ 128:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** unsigned char i2c_rep_start(unsigned char address)
+ 129:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** {
+ 287               	.LM35:
+ 288               	.LFBB4:
+ 289               	/* prologue: function */
+ 290               	/* frame size = 0 */
+ 291               	/* stack size = 0 */
+ 292               	.L__stack_usage = 0
+ 130:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     return i2c_start( address );
+ 294               	.LM36:
+ 295 009e 0C94 0000 		jmp i2c_start
+ 297               	.Lscope4:
+ 299               	.global	i2c_stop
+ 301               	i2c_stop:
+ 131:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+ 132:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** }/* i2c_rep_start */
+ 133:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+ 134:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+ 135:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** /*************************************************************************
+ 136:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****  Terminates the data transfer and releases the I2C bus
+ 137:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** *************************************************************************/
+ 138:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** void i2c_stop(void)
+ 139:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** {
+ 303               	.LM37:
+ 304               	.LFBB5:
+ 305               	/* prologue: function */
+ 306               	/* frame size = 0 */
+ 307               	/* stack size = 0 */
+ 308               	.L__stack_usage = 0
+ 140:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     /* send stop condition */
+ 141:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWSTO);
+ 310               	.LM38:
+ 311 00a2 84E9      		ldi r24,lo8(-108)
+ 312 00a4 8093 BC00 		sts 188,r24
+ 313               	.L41:
+ 142:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	
+ 143:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	// wait until stop condition is executed and bus released
+ 144:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	while(TWCR & (1<<TWSTO));
+ 315               	.LM39:
+ 316 00a8 8091 BC00 		lds r24,188
+ 317 00ac 84FD      		sbrc r24,4
+ 318 00ae 00C0      		rjmp .L41
+ 319               	/* epilogue start */
+ 145:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+ 146:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** }/* i2c_stop */
+ 321               	.LM40:
+ 322 00b0 0895      		ret
+ 324               	.Lscope5:
+ 327               	.global	i2c_write
+ 329               	i2c_write:
+ 147:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+ 148:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+ 149:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** /*************************************************************************
+ 150:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****   Send one byte to I2C device
+ 151:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****   
+ 152:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****   Input:    byte to be transfered
+ 153:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****   Return:   0 write successful 
+ 154:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****             1 write failed
+ 155:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** *************************************************************************/
+ 156:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** unsigned char i2c_write( unsigned char data )
+ 157:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** {	
+ 331               	.LM41:
+ 332               	.LFBB6:
+ 333               	/* prologue: function */
+ 334               	/* frame size = 0 */
+ 335               	/* stack size = 0 */
+ 336               	.L__stack_usage = 0
+ 158:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     uint8_t   twst;
+ 159:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     
+ 160:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	// send data to the previously addressed device
+ 161:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	TWDR = data;
+ 338               	.LM42:
+ 339 00b2 8093 BB00 		sts 187,r24
+ 162:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	TWCR = (1<<TWINT) | (1<<TWEN);
+ 341               	.LM43:
+ 342 00b6 84E8      		ldi r24,lo8(-124)
+ 343 00b8 8093 BC00 		sts 188,r24
+ 344               	.L44:
+ 163:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+ 164:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	// wait until transmission completed
+ 165:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	while(!(TWCR & (1<<TWINT)));
+ 346               	.LM44:
+ 347 00bc 8091 BC00 		lds r24,188
+ 348 00c0 87FF      		sbrs r24,7
+ 349 00c2 00C0      		rjmp .L44
+ 166:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+ 167:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	// check value of TWI Status Register. Mask prescaler bits
+ 168:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	twst = TW_STATUS & 0xF8;
+ 351               	.LM45:
+ 352 00c4 9091 B900 		lds r25,185
+ 353 00c8 987F      		andi r25,lo8(-8)
+ 169:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	if( twst != TW_MT_DATA_ACK) return 1;
+ 355               	.LM46:
+ 356 00ca 81E0      		ldi r24,lo8(1)
+ 357 00cc 9832      		cpi r25,lo8(40)
+ 358 00ce 01F4      		brne .L45
+ 359 00d0 80E0      		ldi r24,0
+ 360               	.L45:
+ 170:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	return 0;
+ 171:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+ 172:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** }/* i2c_write */
+ 362               	.LM47:
+ 363 00d2 0895      		ret
+ 365               	.Lscope6:
+ 367               	.global	i2c_readAck
+ 369               	i2c_readAck:
+ 173:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+ 174:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+ 175:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** /*************************************************************************
+ 176:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****  Read one byte from the I2C device, request more data from device 
+ 177:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****  
+ 178:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****  Return:  byte read from I2C device
+ 179:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** *************************************************************************/
+ 180:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** unsigned char i2c_readAck(void)
+ 181:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** {
+ 371               	.LM48:
+ 372               	.LFBB7:
+ 373               	/* prologue: function */
+ 374               	/* frame size = 0 */
+ 375               	/* stack size = 0 */
+ 376               	.L__stack_usage = 0
+ 182:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWEA);
+ 378               	.LM49:
+ 379 00d4 84EC      		ldi r24,lo8(-60)
+ 380 00d6 8093 BC00 		sts 188,r24
+ 381               	.L48:
+ 183:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	while(!(TWCR & (1<<TWINT)));    
+ 383               	.LM50:
+ 384 00da 8091 BC00 		lds r24,188
+ 385 00de 87FF      		sbrs r24,7
+ 386 00e0 00C0      		rjmp .L48
+ 184:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+ 185:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     return TWDR;
+ 388               	.LM51:
+ 389 00e2 8091 BB00 		lds r24,187
+ 186:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+ 187:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** }/* i2c_readAck */
+ 391               	.LM52:
+ 392 00e6 0895      		ret
+ 394               	.Lscope7:
+ 396               	.global	i2c_readNak
+ 398               	i2c_readNak:
+ 188:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+ 189:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+ 190:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** /*************************************************************************
+ 191:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****  Read one byte from the I2C device, read is followed by a stop condition 
+ 192:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****  
+ 193:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****  Return:  byte read from I2C device
+ 194:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** *************************************************************************/
+ 195:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** unsigned char i2c_readNak(void)
+ 196:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** {
+ 400               	.LM53:
+ 401               	.LFBB8:
+ 402               	/* prologue: function */
+ 403               	/* frame size = 0 */
+ 404               	/* stack size = 0 */
+ 405               	.L__stack_usage = 0
+ 197:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	TWCR = (1<<TWINT) | (1<<TWEN);
+ 407               	.LM54:
+ 408 00e8 84E8      		ldi r24,lo8(-124)
+ 409 00ea 8093 BC00 		sts 188,r24
+ 410               	.L51:
+ 198:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	while(!(TWCR & (1<<TWINT)));
+ 412               	.LM55:
+ 413 00ee 8091 BC00 		lds r24,188
+ 414 00f2 87FF      		sbrs r24,7
+ 415 00f4 00C0      		rjmp .L51
+ 199:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 	
+ 200:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c ****     return TWDR;
+ 417               	.LM56:
+ 418 00f6 8091 BB00 		lds r24,187
+ 201:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** 
+ 202:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/twimaster.c **** }/* i2c_readNak */
+ 420               	.LM57:
+ 421 00fa 0895      		ret
+ 423               	.Lscope8:
+ 425               	.Letext0:
+ 426               		.ident	"GCC: (GNU) 4.8.1"
+DEFINED SYMBOLS
+                            *ABS*:00000000 twimaster.c
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccWitbLj.s:2      *ABS*:0000003e __SP_H__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccWitbLj.s:3      *ABS*:0000003d __SP_L__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccWitbLj.s:4      *ABS*:0000003f __SREG__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccWitbLj.s:5      *ABS*:00000000 __tmp_reg__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccWitbLj.s:6      *ABS*:00000001 __zero_reg__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccWitbLj.s:106    .text:00000000 i2c_init
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccWitbLj.s:128    .text:0000000c i2c_start
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccWitbLj.s:202    .text:00000050 i2c_start_wait
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccWitbLj.s:285    .text:0000009e i2c_rep_start
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccWitbLj.s:301    .text:000000a2 i2c_stop
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccWitbLj.s:329    .text:000000b2 i2c_write
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccWitbLj.s:369    .text:000000d4 i2c_readAck
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccWitbLj.s:398    .text:000000e8 i2c_readNak
+
+NO UNDEFINED SYMBOLS

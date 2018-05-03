@@ -1,0 +1,343 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100104.html;106,k100105.html;107,k100107.html;108,k100114.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100104.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100105.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100107.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100114.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 16 - Collections II
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectionlists"></a>
+<h2>16.2 Die Collection des Typs List </h2>
+<hr>
+<ul>
+<li><a href="k100106.html#sectionlists">16.2 Die Collection des Typs List</a>
+<ul>
+<li><a href="k100106.html#sectlevel3id016002001">16.2.1 Abstrakte Eigenschaften</a>
+<li><a href="k100106.html#sectlevel3id016002002">16.2.2 Implementierungen</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id016002001"></a>
+<h3>16.2.1 Abstrakte Eigenschaften </h3>
+
+<p>
+Eine Collection vom Typ <a name="ixa100933"><a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a></a>
+ist eine geordnete Menge von Objekten, auf die entweder sequenziell
+oder &uuml;ber ihren Index (ihre Position in der Liste) zugegriffen
+werden kann. Wie bei Arrays hat das erste Element den Index 0 und
+das letzte den Index <font color="#000077"><tt>size() - 1</tt></font>.
+Es ist m&ouml;glich, an einer beliebigen Stelle der Liste ein Element
+einzuf&uuml;gen oder zu l&ouml;schen. Die weiter hinten stehenden
+Elemente werden dann entsprechend nach rechts bzw. links verschoben.
+Des Weiteren gibt es Methoden, um Elemente in der Liste zu suchen.
+
+<p>
+Das Interface <a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>
+ist direkt aus <a href="index_c.html#ixb100730"><font color=#000080><tt>Collection</tt></font></a>
+abgeleitet und erbt somit dessen Methoden. Zus&auml;tzlich gibt es
+einige neue Methoden, die zum wahlfreien Zugriff auf die Elemente
+ben&ouml;tigt werden. Um Elemente in die Liste einzuf&uuml;gen, k&ouml;nnen
+die Methoden <a name="ixa100934"><a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a></a>
+und <a name="ixa100935"><a href="index_a.html#ixb100737"><font color=#000080><tt>addAll</tt></font></a></a>
+verwendet werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+void add(int index, Object element)
+boolean add(Object o)
+
+boolean addAll(Collection c)
+boolean addAll(int index, Collection c)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/List.html" onClick="this.href=getApiDoc('java.util.List')"><font color="#660066" size=-1>java.util.List</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+wird ein einfaches Element in die Liste eingef&uuml;gt. Wenn die Methode
+mit einem einzelnen <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+als Parameter aufgerufen wird, h&auml;ngt sie das Element an das Ende
+der Liste an. Wird zus&auml;tzlich der Index angegeben, so wird das
+Element an der spezifizierten Position eingef&uuml;gt und alle &uuml;brigen
+Elemente werden um eine Position nach rechts geschoben. Mit <a href="index_a.html#ixb100737"><font color=#000080><tt>addAll</tt></font></a>
+kann eine komplette Collection in die Liste eingef&uuml;gt werden.
+Auch hier k&ouml;nnen die Elemente wahlweise an das Ende angeh&auml;ngt
+oder an einer beliebigen Stelle in der Liste eingef&uuml;gt werden.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Der R&uuml;ckgabewert von <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+ist <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>,
+wenn die Liste durch den Aufruf von <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+ver&auml;ndert, also das Element hinzugef&uuml;gt wurde. Er ist <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>,
+wenn die Liste nicht ver&auml;ndert wurde. Das kann beispielsweise
+dann der Fall sein, wenn die Liste keine Dubletten erlaubt und ein
+bereits vorhandenes Element noch einmal eingef&uuml;gt werden soll.
+Konnte das Element dagegen aus einem anderen Grund nicht eingef&uuml;gt
+werden, wird eine Ausnahme des Typs <a href="index_u.html#ixb100735"><font color=#000080><tt>UnsupportedOperationException</tt></font></a>,
+<a href="index_c.html#ixb100738"><font color=#000080><tt>ClassCastException</tt></font></a>
+oder <a name="ixa100936"><a href="index_i.html#ixb100376"><font color=#000080><tt>IllegalArgumentException</tt></font></a></a>
+ausgel&ouml;st.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Das L&ouml;schen von Elementen kann mit den Methoden <a name="ixa100937"><a href="index_r.html#ixb100739"><font color=#000080><tt>remove</tt></font></a></a>,
+<a name="ixa100938"><a href="index_r.html#ixb100740"><font color=#000080><tt>removeAll</tt></font></a></a>
+und <a name="ixa100939"><a href="index_r.html#ixb100741"><font color=#000080><tt>retainAll</tt></font></a></a>
+erfolgen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+Object remove(int index)
+boolean remove(Object o)
+
+boolean removeAll(Collection c)
+boolean retainAll(Collection c)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/List.html" onClick="this.href=getApiDoc('java.util.List')"><font color="#660066" size=-1>java.util.List</font></a></td>
+</tr>
+</table>
+
+<p>
+An <a href="index_r.html#ixb100739"><font color=#000080><tt>remove</tt></font></a>
+kann dabei wahlweise der Index des zu l&ouml;schenden Objekts oder
+das Objekt selbst &uuml;bergeben werden. Mit <a href="index_r.html#ixb100740"><font color=#000080><tt>removeAll</tt></font></a>
+werden alle Elemente gel&ouml;scht, die auch in der als Argument &uuml;bergebenen
+Collection enthalten sind, und <a href="index_r.html#ixb100741"><font color=#000080><tt>retainAll</tt></font></a>
+l&ouml;scht alle Elemente au&szlig;er den in der Argument-Collection
+enthaltenen. 
+
+<!-- Section -->
+
+<a name="sectlevel3id016002002"></a>
+<h3>16.2.2 Implementierungen </h3>
+
+<p>
+Das Interface <a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>
+wird seit dem JDK 1.2 von verschiedenen Klassen implementiert: 
+<ul>
+<li>Die Klasse <a name="ixa100940"><a href="index_a.html#ixb100729"><font color=#000080><tt>AbstractList</tt></font></a></a>
+ist eine abstrakte Basisklasse, bei der alle optionalen Methoden die
+Ausnahme <a href="index_u.html#ixb100735"><font color=#000080><tt>UnsupportedOperationException</tt></font></a>
+ausl&ouml;sen und diverse obligatorische Methoden als <a href="index_a.html#ixb100448"><font color=#000080><tt>abstract</tt></font></a>
+deklariert wurden. Sie dient als Basisklasse f&uuml;r eigene <a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>-Implementierungen.
+<li>Die Klasse <a name="ixa100941"><a href="index_l.html#ixb100709"><font color=#000080><tt>LinkedList</tt></font></a></a>
+realisiert eine Liste, deren Elemente als doppelt verkettete lineare
+Liste gehalten werden. Ihre Einf&uuml;ge- und L&ouml;schoperationen
+sind im Prinzip (viele Elemente vorausgesetzt) performanter als die
+der <a href="index_a.html#ixb100195"><font color=#000080><tt>ArrayList</tt></font></a>.
+Der wahlfreie Zugriff ist dagegen normalerweise langsamer.
+<li>Die Klasse <a name="ixa100942"><a href="index_a.html#ixb100195"><font color=#000080><tt>ArrayList</tt></font></a></a>
+implementiert die Liste als Array von Elementen, das bei Bedarf vergr&ouml;&szlig;ert
+wird. Hier ist der wahlfreie Zugriff schneller, aber bei gro&szlig;en
+Elementzahlen kann das Einf&uuml;gen und L&ouml;schen l&auml;nger
+dauern als bei einer <a href="index_l.html#ixb100709"><font color=#000080><tt>LinkedList</tt></font></a>.
+<li>Aus Gr&uuml;nden der Vereinheitlichung implementiert seit dem
+JDK 1.2 auch die Klasse <a name="ixa100943"><a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a></a>
+das <a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>-Interface.
+Neben den bereits in <a href="k100099.html#abschnittvector">Abschnitt 15.2</a>
+erw&auml;hnten Methoden besitzt ein 1.2-<a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>
+also auch die entsprechenden Methoden des <a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>-Interface.
+</ul>
+
+<p>
+Soll im eigenen Programm eine Liste verwendet werden, stellt sich
+die Frage, welche der genannten Implementierungen daf&uuml;r am besten
+geeignet ist. W&auml;hrend die Klasse <a href="index_a.html#ixb100729"><font color=#000080><tt>AbstractList</tt></font></a>
+nur als Basisklasse eigener Listenklassen sinnvoll verwendet werden
+kann, ist die Entscheidung f&uuml;r eine der drei &uuml;brigen Klassen
+von den Spezifika der jeweiligen Anwendung abh&auml;ngig. Bleibt die
+Liste klein, wird haupts&auml;chlich wahlfrei darauf zugegriffen;
+&uuml;berwiegen die lesenden gegen&uuml;ber den schreibenden Zugriffen
+deutlich, so liefert die <a href="index_a.html#ixb100195"><font color=#000080><tt>ArrayList</tt></font></a>
+die besten Ergebnisse. Ist die Liste dagegen sehr gro&szlig; und werden
+h&auml;ufig Einf&uuml;gungen und L&ouml;schungen vorgenommen, ist
+wahrscheinlich die <a href="index_l.html#ixb100709"><font color=#000080><tt>LinkedList</tt></font></a>
+die bessere Wahl. Wird von mehreren Threads gleichzeitig auf die Liste
+zugegriffen, kann die Klasse <a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>
+verwendet werden, denn ihre Methoden sind bereits weitgehend als <a href="index_s.html#ixb100727"><font color=#000080><tt>synchronized</tt></font></a>
+deklariert. Weitere Untersuchungen zur Performance der Listentypen
+sind in <a href="k100329.html#tuningvectorlist">Abschnitt 52.2.3</a>
+zu finden. 
+
+<p>
+Das folgende Beispiel zeigt das Anlegen und Bearbeiten zweier unterschiedlicher
+Listen: 
+<a name="listingid016001"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1601.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1601
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">static</font> <font color="#006699">void</font> fillList(List list)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; 10; ++i) {
+<font color="#555555">010 </font>      list.add(<font color="#0000FF">""</font> + i);
+<font color="#555555">011 </font>    }
+<font color="#555555">012 </font>    list.remove(3);
+<font color="#555555">013 </font>    list.remove(<font color="#0000FF">"5"</font>);
+<font color="#555555">014 </font>  }
+<font color="#555555">015 </font>
+<font color="#555555">016 </font>  <font color="#0000AA">static</font> <font color="#006699">void</font> printList(List list)
+<font color="#555555">017 </font>  {
+<font color="#555555">018 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; list.size(); ++i) {
+<font color="#555555">019 </font>      System.out.println((String)list.get(i));
+<font color="#555555">020 </font>    }
+<font color="#555555">021 </font>    System.out.println(<font color="#0000FF">"---"</font>);
+<font color="#555555">022 </font>  }
+<font color="#555555">023 </font>
+<font color="#555555">024 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">025 </font>  {
+<font color="#555555">026 </font>    <font color="#00AA00">//Erzeugen der LinkedList</font>
+<font color="#555555">027 </font>    LinkedList list1 = <font color="#0000AA">new</font> LinkedList();
+<font color="#555555">028 </font>    fillList(list1);
+<font color="#555555">029 </font>    printList(list1);
+<font color="#555555">030 </font>    <font color="#00AA00">//Erzeugen der ArrayList</font>
+<font color="#555555">031 </font>    ArrayList list2 = <font color="#0000AA">new</font> ArrayList();
+<font color="#555555">032 </font>    fillList(list2);
+<font color="#555555">033 </font>    printList(list2);
+<font color="#555555">034 </font>    <font color="#00AA00">//Test von removeAll</font>
+<font color="#555555">035 </font>    list2.remove(<font color="#0000FF">"0"</font>);
+<font color="#555555">036 </font>    list1.removeAll(list2);
+<font color="#555555">037 </font>    printList(list1);
+<font color="#555555">038 </font>  }
+<font color="#555555">039 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1601.java"><font color="#000055" size=-1>Listing1601.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 16.1: Anlegen und Bearbeiten zweier Listen</i></p>
+
+<p>
+Hierbei wird zun&auml;chst je eine Liste des Typs <a href="index_l.html#ixb100709"><font color=#000080><tt>LinkedList</tt></font></a>
+und <a href="index_a.html#ixb100195"><font color=#000080><tt>ArrayList</tt></font></a>
+angelegt; beide werden durch Aufruf von <font color="#000077"><tt>fillList</tt></font>
+identisch gef&uuml;llt. Der Parameter <font color="#000077"><tt>list</tt></font>
+hat den Typ <a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>
+und akzeptiert damit beliebige Objekte, die dieses Interface implementieren.
+Tats&auml;chlich spielt es f&uuml;r <font color="#000077"><tt>fillList</tt></font>
+keine Rolle, welche konkrete Listenklasse verwendet wurde, und die
+nachfolgenden Ausgabemethoden geben jeweils genau dasselbe aus: 
+<font color="#333300">
+<pre>
+0
+1
+2
+4
+6
+7
+8
+9
+---
+0
+1
+2
+4
+6
+7
+8
+9
+---
+0
+---
+</pre>
+</font>
+
+<p>
+Anschlie&szlig;end wird aus <font color="#000077"><tt>list2</tt></font>
+das Element &#187;0&#171; entfernt und aus <font color="#000077"><tt>list1</tt></font>
+werden alle Elemente gel&ouml;scht, die noch in <font color="#000077"><tt>list2</tt></font>
+enthalten sind. Nach dem Aufruf von <a href="index_r.html#ixb100740"><font color=#000080><tt>removeAll</tt></font></a>
+verbleibt also nur noch das (zu diesem Zeitpunkt nicht mehr in <font color="#000077"><tt>list2</tt></font>
+enthaltene) Element &#187;0&#171; in <font color="#000077"><tt>list1</tt></font>
+und es wird durch den folgenden Aufruf von <font color="#000077"><tt>printList</tt></font>
+ausgegeben. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100104.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100105.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100107.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100114.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

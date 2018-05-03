@@ -1,0 +1,312 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100076.html;106,k100079.html;107,k100081.html;108,k100084.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100076.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100079.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100081.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100084.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 12 - Strings
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id012004"></a>
+<h2>12.4 Die Klasse StringBuilder<a name="ixa100694"></a> </h2>
+<hr>
+<ul>
+<li><a href="k100080.html#sectlevel2id012004">12.4 Die Klasse StringBuilder</a>
+<ul>
+<li><a href="k100080.html#sectlevel3id012004001">12.4.1 Konstruktoren</a>
+<li><a href="k100080.html#sectlevel3id012004002">12.4.2 Einf&uuml;gen von Elementen</a>
+<li><a href="k100080.html#sectlevel3id012004003">12.4.3 L&ouml;schen von Elementen</a>
+<li><a href="k100080.html#veraendernstringbuilder">12.4.4 Ver&auml;ndern von Elementen</a>
+<li><a href="k100080.html#sectlevel3id012004005">12.4.5 L&auml;ngeninformationen</a>
+<li><a href="k100080.html#sectlevel3id012004006">12.4.6 Konvertierung in einen String</a>
+</ul>
+</ul>
+<hr>
+
+<p>
+Da Objekte des Typs <font color="#000077"><tt>String</tt></font> nicht
+dynamisch sind und <font color="#000077"><tt>String</tt></font>-Manipulationen
+immer zu neuen Kopien des Ursprungsobjekts f&uuml;hren, entwickelten
+die Java-Ingenieure eine Klasse, die die dynamische Verkettung von
+<font color="#000077"><tt>String</tt></font>-Objekten gestattet. Bereits
+im JDK 1.0 war hierf&uuml;r die Klasse <a href="index_s.html#ixb100289"><font color=#000080><tt>StringBuffer</tt></font></a>
+enthalten, die mit dem JDK 5 durch den <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>
+abgel&ouml;st wurde. Beide k&ouml;nnen verwendet werden, um Zeichenketten
+zu manipulieren oder &#187;St&uuml;ck f&uuml;r St&uuml;ck&#171; zusammenzusetzen.
+
+
+<!-- Section -->
+<a name="sectlevel3id012004001"></a>
+<h3>12.4.1 Konstruktoren </h3>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+StringBuilder()
+
+StringBuilder(String s)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/StringBuilder.html" onClick="this.href=getApiDoc('java.lang.StringBuilder')"><font color="#660066" size=-1>java.lang.StringBuilder</font></a></td>
+</tr>
+</table>
+
+<p>
+Der parameterlose Konstruktor erzeugt einen leeren <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>.
+Wird dagegen ein <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+&uuml;bergeben, erzeugt der Konstruktor ein <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>-Objekt,
+das eine Kopie der &uuml;bergebenen Zeichenkette darstellt. 
+
+<p>
+Die Klasse <font color="#000077"><tt>StringBuilder</tt></font> wurde
+mit Java 5 eingef&uuml;hrt, davor verwendete man die - immer noch
+in der Bibliothek vorhandene - Klasse <font color="#000077"><tt>StringBuffer</tt></font><a name="ixa100695"></a>.
+Beide besitzen die gleichen Methoden. Die Klasse <font color="#000077"><tt>StringBuilder</tt></font>
+ist eine Neuimplementierung der &#187;alten&#171; Klasse und arbeitet
+auf den meisten Plattformen schneller und ressourcenschonender. Dies
+hat sie vor allem dem Umstand zu verdanken, dass sie nicht f&uuml;r
+nebenl&auml;ufige Zugriffe, wie sie in <a href="k100150.html#kapitelmultithreading">Kapitel 23</a>
+beschrieben werden, konzipiert ist. Solange wir also nicht mit mehreren
+Threads arbeiten, werden wir die Klasse <font color="#000077"><tt>StringBuilder</tt></font>
+verwenden. 
+
+<!-- Section -->
+
+<a name="sectlevel3id012004002"></a>
+<h3>12.4.2 Einf&uuml;gen von Elementen </h3>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+StringBuilder append(String s)
+
+StringBuilder insert(int offset, String s)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/StringBuilder.html" onClick="this.href=getApiDoc('java.lang.StringBuilder')"><font color="#660066" size=-1>java.lang.StringBuilder</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa100696"><a href="index_a.html#ixb100188"><font color=#000080><tt>append</tt></font></a></a>
+wird der String <font color="#000077"><tt>s</tt></font> an das Ende
+des <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>-Objekts
+angeh&auml;ngt. Zur&uuml;ckgegeben wird das auf diese Weise verl&auml;ngerte
+<a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>-Objekt
+<font color="#000077"><tt>s</tt></font>. Zus&auml;tzlich gibt es die
+Methode <a href="index_a.html#ixb100188"><font color=#000080><tt>append</tt></font></a>
+in Varianten f&uuml;r das Anh&auml;ngen aller Arten von primitiven
+Typen. Anstelle eines <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Objekts
+wird hier der entsprechende primitive Typ &uuml;bergeben, in einen
+String konvertiert und an das Ende des Objekts angeh&auml;ngt. 
+
+<p>
+<a name="ixa100697"><a href="index_i.html#ixb100549"><font color=#000080><tt>insert</tt></font></a></a>
+f&uuml;gt den String <font color="#000077"><tt>s</tt></font> an der
+Position <font color="#000077"><tt>offset</tt></font> in den aktuellen
+<a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>
+ein. Zur&uuml;ckgegeben wird das auf diese Weise verl&auml;ngerte
+<a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>-Objekt
+<font color="#000077"><tt>s</tt></font>. Auch diese Methode gibt es
+f&uuml;r primitive Typen. Der anstelle eines <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+&uuml;bergebene Wert wird zun&auml;chst in einen <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+konvertiert und dann an der gew&uuml;nschten Stelle eingef&uuml;gt.
+
+
+<!-- Section -->
+<a name="sectlevel3id012004003"></a>
+<h3>12.4.3 L&ouml;schen von Elementen </h3>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public StringBuilder deleteCharAt(int index)
+public StringBuilder delete(int start, int end)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/StringBuilder.html" onClick="this.href=getApiDoc('java.lang.StringBuilder')"><font color="#660066" size=-1>java.lang.StringBuilder</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa100698"><a href="index_d.html#ixb100550"><font color=#000080><tt>deleteCharAt</tt></font></a></a>
+wird das an Position <font color="#000077"><tt>index</tt></font> stehende
+Zeichen entfernt und der <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>
+um ein Zeichen verk&uuml;rzt. <a name="ixa100699"><a href="index_d.html#ixb100551"><font color=#000080><tt>delete</tt></font></a></a>
+entfernt den Teilstring, der von Position <font color="#000077"><tt>start</tt></font>
+bis <font color="#000077"><tt>end</tt></font> reicht, aus dem <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>
+und verk&uuml;rzt ihn um die entsprechende Anzahl Zeichen. 
+
+<!-- Section -->
+
+<a name="veraendernstringbuilder"></a>
+<h3>12.4.4 Ver&auml;ndern von Elementen </h3>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+void setCharAt(int index, char c)
+  throws StringIndexOutOfBoundsException
+
+public StringBuilder replace(int start, int end, String str)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/StringBuilder.html" onClick="this.href=getApiDoc('java.lang.StringBuilder')"><font color="#660066" size=-1>java.lang.StringBuilder</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit der Methode <a name="ixa100700"><a href="index_s.html#ixb100552"><font color=#000080><tt>setCharAt</tt></font></a></a>
+wird das an Position <font color="#000077"><tt>index</tt></font> stehende
+Zeichen durch das Zeichen <font color="#000077"><tt>c</tt></font>
+ersetzt. Falls der <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>
+zu kurz ist (also <font color="#000077"><tt>index</tt></font> hinter
+das Ende des <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>-Objekts
+zeigt), l&ouml;st die Methode eine Ausnahme des Typs <a name="ixa100701"><a href="index_s.html#ixb100525"><font color=#000080><tt>StringIndexOutOfBoundsException</tt></font></a></a>
+aus. 
+
+<!-- Section -->
+
+<a name="sectlevel3id012004005"></a>
+<h3>12.4.5 L&auml;ngeninformationen </h3>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+int length()
+
+public int capacity()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/StringBuilder.html" onClick="this.href=getApiDoc('java.lang.StringBuilder')"><font color="#660066" size=-1>java.lang.StringBuilder</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa100702"><a href="index_l.html#ixb100286"><font color=#000080><tt>length</tt></font></a></a>
+liefert die L&auml;nge des Objekts, also die Anzahl der Zeichen, die
+im <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>
+enthalten sind. Mit <a name="ixa100703"><a href="index_c.html#ixb100553"><font color=#000080><tt>capacity</tt></font></a></a>
+wird die Gr&ouml;&szlig;e des belegten Pufferspeichers ermittelt.
+Dieser Wert ist typischerweise gr&ouml;&szlig;er als der von <a href="index_l.html#ixb100286"><font color=#000080><tt>length</tt></font></a>
+zur&uuml;ckgegebene Wert. 
+
+<!-- Section -->
+
+<a name="sectlevel3id012004006"></a>
+<h3>12.4.6 Konvertierung in einen String </h3>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+String toString()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/StringBuilder.html" onClick="this.href=getApiDoc('java.lang.StringBuilder')"><font color="#660066" size=-1>java.lang.StringBuilder</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa100704"></a> Nachdem die Konstruktion eines <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>-Objekts
+abgeschlossen ist, kann es mit Hilfe dieser Methode effizient in einen
+<a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+verwandelt werden. Die Methode legt dabei keine Kopie des <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>-Objekts
+an, sondern liefert einen Zeiger auf den internen Zeichenpuffer. Erst
+wenn der <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>
+erneut ver&auml;ndert werden soll, wird tats&auml;chlich eine Kopie
+erzeugt. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die sinnvolle Anwendung der Klassen <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+und <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>
+hat bei vielen Programmen gro&szlig;en Einfluss auf ihr Laufzeitverhalten.
+In <a href="k100327.html#kapiteltuning">Kapitel 52</a> gehen wir daher
+noch einmal auf die speziellen Performance-Aspekte beider Klassen
+ein und geben Hinweise zu ihrer sinnvollen Anwendung.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100076.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100079.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100081.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100084.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

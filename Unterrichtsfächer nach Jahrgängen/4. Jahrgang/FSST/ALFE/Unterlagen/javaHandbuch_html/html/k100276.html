@@ -1,0 +1,1974 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100274.html;106,k100275.html;107,k100277.html;108,k100278.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100274.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100275.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100277.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100278.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 43 - XML-Verarbeitung
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="xmlverarbeiten"></a>
+<h2>43.2 Verarbeiten von XML-Dokumenten mit Java </h2>
+<hr>
+<ul>
+<li><a href="k100276.html#xmlverarbeiten">43.2 Verarbeiten von XML-Dokumenten mit Java</a>
+<ul>
+<li><a href="k100276.html#sectlevel3id043002001">43.2.1 Document Object Model - DOM</a>
+<li><a href="k100276.html#sectlevel3id043002002">43.2.2 Simple API for XML - SAX</a>
+<li><a href="k100276.html#sectlevel3id043002003">43.2.3 Streaming API for XML - StAX</a>
+<li><a href="k100276.html#jaxb">43.2.4 Java Architecture for XML Binding - JAXB</a>
+</ul>
+</ul>
+<hr>
+
+<p>
+F&uuml;r die Verarbeitung von XML-Dokumenten mit Java gibt es diverse
+Standards, von denen JAXP<a name="ixa103076"></a> (Java API for XML
+Processing) sicherlich eine zentrale Rolle spielt. JAXP definiert
+drei verschiedene Programmierschnittstellen, um XML-Dokumente mit
+Java zu interpretieren: 
+<ul>
+<li>Mittels DOM<a name="ixa103077"></a> (Document Object Model) durch
+&Uuml;berf&uuml;hrung des Dokuments in eine baumartige Objektstruktur
+<li>Ereignisorientiert mittels SAX<a name="ixa103078"></a> (Simple
+API for XML)
+<li>Ereignisorientiert mittels StAX<a name="ixa103079"></a> (Streaming
+API for XML)
+</ul>
+
+<p>
+Alle drei Standards werden wir im Folgenden kennenlernen. Des Weiteren
+werden wir einen Blick auf JAXB<a name="ixa103080"></a> (Java Architecture
+for XML Binding) werfen, einen weiteren Standard f&uuml;r die Verarbeitung
+von XML-Dokumenten in Java. 
+
+<p>
+Xerces<a name="ixa103081"></a> von Apache ist eine bekannte Implementation
+aller drei JAXP-APIs und fester Bestandteil des Standard-JDK; eine
+Implementation von JAXB liegt dem JDK seit Version 6 bei. F&uuml;r
+die Beispiele in diesem Kapitel ben&ouml;tigen wir also keine Fremdbibliotheken,
+sondern wir st&uuml;tzen uns auf Features des aktuellen Standard-JDK.
+
+<p>
+In den folgenden Abschnitten werden die verschiedenen APIs an Hand
+eines einheitlichen Beispiels n&auml;her vorgestellt. Dazu soll mit
+Hilfe eines XML-Dokuments das Aussehen eines Swing-Fensters konfiguriert
+werden, in dem Titel, Schriftart, Hintergrund- und Vordergrundfarbe
+des Fensters mit XML-Mitteln eingestellt werden. Beim &Ouml;ffnen
+des Fensters soll die XML-Datei gelesen und die darin enthaltenen
+Einstellungen auf das Fenster angewendet werden. Diese XML-Datei sieht
+wie folgt aus: 
+<a name="fensterxml"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>&lt;?xml version=<font color="#0000FF">"1.0"</font> encoding=<font color="#0000FF">"iso-8859-15"</font>?&gt;
+<font color="#555555">002 </font>&lt;!DOCTYPE frame SYSTEM <font color="#0000FF">"config_jaxp.dtd"</font>&gt;
+<font color="#555555">003 </font>&lt;frame&gt;
+<font color="#555555">004 </font>  &lt;title&gt;XML-Beispiel&lt;/title&gt;
+<font color="#555555">005 </font>  &lt;font size=<font color="#0000FF">"11"</font>&gt;Arial&lt;/font&gt;
+<font color="#555555">006 </font>  &lt;fgcolor&gt;0&lt;/fgcolor&gt;
+<font color="#555555">007 </font>  &lt;bgcolor&gt;16777215&lt;/bgcolor&gt;
+<font color="#555555">008 </font>&lt;/frame&gt;</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/config_jaxp.xml"><font color="#000055" size=-1>config_jaxp.xml</font></a></td>
+</tr>
+</table>
+<i>
+Listing 43.17: XML-Dokument zur Konfiguration eines Swing-Fensters
+(config_jaxp.xml)</i></p>
+
+<p>
+Als Schriftart soll Arial 11 Punkt verwendet werden, die Vordergrundfarbe
+ist Schwarz, die Hintergrundfarbe Wei&szlig; und der Fenstertitel
+lautet "XML-Beispiel". Der Farbwert 16777215 steht f&uuml;r 2<sup>24</sup>-1,
+repr&auml;sentiert also den hexadezimalen Wert FFFFFF, der - als drei
+Bytes gelesen - die Farbkan&auml;le Rot, Gr&uuml;n und Blau auf ihre
+jeweils maximale Helligkeit einstellt. Nat&uuml;rlich k&ouml;nnen
+Sie die Werte beliebig &auml;ndern und sich (bei jedem erneuten Start
+des Fensters) ansehen, wie die Anpassungen sich auf das Aussehen des
+Fensters auswirken. 
+
+<p>
+Den Font werden wir mit der Methode <a href="index_g.html#ixb101208"><font color=#000080><tt>getFont</tt></font></a>
+aus dem Schriftarten-String innerhalb des XML-Dokuments generieren,
+die <font color="#000077"><tt>Color</tt></font>-Objekte mit der Methode
+<font color="#000077"><tt>decode</tt></font>: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static Font getFont(String nm)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Font.html" onClick="this.href=getApiDoc('java.awt.Font')"><font color="#660066" size=-1>java.awt.Font</font></a></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static Color decode(String nm)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Color.html" onClick="this.href=getApiDoc('java.awt.Color')"><font color="#660066" size=-1>java.awt.Color</font></a></td>
+</tr>
+</table>
+
+<p>
+Die passende DTD sieht so aus: 
+<a name="fensterdtd"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>&lt;?xml version=<font color="#0000FF">"1.0"</font> encoding=<font color="#0000FF">"iso-8859-15"</font>?&gt;
+<font color="#555555">002 </font>&lt;!ELEMENT frame (title, font, fgcolor, bgcolor)&gt;
+<font color="#555555">003 </font>
+<font color="#555555">004 </font>&lt;!-- Fenstertitel --&gt;
+<font color="#555555">005 </font>&lt;!ELEMENT title (#PCDATA)&gt;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font>&lt;!-- Schriftart --&gt;
+<font color="#555555">008 </font>&lt;!ELEMENT font (#PCDATA) &gt;
+<font color="#555555">009 </font>&lt;!ATTLIST font size CDATA <font color="#0000FF">"12"</font>&gt;
+<font color="#555555">010 </font>
+<font color="#555555">011 </font>&lt;!-- Vordergrundfarbe --&gt;
+<font color="#555555">012 </font>&lt;!ELEMENT fgcolor (#PCDATA)&gt;
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>&lt;!-- Hintergrundfarbe --&gt;
+<font color="#555555">015 </font>&lt;!ELEMENT bgcolor (#PCDATA)&gt;</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/config_jaxp.dtd"><font color="#000055" size=-1>config_jaxp.dtd</font></a></td>
+</tr>
+</table>
+<i>
+Listing 43.18: DTD zur Konfiguration eines Fensters (config_jaxp.dtd)</i></p>
+
+<p>
+Wir werden sie f&uuml;r alle drei JAXP-APIs anwenden. F&uuml;r die
+Implementation nach dem JAXB-Standard werden wir sp&auml;ter eine
+eigene XSD entwickeln. 
+
+<p>
+Das folgende Listing zeigt den Rumpf unseres Fensterprogramms. Die
+zun&auml;chst leere Methode <font color="#000077"><tt>readConfig</tt></font>
+werden wir in den folgenden Abschnitten ausprogrammieren, indem wir
+den jeweils passenden Code aus den verschiedenen XML-APIs einf&uuml;gen.
+<a name="xmlwindow"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4319.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4319 <font color="#0000AA">extends</font> JFrame
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">private</font> String title;
+<font color="#555555">009 </font>  <font color="#0000AA">private</font> Color fgcolor;
+<font color="#555555">010 </font>  <font color="#0000AA">private</font> Color bgcolor;
+<font color="#555555">011 </font>  <font color="#0000AA">private</font> Font font;
+<font color="#555555">012 </font>
+<font color="#555555">013 </font>  <font color="#0000AA">public</font> Listing4319()
+<font color="#555555">014 </font>  {
+<font color="#555555">015 </font>    readConfig();
+<font color="#555555">016 </font>
+<font color="#555555">017 </font>    setTitle(title);
+<font color="#555555">018 </font>
+<font color="#555555">019 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter());
+<font color="#555555">020 </font>    JLabel label = <font color="#0000AA">new</font> JLabel(<font color="#0000FF">"Hello, World"</font>, JLabel.CENTER);
+<font color="#555555">021 </font>    label.setPreferredSize(<font color="#0000AA">new</font> Dimension(200, 200));
+<font color="#555555">022 </font>
+<font color="#555555">023 </font>    Container pane = getContentPane();
+<font color="#555555">024 </font>    pane.setLayout(<font color="#0000AA">new</font> FlowLayout());
+<font color="#555555">025 </font>    pane.add(label);
+<font color="#555555">026 </font>
+<font color="#555555">027 </font>    pane.setBackground(bgcolor);
+<font color="#555555">028 </font>    pane.setForeground(fgcolor);
+<font color="#555555">029 </font>    label.setFont(font);
+<font color="#555555">030 </font>
+<font color="#555555">031 </font>    pack();
+<font color="#555555">032 </font>  }
+<font color="#555555">033 </font>
+<font color="#555555">034 </font>  <font color="#0000AA">private</font> <font color="#006699">void</font> readConfig()
+<font color="#555555">035 </font>  {
+<font color="#555555">036 </font>    <font color="#00AA00">// ... zun&auml;chst leer</font>
+<font color="#555555">037 </font>  }
+<font color="#555555">038 </font>
+<font color="#555555">039 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args) 
+<font color="#555555">040 </font>  {
+<font color="#555555">041 </font>    Listing4319 window = <font color="#0000AA">new</font> Listing4319();
+<font color="#555555">042 </font>    window.setVisible(<font color="#006699">true</font>);
+<font color="#555555">043 </font>  }
+<font color="#555555">044 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4319.java"><font color="#000055" size=-1>Listing4319.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 43.19: Rumpf-Anwendung</i></p>
+
+<p>
+Das Beispielprogramm erzeugt ein Fenster mit dem gew&uuml;nschten
+Titel, der definierten Hinter- und Vordergrundfarbe und dem angegebenen
+Font. Das folgende Bild zeigt das Fenster, wenn es mit dem Original-XML-Dokument
+konfiguriert wurde: wei&szlig;er Hintergrund, schwarze Vordergrundfarbe,
+Schriftart Arial 11 Punkt und die entsprechende Titelzeile. 
+<p>
+<a name="xmlconfigfenster"></a>
+<img src="images/XML-Beispiel.gif">
+<p>
+
+<p><i>
+Abbildung 43.1: Mittels XML konfiguriertes Fenster </i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+In diesem Beispiel (wie auch in vielen anderen in diesem Buch) wird
+der Einfachheit halber die in <a href="k100159.html#fensterschliessen">Abschnitt 24.2.4</a>
+vorgestellte Klasse <a href="index_w.html#ixb100136"><font color=#000080><tt>WindowClosingAdapter</tt></font></a>
+verwendet, um einen Listener zum Schlie&szlig;en des Fensters zu registrieren.
+Damit sich ein solches Beispiel kompilieren l&auml;sst, muss die Datei
+<font color="#660099">WindowClosingAdapter.java</font> im aktuellen
+Verzeichnis vorhanden sein. Sie befindet sich auf der DVD zum Buch
+oder in <a href="k100159.html#windowclosingadapter">Listing 24.2</a>.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id043002001"></a>
+<h3>43.2.1 Document Object Model - DOM<a name="ixa103082"></a><a name="ixa103083"></a>
+</h3>
+
+<p>
+Als Erstes wollen wir die XML-Konfigurationsdatei mit der DOM-Schnittstelle
+verarbeiten. DOM ist ein programmiersprachenunabh&auml;ngiger Standard,
+dessen zentraler Gedanke es ist, das XML-Dokument in den Hauptspeicher
+zu laden und dort in Form eines Objektbaums zur Verf&uuml;gung zu
+stellen. Ein solcher DOM-Baum l&auml;sst sich mit wenigen Zeilen Java-Code
+aus der XML-Datei erstellen und kann mit Hilfe geeigneter Java-Methoden
+weiter verarbeitet werden. Da das komplette Dokument im Hauptspeicher
+liegt, ist DOM f&uuml;r gr&ouml;&szlig;ere XML-Dateien eher weniger
+gut geeignet. 
+
+<p>
+Die Urspr&uuml;nge von DOM reichen bis zu den ersten Gehversuchen
+des dynamischen Webs zur&uuml;ck. Mit Hilfe von JavaScript kann man
+n&auml;mlich schon seit vielen Jahren Webseiten ver&auml;ndern, indem
+man auf den DOM-Baum des HTML-Dokuments zugreift und diesen zur Laufzeit
+ver&auml;ndert. DOM ist mittlerweile ein W3C<a name="ixa103084"></a>-Standard
+und eine Java-Implementation des Standards ist seit der Version 1.4
+fester Bestandteil des JDK. 
+
+<p>
+Basis aller XML-APIs ist der XML-Parser<a name="ixa103085"></a>, der
+den Eingabestrom in seine grammatikalischen Bestandteile zerlegt.
+Er liegt im Package <a name="ixa103086"><a href="index_j.html#ixb102290"><font color=#000080><tt>javax.xml.parsers</tt></font></a></a>.
+Uns interessieren darin die Klassen <a name="ixa103087"><a href="index_d.html#ixb102291"><font color=#000080><tt>DocumentBuilder</tt></font></a></a>
+zum Erzeugen des DOM-Baums und <a name="ixa103088"><a href="index_d.html#ixb102292"><font color=#000080><tt>DocumentBuilderFactory</tt></font></a></a>,
+um den <a href="index_d.html#ixb102291"><font color=#000080><tt>DocumentBuilder</tt></font></a>
+zu erzeugen (vgl. das Factory-Design-Pattern, <a href="k100074.html#factorypattern">Abschnitt 11.4.4</a>).
+Eine <a href="index_d.html#ixb102292"><font color=#000080><tt>DocumentBuilderFactory</tt></font></a>
+erzeut man mit Hilfe ihrer statischen Methode <a href="index_n.html#ixb102293"><font color=#000080><tt>newInstance</tt></font></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static DocumentBuilderFactory newInstance()
+
+public DocumentBuilder newDocumentBuilder() 
+  throws ParserConfigurationException
+
+public void setValidating(boolean validating)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/xml/parsers/DocumentBuilderFactory.html" onClick="this.href=getApiDoc('javax.xml.parsers.DocumentBuilderFactory')"><font color="#660066" size=-1>javax.xml.parsers.DocumentBuilderFactory</font></a></td>
+</tr>
+</table>
+
+<p>
+Der DOM-XML-Parser stellt verschiedene Methoden zur Verf&uuml;gung,
+um das XML-Dokument einzulesen und in einen DOM-Baum zu verwandeln:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Document parse(File f) 
+  throws SAXException, IOException
+  
+public Document parse(InputSource is) 
+  throws SAXException, IOException
+  
+public Document parse(InputStream is) 
+  throws SAXException, IOException
+  
+public Document parse(String uri) 
+  throws SAXException, IOException
+
+public void setEntityResolver(EntityResolver e)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/xml/parsers/DocumentBuilder.html" onClick="this.href=getApiDoc('javax.xml.parsers.DocumentBuilder')"><font color="#660066" size=-1>javax.xml.parsers.DocumentBuilder</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Interfaces des Objektbaums liegen im Package <a name="ixa103089"><a href="index_o.html#ixb102294"><font color=#000080><tt>org.w3c.dom</tt></font></a></a>,
+unter anderem liegt dort das Interface <font color="#000077"><tt>Document</tt></font>,
+das den eingelesenen Baum repr&auml;sentiert. Es folgt die erste Version
+unserer <font color="#000077"><tt>readConfig</tt></font>-Methode zur
+Vervollst&auml;ndigung von <a href="k100276.html#xmlwindow">Listing 43.19</a>
+nach DOM-Standard: 
+<a name="readconfigdom1"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>  <font color="#0000AA">private</font> <font color="#006699">void</font> readConfig() 
+<font color="#555555">002 </font>  {
+<font color="#555555">003 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">004 </font>      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+<font color="#555555">005 </font>      factory.setValidating(<font color="#006699">true</font>);
+<font color="#555555">006 </font>      DocumentBuilder builder = factory.newDocumentBuilder();
+<font color="#555555">007 </font>      builder.setEntityResolver(<font color="#0000AA">new</font> EntityResolver()  {
+<font color="#555555">008 </font>        <font color="#0000AA">public</font> InputSource resolveEntity(String publicId, String systemId)
+<font color="#555555">009 </font>            <font color="#0000AA">throws</font> SAXException, IOException {
+<font color="#555555">010 </font>          <font color="#0000AA">if</font> (systemId.endsWith(<font color="#0000FF">"config_jaxp.dtd"</font>))
+<font color="#555555">011 </font>            <font color="#0000AA">return</font> <font color="#0000AA">new</font> InputSource(
+<font color="#555555">012 </font>            	getClass().getResourceAsStream(<font color="#0000FF">"config_jaxp.dtd"</font>));
+<font color="#555555">013 </font>          <font color="#0000AA">return</font> <font color="#006699">null</font>;
+<font color="#555555">014 </font>        }
+<font color="#555555">015 </font>      });
+<font color="#555555">016 </font>      Document document = builder.parse(getClass().getResourceAsStream(
+<font color="#555555">017 </font>          <font color="#0000FF">"config_jaxp.xml"</font>));
+<font color="#555555">018 </font>          
+<font color="#555555">019 </font>      <font color="#00AA00">// fortsetzen: Document verarbeiten</font>
+<font color="#555555">020 </font>    }
+<font color="#555555">021 </font>    <font color="#0000AA">catch</font> (ParserConfigurationException x) {
+<font color="#555555">022 </font>      x.printStackTrace();
+<font color="#555555">023 </font>    }
+<font color="#555555">024 </font>    <font color="#0000AA">catch</font> (SAXException x) {
+<font color="#555555">025 </font>      x.printStackTrace();
+<font color="#555555">026 </font>    }
+<font color="#555555">027 </font>    <font color="#0000AA">catch</font> (IOException x) {
+<font color="#555555">028 </font>      x.printStackTrace();
+<font color="#555555">029 </font>    }
+<font color="#555555">030 </font>  }</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 43.20: Erster Entwurf der readConfig-Methode</i></p>
+
+<p>
+Zun&auml;chst erzeugen wir eine neue <a href="index_d.html#ixb102292"><font color=#000080><tt>DocumentBuilderFactory</tt></font></a>
+und konfigurieren diese so, dass der entstehende <font color="#000077"><tt>DocumentBuilder</tt></font>
+<i>validierend</i> ist, dass er also beim Einlesen der XML-Datei pr&uuml;ft,
+ob diese den Vorgaben ihrer DTD entspricht. Es gen&uuml;gt dabei nicht,
+<font color="#000077"><tt>setValidating(true)</tt></font> aufzurufen,
+sondern zus&auml;tzlich muss ein <a href="index_e.html#ixb102295"><font color=#000080><tt>ErrorHandler</tt></font></a>
+gesetzt werden, der entscheidet, was mit auftretenden Exceptions passieren
+soll. Andernfalls w&uuml;rde man auf der Konsole folgende Meldung
+erhalten (und die Fehler selbst w&uuml;rden stillschweigend ignoriert):
+<font color="#333300">
+<pre>
+Warning: validation was turned on but an org.xml.sax.ErrorHandler was not
+set, which is probably not what is desired. [...]
+</pre>
+</font>
+
+<p>
+Das Interface besitzt drei Methoden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void warning(SAXParseException exception) 
+  throws SAXException
+  
+public void error(SAXParseException exception) 
+  throws SAXException
+  
+public void fatalError(SAXParseException exception) 
+  throws SAXException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/org/xml/sax/ErrorHandler.html" onClick="this.href=getApiDoc('org.xml.sax.ErrorHandler')"><font color="#660066" size=-1>org.xml.sax.ErrorHandler</font></a></td>
+</tr>
+</table>
+
+<p>
+Im einfachsten Fall implementiert man den <a name="ixa103090"><a href="index_e.html#ixb102295"><font color=#000080><tt>ErrorHandler</tt></font></a></a>
+so, dass man die Parameter-Exception wirft. In <a href="k100276.html#readconfigdom2">Listing 43.21</a>
+werden wir diesen Weg w&auml;hlen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Das Validieren gegen die Grammatik, in unserem Fall gegen die DTD,
+kann das Einlesen des Dokuments erheblich verlangsamen. In der Praxis
+wird man daher mitunter abw&auml;gen m&uuml;ssen, ob die an und f&uuml;r
+sich recht n&uuml;tzliche Pr&uuml;fung aus Performance-Gr&uuml;nden
+vielleicht eher abgeschaltet werden sollte.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Vor dem Aufruf der <a href="index_p.html#ixb100941"><font color=#000080><tt>parse</tt></font></a>-Methode,
+mit der wir die XML-Datei einlesen, setzen wir noch einen <a name="ixa103091"><a href="index_e.html#ixb102296"><font color=#000080><tt>EntityResolver</tt></font></a></a>.
+Er hat die Aufgabe, die DTD von der richtigen Stelle im Dateisystem
+zu lesen. Der Verweis auf die DTD in unserer XML-Datei ist relativ,
+sie wird also in dem Verzeichnis gesucht, aus dem das Java-Programm
+gestartet wird. 
+
+<p>
+Am <a name="ixa103087"><a href="index_d.html#ixb102291"><font color=#000080><tt>DocumentBuilder</tt></font></a></a>
+rufen wir anschlie&szlig;end die <a name="ixa103092"><a href="index_p.html#ixb100941"><font color=#000080><tt>parse</tt></font></a></a>-Methode
+auf, um die Datei <font color="#660099">config_jaxp.xml</font> einzulesen.
+Das Ergebnis des Aufrufs ist ein Objekt vom Typ <a name="ixa103093"><a href="index_d.html#ixb101929"><font color=#000080><tt>Document</tt></font></a></a>,
+das den DOM-Baum f&uuml;r das eingelesene XML-Dokument repr&auml;sentiert.
+
+<p>
+Das <a href="index_d.html#ixb101929"><font color=#000080><tt>Document</tt></font></a>-Interface
+ist vom Interface <a name="ixa103094"><a href="index_n.html#ixb102297"><font color=#000080><tt>org.w3c.dom.Node</tt></font></a></a>
+abgeleitet, das auch alle anderen Knoten des DOM-Baums implementieren.
+Am <a href="index_d.html#ixb101929"><font color=#000080><tt>Document</tt></font></a>-Interface
+interessiert uns zun&auml;chst nur die Methode, mit der wir Zugriff
+auf das Wurzelelement haben: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Element getDocumentElement()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/org/w3c/dom/Document.html" onClick="this.href=getApiDoc('org.w3c.dom.Document')"><font color="#660066" size=-1>org.w3c.dom.Document</font></a></td>
+</tr>
+</table>
+
+<p>
+Wenn wir uns das XML-Dokument aus <a href="k100276.html#fensterxml">Listing 43.17</a>
+als Baum vorstellen, enth&auml;lt das <font color="#000077"><tt>frame</tt></font>-Element
+(also die Wurzel) selbst keine verwertbaren Informationen. Wichtiger
+sind f&uuml;r uns die Kindknoten <font color="#000077"><tt>title</tt></font>,
+<font color="#000077"><tt>font</tt></font>, <font color="#000077"><tt>fgcolor</tt></font>
+und <font color="#000077"><tt>bgcolor</tt></font>. Der Zugriff darauf
+erfolgt mit Hilfe der Interfaces <a name="ixa103094"><a href="index_n.html#ixb102297"><font color=#000080><tt>Node</tt></font></a></a>
+und <a name="ixa103095"><a href="index_e.html#ixb102298"><font color=#000080><tt>Element</tt></font></a></a>.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public String getNodeName()
+
+public String getTextContent()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/org/w3c/dom/Node.html" onClick="this.href=getApiDoc('org.w3c.dom.Node')"><font color="#660066" size=-1>org.w3c.dom.Node</font></a></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public String getAttribute(String name)
+
+public NodeList getElementsByTagName(String name)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/org/w3c/dom/Element.html" onClick="this.href=getApiDoc('org.w3c.dom.Element')"><font color="#660066" size=-1>org.w3c.dom.Element</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa103096"><a href="index_g.html#ixb102299"><font color=#000080><tt>getTextContent</tt></font></a></a>
+beschaffen wir uns den Textinhalt der Elemente. F&uuml;r die Fontgr&ouml;&szlig;e
+ben&ouml;tigen wir Zugriff auf den Wert des Attributs <font color="#000077"><tt>size</tt></font>,
+den wir mit der Methode <a name="ixa103097"><a href="index_g.html#ixb102300"><font color=#000080><tt>getAttribute</tt></font></a></a>
+erhalten. Au&szlig;erdem verwenden wir die Methode <a name="ixa103098"><a href="index_g.html#ixb102301"><font color=#000080><tt>getElementsByTagName</tt></font></a></a>
+zum Zugriff auf die Kindknoten. 
+
+<p>
+Nun haben wir alles zusammen, was wir ben&ouml;tigen, um die <font color="#000077"><tt>readConfig</tt></font>-Methode
+in der DOM-Variante auszuprogrammieren: 
+<a name="readconfigdom2"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4321.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.io.IOException;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">007 </font><font color="#0000AA">import</font> javax.xml.parsers.*;
+<font color="#555555">008 </font>
+<font color="#555555">009 </font><font color="#0000AA">import</font> org.w3c.dom.*;
+<font color="#555555">010 </font><font color="#0000AA">import</font> org.xml.sax.*;
+<font color="#555555">011 </font>
+<font color="#555555">012 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4321 <font color="#0000AA">extends</font> JFrame
+<font color="#555555">013 </font>{
+<font color="#555555">014 </font>  <font color="#0000AA">private</font> String title;
+<font color="#555555">015 </font>  <font color="#0000AA">private</font> Color fgcolor;
+<font color="#555555">016 </font>  <font color="#0000AA">private</font> Color bgcolor;
+<font color="#555555">017 </font>  <font color="#0000AA">private</font> Font font;
+<font color="#555555">018 </font>
+<font color="#555555">019 </font>  <font color="#0000AA">public</font> Listing4321()
+<font color="#555555">020 </font>  {
+<font color="#555555">021 </font>    readConfig();
+<font color="#555555">022 </font>
+<font color="#555555">023 </font>    setTitle(title);
+<font color="#555555">024 </font>
+<font color="#555555">025 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter());
+<font color="#555555">026 </font>    JLabel label = <font color="#0000AA">new</font> JLabel(<font color="#0000FF">"Hello, World"</font>, JLabel.CENTER);
+<font color="#555555">027 </font>    label.setPreferredSize(<font color="#0000AA">new</font> Dimension(200, 200));
+<font color="#555555">028 </font>
+<font color="#555555">029 </font>    Container pane = getContentPane();
+<font color="#555555">030 </font>    pane.setLayout(<font color="#0000AA">new</font> FlowLayout());
+<font color="#555555">031 </font>    pane.add(label);
+<font color="#555555">032 </font>
+<font color="#555555">033 </font>    pane.setBackground(bgcolor);
+<font color="#555555">034 </font>    pane.setForeground(fgcolor);
+<font color="#555555">035 </font>    label.setFont(font);
+<font color="#555555">036 </font>
+<font color="#555555">037 </font>    pack();
+<font color="#555555">038 </font>  }
+<font color="#555555">039 </font>
+<font color="#555555">040 </font>  <font color="#0000AA">private</font> <font color="#006699">void</font> readConfig()
+<font color="#555555">041 </font>  {
+<font color="#555555">042 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">043 </font>      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+<font color="#555555">044 </font>      factory.setValidating(<font color="#006699">true</font>);
+<font color="#555555">045 </font>      DocumentBuilder builder = factory.newDocumentBuilder();
+<font color="#555555">046 </font>      builder.setEntityResolver(<font color="#0000AA">new</font> EntityResolver()
+<font color="#555555">047 </font>      {
+<font color="#555555">048 </font>        <font color="#0000AA">public</font> InputSource resolveEntity(String publicId, String systemId)
+<font color="#555555">049 </font>            <font color="#0000AA">throws</font> SAXException, IOException
+<font color="#555555">050 </font>        {
+<font color="#555555">051 </font>          <font color="#0000AA">if</font> (systemId.endsWith(<font color="#0000FF">"config_jaxp.dtd"</font>))
+<font color="#555555">052 </font>            <font color="#0000AA">return</font> <font color="#0000AA">new</font> InputSource(
+<font color="#555555">053 </font>              getClass().getResourceAsStream(<font color="#0000FF">"config_jaxp.dtd"</font>));
+<font color="#555555">054 </font>          <font color="#0000AA">return</font> <font color="#006699">null</font>;
+<font color="#555555">055 </font>        }
+<font color="#555555">056 </font>      });
+<font color="#555555">057 </font>      builder.setErrorHandler(<font color="#0000AA">new</font> ErrorHandler()
+<font color="#555555">058 </font>      {
+<font color="#555555">059 </font>        <font color="#0000AA">public</font> <font color="#006699">void</font> warning(SAXParseException exception) <font color="#0000AA">throws</font> SAXException
+<font color="#555555">060 </font>        {
+<font color="#555555">061 </font>        }
+<font color="#555555">062 </font>        <font color="#0000AA">public</font> <font color="#006699">void</font> fatalError(SAXParseException exception) <font color="#0000AA">throws</font> SAXException
+<font color="#555555">063 </font>        {
+<font color="#555555">064 </font>          <font color="#0000AA">throw</font> exception;
+<font color="#555555">065 </font>        }
+<font color="#555555">066 </font>        <font color="#0000AA">public</font> <font color="#006699">void</font> error(SAXParseException exception) <font color="#0000AA">throws</font> SAXException
+<font color="#555555">067 </font>        {
+<font color="#555555">068 </font>          <font color="#0000AA">throw</font> exception;
+<font color="#555555">069 </font>        }
+<font color="#555555">070 </font>      });
+<font color="#555555">071 </font>      Document document = builder.parse(getClass().getResourceAsStream(
+<font color="#555555">072 </font>          <font color="#0000FF">"config_jaxp.xml"</font>));
+<font color="#555555">073 </font>
+<font color="#555555">074 </font>      Element frameElement = document.getDocumentElement();
+<font color="#555555">075 </font>      Element titleElement = (Element) frameElement.getElementsByTagName(
+<font color="#555555">076 </font>          <font color="#0000FF">"title"</font>).item(0);
+<font color="#555555">077 </font>      title = titleElement.getTextContent().trim();
+<font color="#555555">078 </font>
+<font color="#555555">079 </font>      Element fontElement = (Element) frameElement.getElementsByTagName(<font color="#0000FF">"font"</font>)
+<font color="#555555">080 </font>          .item(0);
+<font color="#555555">081 </font>      font = <font color="#0000AA">new</font> Font(fontElement.getTextContent().trim(), Font.PLAIN,
+<font color="#555555">082 </font>          Integer.parseInt(fontElement.getAttribute(<font color="#0000FF">"size"</font>).trim()));
+<font color="#555555">083 </font>
+<font color="#555555">084 </font>      Element fgcolorElement = (Element) frameElement.getElementsByTagName(
+<font color="#555555">085 </font>          <font color="#0000FF">"fgcolor"</font>).item(0);
+<font color="#555555">086 </font>      fgcolor = Color.decode(fgcolorElement.getTextContent().trim());
+<font color="#555555">087 </font>
+<font color="#555555">088 </font>      Element bgcolorElement = (Element) frameElement.getElementsByTagName(
+<font color="#555555">089 </font>          <font color="#0000FF">"bgcolor"</font>).item(0);
+<font color="#555555">090 </font>      bgcolor = Color.decode(bgcolorElement.getTextContent().trim());
+<font color="#555555">091 </font>    }
+<font color="#555555">092 </font>    <font color="#0000AA">catch</font> (ParserConfigurationException x) {
+<font color="#555555">093 </font>      x.printStackTrace();
+<font color="#555555">094 </font>    }
+<font color="#555555">095 </font>    <font color="#0000AA">catch</font> (SAXException x) {
+<font color="#555555">096 </font>      x.printStackTrace();
+<font color="#555555">097 </font>    }
+<font color="#555555">098 </font>    <font color="#0000AA">catch</font> (IOException x) {
+<font color="#555555">099 </font>      x.printStackTrace();
+<font color="#555555">100 </font>    }
+<font color="#555555">101 </font>  }
+<font color="#555555">102 </font>
+<font color="#555555">103 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">104 </font>  {
+<font color="#555555">105 </font>    Listing4321 window = <font color="#0000AA">new</font> Listing4321();
+<font color="#555555">106 </font>    window.setVisible(<font color="#006699">true</font>);
+<font color="#555555">107 </font>  }
+<font color="#555555">108 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4321.java"><font color="#000055" size=-1>Listing4321.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 43.21: Umsetzung nach DOM</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Auf dem R&uuml;ckgabewert von <a href="index_g.html#ixb102299"><font color=#000080><tt>getTextContent</tt></font></a>
+rufen wir die Methode <a href="index_t.html#ixb100527"><font color=#000080><tt>trim</tt></font></a>
+auf, um Leerzeichen und Zeilenumbr&uuml;che zu entfernen. <a name="ixa103098"><a href="index_g.html#ixb102301"><font color=#000080><tt>getElementsByTagName</tt></font></a></a>
+liefert <i>alle</i> Elemente im Baum mit dem angegebenen Namen, also
+unter Umst&auml;nden mehr als eins. In unserem Beispiel ist das jedoch
+unerheblich, weil jedes Tag einen eindeutigen Namen besitzt. </td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Um das Programm auszuf&uuml;hren, legen wir die <font color="#660099">config_jaxp.xml</font>
+und die <font color="#660099">config_jaxp.dtd</font> (<a href="k100276.html#fensterdtd">Listing 43.18</a>)
+im gleichen Verzeichnis ab wie das Java-Programm. Wenn wir nun das
+Programm ausf&uuml;hren, erscheint ein Swing-Fenster mit dem Titel,
+der Hintergrund- und Vordergrundfarbe sowie dem Font aus der <font color="#660099">config_jaxp.xml</font>,
+genau wie in <a href="k100276.html#xmlconfigfenster">Abbildung 43.1</a>
+zu sehen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Abschlie&szlig;end sei anzumerken, dass sich DOM auch f&uuml;r die
+&#187;Gegenrichtung&#171; verwenden l&auml;sst, also zum <i>Erzeugen</i>
+von XML-Dokumenten aus dem Objektmodell. DOM-B&auml;ume lassen sich
+zudem recht komfortabel mit sog. XPATH<a name="ixa103099"></a>-Ausdr&uuml;cken
+durchsuchen, deren Erl&auml;uterung hier jedoch den Rahmen sprengen
+w&uuml;rde. Au&szlig;erdem ist zu erw&auml;hnen, dass es mit JDOM<a name="ixa103100"></a>
+(<a href="http://www.jdom.org">http://www.jdom.org</a>) von Jason
+Hunter und anderen eine Alternative zu DOM gibt, die im Gegensatz
+zu DOM jedoch kein offizieller Standard und auch nicht Bestandteil
+des JDK ist.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id043002002"></a>
+<h3>43.2.2 Simple API for XML - SAX<a name="ixa103101"></a> </h3>
+
+<p>
+SAX steht f&uuml;r <a name="ixa103102"><i>Simple API for XML</i></a>
+und stellt wie DOM eine Programmierschnittstelle zum Einlesen von
+XML-Dokumenten dar. SAX ist zwar kein offizieller Standard einer unabh&auml;ngigen
+Organisation, daf&uuml;r ist es programmiersprachenunabh&auml;ngig
+und besitzt Implementationen f&uuml;r diverse Programmiersprachen.
+Seit der Version 1.4 ist es fester Bestandteil des JDK. Im Gegensatz
+zu DOM und JDOM erstellt der Parser hier keinen Objektbaum, sondern
+die Verarbeitung der XML-Datei erfolgt synchron mit ihrem Einlesen.
+Dazu registriert sich das verarbeitende Programm direkt am Parser
+und empf&auml;ngt w&auml;hrend des Einlesens der Elemente, Attribute
+usw. fortw&auml;hrend Ereignisse, die es dann nach Bedarf verarbeitet.
+
+<p>
+Abgesehen vom Parser und seiner Factory liegen die Klassen und Interfaces
+dieses API im Package <a name="ixa103103"><a href="index_o.html#ixb102305"><font color=#000080><tt>org.xml.sax</tt></font></a></a>.
+Wie bei DOM l&auml;sst sich der <a name="ixa103104"><a href="index_s.html#ixb102306"><font color=#000080><tt>SAXParser</tt></font></a></a>
+nicht per Konstruktor erzeugen, sondern man ben&ouml;tigt dazu die
+<a name="ixa103105"><a href="index_s.html#ixb102307"><font color=#000080><tt>SAXParserFactory</tt></font></a></a>.
+Auch die Fabrik erzeugt man nicht &uuml;ber einen Konstruktor, sondern
+mit Hilfe einer statischen Methode: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static SAXParserFactory newInstance()
+
+public SAXParser newSAXParser() 
+  throws ParserConfigurationException, SAXException
+
+public void setValidating(boolean validating)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/xml/parsers/SAXParserFactory.html" onClick="this.href=getApiDoc('javax.xml.parsers.SAXParserFactory')"><font color="#660066" size=-1>javax.xml.parsers.SAXParserFactory</font></a></td>
+</tr>
+</table>
+
+<p>
+Der Parser besitzt eine Reihe von Methoden, um ein XML-Dokument einzulesen:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void parse(File f, DefaultHandler dh) 
+  throws SAXException, IOException
+
+public void parse(InputSource is, DefaultHandler dh)
+  throws SAXException, IOException
+
+public void parse(InputStream is, DefaultHandler dh) 
+  throws SAXException, IOException
+
+public void parse(String uri, DefaultHandler dh) 
+  throws SAXException, IOException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/xml/parsers/SAXParser.html" onClick="this.href=getApiDoc('javax.xml.parsers.SAXParser')"><font color="#660066" size=-1>javax.xml.parsers.SAXParser</font></a></td>
+</tr>
+</table>
+
+<p>
+Auff&auml;lligster Unterschied zum DOM-API ist, dass die <a href="index_p.html#ixb100941"><font color=#000080><tt>parse</tt></font></a>-Methoden
+des SAX-Parser einen <a name="ixa103106"><a href="index_d.html#ixb102308"><font color=#000080><tt>DefaultHandler</tt></font></a></a>
+ben&ouml;tigen, der eine Reihe von Callback-Methoden besitzt, die
+vom SAX-Parser aufgerufen werden. Der <a href="index_d.html#ixb102308"><font color=#000080><tt>DefaultHandler</tt></font></a>
+ist eine Klasse mit einer Reihe von leeren Methoden, die einige Interfaces
+implementieren. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void startDocument() throws SAXException
+public void endDocument() throws SAXException
+
+public void startElement(String uri, String localName,
+                         String qName, Attributes attributes)
+  throws SAXException
+  
+public void endElement(String uri, String localName, String qName)
+  throws SAXException                  
+        
+public void characters(char ch[], int start, int length)
+  throws SAXException
+        
+public InputSource resolveEntity(String publicId, String systemId)
+  throws IOException, SAXException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/org/xml/sax/helpers/DefaultHandler.html" onClick="this.href=getApiDoc('org.xml.sax.helpers.DefaultHandler')"><font color="#660066" size=-1>org.xml.sax.helpers.DefaultHandler</font></a></td>
+</tr>
+</table>
+
+<p>
+Um mit der SAX-API ein XML-Dokument zu verarbeiten, m&uuml;ssen wir
+eine eigene Klasse aus <a href="index_d.html#ixb102308"><font color=#000080><tt>DefaultHandler</tt></font></a>
+ableiten und die n&ouml;tigen Methoden nach unseren Bed&uuml;rfnissen
+&uuml;berschreiben. Wie die Namen der Methoden vermuten lassen, wird
+<a name="ixa103107"><a href="index_s.html#ixb102309"><font color=#000080><tt>startElement</tt></font></a></a>
+bei jedem &ouml;ffnenden, <a name="ixa103108"><a href="index_e.html#ixb102310"><font color=#000080><tt>endElement</tt></font></a></a>
+bei jedem schlie&szlig;enden Tag gerufen usw. Die folgende Skizze
+zeigt exemplarisch, in welcher Reihenfolge die Callback-Methoden aufgerufen
+werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+startDocument
+startElement      &lt;frame&gt; 
+startElement        &lt;title&gt;
+characters            XML-Beispiel
+endElement          &lt;/title&gt; 
+                    ... 
+endElement        &lt;/frame&gt;
+endDocument
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+Da immer nur ein kleiner Ausschnitt der einzulesenden Teile im Hauptspeicher
+gehalten wird, verbraucht der SAX-Parser weniger Ressourcen als sein
+DOM-Pendant und kann daher auch f&uuml;r sehr gro&szlig;e XML-Dokumente
+verwendet werden. Nachteilig ist dabei, dass die SAX-Implementation
+tendenziell umso schwieriger wird, je mehr Informationen &uuml;ber
+das Umfeld eines Elements ben&ouml;tigt werden. Denn mit dem SAX-Parser
+gibt es keine M&ouml;glichkeit, wahlfrei im XML-Dokument (oder -Baum)
+zu navigieren: Das Dokument wird ein einziges Mal von vorne bis hinten
+durchgelesen! Je gr&ouml;&szlig;er der ben&ouml;tigte Kontext ist,
+desto eher sollte man daher erw&auml;gen, das XML-Dokument mit einer
+der APIs zu verarbeiten, die eine freie Navigation erm&ouml;glichen,
+also zum Beispiel mit DOM oder JAXB. 
+
+<p>
+F&uuml;r unsere Beispielanwendung sind die Methoden <a href="index_s.html#ixb102309"><font color=#000080><tt>startElement</tt></font></a>
+und <a name="ixa103109"><a href="index_c.html#ixb102311"><font color=#000080><tt>characters</tt></font></a></a>
+zu &uuml;berschreiben. Damit wir den Text des Elements, den wir in
+der Methode <a href="index_c.html#ixb102311"><font color=#000080><tt>characters</tt></font></a>
+empfangen, sinnvoll interpretieren k&ouml;nnen, m&uuml;ssen wir uns
+in <a href="index_s.html#ixb102309"><font color=#000080><tt>startElement</tt></font></a>
+den Namen des aktuellen Elements merken. Au&szlig;erdem ben&ouml;tigen
+wir eine weitere Instanzvariable f&uuml;r den Zusammenbau des Font-Objekts.
+Die Fontsize erhalten wir n&auml;mlich &uuml;ber die Attributliste
+in <a href="index_s.html#ixb102309"><font color=#000080><tt>startElement</tt></font></a>,
+den Fontnamen dagegen erst in der etwas sp&auml;ter aufgerufenen <a href="index_c.html#ixb102311"><font color=#000080><tt>characters</tt></font></a>-Methode;
+und erst dann k&ouml;nnen wir das Fontobjekt zusammenbauen. 
+
+<p>
+Die Fontsize erhalten wir aus dem Attributwert, der in SAX durch das
+Interface <a name="ixa103110"><a href="index_a.html#ixb102312"><font color=#000080><tt>Attributes</tt></font></a></a>
+repr&auml;sentiert wird. Wir erhalten in der <a href="index_s.html#ixb102309"><font color=#000080><tt>startElement</tt></font></a>-Methode
+der Klasse <a href="index_d.html#ixb102308"><font color=#000080><tt>DefaultHandler</tt></font></a>
+Zugriff auf <a name="ixa103110"><a href="index_a.html#ixb102312"><font color=#000080><tt>Attributes</tt></font></a></a>-Objekte:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public String getValue(String qName)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/org/xml/sax/Attributes.html" onClick="this.href=getApiDoc('org.xml.sax.Attributes')"><font color="#660066" size=-1>org.xml.sax.Attributes</font></a></td>
+</tr>
+</table>
+
+<p>
+Analog zur DOM-Implementation m&uuml;ssen wir die Methode <a name="ixa103111"><a href="index_r.html#ixb102313"><font color=#000080><tt>resolveEntity</tt></font></a></a>
+&uuml;berschreiben, um die DTD zum XML-Dokument von der passenden
+Stelle im Dateisystem einzulesen. Damit haben wir fast alles zusammen,
+um die <font color="#000077"><tt>readConfig</tt></font>-Methode (<a href="k100276.html#xmlwindow">Listing 43.19</a>)
+mit Hilfe der SAX-API zu implementieren. Um das Beispiel &uuml;bersichtlich
+zu halten, werden wir eine anonyme Klasse erzeugen, die sich vom <a href="index_d.html#ixb102308"><font color=#000080><tt>DefaultHandler</tt></font></a>
+ableitet. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+F&uuml;r das Validieren des XML-Dokuments gegen die DTD reicht das
+Einschalten mit <a name="ixa103112"><a href="index_s.html#ixb102314"><font color=#000080><tt>setValidating</tt></font></a></a>
+in diesem Fall nicht. Der <a href="index_d.html#ixb102308"><font color=#000080><tt>DefaultHandler</tt></font></a>
+enth&auml;lt n&auml;mlich nur leere Methoden, was insbesondere auch
+f&uuml;r die Methoden zur Fehlerbehandlung gilt. Standardm&auml;&szlig;ig
+passiert also im Fehlerfall gar nichts und es wird insbesondere keine
+Exception geworfen, von der unser Programmcode etwas mitbekommen w&uuml;rde.
+Um dies zu &auml;ndern, m&uuml;ssen wir auch die <a name="ixa103113"><a href="index_e.html#ixb102315"><font color=#000080><tt>error</tt></font></a></a>-Methode
+des <a href="index_d.html#ixb102308"><font color=#000080><tt>DefaultHandler</tt></font></a>
+&uuml;berschreiben und die empfangene Exception weiterverarbeiten.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<a name="readconfigsax"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4322.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.io.IOException;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">007 </font><font color="#0000AA">import</font> javax.xml.parsers.*;
+<font color="#555555">008 </font>
+<font color="#555555">009 </font><font color="#0000AA">import</font> org.xml.sax.*;
+<font color="#555555">010 </font><font color="#0000AA">import</font> org.xml.sax.helpers.DefaultHandler;
+<font color="#555555">011 </font>
+<font color="#555555">012 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4322 <font color="#0000AA">extends</font> JFrame
+<font color="#555555">013 </font>{
+<font color="#555555">014 </font>  <font color="#0000AA">private</font> String title;
+<font color="#555555">015 </font>  <font color="#0000AA">private</font> Color fgcolor;
+<font color="#555555">016 </font>  <font color="#0000AA">private</font> Color bgcolor;
+<font color="#555555">017 </font>  <font color="#0000AA">private</font> Font font;
+<font color="#555555">018 </font>
+<font color="#555555">019 </font>  <font color="#0000AA">public</font> Listing4322()
+<font color="#555555">020 </font>  {
+<font color="#555555">021 </font>    readConfig();
+<font color="#555555">022 </font>
+<font color="#555555">023 </font>    setTitle(title);
+<font color="#555555">024 </font>
+<font color="#555555">025 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter());
+<font color="#555555">026 </font>    JLabel label = <font color="#0000AA">new</font> JLabel(<font color="#0000FF">"Hello, World"</font>, JLabel.CENTER);
+<font color="#555555">027 </font>    label.setPreferredSize(<font color="#0000AA">new</font> Dimension(200, 200));
+<font color="#555555">028 </font>
+<font color="#555555">029 </font>    Container pane = getContentPane();
+<font color="#555555">030 </font>    pane.setLayout(<font color="#0000AA">new</font> FlowLayout());
+<font color="#555555">031 </font>    pane.add(label);
+<font color="#555555">032 </font>
+<font color="#555555">033 </font>    pane.setBackground(bgcolor);
+<font color="#555555">034 </font>    pane.setForeground(fgcolor);
+<font color="#555555">035 </font>    label.setFont(font);
+<font color="#555555">036 </font>
+<font color="#555555">037 </font>    pack();
+<font color="#555555">038 </font>  }
+<font color="#555555">039 </font>
+<font color="#555555">040 </font>  <font color="#0000AA">private</font> <font color="#006699">void</font> readConfig()
+<font color="#555555">041 </font>  {
+<font color="#555555">042 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">043 </font>      SAXParserFactory factory = SAXParserFactory.newInstance();
+<font color="#555555">044 </font>      factory.setValidating(<font color="#006699">true</font>);
+<font color="#555555">045 </font>      SAXParser parser = factory.newSAXParser();
+<font color="#555555">046 </font>
+<font color="#555555">047 </font>      parser.parse(getClass().getResourceAsStream(<font color="#0000FF">"config_jaxp.xml"</font>),
+<font color="#555555">048 </font>        <font color="#0000AA">new</font> DefaultHandler()
+<font color="#555555">049 </font>        {
+<font color="#555555">050 </font>          <font color="#0000AA">private</font> String element;
+<font color="#555555">051 </font>
+<font color="#555555">052 </font>          <font color="#0000AA">private</font> <font color="#006699">int</font> fontsize;
+<font color="#555555">053 </font>
+<font color="#555555">054 </font>          <font color="#0000AA">public</font> <font color="#006699">void</font> startElement(String uri, String localName,
+<font color="#555555">055 </font>              String qName, Attributes attributes) <font color="#0000AA">throws</font> SAXException
+<font color="#555555">056 </font>          {
+<font color="#555555">057 </font>            element = qName;
+<font color="#555555">058 </font>            <font color="#0000AA">if</font> (element.equals(<font color="#0000FF">"font"</font>)) {
+<font color="#555555">059 </font>              fontsize = Integer.parseInt(attributes.getValue(<font color="#0000FF">"size"</font>).trim());
+<font color="#555555">060 </font>            }
+<font color="#555555">061 </font>          }
+<font color="#555555">062 </font>
+<font color="#555555">063 </font>          <font color="#0000AA">public</font> <font color="#006699">void</font> characters(<font color="#006699">char</font>[] ch, <font color="#006699">int</font> start, <font color="#006699">int</font> length)
+<font color="#555555">064 </font>              <font color="#0000AA">throws</font> SAXException
+<font color="#555555">065 </font>          {
+<font color="#555555">066 </font>            String text = String.valueOf(ch, start, length).trim();
+<font color="#555555">067 </font>            <font color="#0000AA">if</font> (element.equals(<font color="#0000FF">"title"</font>)) {
+<font color="#555555">068 </font>              title = text;
+<font color="#555555">069 </font>            }
+<font color="#555555">070 </font>            <font color="#0000AA">else</font> <font color="#0000AA">if</font> (element.equals(<font color="#0000FF">"font"</font>)) {
+<font color="#555555">071 </font>              font = <font color="#0000AA">new</font> Font(text, Font.PLAIN, fontsize);
+<font color="#555555">072 </font>            }
+<font color="#555555">073 </font>            <font color="#0000AA">else</font> <font color="#0000AA">if</font> (element.equals(<font color="#0000FF">"fgcolor"</font>)) {
+<font color="#555555">074 </font>              fgcolor = Color.decode(text);
+<font color="#555555">075 </font>            }
+<font color="#555555">076 </font>            <font color="#0000AA">else</font> <font color="#0000AA">if</font> (element.equals(<font color="#0000FF">"bgcolor"</font>)) {
+<font color="#555555">077 </font>              bgcolor = Color.decode(text);
+<font color="#555555">078 </font>            }
+<font color="#555555">079 </font>          }
+<font color="#555555">080 </font>
+<font color="#555555">081 </font>          <font color="#0000AA">public</font> InputSource resolveEntity(String publicId, String systemId)
+<font color="#555555">082 </font>              <font color="#0000AA">throws</font> IOException, SAXException
+<font color="#555555">083 </font>          {
+<font color="#555555">084 </font>            <font color="#0000AA">if</font> (systemId.endsWith(<font color="#0000FF">"config_jaxp.dtd"</font>))
+<font color="#555555">085 </font>              <font color="#0000AA">return</font> <font color="#0000AA">new</font> InputSource(getClass().getResourceAsStream(
+<font color="#555555">086 </font>                  <font color="#0000FF">"config_jaxp.dtd"</font>));
+<font color="#555555">087 </font>            <font color="#0000AA">return</font> <font color="#006699">null</font>;
+<font color="#555555">088 </font>          }
+<font color="#555555">089 </font>
+<font color="#555555">090 </font>          <font color="#0000AA">public</font> <font color="#006699">void</font> error(SAXParseException e) <font color="#0000AA">throws</font> SAXException
+<font color="#555555">091 </font>          {
+<font color="#555555">092 </font>            <font color="#0000AA">throw</font> e;
+<font color="#555555">093 </font>          }
+<font color="#555555">094 </font>        });
+<font color="#555555">095 </font>    }
+<font color="#555555">096 </font>    <font color="#0000AA">catch</font> (ParserConfigurationException x) {
+<font color="#555555">097 </font>      x.printStackTrace();
+<font color="#555555">098 </font>    }
+<font color="#555555">099 </font>    <font color="#0000AA">catch</font> (SAXException x) {
+<font color="#555555">100 </font>      x.printStackTrace();
+<font color="#555555">101 </font>    }
+<font color="#555555">102 </font>    <font color="#0000AA">catch</font> (IOException x) {
+<font color="#555555">103 </font>      x.printStackTrace();
+<font color="#555555">104 </font>    }
+<font color="#555555">105 </font>  }
+<font color="#555555">106 </font>
+<font color="#555555">107 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">108 </font>  {
+<font color="#555555">109 </font>    Listing4322 window = <font color="#0000AA">new</font> Listing4322();
+<font color="#555555">110 </font>    window.setVisible(<font color="#006699">true</font>);
+<font color="#555555">111 </font>  }
+<font color="#555555">112 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4322.java"><font color="#000055" size=-1>Listing4322.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 43.22: Umsetzung nach SAX</i></p>
+
+<p>
+Wenn Sie die <font color="#660099">config_jaxp.xml</font> (<a href="k100276.html#fensterxml">Listing 43.17</a>)
+und die <font color="#660099">config_jaxp.dtd</font> (<a href="k100276.html#fensterdtd">Listing 43.18</a>)
+im gleichen Verzeichnis ablegen wie das Programm selbst, sehen Sie
+nun auch bei der SAX-Implementierung das oben beschriebene und per
+XML-Datei konfigurierte Fenster, nachdem Sie das Programm starten.
+
+
+<!-- Section -->
+<a name="sectlevel3id043002003"></a>
+<h3>43.2.3 Streaming API for XML - StAX<a name="ixa103114"></a> </h3>
+
+<p>
+StAX<a name="ixa103115"></a> basiert wie SAX auf dem Konzept des ereignisorientierten
+XML-Parsens. SAX wird als <a name="ixa103116"><i>Push-Parsing</i></a>
+bezeichnet, weil der Parser die f&uuml;hrende Rolle &uuml;bernimmt
+und den passiven <a href="index_d.html#ixb102308"><font color=#000080><tt>DefaultHandler</tt></font></a>
+mit Ereignissen versorgt. StAX dagegen wird als <a name="ixa103117"><i>Pull-Parsing</i></a>
+bezeichnet, denn das verarbeitende Programm hat die f&uuml;hrende
+Rolle und ruft wie bei einem Iterator nach und nach die Elemente aus
+dem an sich passiven Parser ab. 
+
+<p>
+StAX ist aus dem <i>XMLPULL-Projekt</i> von BEA und Sun hervorgegangen.
+Seine Implementierung wurde im JSR 173 spezifiziert und ist seit Version
+1.6 fester Bestandteil des JDK. Der StAX-Parser ist im Package <a name="ixa103118"><a href="index_j.html#ixb102319"><font color=#000080><tt>javax.xml.stream</tt></font></a></a>
+und seinen Unterpackages zu finden. Genau genommen stellt StAX sogar
+zwei APIs zur Verf&uuml;gung: die Cursor API und die Iterator API.
+Wir wollen uns im Folgenden die Cursor API ansehen. 
+
+<p>
+Ausgangspunkt der Cursor API ist wie bei DOM eine Fabrik, die <a name="ixa103119"><a href="index_x.html#ixb102320"><font color=#000080><tt>XMLInputFactory</tt></font></a></a>,
+die uns mit einen <a name="ixa103120"><a href="index_x.html#ixb102321"><font color=#000080><tt>XMLStreamReader</tt></font></a></a>
+einen XML-Parser zur Verf&uuml;gung stellt: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static XMLInputFactory newInstance()
+  throws FactoryConfigurationError
+
+public XMLStreamReader createXMLStreamReader(Reader reader) 
+  throws XMLStreamException
+
+public XMLStreamReader createXMLStreamReader(Source source) 
+  throws XMLStreamException
+
+public XMLStreamReader createXMLStreamReader(InputStream stream) 
+  throws XMLStreamException
+
+public void setProperty(String name, Object value) 
+  throws java.lang.IllegalArgumentException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/xml/stream/XMLInputFactory.html" onClick="this.href=getApiDoc('javax.xml.stream.XMLInputFactory')"><font color="#660066" size=-1>javax.xml.stream.XMLInputFactory</font></a></td>
+</tr>
+</table>
+
+<p>
+Es gibt eine Reihe weiterer <font color="#000077"><tt>createXMLStreamReader</tt></font>-Methoden,
+die hier nicht weiter erl&auml;utert werden sollen. Die Factory besitzt
+keine <a name="ixa103121"><a href="index_s.html#ixb102314"><font color=#000080><tt>setValidating</tt></font></a></a>-Methode
+wie ihr SAX- oder DOM-Pendant, sondern die Validierung schaltet man
+mit Hilfe der allgemeinen <a name="ixa103122"><a href="index_s.html#ixb102322"><font color=#000080><tt>setProperty</tt></font></a></a>-Methode
+ein. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die standardm&auml;&szlig;ige JDK-Implementation der StAX-API ist
+nicht in der Lage, gegen eine DTD zu validieren, und weist daher den
+Aufruf von <font color="#000077"><tt>setProperty(XMLInputFactory.IS_VALIDATING,
+Boolean.TRUE)</tt></font> mit einer Exception zur&uuml;ck. Tats&auml;chlich
+ignoriert sie den externen Verweis auf die DTD vollst&auml;ndig und
+wir brauchen f&uuml;r unsere StAX-Implementation daher noch nicht
+einmal einen <a name="ixa103123"><a href="index_x.html#ixb102323"><font color=#000080><tt>XMLResolver</tt></font></a></a>
+zu implementieren (entsprechend dem <a href="index_e.html#ixb102296"><font color=#000080><tt>EntityResolver</tt></font></a>
+in SAX und DOM).</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Der &uuml;ber die Factory erzeugte <a name="ixa103120"><a href="index_x.html#ixb102321"><font color=#000080><tt>XMLStreamReader</tt></font></a></a>
+besitzt neben anderen eine <a name="ixa103124"><a href="index_h.html#ixb100111"><font color=#000080><tt>hasNext</tt></font></a></a>-
+und <a name="ixa103125"><a href="index_n.html#ixb100112"><font color=#000080><tt>next</tt></font></a></a>-Methoden
+und wird wie ein <a href="index_i.html#ixb100110"><font color=#000080><tt>Iterator</tt></font></a>
+verwendet: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int next() 
+  throws XMLStreamException
+  
+public boolean hasNext() 
+  throws XMLStreamException
+
+public void close() 
+  throws XMLStreamException
+
+public String getElementText() 
+  throws XMLStreamException
+
+public String getAttributeValue(int idx)
+                                
+public String getLocalName()                
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/xml/stream/XMLStreamReader.html" onClick="this.href=getApiDoc('javax.xml.stream.XMLStreamReader')"><font color="#660066" size=-1>javax.xml.stream.XMLStreamReader</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_h.html#ixb100111"><font color=#000080><tt>hasNext</tt></font></a>
+liefert erwartungsgem&auml;&szlig; <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+zur&uuml;ck, solange weitere Tokens im Eingabestrom zur Verabeitung
+anstehen. Die <a href="index_n.html#ixb100112"><font color=#000080><tt>next</tt></font></a>-Methode
+liefert das n&auml;chste Eingabesymbol in Form einer Konstante aus
+dem Interface <a name="ixa103126"><a href="index_x.html#ixb102324"><font color=#000080><tt>XMLStreamConstants</tt></font></a></a>
+zur&uuml;ck: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static final int START_DOCUMENT
+public static final int END_DOCUMENT
+public static final int START_ELEMENT
+public static final int END_ELEMENT
+public static final int CHARACTERS
+public static final int COMMENT
+public static final int ATTRIBUTE
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/xml/stream/XMLStreamConstants.html" onClick="this.href=getApiDoc('javax.xml.stream.XMLStreamConstants')"><font color="#660066" size=-1>javax.xml.stream.XMLStreamConstants</font></a></td>
+</tr>
+</table>
+
+<p>
+Das folgende Schema zeigt die unterschiedlichen Zust&auml;nde des
+Parsers w&auml;hrend des Einlesens unserer <font color="#660099">config_jaxp.xml</font>-Datei:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+START_DOCUMENT
+START_ELEMENT     &lt;frame&gt; 
+CHARACTERS
+START_ELEMENT       &lt;title&gt;
+CHARACTERS            XML-Beispiel
+END_ELEMENT         &lt;/title&gt; 
+                    ... 
+END_ELEMENT       &lt;/frame&gt;
+END_DOCUMENT
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+Der Parser beginnt immer mit dem Symbol <a name="ixa103127"><a href="index_s.html#ixb102325"><font color=#000080><tt>START_DOCUMENT</tt></font></a></a>
+und liefert bei jedem &ouml;ffnenden Tag ein <a name="ixa103128"><a href="index_s.html#ixb102326"><font color=#000080><tt>START_ELEMENT</tt></font></a></a>.
+Zwischen dem &ouml;ffnenden <font color="#000077"><tt>frame</tt></font>
+und dem &ouml;ffnenden <font color="#000077"><tt>title</tt></font>-Tag
+liegen Leerzeichen und ein Zeilenumbruch. Daher liefert der Parser
+anschlie&szlig;end ein <a name="ixa103129"><a href="index_c.html#ixb102327"><font color=#000080><tt>CHARACTERS</tt></font></a></a>
+(und nicht <a href="index_s.html#ixb102326"><font color=#000080><tt>START_ELEMENT</tt></font></a>,
+wie man analog zu SAX vermuten k&ouml;nnte). Dies geht so weiter,
+bis das komplette Dokument verarbeitet ist und als letztes Symbol
+ein <a name="ixa103130"><a href="index_e.html#ixb102328"><font color=#000080><tt>END_DOCUMENT</tt></font></a></a>
+geliefert wird. 
+
+<p>
+Mit Hilfe der <font color="#000077"><tt>get</tt></font>-Methoden lassen
+sich n&auml;here Informationen beschaffen, z.B. mit <a name="ixa103131"><a href="index_g.html#ixb102329"><font color=#000080><tt>getLocalName</tt></font></a></a>
+der Name des aktuellen Elements. Die <font color="#000077"><tt>get</tt></font>-Methoden
+des <a name="ixa103120"><a href="index_x.html#ixb102321"><font color=#000080><tt>XMLStreamReader</tt></font></a></a>-Interface
+lassen sich jedoch nur passend zum aktuellen Eingabesymbol aufrufen,
+andernfalls wird der Aufruf mit einer <font color="#000077"><tt>IllegalStateException</tt></font>
+quittiert. Man kann also beispielsweise die Methode <a name="ixa103132"><a href="index_g.html#ixb102330"><font color=#000080><tt>getAttributeValue</tt></font></a></a>
+nicht im Status <a name="ixa103133"><a href="index_e.html#ixb102331"><font color=#000080><tt>END_ELEMENT</tt></font></a></a>
+aufrufen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Eine Ausnahme bildet die Methode <a name="ixa103134"><a href="index_g.html#ixb102332"><font color=#000080><tt>getElementText</tt></font></a></a>.
+Zum einen wirft sie eine <a name="ixa103135"><a href="index_x.html#ixb102333"><font color=#000080><tt>XMLStreamException</tt></font></a></a>
+statt einer <font color="#000077"><tt>IllegalStateException</tt></font>,
+wenn sie im falschen Status aufgerufen wird. Zum anderen ist sie im
+Vergleich zu den restlichen <font color="#000077"><tt>get</tt></font>-Methoden
+nicht frei von Seiteneffekten. Nach dem Aufruf von <a href="index_g.html#ixb102332"><font color=#000080><tt>getElementText</tt></font></a>
+im Status <a href="index_s.html#ixb102326"><font color=#000080><tt>START_ELEMENT</tt></font></a>
+ist es beispielsweise nicht mehr m&ouml;glich, die Attributwerte des
+Elements mit Hilfe von <a name="ixa103132"><a href="index_g.html#ixb102330"><font color=#000080><tt>getAttributeValue</tt></font></a></a>
+abzuholen. Der Parser musste n&auml;mlich bereits das n&auml;chste
+Token aus dem Stream lesen (den Text zwischen dem &ouml;ffnenden und
+dem schlie&szlig;enden Tag), so dass sein Status folglich bereits
+auf <a href="index_e.html#ixb102331"><font color=#000080><tt>END_ELEMENT</tt></font></a>
+gewechselt hat. </td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Nach diesen Erl&auml;uterungen k&ouml;nnen wir nun die <font color="#000077"><tt>readConfig</tt></font>-Methode
+in der StAX-Variante implementieren: 
+<a name="readconfigstax"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4323.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">006 </font><font color="#0000AA">import</font> javax.xml.stream.*;
+<font color="#555555">007 </font>
+<font color="#555555">008 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4323 <font color="#0000AA">extends</font> JFrame
+<font color="#555555">009 </font>{
+<font color="#555555">010 </font>  <font color="#0000AA">private</font> String title;
+<font color="#555555">011 </font>  <font color="#0000AA">private</font> Color fgcolor;
+<font color="#555555">012 </font>  <font color="#0000AA">private</font> Color bgcolor;
+<font color="#555555">013 </font>  <font color="#0000AA">private</font> Font font;
+<font color="#555555">014 </font>
+<font color="#555555">015 </font>  <font color="#0000AA">public</font> Listing4323()
+<font color="#555555">016 </font>  {
+<font color="#555555">017 </font>    readConfig();
+<font color="#555555">018 </font>
+<font color="#555555">019 </font>    setTitle(title);
+<font color="#555555">020 </font>
+<font color="#555555">021 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter());
+<font color="#555555">022 </font>    JLabel label = <font color="#0000AA">new</font> JLabel(<font color="#0000FF">"Hello, World"</font>, JLabel.CENTER);
+<font color="#555555">023 </font>    label.setPreferredSize(<font color="#0000AA">new</font> Dimension(200, 200));
+<font color="#555555">024 </font>
+<font color="#555555">025 </font>    Container pane = getContentPane();
+<font color="#555555">026 </font>    pane.setLayout(<font color="#0000AA">new</font> FlowLayout());
+<font color="#555555">027 </font>    pane.add(label);
+<font color="#555555">028 </font>
+<font color="#555555">029 </font>    pane.setBackground(bgcolor);
+<font color="#555555">030 </font>    pane.setForeground(fgcolor);
+<font color="#555555">031 </font>    label.setFont(font);
+<font color="#555555">032 </font>
+<font color="#555555">033 </font>    pack();
+<font color="#555555">034 </font>  }
+<font color="#555555">035 </font>
+<font color="#555555">036 </font>  <font color="#0000AA">private</font> <font color="#006699">void</font> readConfig()
+<font color="#555555">037 </font>  {
+<font color="#555555">038 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">039 </font>      XMLInputFactory factory = XMLInputFactory.newInstance();
+<font color="#555555">040 </font>      XMLStreamReader parser = factory.createXMLStreamReader(getClass()
+<font color="#555555">041 </font>          .getResourceAsStream(<font color="#0000FF">"config_jaxp.xml"</font>));
+<font color="#555555">042 </font>
+<font color="#555555">043 </font>      <font color="#0000AA">while</font> (parser.hasNext()) {
+<font color="#555555">044 </font>        <font color="#0000AA">if</font> (parser.next() == XMLStreamConstants.START_ELEMENT) {
+<font color="#555555">045 </font>          <font color="#0000AA">if</font> (parser.getLocalName().equals(<font color="#0000FF">"titelzeile"</font>)) {
+<font color="#555555">046 </font>            <font color="#006699">this</font>.title = parser.getElementText().trim();
+<font color="#555555">047 </font>          }
+<font color="#555555">048 </font>          <font color="#0000AA">if</font> (parser.getLocalName().equals(<font color="#0000FF">"font"</font>)) {
+<font color="#555555">049 </font>            <font color="#006699">int</font> size = Integer.parseInt(parser.getAttributeValue(0).trim());
+<font color="#555555">050 </font>            font = <font color="#0000AA">new</font> Font(parser.getElementText().trim(), Font.PLAIN, size);
+<font color="#555555">051 </font>          }
+<font color="#555555">052 </font>          <font color="#0000AA">if</font> (parser.getLocalName().equals(<font color="#0000FF">"fgcolor"</font>)) {
+<font color="#555555">053 </font>            fgcolor = Color.decode(parser.getElementText().trim());
+<font color="#555555">054 </font>          }
+<font color="#555555">055 </font>          <font color="#0000AA">if</font> (parser.getLocalName().equals(<font color="#0000FF">"bgcolor"</font>)) {
+<font color="#555555">056 </font>            bgcolor = Color.decode(parser.getElementText().trim());
+<font color="#555555">057 </font>          }
+<font color="#555555">058 </font>        }
+<font color="#555555">059 </font>      }
+<font color="#555555">060 </font>      parser.close();
+<font color="#555555">061 </font>    }
+<font color="#555555">062 </font>    <font color="#0000AA">catch</font> (XMLStreamException x) {
+<font color="#555555">063 </font>      x.printStackTrace();
+<font color="#555555">064 </font>    }
+<font color="#555555">065 </font>  }
+<font color="#555555">066 </font>
+<font color="#555555">067 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">068 </font>  {
+<font color="#555555">069 </font>    Listing4323 window = <font color="#0000AA">new</font> Listing4323();
+<font color="#555555">070 </font>    window.setVisible(<font color="#006699">true</font>);
+<font color="#555555">071 </font>  }
+<font color="#555555">072 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4323.java"><font color="#000055" size=-1>Listing4323.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 43.23: Umsetzung nach StAX</i></p>
+
+<p>
+Unter der Voraussetzung, dass Programm und XML-Dateien im selben Verzeichnis
+liegen, ergibt sich auch hier das gleiche Bild wie in den vorigen
+beiden Implementierungen: Es erscheint ein Swing-Fenster mit den konfigurierten
+Eigenschaften, so wie in <a href="k100276.html#xmlconfigfenster">Abbildung 43.1</a>
+zu sehen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Abschlie&szlig;end ist noch zu erw&auml;hnen, dass mit der StAX-API
+auch XML-Dokumente erstellt werden k&ouml;nnen. Dazu stehen die <a name="ixa103136"><a href="index_x.html#ixb102334"><font color=#000080><tt>XMLOutputFactory</tt></font></a></a>
+und der <a name="ixa103137"><a href="index_x.html#ixb102335"><font color=#000080><tt>XMLStreamWriter</tt></font></a></a>
+zur Verf&uuml;gung. Wir wollen an dieser Stelle nicht weiter darauf
+eingehen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="jaxb"></a>
+<h3>43.2.4 Java Architecture for XML Binding - JAXB<a name="ixa103138"></a><a name="ixa103139"></a>
+</h3>
+
+<p>
+Die Java Architecture for XML-Binding, kurz JAXB (<a href="http://jaxb.java.net">http://jaxb.java.net</a>),
+ist eine XML-Programmierschnittstelle, die aus den JSRs 31 und 222
+hervorgegangen ist. JAXB ist also ein Java-Standard und eine Implementierung
+ist seit Version 6 fester Bestandteil des J2SE. 
+
+<p>
+Um JAXB verwenden zu k&ouml;nnen, ben&ouml;tigen wir eine XML-Grammatik.
+DTDs sind n&auml;mlich nicht offizieller Bestandteil der Spezifikation,
+ihre Unterst&uuml;tzung ist laut Dokumentation nur experimenteller
+Natur. F&uuml;r unsere Beispielanwendung werden wir daher eine XML
+Schema Definition erstellen (vgl. <a href="k100275.html#xmlschemadefinition">Abschnitt 43.1.3</a>),
+die unserer DTD semantisch gleicht. Um Namenskonflikte mit den Klassen
+<font color="#000077"><tt>java.awt.Frame</tt></font> und <font color="#000077"><tt>java.awt.Font</tt></font>
+zu vermeiden, stellen wir darin den Elementnamen den Pr&auml;fix &#187;<font color="#000077"><tt>c</tt></font>&#171;
+vor. 
+<a name="fensterxsd"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>&lt;?xml version=<font color="#0000FF">"1.0"</font> encoding=<font color="#0000FF">"iso-8859-15"</font>?&gt;
+<font color="#555555">002 </font>&lt;xs:schema xmlns:xs=<font color="#0000FF">"http://www.w3.org/2001/XMLSchema"</font>&gt;
+<font color="#555555">003 </font>
+<font color="#555555">004 </font> &lt;xs:element name=<font color="#0000FF">"cframe"</font>&gt;
+<font color="#555555">005 </font>  &lt;xs:complexType&gt;
+<font color="#555555">006 </font>   &lt;xs:sequence&gt;
+<font color="#555555">007 </font>    &lt;xs:element ref=<font color="#0000FF">"ctitle"</font>/&gt;
+<font color="#555555">008 </font>    &lt;xs:element ref=<font color="#0000FF">"cfont"</font>/&gt;
+<font color="#555555">009 </font>    &lt;xs:element ref=<font color="#0000FF">"cfgcolor"</font>/&gt;
+<font color="#555555">010 </font>    &lt;xs:element ref=<font color="#0000FF">"cbgcolor"</font>/&gt;
+<font color="#555555">011 </font>   &lt;/xs:sequence&gt;
+<font color="#555555">012 </font>  &lt;/xs:complexType&gt;
+<font color="#555555">013 </font> &lt;/xs:element&gt;
+<font color="#555555">014 </font>
+<font color="#555555">015 </font> &lt;!-- Fenstertitel --&gt;
+<font color="#555555">016 </font> &lt;xs:element name=<font color="#0000FF">"ctitle"</font> type=<font color="#0000FF">"xs:string"</font>/&gt;
+<font color="#555555">017 </font>
+<font color="#555555">018 </font> &lt;!-- Schriftart --&gt;
+<font color="#555555">019 </font> &lt;xs:element name=<font color="#0000FF">"cfont"</font>&gt;
+<font color="#555555">020 </font>  &lt;xs:complexType&gt;
+<font color="#555555">021 </font>    &lt;xs:simpleContent&gt;
+<font color="#555555">022 </font>      &lt;xs:extension base=<font color="#0000FF">"xs:string"</font>&gt;
+<font color="#555555">023 </font>	    &lt;xs:attribute name=<font color="#0000FF">"size"</font> type=<font color="#0000FF">"xs:int"</font> <font color="#0000AA">default</font>=<font color="#0000FF">"12"</font>/&gt;
+<font color="#555555">024 </font>      &lt;/xs:extension&gt;
+<font color="#555555">025 </font>    &lt;/xs:simpleContent&gt;
+<font color="#555555">026 </font>  &lt;/xs:complexType&gt;
+<font color="#555555">027 </font> &lt;/xs:element&gt;
+<font color="#555555">028 </font>
+<font color="#555555">029 </font> &lt;!-- Vordergrundfarbe --&gt;
+<font color="#555555">030 </font> &lt;xs:element name=<font color="#0000FF">"cfgcolor"</font> type=<font color="#0000FF">"xs:int"</font>/&gt;
+<font color="#555555">031 </font>
+<font color="#555555">032 </font> &lt;!-- Hintergrundfarbe --&gt;
+<font color="#555555">033 </font> &lt;xs:element name=<font color="#0000FF">"cbgcolor"</font> type=<font color="#0000FF">"xs:int"</font>/&gt;
+<font color="#555555">034 </font> 
+<font color="#555555">035 </font>&lt;/xs:schema&gt;</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/config_jaxb.xsd"><font color="#000055" size=-1>config_jaxb.xsd</font></a></td>
+</tr>
+</table>
+<i>
+Listing 43.24: XSD-Grammatik (config_jaxb.xsd)</i></p>
+
+<p>
+Auch das XML-Dokument zur Konfiguration unseres Fensterprogramms m&uuml;ssen
+wir nun leicht anpassen. Zum einen m&uuml;ssen wir die Referenz auf
+die DTD durch eine Referenz auf die XSD ersetzen (Zeile 2 und 3).
+Zum anderen haben sich die Elementnamen ge&auml;ndert, denn sie fangen
+ja nun mit &#187;c&#171; an. 
+<a name="fensterxmlmitxsd"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>&lt;?xml version=<font color="#0000FF">"1.0"</font> encoding=<font color="#0000FF">"iso-8859-15"</font>?&gt;
+<font color="#555555">002 </font>&lt;cframe xmlns:xsi=<font color="#0000FF">"http://www.w3.org/2001/XMLSchema-instance"</font>
+<font color="#555555">003 </font>	   xsi:noNamespaceSchemaLocation=<font color="#0000FF">'config_jaxb.xsd'</font>&gt;
+<font color="#555555">004 </font>  &lt;ctitle&gt;XML-Beispiel&lt;/ctitle&gt;
+<font color="#555555">005 </font>  &lt;cfont size=<font color="#0000FF">"11"</font>&gt;Arial&lt;/cfont&gt;
+<font color="#555555">006 </font>  &lt;cfgcolor&gt;0&lt;/cfgcolor&gt;
+<font color="#555555">007 </font>  &lt;cbgcolor&gt;16777215&lt;/cbgcolor&gt;
+<font color="#555555">008 </font>&lt;/cframe&gt;</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/config_jaxb.xml"><font color="#000055" size=-1>config_jaxb.xml</font></a></td>
+</tr>
+</table>
+<i>
+Listing 43.25: XML-Dokument zur Konfiguration eines Swing-Fensters
+(config_jaxb.xml)</i></p>
+
+<p>
+JAXB funktioniert nach dem sogenannten &#187;Data Binding&#171;-Prinzip,
+das Java-Objekte in XML-Dokumente &uuml;bersetzt und umgekehrt: 
+<ul>
+<li>Durch den Prozess des <a name="ixa103140"><i>Marshalling</i></a>
+werden aus Java-Objekten XML-Dokumente erzeugt. 
+<li>Durch den Prozess des <a name="ixa103141"><i>Unmarshalling</i></a>
+werden aus XML-Dokumenten Java-Objekte erzeugt.
+</ul>
+
+<p>
+Zentraler Bestandteil von JAXB sind die Klassen und Interfaces im
+Package <a name="ixa103142"><a href="index_j.html#ixb102339"><font color=#000080><tt>javax.xml.bind</tt></font></a></a>
+und seinen Unterpackages sowie der <a name="ixa103143"><i>Binding-Compiler</i></a>
+<a name="ixa103144"><a href="index_x.html#ixb102341"><font color=#000080><tt>xjc</tt></font></a></a>,
+der im gleichen Verzeichnis wie der Javacompiler <a href="index_j.html#ixb100131"><font color=#000080><tt>javac</tt></font></a>
+und die Virtual Maschine <a href="index_j.html#ixb100134"><font color=#000080><tt>java</tt></font></a>
+liegt. Aufgabe des Binding-Compiler ist es, aus einer XML-Grammatik
+Java-Klassen zu erzeugen, mit deren Hilfe sich das Marshalling und
+Unmarshalling einfach realisieren l&auml;sst. 
+
+<p>
+Um den Binding-Compiler zu testen, rufen wir ihn einfach per Kommandozeile
+auf: 
+<font color="#333300">
+<pre>
+xjc
+</pre>
+</font>
+
+<p>
+Das Ergebnis dieses unparametrisierten Aufrufs ist eine Auflistung
+aller Aufrufparameter samt zugeh&ouml;riger Erkl&auml;rungen. Falls
+der Binding-Compiler vom System nicht gefunden wird, haben Sie vielleicht
+eine &auml;ltere Java-Version installiert oder das <font color="#660099">bin</font>-Verzeichnis
+des JDK liegt nicht in der <a href="index_p.html#ixb100159"><font color=#000080><tt>PATH</tt></font></a>-Umgebungsvariablen
+Ihres Betriebssystems. Ziehen Sie in diesem Fall bitte <a href="k100013.html#jdkinstallation">Abschnitt 2.1</a>
+zu Rate. 
+
+<p>
+Um unser Beispiel auszuprobieren, wechseln wir das Verzeichnis, in
+dem die XSD-Datei liegt (<a href="k100276.html#fensterxsd">Listing 43.24</a>).
+Nun rufen wir den Binding-Compiler auf, um aus der Datei <font color="#660099">config_jaxb.xsd</font>
+die f&uuml;r das Marshalling und Unmarshalling n&ouml;tigen Java-Klassen
+zu erzeugen: 
+<font color="#333300">
+<pre>
+xjc config_jaxb.xsd
+</pre>
+</font>
+
+<p>
+Der Binding-Compiler generiert aus dem Wurzelelement und den komplexen
+Subelementen die Java-Klassen <font color="#660099">Cfont.java</font>,
+<font color="#660099">Cframe.java</font> und <font color="#660099">ObjectFactory.java</font>
+und legt sie in einem Paket (und gleichnamigen Unterverzeichnis) <font color="#000077"><tt>generated</tt></font>
+an: 
+<font color="#333300">
+<pre>
+parsing a schema...
+compiling a schema...
+generated/Cfont.java
+generated/Cframe.java
+generated/ObjectFactory.java
+</pre>
+</font>
+
+<p>
+Au&szlig;erdem generiert er eine <a name="ixa103145"><a href="index_o.html#ixb102342"><font color=#000080><tt>ObjectFactory</tt></font></a></a>,
+um entsprechende Objekte zu erzeugen. F&uuml;r uns ist diese Klasse
+jedoch zun&auml;chst ohne Bedeutung, weil wir manuell keinen Objektbaum
+erzeugen wollen. Interesanter sind die Schnittstellen der anderen
+generierten Klassen, beispielsweise die von <font color="#000077"><tt>Cframe</tt></font>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public String getCtitle()
+public void setCtitle(String value)
+
+public Cfont getCfont()
+public void setCfont(Cfont value)
+
+public int getCfgcolor()
+public void setCfgcolor(int value)
+
+public int getCbgcolor()
+public void setCbgcolor(int value)
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+F&uuml;r alle Subelemente des <font color="#000077"><tt>Cframe</tt></font>-Elements
+wurden <font color="#000077"><tt>get</tt></font>- und <font color="#000077"><tt>set</tt></font>-Methoden
+generiert, mit denen die Eigenschaften des Frames gesetzt, ver&auml;ndert
+und abgefragt werden k&ouml;nnen. Die Schnittstelle der generierten
+Klasse <font color="#000077"><tt>Cfont</tt></font> sieht &auml;hnlich
+aus: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int getSize()
+public void setSize(Integer value)
+
+public String getValue()
+public void setValue(String value)
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+Anders als in <font color="#000077"><tt>Cframe</tt></font> wurden
+hier zus&auml;tzlich die Methoden <font color="#000077"><tt>getValue</tt></font>
+und <font color="#000077"><tt>setValue</tt></font> zum Abholen und
+Setzen des Elementinhalts generiert. Da das <font color="#000077"><tt>cframe</tt></font>-Element
+per Definition keinen Elementinhalt besitzt, generiert der Binding-Compiler
+auch keine entsprechenden Getter und Setter. 
+
+<p>
+Zudem f&auml;llt auf, dass das <font color="#000077"><tt>size</tt></font>-Attribut
+vom Typ <a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>
+ist, weil das korrespondierende Attribut in der XSD vom Datentyp <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>
+ist. Die generierten Klassen bilden also nicht nur die Struktur der
+Grammatik ab, sondern ber&uuml;cksichtigen auch den Datentyp der Attribute
+und Elemente. Mit einer DTD als Grundlage w&auml;re das nicht m&ouml;glich
+gewesen, denn DTDs kennen solche elementaren Datentypen nicht. 
+
+<p>
+F&uuml;r das Unmarshalling mit JAXB ben&ouml;tigen wir noch einige
+Klassen aus der JAXB-API. Die Klasse <a name="ixa103146"><a href="index_j.html#ixb102343"><font color=#000080><tt>JAXBContext</tt></font></a></a>
+stellt den Einstiegspunkt in die API dar und bietet Schnittstellen
+zum Erzeugen von <a name="ixa103147"><a href="index_m.html#ixb102344"><font color=#000080><tt>Marshaller</tt></font></a></a>-
+und <a name="ixa103148"><a href="index_u.html#ixb102345"><font color=#000080><tt>Unmarshaller</tt></font></a></a>-Objekten
+an: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static JAXBContext newInstance(String packages) 
+  throws JAXBException
+
+public Unmarshaller createUnmarshaller() 
+  throws JAXBException
+  
+public Marshaller createMarshaller() 
+  throws JAXBException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/xml/bind/JAXBContext.html" onClick="this.href=getApiDoc('javax.xml.bind.JAXBContext')"><font color="#660066" size=-1>javax.xml.bind.JAXBContext</font></a></td>
+</tr>
+</table>
+
+<p>
+Ein Objekt vom Typ <a href="index_j.html#ixb102343"><font color=#000080><tt>JAXBContext</tt></font></a>
+erzeugt man mit Hilfe der Methode <font color="#000077"><tt>newInstance</tt></font>.
+Deren Parameter <font color="#000077"><tt>packages</tt></font> enth&auml;lt
+eine durch Doppelpunkte getrennte Liste von Package-Namen, die Klassen
+enthalten, die mittels <a href="index_x.html#ixb102341"><font color=#000080><tt>xjc</tt></font></a>-Compiler
+erzeugt wurden. In unserem Fall ist das nur das Package <font color="#000077"><tt>generated</tt></font>.
+
+<p>
+&Uuml;ber den <a name="ixa103149"><a href="index_j.html#ixb102346"><font color=#000080><tt>JAXBKontext</tt></font></a></a>
+k&ouml;nnen wir uns einen <a href="index_u.html#ixb102345"><font color=#000080><tt>Unmarshaller</tt></font></a>
+beschaffen, der eine Reihe von <font color="#000077"><tt>unmarshall</tt></font>-Methoden
+zur Verf&uuml;gung stellt. Au&szlig;erdem kann am <a href="index_u.html#ixb102345"><font color=#000080><tt>Unmarshaller</tt></font></a>
+ein Schema gesetzt werden, um die Validierung einzuschalten. M&ouml;chte
+man den Abbruch bei Fehlern erzwingen, so ist im Gegensatz zu den
+fr&uuml;heren APIs kein expliziter <a name="ixa103150"><a href="index_v.html#ixb102347"><font color=#000080><tt>ValidationEventHandler</tt></font></a></a>
+zu setzen, denn bei Fehlern bricht das Unmarshalling per Default ab.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Object unmarshal(Reader reader) 
+  throws JAXBException
+  
+public Object unmarshal(Source source) 
+  throws JAXBException
+  
+public Object unmarshal(InputStream is) 
+  throws JAXBException
+
+public void setSchema(Schema schema)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/xml/bind/Unmarshaller.html" onClick="this.href=getApiDoc('javax.xml.bind.Unmarshaller')"><font color="#660066" size=-1>javax.xml.bind.Unmarshaller</font></a></td>
+</tr>
+</table>
+
+<p>
+Ein <a name="ixa103151"><a href="index_s.html#ixb102348"><font color=#000080><tt>Schema</tt></font></a></a>-Objekt
+l&auml;sst sich mit Hilfe einer <a name="ixa103152"><a href="index_s.html#ixb102349"><font color=#000080><tt>SchemaFactory</tt></font></a></a>
+erzeugen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static SchemaFactory newInstance(String schemaLanguage)
+
+public Schema newSchema(URL schema) 
+  throws SAXException
+  
+public Schema newSchema(File schema) 
+  throws SAXException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/xml/validation/SchemaFactory.html" onClick="this.href=getApiDoc('javax.xml.validation.SchemaFactory')"><font color="#660066" size=-1>javax.xml.validation.SchemaFactory</font></a></td>
+</tr>
+</table>
+
+<p>
+M&ouml;gliche Werte f&uuml;r den <font color="#000077"><tt>schemaLanguage</tt></font>-Parameter,
+der den Typ der Grammatik definiert, sind in der Klasse <a name="ixa103153"><a href="index_x.html#ixb102350"><font color=#000080><tt>javax.xml.XMLConstants</tt></font></a></a>
+als Konstante definiert. Wir verwenden eine XML Schema Definition,
+also verwenden wir die Konstante <a name="ixa103154"><a href="index_w.html#ixb102351"><font color=#000080><tt>W3C_XML_SCHEMA_NS_URI</tt></font></a></a>.
+<a name="readconfigjaxb"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4326.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> generated.Cframe;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">008 </font><font color="#0000AA">import</font> javax.xml.bind.*;
+<font color="#555555">009 </font><font color="#0000AA">import</font> javax.xml.validation.*;
+<font color="#555555">010 </font>
+<font color="#555555">011 </font><font color="#0000AA">import</font> org.xml.sax.SAXException;
+<font color="#555555">012 </font>
+<font color="#555555">013 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4326 <font color="#0000AA">extends</font> JFrame
+<font color="#555555">014 </font>{
+<font color="#555555">015 </font>  <font color="#0000AA">private</font> String title;
+<font color="#555555">016 </font>  <font color="#0000AA">private</font> Color fgcolor;
+<font color="#555555">017 </font>  <font color="#0000AA">private</font> Color bgcolor;
+<font color="#555555">018 </font>  <font color="#0000AA">private</font> Font font;
+<font color="#555555">019 </font>
+<font color="#555555">020 </font>  <font color="#0000AA">public</font> Listing4326()
+<font color="#555555">021 </font>  {
+<font color="#555555">022 </font>    readConfig();
+<font color="#555555">023 </font>
+<font color="#555555">024 </font>    setTitle(title);
+<font color="#555555">025 </font>
+<font color="#555555">026 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter());
+<font color="#555555">027 </font>    JLabel label = <font color="#0000AA">new</font> JLabel(<font color="#0000FF">"Hello, World"</font>, JLabel.CENTER);
+<font color="#555555">028 </font>    label.setPreferredSize(<font color="#0000AA">new</font> Dimension(200, 200));
+<font color="#555555">029 </font>
+<font color="#555555">030 </font>    Container pane = getContentPane();
+<font color="#555555">031 </font>    pane.setLayout(<font color="#0000AA">new</font> FlowLayout());
+<font color="#555555">032 </font>    pane.add(label);
+<font color="#555555">033 </font>
+<font color="#555555">034 </font>    pane.setBackground(bgcolor);
+<font color="#555555">035 </font>    pane.setForeground(fgcolor);
+<font color="#555555">036 </font>    label.setFont(font);
+<font color="#555555">037 </font>
+<font color="#555555">038 </font>    pack();    
+<font color="#555555">039 </font>  }
+<font color="#555555">040 </font>
+<font color="#555555">041 </font>  <font color="#0000AA">private</font> <font color="#006699">void</font> readConfig()
+<font color="#555555">042 </font>  {
+<font color="#555555">043 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">044 </font>      JAXBContext context = JAXBContext.newInstance(<font color="#0000FF">"generated"</font>);
+<font color="#555555">045 </font>      Unmarshaller unmarshaller = context.createUnmarshaller();  
+<font color="#555555">046 </font>
+<font color="#555555">047 </font>      SchemaFactory sf = SchemaFactory.newInstance(
+<font color="#555555">048 </font>         javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI);
+<font color="#555555">049 </font>
+<font color="#555555">050 </font>      Schema schema = sf.newSchema(getClass().getResource(<font color="#0000FF">"config_jaxb.xsd"</font>));
+<font color="#555555">051 </font>      unmarshaller.setSchema(schema);
+<font color="#555555">052 </font>      
+<font color="#555555">053 </font>      Cframe frame = (Cframe) unmarshaller.unmarshal(
+<font color="#555555">054 </font>        getClass().getResource(<font color="#0000FF">"config_jaxb.xml"</font>));
+<font color="#555555">055 </font>      <font color="#006699">this</font>.title = frame.getCtitle();
+<font color="#555555">056 </font>      <font color="#006699">this</font>.bgcolor = <font color="#0000AA">new</font> Color(frame.getCbgcolor());
+<font color="#555555">057 </font>      <font color="#006699">this</font>.fgcolor = <font color="#0000AA">new</font> Color(frame.getCfgcolor());
+<font color="#555555">058 </font>      <font color="#006699">this</font>.font = <font color="#0000AA">new</font> Font(frame.getCfont().getValue(), Font.PLAIN, 
+<font color="#555555">059 </font>        frame.getCfont().getSize());
+<font color="#555555">060 </font>    }
+<font color="#555555">061 </font>    <font color="#0000AA">catch</font> (JAXBException x) {
+<font color="#555555">062 </font>      x.printStackTrace();
+<font color="#555555">063 </font>    }
+<font color="#555555">064 </font>    <font color="#0000AA">catch</font> (SAXException x) {
+<font color="#555555">065 </font>      x.printStackTrace();
+<font color="#555555">066 </font>    }
+<font color="#555555">067 </font>  }
+<font color="#555555">068 </font>
+<font color="#555555">069 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">070 </font>  {
+<font color="#555555">071 </font>    Listing4326 window = <font color="#0000AA">new</font> Listing4326();
+<font color="#555555">072 </font>    window.setVisible(<font color="#006699">true</font>);
+<font color="#555555">073 </font>  }
+<font color="#555555">074 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4326.java"><font color="#000055" size=-1>Listing4326.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 43.26: Umsetzung nach JAXB</i></p>
+
+<p>
+Das Beispiel kann auf die gleiche Weise ausprobiert werden wie alle
+vorigen. Wir legen einfach <font color="#660099">config_jaxb.xml</font>
+im gleichen Verzeichnis ab wie das Listing und die XSD und starten
+dann das Fensterprogramm. Wie in allen anderen F&auml;llen erscheint
+nun ein Swing-Fenster entsprechend den Konfigurationsangaben in der
+XML-Datei. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100274.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100275.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100277.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100278.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

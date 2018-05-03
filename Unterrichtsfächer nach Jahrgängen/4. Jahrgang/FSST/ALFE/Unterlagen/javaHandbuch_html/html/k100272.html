@@ -1,0 +1,564 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100269.html;106,k100271.html;107,k100273.html;108,k100274.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100269.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100271.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100273.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100274.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 42 - Serialisierung
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id042003"></a>
+<h2>42.3 Anwendungen </h2>
+<hr>
+<ul>
+<li><a href="k100272.html#sectlevel2id042003">42.3 Anwendungen</a>
+<ul>
+<li><a href="k100272.html#sectlevel3id042003001">42.3.1 Ein einfacher Objektspeicher</a>
+<li><a href="k100272.html#sectlevel3id042003002">42.3.2 Kopieren von Objekten</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id042003001"></a>
+<h3>42.3.1 Ein einfacher Objektspeicher </h3>
+
+<p>
+Die folgende Klasse <font color="#000077"><tt>TrivialObjectStore</tt></font>
+stellt ein einfaches Beispiel f&uuml;r einen persistenten Objektspeicher
+dar. Sie besitzt eine Methode <font color="#000077"><tt>putObject</tt></font>,
+mit der beliebige <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-<a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>-Paare
+angelegt und sp&auml;ter mit <font color="#000077"><tt>getObject</tt></font>
+wieder abgerufen werden k&ouml;nnen. Durch Aufruf von <font color="#000077"><tt>save</tt></font>
+kann der komplette Objektspeicher serialisiert werden, ein Aufruf
+von <font color="#000077"><tt>load</tt></font> l&auml;dt ihn von der
+Festplatte. Die Klasse <font color="#000077"><tt>TrivialObjectStore</tt></font>
+verwendet eine <a href="index_h.html#ixb100428"><font color=#000080><tt>Hashtable</tt></font></a>
+zur Ablage der <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-<a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>-Paare.
+Diese implementiert bereits standardm&auml;&szlig;ig das Interface
+<a href="index_s.html#ixb100461"><font color=#000080><tt>Serializable</tt></font></a>
+und kann daher sehr einfach auf einem externen Datentr&auml;ger gespeichert
+oder von dort geladen werden. 
+<a name="listingid042009"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* TrivialObjectStore.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#00AA00">/**
+<font color="#555555">007 </font> * Trivialer Objektspeicher, der Mengen von Name-Objekt-
+<font color="#555555">008 </font> * Paaren aufnehmen und persistent speichern kann.
+<font color="#555555">009 </font> */</font>
+<font color="#555555">010 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> TrivialObjectStore
+<font color="#555555">011 </font>{
+<font color="#555555">012 </font>  <font color="#00AA00">//Instance variables</font>
+<font color="#555555">013 </font>  <font color="#0000AA">private</font> String fname;
+<font color="#555555">014 </font>  <font color="#0000AA">private</font> Hashtable&lt;String, Object&gt; objects;
+<font color="#555555">015 </font>
+<font color="#555555">016 </font>  <font color="#00AA00">/**
+<font color="#555555">017 </font>   * Erzeugt einen neuen Objektspeicher mit dem angegebenen
+<font color="#555555">018 </font>   * Namen (die Erweiterung ".tos" ("trivial object store")
+<font color="#555555">019 </font>   * wird ggfs. automatisch angeh&auml;ngt.
+<font color="#555555">020 </font>   */</font>
+<font color="#555555">021 </font>  <font color="#0000AA">public</font> TrivialObjectStore(String fname)
+<font color="#555555">022 </font>  {
+<font color="#555555">023 </font>    <font color="#006699">this</font>.fname = fname;
+<font color="#555555">024 </font>    <font color="#0000AA">if</font> (!fname.endsWith(<font color="#0000FF">".tos"</font>)) {
+<font color="#555555">025 </font>      <font color="#006699">this</font>.fname += <font color="#0000FF">".tos"</font>;
+<font color="#555555">026 </font>    }
+<font color="#555555">027 </font>    <font color="#006699">this</font>.objects = <font color="#0000AA">new</font> Hashtable&lt;String, Object&gt;(50);
+<font color="#555555">028 </font>  }
+<font color="#555555">029 </font>
+<font color="#555555">030 </font>  <font color="#00AA00">/**
+<font color="#555555">031 </font>   * Sichert den Objektspeicher unter dem im Konstruktor
+<font color="#555555">032 </font>   * angegebenen Namen.
+<font color="#555555">033 </font>   */</font>
+<font color="#555555">034 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> save()
+<font color="#555555">035 </font>  <font color="#0000AA">throws</font> IOException
+<font color="#555555">036 </font>  {
+<font color="#555555">037 </font>    FileOutputStream fs = <font color="#0000AA">new</font> FileOutputStream(fname);
+<font color="#555555">038 </font>    ObjectOutputStream os = <font color="#0000AA">new</font> ObjectOutputStream(fs);
+<font color="#555555">039 </font>    os.writeObject(objects);
+<font color="#555555">040 </font>    os.close();
+<font color="#555555">041 </font>  }
+<font color="#555555">042 </font>
+<font color="#555555">043 </font>  <font color="#00AA00">/**
+<font color="#555555">044 </font>   * L&auml;dt den Objektspeicher mit dem im Konstruktor
+<font color="#555555">045 </font>   * angegebenen Namen.
+<font color="#555555">046 </font>   */</font>
+<font color="#555555">047 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> load()
+<font color="#555555">048 </font>  <font color="#0000AA">throws</font> ClassNotFoundException, IOException
+<font color="#555555">049 </font>  {
+<font color="#555555">050 </font>    FileInputStream fs = <font color="#0000AA">new</font> FileInputStream(fname);
+<font color="#555555">051 </font>    ObjectInputStream is = <font color="#0000AA">new</font> ObjectInputStream(fs);
+<font color="#555555">052 </font>    objects = (Hashtable&lt;String, Object&gt;)is.readObject();
+<font color="#555555">053 </font>    is.close();
+<font color="#555555">054 </font>  }
+<font color="#555555">055 </font>
+<font color="#555555">056 </font>  <font color="#00AA00">/**
+<font color="#555555">057 </font>   * F&uuml;gt ein Objekt in den Objektspeicher ein.
+<font color="#555555">058 </font>   */</font>
+<font color="#555555">059 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> putObject(String name, Object object)
+<font color="#555555">060 </font>  {
+<font color="#555555">061 </font>    objects.put(name, object);
+<font color="#555555">062 </font>  }
+<font color="#555555">063 </font>
+<font color="#555555">064 </font>  <font color="#00AA00">/**
+<font color="#555555">065 </font>   * Liest das Objekt mit dem angegebenen Namen aus dem
+<font color="#555555">066 </font>   * Objektspeicher. Ist es nicht vorhanden, wird null
+<font color="#555555">067 </font>   * zur&uuml;ckgegeben.
+<font color="#555555">068 </font>   */</font>
+<font color="#555555">069 </font>  <font color="#0000AA">public</font> Object getObject(String name)
+<font color="#555555">070 </font>  {
+<font color="#555555">071 </font>    <font color="#0000AA">return</font> objects.get(name);
+<font color="#555555">072 </font>  }
+<font color="#555555">073 </font>
+<font color="#555555">074 </font>  <font color="#00AA00">/**
+<font color="#555555">075 </font>   * Liefert eine Aufz&auml;hlung aller gespeicherten Namen.
+<font color="#555555">076 </font>   */</font>
+<font color="#555555">077 </font>  <font color="#0000AA">public</font> Enumeration&lt;String&gt; getAllNames()
+<font color="#555555">078 </font>  {
+<font color="#555555">079 </font>    <font color="#0000AA">return</font> objects.keys();
+<font color="#555555">080 </font>  }
+<font color="#555555">081 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/TrivialObjectStore.java"><font color="#000055" size=-1>TrivialObjectStore.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 42.9: Ein einfacher Objektspeicher</i></p>
+
+<p>
+Objekte der Klasse <font color="#000077"><tt>TrivialObjectStore</tt></font>
+k&ouml;nnen nun verwendet werden, um beliebige serialisierbare Objekte
+unter Zuordnung eines Namens auf einem externen Datentr&auml;ger zu
+speichern. Das folgende Listing zeigt dies am Beispiel eines fiktiven
+&#187;Tamagotchi-Shops&#171;, dessen Eigenschaften <i>Name</i>, <i>Besitzer</i>
+und <i>Liste der Produkte</i> im Objektspeicher abgelegt, in die Datei
+<font color="#660099">shop.tos</font> geschrieben und anschlie&szlig;end
+wieder ausgelesen werden: 
+<a name="objektspeicherbeispiel"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4210.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4210
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    <font color="#00AA00">//Erzeugen und Speichern des Objektspeichers</font>
+<font color="#555555">011 </font>    TrivialObjectStore tos = <font color="#0000AA">new</font> TrivialObjectStore(<font color="#0000FF">"shop"</font>);
+<font color="#555555">012 </font>    tos.putObject(<font color="#0000FF">"name"</font>, <font color="#0000FF">"Tami-Shop Norderelbe"</font>);
+<font color="#555555">013 </font>    tos.putObject(<font color="#0000FF">"besitzer"</font>, <font color="#0000FF">"Meier, Fridolin"</font>);
+<font color="#555555">014 </font>    Vector&lt;String&gt; products = <font color="#0000AA">new</font> Vector&lt;String&gt;(10);
+<font color="#555555">015 </font>    products.addElement(<font color="#0000FF">"Dinky Dino"</font>);
+<font color="#555555">016 </font>    products.addElement(<font color="#0000FF">"96er Classic"</font>);
+<font color="#555555">017 </font>    products.addElement(<font color="#0000FF">"Black Frog"</font>);
+<font color="#555555">018 </font>    products.addElement(<font color="#0000FF">"SmartGotchi"</font>);
+<font color="#555555">019 </font>    products.addElement(<font color="#0000FF">"Pretty Dolly"</font>);
+<font color="#555555">020 </font>    tos.putObject(<font color="#0000FF">"produkte"</font>, products);
+<font color="#555555">021 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">022 </font>      tos.save();
+<font color="#555555">023 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">024 </font>      System.err.println(e.toString());
+<font color="#555555">025 </font>    }
+<font color="#555555">026 </font>
+<font color="#555555">027 </font>    <font color="#00AA00">//Einlesen des Objektspeichers <a name="objektspeicherbeispiel.a"></a></font>
+<font color="#555555">028 </font>    TrivialObjectStore tos2 = <font color="#0000AA">new</font> TrivialObjectStore(<font color="#0000FF">"shop"</font>);
+<font color="#555555">029 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">030 </font>      tos2.load();
+<font color="#555555">031 </font>      Enumeration&lt;String&gt; names = tos2.getAllNames();
+<font color="#555555">032 </font>      <font color="#0000AA">while</font> (names.hasMoreElements()) {
+<font color="#555555">033 </font>        String name = names.nextElement();
+<font color="#555555">034 </font>        Object obj = tos2.getObject(name);
+<font color="#555555">035 </font>        System.out.print(name + <font color="#0000FF">": "</font>);
+<font color="#555555">036 </font>        System.out.println(obj.getClass().toString()); <a name="objektspeicherbeispiel.b"></a>
+<font color="#555555">037 </font>        <font color="#0000AA">if</font> (obj <font color="#0000AA">instanceof</font> Collection) {
+<font color="#555555">038 </font>          Iterator&lt;?&gt; it = ((Collection&lt;?&gt;)obj).iterator();
+<font color="#555555">039 </font>          <font color="#0000AA">while</font> (it.hasNext()) {
+<font color="#555555">040 </font>            System.out.println(<font color="#0000FF">"  "</font> + it.next().toString());
+<font color="#555555">041 </font>          }
+<font color="#555555">042 </font>        } <font color="#0000AA">else</font> {
+<font color="#555555">043 </font>          System.out.println(<font color="#0000FF">"  "</font> + obj.toString());
+<font color="#555555">044 </font>        }
+<font color="#555555">045 </font>      }
+<font color="#555555">046 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">047 </font>      System.err.println(e.toString());
+<font color="#555555">048 </font>    } <font color="#0000AA">catch</font> (ClassNotFoundException e) {
+<font color="#555555">049 </font>      System.err.println(e.toString());
+<font color="#555555">050 </font>    }
+<font color="#555555">051 </font>  }
+<font color="#555555">052 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4210.java"><font color="#000055" size=-1>Listing4210.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 42.10: Beispielanwendung f&uuml;r den einfachen Objektspeicher</i></p>
+
+<p>
+Hier wird zun&auml;chst ein neuer Objektspeicher <font color="#000077"><tt>tos</tt></font>
+erstellt und mit den Objekten aus dem Tamagotchi-Shop gef&uuml;llt.
+Neben zwei Strings <font color="#000077"><tt>name</tt></font> und
+<font color="#000077"><tt>besitzer</tt></font> wird dabei unter der
+Bezeichnung <font color="#000077"><tt>produkte</tt></font> eine weitere
+Collection, der <a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>
+mit den Produkten, eingef&uuml;gt. Das durch Aufruf von <font color="#000077"><tt>save</tt></font>
+ausgel&ouml;ste Serialisieren der <a href="index_h.html#ixb100428"><font color=#000080><tt>Hashtable</tt></font></a>
+bewirkt, dass alle darin gespeicherten Elemente serialisiert werden,
+sofern sie das Interface <a href="index_s.html#ixb100461"><font color=#000080><tt>Serializable</tt></font></a>
+implementieren. 
+
+<p>
+Ab <a href="k100272.html#objektspeicherbeispiel.a">Zeile 027</a> wird
+dann der Objektspeicher wieder eingelesen, in diesem Fall in die Variable
+<font color="#000077"><tt>tos2</tt></font>. Mit <font color="#000077"><tt>getAllNames</tt></font>
+beschafft das Programm zun&auml;chst eine <a href="index_e.html#ixb100697"><font color=#000080><tt>Enumeration</tt></font></a>
+&uuml;ber alle Objektnamen und durchl&auml;uft sie elementweise. Zu
+jedem Namen wird mit <font color="#000077"><tt>getElement</tt></font>
+das zugeh&ouml;rige Element geholt und sein Name und der Name der
+zugeh&ouml;rigen Klasse werden ausgegeben (<a href="k100272.html#objektspeicherbeispiel.b">Zeile 036</a>).
+Anschlie&szlig;end wird &uuml;berpr&uuml;ft, ob das gefundene Objekt
+das Interface <a href="index_c.html#ixb100730"><font color=#000080><tt>Collection</tt></font></a>
+implementiert und ggfs. &uuml;ber alle darin enthaltenen Elemente
+iteriert. Andernfalls wird das Objekt direkt mit <a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a>
+ausgegeben. 
+
+<p>
+Die Ausgabe des Programms ist: 
+<font color="#333300">
+<pre>
+produkte: class java.util.Vector
+  Dinky Dino
+  96er Classic
+  Black Frog
+  SmartGotchi
+  Pretty Dolly
+besitzer: class java.lang.String
+  Meier, Fridolin
+name: class java.lang.String
+  Tami-Shop Norderelbe
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Klasse <font color="#000077"><tt>TrivialObjectStore</tt></font>
+verdeutlicht <i>eine m&ouml;gliche</i> Vorgehensweise bei der persistenten
+Speicherung von Objekten. F&uuml;r einen echten Praxiseinsatz (etwa
+in der Anwendungsentwicklung) fehlen aber noch ein paar wichtige Eigenschaften:
+<ul>
+<li>Anstatt den Objektspeicher immer <i>komplett</i> zu laden und
+zu speichern, sollte es m&ouml;glich sein, einzelne Elemente zu speichern,
+zu laden und zu l&ouml;schen.
+<li>Der Objektspeicher sollte mehrbenutzerf&auml;hig sein und Transaktions-
+und Recovery-Logik mitbringen.
+<li>Die Suche nach Objekten sollte durch Indexdateien beschleunigt
+werden k&ouml;nnen.
+</ul>
+</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Leider ist die Implementierung dieser Features nicht trivial. Ein
+gutes Beispiel f&uuml;r die Implementierung des ersten und dritten
+Punkts findet sich in &#187;Java Algorithms&#171; von Scott Robert
+Ladd. Der Autor zeigt zun&auml;chst, wie man Objekte auf der Basis
+von Random-Access-Dateien (anstelle der &uuml;blichen Streams) serialisiert.
+Anschlie&szlig;end zeigt er die Verwendung von Indexdateien am Beispiel
+der Implementierung von B-Trees. 
+
+<!-- Section -->
+
+<a name="sectlevel3id042003002"></a>
+<h3>42.3.2 <a name="ixa103022">Kopieren von Objekten</a></h3>
+
+<p>
+Eine auf den ersten Blick &uuml;berraschende Anwendung der Serialisierung
+besteht darin, Objekte zu kopieren. Es sei noch einmal daran erinnert,
+dass die Zuweisung eines Objekts an eine Objektvariable lediglich
+eine Zeigeroperation war; dass also immer nur ein Verweis ge&auml;ndert
+wurde. Soll ein komplexes Objekt kopiert werden, wird dazu &uuml;blicherweise
+das Interface <a name="ixa103023"><a href="index_c.html#ixb100462"><font color=#000080><tt>Cloneable</tt></font></a></a>
+implementiert und eine Methode <a name="ixa103024"><a href="index_c.html#ixb100290"><font color=#000080><tt>clone</tt></font></a></a>
+zur Verf&uuml;gung gestellt, die den eigentlichen Kopiervorgang vornimmt.
+Sollte ein Objekt kopiert werden, das <a href="index_c.html#ixb100462"><font color=#000080><tt>Cloneable</tt></font></a>
+nicht implementiert, blieb bisher nur der umst&auml;ndliche Weg &uuml;ber
+das manuelle Kopieren aller Membervariablen. Das ist insbesondere
+dann m&uuml;hsam und fehlertr&auml;chtig, wenn das zu kopierende Objekt
+Unterobjekte enth&auml;lt, die ihrerseits kopiert werden m&uuml;ssen
+(<a name="ixa103025"><i>deep copy</i></a> anstatt <a name="ixa103026"><i>shallow copy</i></a>).
+
+<p>
+Der Schl&uuml;ssel zum Kopieren von Objekten mit Hilfe der Serialisierung
+liegt darin, anstelle der &uuml;blichen <i>dateibasierten</i> Streamklassen
+solche zu verwenden, die ihre Daten im Hauptspeicher halten. Am besten
+sind dazu <a name="ixa103027"><a href="index_b.html#ixb101011"><font color=#000080><tt>ByteArrayOutputStream</tt></font></a></a>
+und <a name="ixa103028"><a href="index_b.html#ixb101040"><font color=#000080><tt>ByteArrayInputStream</tt></font></a></a>
+geeignet. Sie sind integraler Bestandteil der <a href="index_o.html#ixb100588"><font color=#000080><tt>OutputStream</tt></font></a>-
+und <a href="index_i.html#ixb100587"><font color=#000080><tt>InputStream</tt></font></a>-Hierarchien
+und man kann die Daten problemlos von einem zum anderen &uuml;bergeben.
+Das folgende Programm implementiert eine Methode <font color="#000077"><tt>seriaClone()</tt></font>,
+die ein beliebiges Objekt als Argument erwartet und in einen <a href="index_b.html#ixb101011"><font color=#000080><tt>ByteArrayOutputStream</tt></font></a>
+serialisiert. Das resultierende Byte-Array wird dann zur Konstruktion
+eines <a href="index_b.html#ixb101040"><font color=#000080><tt>ByteArrayInputStream</tt></font></a>
+verwendet, dort deserialisiert und als Objektkopie an den Aufrufer
+zur&uuml;ckgegeben: 
+<a name="listingid042011"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4211.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4211
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> Object seriaClone(Object o)
+<font color="#555555">009 </font>  <font color="#0000AA">throws</font> IOException, ClassNotFoundException
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    <font color="#00AA00">//Serialisieren des Objekts</font>
+<font color="#555555">012 </font>    ByteArrayOutputStream out = <font color="#0000AA">new</font> ByteArrayOutputStream();
+<font color="#555555">013 </font>    ObjectOutputStream os = <font color="#0000AA">new</font> ObjectOutputStream(out);
+<font color="#555555">014 </font>    os.writeObject(o);
+<font color="#555555">015 </font>    os.flush();
+<font color="#555555">016 </font>    <font color="#00AA00">//Deserialisieren des Objekts</font>
+<font color="#555555">017 </font>    ByteArrayInputStream in = <font color="#0000AA">new</font> ByteArrayInputStream(
+<font color="#555555">018 </font>      out.toByteArray()
+<font color="#555555">019 </font>    );
+<font color="#555555">020 </font>    ObjectInputStream is = <font color="#0000AA">new</font> ObjectInputStream(in);
+<font color="#555555">021 </font>    Object ret = is.readObject();
+<font color="#555555">022 </font>    is.close();
+<font color="#555555">023 </font>    os.close();
+<font color="#555555">024 </font>    <font color="#0000AA">return</font> ret;
+<font color="#555555">025 </font>  }
+<font color="#555555">026 </font>
+<font color="#555555">027 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">028 </font>  {
+<font color="#555555">029 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">030 </font>      <font color="#00AA00">//Erzeugen des Buchobjekts</font>
+<font color="#555555">031 </font>      Book book = <font color="#0000AA">new</font> Book();
+<font color="#555555">032 </font>      book.author = <font color="#0000FF">"Peitgen, Heinz-Otto"</font>;
+<font color="#555555">033 </font>      String[] s = {<font color="#0000FF">"J&uuml;rgens, Hartmut"</font>, <font color="#0000FF">"Saupe, Dietmar"</font>};
+<font color="#555555">034 </font>      book.coAuthors = s;
+<font color="#555555">035 </font>      book.title = <font color="#0000FF">"Bausteine des Chaos"</font>;
+<font color="#555555">036 </font>      book.publisher = <font color="#0000FF">"rororo science"</font>;
+<font color="#555555">037 </font>      book.pubyear = 1998;
+<font color="#555555">038 </font>      book.pages = 514;
+<font color="#555555">039 </font>      book.isbn = <font color="#0000FF">"3-499-60250-4"</font>;
+<font color="#555555">040 </font>      book.reflist = <font color="#0000AA">new</font> Vector&lt;String&gt;();
+<font color="#555555">041 </font>      book.reflist.addElement(<font color="#0000FF">"The World of MC Escher"</font>);
+<font color="#555555">042 </font>      book.reflist.addElement(
+<font color="#555555">043 </font>        <font color="#0000FF">"Die fraktale Geometrie der Natur"</font>
+<font color="#555555">044 </font>      );
+<font color="#555555">045 </font>      book.reflist.addElement(<font color="#0000FF">"G&ouml;del, Escher, Bach"</font>);
+<font color="#555555">046 </font>      System.out.println(book.toString());
+<font color="#555555">047 </font>      <font color="#00AA00">//Erzeugen und Ver&auml;ndern der Kopie</font>
+<font color="#555555">048 </font>      Book copy = (Book)seriaClone(book);
+<font color="#555555">049 </font>      copy.title += <font color="#0000FF">" - Fraktale"</font>;
+<font color="#555555">050 </font>      copy.reflist.addElement(<font color="#0000FF">"Fractal Creations"</font>);
+<font color="#555555">051 </font>      <font color="#00AA00">//Ausgeben von Original und Kopie</font>
+<font color="#555555">052 </font>      System.out.print(book.toString());
+<font color="#555555">053 </font>      System.out.println(<font color="#0000FF">"---"</font>);
+<font color="#555555">054 </font>      System.out.print(copy.toString());
+<font color="#555555">055 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">056 </font>      System.err.println(e.toString());
+<font color="#555555">057 </font>    } <font color="#0000AA">catch</font> (ClassNotFoundException e) {
+<font color="#555555">058 </font>      System.err.println(e.toString());
+<font color="#555555">059 </font>    }
+<font color="#555555">060 </font>  }
+<font color="#555555">061 </font>}
+<font color="#555555">062 </font>
+<font color="#555555">063 </font><font color="#0000AA">class</font> Book
+<font color="#555555">064 </font><font color="#0000AA">implements</font> Serializable
+<font color="#555555">065 </font>{
+<font color="#555555">066 </font>  <font color="#0000AA">public</font> String author;
+<font color="#555555">067 </font>  <font color="#0000AA">public</font> String[] coAuthors;
+<font color="#555555">068 </font>  <font color="#0000AA">public</font> String title;
+<font color="#555555">069 </font>  <font color="#0000AA">public</font> String publisher;
+<font color="#555555">070 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font>    pubyear;
+<font color="#555555">071 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font>    pages;
+<font color="#555555">072 </font>  <font color="#0000AA">public</font> String isbn;
+<font color="#555555">073 </font>  <font color="#0000AA">public</font> Vector&lt;String&gt; reflist;
+<font color="#555555">074 </font>
+<font color="#555555">075 </font>  <font color="#0000AA">public</font> String toString()
+<font color="#555555">076 </font>  {
+<font color="#555555">077 </font>    String NL = System.getProperty(<font color="#0000FF">"line.separator"</font>);
+<font color="#555555">078 </font>    StringBuffer ret = <font color="#0000AA">new</font> StringBuffer(200);
+<font color="#555555">079 </font>    ret.append(author + NL);
+<font color="#555555">080 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; coAuthors.length; ++i) {
+<font color="#555555">081 </font>      ret.append(coAuthors[i] + NL);
+<font color="#555555">082 </font>    }
+<font color="#555555">083 </font>    ret.append(<font color="#0000FF">"\""</font> + title + <font color="#0000FF">"\""</font> + NL);
+<font color="#555555">084 </font>    ret.append(publisher + <font color="#0000FF">" "</font> + pubyear + NL);
+<font color="#555555">085 </font>    ret.append(pages + <font color="#0000FF">" pages"</font> + NL);
+<font color="#555555">086 </font>    ret.append(isbn + NL);
+<font color="#555555">087 </font>    Enumeration&lt;String&gt; e = reflist.elements();
+<font color="#555555">088 </font>    <font color="#0000AA">while</font> (e.hasMoreElements()) {
+<font color="#555555">089 </font>      ret.append(<font color="#0000FF">"  "</font> + e.nextElement() + NL);
+<font color="#555555">090 </font>    }
+<font color="#555555">091 </font>    <font color="#0000AA">return</font> ret.toString();
+<font color="#555555">092 </font>  }
+<font color="#555555">093 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4211.java"><font color="#000055" size=-1>Listing4211.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 42.11: Kopieren von Objekten durch Serialisierung</i></p>
+
+<p>
+Das Programm verwendet zum Testen ein Objekt der Klasse <font color="#000077"><tt>Book</tt></font>,
+das mit den Daten eines Buchtitels initialisiert wird. Anschlie&szlig;end
+wird mit <font color="#000077"><tt>seriaClone</tt></font> eine Kopie
+hergestellt und der Variable <font color="#000077"><tt>copy</tt></font>
+zugewiesen. Um zu verdeutlichen, dass wirklich eine Kopie hergestellt
+wurde, modifizieren wir nun einige Angaben der Kopie und geben anschlie&szlig;end
+beide Objekte aus: 
+<font color="#333300">
+<pre>
+Peitgen, Heinz-Otto
+J&uuml;rgens, Hartmut
+Saupe, Dietmar
+"Bausteine des Chaos"
+rororo science 1998
+514 pages
+3-499-60250-4
+  The World of MC Escher
+  Die fraktale Geometrie der Natur
+  G&ouml;del, Escher, Bach
+---
+Peitgen, Heinz-Otto
+J&uuml;rgens, Hartmut
+Saupe, Dietmar
+"Bausteine des Chaos - Fraktale"
+rororo science 1998
+514 pages
+3-499-60250-4
+  The World of MC Escher
+  Die fraktale Geometrie der Natur
+  G&ouml;del, Escher, Bach
+  Fractal Creations
+</pre>
+</font>
+
+<p>
+An der Programmausgabe kann man erkennen, dass das Objekt tats&auml;chlich
+ordnungsgem&auml;&szlig; kopiert wurde. Auch alle Unterobjekte wurden
+kopiert und konnten anschlie&szlig;end unabh&auml;ngig voneinander
+ge&auml;ndert werden. Ohne Serialisierung w&auml;re der manuelle Aufwand
+um ein Vielfaches gr&ouml;&szlig;er gewesen. Das Verfahren findet
+dort seine Grenzen, wo die zu kopierenden Objekte nicht serialisierbar
+sind oder nichtserialisierbare Unterobjekte enthalten. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Zudem muss im echten Einsatz das Laufzeitverhalten &uuml;berpr&uuml;ft
+werden, denn der Vorgang des Serialisierens/Deserialisierens ist um
+ein Vielfaches langsamer als das direkte Kopieren der Objektattribute.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100269.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100271.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100273.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100274.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

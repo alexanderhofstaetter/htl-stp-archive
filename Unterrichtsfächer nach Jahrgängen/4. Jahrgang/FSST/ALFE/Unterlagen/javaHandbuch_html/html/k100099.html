@@ -1,0 +1,403 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100097.html;106,k100098.html;107,k100100.html;108,k100104.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100097.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100098.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100100.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100104.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 15 - Collections I
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="abschnittvector"></a>
+<h2>15.2 Die Klasse Vector </h2>
+<hr>
+<ul>
+<li><a href="k100099.html#abschnittvector">15.2 Die Klasse Vector</a>
+<ul>
+<li><a href="k100099.html#sectlevel3id015002001">15.2.1 Einf&uuml;gen von Elementen</a>
+<li><a href="k100099.html#sectlevel3id015002002">15.2.2 Zugriff auf Elemente</a>
+<li><a href="k100099.html#sectlevel3id015002003">15.2.3 Der Vektor als Iterator</a>
+</ul>
+</ul>
+<hr>
+
+<p>
+Die Klasse <a name="ixa100867"><a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a></a>
+aus dem Paket <a href="index_j.html#ixb100149"><font color=#000080><tt>java.util</tt></font></a>
+ist die Java-Repr&auml;sentation einer <a name="ixa100868"><i>linearen Liste</i></a>.
+Die Liste kann Elemente beliebigen Typs enthalten und ihre L&auml;nge
+ist zur Laufzeit ver&auml;nderbar. <a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>
+erlaubt das Einf&uuml;gen von Elementen an beliebiger Stelle und bietet
+sowohl sequenziellen als auch wahlfreien Zugriff auf die Elemente.
+Das JDK realisiert einen <a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>
+als Array von Elementen des Typs <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>.
+Daher sind Zugriffe auf vorhandene Elemente und das Durchlaufen der
+Liste schnelle Operationen. L&ouml;schungen und Einf&uuml;gungen,
+die die interne Kapazit&auml;t des Arrays &uuml;berschreiten, sind
+dagegen relativ langsam, weil Teile des Arrays umkopiert werden m&uuml;ssen.
+In der Praxis k&ouml;nnen diese implementierungsspezifischen Details
+allerdings meist vernachl&auml;ssigt werden und ein <a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>
+kann als konkrete Implementierung einer linearen Liste angesehen werden.
+
+
+<!-- Section -->
+<a name="sectlevel3id015002001"></a>
+<h3>15.2.1 Einf&uuml;gen von Elementen </h3>
+
+<p>
+Das Anlegen eines neuen Vektors kann mit Hilfe des parameterlosen
+Konstruktors erfolgen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Vector()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Vector.html" onClick="this.href=getApiDoc('java.util.Vector')"><font color="#660066" size=-1>java.util.Vector</font></a></td>
+</tr>
+</table>
+
+<p>
+Nach dem Anlegen ist ein <a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>
+zun&auml;chst leer, d.h., er enth&auml;lt keine Elemente. Durch Aufruf
+von <a name="ixa100869"><a href="index_i.html#ixb100690"><font color=#000080><tt>isEmpty</tt></font></a></a>
+kann gepr&uuml;ft werden, ob ein <a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>
+leer ist; <a name="ixa100870"><a href="index_s.html#ixb100691"><font color=#000080><tt>size</tt></font></a></a>
+liefert die Anzahl der Elemente: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public final boolean isEmpty()
+
+public final int size()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Vector.html" onClick="this.href=getApiDoc('java.util.Vector')"><font color="#660066" size=-1>java.util.Vector</font></a></td>
+</tr>
+</table>
+
+<p>
+Elemente k&ouml;nnen an beliebiger Stelle in die Liste eingef&uuml;gt
+werden. Ein <a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>
+erlaubt die Speicherung beliebiger Objekttypen, denn die Einf&uuml;ge-
+und Zugriffsmethoden arbeiten mit Instanzen der Klasse <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>.
+Da jede Klasse letztlich aus <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+abgeleitet ist, k&ouml;nnen auf diese Weise beliebige Objekte in die
+Liste eingef&uuml;gt werden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Leider ist der Zugriff auf die gespeicherten Elemente damit nat&uuml;rlich
+nicht <i>typsicher</i>. Der Compiler kann nicht wissen, welche Objekte
+an welcher Stelle im <a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>
+gespeichert wurden, und geht daher davon aus, dass beim Zugriff auf
+Elemente eine Instanz der Klasse <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+geliefert wird. Mit Hilfe des Typkonvertierungsoperators muss diese
+dann in das urspr&uuml;ngliche Objekt zur&uuml;ckverwandelt werden.
+Die Verantwortung f&uuml;r die korrekte Typisierung liegt damit beim
+Entwickler. Mit Hilfe des Operators <a name="ixa100871"><a href="index_i.html#ixb100341"><font color=#000080><tt>instanceof</tt></font></a></a>
+kann bei Bedarf zumindest eine Laufzeit-Typ&uuml;berpr&uuml;fung vorgeschaltet
+werden. In <a href="k100112.html#typisierteklassen">Abschnitt 16.8</a>
+werden wir einen Weg kennenlernen, typsichere Collections zu erstellen,
+die seit der J2SE 5.0 in Java zur Verf&uuml;gung stehen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Neue Elemente k&ouml;nnen wahlweise am Ende des Vektors oder an einer
+beliebigen anderen Stelle eingef&uuml;gt werden. Das Einf&uuml;gen
+am Ende erfolgt mit der Methode <a name="ixa100872"><a href="index_a.html#ixb100692"><font color=#000080><tt>addElement</tt></font></a></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void addElement(Object obj)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Vector.html" onClick="this.href=getApiDoc('java.util.Vector')"><font color="#660066" size=-1>java.util.Vector</font></a></td>
+</tr>
+</table>
+
+<p>
+In diesem Fall wird das Objekt <font color="#000077"><tt>obj</tt></font>
+an das Ende der bisherigen Liste von Elementen angeh&auml;ngt. 
+
+<p>
+Soll ein Element dagegen an einer beliebigen Stelle innerhalb der
+Liste eingef&uuml;gt werden, ist die Methode <a name="ixa100873"><a href="index_i.html#ixb100693"><font color=#000080><tt>insertElementAt</tt></font></a></a>
+zu verwenden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void insertElementAt(Obj obj, int index)
+  throws ArrayIndexOutOfBoundsException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Vector.html" onClick="this.href=getApiDoc('java.util.Vector')"><font color="#660066" size=-1>java.util.Vector</font></a></td>
+</tr>
+</table>
+
+<p>
+Diese Methode f&uuml;gt das Objekt <font color="#000077"><tt>obj</tt></font>
+an der Position <font color="#000077"><tt>index</tt></font> in den
+Vektor ein. Alle bisher an dieser oder einer dahinterliegenden Position
+befindlichen Elemente werden um eine Position weitergeschoben. 
+
+<!-- Section -->
+
+<a name="sectlevel3id015002002"></a>
+<h3>15.2.2 Zugriff auf Elemente </h3>
+
+<p>
+Ein Vektor bietet sowohl <i>sequenziellen</i> als auch <i>wahlfreien</i>
+Zugriff auf seine Elemente. F&uuml;r den sequenziellen Zugriff bietet
+es sich an, den im nachfolgenden Abschnitt beschriebenen <i>Iterator</i>
+zu verwenden. Der wahlfreie Zugriff erfolgt mit einer der Methoden
+<a name="ixa100874"><a href="index_f.html#ixb100694"><font color=#000080><tt>firstElement</tt></font></a></a>,
+<a name="ixa100875"><a href="index_l.html#ixb100695"><font color=#000080><tt>lastElement</tt></font></a></a>
+oder <a name="ixa100876"><a href="index_e.html#ixb100696"><font color=#000080><tt>elementAt</tt></font></a></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Object firstElement()
+  throws ArrayIndexOutOfBoundsException
+
+public Object lastElement()
+  throws ArrayIndexOutOfBoundsException
+
+public Object elementAt(int index)
+  throws ArrayIndexOutOfBoundsException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Vector.html" onClick="this.href=getApiDoc('java.util.Vector')"><font color="#660066" size=-1>java.util.Vector</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_f.html#ixb100694"><font color=#000080><tt>firstElement</tt></font></a>
+liefert das erste Element, <a href="index_l.html#ixb100695"><font color=#000080><tt>lastElement</tt></font></a>
+das letzte. Mit Hilfe von <a href="index_e.html#ixb100696"><font color=#000080><tt>elementAt</tt></font></a>
+wird auf das Element an Position <font color="#000077"><tt>index</tt></font>
+zugegriffen. Alle drei Methoden verursachen eine Ausnahme, wenn das
+gesuchte Element nicht vorhanden ist. 
+
+<!-- Section -->
+
+<a name="sectlevel3id015002003"></a>
+<h3>15.2.3 Der Vektor als Iterator </h3>
+
+<p>
+F&uuml;r den sequenziellen Zugriff auf die Elemente des Vektors steht
+ein <i>Iterator</i> zur Verf&uuml;gung. Ein Iterator ist eine Abstraktion
+f&uuml;r den aufeinanderfolgenden Zugriff auf alle Elemente einer
+komplexen Datenstruktur (siehe <a href="k100074.html#iteratorpattern">Abschnitt 11.4.5</a>).
+Ein Iterator f&uuml;r die traditionellen Collection-Klassen wird in
+Java durch das Interface <a name="ixa100877"><a href="index_e.html#ixb100697"><font color=#000080><tt>Enumeration</tt></font></a></a>
+zur Verf&uuml;gung gestellt und deshalb in der Java-Welt oft auch
+als <i>Enumerator</i> bezeichnet. 
+
+<p>
+Das Interface <a href="index_e.html#ixb100697"><font color=#000080><tt>Enumeration</tt></font></a>
+besitzt die Methoden <a name="ixa100878"><a href="index_h.html#ixb100698"><font color=#000080><tt>hasMoreElements</tt></font></a></a>
+und <a name="ixa100879"><a href="index_n.html#ixb100699"><font color=#000080><tt>nextElement</tt></font></a></a>.
+Direkt nach der Initialisierung zeigt ein <a href="index_e.html#ixb100697"><font color=#000080><tt>Enumeration</tt></font></a>-Objekt
+auf das erste Element der Aufz&auml;hlung. Durch Aufruf von <a href="index_h.html#ixb100698"><font color=#000080><tt>hasMoreElements</tt></font></a>
+kann gepr&uuml;ft werden, ob weitere Elemente in der Aufz&auml;hlung
+enthalten sind, und <a href="index_n.html#ixb100699"><font color=#000080><tt>nextElement</tt></font></a>
+setzt den internen Zeiger auf das n&auml;chste Element: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public boolean hasMoreElements()
+
+public Object nextElement()
+  throws NoSuchElementException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Enumeration.html" onClick="this.href=getApiDoc('java.util.Enumeration')"><font color="#660066" size=-1>java.util.Enumeration</font></a></td>
+</tr>
+</table>
+
+<p>
+In der Klasse <a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>
+liefert die Methode <a name="ixa100880"><a href="index_e.html#ixb100700"><font color=#000080><tt>elements</tt></font></a></a>
+einen Enumerator f&uuml;r alle Elemente, die sich im Vektor befinden:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Enumeration elements()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Enumeration.html" onClick="this.href=getApiDoc('java.util.Enumeration')"><font color="#660066" size=-1>java.util.Enumeration</font></a></td>
+</tr>
+</table>
+
+<p>
+Das folgende Beispiel verdeutlicht die Anwendung von <a href="index_e.html#ixb100700"><font color=#000080><tt>elements</tt></font></a>:
+<a name="listingid015001"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1501.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1501
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    Vector v = <font color="#0000AA">new</font> Vector();
+<font color="#555555">010 </font>
+<font color="#555555">011 </font>    v.addElement(<font color="#0000FF">"eins"</font>);
+<font color="#555555">012 </font>    v.addElement(<font color="#0000FF">"drei"</font>);
+<font color="#555555">013 </font>    v.insertElementAt(<font color="#0000FF">"zwei"</font>,1);
+<font color="#555555">014 </font>    <font color="#0000AA">for</font> (Enumeration el=v.elements(); el.hasMoreElements(); ) {
+<font color="#555555">015 </font>      System.out.println((String)el.nextElement());
+<font color="#555555">016 </font>    }
+<font color="#555555">017 </font>  }
+<font color="#555555">018 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1501.java"><font color="#000055" size=-1>Listing1501.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 15.1: Die Methode elements der Klasse Vector</i></p>
+
+<p>
+Das Programm erzeugt einen <a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>,
+f&uuml;gt die Werte &#187;eins&#171;, &#187;zwei&#171; und &#187;drei&#171;
+ein und gibt sie anschlie&szlig;end auf dem Bildschirm aus: 
+<font color="#333300">
+<pre>
+eins
+zwei
+drei
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Ein Enumerator ist immer dann n&uuml;tzlich, wenn die Elemente eines
+zusammengesetzten Datentyps nacheinander aufgez&auml;hlt werden sollen.
+Enumeratoren werden in Java noch an verschiedenen anderen Stellen
+zur Verf&uuml;gung gestellt, beispielsweise in den Klassen <a href="index_h.html#ixb100428"><font color=#000080><tt>Hashtable</tt></font></a>
+oder <a href="index_s.html#ixb100544"><font color=#000080><tt>StringTokenizer</tt></font></a>.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100097.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100098.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100100.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100104.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

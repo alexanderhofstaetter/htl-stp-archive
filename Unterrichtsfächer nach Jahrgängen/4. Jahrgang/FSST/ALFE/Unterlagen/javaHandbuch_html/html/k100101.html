@@ -1,0 +1,500 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100097.html;106,k100100.html;107,k100102.html;108,k100104.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100097.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100100.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100102.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100104.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 15 - Collections I
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="klassehashtable"></a>
+<h2>15.4 Die Klasse Hashtable </h2>
+<hr>
+<ul>
+<li><a href="k100101.html#klassehashtable">15.4 Die Klasse Hashtable</a>
+<ul>
+<li><a href="k100101.html#sectlevel3id015004001">15.4.1 Einf&uuml;gen von Elementen</a>
+<li><a href="k100101.html#sectlevel3id015004002">15.4.2 Zugriff auf Elemente</a>
+<li><a href="k100101.html#sectlevel3id015004003">15.4.3 Hashtable als Iterator</a>
+<li><a href="k100101.html#properties">15.4.4 Die Klasse Properties</a>
+</ul>
+</ul>
+<hr>
+
+<p>
+Die Klasse <a name="ixa100890"><a href="index_h.html#ixb100428"><font color=#000080><tt>Hashtable</tt></font></a></a>
+ist eine Konkretisierung der abstrakten Klasse <a name="ixa100891"><a href="index_d.html#ixb100687"><font color=#000080><tt>Dictionary</tt></font></a></a>.
+Diese stellt einen <i>assoziativen</i> Speicher dar, der <i>Schl&uuml;ssel</i>
+auf <i>Werte</i> abbildet und &uuml;ber den Schl&uuml;sselbegriff
+einen effizienten Zugriff auf den Wert erm&ouml;glicht. Ein Dictionary
+speichert also immer zusammengeh&ouml;rige Paare von Daten, bei denen
+der Schl&uuml;ssel als Name des zugeh&ouml;rigen Werts angesehen werden
+kann. &Uuml;ber den Schl&uuml;ssel kann sp&auml;ter der Wert leicht
+wiedergefunden werden. 
+
+<p>
+Da ein Dictionary auf unterschiedliche Weise implementiert werden
+kann, haben die Java-Designer entschieden, dessen abstrakte Eigenschaften
+in einer Basisklasse zusammenzufassen. Die Implementierung <a href="index_h.html#ixb100428"><font color=#000080><tt>Hashtable</tt></font></a>
+benutzt das Verfahren der <a name="ixa100892"><i>Schl&uuml;sseltransformation</i></a>,
+also die Verwendung einer Transformationsfunktion (auch <a name="ixa100893"><i>Hash-Funktion</i></a>
+genannt), zur Abbildung von Schl&uuml;sseln auf Indexpositionen eines
+Arrays. Weitere Konkretisierungen der Klasse <a href="index_d.html#ixb100687"><font color=#000080><tt>Dictionary</tt></font></a>,
+etwa auf der Basis bin&auml;rer B&auml;ume, gibt es in Java derzeit
+nicht. 
+
+<p>
+Neben den erw&auml;hnten abstrakten Eigenschaften besitzt <a href="index_h.html#ixb100428"><font color=#000080><tt>Hashtable</tt></font></a>
+noch die konkreten Merkmale <i>Kapazit&auml;t</i> und <i>Ladefaktor</i>.
+Die Kapazit&auml;t gibt die Anzahl der Elemente an, die insgesamt
+untergebracht werden k&ouml;nnen. Der Ladefaktor zeigt dagegen an,
+bei welchem F&uuml;llungsgrad die Hash-Tabelle vergr&ouml;&szlig;ert
+werden muss. Das Vergr&ouml;&szlig;ern erfolgt automatisch, wenn die
+Anzahl der Elemente innerhalb der Tabelle gr&ouml;&szlig;er ist als
+das Produkt aus Kapazit&auml;t und Ladefaktor. Seit dem JDK 1.2 darf
+der Ladefaktor auch gr&ouml;&szlig;er als 1 sein. In diesem Fall wird
+die <a href="index_h.html#ixb100428"><font color=#000080><tt>Hashtable</tt></font></a>
+also erst dann vergr&ouml;&szlig;ert, wenn der F&uuml;llungsgrad gr&ouml;&szlig;er
+als 100 % ist und bereits ein Teil der Elemente in den &Uuml;berlaufbereichen
+untergebracht wurde. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Wichtig bei der Verwendung der <a href="index_d.html#ixb100687"><font color=#000080><tt>Dictionary</tt></font></a>-Klassen
+ist, dass das Einf&uuml;gen und der Zugriff auf Schl&uuml;ssel nicht
+auf der Basis des Operators <font color="#000077"><tt>==</tt></font>,
+sondern mit Hilfe der Methode <a name="ixa100894"><a href="index_e.html#ixb100230"><font color=#000080><tt>equals</tt></font></a></a>
+erfolgt. Schl&uuml;ssel m&uuml;ssen daher lediglich <i>inhaltlich</i>
+gleich sein, um als identisch angesehen zu werden. Eine Referenzgleichheit
+ist dagegen nicht erforderlich.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id015004001"></a>
+<h3>15.4.1 Einf&uuml;gen von Elementen </h3>
+
+<p>
+Eine Instanz der Klasse <a href="index_h.html#ixb100428"><font color=#000080><tt>Hashtable</tt></font></a>
+kann mit Hilfe eines parameterlosen Konstruktors angelegt werden:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Hashtable()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Hashtable.html" onClick="this.href=getApiDoc('java.util.Hashtable')"><font color="#660066" size=-1>java.util.Hashtable</font></a></td>
+</tr>
+</table>
+
+<p>
+Das Einf&uuml;gen von Elementen erfolgt durch Aufruf der Methode <a name="ixa100895"><a href="index_p.html#ixb100712"><font color=#000080><tt>put</tt></font></a></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Object put(Object key, Object value)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Hashtable.html" onClick="this.href=getApiDoc('java.util.Hashtable')"><font color="#660066" size=-1>java.util.Hashtable</font></a></td>
+</tr>
+</table>
+
+<p>
+Dieser Aufruf f&uuml;gt das Schl&uuml;ssel-Werte-Paar <i>(key, value)</i>
+in die <a href="index_h.html#ixb100428"><font color=#000080><tt>Hashtable</tt></font></a>
+ein. Weder <i>key</i> noch <i>value</i> d&uuml;rfen dabei <a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>
+sein. Falls bereits ein Wertepaar mit dem Schl&uuml;ssel <i>key</i>
+enthalten ist, wird der bisherige Wert gegen den neuen ausgetauscht,
+und <a href="index_p.html#ixb100712"><font color=#000080><tt>put</tt></font></a>
+liefert in diesem Fall den Wert zur&uuml;ck, der bisher dem Schl&uuml;ssel
+zugeordnet war. Falls der Schl&uuml;ssel bisher noch nicht vorhanden
+ist, ist der R&uuml;ckgabewert <a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>.
+
+
+<!-- Section -->
+<a name="sectlevel3id015004002"></a>
+<h3>15.4.2 Zugriff auf Elemente </h3>
+
+<p>
+Der Zugriff auf ein Element erfolgt mit Hilfe der Methode <a name="ixa100896"><a href="index_g.html#ixb100713"><font color=#000080><tt>get</tt></font></a></a>
+&uuml;ber den ihm zugeordneten Schl&uuml;ssel. <a href="index_g.html#ixb100713"><font color=#000080><tt>get</tt></font></a>
+erwartet ein Schl&uuml;sselobjekt und liefert den dazu passenden Wert.
+Falls der angegebene Schl&uuml;ssel nicht enthalten war, ist der R&uuml;ckgabewert
+<a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Object get(Object key)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Hashtable.html" onClick="this.href=getApiDoc('java.util.Hashtable')"><font color="#660066" size=-1>java.util.Hashtable</font></a></td>
+</tr>
+</table>
+
+<p>
+Zus&auml;tzlich zu den bisher erw&auml;hnten Methoden gibt es noch
+zwei weitere mit den Namen <a name="ixa100897"><a href="index_c.html#ixb100714"><font color=#000080><tt>contains</tt></font></a></a>
+und <a name="ixa100898"><a href="index_c.html#ixb100715"><font color=#000080><tt>containsKey</tt></font></a></a>.
+Sie &uuml;berpr&uuml;fen, ob ein bestimmter Wert bzw. ein bestimmter
+Schl&uuml;ssel in der <a href="index_h.html#ixb100428"><font color=#000080><tt>Hashtable</tt></font></a>
+enthalten ist: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public boolean contains(Object value)
+public boolean containsKey(Object key)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Hashtable.html" onClick="this.href=getApiDoc('java.util.Hashtable')"><font color="#660066" size=-1>java.util.Hashtable</font></a></td>
+</tr>
+</table>
+
+<p>
+Der R&uuml;ckgabewert ist <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>,
+falls das gesuchte Element enthalten ist, andernfalls ist er <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>.
+Bei der Verwendung dieser Funktionen ist zu beachten, dass die Suche
+nach einem Wert wahrscheinlich viel ineffizienter ist als die Suche
+nach einem Schl&uuml;ssel. W&auml;hrend der Schl&uuml;ssel &uuml;ber
+die Transformationsfunktion sehr schnell gefunden wird, erfordert
+die Suche nach einem Wert einen sequenziellen Durchlauf durch die
+Tabelle. 
+
+<!-- Section -->
+
+<a name="sectlevel3id015004003"></a>
+<h3>15.4.3 Hashtable als Iterator </h3>
+
+<p>
+In der Klasse <a href="index_h.html#ixb100428"><font color=#000080><tt>Hashtable</tt></font></a>
+gibt es zwei Iteratoren, die zur Auflistung von Schl&uuml;sseln und
+Werten verwendet werden k&ouml;nnen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Enumeration elements()
+public Enumeration keys()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Hashtable.html" onClick="this.href=getApiDoc('java.util.Hashtable')"><font color="#660066" size=-1>java.util.Hashtable</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Methode <a name="ixa100899"><a href="index_e.html#ixb100700"><font color=#000080><tt>elements</tt></font></a></a>
+liefert einen Iterator f&uuml;r die Auflistung aller Werte in der
+<a href="index_h.html#ixb100428"><font color=#000080><tt>Hashtable</tt></font></a>.
+In welcher Reihenfolge die Elemente dabei durchlaufen werden, ist
+nicht definiert. Da eine Hash-Funktion die Eigenschaft hat, Schl&uuml;ssel
+gleichm&auml;&szlig;ig &uuml;ber den verf&uuml;gbaren Speicher zu
+verteilen, ist davon auszugehen, dass die Iteratoren ihre R&uuml;ckgabewerte
+in einer zuf&auml;lligen Reihenfolge liefern. 
+
+<p>
+Analog zu <a href="index_e.html#ixb100700"><font color=#000080><tt>elements</tt></font></a>
+liefert <a name="ixa100900"><a href="index_k.html#ixb100716"><font color=#000080><tt>keys</tt></font></a></a>
+eine Auflistung aller Schl&uuml;ssel, die sich in der Hash-Tabelle
+befinden. Wie &uuml;blich liefern beide Methoden ein Objekt, welches
+das Interface <a href="index_e.html#ixb100697"><font color=#000080><tt>Enumeration</tt></font></a>
+implementiert. Wie zuvor erkl&auml;rt, erfolgt der Zugriff daher mit
+Hilfe der Methoden <a href="index_h.html#ixb100698"><font color=#000080><tt>hasMoreElements</tt></font></a>
+und <a href="index_n.html#ixb100699"><font color=#000080><tt>nextElement</tt></font></a>.
+
+<p>
+Das folgende Beispiel verdeutlicht die Anwendung einer <a href="index_h.html#ixb100428"><font color=#000080><tt>Hashtable</tt></font></a>:
+<a name="hashtableiterator"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1503.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1503
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    Hashtable h = <font color="#0000AA">new</font> Hashtable();
+<font color="#555555">010 </font>
+<font color="#555555">011 </font>    <font color="#00AA00">//Pflege der Aliase</font>
+<font color="#555555">012 </font>    h.put(<font color="#0000FF">"Fritz"</font>,<font color="#0000FF">"f.mueller@test.de"</font>);
+<font color="#555555">013 </font>    h.put(<font color="#0000FF">"Franz"</font>,<font color="#0000FF">"fk@b-blabla.com"</font>);
+<font color="#555555">014 </font>    h.put(<font color="#0000FF">"Paula"</font>,<font color="#0000FF">"user0125@mail.uofm.edu"</font>);
+<font color="#555555">015 </font>    h.put(<font color="#0000FF">"Lissa"</font>,<font color="#0000FF">"lb3@gateway.fhdto.northsurf.dk"</font>);
+<font color="#555555">016 </font>
+<font color="#555555">017 </font>    <font color="#00AA00">//Ausgabe</font>
+<font color="#555555">018 </font>    Enumeration e = h.keys();
+<font color="#555555">019 </font>    <font color="#0000AA">while</font> (e.hasMoreElements()) {
+<font color="#555555">020 </font>      String alias = (String)e.nextElement();
+<font color="#555555">021 </font>      System.out.println(
+<font color="#555555">022 </font>        alias + <font color="#0000FF">" --&gt; "</font> + h.get(alias)
+<font color="#555555">023 </font>      );
+<font color="#555555">024 </font>    }
+<font color="#555555">025 </font>  }
+<font color="#555555">026 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1503.java"><font color="#000055" size=-1>Listing1503.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 15.3: Anwendung der Klasse Hashtable</i></p>
+
+<p>
+Das Programm legt eine leere <a href="index_h.html#ixb100428"><font color=#000080><tt>Hashtable</tt></font></a>
+an, die zur Aufnahme von Mail-Aliasen verwendet werden soll. Dazu
+soll zu jeder E-Mail-Adresse ein kurzer Aliasname gepflegt werden,
+unter dem die lange Adresse sp&auml;ter angesprochen werden kann.
+Das Programm legt zun&auml;chst die Aliase &#187;Fritz&#171;, &#187;Franz&#171;,
+&#187;Paula&#171; und &#187;Lissa&#171; an und assoziiert jeden mit
+der zugeh&ouml;rigen E-Mail-Adresse. Anschlie&szlig;end durchl&auml;uft
+es alle Schl&uuml;ssel und gibt zu jedem den dazu passenden Wert aus.
+Die Ausgabe des Programms ist: 
+<font color="#333300">
+<pre>
+Lissa --&gt; lb3@gateway.fhdto.northsurf.dk
+Paula --&gt; user0125@mail.uofm.edu
+Franz --&gt; fk@b-blabla.com
+Fritz --&gt; f.mueller@test.de
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="properties"></a>
+<h3>15.4.4 Die Klasse Properties </h3>
+
+<p>
+Die Klasse <a name="ixa100901"><a href="index_p.html#ixb100717"><font color=#000080><tt>Properties</tt></font></a></a>
+ist aus <a href="index_h.html#ixb100428"><font color=#000080><tt>Hashtable</tt></font></a>
+abgeleitet und repr&auml;sentiert ein auf <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Paare
+spezialisiertes Dictionary, das es erlaubt, seinen Inhalt auf einen
+externen Datentr&auml;ger zu speichern oder von dort zu laden. Ein
+solches Objekt wird auch als <i>Property-Liste</i> (oder <i>Eigenschaften-Liste</i>)
+bezeichnet. Zur Instanzierung stehen zwei Konstruktoren zur Verf&uuml;gung:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Properties()
+public Properties(Properties defaults)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Properties.html" onClick="this.href=getApiDoc('java.util.Properties')"><font color="#660066" size=-1>java.util.Properties</font></a></td>
+</tr>
+</table>
+
+<p>
+Der erste legt eine leere Property-Liste an, der zweite f&uuml;llt
+sie mit den &uuml;bergebenen Default-Werten. Der Zugriff auf die einzelnen
+Elemente erfolgt mit den Methoden <a name="ixa100902"><a href="index_g.html#ixb100718"><font color=#000080><tt>getProperty</tt></font></a></a>
+und <a name="ixa100903"><a href="index_p.html#ixb100719"><font color=#000080><tt>propertyNames</tt></font></a></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public String getProperty(String key)
+public String getProperty(String key, String defaultValue)
+
+public Enumeration propertyNames()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Properties.html" onClick="this.href=getApiDoc('java.util.Properties')"><font color="#660066" size=-1>java.util.Properties</font></a></td>
+</tr>
+</table>
+
+<p>
+Die erste Variante von <a href="index_g.html#ixb100718"><font color=#000080><tt>getProperty</tt></font></a>
+liefert die Eigenschaft mit der Bezeichnung <font color="#000077"><tt>key</tt></font>.
+Ist sie nicht vorhanden, wird <a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>
+zur&uuml;ckgegeben. Die zweite Variante hat dieselbe Aufgabe, gibt
+aber den Standardwert <font color="#000077"><tt>defaultValue</tt></font>
+zur&uuml;ck, wenn die gesuchte Eigenschaft nicht gefunden wurde. Mit
+<a href="index_p.html#ixb100719"><font color=#000080><tt>propertyNames</tt></font></a>
+kann ein <a href="index_e.html#ixb100697"><font color=#000080><tt>Enumeration</tt></font></a>-Objekt
+beschafft werden, mit dem alle Eigenschaften der Property-Liste aufgez&auml;hlt
+werden k&ouml;nnen. 
+
+<p>
+Zum Speichern einer Property-Liste steht die Methode <a name="ixa100904"><a href="index_s.html#ixb100720"><font color=#000080><tt>store</tt></font></a></a>
+zur Verf&uuml;gung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void store(OutputStream out, String header)
+  throws IOException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Properties.html" onClick="this.href=getApiDoc('java.util.Properties')"><font color="#660066" size=-1>java.util.Properties</font></a></td>
+</tr>
+</table>
+
+<p>
+Sie erwartet einen <a href="index_o.html#ixb100588"><font color=#000080><tt>OutputStream</tt></font></a>
+als Ausgabeger&auml;t (siehe <a href="k100132.html#kapitelbytestreams">Kapitel 20</a>)
+und einen Header-<a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>,
+der als Kommentar in die Ausgabedatei geschrieben wird. 
+
+<p>
+Das Gegenst&uuml;ck zu <a href="index_s.html#ixb100720"><font color=#000080><tt>store</tt></font></a>
+ist <a name="ixa100905"><a href="index_l.html#ixb100721"><font color=#000080><tt>load</tt></font></a></a>.
+Mit ihr kann eine Property-Datei eingelesen werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void load(InputStream in)
+  throws IOException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Properties.html" onClick="this.href=getApiDoc('java.util.Properties')"><font color="#660066" size=-1>java.util.Properties</font></a></td>
+</tr>
+</table>
+
+<p>
+Hier muss ein <a href="index_i.html#ixb100587"><font color=#000080><tt>InputStream</tt></font></a>
+&uuml;bergeben werden (siehe ebenfalls <a href="k100132.html#kapitelbytestreams">Kapitel 20</a>),
+der die Daten der Property-Liste zur Verf&uuml;gung stellt. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Property-Dateien sind Textdateien mit einem recht einfachen Aufbau.
+Je Zeile enthalten sie einen Schl&uuml;ssel und den zugeh&ouml;rigen
+Wert. Beide sind durch ein Gleichheitszeichen voneinander getrennt.
+Falls das erste nichtleere Zeichen einer Zeile ein &#187;#&#171; oder
+&#187;!&#171; ist, wird die gesamte Zeile als Kommentar angesehen
+und beim Einlesen ignoriert. Zus&auml;tzlich sind einige Escape-Zeichen
+wie \t, \n, \r, \\, \" oder \' erlaubt und es gibt die M&ouml;glichkeit,
+sehr lange Schl&uuml;ssel-Wert-Paare auf mehrere Zeilen zu verteilen.
+Weitere Details k&ouml;nnen in der API-Dokumentation der Methoden
+<a href="index_l.html#ixb100721"><font color=#000080><tt>load</tt></font></a>
+und <a href="index_s.html#ixb100720"><font color=#000080><tt>store</tt></font></a>
+nachgelesen werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Wir wollen an dieser Stelle die Betrachtung der Klasse <a href="index_p.html#ixb100717"><font color=#000080><tt>Properties</tt></font></a>
+abschlie&szlig;en. Ein weiteres Beispiel zu ihrer Verwendung findet
+sich in <a href="k100117.html#systemproperties">Abschnitt 17.3.1</a>.
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100097.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100100.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100102.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100104.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

@@ -1,0 +1,856 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100012.html;106,k100014.html;107,k100016.html;108,k100017.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100012.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100014.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100016.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100017.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 2 - Schnelleinstieg
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id002003"></a>
+<h2>2.3 Tipps f&uuml;r eigene Experimente </h2>
+<hr>
+<ul>
+<li><a href="k100015.html#sectlevel2id002003">2.3 Tipps f&uuml;r eigene Experimente</a>
+<ul>
+<li><a href="k100015.html#sectlevel3id002003001">2.3.1 Der Entwicklungszyklus in Kurzform</a>
+<li><a href="k100015.html#sectlevel3id002003002">2.3.2 Einfache Ausgaben</a>
+<li><a href="k100015.html#subsectionscanner">2.3.3 Einfache Eingaben</a>
+<li><a href="k100015.html#sectlevel3id002003004">2.3.4 Formatierung der Quelltexte</a>
+<li><a href="k100015.html#sectlevel3id002003005">2.3.5 Namenskonventionen</a>
+<li><a href="k100015.html#sectlevel3id002003006">2.3.6 Aufruf von Java-Programmen unter Windows</a>
+<ul>
+<li><a href="k100015.html#sectlevel4id002003006001">Erstellen einer Batch-Datei</a>
+<li><a href="k100015.html#sectlevel4id002003006002">Erstellen einer Verkn&uuml;pfung auf dem Desktop</a>
+<li><a href="k100015.html#sectlevel4id002003006003">Verwenden von javaw anstelle von java</a>
+</ul>
+<li><a href="k100015.html#troubleshooting">2.3.7 Troubleshooting</a>
+<ul>
+<li><a href="k100015.html#sectlevel4id002003007001">Was ist eine DOS-Box und wie startet man sie?</a>
+<li><a href="k100015.html#sectlevel4id002003007002">java l&auml;uft, javac aber nicht</a>
+<li><a href="k100015.html#sectlevel4id002003007003">Was sind eigentlich Umgebungsvariablen?</a>
+<li><a href="k100015.html#sectlevel4id002003007004">Der Compiler javac arbeitet nicht</a>
+<li><a href="k100015.html#sectlevel4id002003007005">Der Interpreter java arbeitet nicht korrekt</a>
+<li><a href="k100015.html#sectlevel4id002003007006">Zus&auml;tzlich ben&ouml;tigte Klassen werden nicht gefunden</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id002003001"></a>
+<h3>2.3.1 Der <a name="ixa100139">Entwicklungszyklus</a> in Kurzform
+</h3>
+
+<p>
+Eine neue Programmiersprache lernt man nur, wenn man selbst Programme
+in dieser Sprache schreibt. Je mehr, desto besser. Bei der Lekt&uuml;re
+des Buchs ist es daher sinnvoll, von Anfang an eigene Experimente
+durchzuf&uuml;hren und so viele Beispielprogramme wie m&ouml;glich
+auszuprobieren, abzu&auml;ndern, zu &uuml;bersetzen und auszuf&uuml;hren.
+In diesem Abschnitt wollen wir ein paar informelle Tipps geben, die
+das erleichtern sollen. 
+
+<p>
+Hier noch einmal in Kurzform die Schritte vom Quellcode bis zum lauff&auml;higen
+Programm: 
+<ul>
+<li>Erstellen Sie die Quelldatei mit einem ASCII-Editor. Verwenden
+Sie keine Textverarbeitung, denn die w&uuml;rde dem Code unverst&auml;ndliche
+Steuerzeichen hinzuf&uuml;gen.
+<li>Achten Sie darauf, dass die Datei die Erweiterung <font color="#660099">.java</font>
+tr&auml;gt, und geben Sie ihr exakt denselben Namen wie der Hauptklasse.
+<li>&Uuml;bersetzen Sie das Programm mit dem Compiler <a href="index_j.html#ixb100131"><font color=#000080><tt>javac</tt></font></a>
+und geben Sie dabei den Dateinamen als Argument an. Um alle Java-Dateien
+in einem Verzeichnis zu &uuml;bersetzen, k&ouml;nnen Sie auch <font color="#660099">*.java</font>
+als Argument verwenden.
+<li>Falls im Quelltext syntaktische Fehler enthalten sind, meldet
+der Compiler sie zusammen mit der Zeilennummer und der Quelldatei,
+in der sie aufgetreten sind. Am Anfang passieren leicht Fehler wie
+vergessene oder &uuml;berfl&uuml;ssige Klammern oder Semikolons. Bedenken
+Sie auch, dass alle Schl&uuml;sselw&ouml;rter kleingeschrieben werden
+und bei Bezeichnern streng zwischen Gro&szlig;- und Kleinschreibung
+unterschieden wird.
+<li>Mitunter gibt es Fehlermeldungen, weil Code nicht erreicht werden
+kann oder Variablen nicht initialisiert werden. Das ist in Java nicht
+erlaubt und wird vom Compiler mittels Datenflussanalyse &uuml;berpr&uuml;ft.
+Stellen Sie den Code in einem solchen Fall geeignet um.
+<li>Ignorieren Sie zun&auml;chst Warnungen, bei denen der Compiler
+die Verwendung von Klassen oder Methoden, die als <a name="ixa100140"><a href="index_d.html#ixb100139"><font color=#000080><tt>deprecated</tt></font></a></a>
+markiert wurden, kritisiert. Derartige Programmteile funktionieren
+zwar meist noch, sind aber veraltet und sollten eigentlich nicht mehr
+verwendet werden.
+<li>Gibt der Compiler gar keine Meldung aus, wurde das Programm erfolgreich
+&uuml;bersetzt.
+<li>Sie k&ouml;nnen das Programm nun mit dem Java-Interpreter <a href="index_j.html#ixb100134"><font color=#000080><tt>java</tt></font></a>
+starten. Geben Sie als Argument nur den Klassennamen ohne die Erweiterung
+<font color="#660099">.java</font> oder <font color="#660099">.class</font>
+an.
+<li>Wenn es beim Aufruf des Interpreters eine Fehlermeldung der Art
+<a name="ixa100141"><a href="index_n.html#ixb100132"><font color=#000080><tt>NoClassDefFoundError</tt></font></a></a>
+gibt, liegt das fast immer daran, dass der Name der Klasse falsch
+geschrieben wurde oder dass keine oder eine falsch benannte <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>-Methode
+vorhanden ist. Beachten Sie, dass <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>
+genauso deklariert wird wie beispielsweise in <a href="k100014.html#helloworld">Listing 2.1</a>.
+</ul>
+
+
+<!-- Section -->
+<a name="sectlevel3id002003002"></a>
+<h3>2.3.2 Einfache Ausgaben<a name="ixa100142"></a> </h3>
+
+<p>
+F&uuml;r die ersten Schritte in einer neuen Sprache ben&ouml;tigt
+man immer auch I/O-Routinen, um einfache Ein- und Ausgaben vornehmen
+zu k&ouml;nnen. Gl&uuml;cklicherweise kann man in Java nicht nur grafikorientierte
+Programme schreiben, sondern auch auf die Standardein- und -ausgabe
+zugreifen. Damit stehen f&uuml;r kleine Programme einfache I/O-Routinen
+zur Verf&uuml;gung, die wie in den meisten konventionellen Programmiersprachen
+verwendet werden k&ouml;nnen. 
+
+<p>
+Mit Hilfe des Kommandos <a name="ixa100143"><a href="index_s.html#ixb100141"><font color=#000080><tt>System.out.println</tt></font></a></a>
+k&ouml;nnen einfache Ausgaben auf den Bildschirm geschrieben werden.
+Nach jedem Aufruf wird ein Zeilenumbruch ausgegeben. Mit <a name="ixa100144"><a href="index_s.html#ixb100142"><font color=#000080><tt>System.out.print</tt></font></a></a>
+kann diese auch unterdr&uuml;ckt werden. Beide Methoden erwarten ein
+einziges Argument, das von beliebigem Typ sein kann. Dieses kann jedoch
+auch zur Laufzeit mit Hilfe des Plus-Operators aus verschiedenen Bestandteilen
+zusammengef&uuml;gt werden: 
+<a name="listingid002002"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing0202.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing0202
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    System.out.println(<font color="#0000FF">"1+2="</font> + (1+2));
+<font color="#555555">008 </font>  }
+<font color="#555555">009 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing0202.java"><font color="#000055" size=-1>Listing0202.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 2.2: Einfache Ausgaben</i></p>
+
+<p>
+Die Ausgabe des Programms ist: 
+<font color="#333300">
+<pre>
+1+2=3
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Der erste String enth&auml;lt den Wert &#187;1+2=&#171; und wird mit
+dem Ergebnis des Ausdrucks <i>(1+2)</i> verkettet (also mit dem Wert
+3). Ohne die Klammern w&uuml;rde der Compiler das zweite Plus ebenfalls
+als String-Verkettungsoperator ansehen und die Ausgabe des Programms
+w&auml;re <font color="#000077"><tt>1+2=12</tt></font> gewesen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Seit Java 6 gibt es ein <a href="index_p.html#ixb100143"><font color=#000080><tt>printf</tt></font></a>-Pendant,
+das in <a href="k100082.html#formatter">Abschnitt 12.6.2</a> beschrieben
+wird. Es bietet &auml;hnliche Funktionen wie die entsprechenden C-Routinen
+und stellt eine flexible und einfach zu bedienende Ausgabeschnittstelle
+zur Verf&uuml;gung. 
+
+<!-- Section -->
+
+<a name="subsectionscanner"></a>
+<h3>2.3.3 Einfache Eingaben<a name="ixa100145"></a> </h3>
+
+<p>
+Seit der Version Java 5 ist auch das Einlesen von Daten &uuml;ber
+die Kommandozeile ein Kinderspiel. Hierzu verwenden man statt des
+Ausgabe-Streams <a href="index_s.html#ixb100145"><font color=#000080><tt>System.out</tt></font></a>
+den Eingabe-Stream <a name="ixa100146"><a href="index_s.html#ixb100146"><font color=#000080><tt>System.in</tt></font></a></a>
+in Verbindung mit einer Instanz der Hilfsklasse <a name="ixa100147"><a href="index_s.html#ixb100147"><font color=#000080><tt>Scanner</tt></font></a></a>.
+
+<p>
+Das folgende Listing zeigt ein Programm, das zwei Ganzzahlen einliest,
+sie zusammenz&auml;hlt und das Ergebnis auf dem Bildschirm ausgibt:
+<a name="listingid002003"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing0203.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.util.Scanner;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.io.IOException;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing0203
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    <font color="#006699">int</font> a, b, c;
+<font color="#555555">011 </font>		
+<font color="#555555">012 </font>    Scanner scanner = <font color="#0000AA">new</font> Scanner(System.in);
+<font color="#555555">013 </font>		
+<font color="#555555">014 </font>    System.out.println(<font color="#0000FF">"Bitte a eingeben: "</font>);
+<font color="#555555">015 </font>    a = scanner.nextInt();
+<font color="#555555">016 </font>    System.out.println(<font color="#0000FF">"Bitte b eingeben: "</font>);
+<font color="#555555">017 </font>    b = scanner.nextInt();
+<font color="#555555">018 </font>    c = a + b;
+<font color="#555555">019 </font>    System.out.println(<font color="#0000FF">"a+b="</font>+c);
+<font color="#555555">020 </font>  }
+<font color="#555555">021 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing0203.java"><font color="#000055" size=-1>Listing0203.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 2.3: Einfache Eingaben</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die <a name="ixa100148"><a href="index_i.html#ixb100148"><font color=#000080><tt>import</tt></font></a></a>-Anweisung
+am Anfang des Listings dient dazu, die Klasse <a href="index_s.html#ixb100147"><font color=#000080><tt>Scanner</tt></font></a>
+des Pakets <a href="index_j.html#ixb100149"><font color=#000080><tt>java.util</tt></font></a>
+bekanntzumachen. Ohne diese Anweisung w&uuml;rde <a href="index_s.html#ixb100147"><font color=#000080><tt>Scanner</tt></font></a>
+vom Compiler nicht gefunden und es g&auml;be eine entsprechende Fehlermeldung.
+Auch in nachfolgenden Beispielprogrammen tauchen von Zeit zu Zeit
+<a href="index_i.html#ixb100148"><font color=#000080><tt>import</tt></font></a>-Anweisungen
+auf. In <a href="k100090.html#progstrukturierung">Kapitel 14</a> werden
+wir ausf&uuml;hrlich auf die Verwendung und das Erstellen von Paketen
+eingehen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Werden die Zahlen 10 und 20 eingegeben, so lautet die Ausgabe des
+Programms: 
+<font color="#333300">
+<pre>
+Bitte a eingeben:
+10
+Bitte b eingeben:
+20
+a+b=30
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Das Ergebnis von <font color="#000077"><tt>scanner.nextInt</tt></font>
+ist ein <a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>,
+der den Inhalt der Eingabezeile enth&auml;lt.<a name="ixa100149"></a></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Weitere Informationen zur streambasierten Ein-/Ausgabe sind in <a href="k100127.html#kapitelcharacterstreams">Kapitel 19</a>
+und <a href="k100132.html#kapitelbytestreams">Kapitel 20</a> zu finden.
+
+
+<!-- Section -->
+<a name="sectlevel3id002003004"></a>
+<h3>2.3.4 Formatierung der Quelltexte </h3>
+
+<p>
+Es ist bekannt, dass man sich &uuml;ber die Formatierung von Quelltexten
+und die Einr&uuml;ckung von Deklarationen und Anweisungen streiten
+kann. Jeder Entwickler hat seinen eigenen Stil und kennt gute Argumente,
+genau diesen zu verwenden. Bei Java-Programmen gibt es einige gro&szlig;e
+Lager, denen man sich anschlie&szlig;en kann. Im professionellen Umfeld
+ist man sogar meist gezwungen, sich einem vorgegebenen Stil anzupassen.
+Wir wollen uns diesen fruchtlosen Diskussionen nicht anschlie&szlig;en
+und keinesfalls behaupten, die in diesem Buch verwendete Art der Quelltextformatierung
+w&auml;re die einzig richtige. Wir haben jedoch versucht, die Beispielprogramme
+konsistent zu formatieren und dabei einige wenige, leicht verst&auml;ndliche
+Regeln einzuhalten. 
+
+<p>
+Bei Klassen- und Methodendefinitionen stehen die geschweiften Klammern
+unterhalb der Deklarationsanweisung und die eigentliche Deklaration
+ist einger&uuml;ckt: 
+<a name="listingid002004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">import</font> java.util.Scanner;
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing0204
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#00AA00">//Hier steht der Methodenrumpf</font>
+<font color="#555555">008 </font>  }
+<font color="#555555">009 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 2.4: Einr&uuml;cken von Klassen und Methoden</i></p>
+
+<p>
+Bei Kontrollanweisungen innerhalb einer Methode schreiben wir die
+&ouml;ffnende Klammer dagegen in dieselbe Zeile wie die einleitende
+Anweisung: 
+<a name="listingid002005"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; aNeighbours.length; ++i) {
+<font color="#555555">002 </font>  <font color="#0000AA">if</font> (p1.x + aNeighbours[i][0] == p2.x) {
+<font color="#555555">003 </font>    <font color="#0000AA">if</font> (p1.y + aNeighbours[i][1] == p2.y) {
+<font color="#555555">004 </font>      <font color="#0000AA">return</font> <font color="#006699">true</font>;
+<font color="#555555">005 </font>    }
+<font color="#555555">006 </font>  }
+<font color="#555555">007 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 2.5: Einr&uuml;cken von Kontrollanweisungen</i></p>
+
+<p>
+Dies gilt auch f&uuml;r fortgesetzte Anweisungen wie beispielsweise
+<a name="ixa100150"><a href="index_e.html#ixb100152"><font color=#000080><tt>else</tt></font></a></a>
+oder <font color="#000077"><tt>else if</tt></font>: 
+<a name="listingid002006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">if</font> (cmd.equals(<font color="#0000FF">"Gr&ouml;&szlig;er"</font>)) {
+<font color="#555555">002 </font>  d.height *= 1.05;
+<font color="#555555">003 </font>  d.width  *= 1.05;
+<font color="#555555">004 </font>} <font color="#0000AA">else</font> <font color="#0000AA">if</font> (cmd.equals(<font color="#0000FF">"Kleiner"</font>)) {
+<font color="#555555">005 </font>  d.height *= 0.95;
+<font color="#555555">006 </font>  d.width  *= 0.95;
+<font color="#555555">007 </font>} <font color="#0000AA">else</font> {
+<font color="#555555">008 </font>  x = 10;
+<font color="#555555">009 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 2.6: Einr&uuml;cken fortgesetzter Anweisungen</i></p>
+
+<p>
+Diese Technik verwenden wir meist auch, wenn bei einem Methodenaufruf
+nicht alle Argumente in eine Zeile passen: 
+<a name="listingid002007"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>System.out.println(
+<font color="#555555">002 </font>  <font color="#0000FF">"Gr&uuml;&szlig;e aus Hamburg"</font>.regionMatches(
+<font color="#555555">003 </font>    8,
+<font color="#555555">004 </font>    <font color="#0000FF">"Greetings from Australia"</font>,
+<font color="#555555">005 </font>    8,
+<font color="#555555">006 </font>    2
+<font color="#555555">007 </font>  )
+<font color="#555555">008 </font>);</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 2.7: Einr&uuml;cken langer Methodenaufrufe</i></p>
+
+<p>
+Diese einfachen Regeln lassen sich in den meisten F&auml;llen anwenden,
+es gibt aber auch F&auml;lle, in denen sie versagen. So zum Beispiel,
+wenn der Testausdruck einer <a href="index_i.html#ixb100074"><font color=#000080><tt>if</tt></font></a>-Anweisung
+&uuml;ber mehrere Zeilen geht, wenn die Parameterdeklaration einer
+Methode nicht in eine Zeile passt oder schlicht, wenn die Verschachtelung
+bereits sehr tief ist und keine weitere Einr&uuml;ckung zul&auml;sst.
+In diesem Fall sei der Leser um Nachsicht gebeten und aufgefordert,
+den &auml;sthetischen Anspruch an das Programm den jeweiligen pragmatischen
+Erw&auml;gungen unterzuordnen. 
+
+<!-- Section -->
+
+<a name="sectlevel3id002003005"></a>
+<h3>2.3.5 <a name="ixa100151">Namenskonventionen</a><a name="ixa100152"></a></h3>
+
+<p>
+Wie in allen Programmiersprachen, gibt es auch in Java Konventionen
+f&uuml;r die Vergabe von Namen. Sie sind zwar nicht zwingend erforderlich,
+erleichtern aber das Verst&auml;ndnis der Quelltexte ungemein und
+sollten daher unbedingt eingehalten werden. Die wichtigsten sind:
+<ul>
+<li>Klassennamen beginnen stets mit einem Gro&szlig;buchstaben. Beispiele
+sind <font color="#000077"><tt>String</tt></font>, <font color="#000077"><tt>Vector</tt></font>
+oder <font color="#000077"><tt>Hello</tt></font>. Besteht ein Klassenname
+aus mehreren Silben, k&ouml;nnen zur Steigerung der &Uuml;bersichtlichkeit
+auch die Folgesilben mit einem Gro&szlig;buchstaben beginnen. Beispiele
+daf&uuml;r w&auml;ren <font color="#000077"><tt>HelloWorld</tt></font>,
+<font color="#000077"><tt>KeyAdapter</tt></font> oder <font color="#000077"><tt>NoSuchMethodException</tt></font>.
+Klassennamen, die nur aus Gro&szlig;buchstaben bestehen, sind un&uuml;blich.
+<li>Methodennamen beginnen mit einem Kleinbuchstaben. Haben sie mehrere
+Silben, ist die erste oft ein Verb. Weitere beginnen mit einem Gro&szlig;buchstaben.
+Beispiele sind <font color="#000077"><tt>println</tt></font>, <font color="#000077"><tt>hasMoreElements</tt></font>
+oder <font color="#000077"><tt>isEnabled</tt></font>.
+<li>Paketnamen bestehen ausschlie&szlig;lich aus Kleinbuchstaben.
+Beispiele sind <font color="#000077"><tt>java.lang</tt></font>, <font color="#000077"><tt>javax.swing.event</tt></font>
+oder <font color="#000077"><tt>com.solution42.util</tt></font> (mehrteilige
+Paketnamen werden durch Punkte separiert).
+<li>F&uuml;r Variablennamen gelten dieselben Konventionen wie f&uuml;r
+Methoden. Es ist un&uuml;blich, Membervariablen mit einem Pr&auml;fix
+wie z.B. &#187;m_&#171; zu versehen. Auch die Verwendung der ungarischen
+Notation<a name="ixa100153"></a>, bei der Variablen datentypbezogene
+Namenspr&auml;fixe erhalten, ist in Java nicht &uuml;blich.
+</ul>
+
+<p>
+Weitere Konventionen werden, wenn erforderlich, im Buch beschrieben.
+
+
+<!-- Section -->
+<a name="sectlevel3id002003006"></a>
+<h3>2.3.6 Aufruf von Java-Programmen unter Windows </h3>
+
+<p>
+Immer wieder wird gefragt, wie man Java-Programme m&ouml;glichst einfach
+unter Windows aufrufen kann. Das Starten aus der DOS-Box erscheint
+vielen Lesern zu umst&auml;ndlich und bei einem Java-Programm mit
+grafischer Oberfl&auml;che st&ouml;rt das &uuml;berfl&uuml;ssige Konsolenfenster.
+Im Gegensatz zu <font color="#000077"><tt>com</tt></font>- oder <font color="#000077"><tt>exe</tt></font>-Dateien
+ist ein kompiliertes Java-Programm zwar nicht direkt ausf&uuml;hrbar,
+aber es gibt doch einige M&ouml;glichkeiten, das Starten unter Windows
+zu vereinfachen. 
+
+<!-- Section -->
+
+<a name="sectlevel4id002003006001"></a>
+<h4>Erstellen einer Batch-Datei </h4>
+
+<p>
+Eine erste Vereinfachung besteht darin, eine Batch-Datei zu erstellen,
+aus der der java-Interpreter mit dem Java-Programm als Argument aufgerufen
+wird. Soll beispielsweise das Java-Programm <font color="#000077"><tt>Listing3701</tt></font>,
+dessen Bytecode <font color="#660099">Listing3701.class</font> im
+Verzeichnis <font color="#660099">c:\tmp</font> liegt, mit dem java-Interpreter,
+der in das Verzeichnis <font color="#660099">c:\jdk1.7</font> installiert
+wurde, gestartet werden, kann dazu folgende Batch-Datei verwendet
+werden: 
+<font color="#333300">
+<pre>
+@echo off
+c:
+cd \tmp
+c:\jdk1.7\bin\java Listing3701
+</pre>
+</font>
+
+<p>
+Wird diese beispielsweise <font color="#660099">go3701.bat</font>
+genannt und in ein Verzeichnis gelegt, das &uuml;ber die PATH-Angabe
+zu erreichen ist, kann unser Java-Programm durch einfache Eingabe
+des Kommandos <font color="#000077"><tt>go3701</tt></font> aus jedem
+Verzeichnis heraus oder aus dem &#187;Ausf&uuml;hren&#171;-Dialog
+des Startmen&uuml;s gestartet werden. 
+
+<!-- Section -->
+
+<a name="sectlevel4id002003006002"></a>
+<h4>Erstellen einer Verkn&uuml;pfung auf dem Desktop </h4>
+
+<p>
+Ebenso leicht ist es m&ouml;glich, ein Java-Programm durch einen Doppelklick
+auf ein Desktop-Symbol zu starten. Dazu wird eine Verkn&uuml;pfung
+<a name="ixa100154"></a> angelegt, die den java-Interpreter mit dem
+Programmnamen als Argument aufruft. Nach einem rechten Mausklick auf
+den Windows-Desktop ist dazu zun&auml;chst der Men&uuml;punkt &#187;Neu.Verkn&uuml;pfung&#171;
+aufzurufen. Anschlie&szlig;end sind die Angaben f&uuml;r Programm,
+Arbeitsverzeichnis und Icon so zu machen, dass der sp&auml;tere Eigenschaften-Dialog
+des neu angelegten Symbols wie folgt aussieht (beispielhaft f&uuml;r
+Windows Vista und die Version 1.7 des JDK): 
+<p>
+<a name="imageid002005"></a>
+<img src="images/Verknuepfung.gif">
+<p>
+
+<p><i>
+Abbildung 2.5: Eine Verkn&uuml;pfung auf dem Windows-Desktop</i></p>
+
+<p>
+Das Java-Programm kann nun wie jedes andere Windows-Programm per Doppelklick
+vom Desktop aus gestartet werden. 
+
+<!-- Section -->
+
+<a name="sectlevel4id002003006003"></a>
+<h4>Verwenden von javaw anstelle von java </h4>
+
+<p>
+Soll ein java-Programm, das eine grafische Oberfl&auml;che hat, ohne
+Konsolenfenster gestartet werden, kann anstelle des Standard-Interpreters
+<a href="index_j.html#ixb100134"><font color=#000080><tt>java</tt></font></a>
+der alternative Interpreter <a name="ixa100155"><a href="index_j.html#ixb100157"><font color=#000080><tt>javaw</tt></font></a></a>
+verwendet werden. Er arbeitet genauso wie <a href="index_j.html#ixb100134"><font color=#000080><tt>java</tt></font></a>
+und akzeptiert dieselben Optionen (siehe <a href="k100334.html#derjavainterpreter">Abschnitt 53.2</a>),
+stellt der Anwendung aber kein Konsolenfenster zur Verf&uuml;gung.
+Zu beachten ist allerdings, dass alle Ausgaben auf <a href="index_s.html#ixb100145"><font color=#000080><tt>System.out</tt></font></a>
+und <font color="#000077"><tt>System.err</tt></font> ins Leere gehen.
+
+
+<!-- Section -->
+<a name="troubleshooting"></a>
+<h3>2.3.7 Troubleshooting </h3>
+
+<p>
+Nachfolgend noch einmal eine kurze Zusammenfassung der h&auml;ufigsten
+Probleme beim Erstellen, &Uuml;bersetzen und Starten eines Java-Programms,
+inklusive Beschreibung, wie man sie behebt oder umgeht. 
+
+<!-- Section -->
+
+<a name="sectlevel4id002003007001"></a>
+<h4>Was ist eine DOS-Box und wie startet man sie? </h4>
+
+<p>
+Alle Werkzeuge des JDK arbeiten kommandozeilenorientiert. Anders als
+typische GUI-Programme wie Adobe Photoshop, Microsoft Excel oder Firefox
+besitzen sie also keine grafische Oberfl&auml;che, sondern werden
+aus einer &#187;DOS-Box&#171; (bzw. einer UNIX-Shell) heraus aufgerufen.
+Diese wird unter neueren Windows-Betriebssystemen als &#187;Eingabeaufforderung&#171;
+bezeichnet und ist meist im Startmen&uuml; (unter &#187;Programme&#171;)
+zu finden. In der DOS-Box werden Befehle und ihre Parameter &uuml;ber
+die Tastatur eingegeben und starten so die zugeh&ouml;rigen Programme.
+Um in einer DOS-Box zurechtzukommen, sollte man deren Kommandosyntax
+und die wichtigsten Befehle zum Starten von Programmen und f&uuml;r
+Datei- und Verzeichnisoperationen kennen. Beides wird in unz&auml;hligen
+B&uuml;chern und (zum Teil) in den Hilfedateien des Betriebssystems
+beschrieben. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Das UNIX-Pendant zu einer DOS-Box ist die <a name="ixa100156"><i>Shell</i></a>.
+Auch sie dient prim&auml;r dazu, Benutzerkommandos zu empfangen und
+auszuf&uuml;hren. UNIX-Shells sind wesentlich m&auml;chtiger als DOS-Boxen
+unter Windows und im Laufe der Jahre haben sich verschiedene Varianten
+entwickelt (Bourne-Shell, C-Shell, Korn-Shell, BASH etc.). Obwohl
+viele der elementaren Shell-Kommandos den DOS-Box-Pendants gleichen
+oder ihnen recht &auml;hnlich sind, lassen sich mit ihrer detaillierten
+Beschreibung leicht ganze B&uuml;cher f&uuml;llen. Das Kommando <font color="#000077"><tt>man</tt></font>
+liefert eine Beschreibung der Shell und aller zugeh&ouml;rigen UNIX-Kommandos.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id002003007002"></a>
+<h4>java l&auml;uft, javac aber nicht </h4>
+
+<p>
+Wenn unter Windows der Java-Interpreter <a href="index_j.html#ixb100134"><font color=#000080><tt>java</tt></font></a>
+gestartet werden kann, beim Aufruf des Compilers <a href="index_j.html#ixb100131"><font color=#000080><tt>javac</tt></font></a>
+aber eine Fehlermeldung kommt, liegt das meist daran, dass der <a name="ixa100157"><a href="index_p.html#ixb100159"><font color=#000080><tt>PATH</tt></font></a></a>
+nicht korrekt gesetzt wurde. W&auml;hrend die JDK-Installation den
+Interpreter unter anderem auch in Verzeichnisse kopiert, auf die der
+PATH bereits verweist (so dass dieser ohne weiteres Zutun aus jedem
+Verzeichnis aufgerufen werden kann), ist das f&uuml;r den Compiler
+und die &uuml;brigen JDK-Werkzeuge nicht der Fall. Diese k&ouml;nnen
+nur dann ohne vorangestellten Pfad aufgerufen werden, wenn der <a href="index_p.html#ixb100159"><font color=#000080><tt>PATH</tt></font></a>
+auf das Unterverzeichnis <font color="#660099">bin</font> des Installationsverzeichnisses
+verweist. Bei der in diesem Buch angenommenen Standardinstallation
+muss die <a href="index_p.html#ixb100159"><font color=#000080><tt>PATH</tt></font></a>-Variable
+also das Verzeichnis <font color="#660099">c:\jdk1.7\bin</font> enthalten.
+
+
+<!-- Section -->
+<a name="sectlevel4id002003007003"></a>
+<h4>Was sind eigentlich Umgebungsvariablen? </h4>
+
+<p>
+Einer der Standardmechanismen zur Konfiguration von Programmen besteht
+darin, Umgebungsvariablen zu setzen. Diese werden vom Anwender (meist
+innerhalb einer DOS-Box bzw. Shell mit Hilfe des <a name="ixa100158"><a href="index_s.html#ixb100160"><font color=#000080><tt>set</tt></font></a></a>-Kommandos)
+gesetzt und vom Programm gelesen und zur Konfiguration verwendet.
+Die beiden f&uuml;r das JDK wichtigsten Umgebungsvariablen sind <a name="ixa100159"><a href="index_p.html#ixb100159"><font color=#000080><tt>PATH</tt></font></a></a>
+und <a name="ixa100160"><a href="index_c.html#ixb100137"><font color=#000080><tt>CLASSPATH</tt></font></a></a>.
+&Uuml;ber Erstere wird dem Betriebssystem mitgeteilt, wo es nach ausf&uuml;hrbaren
+Programmen suchen soll, also etwa nach dem Compiler oder Interpreter
+des JDK. Die Umgebungsvariable <a href="index_c.html#ixb100137"><font color=#000080><tt>CLASSPATH</tt></font></a>
+(umgangssprachlich &#187;der CLASSPATH&#171; genannt) ist JDK-spezifisch.
+Sie zeigt dem Compiler und Interpreter an, in welchen Verzeichnissen
+er nach Klassendateien suchen soll. Im Gegensatz zu <a href="index_p.html#ixb100159"><font color=#000080><tt>PATH</tt></font></a>
+kann der <a href="index_c.html#ixb100137"><font color=#000080><tt>CLASSPATH</tt></font></a>
+bei der Standardinstallation eines aktuellen JDK ungesetzt bleiben.
+Compiler und Interpreter finden ihr eigenes Laufzeitsystem automatisch
+und die selbst geschriebenen Klassen werden im aktuellen Verzeichnis
+gesucht. 
+
+<p>
+Da es zu umst&auml;ndlich ist, h&auml;ufig ben&ouml;tigte Umgebungsvariablen
+nach jedem Aufruf einer DOS-Box neu zu setzen, bieten alle Betriebssysteme
+die M&ouml;glichkeit, sie permanent festzulegen. <a href="k100013.html#jdkinstallationdetails">Abschnitt 2.1.2</a>
+erl&auml;utert dies am Beispiel der <a href="index_p.html#ixb100159"><font color=#000080><tt>PATH</tt></font></a>-Variable.
+
+
+<!-- Section -->
+<a name="sectlevel4id002003007004"></a>
+<h4>Der Compiler javac arbeitet nicht </h4>
+
+<p>
+Wenn der Compiler <a href="index_j.html#ixb100131"><font color=#000080><tt>javac</tt></font></a>
+die <font color="#660099">.java</font>-Datei nicht findet, liegt dies
+in aller Regel daran, dass sie nicht existiert. Der Compiler unterscheidet
+zwischen Gro&szlig;- und Kleinschreibung; die Datei <font color="#660099">Test1.java</font>
+ist somit streng von <font color="#660099">test1.java</font> oder
+<font color="#660099">TEST1.JAVA</font> zu unterscheiden. Zudem <i>muss</i>
+die Dateierweiterung <font color="#660099">.java</font> lauten, denn
+andere Erweiterungen werden nicht akzeptiert. Hat der Editor f&auml;lschlicherweise
+die Erweiterung <font color="#660099">.txt</font> angeh&auml;ngt,
+wird die Datei vom Compiler nicht gefunden. 
+
+<p>
+Wichtig ist auch, dass der Compiler korrekt aufgerufen wird. Anders
+als beim Interpreter wird die Dateierweiterung stets angegeben. Ein
+Aufruf von <font color="#000077"><tt>javac Test1</tt></font> wird
+also nicht funktionieren, <font color="#000077"><tt>javac Test1.java</tt></font>
+dagegen sehr wohl. Schlie&szlig;lich ist zu beachten, dass die zu
+&uuml;bersetzende Klasse denselben Basisnamen hat wie die Datei, in
+der sie definiert wurde. In der Datei <font color="#660099">Test1.java</font>
+muss also eine &ouml;ffentliche Klasse mit dem Namen <font color="#000077"><tt>Test1</tt></font>
+definiert worden sein. 
+
+<!-- Section -->
+
+<a name="sectlevel4id002003007005"></a>
+<h4>Der Interpreter java arbeitet nicht korrekt </h4>
+
+<p>
+Der h&auml;ufigste Fehler beim Aufruf des Interpreters ist ein &#187;NoClassDefFoundError&#171;.
+Ein trivialer Fehler besteht darin, dass der Interpreter falsch aufgerufen
+wurde. Im Gegensatz zum Compiler m&ouml;chte er keinen <i>Dateinamen</i>
+als Argument &uuml;bergeben bekommen, sondern einen <i>Klassennamen</i>.
+Folglich darf die Erweiterung <font color="#660099">.java</font> oder
+<font color="#660099">.class</font> nicht angegeben werden. Die in
+die Datei <font color="#660099">Test1.class</font> &uuml;bersetzte
+Klasse <font color="#000077"><tt>Test1</tt></font> wird also durch
+Aufruf von <font color="#000077"><tt>java Test1</tt></font> gestartet,
+und nicht durch <font color="#000077"><tt>java Test1.class</tt></font>.
+
+<p>
+Das funktioniert allerdings nur, und das ist auch schon die zweite
+Fehlerquelle, wenn <font color="#000077"><tt>Test1</tt></font> auch
+tats&auml;chlich eine Methode <font color="#000077"><tt>public static
+void main</tt></font> enth&auml;lt. Diese versucht n&auml;mlich der
+Interpreter zu starten, und wenn sie nicht vorhanden ist, gibt es
+obige Fehlermeldung. 
+
+<p>
+Ist der Aufruf korrekt und die <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>-Methode
+ebenso vorhanden wie die n&ouml;tige Klassendatei, kann es trotzdem
+vorkommen, dass der Interpreter die Klasse nicht starten kann. Das
+liegt dann meist daran, dass etwas mit dem <a href="index_c.html#ixb100137"><font color=#000080><tt>CLASSPATH</tt></font></a>
+nicht stimmt. Der <a href="index_c.html#ixb100137"><font color=#000080><tt>CLASSPATH</tt></font></a>
+ist eine Umgebungsvariable, die eine Liste von Verzeichnissen und
+Archivdateien enth&auml;lt, die vom Interpreter der Reihe nach durchsucht
+werden, um die auszuf&uuml;hrenden Klassen zu finden. Die genaue Interpretation
+des <a href="index_c.html#ixb100137"><font color=#000080><tt>CLASSPATH</tt></font></a>
+hat sich &uuml;ber die Jahre etwas ge&auml;ndert, aber bei aktuellen
+JDK-Versionen kann sie wie folgt zusammengefasst werden: 
+
+<p>
+Ist gar kein <a href="index_c.html#ixb100137"><font color=#000080><tt>CLASSPATH</tt></font></a>
+angegeben, sucht der Interpreter im <i>aktuellen</i> Verzeichnis (bzw.
+bei Klassen in Unterpaketen in darin befindlichen Unterverzeichnissen)
+nach der Klassendatei. Ist dagegen eine Umgebungsvariable <a href="index_c.html#ixb100137"><font color=#000080><tt>CLASSPATH</tt></font></a>
+vorhanden, durchsucht der Interpreter dessen Elemente der Reihe nach.
+Befindet sich darin nicht das <i>aktuelle</i> Verzeichnis (entweder
+absolut oder als &#187;.&#171; angegeben), so werden auch keine Klassen
+gefunden, die im aktuellen Verzeichnis liegen. F&uuml;r unsere ersten
+Versuche ist es bei aktuellen JDKs also am besten, den <a href="index_c.html#ixb100137"><font color=#000080><tt>CLASSPATH</tt></font></a>
+gar nicht zu setzen und alle Klassen in das aktuelle Verzeichnis zu
+legen. 
+
+<p>
+Mitunter wird der <a href="index_c.html#ixb100137"><font color=#000080><tt>CLASSPATH</tt></font></a>
+von anderen installierten Java-Programmen ver&auml;ndert und sorgt
+so unbeabsichtigt daf&uuml;r, dass die eigenen Klassen nicht mehr
+gefunden werden. Das ist zwar kein guter Stil, kommt in der Praxis
+aber dennoch manchmal vor. In einem solchen Fall muss der <a href="index_c.html#ixb100137"><font color=#000080><tt>CLASSPATH</tt></font></a>
+w&auml;hrend der eigenen Experimente zur&uuml;ckgesetzt oder so ge&auml;ndert
+werden, dass das aktuelle Verzeichnis (bzw. das mit den eigenen Klassendateien)
+darin enthalten ist. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Neben der <a href="index_c.html#ixb100137"><font color=#000080><tt>CLASSPATH</tt></font></a>-Umgebungsvariable
+kann der Klassenpfad dem Compiler und Interpreter auch direkt beim
+Aufruf &uuml;ber Kommandozeilenschalter bekanntgemacht werden (die
+entsprechenden Argumente lauten <a name="ixa100161"><a href="index_0.html#ixb100161"><font color=#000080><tt>-cp</tt></font></a></a>
+bzw. <a name="ixa100162"><a href="index_0.html#ixb100162"><font color=#000080><tt>-classpath</tt></font></a></a>).
+Werden also beispielsweise Compiler und Interpreter &uuml;ber Batch-Dateien
+bzw. Shell-Scripte aufgerufen, k&ouml;nnten darin entsprechende Parameter
+enthalten sein und das Auffinden der eigenen Klassen erfolgreich verhindern.
+Auch dies ist eine Fehlerquelle, die in der Praxis mitunter eine Rolle
+spielt.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id002003007006"></a>
+<h4>Zus&auml;tzlich ben&ouml;tigte Klassen werden nicht gefunden </h4>
+
+<p>
+Gibt es beim Ausf&uuml;hren eines Beispielprogramms die Fehlermeldung,
+dass eine andere als die aufgerufene Klasse nicht gefunden werden
+kann, liegt das meist daran, dass deren <font color="#660099">.class</font>-Datei
+nicht mit aus dem Verzeichnis mit den Beispieldateien in das aktuelle
+Verzeichnis kopiert wurde. Prominentester Kandidat ist der <font color="#000077"><tt>WindowClosingAdapter</tt></font>,
+der von fast allen Beispielprogrammen ben&ouml;tigt wird, die eine
+grafische Oberfl&auml;che haben. Weitere Hinweise sind in <a href="k100014.html#beispielprogramme">Abschnitt 2.2.2</a>
+zu finden.
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100012.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100014.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100016.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100017.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

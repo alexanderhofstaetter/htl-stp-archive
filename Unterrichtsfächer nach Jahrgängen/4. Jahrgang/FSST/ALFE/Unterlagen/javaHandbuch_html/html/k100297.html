@@ -1,0 +1,338 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100292.html;106,k100296.html;107,k100298.html;108,k100300.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100292.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100296.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100298.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100300.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 46 - Beans
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id046005"></a>
+<h2>46.5 Panel-Beans </h2>
+<hr>
+<ul>
+<li><a href="k100297.html#sectlevel2id046005">46.5 Panel-Beans</a>
+</ul>
+<hr>
+
+<p>
+Die bisherigen Beans waren aus <a href="index_c.html#ixb101652"><font color=#000080><tt>Canvas</tt></font></a>
+abgeleitet und repr&auml;sentierten damit <i>elementare</i> Komponenten.
+Ebenso leicht ist es m&ouml;glich, <i>zusammengesetzte</i> Komponenten
+als Beans zu definieren und so gr&ouml;&szlig;ere Programmeinheiten
+wiederverwendbar zu machen. 
+
+<p>
+Wird eine Bean beispielsweise aus der Klasse <a name="ixa103440"><a href="index_p.html#ixb101295"><font color=#000080><tt>Panel</tt></font></a></a>
+abgeleitet, k&ouml;nnen darauf vordefinierte Dialogelemente platziert
+und mit Hilfe von setter-Methoden konfigurierbar gemacht werden. Im
+GUI-Designer erscheinen die unterschiedlichen Dialogelemente dann
+wie ein einziges. Meist spielt die Bean auch noch die Rolle eines
+<i>Ereigniskonzentrators</i>, d.h., sie registriert sich als Listener
+bei ihren eigenen Komponenten und verarbeitet diese so weit wie m&ouml;glich
+selbst. Nach au&szlig;en hin definiert sie ein abstrakteres Event-Modell,
+das an die Bed&uuml;rfnisse der Gesamtkomponente angepasst ist. Statt
+den Client mit den Elementarereignissen der einzelnen Komponenten
+zu belasten, sendet sie nur noch Ereignisse, die das Verhalten der
+zusammengesetzten Komponente repr&auml;sentieren. 
+
+<p>
+Die Konstruktion einer Panel-Bean ist prinzipiell nicht schwieriger
+als die einer einfachen Bean. Zus&auml;tzlicher Aufwand wird allerdings
+erforderlich, wenn die Eigenschaften der darin enthaltenen Komponenten
+zum Designzeitpunkt nicht mit einfachen getter- und setter-Methoden
+erledigt werden k&ouml;nnen. Die meisten Entwickler erwarten heute
+beispielsweise von einem Splitpanel (eine typische Panel-Bean), dass
+im GUI-Designer die einzelnen Komponenten per Drag-and-Drop darauf
+platziert werden k&ouml;nnen. 
+
+<p>
+So weit wollen wir allerdings nicht in die Bean-Programmierung vordringen.
+Wir wollen nur die Grundprinzipien erkl&auml;ren und eine Klasse <font color="#000077"><tt>ButtonPanel</tt></font>
+entwickeln, die eine Gruppe von Radiobuttons kapselt. Die Anzahl der
+Radiobuttons, ihre Beschriftung und die Auswahl des selektierten Elements
+sollen frei definiert werden k&ouml;nnen. &Auml;ndert sich die Anzahl
+der Buttons oder wird ein anderer Button selektiert, soll die Bean
+ein <a href="index_p.html#ixb102559"><font color=#000080><tt>PropertyChangeEvent</tt></font></a>
+versenden. 
+
+<p>
+Das folgende Listing zeigt den Code f&uuml;r diese Klasse: 
+<a name="buttonpanellisting"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* ButtonPanel.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> java.beans.*;
+<font color="#555555">006 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">007 </font>
+<font color="#555555">008 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> ButtonPanel
+<font color="#555555">009 </font><font color="#0000AA">extends</font> Panel
+<font color="#555555">010 </font><font color="#0000AA">implements</font> Serializable, ItemListener
+<font color="#555555">011 </font>{
+<font color="#555555">012 </font>  <font color="#00AA00">//---Instanzvariablen------------------------------------</font>
+<font color="#555555">013 </font>  <font color="#0000AA">protected</font> CheckboxGroup cbg;
+<font color="#555555">014 </font>  <font color="#0000AA">protected</font> Checkbox[]    cb;
+<font color="#555555">015 </font>  <font color="#0000AA">transient</font> <font color="#0000AA">protected</font> PropertyChangeSupport pcs;
+<font color="#555555">016 </font>
+<font color="#555555">017 </font>  <font color="#00AA00">//---Methoden--------------------------------------------</font>
+<font color="#555555">018 </font>  <font color="#0000AA">public</font> ButtonPanel()
+<font color="#555555">019 </font>  {
+<font color="#555555">020 </font>    cbg = <font color="#0000AA">new</font> CheckboxGroup();
+<font color="#555555">021 </font>    cb = <font color="#0000AA">new</font> Checkbox[0];
+<font color="#555555">022 </font>    initTransientState();
+<font color="#555555">023 </font>  }
+<font color="#555555">024 </font>
+<font color="#555555">025 </font>  <font color="#00AA00">//---Anzahl der RadioButtons-----------------------------</font>
+<font color="#555555">026 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setButtonCnt(<font color="#006699">int</font> cnt)
+<font color="#555555">027 </font>  {
+<font color="#555555">028 </font>    <font color="#0000AA">if</font> (cnt != cb.length) {
+<font color="#555555">029 </font>      <font color="#006699">int</font> oldvalue = cb.length;
+<font color="#555555">030 </font>      <font color="#00AA00">//Bisherige Buttons entfernen</font>
+<font color="#555555">031 </font>      <font color="#0000AA">if</font> (cb.length &gt; 0) {
+<font color="#555555">032 </font>        removeAll();
+<font color="#555555">033 </font>      }
+<font color="#555555">034 </font>      cb = <font color="#0000AA">new</font> Checkbox[cnt];
+<font color="#555555">035 </font>      setLayout(<font color="#0000AA">new</font> GridLayout(cnt, 1));
+<font color="#555555">036 </font>      <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; cnt; ++i) {
+<font color="#555555">037 </font>        cb[i] = <font color="#0000AA">new</font> Checkbox(
+<font color="#555555">038 </font>          <font color="#0000FF">"RadioButton "</font> + i,
+<font color="#555555">039 </font>          cbg,
+<font color="#555555">040 </font>          (i == 0 ? <font color="#006699">true</font> : <font color="#006699">false</font>)
+<font color="#555555">041 </font>        );
+<font color="#555555">042 </font>        cb[i].addItemListener(<font color="#006699">this</font>); <a name="buttonpanellisting.a"></a>
+<font color="#555555">043 </font>        add(cb[i]);
+<font color="#555555">044 </font>      }
+<font color="#555555">045 </font>      <font color="#00AA00">//PropertyChangeEvents senden</font>
+<font color="#555555">046 </font>      pcs.firePropertyChange(<font color="#0000FF">"buttonCnt"</font>, oldvalue, cnt);
+<font color="#555555">047 </font>      <font color="#0000AA">if</font> (cnt &gt; 0) {
+<font color="#555555">048 </font>        setSelected(0);
+<font color="#555555">049 </font>      }
+<font color="#555555">050 </font>      <font color="#00AA00">//Neu layouten <a name="buttonpanellisting.b"></a></font>
+<font color="#555555">051 </font>      setSize(getPreferredSize());
+<font color="#555555">052 </font>      invalidate();
+<font color="#555555">053 </font>      doLayout();
+<font color="#555555">054 </font>      Container owner = getParent();
+<font color="#555555">055 </font>      <font color="#0000AA">if</font> (owner != <font color="#006699">null</font>) {
+<font color="#555555">056 </font>        owner.invalidate();
+<font color="#555555">057 </font>        owner.doLayout();
+<font color="#555555">058 </font>      }
+<font color="#555555">059 </font>    }
+<font color="#555555">060 </font>  }
+<font color="#555555">061 </font>
+<font color="#555555">062 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> getButtonCnt()
+<font color="#555555">063 </font>  {
+<font color="#555555">064 </font>    <font color="#0000AA">return</font> cb.length;
+<font color="#555555">065 </font>  }
+<font color="#555555">066 </font>
+<font color="#555555">067 </font>  <font color="#00AA00">//---Beschriftung der Buttons----------------------------</font>
+<font color="#555555">068 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setLabel(<font color="#006699">int</font> index, String label)
+<font color="#555555">069 </font>  {
+<font color="#555555">070 </font>    <font color="#0000AA">if</font> (index &gt;= 0 &amp;&amp; index &lt; cb.length) {
+<font color="#555555">071 </font>      cb[index].setLabel(label);
+<font color="#555555">072 </font>    }
+<font color="#555555">073 </font>  }
+<font color="#555555">074 </font>
+<font color="#555555">075 </font>  <font color="#0000AA">public</font> String getLabel(<font color="#006699">int</font> index)
+<font color="#555555">076 </font>  {
+<font color="#555555">077 </font>    String ret = <font color="#0000FF">"***invalid index***"</font>;
+<font color="#555555">078 </font>    <font color="#0000AA">if</font> (index &gt;= 0 &amp;&amp; index &lt; cb.length) {
+<font color="#555555">079 </font>      ret = cb[index].getLabel();
+<font color="#555555">080 </font>    }
+<font color="#555555">081 </font>    <font color="#0000AA">return</font> ret;
+<font color="#555555">082 </font>  }
+<font color="#555555">083 </font>
+<font color="#555555">084 </font>  <font color="#00AA00">//---Selektiertes Element--------------------------------</font>
+<font color="#555555">085 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setSelected(<font color="#006699">int</font> index)
+<font color="#555555">086 </font>  {
+<font color="#555555">087 </font>    <font color="#0000AA">if</font> (index &gt;= 0 &amp;&amp; index &lt; cb.length) {
+<font color="#555555">088 </font>      <font color="#006699">int</font> oldvalue = getSelected();
+<font color="#555555">089 </font>      cb[index].setState(<font color="#006699">true</font>);
+<font color="#555555">090 </font>      pcs.firePropertyChange(<font color="#0000FF">"selected"</font>, oldvalue, index);
+<font color="#555555">091 </font>    }
+<font color="#555555">092 </font>  }
+<font color="#555555">093 </font>
+<font color="#555555">094 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> getSelected()
+<font color="#555555">095 </font>  {
+<font color="#555555">096 </font>    <font color="#006699">int</font> ret = -1;
+<font color="#555555">097 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; cb.length; ++i) {
+<font color="#555555">098 </font>      <font color="#0000AA">if</font> (cb[i].getState()) {
+<font color="#555555">099 </font>        ret = i;
+<font color="#555555">100 </font>        <font color="#0000AA">break</font>;
+<font color="#555555">101 </font>      }
+<font color="#555555">102 </font>    }
+<font color="#555555">103 </font>    <font color="#0000AA">return</font> ret;
+<font color="#555555">104 </font>  }
+<font color="#555555">105 </font>
+<font color="#555555">106 </font>  <font color="#00AA00">//---Verwaltung der PropertyChangeListener---</font>
+<font color="#555555">107 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> addPropertyChangeListener(
+<font color="#555555">108 </font>    PropertyChangeListener l
+<font color="#555555">109 </font>  )
+<font color="#555555">110 </font>  {
+<font color="#555555">111 </font>    pcs.addPropertyChangeListener(l);
+<font color="#555555">112 </font>  }
+<font color="#555555">113 </font>
+<font color="#555555">114 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> removePropertyChangeListener(
+<font color="#555555">115 </font>    PropertyChangeListener l
+<font color="#555555">116 </font>  )
+<font color="#555555">117 </font>  {
+<font color="#555555">118 </font>    pcs.removePropertyChangeListener(l);
+<font color="#555555">119 </font>  }
+<font color="#555555">120 </font>
+<font color="#555555">121 </font>  <font color="#00AA00">//---Reaktion auf Zustands&auml;nderungen---------------------</font>
+<font color="#555555">122 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> itemStateChanged(ItemEvent event)
+<font color="#555555">123 </font>  {
+<font color="#555555">124 </font>    Checkbox changedcb = (Checkbox) event.getItemSelectable();
+<font color="#555555">125 </font>    <font color="#0000AA">if</font> (changedcb.getState()) {
+<font color="#555555">126 </font>      <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; cb.length; ++i) {
+<font color="#555555">127 </font>        <font color="#0000AA">if</font> (cb[i] == changedcb) {
+<font color="#555555">128 </font>          pcs.firePropertyChange(<font color="#0000FF">"selected"</font>, -1, i);
+<font color="#555555">129 </font>          <font color="#0000AA">break</font>;
+<font color="#555555">130 </font>        }
+<font color="#555555">131 </font>      }
+<font color="#555555">132 </font>    }
+<font color="#555555">133 </font>  }
+<font color="#555555">134 </font>
+<font color="#555555">135 </font>  <font color="#00AA00">//---Private Methoden------------------------------------</font>
+<font color="#555555">136 </font>  <font color="#00AA00">/**
+<font color="#555555">137 </font>   * Initialisierung der nichtpersistenten Instanzvariablen.
+<font color="#555555">138 </font>   */</font>
+<font color="#555555">139 </font>  <font color="#0000AA">private</font> <font color="#006699">void</font> initTransientState()
+<font color="#555555">140 </font>  {
+<font color="#555555">141 </font>    pcs = <font color="#0000AA">new</font> PropertyChangeSupport(<font color="#006699">this</font>);
+<font color="#555555">142 </font>  }
+<font color="#555555">143 </font>
+<font color="#555555">144 </font>  <font color="#00AA00">/**
+<font color="#555555">145 </font>   * Wird &uuml;berlagert, um nach dem Deserialisieren den transienten
+<font color="#555555">146 </font>   * Zustand zu initialisieren.
+<font color="#555555">147 </font>   */</font>
+<font color="#555555">148 </font>  <font color="#0000AA">private</font> <font color="#006699">void</font> readObject(ObjectInputStream stream)
+<font color="#555555">149 </font>  <font color="#0000AA">throws</font> IOException, ClassNotFoundException
+<font color="#555555">150 </font>  {
+<font color="#555555">151 </font>    stream.defaultReadObject();
+<font color="#555555">152 </font>    initTransientState();
+<font color="#555555">153 </font>  }
+<font color="#555555">154 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/ButtonPanel.java"><font color="#000055" size=-1>ButtonPanel.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 46.9: Die Klasse ButtonPanel</i></p>
+
+<p>
+Die Bean verwaltet die Radionbuttons in dem Array <font color="#000077"><tt>cbg</tt></font>,
+das zun&auml;chst leer ist. Ver&auml;ndert sich ihre Anzahl durch
+Aufruf von <font color="#000077"><tt>setButtonCnt</tt></font>, werden
+alle bisherigen Buttons entfernt, neue in der gew&uuml;nschten Anzahl
+angelegt und die registrierten Listener &uuml;ber die &Auml;nderung
+benachrichtigt. Zun&auml;chst haben die Buttons die Beschriftung &#187;RadioButton
+1&#171;, &#187;RadioButton 2&#171; usw. Sie kann durch Aufruf von
+<font color="#000077"><tt>setLabel</tt></font> ge&auml;ndert werden.
+Der Zugriff auf das selektierte Element erfolgt mit <font color="#000077"><tt>getSelected</tt></font>
+und <font color="#000077"><tt>setSelected</tt></font>. 
+
+<p>
+Um benachrichtigt zu werden, wenn der Benutzer per Mausklick die Selektion
+&auml;ndert, registriert sich die Bean in <a href="k100297.html#buttonpanellisting.a">Zeile 042</a>
+als <a href="index_i.html#ixb101420"><font color=#000080><tt>ItemListener</tt></font></a>
+bei den von ihr erzeugten Radiobuttons. Dadurch wird bei jeder &Auml;nderung
+die Methode <font color="#000077"><tt>itemStateChanged</tt></font>
+aufgerufen und die Bean kann ihrerseits ein <a href="index_p.html#ixb102559"><font color=#000080><tt>PropertyChangeEvent</tt></font></a>
+an alle registrierten Listener versenden. 
+
+<p>
+<a href="k100297.html#buttonpanelinbeanbox">Abbildung 46.7</a> zeigt
+ein <font color="#000077"><tt>ButtonPanel</tt></font> mit vier Radiobuttons
+in der Beanbox: 
+<p>
+<a name="buttonpanelinbeanbox"></a>
+<img src="images/Beanbox4.gif">
+<p>
+
+<p><i>
+Abbildung 46.7: Das ButtonPanel in der BeanBox</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Das Listing treibt einigen Aufwand, um nach einer Gr&ouml;&szlig;en&auml;nderung
+korrekt dargestellt zu werden (im Listing ab <a href="k100297.html#buttonpanellisting.b">Zeile 050</a>
+zu sehen). Trotzdem war beispielsweise die Beanbox nicht dazu zu bewegen,
+bei einer Verminderung der Buttonzahl den nicht mehr ben&ouml;tigten
+Platz wieder freizugeben. Ist das dynamische &Auml;ndern der Gr&ouml;&szlig;e
+ein wichtiges Feature, muss unter Umst&auml;nden noch ein wenig experimentiert
+werden, um bei allen Clients zu den gew&uuml;nschten Resultaten zu
+kommen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100292.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100296.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100298.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100300.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

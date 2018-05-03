@@ -1,0 +1,287 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100028.html;106,k100030.html;107,k100032.html;108,k100036.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100028.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100030.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100032.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100036.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 5 - Datentypen
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id005003"></a>
+<h2>5.3 <a name="ixa100287">Variablen</a> </h2>
+<hr>
+<ul>
+<li><a href="k100031.html#sectlevel2id005003">5.3 Variablen</a>
+<ul>
+<li><a href="k100031.html#sectlevel3id005003001">5.3.1 Grundeigenschaften</a>
+<li><a href="k100031.html#sectlevel3id005003002">5.3.2 Deklaration von Variablen</a>
+<li><a href="k100031.html#sectlevel3id005003003">5.3.3 Lebensdauer/Sichtbarkeit </a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id005003001"></a>
+<h3>5.3.1 Grundeigenschaften </h3>
+
+<p>
+Variablen dienen dazu, Daten im Hauptspeicher eines Programms abzulegen
+und gegebenenfalls zu lesen oder zu ver&auml;ndern. In Java gibt es
+drei Typen von Variablen: 
+<ul>
+<li><a name="ixa100288"><i>Instanzvariablen</i></a>, die im Rahmen
+einer Klassendefinition definiert und zusammen mit dem Objekt angelegt
+werden
+<li><a name="ixa100289"><i>Klassenvariablen</i></a>, die ebenfalls
+im Rahmen einer Klassendefinition definiert werden, aber unabh&auml;ngig
+von einem konkreten Objekt existieren
+<li><a name="ixa100290"><i>Lokale Variablen</i></a>, die innerhalb
+einer Methode oder eines Blocks definiert werden und nur dort existieren
+</ul>
+
+<p>
+Daneben betrachtet die Sprachdefinition auch Array-Komponenten und
+die Parameter von Methoden und Exception-Handlern als Variablen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Eine Variable in Java ist immer typisiert. Sie ist entweder von einem
+primitiven Typ oder von einem Referenztyp. Mit Ausnahme eines Spezialfalls
+bei Array-Variablen, auf den wir sp&auml;ter zur&uuml;ckkommen, werden
+alle <a name="ixa100291">Typ&uuml;berpr&uuml;fungen</a> zur Compile-Zeit
+vorgenommen. Java ist damit im klassischen Sinne eine typsichere Sprache.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Um einer Variablen vom Typ <font color="#000077"><tt>T</tt></font>
+einen Wert <font color="#000077"><tt>X</tt></font> zuzuweisen, m&uuml;ssen
+<font color="#000077"><tt>T</tt></font> und <font color="#000077"><tt>X</tt></font>
+zuweisungskompatibel sein. Welche Typen zuweisungskompatibel sind,
+wird am Ende dieses Kapitels in <a href="k100034.html#abschnitttypkonvertierungen">Abschnitt 5.6</a>
+erkl&auml;rt. 
+
+<p>
+Variablen k&ouml;nnen auf zwei unterschiedliche Arten ver&auml;ndert
+werden: 
+<ul>
+<li>durch eine <a name="ixa100292">Zuweisung</a>
+<li>durch einen <a name="ixa100293">Inkrement</a>- oder <a name="ixa100294">Dekrement-Operator</a>
+</ul>
+
+<p>
+Beide M&ouml;glichkeiten werden in <a href="k100036.html#kapitelausdruecke">Kapitel 6</a>
+ausf&uuml;hrlich erkl&auml;rt. 
+
+<!-- Section -->
+
+<a name="sectlevel3id005003002"></a>
+<h3>5.3.2 <a name="ixa100295">Deklaration von Variablen</a></h3>
+
+<p>
+Die Deklaration einer Variable erfolgt in der Form 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+Typname Variablenname;
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+Dabei wird eine Variable des Typs <font color="#000077"><tt>Typname</tt></font>
+mit dem Namen <font color="#000077"><tt>Variablenname</tt></font>
+angelegt. Variablendeklarationen d&uuml;rfen in Java an beliebiger
+Stelle im Programmcode erfolgen. Das folgende Beispielprogramm legt
+die Variablen <font color="#000077"><tt>a</tt></font>, <font color="#000077"><tt>b</tt></font>,
+<font color="#000077"><tt>c</tt></font> und <font color="#000077"><tt>d</tt></font>
+an und gibt ihren Inhalt auf dem Bildschirm aus: 
+<a name="listingid005002"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing0502.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing0502
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#006699">int</font> a;
+<font color="#555555">008 </font>    a = 1;
+<font color="#555555">009 </font>    <font color="#006699">char</font> b = <font color="#0000FF">'x'</font>;
+<font color="#555555">010 </font>    System.out.println(a);
+<font color="#555555">011 </font>    <font color="#006699">double</font> c = 3.1415;
+<font color="#555555">012 </font>    System.out.println(b);
+<font color="#555555">013 </font>    System.out.println(c);
+<font color="#555555">014 </font>    <font color="#006699">boolean</font> d = <font color="#006699">false</font>;
+<font color="#555555">015 </font>    System.out.println(d);
+<font color="#555555">016 </font>  }
+<font color="#555555">017 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing0502.java"><font color="#000055" size=-1>Listing0502.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 5.2: Einfache Variablen ausgeben</i></p>
+
+<p>
+Die Ausgabe des Programms ist: 
+<font color="#333300">
+<pre>
+1
+x
+3.1415
+false
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Wie in diesem Beispiel zu sehen ist, d&uuml;rfen Variablen gleich
+bei der Deklaration initialisiert<a name="ixa100296"></a> werden.
+Dazu ist einfach der gew&uuml;nschte Wert hinter einem Zuweisungsoperator
+an die Deklaration anzuh&auml;ngen: 
+<a name="listingid005003"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#006699">char</font> b = <font color="#0000FF">'x'</font>;
+<font color="#006699">double</font> c = 3.1415;
+<font color="#006699">boolean</font> d = <font color="#006699">false</font>;</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 5.3: Initialisieren von Variablen</i></p>
+</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id005003003"></a>
+<h3>5.3.3 Lebensdauer/Sichtbarkeit <a name="ixa100297"></a><a name="ixa100298"></a>
+</h3>
+
+<p>
+Die Sichtbarkeit lokaler Variablen erstreckt sich von der Stelle ihrer
+Deklaration bis zum Ende der Methode, in der sie deklariert wurden.
+Falls innerhalb eines Blocks lokale Variablen angelegt wurden, sind
+sie bis zum Ende des Blocks sichtbar. Die Lebensdauer einer lokalen
+Variable beginnt, wenn die zugeh&ouml;rige Deklarationsanweisung ausgef&uuml;hrt
+wird. Sie endet mit dem Ende des Methodenaufrufs. Falls innerhalb
+eines Blocks lokale Variablen angelegt wurden, endet ihre Lebensdauer
+mit dem Verlassen des Blocks. Es ist in Java nicht erlaubt, lokale
+Variablen zu deklarieren, die gleichnamige lokale Variablen eines
+weiter au&szlig;en liegenden Blocks verdecken. Das Verdecken von Klassen-
+oder Instanzvariablen ist dagegen zul&auml;ssig. 
+
+<p>
+<a name="ixa100299">Instanzvariablen</a> werden zum Zeitpunkt des
+Erzeugens einer neuen Instanz einer Klasse angelegt. Sie sind innerhalb
+der ganzen Klasse sichtbar, solange sie nicht von gleichnamigen lokalen
+Variablen verdeckt werden. In diesem Fall ist aber der Zugriff mit
+Hilfe des <a href="index_t.html#ixb100284"><font color=#000080><tt>this</tt></font></a>-Zeigers
+m&ouml;glich: <font color="#000077"><tt>this.name</tt></font> greift
+immer auf die Instanz- oder Klassenvariable <font color="#000077"><tt>name</tt></font>
+zu, selbst wenn eine gleichnamige lokale Variable existiert. Mit dem
+Zerst&ouml;ren des zugeh&ouml;rigen Objekts werden auch alle Instanzvariablen
+zerst&ouml;rt. 
+
+<p>
+<a name="ixa100300">Klassenvariablen</a> leben w&auml;hrend der kompletten
+Laufzeit des Programms. Die Regeln f&uuml;r ihre Sichtbarkeit entsprechen
+denen von Instanzvariablen. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100028.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100030.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100032.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100036.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

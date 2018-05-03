@@ -1,0 +1,218 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100063.html;106,k100064.html;107,k100066.html;108,k100070.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100063.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100064.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100066.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100070.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 10 - OOP III: Interfaces
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="interfacecomparable"></a>
+<h2>10.2 Das Interface <a name="ixa100556">Comparable</a> </h2>
+<hr>
+<ul>
+<li><a href="k100065.html#interfacecomparable">10.2 Das Interface Comparable</a>
+</ul>
+<hr>
+
+<p>
+Interfaces werden verwendet, um Eigenschaften auszudr&uuml;cken, die
+auf Klassen aus unterschiedlichen Klassenhierarchien zutreffen k&ouml;nnen.
+Das erkennt man auch daran, dass ihre Namen oft (substantivierte)
+Eigenschaftsw&ouml;rter sind. Ein bekanntes Beispiel aus der Java-Klassenbibliothek
+ist das Interface <a name="ixa100557"><a href="index_c.html#ixb100454"><font color=#000080><tt>Comparable</tt></font></a></a>
+des Pakets <a href="index_j.html#ixb100196"><font color=#000080><tt>java.lang</tt></font></a>:
+<font color="#000077">
+<pre>
+public interface Comparable
+{
+  public int compareTo(Object o);
+}
+</pre>
+</font>
+
+<p>
+Dieses Interface kann von Klassen implementiert werden, deren Objekte
+paarweise <i>vergleichbar</i> sind. Die Methode <a name="ixa100558"><a href="index_c.html#ixb100455"><font color=#000080><tt>compareTo</tt></font></a></a>
+liefert genau dann einen Wert kleiner 0, wenn das Objekt &#187;kleiner&#171;;
+gr&ouml;&szlig;er 0, wenn es &#187;gr&ouml;&szlig;er&#171;, und gleich
+0, wenn es &#187;gleich&#171; dem als Argument &uuml;bergebenen Objekt
+<font color="#000077"><tt>o</tt></font> ist. In der Klassenbibliothek
+gibt es eine ganze Reihe von Klassen, die <a href="index_c.html#ixb100454"><font color=#000080><tt>Comparable</tt></font></a>
+implementieren, beispielsweise <font color="#000077"><tt>String</tt></font>
+und <font color="#000077"><tt>Character</tt></font> oder die numerischen
+Wrapper-Klassen (Letztere werden in <a href="k100072.html#wrapperklassen">Abschnitt 11.2</a>
+erl&auml;utert). 
+
+<p>
+Mit Hilfe von <a href="index_c.html#ixb100454"><font color=#000080><tt>Comparable</tt></font></a>
+kann die Reihenfolge der Objekte einer Klasse ermittelt werden. Aus
+dem paarweisen Vergleich l&auml;sst sich eine (nicht notwendigerweise
+eindeutige) implizite Ordnung der Elemente ableiten, denn f&uuml;r
+alle aufeinanderfolgenden Objekte <font color="#000077"><tt>a</tt></font>
+und <font color="#000077"><tt>b</tt></font> muss <font color="#000077"><tt>a.compareTo(b)
+&lt;= 0</tt></font> gelten. Damit ist es m&ouml;glich, Methoden zu
+schreiben, die das kleinste oder gr&ouml;&szlig;te Element einer Menge
+von Objekten ermitteln oder diese sortieren: 
+<a name="listingid010007"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1007.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1007
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> Object getSmallest(Comparable[] objects)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    Object smallest = objects[0];
+<font color="#555555">008 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 1; i &lt; objects.length; ++i) {
+<font color="#555555">009 </font>      <font color="#0000AA">if</font> (objects[i].compareTo(smallest) &lt; 0) {
+<font color="#555555">010 </font>        smallest = objects[i];
+<font color="#555555">011 </font>      }
+<font color="#555555">012 </font>    }
+<font color="#555555">013 </font>    <font color="#0000AA">return</font> smallest;
+<font color="#555555">014 </font>  }
+<font color="#555555">015 </font>
+<font color="#555555">016 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> bubbleSort(Comparable[] objects)
+<font color="#555555">017 </font>  {
+<font color="#555555">018 </font>    <font color="#006699">boolean</font> sorted;
+<font color="#555555">019 </font>    <font color="#0000AA">do</font> {
+<font color="#555555">020 </font>      sorted = <font color="#006699">true</font>;
+<font color="#555555">021 </font>      <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; objects.length - 1; ++i) {
+<font color="#555555">022 </font>        <font color="#0000AA">if</font> (objects[i].compareTo(objects[i + 1]) &gt; 0) {
+<font color="#555555">023 </font>          Comparable tmp = objects[i];
+<font color="#555555">024 </font>          objects[i] = objects[i + 1];
+<font color="#555555">025 </font>          objects[i + 1] = tmp;
+<font color="#555555">026 </font>          sorted = <font color="#006699">false</font>;
+<font color="#555555">027 </font>        }
+<font color="#555555">028 </font>      }
+<font color="#555555">029 </font>    } <font color="#0000AA">while</font> (!sorted);
+<font color="#555555">030 </font>  }
+<font color="#555555">031 </font>
+<font color="#555555">032 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">033 </font>  {
+<font color="#555555">034 </font>    <font color="#00AA00">//Erzeugen eines String-Arrays</font>
+<font color="#555555">035 </font>    Comparable[] objects = <font color="#0000AA">new</font> Comparable[4];
+<font color="#555555">036 </font>    objects[0] = <font color="#0000FF">"STRINGS"</font>;
+<font color="#555555">037 </font>    objects[1] = <font color="#0000FF">"SIND"</font>;
+<font color="#555555">038 </font>    objects[2] = <font color="#0000FF">"PAARWEISE"</font>;
+<font color="#555555">039 </font>    objects[3] = <font color="#0000FF">"VERGLEICHBAR"</font>;
+<font color="#555555">040 </font>    <font color="#00AA00">//Ausgeben des kleinsten Elements</font>
+<font color="#555555">041 </font>    System.out.println((String)getSmallest(objects));
+<font color="#555555">042 </font>    System.out.println(<font color="#0000FF">"--"</font>);
+<font color="#555555">043 </font>    <font color="#00AA00">//Sortieren und Ausgaben</font>
+<font color="#555555">044 </font>    bubbleSort(objects);
+<font color="#555555">045 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; objects.length; ++i) {
+<font color="#555555">046 </font>      System.out.println((String)objects[i]);
+<font color="#555555">047 </font>    }
+<font color="#555555">048 </font>  }
+<font color="#555555">049 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1007.java"><font color="#000055" size=-1>Listing1007.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 10.7: Das Interface Comparable</i></p>
+
+<p>
+Die Implementierung der Methode <font color="#000077"><tt>getSmallest</tt></font>
+ist leicht zu verstehen. Das kleinste Element wird gefunden, indem
+jedes Element des Arrays mit dem bis dato kleinsten Element verglichen
+wird. Ist es kleiner, wird das bisherige kleinste Element ersetzt,
+andernfalls bleibt es unver&auml;ndert. Die Implementierung von <font color="#000077"><tt>bubbleSort</tt></font>
+folgt ebenfalls einem einfachen Schema. In jedem Array-Durchlauf werden
+zwei aufeinanderfolgende Elemente vertauscht, falls das zweite kleiner
+als das erste ist. Es werden so viele Durchl&auml;ufe vorgenommen,
+bis keine Vertauschung mehr stattgefunden hat. 
+
+<p>
+Bemerkenswert ist hierbei die <a name="ixa100559"><i>Generizit&auml;t</i></a>
+(Typunabh&auml;ngigkeit) der L&ouml;sung. Es spielt keine Rolle, welche
+Art von Objekten sortiert wird, solange alle das Interface <a href="index_c.html#ixb100454"><font color=#000080><tt>Comparable</tt></font></a>
+implementieren. Bei Strings ist das standardm&auml;&szlig;ig der Fall;
+eigene Klassen k&ouml;nnten ihre eigene Implementierung von <a href="index_c.html#ixb100454"><font color=#000080><tt>Comparable</tt></font></a>
+beisteuern. Bei Objekten, die auch <font color="#000077"><tt>Groesse</tt></font>
+implementieren, k&ouml;nnte beispielsweise das <i>Volumen</i> (L&auml;nge
+mal Breite mal H&ouml;he) oder eine beliebige andere Verkn&uuml;pfung
+der Rauml&auml;ngen verwendet werden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Auch Objekte unterschiedlicher Klassen k&ouml;nnen problemlos miteinander
+verglichen werden, sofern <a href="index_c.html#ixb100455"><font color=#000080><tt>compareTo</tt></font></a>
+dazu in der Lage ist. So ist es leicht vorstellbar, dass sowohl Autos
+als auch Fu&szlig;ballpl&auml;tze und Papierbl&auml;tter (und eventuell
+noch &Auml;pfel und Birnen) auf der Basis ihrer Grundfl&auml;che (siehe
+<a href="k100064.html#grundflaeche">Listing 10.5</a>) miteinander
+verglichen werden, denn diese Ma&szlig;zahl hat f&uuml;r alle beteiligten
+Klassen eine Bedeutung.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100063.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100064.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100066.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100070.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

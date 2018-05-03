@@ -1,0 +1,103 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100084.html;106,k100084.html;107,k100086.html;108,k100090.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100084.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100084.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100086.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100090.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 13 - Exceptions
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id013001"></a>
+<h2>13.1 Grundlagen und Begriffe </h2>
+<hr>
+<ul>
+<li><a href="k100085.html#sectlevel2id013001">13.1 Grundlagen und Begriffe</a>
+</ul>
+<hr>
+
+<p>
+Mit den <i>Exceptions</i> besitzt Java einen Mechanismus zur strukturierten
+Behandlung von Fehlern, die w&auml;hrend der Programmausf&uuml;hrung
+auftreten. Tritt etwa ein <a name="ixa100719">Laufzeitfehler</a> auf,
+weil ein Array-Zugriff au&szlig;erhalb der definierten Grenzen erfolgte
+oder weil eine Datei, die ge&ouml;ffnet werden sollte, nicht gefunden
+wurde, so gibt es in Java Sprachmittel, die eine systematische Behandlung
+solcher Ausnahmen erm&ouml;glichen. 
+
+<p>
+Da Exceptions ein relativ neues Feature von Programmiersprachen sind,
+ist es sinnvoll, zun&auml;chst die in diesem Zusammenhang verwendeten
+Begriffe vorzustellen. Als <i>Exception</i> wird dabei die eigentliche
+Ausnahme bezeichnet, die durch ein Programm zur Laufzeit verursacht
+werden kann. Das <a name="ixa100720"><i>Ausl&ouml;sen einer Ausnahme</i></a>
+wird im Java-Sprachgebrauch als <i>throwing</i> bezeichnet, wir werden
+meist die deutsche Bezeichnung <i>ausl&ouml;sen</i> verwenden. Das
+<a name="ixa100721"><i>Behandeln einer Ausnahme</i></a>, also die
+explizite Reaktion auf das Eintreten einer Ausnahme, wird als <i>catching</i>
+bezeichnet. Schlie&szlig;lich werden wir auch die Begriffe <i>Ausnahme</i>
+und <i>Exception</i> synonym verwenden. 
+
+<p>
+Das Grundprinzip des Exception-Mechanismus in Java kann wie folgt
+beschrieben werden: 
+<ul>
+<li>Ein Laufzeitfehler oder eine vom Entwickler gewollte Bedingung
+l&ouml;st eine Ausnahme aus.
+<li>Diese kann nun entweder von dem Programmteil, in dem sie ausgel&ouml;st
+wurde, behandelt werden oder sie kann weitergegeben werden.
+<li>Wird die Ausnahme weitergegeben, so hat der Empf&auml;nger der
+Ausnahme erneut die M&ouml;glichkeit, sie entweder zu behandeln oder
+selbst weiterzugeben.
+<li>Wird die Ausnahme von keinem Programmteil behandelt, so f&uuml;hrt
+sie zum Abbruch des Programms und zur Ausgabe einer Fehlermeldung.
+</ul>
+
+<p>
+Die folgenden Abschnitte erl&auml;utern die Details des Auftretens,
+der Behandlung und der Weitergabe von Ausnahmen. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100084.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100084.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100086.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100090.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

@@ -1,0 +1,455 @@
+   1               		.file	"main.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   8               		.text
+   9               	.Ltext0:
+ 102               	.global	uart_getc
+ 104               	uart_getc:
+   1:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** #define F_CPU 16000000UL //Takt
+   2:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** #define BAUD 115200UL //gewünschte Baudrate
+   3:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** 
+   4:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** #define UBRR_CALC (F_CPU/16UL/BAUD-1) //Baudrtate aus Takt berechnen
+   5:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** 
+   6:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** #include <avr/io.h>
+   7:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** #include <avr/interrupt.h>
+   8:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** 
+   9:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** char i=0;           //Laufvariable
+  10:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** char eingang;       //Variable für empf. Zeichen
+  11:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** char Line[40];      // String mit maximal 39 zeichen
+  12:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** 
+  13:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** void init_usart (void)
+  14:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** {
+  15:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     UBRR1H = (unsigned char)(UBRR_CALC>>8); //Baudrate einstellen
+  16:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     UBRR1L = (unsigned char)(UBRR_CALC);
+  17:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     
+  18:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     UCSR1B |= (1<<RXEN1)|(1<<RXCIE1)|(1<<TXEN1);//Empf. ein, Empf.-Interr. ein, Sender ein
+  19:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     UCSR1C |= (1<<UCSZ11)|(1<<UCSZ10); //asynchr., 8 Daten-, kein Parity-, 1 Stop
+  20:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** }
+  21:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** 
+  22:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** 
+  23:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** /* Zeichen empfangen */
+  24:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** uint8_t uart_getc(void)
+  25:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** {
+ 106               	.LM0:
+ 107               	.LFBB1:
+ 108               	/* prologue: function */
+ 109               	/* frame size = 0 */
+ 110               	/* stack size = 0 */
+ 111               	.L__stack_usage = 0
+ 112               	.L3:
+  26:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     while (!(UCSR1A & (1<<RXC1)))   // warten bis Zeichen verfuegbar
+ 114               	.LM1:
+ 115 0000 8091 C800 		lds r24,200
+ 116 0004 87FF      		sbrs r24,7
+ 117 0006 00C0      		rjmp .L3
+  27:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****         ;
+  28:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     return UDR1;                   // Zeichen aus UDR an Aufrufer zurueckgeben
+ 119               	.LM2:
+ 120 0008 8091 CE00 		lds r24,206
+  29:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** }
+ 122               	.LM3:
+ 123 000c 0895      		ret
+ 125               	.Lscope1:
+ 127               	.global	init_usart
+ 129               	init_usart:
+  14:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** {
+ 131               	.LM4:
+ 132               	.LFBB2:
+ 133               	/* prologue: function */
+ 134               	/* frame size = 0 */
+ 135               	/* stack size = 0 */
+ 136               	.L__stack_usage = 0
+  15:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     UBRR1H = (unsigned char)(UBRR_CALC>>8); //Baudrate einstellen
+ 138               	.LM5:
+ 139 000e 1092 CD00 		sts 205,__zero_reg__
+  16:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     UBRR1L = (unsigned char)(UBRR_CALC);
+ 141               	.LM6:
+ 142 0012 87E0      		ldi r24,lo8(7)
+ 143 0014 8093 CC00 		sts 204,r24
+  18:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     UCSR1B |= (1<<RXEN1)|(1<<RXCIE1)|(1<<TXEN1);//Empf. ein, Empf.-Interr. ein, Sender ein
+ 145               	.LM7:
+ 146 0018 E9EC      		ldi r30,lo8(-55)
+ 147 001a F0E0      		ldi r31,0
+ 148 001c 8081      		ld r24,Z
+ 149 001e 8869      		ori r24,lo8(-104)
+ 150 0020 8083      		st Z,r24
+  19:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     UCSR1C |= (1<<UCSZ11)|(1<<UCSZ10); //asynchr., 8 Daten-, kein Parity-, 1 Stop
+ 152               	.LM8:
+ 153 0022 EAEC      		ldi r30,lo8(-54)
+ 154 0024 F0E0      		ldi r31,0
+ 155 0026 8081      		ld r24,Z
+ 156 0028 8660      		ori r24,lo8(6)
+ 157 002a 8083      		st Z,r24
+ 158 002c 0895      		ret
+ 160               	.Lscope2:
+ 163               	.global	uart_gets
+ 165               	uart_gets:
+  30:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** 
+  31:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** void uart_gets( char* Buffer, uint8_t MaxLen )
+  32:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** {
+ 167               	.LM9:
+ 168               	.LFBB3:
+ 169 002e CF92      		push r12
+ 170 0030 DF92      		push r13
+ 171 0032 FF92      		push r15
+ 172 0034 0F93      		push r16
+ 173 0036 1F93      		push r17
+ 174 0038 CF93      		push r28
+ 175 003a DF93      		push r29
+ 176 003c 1F92      		push __zero_reg__
+ 177 003e CDB7      		in r28,__SP_L__
+ 178 0040 DEB7      		in r29,__SP_H__
+ 179               	/* prologue: function */
+ 180               	/* frame size = 1 */
+ 181               	/* stack size = 8 */
+ 182               	.L__stack_usage = 8
+ 183 0042 182F      		mov r17,r24
+ 184 0044 062F      		mov r16,r22
+  33:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     uint8_t NextChar;
+  34:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     uint8_t StringLen = 0;
+  35:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     
+  36:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     NextChar = uart_getc();         // Warte auf und empfange das nächste Zeichen
+ 186               	.LM10:
+ 187 0046 9983      		std Y+1,r25
+ 188 0048 0E94 0000 		call uart_getc
+ 189 004c F12E      		mov r15,r17
+  37:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     
+  38:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     // Sammle solange Zeichen, bis:
+  39:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     // * entweder das String Ende Zeichen kam
+  40:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     // * oder das aufnehmende Array voll ist
+  41:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     while( NextChar != '.' && StringLen < MaxLen - 1 ) {
+ 191               	.LM11:
+ 192 004e C12E      		mov r12,r17
+ 193 0050 9981      		ldd r25,Y+1
+ 194 0052 D92E      		mov r13,r25
+ 195 0054 10E0      		ldi r17,0
+ 196 0056 0150      		subi r16,1
+ 197 0058 1109      		sbc r17,__zero_reg__
+ 198               	.L7:
+ 199 005a 2C2D      		mov r18,r12
+ 200 005c 2F19      		sub r18,r15
+ 202               	.LM12:
+ 203 005e 8E32      		cpi r24,lo8(46)
+ 204 0060 01F4      		brne .L8
+ 205               	.L10:
+  42:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****         *Buffer++ = NextChar;
+  43:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****         StringLen++;
+  44:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****         NextChar = uart_getc();
+  45:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     }
+  46:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     
+  47:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     // Noch ein '\0' anhängen um einen Standard
+  48:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     // C-String daraus zu machen
+  49:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     *Buffer = '\0';
+ 207               	.LM13:
+ 208 0062 F601      		movw r30,r12
+ 209 0064 1082      		st Z,__zero_reg__
+ 210               	/* epilogue start */
+  50:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** }
+ 212               	.LM14:
+ 213 0066 0F90      		pop __tmp_reg__
+ 214 0068 DF91      		pop r29
+ 215 006a CF91      		pop r28
+ 216 006c 1F91      		pop r17
+ 217 006e 0F91      		pop r16
+ 218 0070 FF90      		pop r15
+ 219 0072 DF90      		pop r13
+ 220 0074 CF90      		pop r12
+ 221 0076 0895      		ret
+ 222               	.L8:
+  41:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     while( NextChar != '.' && StringLen < MaxLen - 1 ) {
+ 224               	.LM15:
+ 225 0078 30E0      		ldi r19,0
+ 226 007a 2017      		cp r18,r16
+ 227 007c 3107      		cpc r19,r17
+ 228 007e 04F4      		brge .L10
+  42:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****         *Buffer++ = NextChar;
+ 230               	.LM16:
+ 231 0080 F601      		movw r30,r12
+ 232 0082 8193      		st Z+,r24
+ 233 0084 6F01      		movw r12,r30
+  44:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****         NextChar = uart_getc();
+ 235               	.LM17:
+ 236 0086 0E94 0000 		call uart_getc
+ 237 008a 00C0      		rjmp .L7
+ 242               	.Lscope3:
+ 243               		.section	.rodata.str1.1,"aMS",@progbits,1
+ 244               	.LC0:
+ 245 0000 6569 6E00 		.string	"ein"
+ 246               	.LC1:
+ 247 0004 6175 7300 		.string	"aus"
+ 248               		.text
+ 250               	.global	__vector_25
+ 252               	__vector_25:
+  51:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** 
+  52:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** 
+  53:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** ISR(USART1_RX_vect) //Interrupt für UART empfang
+  54:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** {
+ 254               	.LM18:
+ 255               	.LFBB4:
+ 256 008c 1F92      		push r1
+ 257 008e 0F92      		push r0
+ 258 0090 0FB6      		in r0,__SREG__
+ 259 0092 0F92      		push r0
+ 260 0094 1124      		clr __zero_reg__
+ 261 0096 2F93      		push r18
+ 262 0098 3F93      		push r19
+ 263 009a 4F93      		push r20
+ 264 009c 5F93      		push r21
+ 265 009e 6F93      		push r22
+ 266 00a0 7F93      		push r23
+ 267 00a2 8F93      		push r24
+ 268 00a4 9F93      		push r25
+ 269 00a6 AF93      		push r26
+ 270 00a8 BF93      		push r27
+ 271 00aa EF93      		push r30
+ 272 00ac FF93      		push r31
+ 273               	/* prologue: Signal */
+ 274               	/* frame size = 0 */
+ 275               	/* stack size = 15 */
+ 276               	.L__stack_usage = 15
+  55:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     eingang = uart_getc;
+ 278               	.LM19:
+ 279 00ae 80E0      		ldi r24,lo8(gs(uart_getc))
+ 280 00b0 90E0      		ldi r25,hi8(gs(uart_getc))
+ 281 00b2 8093 0000 		sts eingang,r24
+  56:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     
+  57:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     if (eingang == '1') {
+ 283               	.LM20:
+ 284 00b6 8133      		cpi r24,lo8(49)
+ 285 00b8 01F4      		brne .L13
+  58:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****         PORTD &=~(1<<PD7);
+ 287               	.LM21:
+ 288 00ba 5F98      		cbi 0xb,7
+ 289               	.L13:
+  59:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     }
+  60:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     if (eingang == '2') {
+ 291               	.LM22:
+ 292 00bc 8091 0000 		lds r24,eingang
+ 293 00c0 8233      		cpi r24,lo8(50)
+ 294 00c2 01F4      		brne .L14
+  61:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****         PORTD |= (1<<PD7);
+ 296               	.LM23:
+ 297 00c4 5F9A      		sbi 0xb,7
+ 298               	.L14:
+  62:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     }
+  63:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     
+  64:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****    
+  65:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     
+  66:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     if (eingang != '1' && eingang != '2') {
+ 300               	.LM24:
+ 301 00c6 8091 0000 		lds r24,eingang
+ 302 00ca 8153      		subi r24,lo8(-(-49))
+ 303 00cc 8230      		cpi r24,lo8(2)
+ 304 00ce 00F0      		brlo .L12
+  67:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****         uart_gets(Line, 40);
+ 306               	.LM25:
+ 307 00d0 68E2      		ldi r22,lo8(40)
+ 308 00d2 80E0      		ldi r24,lo8(Line)
+ 309 00d4 90E0      		ldi r25,hi8(Line)
+ 310 00d6 0E94 0000 		call uart_gets
+ 311               	.LBB2:
+  68:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****         
+  69:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****         if (!(strcmp(Line,"ein"))) {  // prüfen ob string passt
+ 313               	.LM26:
+ 314 00da 60E0      		ldi r22,lo8(.LC0)
+ 315 00dc 70E0      		ldi r23,hi8(.LC0)
+ 316 00de 80E0      		ldi r24,lo8(Line)
+ 317 00e0 90E0      		ldi r25,hi8(Line)
+ 318 00e2 0E94 0000 		call strcmp
+ 319 00e6 892B      		or r24,r25
+ 320 00e8 01F4      		brne .L17
+  70:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****             PORTD &= ~(1<<PD7);
+ 322               	.LM27:
+ 323 00ea 5F98      		cbi 0xb,7
+ 324               	.L17:
+ 325               	.LBE2:
+ 326               	.LBB3:
+  71:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****         }
+  72:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     
+  73:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****         if (!(strcmp(Line,"aus"))) { // prüfen ob string passt
+ 328               	.LM28:
+ 329 00ec 60E0      		ldi r22,lo8(.LC1)
+ 330 00ee 70E0      		ldi r23,hi8(.LC1)
+ 331 00f0 80E0      		ldi r24,lo8(Line)
+ 332 00f2 90E0      		ldi r25,hi8(Line)
+ 333 00f4 0E94 0000 		call strcmp
+ 334 00f8 892B      		or r24,r25
+ 335 00fa 01F4      		brne .L12
+  74:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****             PORTD |= (1<<PD7);
+ 337               	.LM29:
+ 338 00fc 5F9A      		sbi 0xb,7
+ 339               	.L12:
+ 340               	/* epilogue start */
+ 341               	.LBE3:
+  75:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****         }
+  76:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     }
+  77:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** 
+  78:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** }
+ 343               	.LM30:
+ 344 00fe FF91      		pop r31
+ 345 0100 EF91      		pop r30
+ 346 0102 BF91      		pop r27
+ 347 0104 AF91      		pop r26
+ 348 0106 9F91      		pop r25
+ 349 0108 8F91      		pop r24
+ 350 010a 7F91      		pop r23
+ 351 010c 6F91      		pop r22
+ 352 010e 5F91      		pop r21
+ 353 0110 4F91      		pop r20
+ 354 0112 3F91      		pop r19
+ 355 0114 2F91      		pop r18
+ 356 0116 0F90      		pop r0
+ 357 0118 0FBE      		out __SREG__,r0
+ 358 011a 0F90      		pop r0
+ 359 011c 1F90      		pop r1
+ 360 011e 1895      		reti
+ 362               	.Lscope4:
+ 363               		.section	.rodata.str1.1
+ 364               	.LC2:
+ 365 0008 0A0D 0A0D 		.string	"\n\r\n\rWir sollten im labor sein...\n\r\n\r"
+ 365      5769 7220 
+ 365      736F 6C6C 
+ 365      7465 6E20 
+ 365      696D 206C 
+ 366               		.section	.text.startup,"ax",@progbits
+ 368               	.global	main
+ 370               	main:
+  79:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** 
+  80:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** int main(void)
+  81:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** {
+ 372               	.LM31:
+ 373               	.LFBB5:
+ 374 0000 CF93      		push r28
+ 375 0002 DF93      		push r29
+ 376 0004 CDB7      		in r28,__SP_L__
+ 377 0006 DEB7      		in r29,__SP_H__
+ 378 0008 A597      		sbiw r28,37
+ 379 000a 0FB6      		in __tmp_reg__,__SREG__
+ 380 000c F894      		cli
+ 381 000e DEBF      		out __SP_H__,r29
+ 382 0010 0FBE      		out __SREG__,__tmp_reg__
+ 383 0012 CDBF      		out __SP_L__,r28
+ 384               	/* prologue: function */
+ 385               	/* frame size = 37 */
+ 386               	/* stack size = 39 */
+ 387               	.L__stack_usage = 39
+  82:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c **** DDRD |= (1<<DDD7); //PB0 OUTPUT
+ 389               	.LM32:
+ 390 0014 579A      		sbi 0xa,7
+  83:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     PORTD |= (1<<PD7); // standard: led aus
+ 392               	.LM33:
+ 393 0016 5F9A      		sbi 0xb,7
+  84:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     
+  85:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     CLKPR = 0x80;
+ 395               	.LM34:
+ 396 0018 80E8      		ldi r24,lo8(-128)
+ 397 001a 8093 6100 		sts 97,r24
+  86:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     CLKPR = 0x00; //CLK-Prescaler 1
+ 399               	.LM35:
+ 400 001e 1092 6100 		sts 97,__zero_reg__
+  87:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     
+  88:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     
+  89:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     init_usart(); //USART initialisieren
+ 402               	.LM36:
+ 403 0022 0E94 0000 		call init_usart
+  90:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     
+  91:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     sei(); //Interrupts global freigeben
+ 405               	.LM37:
+ 406               	/* #APP */
+ 407               	 ;  91 "/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c" 1
+ 408 0026 7894      		sei
+ 409               	 ;  0 "" 2
+  92:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     
+  93:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     UDR1 = 'C';
+ 411               	.LM38:
+ 412               	/* #NOAPP */
+ 413 0028 83E4      		ldi r24,lo8(67)
+ 414 002a 8093 CE00 		sts 206,r24
+  94:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     
+  95:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     char text[]="\n\r\n\rWir sollten im labor sein...\n\r\n\r";
+ 416               	.LM39:
+ 417 002e 85E2      		ldi r24,lo8(37)
+ 418 0030 E0E0      		ldi r30,lo8(.LC2)
+ 419 0032 F0E0      		ldi r31,hi8(.LC2)
+ 420 0034 DE01      		movw r26,r28
+ 421 0036 1196      		adiw r26,1
+ 422               		0:
+ 423 0038 0190      		ld r0,Z+
+ 424 003a 0D92      		st X+,r0
+ 425 003c 8A95      		dec r24
+ 426 003e 01F4      		brne 0b
+ 427               	.L20:
+  96:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     
+  97:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     while(text[i]!='\0') {
+ 429               	.LM40:
+ 430 0040 8091 0000 		lds r24,i
+ 431 0044 E1E0      		ldi r30,lo8(1)
+ 432 0046 F0E0      		ldi r31,0
+ 433 0048 EC0F      		add r30,r28
+ 434 004a FD1F      		adc r31,r29
+ 435 004c E80F      		add r30,r24
+ 436 004e F11D      		adc r31,__zero_reg__
+ 437 0050 8081      		ld r24,Z
+ 438 0052 8823      		tst r24
+ 439 0054 01F0      		breq .L25
+ 440               	.L22:
+  98:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****         while(!(UCSR1A & (1<<UDRE1))); //warten bis fertig
+ 442               	.LM41:
+ 443 0056 9091 C800 		lds r25,200
+ 444 005a 95FF      		sbrs r25,5
+ 445 005c 00C0      		rjmp .L22
+  99:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****         UDR1 = text[i]; //Zeichen and UDR senden
+ 447               	.LM42:
+ 448 005e 8093 CE00 		sts 206,r24
+ 100:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****         i++;
+ 450               	.LM43:
+ 451 0062 8091 0000 		lds r24,i
+ 452 0066 8F5F      		subi r24,lo8(-(1))
+ 453 0068 8093 0000 		sts i,r24
+ 454 006c 00C0      		rjmp .L20
+ 455               	.L25:
+ 101:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     }
+ 102:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     
+ 103:/Users/alexhofstaetter/Dropbox/Schule/4-Jahrgang/Labor/CRHA/4_SPI/UART/UART/main.c ****     uart_gets( Line, sizeof( Line ) );
+ 457               	.LM44:
+ 458 006e 68E2      		ldi r22,lo8(40)
+ 459 0070 80E0      		ldi r24,lo8(Line)
+ 460 0072 90E0      		ldi r25,hi8(Line)
+ 461 0074 0E94 0000 		call uart_gets
+ 462               	.L24:
+ 463 0078 00C0      		rjmp .L24
+ 468               	.Lscope5:
+ 469               		.comm	Line,40,1
+ 470               		.comm	eingang,1,1
+ 471               	.global	i
+ 472               		.section .bss
+ 475               	i:
+ 476 0000 00        		.zero	1
+ 480               		.text
+ 482               	.Letext0:
+ 483               		.ident	"GCC: (GNU) 4.8.1"
+ 484               	.global __do_copy_data
+ 485               	.global __do_clear_bss
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccQQzBZX.s:2      *ABS*:0000003e __SP_H__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccQQzBZX.s:3      *ABS*:0000003d __SP_L__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccQQzBZX.s:4      *ABS*:0000003f __SREG__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccQQzBZX.s:5      *ABS*:00000000 __tmp_reg__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccQQzBZX.s:6      *ABS*:00000001 __zero_reg__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccQQzBZX.s:104    .text:00000000 uart_getc
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccQQzBZX.s:129    .text:0000000e init_usart
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccQQzBZX.s:165    .text:0000002e uart_gets
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccQQzBZX.s:252    .text:0000008c __vector_25
+                            *COM*:00000001 eingang
+                            *COM*:00000028 Line
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccQQzBZX.s:370    .text.startup:00000000 main
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccQQzBZX.s:475    .bss:00000000 i
+
+UNDEFINED SYMBOLS
+strcmp
+__do_copy_data
+__do_clear_bss

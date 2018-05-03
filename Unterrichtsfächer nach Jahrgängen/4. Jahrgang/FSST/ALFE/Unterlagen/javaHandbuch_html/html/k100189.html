@@ -1,0 +1,310 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100185.html;106,k100188.html;107,k100190.html;108,k100193.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100185.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100188.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100190.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100193.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 29 - Low-Level-Events
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id029004"></a>
+<h2>29.4 <a name="ixa101893">MouseMotion-Events</a></h2>
+<hr>
+<ul>
+<li><a href="k100189.html#sectlevel2id029004">29.4 MouseMotion-Events</a>
+</ul>
+<hr>
+
+<p>
+Im JDK gibt es eine klare Trennung zwischen <i>Mouse</i>-Events und
+<i>MouseMotion</i>-Events. W&auml;hrend die Mouse-Events f&uuml;r
+Mausklicks und das Betreten oder Verlassen der Komponente zust&auml;ndig
+sind, geben MouseMotion-Events Auskunft &uuml;ber die <i>Bewegung</i>
+des Mauszeigers. Neben der verbesserten Modularisierung (sehr viele
+Programme wollen lediglich von Mausklicks, nicht aber von Mausbewegungen
+unterrichtet werden) wurde die Trennung vor allem deshalb vorgenommen,
+um Performance-Verbesserungen zu erzielen. Durch die Entkopplung der
+Ereignishandler f&uuml;r Mausbewegungen wird die Anzahl der Events,
+mit denen die meisten Event-Handler beschossen werden, drastisch reduziert.
+
+<p>
+Ein Empf&auml;nger f&uuml;r MouseMotion-Events muss das Interface
+<a href="index_m.html#ixb101382"><font color=#000080><tt>MouseMotionListener</tt></font></a>
+implementieren. Er wird mit der Methode <a href="index_a.html#ixb101383"><font color=#000080><tt>addMouseMotionListener</tt></font></a>
+registriert, die in allen Objekten der Klasse <a href="index_c.html#ixb101293"><font color=#000080><tt>Component</tt></font></a>
+oder daraus abgeleiteten Klassen zur Verf&uuml;gung steht. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void addMouseMotionListener(MouseListener l)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Component.html" onClick="this.href=getApiDoc('java.awt.Component')"><font color="#660066" size=-1>java.awt.Component</font></a></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Im Gegensatz zur bisherigen Systematik bekommen die Methoden von <a href="index_m.html#ixb101382"><font color=#000080><tt>MouseMotionListener</tt></font></a>
+allerdings keine Events des Typs <font color="#000077"><tt>MouseMotionEvent</tt></font>
+&uuml;bergeben (die gibt es n&auml;mlich nicht), sondern solche des
+Typs <a href="index_m.html#ixb101347"><font color=#000080><tt>MouseEvent</tt></font></a>.
+Damit stehen dieselben Methoden wie bei Mouse-Events zur Verf&uuml;gung.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Das Interface <a href="index_m.html#ixb101382"><font color=#000080><tt>MouseMotionListener</tt></font></a>
+definiert die Methoden <a href="index_m.html#ixb101385"><font color=#000080><tt>mouseMoved</tt></font></a>
+und <a href="index_m.html#ixb101384"><font color=#000080><tt>mouseDragged</tt></font></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public abstract void mouseMoved(MouseEvent e)
+
+public abstract void mouseDragged(MouseEvent e)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/event/MouseMotionListener.html" onClick="this.href=getApiDoc('java.awt.event.MouseMotionListener')"><font color="#660066" size=-1>java.awt.event.MouseMotionListener</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_m.html#ixb101385"><font color=#000080><tt>mouseMoved</tt></font></a>
+wird aufgerufen, wenn die Maus bewegt wird, ohne dass dabei eine der
+Maustasten gedr&uuml;ckt ist. <a href="index_m.html#ixb101384"><font color=#000080><tt>mouseDragged</tt></font></a>
+wird dagegen aufgerufen, wenn die Maus bei gedr&uuml;ckter linker
+oder rechter Maustaste bewegt wird. 
+
+<p>
+Das folgende Listing zeigt den Einsatz von <a href="index_m.html#ixb101384"><font color=#000080><tt>mouseDragged</tt></font></a>
+am Beispiel eines Programms, mit dem Rechtecke gezeichnet werden k&ouml;nnen.
+Das Dr&uuml;cken der linken Maustaste legt den Anfangspunkt des Rechtecks
+fest und durch Ziehen der Maus wird seine Gr&ouml;&szlig;e bestimmt.
+Nach dem Loslassen der Maustaste wird das Rechteck in die Liste der
+gezeichneten Objekte eingetragen und beim n&auml;chsten Aufruf von
+<a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>
+gezeichnet. 
+<a name="listingid029004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2904.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2904
+<font color="#555555">008 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">009 </font>{
+<font color="#555555">010 </font>  <font color="#0000AA">private</font> ArrayList&lt;Rectangle&gt; drawlist;
+<font color="#555555">011 </font>  <font color="#0000AA">private</font> Rectangle actrect;
+<font color="#555555">012 </font>
+<font color="#555555">013 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">014 </font>  {
+<font color="#555555">015 </font>    Listing2904 wnd = <font color="#0000AA">new</font> Listing2904();
+<font color="#555555">016 </font>    wnd.setLocation(200,200);
+<font color="#555555">017 </font>    wnd.setSize(400,300);
+<font color="#555555">018 </font>    wnd.setVisible(<font color="#006699">true</font>);
+<font color="#555555">019 </font>  }
+<font color="#555555">020 </font>
+<font color="#555555">021 </font>  <font color="#0000AA">public</font> Listing2904()
+<font color="#555555">022 </font>  {
+<font color="#555555">023 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Rechtecke zeichnen"</font>);
+<font color="#555555">024 </font>    drawlist = <font color="#0000AA">new</font> ArrayList&lt;Rectangle&gt;();
+<font color="#555555">025 </font>    actrect = <font color="#0000AA">new</font> Rectangle(0,0,0,0);
+<font color="#555555">026 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter());
+<font color="#555555">027 </font>    addMouseListener(<font color="#0000AA">new</font> MyMouseListener());
+<font color="#555555">028 </font>    addMouseMotionListener(<font color="#0000AA">new</font> MyMouseMotionListener());
+<font color="#555555">029 </font>  }
+<font color="#555555">030 </font>
+<font color="#555555">031 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">032 </font>  {
+<font color="#555555">033 </font>    Rectangle r;
+<font color="#555555">034 </font>    Iterator&lt;Rectangle&gt; e;
+<font color="#555555">035 </font>
+<font color="#555555">036 </font>    <font color="#0000AA">for</font> (e = drawlist.iterator(); e.hasNext(); ) {
+<font color="#555555">037 </font>      r = e.next();
+<font color="#555555">038 </font>      g.drawRect(r.x, r.y, r.width, r.height);
+<font color="#555555">039 </font>    }
+<font color="#555555">040 </font>    <font color="#0000AA">if</font> (actrect.x &gt; 0 || actrect.y &gt; 0) {
+<font color="#555555">041 </font>      g.drawRect(
+<font color="#555555">042 </font>        actrect.x,
+<font color="#555555">043 </font>        actrect.y,
+<font color="#555555">044 </font>        actrect.width,
+<font color="#555555">045 </font>        actrect.height
+<font color="#555555">046 </font>      );
+<font color="#555555">047 </font>    }
+<font color="#555555">048 </font>  }
+<font color="#555555">049 </font>
+<font color="#555555">050 </font>  <font color="#0000AA">class</font> MyMouseListener
+<font color="#555555">051 </font>  <font color="#0000AA">extends</font> MouseAdapter
+<font color="#555555">052 </font>  {
+<font color="#555555">053 </font>    <font color="#0000AA">public</font> <font color="#006699">void</font> mousePressed(MouseEvent event)
+<font color="#555555">054 </font>    {
+<font color="#555555">055 </font>      actrect = <font color="#0000AA">new</font> Rectangle(event.getX(),event.getY(),0,0);
+<font color="#555555">056 </font>    }
+<font color="#555555">057 </font>
+<font color="#555555">058 </font>    <font color="#0000AA">public</font> <font color="#006699">void</font> mouseReleased(MouseEvent event)
+<font color="#555555">059 </font>    {
+<font color="#555555">060 </font>      <font color="#0000AA">if</font> (actrect.width &gt; 0 || actrect.height &gt; 0) {
+<font color="#555555">061 </font>        drawlist.add(actrect);
+<font color="#555555">062 </font>      }
+<font color="#555555">063 </font>      repaint();
+<font color="#555555">064 </font>    }
+<font color="#555555">065 </font>  }
+<font color="#555555">066 </font>
+<font color="#555555">067 </font>  <font color="#0000AA">class</font> MyMouseMotionListener
+<font color="#555555">068 </font>  <font color="#0000AA">extends</font> MouseMotionAdapter
+<font color="#555555">069 </font>  {
+<font color="#555555">070 </font>    <font color="#0000AA">public</font> <font color="#006699">void</font> mouseDragged(MouseEvent event)
+<font color="#555555">071 </font>    {
+<font color="#555555">072 </font>      <font color="#006699">int</font> x = event.getX();
+<font color="#555555">073 </font>      <font color="#006699">int</font> y = event.getY();
+<font color="#555555">074 </font>      <font color="#0000AA">if</font> (x &gt; actrect.x &amp;&amp; y &gt; actrect.y) {
+<font color="#555555">075 </font>        actrect.width = x - actrect.x;
+<font color="#555555">076 </font>        actrect.height = y - actrect.y;
+<font color="#555555">077 </font>      }
+<font color="#555555">078 </font>      repaint();
+<font color="#555555">079 </font>    }
+<font color="#555555">080 </font>  }
+<font color="#555555">081 </font>
+<font color="#555555">082 </font>  <font color="#0000AA">class</font> MyWindowListener
+<font color="#555555">083 </font>  <font color="#0000AA">extends</font> WindowAdapter
+<font color="#555555">084 </font>  {
+<font color="#555555">085 </font>    <font color="#0000AA">public</font> <font color="#006699">void</font> windowClosing(WindowEvent event)
+<font color="#555555">086 </font>    {
+<font color="#555555">087 </font>      setVisible(<font color="#006699">false</font>);
+<font color="#555555">088 </font>      dispose();
+<font color="#555555">089 </font>      System.exit(0);
+<font color="#555555">090 </font>    }
+<font color="#555555">091 </font>  }
+<font color="#555555">092 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2904.java"><font color="#000055" size=-1>Listing2904.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 29.4: Zeichnen von Rechtecken durch Ziehen der Maus</i></p>
+
+<p>
+Eine Beispielsitzung mit dem Programm k&ouml;nnte folgendes Ergebnis
+liefern: 
+<p>
+<a name="imageid029003"></a>
+<img src="images/MausBewegung.gif">
+<p>
+
+<p><i>
+Abbildung 29.3: Die Ausgabe des Mausbewegungsprogramms</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Interessant ist hier das Zusammenspiel zwischen <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>
+und den Methoden, die die Maus-Events behandeln. Beim Aufruf von <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>
+werden zun&auml;chst alle Rechtecke gezeichnet, die sich in der Liste
+<font color="#000077"><tt>drawlist</tt></font> befinden. Anschlie&szlig;end
+&uuml;berpr&uuml;ft <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>,
+ob das aktuelle Element (dieses wurde beim Mausklick angelegt) eine
+L&auml;nge oder Breite gr&ouml;&szlig;er Null hat, und zeichnet es
+gegebenenfalls. Dies ist genau dann der Fall, wenn der Anwender die
+Maustaste gedr&uuml;ckt und die Maus vom Ursprung nach rechts unten
+bewegt hat. Beim Loslassen der Maustaste wird das aktuelle Element
+in die Liste der Rechtecke eingetragen und steht so beim n&auml;chsten
+<a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>
+zur Verf&uuml;gung.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100185.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100188.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100190.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100193.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

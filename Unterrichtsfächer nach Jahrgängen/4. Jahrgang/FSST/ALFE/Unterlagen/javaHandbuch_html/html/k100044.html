@@ -1,0 +1,540 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100036.html;106,k100043.html;107,k100045.html;108,k100046.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100036.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100043.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100045.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100046.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 6 - Ausdr&uuml;cke
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id006008"></a>
+<h2>6.8 <a name="ixa100383">Operator-Vorrangregeln</a><a name="ixa100384"></a></h2>
+<hr>
+<ul>
+<li><a href="k100044.html#sectlevel2id006008">6.8 Operator-Vorrangregeln</a>
+</ul>
+<hr>
+
+<p>
+<a href="k100044.html#operatorvorrangregeln">Tabelle 6.6</a> listet
+alle Operatoren in der Reihenfolge ihrer Vorrangregeln auf. Weiter
+oben stehende Operatoren haben dabei Vorrang vor weiter unten stehenden
+Operatoren. Innerhalb derselben Gruppe stehende Operatoren werden
+entsprechend ihrer Assoziativit&auml;t ausgewertet. 
+
+<p>
+Die Spalte <i>Typisierung</i> gibt die m&ouml;glichen Operandentypen
+an. Dabei steht &#187;N&#171; f&uuml;r numerische, &#187;I&#171; f&uuml;r
+integrale (also ganzzahlig numerische), &#187;L&#171; f&uuml;r logische,
+&#187;S&#171; f&uuml;r String-, &#187;R&#171; f&uuml;r Referenz- und
+&#187;P&#171; f&uuml;r primitive Typen. Ein &#187;A&#171; wird verwendet,
+wenn alle Typen in Frage kommen, und mit einem &#187;V&#171; wird
+angezeigt, dass eine Variable erforderlich ist. <a name="operatorvorrangregeln"></a>
+
+<p>
+<table cols=5 border width=100%>
+
+<tr>
+<td valign=top align=left width=14%><b>Gruppe</b></td>
+<td valign=top align=left width=14%><b>Operator</b></td>
+<td valign=top align=left width=14%><b>Typisierung</b></td>
+<td valign=top align=left width=14%><b>Assoziativit&auml;t</b></td>
+<td valign=top align=left width=42%><b>Bezeichnung </b></td></tr>
+<tr>
+<td valign=top align=left>1</td>
+<td valign=top align=left>++</td>
+<td valign=top align=left>N</td>
+<td valign=top align=left>R</td>
+<td valign=top align=left>Inkrement </td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>--</td>
+<td valign=top align=left>N</td>
+<td valign=top align=left>R</td>
+<td valign=top align=left>Dekrement </td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>+</td>
+<td valign=top align=left>N</td>
+<td valign=top align=left>R</td>
+<td valign=top align=left>Un&auml;res Plus </td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>-</td>
+<td valign=top align=left>N</td>
+<td valign=top align=left>R</td>
+<td valign=top align=left>Un&auml;res Minus </td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>~</td>
+<td valign=top align=left>I</td>
+<td valign=top align=left>R</td>
+<td valign=top align=left>Einerkomplement </td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>!</td>
+<td valign=top align=left>L</td>
+<td valign=top align=left>R</td>
+<td valign=top align=left>Logisches NICHT </td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>(type)</td>
+<td valign=top align=left>A</td>
+<td valign=top align=left>R</td>
+<td valign=top align=left>Type-Cast </td></tr>
+<tr>
+<td valign=top align=left>2</td>
+<td valign=top align=left>*</td>
+<td valign=top align=left>N,N</td>
+<td valign=top align=left>L</td>
+<td valign=top align=left>Multiplikation </td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>/</td>
+<td valign=top align=left>N,N</td>
+<td valign=top align=left>L</td>
+<td valign=top align=left>Division </td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>%</td>
+<td valign=top align=left>N,N</td>
+<td valign=top align=left>L</td>
+<td valign=top align=left>Modulo </td></tr>
+<tr>
+<td valign=top align=left>3</td>
+<td valign=top align=left>+</td>
+<td valign=top align=left>N,N</td>
+<td valign=top align=left>L</td>
+<td valign=top align=left>Addition </td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>-</td>
+<td valign=top align=left>N,N</td>
+<td valign=top align=left>L</td>
+<td valign=top align=left>Subtraktion </td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>+</td>
+<td valign=top align=left>S,A</td>
+<td valign=top align=left>L</td>
+<td valign=top align=left>String-Verkettung </td></tr>
+<tr>
+<td valign=top align=left>4</td>
+<td valign=top align=left>&lt;&lt;</td>
+<td valign=top align=left>I,I</td>
+<td valign=top align=left>L</td>
+<td valign=top align=left>Linksschieben </td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>&gt;&gt;</td>
+<td valign=top align=left>I,I</td>
+<td valign=top align=left>L</td>
+<td valign=top align=left>Rechtsschieben </td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>&gt;&gt;&gt;</td>
+<td valign=top align=left>I,I</td>
+<td valign=top align=left>L</td>
+<td valign=top align=left>Rechtsschieben mit Nullexpansion </td></tr>
+<tr>
+<td valign=top align=left>5</td>
+<td valign=top align=left>&lt;</td>
+<td valign=top align=left>N,N</td>
+<td valign=top align=left>L</td>
+<td valign=top align=left>Kleiner </td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>&lt;=</td>
+<td valign=top align=left>N,N</td>
+<td valign=top align=left>L</td>
+<td valign=top align=left>Kleiner gleich </td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>&gt;</td>
+<td valign=top align=left>N,N</td>
+<td valign=top align=left>L</td>
+<td valign=top align=left>Gr&ouml;&szlig;er </td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>&gt;=</td>
+<td valign=top align=left>N,N</td>
+<td valign=top align=left>L</td>
+<td valign=top align=left>Gr&ouml;&szlig;er gleich </td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>instanceof</td>
+<td valign=top align=left>R,R</td>
+<td valign=top align=left>L</td>
+<td valign=top align=left>Klassenzugeh&ouml;rigkeit </td></tr>
+<tr>
+<td valign=top align=left>6</td>
+<td valign=top align=left>==</td>
+<td valign=top align=left>P,P</td>
+<td valign=top align=left>L</td>
+<td valign=top align=left>Gleich </td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>!=</td>
+<td valign=top align=left>P,P</td>
+<td valign=top align=left>L</td>
+<td valign=top align=left>Ungleich </td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>==</td>
+<td valign=top align=left>R,R</td>
+<td valign=top align=left>L</td>
+<td valign=top align=left>Referenzgleichheit </td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>!=</td>
+<td valign=top align=left>R,R</td>
+<td valign=top align=left>L</td>
+<td valign=top align=left>Referenzungleichheit </td></tr>
+<tr>
+<td valign=top align=left>7</td>
+<td valign=top align=left>&amp;</td>
+<td valign=top align=left>I,I</td>
+<td valign=top align=left>L</td>
+<td valign=top align=left>Bitweises UND </td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>&amp;</td>
+<td valign=top align=left>L,L</td>
+<td valign=top align=left>L</td>
+<td valign=top align=left>Logisches UND mit vollst&auml;ndiger Auswertung
+</td></tr>
+<tr>
+<td valign=top align=left>8</td>
+<td valign=top align=left>^</td>
+<td valign=top align=left>I,I</td>
+<td valign=top align=left>L</td>
+<td valign=top align=left>Bitweises Exklusiv-ODER </td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>^</td>
+<td valign=top align=left>L,L</td>
+<td valign=top align=left>L</td>
+<td valign=top align=left>Logisches Exklusiv-ODER </td></tr>
+<tr>
+<td valign=top align=left>9</td>
+<td valign=top align=left>|</td>
+<td valign=top align=left>I,I</td>
+<td valign=top align=left>L</td>
+<td valign=top align=left>Bitweises ODER </td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>|</td>
+<td valign=top align=left>L,L</td>
+<td valign=top align=left>L</td>
+<td valign=top align=left>Logisches ODER mit vollst&auml;ndiger Auswertung
+</td></tr>
+<tr>
+<td valign=top align=left>10</td>
+<td valign=top align=left>&amp;&amp;</td>
+<td valign=top align=left>L,L</td>
+<td valign=top align=left>L</td>
+<td valign=top align=left>Logisches UND mit Short-Circuit-Evaluation
+</td></tr>
+<tr>
+<td valign=top align=left>11</td>
+<td valign=top align=left>||</td>
+<td valign=top align=left>L,L</td>
+<td valign=top align=left>L</td>
+<td valign=top align=left>Logisches ODER mit Short-Circuit-Evaluation
+</td></tr>
+<tr>
+<td valign=top align=left>12</td>
+<td valign=top align=left>?:</td>
+<td valign=top align=left>L,A,A</td>
+<td valign=top align=left>R</td>
+<td valign=top align=left>Bedingte Auswertung </td></tr>
+<tr>
+<td valign=top align=left>13</td>
+<td valign=top align=left>=</td>
+<td valign=top align=left>V,A</td>
+<td valign=top align=left>R</td>
+<td valign=top align=left>Zuweisung </td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>+=</td>
+<td valign=top align=left>V,N</td>
+<td valign=top align=left>R</td>
+<td valign=top align=left>Additionszuweisung </td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>-=</td>
+<td valign=top align=left>V,N</td>
+<td valign=top align=left>R</td>
+<td valign=top align=left>Subtraktionszuweisung </td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>*=</td>
+<td valign=top align=left>V,N</td>
+<td valign=top align=left>R</td>
+<td valign=top align=left>Multiplikationszuweisung </td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>/=</td>
+<td valign=top align=left>V,N</td>
+<td valign=top align=left>R</td>
+<td valign=top align=left>Divisionszuweisung </td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>%=</td>
+<td valign=top align=left>V,N</td>
+<td valign=top align=left>R</td>
+<td valign=top align=left>Restwertzuweisung </td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>&amp;=</td>
+<td valign=top align=left>N,N u. L,L</td>
+<td valign=top align=left>R</td>
+<td valign=top align=left>Bitweises-UND-Zuweisung und Logisches-UND-Zuweisung
+</td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>|=</td>
+<td valign=top align=left>N,N u. L,L</td>
+<td valign=top align=left>R</td>
+<td valign=top align=left>Bitweises-ODER-Zuweisung und Logisches-ODER-Zuweisung
+</td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>^=</td>
+<td valign=top align=left>N,N u. L,L</td>
+<td valign=top align=left>R</td>
+<td valign=top align=left>Bitweises-Exklusiv-ODER-Zuweisung und Logisches-Exklusiv-ODER-Zuweisung
+</td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>&lt;&lt;=</td>
+<td valign=top align=left>V,I</td>
+<td valign=top align=left>R</td>
+<td valign=top align=left>Linksschiebezuweisung </td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>&gt;&gt;=</td>
+<td valign=top align=left>V,I</td>
+<td valign=top align=left>R</td>
+<td valign=top align=left>Rechtsschiebezuweisung </td></tr>
+<tr>
+<td valign=top align=left>
+<br>
+</td>
+<td valign=top align=left>&gt;&gt;&gt;=</td>
+<td valign=top align=left>V,I</td>
+<td valign=top align=left>R</td>
+<td valign=top align=left>Rechtsschiebezuweisung mit Nullexpansion
+</td></tr>
+</table>
+<p><i>
+Tabelle 6.6: Operator-Vorrangregeln </i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Etwas unsch&ouml;n ist die Tatsache, dass die bitweisen Operatoren
+schw&auml;cher binden als die relationalen Operatoren. Da sie auf
+einer Stufe mit den zugeh&ouml;rigen logischen Operatoren stehen,
+gibt es beim &Uuml;bersetzen des folgenden Programms den Fehler &#187;Incompatible
+type for &amp;. Can't convert int to boolean&#171;:</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<a name="listingid006008"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing0608.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing0608
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#006699">int</font> i = 55;
+<font color="#555555">008 </font>    <font color="#006699">int</font> j = 97;
+<font color="#555555">009 </font>    <font color="#0000AA">if</font> (i &amp; 15 &lt; j &amp; 15) {
+<font color="#555555">010 </font>      System.out.println(<font color="#0000FF">"LowByte(55) &lt; LowByte(97)"</font>);
+<font color="#555555">011 </font>    } <font color="#0000AA">else</font> {
+<font color="#555555">012 </font>      System.out.println(<font color="#0000FF">"LowByte(55) &gt;= LowByte(97)"</font>);
+<font color="#555555">013 </font>    }
+<font color="#555555">014 </font>  }
+<font color="#555555">015 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 6.8: Bindungsprobleme bei den bitweisen Operatoren</i></p>
+
+<p>
+Bei der Verwendung der bitweisen Operatoren sind also zus&auml;tzliche
+Klammern erforderlich. Die korrekte Version des Programms zeigt <a href="k100044.html#korrektebitweise">Listing 6.9</a>
+(verbessert wurde <a href="k100044.html#korrektebitweise.besser">Zeile 009</a>):
+<a name="korrektebitweise"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing0609.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing0609
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#006699">int</font> i = 55;
+<font color="#555555">008 </font>    <font color="#006699">int</font> j = 97;
+<font color="#555555">009 </font>    <font color="#0000AA">if</font> ((i &amp; 15) &lt; (j &amp; 15)) { <a name="korrektebitweise.besser"></a>
+<font color="#555555">010 </font>      System.out.println(<font color="#0000FF">"LowByte(55) &lt; LowByte(97)"</font>);
+<font color="#555555">011 </font>    } <font color="#0000AA">else</font> {
+<font color="#555555">012 </font>      System.out.println(<font color="#0000FF">"LowByte(55) &gt;= LowByte(97)"</font>);
+<font color="#555555">013 </font>    }
+<font color="#555555">014 </font>  }
+<font color="#555555">015 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing0609.java"><font color="#000055" size=-1>Listing0609.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 6.9: Korrekte Klammerung von bitweisen Operatoren</i></p>
+
+<p>
+Die Ausgabe des Programms ist nun erwartungsgem&auml;&szlig;: 
+<font color="#333300">
+<pre>
+LowByte(55) &gt;= LowByte(97)
+</pre>
+</font>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100036.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100043.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100045.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100046.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

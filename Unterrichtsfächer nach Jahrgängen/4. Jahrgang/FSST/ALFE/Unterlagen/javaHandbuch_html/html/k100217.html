@@ -1,0 +1,314 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100207.html;106,k100216.html;107,k100218.html;108,k100221.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100207.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100216.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100218.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100221.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 32 - AWT-Dialogelemente
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id032010"></a>
+<h2>32.10 List </h2>
+<hr>
+<ul>
+<li><a href="k100217.html#sectlevel2id032010">32.10 List</a>
+</ul>
+<hr>
+
+<p>
+Eine <a name="ixa102159"><a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a></a>
+ist eine listenartige Darstellung von Werten, aus denen der Anwender
+einen oder mehrere ausw&auml;hlen kann. Anders als ein <a href="index_c.html#ixb101423"><font color=#000080><tt>Choice</tt></font></a>-Element
+ist ein Element der Klasse <a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>
+st&auml;ndig in voller Gr&ouml;&szlig;e auf dem Bildschirm sichtbar.
+Unter Windows werden Objekte der Klasse <a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>
+durch <a name="ixa102160"><i>Listboxen</i></a> dargestellt. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public List()
+
+public List(int size)
+
+public List(int size, boolean multiselect)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/List.html" onClick="this.href=getApiDoc('java.awt.List')"><font color="#660066" size=-1>java.awt.List</font></a></td>
+</tr>
+</table>
+
+<p>
+Der parameterlose Konstruktor legt eine leere Listbox an, deren dargestellte
+Gr&ouml;&szlig;e vom Layoutmanager begrenzt wird. Der Parameter <font color="#000077"><tt>size</tt></font>
+legt die Anzahl der angezeigten Zeilen fest. Dabei k&ouml;nnen auch
+mehr Elemente in der Listbox enthalten sein, als auf einmal angezeigt
+werden k&ouml;nnen. <a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>-Dialogelemente
+k&ouml;nnen wahlweise die <a name="ixa102161"><i>Mehrfachselektion</i></a>
+von Elementen zulassen. Wird bei der Konstruktion der Listbox der
+Parameter <font color="#000077"><tt>multiselect</tt></font> auf <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+gesetzt, kann der Anwender nicht nur ein Element, sondern auch mehrere
+Elemente selektieren. 
+
+<p>
+Das Dialogelement <a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>
+bietet nahezu dieselbe Funktionalit&auml;t wie <a href="index_c.html#ixb101423"><font color=#000080><tt>Choice</tt></font></a>.
+Zus&auml;tzlich stehen die Methoden <a name="ixa102162"><a href="index_g.html#ixb101620"><font color=#000080><tt>getSelectedIndexes</tt></font></a></a>
+und <a name="ixa102163"><a href="index_g.html#ixb101621"><font color=#000080><tt>getSelectedItems</tt></font></a></a>
+zur Verf&uuml;gung, um bei einer Mehrfachselektion auf die selektierten
+Elemente zugreifen zu k&ouml;nnen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int[] getSelectedIndexes()
+
+public String[] getSelectedItems()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/List.html" onClick="this.href=getApiDoc('java.awt.List')"><font color="#660066" size=-1>java.awt.List</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_g.html#ixb101620"><font color=#000080><tt>getSelectedIndexes</tt></font></a>
+liefert ein Array mit den Indexpositionen aller selektierten Elemente
+und <a href="index_g.html#ixb101621"><font color=#000080><tt>getSelectedItems</tt></font></a>
+liefert eine Liste der Werte selbst. 
+
+<p>
+Mit den Methoden <a name="ixa102164"><a href="index_s.html#ixb101598"><font color=#000080><tt>select</tt></font></a></a>
+und <a name="ixa102165"><a href="index_d.html#ixb101622"><font color=#000080><tt>deselect</tt></font></a></a>
+lassen sich einzelne Elemente selektieren oder deselektieren: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void select(int index)
+
+public void deselect(int index)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/List.html" onClick="this.href=getApiDoc('java.awt.List')"><font color="#660066" size=-1>java.awt.List</font></a></td>
+</tr>
+</table>
+
+<p>
+Im Gegensatz zu <a href="index_c.html#ixb101423"><font color=#000080><tt>Choice</tt></font></a>
+ist es bei einer Komponente des Typs <a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>
+auch m&ouml;glich, Elemente zu entfernen oder ihren Wert zu &auml;ndern:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void remove(int index)
+
+public void replaceItem(String newValue, int index)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/List.html" onClick="this.href=getApiDoc('java.awt.List')"><font color="#660066" size=-1>java.awt.List</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Methode <a name="ixa102166"><a href="index_r.html#ixb100739"><font color=#000080><tt>remove</tt></font></a></a>
+l&ouml;scht das Element an der Position <font color="#000077"><tt>index</tt></font>
+und <a name="ixa102167"><a href="index_r.html#ixb101623"><font color=#000080><tt>replaceItem</tt></font></a></a>
+ersetzt das Element an der Position <font color="#000077"><tt>index</tt></font>
+durch den neuen Wert <font color="#000077"><tt>newValue</tt></font>.
+
+<p>
+Eine <a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>
+sendet sowohl Item-Ereignisse als auch Action-Ereignisse. Ein Action-Ereignis
+wird dann generiert, wenn ein Listenelement per Doppelklick ausgew&auml;hlt
+oder die <font color="#007700"><tt>[ENTER]</tt></font>-Taste gedr&uuml;ckt
+wurde. Ein Item-Ereignis wird ausgel&ouml;st, nachdem in der Liste
+ein Element ausgew&auml;hlt wurde. Bez&uuml;glich der Implementierung
+von Event-Handlern f&uuml;r diese Ereignisse verweisen wir auf die
+Beschreibungen der Klassen <a href="index_c.html#ixb101423"><font color=#000080><tt>Choice</tt></font></a>
+und <a href="index_t.html#ixb101412"><font color=#000080><tt>TextField</tt></font></a>
+weiter oben. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Falls ein Item-Ereignis ausgel&ouml;st wurde, verh&auml;lt sich die
+Methode <a href="index_g.html#ixb101587"><font color=#000080><tt>getItemSelectable</tt></font></a>
+des <a href="index_i.html#ixb101345"><font color=#000080><tt>ItemEvent</tt></font></a>
+analog zu <a href="index_c.html#ixb101423"><font color=#000080><tt>Choice</tt></font></a>
+und liefert das <a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>-Objekt,
+das das Ereignis ausgel&ouml;st hat. Der R&uuml;ckgabewert von <a href="index_g.html#ixb101501"><font color=#000080><tt>getItem</tt></font></a>
+ist dagegen anders zu interpretieren, denn er liefert nicht das ausgew&auml;hlte
+Element als <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>,
+sondern dessen Position als <a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>-Objekt.
+Dieses kann mit <a href="index_i.html#ixb100478"><font color=#000080><tt>intValue</tt></font></a>
+in ein <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>
+konvertiert werden, das die Position des ausgew&auml;hlten Elements
+liefert. Beispielhafte Implementierungen von <a href="index_a.html#ixb101413"><font color=#000080><tt>actionPerformed</tt></font></a>
+und <a href="index_i.html#ixb101425"><font color=#000080><tt>itemStateChanged</tt></font></a>
+k&ouml;nnten folgenderma&szlig;en aussehen:</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<a name="listingid032013"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* List2.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#006699">void</font> itemStateChanged(ItemEvent event)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  List list = (List) event.getItemSelectable();
+<font color="#555555">006 </font>  String str1 = list.getSelectedItem();
+<font color="#555555">007 </font>  <font color="#006699">int</font> pos = ((Integer) event.getItem()).intValue();
+<font color="#555555">008 </font>  System.out.println(<font color="#0000FF">"list.getSelectedItem: "</font> + str1);
+<font color="#555555">009 </font>  System.out.println(<font color="#0000FF">"event.getItem:        "</font> + pos);
+<font color="#555555">010 </font>}
+<font color="#555555">011 </font>
+<font color="#555555">012 </font><font color="#0000AA">public</font> <font color="#006699">void</font> actionPerformed(ActionEvent event)
+<font color="#555555">013 </font>{
+<font color="#555555">014 </font>   Object obj = event.getSource();
+<font color="#555555">015 </font>   <font color="#0000AA">if</font> (obj <font color="#0000AA">instanceof</font> List) {
+<font color="#555555">016 </font>      System.out.println(<font color="#0000FF">"ListAction: "</font>+event.getActionCommand());
+<font color="#555555">017 </font>   } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (obj <font color="#0000AA">instanceof</font> Button) {
+<font color="#555555">018 </font>      <font color="#0000AA">if</font> (event.getActionCommand().equals(<font color="#0000FF">"Ende"</font>)) {
+<font color="#555555">019 </font>         endDialog();
+<font color="#555555">020 </font>      }
+<font color="#555555">021 </font>   }
+<font color="#555555">022 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/List2.inc"><font color="#000055" size=-1>List2.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 32.13: Behandlung der Ereignisse einer List-Komponente</i></p>
+
+<p>
+Das Beispielprogramm f&uuml;r die Verwendung der <a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>-Komponente
+sieht so aus: 
+<a name="listingid032014"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* List1.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">private</font> <font color="#006699">void</font> customizeLayout(Panel panel)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  panel.setLayout(<font color="#0000AA">new</font> FlowLayout(FlowLayout.LEFT));
+<font color="#555555">006 </font>  List list = <font color="#0000AA">new</font> List(6,<font color="#006699">false</font>);
+<font color="#555555">007 </font>  list.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">008 </font>  list.addItemListener(<font color="#006699">this</font>);
+<font color="#555555">009 </font>  list.add(<font color="#0000FF">"&Auml;pfel"</font>);
+<font color="#555555">010 </font>  list.add(<font color="#0000FF">"Birnen"</font>);
+<font color="#555555">011 </font>  list.add(<font color="#0000FF">"Bananen"</font>);
+<font color="#555555">012 </font>  list.add(<font color="#0000FF">"Pfirsiche"</font>);
+<font color="#555555">013 </font>  list.add(<font color="#0000FF">"Kirschen"</font>);
+<font color="#555555">014 </font>  list.add(<font color="#0000FF">"Kiwis"</font>);
+<font color="#555555">015 </font>  list.add(<font color="#0000FF">"Ananas"</font>);
+<font color="#555555">016 </font>  list.add(<font color="#0000FF">"Erdbeeren"</font>);
+<font color="#555555">017 </font>  list.add(<font color="#0000FF">"Blaubeeren"</font>);
+<font color="#555555">018 </font>  list.add(<font color="#0000FF">"Mandarinen"</font>);
+<font color="#555555">019 </font>  panel.add(list);
+<font color="#555555">020 </font>  list.select(1);
+<font color="#555555">021 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/List1.inc"><font color="#000055" size=-1>List1.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 32.14: Verwendung einer List-Komponente</i></p>
+<p>
+<a name="imageid032009"></a>
+<img src="images/ListBox.gif">
+<p>
+
+<p><i>
+Abbildung 32.9: Ein Dialog mit einer Listbox</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100207.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100216.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100218.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100221.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

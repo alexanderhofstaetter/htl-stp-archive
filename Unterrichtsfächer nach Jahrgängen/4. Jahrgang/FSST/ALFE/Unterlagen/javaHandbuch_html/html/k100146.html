@@ -1,0 +1,161 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100143.html;106,k100145.html;107,k100147.html;108,k100150.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100143.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100145.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100147.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100150.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 22 - Datei- und Verzeichnis-Handling
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id022003"></a>
+<h2>22.3 Informationen &uuml;ber die Datei </h2>
+<hr>
+<ul>
+<li><a href="k100146.html#sectlevel2id022003">22.3 Informationen &uuml;ber die Datei</a>
+</ul>
+<hr>
+
+<p>
+Die Klasse <a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a>
+besitzt eine ganze Reihe von Methoden, um Informationen &uuml;ber
+die durch das <a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a>-Objekt
+bezeichnete Datei oder das Verzeichnis zu gewinnen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public boolean exists()
+
+public boolean canWrite()
+public boolean canRead()
+
+public boolean isHidden()
+
+public boolean isFile()
+public boolean isDirectory()
+
+public boolean isAbsolute()
+
+public long lastModified()
+
+public long length()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/File.html" onClick="this.href=getApiDoc('java.io.File')"><font color="#660066" size=-1>java.io.File</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa101432"><a href="index_e.html#ixb101088"><font color=#000080><tt>exists</tt></font></a></a>
+kann getestet werden, ob die Datei oder das Verzeichnis &uuml;berhaupt
+existiert. Die Methoden <a name="ixa101433"><a href="index_c.html#ixb100682"><font color=#000080><tt>canWrite</tt></font></a></a>
+und <a name="ixa101434"><a href="index_c.html#ixb100681"><font color=#000080><tt>canRead</tt></font></a></a>
+ermitteln, ob ein lesender bzw. schreibender Zugriff m&ouml;glich
+ist, mit <a name="ixa101435"><a href="index_i.html#ixb101089"><font color=#000080><tt>isHidden</tt></font></a></a>
+kann festgestellt werden, ob die Datei versteckt ist. Mit <a name="ixa101436"><a href="index_i.html#ixb101090"><font color=#000080><tt>isFile</tt></font></a></a>
+und <a name="ixa101437"><a href="index_i.html#ixb101091"><font color=#000080><tt>isDirectory</tt></font></a></a>
+kann unterschieden werden, ob es sich um eine Datei oder ein Verzeichnis
+handelt. <a name="ixa101438"><a href="index_i.html#ixb101092"><font color=#000080><tt>isAbsolute</tt></font></a></a>
+gibt an, ob das Objekt mit Hilfe einer absoluten Pfadbezeichnung konstruiert
+wurde. 
+
+<p>
+<a name="ixa101439"><a href="index_l.html#ixb101093"><font color=#000080><tt>lastModified</tt></font></a></a>
+liefert den Zeitpunkt der letzten &Auml;nderung der Datei. Der R&uuml;ckgabewert
+liefert die Anzahl der Millisekunden seit dem 1.1.1970 und kann entweder
+direkt (etwa in arithmetischen Vergleichen) oder zur Konstruktion
+eines <a href="index_d.html#ixb100559"><font color=#000080><tt>Date</tt></font></a>-Objekts
+verwendet werden. Das <a href="index_d.html#ixb100559"><font color=#000080><tt>Date</tt></font></a>-Objekt
+kann dann an die Methode <a name="ixa101440"><a href="index_s.html#ixb100828"><font color=#000080><tt>setTime</tt></font></a></a>
+der Klasse <a href="index_g.html#ixb100806"><font color=#000080><tt>GregorianCalendar</tt></font></a>
+&uuml;bergeben werden, um die einzelnen Uhrzeitkomponenten zu extrahieren.
+Das folgende Beispiel illustriert diese Vorgehensweise: 
+<a name="listingid022001"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2201.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2201
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    File file = <font color="#0000AA">new</font> File(args[0]);
+<font color="#555555">011 </font>    GregorianCalendar cal = <font color="#0000AA">new</font> GregorianCalendar();
+<font color="#555555">012 </font>    cal.setTime(<font color="#0000AA">new</font> Date(file.lastModified()));
+<font color="#555555">013 </font>    System.out.print(<font color="#0000FF">"Letzte &Auml;nderung: "</font>);
+<font color="#555555">014 </font>    System.out.println(
+<font color="#555555">015 </font>      cal.get(Calendar.DATE) + <font color="#0000FF">"."</font> +
+<font color="#555555">016 </font>      (cal.get(Calendar.MONTH)+1) + <font color="#0000FF">"."</font> +
+<font color="#555555">017 </font>      cal.get(Calendar.YEAR) + <font color="#0000FF">" "</font> +
+<font color="#555555">018 </font>      cal.get(Calendar.HOUR_OF_DAY) + <font color="#0000FF">":"</font> +
+<font color="#555555">019 </font>      cal.get(Calendar.MINUTE) + <font color="#0000FF">":"</font> +
+<font color="#555555">020 </font>      cal.get(Calendar.SECOND)
+<font color="#555555">021 </font>    );
+<font color="#555555">022 </font>  }
+<font color="#555555">023 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2201.java"><font color="#000055" size=-1>Listing2201.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 22.1: Modifikationsdatum einer Datei ausgeben</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100143.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100145.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100147.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100150.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

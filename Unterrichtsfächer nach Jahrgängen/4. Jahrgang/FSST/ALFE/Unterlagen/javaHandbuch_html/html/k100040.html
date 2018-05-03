@@ -1,0 +1,156 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100036.html;106,k100039.html;107,k100041.html;108,k100046.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100036.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100039.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100041.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100046.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 6 - Ausdr&uuml;cke
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id006004"></a>
+<h2>6.4 <a name="ixa100352">Logische Operatoren</a><a name="ixa100353"></a></h2>
+<hr>
+<ul>
+<li><a href="k100040.html#sectlevel2id006004">6.4 Logische Operatoren</a>
+</ul>
+<hr>
+
+<p>
+Logische Operatoren dienen dazu, <i>boolesche</i> Werte miteinander
+zu verkn&uuml;pfen. Im Gegensatz zu den relationalen Operatoren, die
+durch Vergleiche erst Wahrheitswerte produzieren, werden logische
+Operatoren zur Weiterverarbeitung von Wahrheitswerten verwendet. 
+
+<p>
+Java stellt die Grundoperationen <a name="ixa100354"><i>UND</i></a>,
+<a name="ixa100355"><i>ODER</i></a> und <a name="ixa100356"><i>NICHT</i></a>
+zur Verf&uuml;gung und bietet dar&uuml;ber hinaus die M&ouml;glichkeit,
+das Auswertungsverhalten der Operanden zu beeinflussen. Anders als
+die meisten anderen Programmiersprachen, stellt Java die UND- und
+ODER-Verkn&uuml;pfungen in zwei verschiedenen Varianten zur Verf&uuml;gung,
+n&auml;mlich mit <a name="ixa100357"><i>Short-Circuit-Evaluation</i></a>
+oder ohne. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Bei der Short-Circuit-Evaluation eines logischen Ausdrucks wird ein
+weiter rechts stehender Teilausdruck nur dann ausgewertet, wenn er
+f&uuml;r das Ergebnis des Gesamtausdrucks noch von Bedeutung ist.
+Falls in dem Ausdruck <font color="#000077"><tt>A &amp;&amp; B</tt></font>
+also bereits <font color="#000077"><tt>A</tt></font> falsch ist, wird
+zwangsl&auml;ufig immer auch <font color="#000077"><tt>A &amp;&amp;
+B</tt></font> falsch sein, unabh&auml;ngig von dem Resultat von <font color="#000077"><tt>B</tt></font>.
+Bei der Short-Circuit-Evaluation wird in diesem Fall <font color="#000077"><tt>B</tt></font>
+gar nicht mehr ausgewertet. Analoges gilt bei der Anwendung des ODER-Operators.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Der in Java ebenfalls verf&uuml;gbare <a name="ixa100358"><i>EXKLUSIV-ODER-Operator</i></a>
+muss nat&uuml;rlich immer in der langen Variante ausgewertet werden.
+<a href="k100040.html#logischeoperatoren">Tabelle 6.3</a> gibt eine
+&Uuml;bersicht der logischen Operatoren. <a name="logischeoperatoren"></a>
+
+<p>
+<table cols=3 border width=100%>
+
+<tr>
+<td valign=top align=left width=33%><b>Operator</b></td>
+<td valign=top align=left width=33%><b>Bezeichnung</b></td>
+<td valign=top align=left width=33%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left>!</td>
+<td valign=top align=left>Logisches NICHT</td>
+<td valign=top align=left>!a ergibt false, wenn a wahr ist, und true,
+wenn a falsch ist. </td></tr>
+<tr>
+<td valign=top align=left>&amp;&amp;</td>
+<td valign=top align=left>UND mit Short-Circuit-Evaluation</td>
+<td valign=top align=left>a &amp;&amp; b ergibt true, wenn sowohl
+a als auch b wahr sind. Ist a bereits falsch, so wird false zur&uuml;ckgegeben
+und b nicht mehr ausgewertet. </td></tr>
+<tr>
+<td valign=top align=left>||</td>
+<td valign=top align=left>ODER mit Short-Circuit-Evaluation</td>
+<td valign=top align=left>a || b ergibt true, wenn mindestens einer
+der beiden Ausdr&uuml;cke a oder b wahr ist. Ist bereits a wahr, so
+wird true zur&uuml;ckgegeben und b nicht mehr ausgewertet. </td></tr>
+<tr>
+<td valign=top align=left>&amp;</td>
+<td valign=top align=left>UND ohne Short-Circuit-Evaluation</td>
+<td valign=top align=left>a &amp; b ergibt true, wenn sowohl a als
+auch b wahr sind. Beide Teilausdr&uuml;cke werden ausgewertet. </td></tr>
+<tr>
+<td valign=top align=left>|</td>
+<td valign=top align=left>ODER ohne Short-Circuit-Evaluation</td>
+<td valign=top align=left>a | b ergibt true, wenn mindestens einer
+der beiden Ausdr&uuml;cke a oder b wahr ist. Beide Teilausdr&uuml;cke
+werden ausgewertet. </td></tr>
+<tr>
+<td valign=top align=left>^</td>
+<td valign=top align=left>Exklusiv-ODER</td>
+<td valign=top align=left>a ^ b ergibt true, wenn beide Ausdr&uuml;cke
+einen unterschiedlichen Wahrheitswert haben. </td></tr>
+</table>
+<p><i>
+Tabelle 6.3: Logische Operatoren </i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100036.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100039.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100041.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100046.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

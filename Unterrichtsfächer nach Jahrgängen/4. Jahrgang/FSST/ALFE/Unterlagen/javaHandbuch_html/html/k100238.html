@@ -1,0 +1,664 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100236.html;106,k100237.html;107,k100239.html;108,k100240.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100236.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100237.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100239.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100240.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 36 - Swing: Grundlagen
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id036002"></a>
+<h2>36.2 Ein einf&uuml;hrendes Beispiel </h2>
+<hr>
+<ul>
+<li><a href="k100238.html#sectlevel2id036002">36.2 Ein einf&uuml;hrendes Beispiel</a>
+<ul>
+<li><a href="k100238.html#sectlevel3id036002001">36.2.1 Das Beispielprogramm</a>
+<li><a href="k100238.html#sectlevel3id036002002">36.2.2 Beschreibung des Beispielprogramms</a>
+<ul>
+<li><a href="k100238.html#sectlevel4id036002002001">Die import-Anweisungen</a>
+<li><a href="k100238.html#sectlevel4id036002002002">JFrame</a>
+<li><a href="k100238.html#sectlevel4id036002002003">JPanel</a>
+<li><a href="k100238.html#sectlevel4id036002002004">JLabel</a>
+<li><a href="k100238.html#sectlevel4id036002002005">JTextField</a>
+<li><a href="k100238.html#sectlevel4id036002002006">Tooltips und Umrandungen</a>
+<li><a href="k100238.html#sectlevel4id036002002007">JList und JScrollPane</a>
+<li><a href="k100238.html#sectlevel4id036002002008">JButton</a>
+<li><a href="k100238.html#sectlevel4id036002002009">Umschalten des Look-and-Feel </a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id036002001"></a>
+<h3>36.2.1 Das Beispielprogramm </h3>
+
+<p>
+In diesem Abschnitt soll ein einfaches Beispielprogramm vorgestellt
+werden. Es handelt sich um eine einfache (und weitgehend sinnfreie)
+Swing-Anwendung mit einem Hauptfenster, in dem drei Gruppen von Komponenten
+untergebracht sind: 
+<ul>
+<li>Ganz oben befindet sich ein Panel mit einem Label und einem Textfeld,
+in dem ein Name eingegeben werden kann. Das Label besitzt neben seiner
+Beschriftung ein Icon mit einem kleinen blauen Pfeil.
+<li>In der Mitte enth&auml;lt das Programm eine Liste, aus der ein
+Monatsname ausgew&auml;hlt werden kann.
+<li>Unten befindet sich ein Panel mit drei Buttons, mit denen zwischen
+den drei vordefinierten Look-and-Feels umgeschaltet werden kann.
+</ul>
+
+<p>
+Die beiden Panels wurden mit einer Umrandung versehen und alle aktiven
+Elemente zeigen Tooltips an, wenn man mit dem Mauszeiger darauf zeigt.
+Durch Dr&uuml;cken auf den Schlie&szlig;en-Button in der Titelleiste
+kann das Programm beendet werden. Die &uuml;brigen Dialogelemente
+besitzen - neben ihrem Standardverhalten - keinerlei zus&auml;tzliche
+Funktionalit&auml;t. 
+
+<p>
+<a href="k100238.html#swing1metal">Abbildung 36.1</a> zeigt das Beispielprogramm
+mit dem Standard-Look-and-Feel von Java-Programmen (das auch als <a name="ixa102368"><i>Metal-Look-and-Feel</i></a>
+bezeichnet wird): 
+<p>
+<a name="swing1metal"></a>
+<img src="images/SwingBsp1a.gif">
+<p>
+
+<p><i>
+Abbildung 36.1: Das Beispielprogramm im Metal-Look-and-Feel (unter
+Ubuntu)</i></p>
+
+<p>
+Oben links ist das Label &#187;Name&#171; mit seinem zugeordeten Icon
+zu erkennen. In das Textfeld wurde bereits der String &#187;Meier,
+Karl-Friedrich&#171; eingetragen. In der Liste ist der Monat Juni
+ausgew&auml;hlt und ihr Tooltip wird angezeigt, weil der Mauszeiger
+&uuml;ber der Liste verweilt. Die beiden Panels haben eine zus&auml;tzliche
+Umrandung, die vom Programm explizit hinzugef&uuml;gt wurde. 
+
+<p>
+Durch Dr&uuml;cken der Buttons kann das Look-and-Feel umgeschaltet
+werden. <a href="k100238.html#swing1motif">Abbildung 36.2</a> zeigt
+das Programm mit aktiviertem Motif-, <a href="k100238.html#swing1windows">Abbildung 36.3</a>
+mit aktiviertem Windows-Look-and-Feel. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+W&auml;hrend das Metal-Look-and-Feel f&uuml;r Swing neu entwickelt
+wurde, versuchen die beiden anderen, die speziellen Eigenschaften
+der korrespondierenden Fenstersysteme nachzuahmen. In der Praxis gelingt
+ihnen das mit wechselndem Erfolg. Insbesondere Anwender, die sehr
+an eines der beiden Fenstersysteme gew&ouml;hnt sind, werden viele
+<i>kleine</i> Abweichungen in der Swing-Implementierung feststellen.
+Zu bedenken ist auch, dass einige der Look-and-Feels aus Lizenzgr&uuml;nden
+nur auf ihren Originalplattformen zur Verf&uuml;gung stehen (z.B.
+das Windows- und das Mac-Look-and-Feel).</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<p>
+<a name="swing1motif"></a>
+<img src="images/SwingBsp1b.gif">
+<p>
+
+<p><i>
+Abbildung 36.2: Das Beispielprogramm im Motif-Look-and-Feel (unter
+Ubuntu)</i></p>
+<p>
+<a name="swing1windows"></a>
+<img src="images/SwingBsp1c.gif">
+<p>
+
+<p><i>
+Abbildung 36.3: Das Beispielprogramm im Windows-Look-and-Feel (unter
+Windows 7)</i></p>
+<p>
+<a name="swing1nimbus"></a>
+<img src="images/SwingBsp1d.gif">
+<p>
+
+<p><i>
+Abbildung 36.4: Das Beispielprogramm im Nimbus-Look-and-Feel (unter
+Ubuntu)</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id036002002"></a>
+<h3>36.2.2 Beschreibung des Beispielprogramms </h3>
+
+<p>
+Zun&auml;chst wollen wir uns den Quellcode des Beispielprogramms ansehen.
+Er besteht aus der Klasse f&uuml;r das Hauptfenster, die lediglich
+einen parameterlosen Konstruktor und die Methode <a href="index_a.html#ixb101413"><font color=#000080><tt>actionPerformed</tt></font></a>
+enth&auml;lt. Der Programmcode &auml;hnelt den Beispielen, die wir
+zum AWT gesehen haben: 
+<a name="swingerstbeispiel"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3601.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3601
+<font color="#555555">008 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">009 </font><font color="#0000AA">implements</font> ActionListener
+<font color="#555555">010 </font>{
+<font color="#555555">011 </font>  <font color="#0000AA">private</font> <font color="#0000AA">static</font> <font color="#0000AA">final</font> String[] MONTHS = {
+<font color="#555555">012 </font>    <font color="#0000FF">"Januar"</font>,    <font color="#0000FF">"Februar"</font>, <font color="#0000FF">"M&auml;rz"</font>,     <font color="#0000FF">"April"</font>,
+<font color="#555555">013 </font>    <font color="#0000FF">"Mai"</font>,       <font color="#0000FF">"Juni"</font>,    <font color="#0000FF">"Juli"</font>,     <font color="#0000FF">"August"</font>,
+<font color="#555555">014 </font>    <font color="#0000FF">"September"</font>, <font color="#0000FF">"Oktober"</font>, <font color="#0000FF">"November"</font>, <font color="#0000FF">"Dezember"</font>
+<font color="#555555">015 </font>  };
+<font color="#555555">016 </font>
+<font color="#555555">017 </font>  <font color="#0000AA">public</font> Listing3601()
+<font color="#555555">018 </font>  {
+<font color="#555555">019 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Mein erstes Swing-Programm"</font>);
+<font color="#555555">020 </font>    <font color="#00AA00">//Panel zur Namenseingabe hinzuf&uuml;gen</font>
+<font color="#555555">021 </font>    JPanel namePanel = <font color="#0000AA">new</font> JPanel();
+<font color="#555555">022 </font>    JLabel label = <font color="#0000AA">new</font> JLabel(
+<font color="#555555">023 </font>      <font color="#0000FF">"Name:"</font>,
+<font color="#555555">024 </font>      <font color="#0000AA">new</font> ImageIcon(<font color="#0000FF">"triblue.gif"</font>), <a name="swingerstbeispiel.b"></a>
+<font color="#555555">025 </font>      SwingConstants.LEFT
+<font color="#555555">026 </font>    );
+<font color="#555555">027 </font>    namePanel.add(label);
+<font color="#555555">028 </font>    JTextField tf = <font color="#0000AA">new</font> JTextField(30);
+<font color="#555555">029 </font>    tf.setToolTipText(<font color="#0000FF">"Geben Sie ihren Namen ein"</font>);
+<font color="#555555">030 </font>    namePanel.add(tf);
+<font color="#555555">031 </font>    namePanel.setBorder(BorderFactory.createEtchedBorder()); <a name="swingerstbeispiel.c"></a>
+<font color="#555555">032 </font>    getContentPane().add(namePanel, BorderLayout.NORTH); <a name="swingerstbeispiel.a"></a>
+<font color="#555555">033 </font>    <font color="#00AA00">//Monatsliste hinzuf&uuml;gen</font>
+<font color="#555555">034 </font>    JList&lt;String&gt; list = <font color="#0000AA">new</font> JList&lt;String&gt;(MONTHS);
+<font color="#555555">035 </font>    list.setToolTipText(<font color="#0000FF">"W&auml;hlen Sie ihren Geburtsmonat aus"</font>);
+<font color="#555555">036 </font>    getContentPane().add(<font color="#0000AA">new</font> JScrollPane(list), BorderLayout.CENTER); <a name="swingerstbeispiel.e"></a>
+<font color="#555555">037 </font>    <font color="#00AA00">//Panel mit den Buttons hinzuf&uuml;gen</font>
+<font color="#555555">038 </font>    JPanel buttonPanel = <font color="#0000AA">new</font> JPanel();
+<font color="#555555">039 </font>    JButton button1 = <font color="#0000AA">new</font> JButton(<font color="#0000FF">"Metal"</font>);
+<font color="#555555">040 </font>    button1.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">041 </font>    button1.setToolTipText(<font color="#0000FF">"Metal-Look-and-Feel aktivieren"</font>);
+<font color="#555555">042 </font>    buttonPanel.add(button1);
+<font color="#555555">043 </font>    JButton button2 = <font color="#0000AA">new</font> JButton(<font color="#0000FF">"Motif"</font>);
+<font color="#555555">044 </font>    button2.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">045 </font>    button2.setToolTipText(<font color="#0000FF">"Motif-Look-and-Feel aktivieren"</font>);
+<font color="#555555">046 </font>    buttonPanel.add(button2);
+<font color="#555555">047 </font>    JButton button3 = <font color="#0000AA">new</font> JButton(<font color="#0000FF">"Windows"</font>);
+<font color="#555555">048 </font>    button3.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">049 </font>    button3.setToolTipText(<font color="#0000FF">"Windows-Look-and-Feel aktivieren"</font>);
+<font color="#555555">050 </font>    buttonPanel.add(button3);
+<font color="#555555">051 </font>    JButton button4 = <font color="#0000AA">new</font> JButton(<font color="#0000FF">"Nimbus"</font>);
+<font color="#555555">052 </font>    button4.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">053 </font>    button4.setToolTipText(<font color="#0000FF">"Nimbus-Look-and-Feel aktivieren"</font>);
+<font color="#555555">054 </font>    buttonPanel.add(button4);
+<font color="#555555">055 </font>    buttonPanel.setBorder(BorderFactory.createEtchedBorder()); <a name="swingerstbeispiel.d"></a>
+<font color="#555555">056 </font>    getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+<font color="#555555">057 </font>    <font color="#00AA00">//Windows-Listener</font>
+<font color="#555555">058 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">059 </font>  }
+<font color="#555555">060 </font>
+<font color="#555555">061 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> actionPerformed(ActionEvent event)
+<font color="#555555">062 </font>  {
+<font color="#555555">063 </font>    String cmd = event.getActionCommand();
+<font color="#555555">064 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">065 </font>      <font color="#00AA00">//PLAF-Klasse ausw&auml;hlen <a name="swingerstbeispiel.f"></a></font>
+<font color="#555555">066 </font>      String plaf = <font color="#0000FF">"unknown"</font>;
+<font color="#555555">067 </font>      <font color="#0000AA">if</font> (cmd.equals(<font color="#0000FF">"Metal"</font>)) {
+<font color="#555555">068 </font>        plaf = <font color="#0000FF">"javax.swing.plaf.metal.MetalLookAndFeel"</font>;
+<font color="#555555">069 </font>      } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (cmd.equals(<font color="#0000FF">"Motif"</font>)) {
+<font color="#555555">070 </font>        plaf = <font color="#0000FF">"com.sun.java.swing.plaf.motif.MotifLookAndFeel"</font>;
+<font color="#555555">071 </font>      } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (cmd.equals(<font color="#0000FF">"Windows"</font>)) {
+<font color="#555555">072 </font>        plaf = <font color="#0000FF">"com.sun.java.swing.plaf.windows.WindowsLookAndFeel"</font>;
+<font color="#555555">073 </font>      } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (cmd.equals(<font color="#0000FF">"Nimbus"</font>)) {
+<font color="#555555">074 </font>        plaf = <font color="#0000FF">"javax.swing.plaf.nimbus.NimbusLookAndFeel"</font>;
+<font color="#555555">075 </font>      }
+<font color="#555555">076 </font>      <font color="#00AA00">//LAF umschalten</font>
+<font color="#555555">077 </font>      UIManager.setLookAndFeel(plaf);
+<font color="#555555">078 </font>      SwingUtilities.updateComponentTreeUI(<font color="#006699">this</font>);
+<font color="#555555">079 </font>    } <font color="#0000AA">catch</font> (UnsupportedLookAndFeelException e) {
+<font color="#555555">080 </font>      System.err.println(e.toString());
+<font color="#555555">081 </font>    } <font color="#0000AA">catch</font> (ClassNotFoundException e) {
+<font color="#555555">082 </font>      System.err.println(e.toString());
+<font color="#555555">083 </font>    } <font color="#0000AA">catch</font> (InstantiationException e) {
+<font color="#555555">084 </font>      System.err.println(e.toString());
+<font color="#555555">085 </font>    } <font color="#0000AA">catch</font> (IllegalAccessException e) {
+<font color="#555555">086 </font>      System.err.println(e.toString());
+<font color="#555555">087 </font>    }
+<font color="#555555">088 </font>  }
+<font color="#555555">089 </font>
+<font color="#555555">090 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">091 </font>  {
+<font color="#555555">092 </font>    Listing3601 frame = <font color="#0000AA">new</font> Listing3601();
+<font color="#555555">093 </font>    frame.setLocation(100, 100);
+<font color="#555555">094 </font>    frame.pack();
+<font color="#555555">095 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">096 </font>  }
+<font color="#555555">097 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3601.java"><font color="#000055" size=-1>Listing3601.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 36.1: Ein einfaches Swing-Beispielprogramm</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+In vielen Beispielen in diesem Buch wird der Einfachheit halber die
+in <a href="k100159.html#fensterschliessen">Abschnitt 24.2.4</a> vorgestellte
+Klasse <a href="index_w.html#ixb100136"><font color=#000080><tt>WindowClosingAdapter</tt></font></a>
+verwendet, um einen Listener zum Schlie&szlig;en des Fensters zu registrieren.
+Damit ein solches Beispiel sich kompilieren l&auml;sst, muss die Datei
+<font color="#660099">WindowClosingAdapter.java</font> im aktuellen
+Verzeichnis vorhanden sein. Sie befindet sich auf der DVD zum Buch
+oder in <a href="k100159.html#windowclosingadapter">Listing 24.2</a>.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#FF9900"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#FF9900"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Das im obigen Listing verwendete Nimbus-Look-and-Feel gilt als Neuerung
+der Version 7. Tats&auml;chlich wird das Nimbus-Look-and-Feel bereits
+seit der Version 6 Update 10 ausgeliefert. Allerdings finden Sie die
+Look-and-Feel-Klasse in Version 6 unter <font color="#000077"><tt>com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel</tt></font>.
+</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#FF9900">
+<tr>
+<td><font color="#FFFFFF">&nbsp;JDK6.0-7.0&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#FF9900"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id036002002001"></a>
+<h4>Die import-Anweisungen </h4>
+
+<p>
+Obwohl alle Swing-Komponenten in <a name="ixa102369"><a href="index_j.html#ixb100200"><font color=#000080><tt>javax.swing</tt></font></a></a>
+und seinen Unterpaketen stecken, ben&ouml;tigen wir in diesem Beispiel
+den Import des Pakets <a href="index_j.html#ixb100198"><font color=#000080><tt>java.awt</tt></font></a>.
+
+<p>
+Neben den Dialogelementen gibt es andere Klassen aus <a href="index_j.html#ixb100198"><font color=#000080><tt>java.awt</tt></font></a>,
+die h&auml;ufig auch in Swing-Programmen ben&ouml;tigt werden, etwa
+die Layoutmanager, <a href="index_c.html#ixb101244"><font color=#000080><tt>Color</tt></font></a>-
+oder <a href="index_f.html#ixb101206"><font color=#000080><tt>Font</tt></font></a>-Objekte
+oder die Klasse <a href="index_g.html#ixb101156"><font color=#000080><tt>Graphics</tt></font></a>.
+
+<p>
+Das Paket <a href="index_j.html#ixb100199"><font color=#000080><tt>java.awt.event</tt></font></a>
+wird regelm&auml;&szlig;ig auch in Swing-Programmen ben&ouml;tigt,
+denn es enth&auml;lt die Klassen f&uuml;r das Versenden von Events
+und Registrieren von Event-Handlern. Diese werden in Swing-Programmen
+in der gleichen Art und Weise ben&ouml;tigt wie in AWT-Programmen.
+
+
+<!-- Section -->
+<a name="sectlevel4id036002002002"></a>
+<h4>JFrame </h4>
+
+<p>
+Das Hauptfenster unserer Anwendung ist aus der Klasse <a name="ixa102370"><a href="index_j.html#ixb100513"><font color=#000080><tt>JFrame</tt></font></a></a>
+abgeleitet, die ihrerseits aus <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>
+abgeleitet ist. <a href="index_j.html#ixb100513"><font color=#000080><tt>JFrame</tt></font></a>
+ist eine der vier Klassen, mit denen in Swing Hauptfenster erzeugt
+werden k&ouml;nnen (<a name="ixa102371"><a href="index_j.html#ixb101773"><font color=#000080><tt>JDialog</tt></font></a></a>,
+<a name="ixa102372"><a href="index_j.html#ixb101774"><font color=#000080><tt>JWindow</tt></font></a></a>
+und <a name="ixa102373"><a href="index_j.html#ixb101775"><font color=#000080><tt>JApplet</tt></font></a></a>
+sind die anderen drei). <a href="index_j.html#ixb100513"><font color=#000080><tt>JFrame</tt></font></a>
+hat &auml;hnliche Eigenschaften wie <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>
+und wird auch &auml;hnlich programmiert wie diese. Beide unterscheiden
+sich jedoch in einem bedeutenden Punkt voneinander. 
+
+<p>
+In <a href="k100238.html#swingerstbeispiel.a">Zeile 032</a> ist zu
+sehen, dass eine Komponente nicht einfach mit <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+auf dem Fenster platziert wird. Stattdessen wird zun&auml;chst eine
+Methode <a name="ixa102374"><a href="index_g.html#ixb101776"><font color=#000080><tt>getContentPane</tt></font></a></a>
+aufgerufen und erst auf dem von ihr zur&uuml;ckgegebenen Container
+wird das Dialogelement mit <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+platziert. Diese - auf den ersten Blick umst&auml;ndliche - Vorgehensweise
+ist allen Swing-Hauptfenstern gemein und wird durch deren innere Struktur
+verursacht. Der eigentliche Container mit den sichtbaren Dialogelementen
+(die <a name="ixa102375"><i>ContentPane</i></a>) ist n&auml;mlich
+Bestandteil einer ganzen Reihe geschachtelter Komponenten, in denen
+die &uuml;brigen Bestandteile des Fensters (etwa dessen Men&uuml;)
+untergebracht sind. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Neben <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+durften in fr&uuml;heren JDKs auch die Methoden <a href="index_s.html#ixb101538"><font color=#000080><tt>setLayout</tt></font></a>
+und <a href="index_r.html#ixb100739"><font color=#000080><tt>remove</tt></font></a>
+nicht direkt auf dem Hauptfenster aufgerufen werden. 
+
+<p>
+Weil es immer wieder zu Missverst&auml;ndnissen kam, entschied man
+sich mit Version 5 des JDK, diese Methoden am <a href="index_j.html#ixb100513"><font color=#000080><tt>JFrame</tt></font></a>
+zu &uuml;berschreiben und den Aufruf an die <a name="ixa102376"><a href="index_c.html#ixb101778"><font color=#000080><tt>ContentPane</tt></font></a></a>
+zu delegieren. 
+
+<p>
+In den neuen JDKs k&ouml;nnen Sie <a href="k100238.html#swingerstbeispiel.a">Zeile 032</a>
+daher kurz so schreiben:
+<font color="#000077">
+<pre>
+add(namePanel, BorderLayout.NORTH); 
+</pre>
+</font>
+
+<p>
+Die &#187;alte Schreibweise&#171; ist nat&uuml;rlich weiterhin erlaubt
+und auch noch recht weit verbreitet. </td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id036002002003"></a>
+<h4>JPanel </h4>
+
+<p>
+Die Buttonleiste und das Label mit seinem Textfeld werden im Beispielprogramm
+auf einem <a name="ixa102377"><a href="index_j.html#ixb101779"><font color=#000080><tt>JPanel</tt></font></a></a>
+platziert. <a href="index_j.html#ixb101779"><font color=#000080><tt>JPanel</tt></font></a>
+ist das Swing-Pendant zu <a href="index_p.html#ixb101295"><font color=#000080><tt>Panel</tt></font></a>
+und dient wie dieses dazu, eine Reihe von Dialogelementen unter Kontrolle
+eines eigenen Layoutmanagers anzuordnen. Anders als bei den Hauptfenstern
+gibt es hier keine <i>ContentPane</i>, sondern die Dialogelemente
+und der Layoutmanager werden dem Panel direkt zugewiesen. Die Bedienung
+eines <a href="index_j.html#ixb101779"><font color=#000080><tt>JPanel</tt></font></a>
+entspricht fast vollst&auml;ndig der eines <a href="index_p.html#ixb101295"><font color=#000080><tt>Panel</tt></font></a>.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Vaterklasse von <a href="index_j.html#ixb101779"><font color=#000080><tt>JPanel</tt></font></a>
+ist <a name="ixa102378"><a href="index_j.html#ixb101780"><font color=#000080><tt>JComponent</tt></font></a></a>.
+Sie wird - mit Ausnahme der Hauptfenster - als Basisklasse f&uuml;r
+praktisch alle Swing-Komponenten verwendet. <a href="index_j.html#ixb101780"><font color=#000080><tt>JComponent</tt></font></a>
+ist direkt aus <a href="index_c.html#ixb101294"><font color=#000080><tt>Container</tt></font></a>
+abgeleitet und besitzt daher alle Eigenschaften der Klassen <a href="index_c.html#ixb101293"><font color=#000080><tt>Component</tt></font></a>
+und <a href="index_c.html#ixb101294"><font color=#000080><tt>Container</tt></font></a>.
+Die technische Unterscheidung zwischen Dialogelementen mit bzw. ohne
+Unterelemente wurde damit in Swing fallengelassen. Dennoch ist ein
+Button im praktischen Sinne nat&uuml;rlich nach wie vor ein <i>elementares</i>
+Dialogelement und es gibt keine sinnvolle M&ouml;glichkeit, weitere
+Dialogelemente darauf zu platzieren.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id036002002004"></a>
+<h4>JLabel </h4>
+
+<p>
+Ein <a name="ixa102379"><a href="index_j.html#ixb101781"><font color=#000080><tt>JLabel</tt></font></a></a>
+ist ein Dialogelement zur Anzeige eines (meist unver&auml;nderlichen)
+Textes. Es wird im Beispielprogramm verwendet, um das Textfeld im
+oberen Teil des Fensters zu beschriften. Im Gegensatz zu einem <a href="index_l.html#ixb101584"><font color=#000080><tt>Label</tt></font></a>
+kann ein <a href="index_j.html#ixb101781"><font color=#000080><tt>JLabel</tt></font></a>
+zus&auml;tzlich ein Icon enthalten. Im Beispielprogramm wird es in
+<a href="k100238.html#swingerstbeispiel.b">Zeile 024</a> direkt an
+den Konstruktor der Klasse &uuml;bergeben. Auf diese Weise ist es
+sehr einfach m&ouml;glich, zus&auml;tzliche grafische Elemente in
+Swing-Dialogen zu platzieren. 
+
+<!-- Section -->
+
+<a name="sectlevel4id036002002005"></a>
+<h4>JTextField </h4>
+
+<p>
+Ein <a href="index_j.html#ixb101782"><font color=#000080><tt>JTextField</tt></font></a>
+repr&auml;sentiert ein einzeiliges Eingabefeld f&uuml;r Textdaten.
+F&uuml;r einfache Anwendungsf&auml;lle entspricht seine Bedienung
+der Klasse <a href="index_t.html#ixb101412"><font color=#000080><tt>TextField</tt></font></a>.
+Unser Beispiel verwendet es zur Eingabe eines Namens. Zur verdeckten
+Eingabe von Passw&ouml;rtern eignet sich die aus <a href="index_j.html#ixb101782"><font color=#000080><tt>JTextField</tt></font></a>
+abgeleitete Klasse <a name="ixa102380"><a href="index_j.html#ixb101783"><font color=#000080><tt>JPasswordField</tt></font></a></a>.
+Sie entspricht einem <a href="index_t.html#ixb101412"><font color=#000080><tt>TextField</tt></font></a>
+nach Aufruf von <a name="ixa102381"><a href="index_s.html#ixb101606"><font color=#000080><tt>setEchoCharacter</tt></font></a></a>.
+
+
+<!-- Section -->
+<a name="sectlevel4id036002002006"></a>
+<h4><a name="ixa102382">Tooltips</a> und <a name="ixa102383">Umrandungen</a>
+</h4>
+
+<p>
+Einige der Dialogelemente im Beispielprogramm enthalten einen Tooltip-Text.
+Dieser wird angezeigt, wenn die Maus &uuml;ber das Dialogelement bewegt
+und dort gehalten wird. Ein Tooltip sollte zus&auml;tzliche Informationen
+geben, die dem unerfahrenen Anwender eine Hilfe bei der Bedienung
+des Programms sind. Tooltips werden mit der Methode <a name="ixa102384"><a href="index_s.html#ixb101785"><font color=#000080><tt>setToolTipText</tt></font></a></a>
+definiert, die alle aus <a href="index_j.html#ixb101780"><font color=#000080><tt>JComponent</tt></font></a>
+abgeleiteten Komponenten besitzen. 
+
+<p>
+Eine andere F&auml;higkeit, die ebenfalls bereits in der Klasse <a href="index_j.html#ixb101780"><font color=#000080><tt>JComponent</tt></font></a>
+realisiert wurde, besteht darin, beliebigen Komponenten eine Umrandung
+zuweisen zu k&ouml;nnen. Das Beispielprogramm versieht seine beiden
+Panels mit einem eingelassenen Rahmen (<a href="k100238.html#swingerstbeispiel.c">Zeile 031</a>
+und <a href="k100238.html#swingerstbeispiel.d">Zeile 055</a>). Dazu
+ist lediglich ein Aufruf der Methode <a name="ixa102385"><a href="index_s.html#ixb101786"><font color=#000080><tt>setBorder</tt></font></a></a>
+mit &Uuml;bergabe einer Instanz der Klasse <a name="ixa102386"><a href="index_b.html#ixb101787"><font color=#000080><tt>Border</tt></font></a></a>
+erforderlich. Diese wird meist mit Hilfe einer der <font color="#000077"><tt>create</tt></font>-Methoden
+der Klasse <a name="ixa102387"><a href="index_b.html#ixb101788"><font color=#000080><tt>BorderFactory</tt></font></a></a>
+erzeugt. 
+
+<!-- Section -->
+
+<a name="sectlevel4id036002002007"></a>
+<h4>JList und JScrollPane </h4>
+
+<p>
+Eine <a name="ixa102388"><a href="index_j.html#ixb101789"><font color=#000080><tt>JList</tt></font></a></a>
+ist eine Liste von Werten, von denen einer oder mehrere ausgew&auml;hlt
+werden k&ouml;nnen. Ihre Bedienung &auml;hnelt der aus dem AWT bekannten
+Klasse <a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>;
+ihre F&auml;higkeiten gehen aber &uuml;ber diese hinaus. <a href="index_j.html#ixb101789"><font color=#000080><tt>JList</tt></font></a>
+ist ein gutes Beispiel f&uuml;r die Aufteilung der Swing-Komponenten
+in Benutzerschnittstelle und Model. Anstatt - wie in unserem Beispiel
+- einfach ein Array von festen Werten an den Konstruktor zu &uuml;bergeben,
+k&ouml;nnen mit Hilfe eines Listenmodells (repr&auml;sentiert durch
+eine Instanz der Klasse <a name="ixa102389"><a href="index_l.html#ixb101790"><font color=#000080><tt>ListModel</tt></font></a></a>)
+sehr komplexe und dynamische Datenstrukturen in der Liste pr&auml;sentiert
+werden. Auch die Benutzeroberfl&auml;che ist ver&auml;nderbar. Mit
+Hilfe eigener &#187;Renderer&#171; k&ouml;nnen neben einfachen Texten
+beispielsweise auch Grafiken oder andere Objekte angezeigt werden.
+
+<p>
+In <a href="k100238.html#swingerstbeispiel.e">Zeile 036</a> kann man
+noch eine Besonderheit sehen. Eine <a href="index_j.html#ixb101789"><font color=#000080><tt>JList</tt></font></a>
+bietet standardm&auml;&szlig;ig keine M&ouml;glichkeit zum Scrollen
+ihres Inhalts. Wird sie ohne weitere Ma&szlig;nahmen auf dem Panel
+platziert, k&ouml;nnen nur Elemente aus dem sichtbaren Bereich ausgew&auml;hlt
+werden. Dieses Eigenschaft teilt sie mit anderen komplexen Swing-Elementen.
+Gl&uuml;cklicherweise gibt es eine einfache L&ouml;sung f&uuml;r dieses
+Problem. Die Liste ist n&auml;mlich lediglich in eine <a name="ixa102390"><a href="index_j.html#ixb101791"><font color=#000080><tt>JScrollPane</tt></font></a></a>
+einzubetten, die an ihrer Stelle auf dem Dialog platziert wird. Dieses
+vielseitige Dialogelement versieht Dialogelemente, die mehr Platz
+ben&ouml;tigen, als auf dem Bildschirm zur Verf&uuml;gung steht, mit
+Schiebereglern und k&uuml;mmert sich um alle Details des Scrollens
+der Daten. 
+
+<!-- Section -->
+
+<a name="sectlevel4id036002002008"></a>
+<h4>JButton </h4>
+
+<p>
+Als letztes Dialogelement in unserem Beispiel wird die Klasse <a name="ixa102391"><a href="index_j.html#ixb101792"><font color=#000080><tt>JButton</tt></font></a></a>
+verwendet. Sie dient zur Darstellung von Schaltfl&auml;chen und erbt
+die meisten Eigenschaften aus ihrer Vaterklasse <a name="ixa102392"><a href="index_a.html#ixb101793"><font color=#000080><tt>AbstractButton</tt></font></a></a>
+(die ihre Eigenschaften &uuml;brigens auch an Men&uuml;eintr&auml;ge
+vererbt). Wie im Programm zu sehen, entsprechen die Grundlagen der
+Bedienung von <a href="index_j.html#ixb101792"><font color=#000080><tt>JButton</tt></font></a>
+denen der Klasse <a href="index_b.html#ixb101410"><font color=#000080><tt>Button</tt></font></a>.
+
+
+<!-- Section -->
+<a name="sectlevel4id036002002009"></a>
+<h4>Umschalten des Look-and-Feel <a name="ixa102393"></a> </h4>
+
+<p>
+Wie in <a href="k100237.html#swingeigenschaften">Abschnitt 36.1.2</a>
+erw&auml;hnt, kann das Look-and-Feel von Swing-Programmen zur Laufzeit
+umgeschaltet werden. Im Beispielprogramm ist das ab <a href="k100238.html#swingerstbeispiel.f">Zeile 065</a>
+zu sehen. Abh&auml;ngig davon, welcher Button gedr&uuml;ckt wurde,
+wird der Variablen <font color="#000077"><tt>plaf</tt></font> der
+Klassenname einer Look-and-Feel-Implementierung zugewiesen. Durch
+Aufruf der Methode <a name="ixa102394"><a href="index_s.html#ixb101794"><font color=#000080><tt>setLookAndFeel</tt></font></a></a>
+wird der <a name="ixa102395"><a href="index_u.html#ixb101795"><font color=#000080><tt>UIManager</tt></font></a></a>
+angewiesen, das Look-and-Feel umzuschalten. Damit die &Auml;nderungen
+auch bei bereits auf dem Bildschirm befindlichen Dialogelementen sichtbar
+werden, wird anschlie&szlig;end durch Aufruf von <a name="ixa102396"><a href="index_u.html#ixb101796"><font color=#000080><tt>updateComponentTreeUI</tt></font></a></a>
+der Klasse <a name="ixa102397"><a href="index_s.html#ixb101797"><font color=#000080><tt>SwingUtilities</tt></font></a></a>
+der gesamte Dialog neu dargestellt. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Schl&auml;gt der Aufruf von <a href="index_s.html#ixb101794"><font color=#000080><tt>setLookAndFeel</tt></font></a>
+fehl (was je nach Plattform durchaus passieren kann), l&ouml;st die
+Methode eine Ausnahme des Typs <a name="ixa102398"><a href="index_u.html#ixb101798"><font color=#000080><tt>UnsupportedLookAndFeelException</tt></font></a></a>
+oder eine der Instanzierungsausnahmen aus. Das Programm sollte diese
+Ausnahme abfangen, das bestehende Look-and-Feel aktiviert lassen und
+den Anwender dar&uuml;ber in Kenntnis setzen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100236.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100237.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100239.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100240.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

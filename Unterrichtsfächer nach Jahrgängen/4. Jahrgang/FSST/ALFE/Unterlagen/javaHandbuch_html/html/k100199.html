@@ -1,0 +1,264 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100193.html;106,k100198.html;107,k100200.html;108,k100202.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100193.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100198.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100200.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100202.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 30 - Men&uuml;s
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="kontextmenues"></a>
+<h2>30.6 <a name="ixa101979">Kontextmen&uuml;s</a> <a name="ixa101980"></a>
+</h2>
+<hr>
+<ul>
+<li><a href="k100199.html#kontextmenues">30.6 Kontextmen&uuml;s </a>
+</ul>
+<hr>
+
+<p>
+Ein wichtiger Bestandteil grafischer Oberfl&auml;chen sind die <i>Kontext</i>-
+oder <i>Popup-Men&uuml;s</i>. Sie liefern auf rechten Mausklick ein
+Men&uuml; mit den wichtigsten Aktionen, die innerhalb der ausgew&auml;hlten
+Komponente zur Verf&uuml;gung stehen. Auf diese Weise steht eine Vielzahl
+von Funktionen dort zur Verf&uuml;gung, wo sie ben&ouml;tigt wird,
+anstatt umst&auml;ndlich aus dem Hauptmen&uuml; des Programms ausgew&auml;hlt
+oder per Kommando eingegeben werden zu m&uuml;ssen. 
+
+<p>
+Auch im AWT gibt es Kontextmen&uuml;s, die so funktionieren. Sie werden
+durch die Klasse <a name="ixa101981"><a href="index_p.html#ixb101516"><font color=#000080><tt>PopupMenu</tt></font></a></a>,
+die aus <a href="index_m.html#ixb101494"><font color=#000080><tt>Menu</tt></font></a>
+abgeleitet ist, implementiert. <a href="index_p.html#ixb101516"><font color=#000080><tt>PopupMenu</tt></font></a>
+ist genauso zu bedienen wie <a href="index_m.html#ixb101494"><font color=#000080><tt>Menu</tt></font></a>
+und wird daher vor allem mittels geeigneter Aufrufe von <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+mit Men&uuml;eintr&auml;gen best&uuml;ckt. Diesen kann ein <a href="index_a.html#ixb101408"><font color=#000080><tt>ActionListener</tt></font></a>
+zugeordnet werden, der bei Ausl&ouml;sen des Men&uuml;punkts aufgerufen
+wird. Gegen&uuml;ber der Klasse <a href="index_m.html#ixb101494"><font color=#000080><tt>Menu</tt></font></a>
+besitzt <a href="index_p.html#ixb101516"><font color=#000080><tt>PopupMenu</tt></font></a>
+eine zus&auml;tzliche Methode <a name="ixa101982"><a href="index_s.html#ixb101517"><font color=#000080><tt>show</tt></font></a></a>,
+mit der das Kontextmen&uuml; angezeigt wird:
+
+<p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void show(Component origin, int x, int y)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/PopupMenu.html" onClick="this.href=getApiDoc('java.awt.PopupMenu')"><font color="#660066" size=-1>java.awt.PopupMenu</font></a></td>
+</tr>
+</table>
+
+<p>
+Der erste Parameter <font color="#000077"><tt>origin</tt></font> ist
+die Komponente, an die das Kontextmen&uuml; gebunden wird. Diese Komponente
+hat lediglich administrative Aufgaben, spielt aber beim Aufruf des
+Kontextmen&uuml;s keine Rolle. Die Argumente <font color="#000077"><tt>x</tt></font>
+und <font color="#000077"><tt>y</tt></font> geben die Position des
+Kontextmen&uuml;s relativ zum Ursprung von <font color="#000077"><tt>origin</tt></font>
+an. 
+
+<p>
+Um ein Kontextmen&uuml; aufzurufen, sind mehrere Dinge zu tun. Zun&auml;chst
+muss das instanzierte Kontextmen&uuml; durch Aufruf von <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+an die Komponente gebunden werden, die auf Mausereignisse f&uuml;r
+den Aufruf reagieren soll. Dies kann beispielsweise das Fenster sein,
+in dem die Komponente untergebracht ist, oder die Komponente selbst.
+Anschlie&szlig;end muss in der Komponente durch Aufruf von <a name="ixa101983"><a href="index_e.html#ixb101439"><font color=#000080><tt>enableEvents</tt></font></a></a>
+die Behandlung von Maus-Events freigeschaltet werden. Drittens muss
+die Methode <a name="ixa101984"><a href="index_p.html#ixb101438"><font color=#000080><tt>processMouseEvent</tt></font></a></a>
+&uuml;berlagert werden und es muss bei jedem Mausereignis mit <a name="ixa101985"><a href="index_i.html#ixb101455"><font color=#000080><tt>isPopupTrigger</tt></font></a></a>
+abgefragt werden, ob es sich um das Ereignis zum Aufruf des Kontextmen&uuml;s
+handelte. In diesem Fall kann das Kontextmen&uuml; durch Aufruf von
+<a href="index_s.html#ixb101517"><font color=#000080><tt>show</tt></font></a>
+angezeigt werden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Kontextmen&uuml;s sind von Plattform zu Plattform leicht unterschiedlich
+implementiert und insbesondere die Art des Aufrufs unterscheidet sich
+voneinander (zweite oder dritte Maustaste, Aufruf beim Dr&uuml;cken
+oder Loslassen usw.). Um das Look-and-Feel des jeweiligen Systems
+beizubehalten, sollte <a href="index_p.html#ixb101438"><font color=#000080><tt>processMouseEvent</tt></font></a>
+&uuml;berlagert werden, um bei <i>jeder</i> Art von Mausereignis feststellen
+zu k&ouml;nnen, ob der PopupMenu-Trigger ausgel&ouml;st wurde. Der
+einfache Aufruf von <a href="index_s.html#ixb101517"><font color=#000080><tt>show</tt></font></a>
+aus einem <a href="index_m.html#ixb101359"><font color=#000080><tt>mousePressed</tt></font></a>-
+oder <a href="index_m.html#ixb101360"><font color=#000080><tt>mouseReleased</tt></font></a>-Ereignis
+heraus ist nicht portabel und sollte daher vermieden werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Das folgende Beispiel zeigt ein Programm mit einem Kontextmen&uuml;,
+das die Punkte &#187;R&uuml;ckg&auml;ngig&#171;, &#187;Ausschneiden&#171;,
+&#187;Kopieren&#171; und &#187;Einf&uuml;gen&#171; enth&auml;lt. Das
+Kontextmen&uuml; wird an das Hauptfenster geh&auml;ngt und von Mausereignissen
+dieses Fensters aufgerufen. Beim Ausl&ouml;sen einer Option des Kontextmen&uuml;s
+wird eine entsprechende Meldung auf die Systemkonsole geschrieben.
+<a name="listingid030006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3006.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">class</font> MyPopupMenu
+<font color="#555555">007 </font><font color="#0000AA">extends</font> PopupMenu
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> MyPopupMenu(ActionListener listener)
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    MenuItem mi;
+<font color="#555555">012 </font>
+<font color="#555555">013 </font>    mi = <font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Rueckgaengig"</font>);
+<font color="#555555">014 </font>    mi.addActionListener(listener);
+<font color="#555555">015 </font>    add(mi);
+<font color="#555555">016 </font>
+<font color="#555555">017 </font>    addSeparator();
+<font color="#555555">018 </font>
+<font color="#555555">019 </font>    mi = <font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Ausschneiden"</font>);
+<font color="#555555">020 </font>    mi.addActionListener(listener);
+<font color="#555555">021 </font>    add(mi);
+<font color="#555555">022 </font>
+<font color="#555555">023 </font>    mi = <font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Kopieren"</font>);
+<font color="#555555">024 </font>    mi.addActionListener(listener);
+<font color="#555555">025 </font>    add(mi);
+<font color="#555555">026 </font>
+<font color="#555555">027 </font>    mi = <font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Einfuegen"</font>);
+<font color="#555555">028 </font>    mi.addActionListener(listener);
+<font color="#555555">029 </font>    add(mi);
+<font color="#555555">030 </font>  }
+<font color="#555555">031 </font>}
+<font color="#555555">032 </font>
+<font color="#555555">033 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3006
+<font color="#555555">034 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">035 </font><font color="#0000AA">implements</font> ActionListener
+<font color="#555555">036 </font>{
+<font color="#555555">037 </font>  MyPopupMenu popup;
+<font color="#555555">038 </font>
+<font color="#555555">039 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">040 </font>  {
+<font color="#555555">041 </font>    Listing3006 wnd = <font color="#0000AA">new</font> Listing3006();
+<font color="#555555">042 </font>  }
+<font color="#555555">043 </font>
+<font color="#555555">044 </font>  <font color="#0000AA">public</font> Listing3006()
+<font color="#555555">045 </font>  {
+<font color="#555555">046 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Kontextmen&uuml;"</font>);
+<font color="#555555">047 </font>    setLocation(100,100);
+<font color="#555555">048 </font>    setSize(300,200);
+<font color="#555555">049 </font>    setVisible(<font color="#006699">true</font>);
+<font color="#555555">050 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">051 </font>    <font color="#00AA00">//Kontextmen&uuml; erzeugen und aktivieren</font>
+<font color="#555555">052 </font>    popup = <font color="#0000AA">new</font> MyPopupMenu(<font color="#006699">this</font>);
+<font color="#555555">053 </font>    add(popup);
+<font color="#555555">054 </font>    enableEvents(AWTEvent.MOUSE_EVENT_MASK);
+<font color="#555555">055 </font>  }
+<font color="#555555">056 </font>
+<font color="#555555">057 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> processMouseEvent(MouseEvent event)
+<font color="#555555">058 </font>  {
+<font color="#555555">059 </font>    <font color="#0000AA">if</font> (event.isPopupTrigger()) {
+<font color="#555555">060 </font>      popup.show(
+<font color="#555555">061 </font>        event.getComponent(),
+<font color="#555555">062 </font>        event.getX(),
+<font color="#555555">063 </font>        event.getY()
+<font color="#555555">064 </font>      );
+<font color="#555555">065 </font>    }
+<font color="#555555">066 </font>    <font color="#006699">super</font>.processMouseEvent(event);
+<font color="#555555">067 </font>  }
+<font color="#555555">068 </font>
+<font color="#555555">069 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> actionPerformed(ActionEvent event)
+<font color="#555555">070 </font>  {
+<font color="#555555">071 </font>    System.out.println(event.getActionCommand());
+<font color="#555555">072 </font>  }
+<font color="#555555">073 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3006.java"><font color="#000055" size=-1>Listing3006.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 30.6: Einbinden eines Kontextmen&uuml;s im AWT</i></p>
+
+<p>
+<a href="k100199.html#aufrufkontextmenue">Abbildung 30.4</a> zeigt
+den Aufruf des Kontextmen&uuml;s: 
+<p>
+<a name="aufrufkontextmenue"></a>
+<img src="images/KontextMenue.gif">
+<p>
+
+<p><i>
+Abbildung 30.4: Aufruf eines Kontextmen&uuml;s</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100193.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100198.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100200.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100202.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100274.html;106,k100276.html;107,k100278.html;108,k100278.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100274.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100276.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100278.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100278.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 43 - XML-Verarbeitung
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id043003"></a>
+<h2>43.3 Zusammenfassung </h2>
+<hr>
+<ul>
+<li><a href="k100277.html#sectlevel2id043003">43.3 Zusammenfassung</a>
+</ul>
+<hr>
+
+<p>
+Wie wir oben gesehen haben, erm&ouml;glichen alle vier APIs das <i>Einlesen</i>
+von XML-Dokumenten. DOM, StAX und JAXB erm&ouml;glichen auch den R&uuml;ckweg,
+also das Erzeugen von XML-Dateien. In JAXB nennt sich dieser Vorgang
+Unmarshalling. 
+
+<p>
+SAX und StAX sind ereignisorientierte APIs. Sie ben&ouml;tigen nur
+wenig Hauptspeicher, weil sie das Dokument sequentiell durchlaufen
+und die Verarbeitung <i>w&auml;hrend</i> des Einlesens stattfindet.
+Mit ihnen lassen sich daher auch sehr gro&szlig;e Dokumente verarbeiten.
+
+<p>
+DOM und JAXB erstellen eine Repr&auml;sentation des XML-Dokuments
+im Hauptspeicher und sind daher f&uuml;r sehr gro&szlig;e XML-Dokumente
+gar nicht oder nicht besonders gut geeignet. 
+
+<p>
+DOM und JAXB erm&ouml;glichen eine wahlfreie Navigation im Dokument,
+die JAXB-Repr&auml;sentation ist zudem typsicher. DOM-B&auml;ume lassen
+sich mit XPath-Ausdr&uuml;cken deklarativ durchsuchen, sind aber nicht
+typsicher. SAX und StAX erm&ouml;glichen keine freie Navigation, sondern
+erlauben ohne eigenes Zutun nur den Zugriff auf die Informationen
+an der jeweils aktuellen Position im Dokument. 
+
+<p>
+Die SAX- und DOM-Implementationen des JDK sind optional validierend,
+die JDK-Implementation des StAX-Parser unterst&uuml;tzt das leider
+nicht. In der aktuellen JAXB-Implementation des JDK kann gegen XSDs,
+aber nicht gegen DTDs validiert werden. 
+
+<p>
+In diesem Kapitel wurden folgende Themen behandelt: 
+<ul>
+<li>Aufbau und Bestandteile eines XML-Dokuments 
+<ul>
+<li>Prolog 
+<li>Elemente 
+<li>Attribute 
+<li>Kommentare 
+</ul>
+<li>XML-Grammatiken mit Document Type Definitions (DTD)
+<li>XML-Grammatiken mit XML Schema Definitions (XSD)
+<li>Lesen von XML-Dokumenten mit Hilfe 
+<ul>
+<li>des Document Object Models (DOM) 
+<li>der Simple API for XML (SAX) 
+<li>der Streaming API for XML (StAX) 
+<li>der Java Architecture for XML Binding (JAXB) 
+</ul>
+</ul>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100274.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100276.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100278.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100278.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

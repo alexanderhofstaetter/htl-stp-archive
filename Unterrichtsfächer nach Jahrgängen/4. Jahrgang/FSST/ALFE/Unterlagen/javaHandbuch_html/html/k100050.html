@@ -1,0 +1,614 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100046.html;106,k100049.html;107,k100051.html;108,k100052.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100046.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100049.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100051.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100052.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 7 - Anweisungen
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id007004"></a>
+<h2>7.4 Sonstige Anweisungen </h2>
+<hr>
+<ul>
+<li><a href="k100050.html#sectlevel2id007004">7.4 Sonstige Anweisungen</a>
+<ul>
+<li><a href="k100050.html#assertanweisung">7.4.1 Die assert-Anweisung</a>
+<ul>
+<li><a href="k100050.html#sectlevel4id007004001001">Syntax</a>
+<li><a href="k100050.html#sectlevel4id007004001002">Bedeutung</a>
+<li><a href="k100050.html#sectlevel4id007004001003">An- und Abschalten der Assertions</a>
+<li><a href="k100050.html#sectlevel4id007004001004">Anwendungen</a>
+<li><a href="k100050.html#sectlevel4id007004001005">Nebeneffekte</a>
+<li><a href="k100050.html#sectlevel4id007004001006">Kompatibilit&auml;t</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="assertanweisung"></a>
+<h3>7.4.1 Die <a name="ixa100426">assert-Anweisung</a> </h3>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Ausf&uuml;hrungen in diesem Abschnitt k&ouml;nnen beim ersten
+Lesen &uuml;bersprungen werden. Bei der <a name="ixa100427"><a href="index_a.html#ixb100053"><font color=#000080><tt>assert</tt></font></a></a>-Anweisung
+handelt es sich um ein weiterf&uuml;hrendes Konzept, das seit dem
+JDK 1.4 zur Verf&uuml;gung steht. Neben einem grundlegenden Verst&auml;ndnis
+von Klassen und Methoden (ab <a href="k100052.html#kapiteloop1">Kapitel 8</a>)
+setzt es insbesondere Kenntnisse &uuml;ber das Ausl&ouml;sen und Behandeln
+von Ausnahmen voraus, die erst in <a href="k100084.html#kapitelexceptions">Kapitel 13</a>
+vermittelt werden. Aus systematischen Gr&uuml;nden soll das Thema
+jedoch an dieser Stelle behandelt werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id007004001001"></a>
+<h4>Syntax </h4>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+assert ausdruck1 [ : ausdruck2 ] ;
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id007004001002"></a>
+<h4>Bedeutung </h4>
+
+<p>
+Seit dem JDK 1.4 gibt es in Java eine <a href="index_a.html#ixb100053"><font color=#000080><tt>assert</tt></font></a>-Anweisung.
+Sie dient dazu, an einer bestimmten Stelle im Programmablauf einen
+logischen Ausdruck zu platzieren, von dem der Programmierer annimmt,
+dass er stets <i>wahr</i> ist, solange das Programm korrekt funktioniert.
+Ist das der Fall, f&auml;hrt das Programm mit der n&auml;chsten Anweisung
+fort, andernfalls wird eine Ausnahme des Typs <a name="ixa100428"><a href="index_a.html#ixb100370"><font color=#000080><tt>AssertionError</tt></font></a></a>
+ausgel&ouml;st. Ein solcher Ausdruck wird auch als <a name="ixa100429"><i>Invariante</i></a>
+bezeichnet, denn er bleibt unver&auml;ndert <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>,
+solange das Programm korrekt funktioniert. 
+
+<p>
+<i>Assertions</i>, wie <a href="index_a.html#ixb100053"><font color=#000080><tt>assert</tt></font></a>-Anweisungen
+vereinfachend genannt werden, dienen also dazu, bestimmte Annahmen
+&uuml;ber den Zustand des Programms zu verifizieren und sicherzustellen,
+dass diese eingehalten werden. Soll im Programm beispielsweise &uuml;berpr&uuml;ft
+werden, ob eine Variable <font color="#000077"><tt>x</tt></font> nichtnegativ
+ist, k&ouml;nnte dazu die folgende <a href="index_a.html#ixb100053"><font color=#000080><tt>assert</tt></font></a>-Anweisung
+verwendet werden: 
+<font color="#000077">
+<pre>
+assert x &gt;= 0;
+</pre>
+</font>
+
+<p>
+Das Programm &uuml;berpr&uuml;ft die Bedingung und f&auml;hrt fort,
+wenn sie erf&uuml;llt ist. Andernfalls wird eine Ausnahme ausgel&ouml;st.
+Nat&uuml;rlich h&auml;tte derselbe Test auch mit Hilfe einer einfachen
+<a href="index_i.html#ixb100074"><font color=#000080><tt>if</tt></font></a>-Anweisung
+ausgef&uuml;hrt werden k&ouml;nnen. Die <a href="index_a.html#ixb100053"><font color=#000080><tt>assert</tt></font></a>-Anweisung
+hat ihr gegen&uuml;ber jedoch einige Vorteile: 
+<ul>
+<li>Der Programmcode ist k&uuml;rzer.
+<li>Auf den ersten Blick ist zu erkennen, dass es sich um einen Korrektheits-Check
+handelt und nicht um eine Verzweigung zur Steuerung des Programmablaufs.
+<li>Assertions lassen sich zur Laufzeit wahlweise an- oder ausschalten.
+Im Gegensatz zu einer einfachen <a href="index_i.html#ixb100074"><font color=#000080><tt>if</tt></font></a>-Anweisung
+verursachen sie praktisch keine Verschlechterung des Laufzeitverhaltens,
+wenn sie deaktiviert sind.
+</ul>
+
+<p>
+Der im Syntaxdiagramm angegebene <font color="#000077"><tt>ausdruck1</tt></font>
+muss immer vom Typ <a href="index_b.html#ixb100071"><font color=#000080><tt>boolean</tt></font></a>
+sein, andernfalls gibt es einen Compilerfehler. Fehlt <font color="#000077"><tt>ausdruck2</tt></font>
+(er darf von beliebigem Typ sein), wird im Falle des Nichterf&uuml;lltseins
+der Bedingung ein <a href="index_a.html#ixb100370"><font color=#000080><tt>AssertionError</tt></font></a>
+mit einer <i>leeren</i> Fehlermeldung erzeugt. Wurde <font color="#000077"><tt>ausdruck2</tt></font>
+dagegen angegeben, wird er im Fehlerfall an den Konstruktor von <a href="index_a.html#ixb100370"><font color=#000080><tt>AssertionError</tt></font></a>
+&uuml;bergeben und dient als Meldungstext f&uuml;r das Fehlerobjekt.
+
+
+<!-- Section -->
+<a name="sectlevel4id007004001003"></a>
+<h4>An- und Abschalten der Assertions </h4>
+
+<p>
+Wir wollen uns ein einfaches Beispielprogramm ansehen: 
+<a name="anwendungassertions"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* AssertionTest.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> AssertionTest
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#0000AA">assert</font> args.length &gt;= 2; <a name="anwendungassertions.a"></a>
+<font color="#555555">008 </font>    <font color="#006699">int</font> i1 = Integer.parseInt(args[0]);
+<font color="#555555">009 </font>    <font color="#006699">int</font> i2 = Integer.parseInt(args[1]);
+<font color="#555555">010 </font>    <font color="#0000AA">assert</font> i2 != 0 : <font color="#0000FF">"Teilen durch 0 nicht moeglich"</font>; <a name="anwendungassertions.b"></a>
+<font color="#555555">011 </font>    System.out.println(i1 + <font color="#0000FF">"/"</font> + i2 + <font color="#0000FF">"="</font> + (i1/i2));
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/AssertionTest.java"><font color="#000055" size=-1>AssertionTest.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 7.9: Anwendung von Assertions</i></p>
+
+<p>
+Das Beispielprogramm verwendet zwei Assertions, um sicherzustellen,
+dass mindestens zwei Kommandozeilenargumente &uuml;bergeben werden
+und dass das zweite von ihnen nicht 0 ist. 
+
+<p>
+Um das Programm laufen zu lassen, kennt der Java-Interpreter ab der
+Version 1.4 die Kommandozeilenoptionen <a name="ixa100430"><a href="index_0.html#ixb100372"><font color=#000080><tt>-enableassertions</tt></font></a></a>
+und <a name="ixa100431"><a href="index_0.html#ixb100373"><font color=#000080><tt>-disableassertions</tt></font></a></a>,
+die mit <a name="ixa100432"><a href="index_0.html#ixb100374"><font color=#000080><tt>-ea</tt></font></a></a>
+bzw. <a name="ixa100433"><a href="index_0.html#ixb100375"><font color=#000080><tt>-da</tt></font></a></a>
+abgek&uuml;rzt werden k&ouml;nnen. Ihre Syntax lautet: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+java [ -enableassertions | -ea  ] [:PaketName... | :KlassenName ]
+
+java [ -disableassertions | -da  ] [:PaketName... | :KlassenName ]
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+Werden die Optionen ohne nachfolgenden Paket- oder Klassennamen angegeben,
+werden die Assertions f&uuml;r alle Klassen mit Ausnahme der Systemklassen
+<font color="#000077"><tt>java.*</tt></font> an- bzw. ausgeschaltet.
+Wird, durch einen Doppelpunkt getrennt, ein Klassenname angegeben,
+gilt die jeweilige Option nur f&uuml;r diese Klasse. Wird ein Paketname
+angegeben (von einem Klassennamen durch drei angeh&auml;ngte Punkte
+zu unterscheiden), erstreckt sich die Option auf alle Klassen innerhalb
+des angegebenen Pakets. Die Optionen k&ouml;nnen mehrfach angegeben
+werden, sie werden der Reihe nach ausgewertet. Wird keine dieser Optionen
+angegeben, sind die Assertions deaktiviert. 
+
+<p>
+Soll unser Beispielprogramm mit aktivierten Assertions ausgef&uuml;hrt
+werden, kann also folgendes Kommando verwendet werden: 
+<font color="#333300">
+<pre>
+java -ea AssertionTest
+</pre>
+</font>
+
+<p>
+In diesem Fall gibt es sofort eine Fehlermeldung, denn die erste <a href="index_a.html#ixb100053"><font color=#000080><tt>assert</tt></font></a>-Anweisung
+ist nicht erf&uuml;llt. Rufen wir das Programm mit zwei Zahlen als
+Argumente auf, wird erwartungsgem&auml;&szlig; deren Quotient berechnet:
+<font color="#333300">
+<pre>
+java -ea AssertionTest 100 25
+</pre>
+</font>
+
+<p>
+Die Ausgabe lautet: 
+<font color="#333300">
+<pre>
+100/25=4
+</pre>
+</font>
+
+<p>
+Wenn das zweite Argument dagegen 0 ist, gibt es eine Fehlermeldung,
+weil die zweite Assertion nicht erf&uuml;llt ist. Auch in diesem Fall
+steigt das Programm mit einem <a href="index_a.html#ixb100370"><font color=#000080><tt>AssertionError</tt></font></a>
+aus, der zus&auml;tzlich die Fehlermeldung &#187;Teilen durch 0 nicht
+moeglich&#171; enth&auml;lt, die wir nach dem Doppelpunkt in <a href="k100050.html#anwendungassertions.b">Zeile 010</a>
+angegeben haben: 
+<font color="#333300">
+<pre>
+Exception in thread "main" java.lang.AssertionError:
+  Teilen durch 0 nicht moeglich
+...
+</pre>
+</font>
+
+<p>
+Wird das Programm mit deaktivierten Assertions aufgerufen, verh&auml;lt
+es sich, als w&auml;ren die Zeilen <a href="k100050.html#anwendungassertions.a">007</a>
+und <a href="k100050.html#anwendungassertions.b">010</a> gar nicht
+vorhanden. In diesem Fall gibt es die &uuml;blichen Laufzeitfehler,
+die bei einem Zugriff auf ein nicht vorhandenes Array-Element oder
+die Division durch 0 entstehen. 
+
+<!-- Section -->
+
+<a name="sectlevel4id007004001004"></a>
+<h4>Anwendungen </h4>
+
+<p>
+Genau genommen war das vorige Programm kein wirklich gutes Beispiel
+f&uuml;r die Anwendung von Assertions. Das &Uuml;berpr&uuml;fen der
+an ein Programm &uuml;bergebenen Kommandozeilenparameter sollte n&auml;mlich
+besser einer <a name="ixa100434"><a href="index_i.html#ixb100376"><font color=#000080><tt>IllegalArgumentException</tt></font></a></a>
+&uuml;berlassen werden: 
+<a name="listingid007010"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing0710
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">004 </font>  {
+<font color="#555555">005 </font>    <font color="#0000AA">if</font> (args.length &lt; 2) {
+<font color="#555555">006 </font>      <font color="#0000AA">throw</font> <font color="#0000AA">new</font> IllegalArgumentException();
+<font color="#555555">007 </font>    }
+<font color="#555555">008 </font>    ...
+<font color="#555555">009 </font>  }
+<font color="#555555">010 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 7.10: Verwendung einer IllegalArgumentException</i></p>
+
+<p>
+Genau wie bei der &Uuml;bergabe eines Arguments an eine &ouml;ffentliche
+Methode sollte es nicht einfach m&ouml;glich sein, deren &Uuml;berpr&uuml;fung
+zur Laufzeit abzuschalten. Da ein Programm bei der &Uuml;bergabe von
+Werten an &ouml;ffentliche Schnittstellen keinerlei Annahmen dar&uuml;ber
+machen kann, ob diese Werte korrekt sind, sollte die &Uuml;berpr&uuml;fung
+dieser Werte immer aktiv sein. Die Verwendung von Assertions empfiehlt
+sich also in diesem Fall nicht. Weitere Beispiele f&uuml;r derartige
+&ouml;ffentliche Schnittstellen sind etwa die Daten, die &uuml;ber
+eine grafische Benutzerschnittstelle in ein Programm gelangen oder
+die aus Dateien oder &uuml;ber Netzwerkverbindungen eingelesen werden.
+In all diesen F&auml;llen sollten nichtabschaltbare Fehlerpr&uuml;fungen
+anstelle von Assertions verwendet werden. 
+
+<p>
+Der Einsatz von Assertions ist dagegen immer dann sinnvoll, wenn Daten
+aus unbekannten Quellen bereits verifiziert sind. Wenn also das Nichterf&uuml;lltsein
+einer Assertion einen Programmfehler anzeigt und nicht fehlerhafte
+Eingabedaten. Beispiele sind: 
+<ul>
+<li>Die &Uuml;berpr&uuml;fung von Parametern, die an nicht&ouml;ffentliche
+Methoden &uuml;bergeben werden. Diese k&ouml;nnen nur dann falsch
+sein, wenn das <i>eigene Programm</i> sie fehlerhaft &uuml;bergibt.
+Kann nach dem Test der Software davon ausgegangen werden, dass ein
+bestimmter Codeteil fehlerfrei ist, ist es legitim, die Assertions
+in diesem Bereich zu deaktivieren und so die Performance des Programms
+zu verbessern. Innerhalb der Test- und Debug-Phase dagegen sind die
+Assertions eine gro&szlig;e Hilfe beim Aufdecken von verdeckten Fehlern.
+<li>Die Verwendung in <a name="ixa100435"><i>Postconditions</i></a>,
+also in Bedingungen, die <i>am Ende einer Methode</i> erf&uuml;llt
+sein m&uuml;ssen. Postconditions dienen dazu, sicherzustellen, dass
+eine Methode bei korrekten Eingabewerten (die ihrerseits durch <a name="ixa100436"><i>Preconditions</i></a>
+abgesichert werden) auch korrekte Ergebnisse produziert. Beispielsweise
+k&ouml;nnte am Ende der <font color="#000077"><tt>push</tt></font>-Methode
+eines Stacks sichergestellt werden, dass der Stack nichtleer ist.
+<li>Die &Uuml;berpr&uuml;fung von <a name="ixa100437"><i>Schleifeninvarianten</i></a>,
+also von Bedingungen, die am Anfang oder Ende einer Schleife <i>bei
+jedem</i> Schleifendurchlauf erf&uuml;llt sein m&uuml;ssen. Dies ist
+besonders bei Schleifen sinnvoll, die so komplex sind, dass beim Programmieren
+eine Art &#187;Restunsicherheit&#171; bez&uuml;glich ihrer Korrektheit
+bestehen bleibt.
+<li>Die Markierung von &#187;toten Zweigen&#171; in <a href="index_i.html#ixb100074"><font color=#000080><tt>if</tt></font></a>-
+oder <a href="index_c.html#ixb100361"><font color=#000080><tt>case</tt></font></a>-Anweisungen,
+die normalerweise niemals erreicht werden sollten. Anstatt hier einen
+Kommentar der Art &#187;kann niemals erreicht werden&#171; zu platzieren,
+k&ouml;nnte auch eine Assertion mit <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>
+als Argument gesetzt werden. Wird dieser Zweig sp&auml;ter tats&auml;chlich
+einmal aufgrund eines Programmfehlers durchlaufen, geschieht dies
+wenigstens nicht unerkannt, sondern das Programm liefert eine Fehlermeldung
+und zeigt den Ort des Problems an.
+</ul>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Sowohl Pre- als auch Postconditions wurden mit der Programmiersprache
+<a name="ixa100438"><i>Eiffel</i></a>, die Bertrand Meyer <a name="ixa100439"></a>
+in seinem Buch &#187;Object-oriented Software Construction&#171; 1988
+vorgestellt hat, einer breiteren &Ouml;ffentlichkeit bekannt. Das
+im JDK 1.4 implementierte Assertion-Konzept entspricht allerdings
+nicht in allen Aspekten Meyers ausgefeiltem &#187;Programming by Contract&#171;.
+Dort gibt es beispielsweise explizite Schl&uuml;sselw&ouml;rter f&uuml;r
+Pre- und Postconditions und es ist m&ouml;glich, in Postconditions
+auf den &#187;alten&#171; Wert eines Parameters zuzugreifen (also
+auf den, den er beim Eintritt in die Methode hatte).</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Dennoch stellen Assertions ein wichtiges Hilfsmittel dar, um Programme
+zuverl&auml;ssiger und besser lesbar zu machen. Das folgende Programm
+zeigt verschiedene Anwendungen von Assertions am Beispiel einer einfachen
+Klasse zur Speicherung von Listen von Ganzzahlen: 
+<a name="simpleintlist"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> SimpleIntList
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font>[] data;
+<font color="#555555">004 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font>   len;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font>  <font color="#0000AA">public</font> SimpleIntList(<font color="#006699">int</font> size)
+<font color="#555555">007 </font>  {
+<font color="#555555">008 </font>    <font color="#006699">this</font>.data = <font color="#0000AA">new</font> <font color="#006699">int</font>[size];
+<font color="#555555">009 </font>    <font color="#006699">this</font>.len  = 0;
+<font color="#555555">010 </font>  }
+<font color="#555555">011 </font>
+<font color="#555555">012 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> add(<font color="#006699">int</font> value)
+<font color="#555555">013 </font>  {
+<font color="#555555">014 </font>    <font color="#00AA00">//Precondition als RuntimeException</font>
+<font color="#555555">015 </font>    <font color="#0000AA">if</font> (full()) { <a name="simpleintlist.f"></a>
+<font color="#555555">016 </font>      <font color="#0000AA">throw</font> <font color="#0000AA">new</font> RuntimeException(<font color="#0000FF">"Liste voll"</font>);
+<font color="#555555">017 </font>    }
+<font color="#555555">018 </font>    <font color="#00AA00">//Implementierung</font>
+<font color="#555555">019 </font>    data[len++] = value;
+<font color="#555555">020 </font>    <font color="#00AA00">//Postcondition</font>
+<font color="#555555">021 </font>    <font color="#0000AA">assert</font> !empty(); <a name="simpleintlist.a"></a>
+<font color="#555555">022 </font>  }
+<font color="#555555">023 </font>
+<font color="#555555">024 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> bubblesort()
+<font color="#555555">025 </font>  {
+<font color="#555555">026 </font>    <font color="#0000AA">if</font> (!empty()) {
+<font color="#555555">027 </font>      <font color="#006699">int</font> cnt = 0;
+<font color="#555555">028 </font>      <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">029 </font>        <font color="#00AA00">//Schleifeninvariante</font>
+<font color="#555555">030 </font>        <font color="#0000AA">assert</font> cnt++ &lt; len: <font color="#0000FF">"Zu viele Iterationen"</font>; <a name="simpleintlist.b"></a>
+<font color="#555555">031 </font>        <font color="#00AA00">//Implementierung...</font>
+<font color="#555555">032 </font>        <font color="#006699">boolean</font> sorted = <font color="#006699">true</font>;
+<font color="#555555">033 </font>        <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 1; i &lt; len; ++i) {
+<font color="#555555">034 </font>          <font color="#0000AA">if</font> (sortTwoElements(i - 1, i)) {
+<font color="#555555">035 </font>            sorted = <font color="#006699">false</font>;
+<font color="#555555">036 </font>          }
+<font color="#555555">037 </font>        }
+<font color="#555555">038 </font>        <font color="#0000AA">if</font> (sorted) {
+<font color="#555555">039 </font>          <font color="#0000AA">break</font>;
+<font color="#555555">040 </font>        }
+<font color="#555555">041 </font>      }
+<font color="#555555">042 </font>    }
+<font color="#555555">043 </font>  }
+<font color="#555555">044 </font>
+<font color="#555555">045 </font>  <font color="#0000AA">public</font> <font color="#006699">boolean</font> empty()
+<font color="#555555">046 </font>  {
+<font color="#555555">047 </font>    <font color="#0000AA">return</font> len &lt;= 0;
+<font color="#555555">048 </font>  }
+<font color="#555555">049 </font>
+<font color="#555555">050 </font>  <font color="#0000AA">public</font> <font color="#006699">boolean</font> full()
+<font color="#555555">051 </font>  {
+<font color="#555555">052 </font>    <font color="#0000AA">return</font> len &gt;= data.length;
+<font color="#555555">053 </font>  }
+<font color="#555555">054 </font>
+<font color="#555555">055 </font>  <font color="#0000AA">private</font> <font color="#006699">boolean</font> sortTwoElements(<font color="#006699">int</font> pos1, <font color="#006699">int</font> pos2)
+<font color="#555555">056 </font>  {
+<font color="#555555">057 </font>    <font color="#00AA00">//Private Preconditions</font>
+<font color="#555555">058 </font>    <font color="#0000AA">assert</font> (pos1 &gt;= 0 &amp;&amp; pos1 &lt; len); <a name="simpleintlist.c"></a>
+<font color="#555555">059 </font>    <font color="#0000AA">assert</font> (pos2 &gt;= 0 &amp;&amp; pos2 &lt; len); <a name="simpleintlist.d"></a>
+<font color="#555555">060 </font>    <font color="#00AA00">//Implementierung...</font>
+<font color="#555555">061 </font>    <font color="#006699">boolean</font> ret = <font color="#006699">false</font>;
+<font color="#555555">062 </font>    <font color="#0000AA">if</font> (data[pos1] &gt; data[pos2]) {
+<font color="#555555">063 </font>      <font color="#006699">int</font> tmp = data[pos1];
+<font color="#555555">064 </font>      data[pos1] = data[pos2];
+<font color="#555555">065 </font>      data[pos2] = tmp;
+<font color="#555555">066 </font>      ret = <font color="#006699">true</font>;
+<font color="#555555">067 </font>    }
+<font color="#555555">068 </font>    <font color="#00AA00">//Postcondition</font>
+<font color="#555555">069 </font>    <font color="#0000AA">assert</font> data[pos1] &lt;= data[pos2] : <font color="#0000FF">"Sortierfehler"</font>; <a name="simpleintlist.e"></a>
+<font color="#555555">070 </font>    <font color="#0000AA">return</font> ret;
+<font color="#555555">071 </font>  }
+<font color="#555555">072 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/SimpleIntList.java"><font color="#000055" size=-1>SimpleIntList.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 7.11: Anwendung von Assertions</i></p>
+
+<p>
+Precondition-Assertions sind in den Zeilen <a href="k100050.html#simpleintlist.c">058</a>
+und <a href="k100050.html#simpleintlist.d">059</a> zu sehen. Sie stellen
+sicher, dass die Methode mit g&uuml;ltigen Array-Indizes aufgerufen
+wird. Eine Precondition, die als <a href="index_r.html#ixb100382"><font color=#000080><tt>RuntimeException</tt></font></a>
+implementiert wurde, findet sich in <a href="k100050.html#simpleintlist.f">Zeile 015</a>
+und pr&uuml;ft, ob die Liste vor dem Einf&uuml;gen eines weiteren
+Elements bereits voll ist. W&auml;hrend die Postcondition in <a href="k100050.html#simpleintlist.a">Zeile 021</a>
+eher formaler Natur ist, &uuml;berpr&uuml;ft jene in <a href="k100050.html#simpleintlist.e">Zeile 069</a>,
+ob das Sortieren der Elemente tats&auml;chlich erfolgreich war. Die
+Schleifeninvariante in <a href="k100050.html#simpleintlist.b">Zeile 030</a>
+stellt sicher, dass der Bubblesort nicht zu viele Array-Durchl&auml;ufe
+macht, was ein Indiz daf&uuml;r w&auml;re, dass er in eine Endlosschleife
+geraten w&auml;re. 
+
+<!-- Section -->
+
+<a name="sectlevel4id007004001005"></a>
+<h4>Nebeneffekte </h4>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Normalerweise sollten die Ausdr&uuml;cke in Assertions keine Nebeneffekte
+enthalten, also keinen Code, der Variablen ver&auml;ndert oder den
+Status des Programms auf andere Weise modifiziert. Der Grund daf&uuml;r
+ist, dass diese Nebeneffekte bei abgeschalteten Assertions nat&uuml;rlich
+nicht ausgef&uuml;hrt werden. Das Programm w&uuml;rde sich also anders
+verhalten, als wenn die Assertions angeschaltet w&auml;ren. Dadurch
+k&ouml;nnen sehr schwer zu findende Fehler entstehen. Generell gilt,
+dass die Funktionalit&auml;t des Programms nicht davon abh&auml;ngen
+sollte, ob die Assertions an- oder abgeschaltet sind.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Allerdings kann es berechtigte Ausnahmen geben. Ein Gegenbeispiel
+liefert etwa das vorige Listing in <a href="k100050.html#simpleintlist.b">Zeile 030</a>.
+Hier wird innerhalb der Assertion die Z&auml;hlervariable <font color="#000077"><tt>cnt</tt></font>
+inkrementiert, also eine Variable ver&auml;ndert. Das ist allerdings
+unkritisch, denn diese wird auch nur innerhalb der Assertion ben&ouml;tigt,
+spielt ansonsten im Programm aber keine Rolle. Variablen, die auch
+an anderen Stellen im Programm verwendet werden, sollten allerdings
+nicht innerhalb von Assertions ver&auml;ndert werden. 
+
+<!-- Section -->
+
+<a name="sectlevel4id007004001006"></a>
+<h4>Kompatibilit&auml;t </h4>
+
+<p>
+Wie schon erw&auml;hnt, gibt es Assertions erst seit der Version 1.4
+des JDK. Ihre Verwendung wirft leider einige Kompatibilit&auml;tsprobleme
+auf: 
+<ul>
+<li>Ein Quelltext, der <a href="index_a.html#ixb100053"><font color=#000080><tt>assert</tt></font></a>-Anweisungen
+enth&auml;lt, kann nur mit einem Compiler &uuml;bersetzt werden, der
+mindestens die Version 1.4 unterst&uuml;tzt. &Auml;ltere Compiler
+halten eine <a href="index_a.html#ixb100053"><font color=#000080><tt>assert</tt></font></a>-Anweisung
+f&uuml;r ein Schl&uuml;sselwort und melden einen Syntaxfehler. 
+<li>Bytecode von Klassen, die <a href="index_a.html#ixb100053"><font color=#000080><tt>assert</tt></font></a>-Anweisungen
+enthalten, l&auml;sst sich nicht auf &auml;lteren virtuellen Maschinen
+ausf&uuml;hren, denn die vom Compiler generierten Zugriffe auf Felder
+und Klassen sind dort nicht vorhanden.
+</ul>
+
+<p>
+Was folgt daraus? Assertions lassen sich nur dann sinnvoll einsetzen,
+wenn der Entwickler mindestens einen JDK-1.4.Compiler besitzt <i>und</i>
+davon ausgehen kann, dass auf allen Zielsystemen, f&uuml;r die er
+entwickelt, ein mindestens 1.4-kompatibles Laufzeitsystem vorhanden
+ist. Letzteres ist mitunter nicht unbedingt der Fall. 
+
+<p>
+<b>Fazit</b>: Assertions sind ein ausgezeichnetes Mittel, um Code
+lesbarer und robuster zu gestalten. W&auml;hrend der Debug-Phase helfen
+sie bei der Fehlersuche. Sofern keine Kompatibilit&auml;t zu &auml;lteren
+JDK-Versionen erforderlich ist, sollten sie daher unbedingt verwendet
+werden. Kann dagegen nicht sichergestellt werden, dass die Zielsysteme
+mindestens das JDK 1.4 unterst&uuml;tzen, k&ouml;nnen Assertions nicht
+verwendet werden. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100046.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100049.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100051.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100052.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

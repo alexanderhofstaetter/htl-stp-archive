@@ -1,0 +1,1183 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100240.html;106,k100242.html;107,k100244.html;108,k100245.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100240.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100242.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100244.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100245.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 37 - Swing: Container und Men&uuml;s
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id037003"></a>
+<h2>37.3 Weitere Swing-Container </h2>
+<hr>
+<ul>
+<li><a href="k100243.html#sectlevel2id037003">37.3 Weitere Swing-Container</a>
+<ul>
+<li><a href="k100243.html#jcomponent">37.3.1 JComponent</a>
+<ul>
+<li><a href="k100243.html#sectlevel4id037003001001">Umrandungen</a>
+<li><a href="k100243.html#sectlevel4id037003001002">Tooltips</a>
+<li><a href="k100243.html#sectlevel4id037003001003">Bildschirmdarstellung der Komponente</a>
+<li><a href="k100243.html#sectlevel4id037003001004">Debug-Grafik</a>
+<li><a href="k100243.html#sectlevel4id037003001005">Transparenter Hintergrund</a>
+<li><a href="k100243.html#sectlevel4id037003001006">Doppelpufferung</a>
+<li><a href="k100243.html#sectlevel4id037003001007">Gr&ouml;&szlig;envorgaben</a>
+<li><a href="k100243.html#sectlevel4id037003001008">Invalidierung/Validierung </a>
+<li><a href="k100243.html#sectlevel4id037003001009">Die Fokusreihenfolge</a>
+<li><a href="k100243.html#sectlevel4id037003001010">Registrieren von Tastaturkommandos</a>
+</ul>
+<li><a href="k100243.html#sectlevel3id037003002">37.3.2 JPanel und JLayeredPane</a>
+<ul>
+<li><a href="k100243.html#sectlevel4id037003002001">JPanel</a>
+<li><a href="k100243.html#sectlevel4id037003002002">JLayeredPane</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="jcomponent"></a>
+<h3>37.3.1 JComponent </h3>
+
+<p>
+Viele der Swing-Komponenten sind direkt oder indirekt aus der Klasse
+<a name="ixa102507"><a href="index_j.html#ixb101780"><font color=#000080><tt>JComponent</tt></font></a></a>
+abgeleitet. Sie stellt eine Reihe allgemeiner Hilfsmittel zur Verf&uuml;gung,
+die f&uuml;r daraus abgeleitete Komponentenklassen n&uuml;tzlich sind.
+Als Ableitung von <a href="index_c.html#ixb101294"><font color=#000080><tt>java.awt.Container</tt></font></a>
+(und damit von <a href="index_c.html#ixb101293"><font color=#000080><tt>java.awt.Component</tt></font></a>)
+besitzt <a href="index_j.html#ixb101780"><font color=#000080><tt>JComponent</tt></font></a>
+bereits einen Gro&szlig;teil der Funktionalit&auml;t von AWT-Komponenten.
+Insbesondere bietet sie als <a href="index_c.html#ixb101294"><font color=#000080><tt>Container</tt></font></a>
+die M&ouml;glichkeit, andere Komponenten aufzunehmen, und sie kann
+einen Layout-Manager besitzen, der f&uuml;r die Gr&ouml;&szlig;e und
+Anordnung der enthaltenen Komponenten zust&auml;ndig ist. 
+
+<p>
+Die mit dem AWT eingef&uuml;hrte grunds&auml;tzliche Unterscheidung
+zwischen <i>elementaren</i> Dialogelementen und solchen, die Unterkomponenten
+aufnehmen k&ouml;nnen, wurde mit der Einf&uuml;hrung von Swing also
+weitgehend fallengelassen. In der Praxis ist das jedoch nur selten
+bedeutsam. Ein <a href="index_j.html#ixb101792"><font color=#000080><tt>JButton</tt></font></a>
+beispielsweise stellt sich im praktischen Gebrauch stets als <i>elementare</i>
+Komponente dar - obwohl er als Konkretisierung von <a href="index_j.html#ixb101780"><font color=#000080><tt>JComponent</tt></font></a>
+auch Unterkomponenten enthalten k&ouml;nnte. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Eine der auff&auml;lligeren Konsequenzen besteht darin, dass es in
+Swing keine zu <a href="index_c.html#ixb101652"><font color=#000080><tt>Canvas</tt></font></a>
+korrespondierende Klasse gibt (siehe <a href="k100221.html#kapitelcanvasundpanel">Kapitel 33</a>).
+Elementare Dialogelemente mit selbst definierter Oberfl&auml;che werden
+in Swing direkt aus <a href="index_j.html#ixb101780"><font color=#000080><tt>JComponent</tt></font></a>
+abgeleitet.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id037003001001"></a>
+<h4>Umrandungen </h4>
+
+<p>
+<a href="index_j.html#ixb101780"><font color=#000080><tt>JComponent</tt></font></a>
+bietet die M&ouml;glichkeit, ihren Instanzen eine Umrandung zu geben.
+Dazu gibt es die Methode <a name="ixa102508"><a href="index_s.html#ixb101786"><font color=#000080><tt>setBorder</tt></font></a></a>,
+mit der der Komponente ein Objekt des Typs <a href="index_b.html#ixb101787"><font color=#000080><tt>Border</tt></font></a>
+zugewiesen werden kann: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setBorder(Border border)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JComponent.html" onClick="this.href=getApiDoc('javax.swing.JComponent')"><font color="#660066" size=-1>javax.swing.JComponent</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_b.html#ixb101787"><font color=#000080><tt>Border</tt></font></a>
+ist ein Interface, zu dem es verschiedene Implementierungen gibt.
+Die wichtigsten von ihnen zeigt folgende Tabelle: <a name="tableid037004"></a>
+
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=20%><b>Klassenname</b></td>
+<td valign=top align=left width=80%><b>Beschreibung</b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102509"><a href="index_e.html#ixb101870"><font color=#000080><tt>EmptyBorder</tt></font></a></a></td>
+<td valign=top align=left>Unsichtbarer Rand mit einstellbarer Dicke</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102510"><a href="index_l.html#ixb101871"><font color=#000080><tt>LineBorder</tt></font></a></a></td>
+<td valign=top align=left>Einfache Linie mit einstellbarer Farbe und
+Dicke</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102511"><a href="index_b.html#ixb101872"><font color=#000080><tt>BevelBorder</tt></font></a></a></td>
+<td valign=top align=left>Erhabener oder vertiefter 3D-Effekt</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102512"><a href="index_e.html#ixb101873"><font color=#000080><tt>EtchedBorder</tt></font></a></a></td>
+<td valign=top align=left>Eingelassene Linie mit 3D-Effekt</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102513"><a href="index_c.html#ixb101874"><font color=#000080><tt>CompoundBorder</tt></font></a></a></td>
+<td valign=top align=left>Aus zwei anderen Umrandungen zusammengesetzt</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102514"><a href="index_t.html#ixb101875"><font color=#000080><tt>TitledBorder</tt></font></a></a></td>
+<td valign=top align=left>Umrandung mit einem eingebetteten Text</td></tr>
+</table>
+<p><i>
+Tabelle 37.4: Border-Implementierungen</i></p>
+
+<p>
+Die Klassen besitzen sehr unterschiedliche Konstruktoren, mit denen
+ihre jeweiligen Eigenschaften festgelegt werden. Obwohl die <a href="index_b.html#ixb101787"><font color=#000080><tt>Border</tt></font></a>-Instanzen
+einfach mit <a href="index_n.html#ixb100088"><font color=#000080><tt>new</tt></font></a>
+erzeugt werden k&ouml;nnten, bietet die Klasse <a href="index_b.html#ixb101788"><font color=#000080><tt>BorderFactory</tt></font></a>
+im Paket <a href="index_j.html#ixb100200"><font color=#000080><tt>javax.swing</tt></font></a>
+eine bessere M&ouml;glichkeit, dies zu tun. Zu jeder Art von Umrandung
+steht n&auml;mlich eine Factory-Methode zur Verf&uuml;gung (<a name="ixa102515"><a href="index_c.html#ixb101876"><font color=#000080><tt>createEmptyBorder</tt></font></a></a>,
+<a name="ixa102516"><a href="index_c.html#ixb101877"><font color=#000080><tt>createLineBorder</tt></font></a></a>
+usw.), mit der ein <a href="index_b.html#ixb101787"><font color=#000080><tt>Border</tt></font></a>-Objekt
+dieses Typs erzeugt werden kann. Wann immer m&ouml;glich, versucht
+die <a href="index_b.html#ixb101788"><font color=#000080><tt>BorderFactory</tt></font></a>
+dabei, Verweise auf bereits erzeugte Instanzen zur&uuml;ckzugeben.
+Da Umrandungen in GUI-Programmen sehr h&auml;ufig ben&ouml;tigt werden,
+reduziert sich dadurch bei konsequenter Verwendung die Anzahl der
+kurzlebigen Objekte und die Belastung des Garbage Collectors. 
+
+<p>
+<a href="k100243.html#jborderbeispiel">Abbildung 37.11</a> zeigt ein
+Beispielprogramm, das sechs Labels mit unterschiedlichen Umrandungen
+enth&auml;lt: 
+<p>
+<a name="jborderbeispiel"></a>
+<img src="images/JBorder.gif">
+<p>
+
+<p><i>
+Abbildung 37.11: Die wichtigsten Umrandungen</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id037003001002"></a>
+<h4><a name="ixa102517">Tooltips</a></h4>
+
+<p>
+<a href="index_j.html#ixb101780"><font color=#000080><tt>JComponent</tt></font></a>
+bietet eine einfach anzuwendende M&ouml;glichkeit, Komponenten einen
+Tooltip-Text zuzuweisen. Dieser wird angezeigt, wenn die Maus &uuml;ber
+das Dialogelement bewegt und dort gehalten wird. Ein Tooltip gibt
+dem unerfahrenen Anwender Informationen zur Bedeutung und Funktion
+des ausgew&auml;hlten Dialogelements. Tooltip-Texte werden mit der
+Methode <a name="ixa102518"><a href="index_s.html#ixb101785"><font color=#000080><tt>setToolTipText</tt></font></a></a>
+zugewiesen; und mit <a name="ixa102519"><a href="index_g.html#ixb101878"><font color=#000080><tt>getToolTipText</tt></font></a></a>
+k&ouml;nnen sie abgefragt werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setToolTipText(String text)
+public String getToolTipText()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JComponent.html" onClick="this.href=getApiDoc('javax.swing.JComponent')"><font color="#660066" size=-1>javax.swing.JComponent</font></a></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Tooltips k&ouml;nnen nicht nur einfache Texte enthalten, sondern prinzipiell
+beliebig komplex aufgebaut sein. Sie werden durch die aus <a href="index_j.html#ixb101780"><font color=#000080><tt>JComponent</tt></font></a>
+abgleitete Klasse <a name="ixa102520"><a href="index_j.html#ixb101879"><font color=#000080><tt>JToolTip</tt></font></a></a>
+repr&auml;sentiert. Aus ihr k&ouml;nnen anwendungsspezifische Tooltip-Klassen
+abgeleitet werden, die nahezu beliebige GUI-Funktionalit&auml;ten
+zur Verf&uuml;gung stellen. Um einer Komponente einen solchen Tooltip
+zuzuordnen, muss die Methode <a name="ixa102521"><a href="index_c.html#ixb101880"><font color=#000080><tt>createToolTip</tt></font></a></a>
+von <a href="index_j.html#ixb101780"><font color=#000080><tt>JComponent</tt></font></a>
+&uuml;berlagert werden und auf Anfrage ihr eigenes <a href="index_j.html#ixb101879"><font color=#000080><tt>JToolTip</tt></font></a>-Objekt
+zur&uuml;ckgeben.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id037003001003"></a>
+<h4>Bildschirmdarstellung der Komponente </h4>
+
+<p>
+Normalerweise braucht eine GUI-Anwendung sich um die konkrete Darstellung
+ihrer Dialogelemente keine Gedanken zu machen. Die elementaren Komponenten
+erledigen dies selbst und die zusammengesetzten Komponenten bedienen
+sich ihrer Layoutmanager und der Ausgabemethoden der elementaren Komponenten.
+Dies &auml;ndert sich, wenn eine eigene Komponente entwickelt werden
+soll. Bei AWT-Anwendungen wurde diese aus <a href="index_c.html#ixb101652"><font color=#000080><tt>Canvas</tt></font></a>
+abgeleitet und in &uuml;berlagerten Varianten von <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>
+oder <a href="index_u.html#ixb101687"><font color=#000080><tt>update</tt></font></a>
+wurde die n&ouml;tige Bildschirmausgabe zur Verf&uuml;gung gestellt.
+
+<p>
+In elementaren Swing-Komponenten, die aus <a href="index_j.html#ixb101780"><font color=#000080><tt>JComponent</tt></font></a>
+abgeleitet wurden, liegen die Dinge etwas komplizierter. Die Methode
+<a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>
+hat bereits in <a href="index_j.html#ixb101780"><font color=#000080><tt>JComponent</tt></font></a>
+eine recht aufw&auml;ndige Implementierung und wird normalerweise
+nicht mehr &uuml;berlagert. Im Prinzip ruft sie nacheinander ihre
+Methoden <a name="ixa102522"><a href="index_p.html#ixb101881"><font color=#000080><tt>paintComponent</tt></font></a></a>,
+<a name="ixa102523"><a href="index_p.html#ixb101882"><font color=#000080><tt>paintBorder</tt></font></a></a>
+und <a name="ixa102524"><a href="index_p.html#ixb101883"><font color=#000080><tt>paintChildren</tt></font></a></a>
+auf. Die letzten beiden sind f&uuml;r das Zeichnen der Umrandung und
+der enthaltenen Dialogelemente zust&auml;ndig und brauchen normalerweise
+in eigenen Komponenten nicht &uuml;berlagert zu werden. F&uuml;r die
+Darstellung der eigenen Komponente ist dagegen <a href="index_p.html#ixb101881"><font color=#000080><tt>paintComponent</tt></font></a>
+zust&auml;ndig: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+protected void paintComponent(Graphics g)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JComponent.html" onClick="this.href=getApiDoc('javax.swing.JComponent')"><font color="#660066" size=-1>javax.swing.JComponent</font></a></td>
+</tr>
+</table>
+
+<p>
+In <a href="index_j.html#ixb101780"><font color=#000080><tt>JComponent</tt></font></a>
+wird jeder Aufruf von <a href="index_p.html#ixb101881"><font color=#000080><tt>paintComponent</tt></font></a>
+an das <a name="ixa102525"><a href="index_c.html#ixb101884"><font color=#000080><tt>ComponentUI</tt></font></a></a>
+der Komponente delegiert. Instanzen dieser im Paket <a name="ixa102526"><a href="index_j.html#ixb101885"><font color=#000080><tt>javax.swing.plaf</tt></font></a></a>
+liegenden Klasse spielen in dem von jeder Swing-Komponente implementierten
+Model-View-Controller-Konzept die Rolle des Views, sind also f&uuml;r
+die grafische Darstellung der Komponente zust&auml;ndig. Jede Swing-Komponente
+besitzt ein <a href="index_c.html#ixb101884"><font color=#000080><tt>ComponentUI</tt></font></a>,
+das je nach Look-and-Feel unterschiedlich sein kann. Eine selbst definierte
+Komponente muss also entweder f&uuml;r jedes unterst&uuml;tzte Look-and-Feel
+ein passendes <a href="index_c.html#ixb101884"><font color=#000080><tt>ComponentUI</tt></font></a>
+zur Verf&uuml;gung stellen oder die Bildschirmdarstellung durch &Uuml;berlagern
+von <a href="index_p.html#ixb101881"><font color=#000080><tt>paintComponent</tt></font></a>
+selbst erledigen. 
+
+<!-- Section -->
+
+<a name="sectlevel4id037003001004"></a>
+<h4><a name="ixa102527">Debug-Grafik</a></h4>
+
+<p>
+Eine interessante Hilfe zum Testen eigener Komponenten kann durch
+Aufruf der Methode <a name="ixa102528"><a href="index_s.html#ixb101886"><font color=#000080><tt>setDebugGraphicsOptions</tt></font></a></a>
+aktiviert werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setDebugGraphicsOptions(int debugOptions)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JComponent.html" onClick="this.href=getApiDoc('javax.swing.JComponent')"><font color="#660066" size=-1>javax.swing.JComponent</font></a></td>
+</tr>
+</table>
+
+<p>
+Dadurch wird die Komponente mit Hilfe eines <a name="ixa102529"><a href="index_d.html#ixb101887"><font color=#000080><tt>DebugGraphics</tt></font></a></a>-Objekts
+gezeichnet. Es ist in der Lage, die verwendeten Grafikoperationen
+auf der Konsole zu protokollieren oder zur besseren Kontrolle verz&ouml;gert
+auszugeben. Als Argument kann an <a href="index_s.html#ixb101886"><font color=#000080><tt>setDebugGraphicsOptions</tt></font></a>
+eine der folgenden Konstanten aus der Klasse <a name="ixa102529"><a href="index_d.html#ixb101887"><font color=#000080><tt>DebugGraphics</tt></font></a></a>
+&uuml;bergeben werden: <a name="tableid037005"></a>
+
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=25%><b>Konstante</b></td>
+<td valign=top align=left width=75%><b>Bedeutung</b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102530"><a href="index_n.html#ixb101888"><font color=#000080><tt>NONE_OPTION</tt></font></a></a></td>
+<td valign=top align=left>Normale Ausgabe</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102531"><a href="index_l.html#ixb101889"><font color=#000080><tt>LOG_OPTION</tt></font></a></a></td>
+<td valign=top align=left>Die Grafikoperationen werden auf der Console
+protokolliert.</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102532"><a href="index_f.html#ixb101890"><font color=#000080><tt>FLASH_OPTION</tt></font></a></a></td>
+<td valign=top align=left>Die Grafikoperationen erfolgen verz&ouml;gert
+und werden w&auml;hrend der Ausgabe blinkend dargestellt. Bei dieser
+Option muss die Doppelpufferung f&uuml;r die Komponente ausgeschaltet
+werden.</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102533"><a href="index_b.html#ixb101891"><font color=#000080><tt>BUFFERED_OPTION</tt></font></a></a></td>
+<td valign=top align=left>Gepufferte Ausgaben werden in einem separaten
+Frame angezeigt.</td></tr>
+</table>
+<p><i>
+Tabelle 37.5: DebugGraphics-Konstanten</i></p>
+
+<p>
+Das folgende Programm zeigt eine einfache Anwendung der Debug-Grafik
+zur Darstellung eines Buttons. Mit Hilfe der statischen Methoden <a name="ixa102534"><a href="index_s.html#ixb101892"><font color=#000080><tt>setFlashTime</tt></font></a></a>
+und <a name="ixa102535"><a href="index_s.html#ixb101893"><font color=#000080><tt>setFlashCount</tt></font></a></a>
+der Klasse <a href="index_d.html#ixb101887"><font color=#000080><tt>DebugGraphics</tt></font></a>
+wird die Blinkrate und -dauer angepasst: 
+<a name="listingid037011"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3711.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3711
+<font color="#555555">007 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> Listing3711()
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Debug-Grafik"</font>);
+<font color="#555555">012 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">013 </font>    Container cp = getContentPane();
+<font color="#555555">014 </font>    DebugGraphics.setFlashTime(100);
+<font color="#555555">015 </font>    DebugGraphics.setFlashCount(3);
+<font color="#555555">016 </font>    JButton button = <font color="#0000AA">new</font> JButton(<font color="#0000FF">"DEBUG-Button"</font>);
+<font color="#555555">017 </font>    RepaintManager repaintManager = RepaintManager.currentManager(button);
+<font color="#555555">018 </font>    repaintManager.setDoubleBufferingEnabled(<font color="#006699">false</font>);
+<font color="#555555">019 </font>    button.setDebugGraphicsOptions(DebugGraphics.FLASH_OPTION);
+<font color="#555555">020 </font>    cp.add(button);
+<font color="#555555">021 </font>  }
+<font color="#555555">022 </font>
+<font color="#555555">023 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">024 </font>  {
+<font color="#555555">025 </font>    Listing3711 frame = <font color="#0000AA">new</font> Listing3711();
+<font color="#555555">026 </font>    frame.setLocation(100, 100);
+<font color="#555555">027 </font>    frame.setSize(300, 200);
+<font color="#555555">028 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">029 </font>  }
+<font color="#555555">030 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3711.java"><font color="#000055" size=-1>Listing3711.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 37.11: Debug-Grafik</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id037003001005"></a>
+<h4>Transparenter Hintergrund </h4>
+
+<p>
+Anders als im AWT, bei dem alle Dialogelemente einen undurchsichtigen
+Hintergrund hatten, kann dieser bei Swing-Komponenten auch transparent
+sein. Damit lassen sich runde Buttons, Beschriftungen mit durchscheinendem
+Hintergrund oder &auml;hnliche Effekte realisieren. Um den Hintergrund
+einer Komponente transparent<a name="ixa102536"></a> zu machen, ist
+die Methode <a name="ixa102537"><a href="index_s.html#ixb101895"><font color=#000080><tt>setOpaque</tt></font></a></a>
+aufzurufen und <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>
+zu &uuml;bergeben. Standardm&auml;&szlig;ig ist der Hintergrund undurchsichtig.
+Das folgende Programm besitzt zwei Buttons, von denen der eine einen
+transparenten und der andere einen undurchsichtigen Hintergrund hat.
+Um den Unterschied besser erkennen zu k&ouml;nnen, befinden sie sich
+auf einer Komponente, die vollst&auml;ndig mit Gitterlinien bedeckt
+ist. 
+<a name="listingid037012"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3712.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3712
+<font color="#555555">007 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> Listing3712()
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Transparenz"</font>);
+<font color="#555555">012 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">013 </font>    Container cp = getContentPane();
+<font color="#555555">014 </font>    <font color="#00AA00">//SimpleGridComponent erzeugen</font>
+<font color="#555555">015 </font>    SimpleGridComponent grid = <font color="#0000AA">new</font> SimpleGridComponent();
+<font color="#555555">016 </font>    grid.setLayout(<font color="#0000AA">new</font> FlowLayout(FlowLayout.CENTER));
+<font color="#555555">017 </font>    <font color="#00AA00">//Transparenten Button hinzuf&uuml;gen</font>
+<font color="#555555">018 </font>    JButton button = <font color="#0000AA">new</font> JButton(<font color="#0000FF">"Transparent"</font>);
+<font color="#555555">019 </font>    button.setOpaque(<font color="#006699">false</font>);
+<font color="#555555">020 </font>    grid.add(button);
+<font color="#555555">021 </font>    <font color="#00AA00">//Undurchsichtigen Button hinzuf&uuml;gen</font>
+<font color="#555555">022 </font>    button = <font color="#0000AA">new</font> JButton(<font color="#0000FF">"Opaque"</font>);
+<font color="#555555">023 </font>    grid.add(button);
+<font color="#555555">024 </font>    <font color="#00AA00">//SimpleGridComponent hinzuf&uuml;gen</font>
+<font color="#555555">025 </font>    cp.add(grid, BorderLayout.CENTER);
+<font color="#555555">026 </font>  }
+<font color="#555555">027 </font>
+<font color="#555555">028 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">029 </font>  {
+<font color="#555555">030 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">031 </font>      String plaf = <font color="#0000FF">"com.sun.java.swing.plaf.windows.WindowsLookAndFeel"</font>;
+<font color="#555555">032 </font>      UIManager.setLookAndFeel(plaf);
+<font color="#555555">033 </font>      Listing3712 frame = <font color="#0000AA">new</font> Listing3712();
+<font color="#555555">034 </font>      frame.setLocation(100, 100);
+<font color="#555555">035 </font>      frame.setSize(300, 100);
+<font color="#555555">036 </font>      frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">037 </font>    } <font color="#0000AA">catch</font> (Exception e) {
+<font color="#555555">038 </font>      e.printStackTrace();
+<font color="#555555">039 </font>      System.exit(1);
+<font color="#555555">040 </font>    }
+<font color="#555555">041 </font>  }
+<font color="#555555">042 </font>}
+<font color="#555555">043 </font>
+<font color="#555555">044 </font><font color="#0000AA">class</font> SimpleGridComponent
+<font color="#555555">045 </font><font color="#0000AA">extends</font> JComponent
+<font color="#555555">046 </font>{
+<font color="#555555">047 </font>  <font color="#0000AA">protected</font> <font color="#006699">void</font> paintComponent(Graphics g)
+<font color="#555555">048 </font>  {
+<font color="#555555">049 </font>    <font color="#006699">int</font> width = getSize().width;
+<font color="#555555">050 </font>    <font color="#006699">int</font> height = getSize().height;
+<font color="#555555">051 </font>    g.setColor(Color.gray);
+<font color="#555555">052 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; width; i += 10) {
+<font color="#555555">053 </font>      g.drawLine(i, 0, i, height);
+<font color="#555555">054 </font>    }
+<font color="#555555">055 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; height; i += 10) {
+<font color="#555555">056 </font>      g.drawLine(0, i, width, i);
+<font color="#555555">057 </font>    }
+<font color="#555555">058 </font>  }
+<font color="#555555">059 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3712.java"><font color="#000055" size=-1>Listing3712.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 37.12: Ein transparenter Button</i></p>
+
+<p>
+Die Ausgabe des Programms sieht so aus: 
+<p>
+<a name="imageid037012"></a>
+<img src="images/TranspButton.gif">
+<p>
+
+<p><i>
+Abbildung 37.12: Ein Programm mit einem transparenten Button</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id037003001006"></a>
+<h4>Doppelpufferung </h4>
+
+<p>
+Um bei animierten Komponenten das Bildschirmflackern zu vermeiden,
+kann die Technik des Doppelpufferns angewendet werden. Wir haben das
+f&uuml;r AWT-Komponenten in <a href="k100228.html#flackernreduzieren">Abschnitt 34.2.4</a>
+ausf&uuml;hrlich erkl&auml;rt. Swing-Komponenten, die aus <a href="index_j.html#ixb101780"><font color=#000080><tt>JComponent</tt></font></a>
+abgeleitet sind, k&ouml;nnen automatisch doppelgepuffert werden. Dazu
+ist lediglich ein Aufruf von <a name="ixa102538"><a href="index_s.html#ixb101896"><font color=#000080><tt>setDoubleBuffered</tt></font></a></a>
+mit &Uuml;bergabe von <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+erforderlich. Mit <a name="ixa102539"><a href="index_i.html#ixb101897"><font color=#000080><tt>isDoubleBuffered</tt></font></a></a>
+kann der aktuelle Zustand dieser Eigenschaft abgefragt werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setDoubleBuffered(boolean aFlag)
+public boolean isDoubleBuffered()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JComponent.html" onClick="this.href=getApiDoc('javax.swing.JComponent')"><font color="#660066" size=-1>javax.swing.JComponent</font></a></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id037003001007"></a>
+<h4>Gr&ouml;&szlig;envorgaben </h4>
+
+<p>
+Bereits in der Klasse <a href="index_c.html#ixb101293"><font color=#000080><tt>Component</tt></font></a>
+sind die Methoden <a name="ixa102540"><a href="index_g.html#ixb101655"><font color=#000080><tt>getMinimumSize</tt></font></a></a>,
+<a name="ixa102541"><a href="index_g.html#ixb101646"><font color=#000080><tt>getPreferredSize</tt></font></a></a>
+und <a name="ixa102542"><a href="index_g.html#ixb101657"><font color=#000080><tt>getMaximumSize</tt></font></a></a>
+definiert. Sie werden in abgeleiteten Klassen &uuml;berlagert, um
+dem Layoutmanager die minimale, optimale und maximale Gr&ouml;&szlig;e
+der Komponenten mitzuteilen (siehe z.B. <a href="k100223.html#gui7segmentanzeige">Abschnitt 33.2.2</a>).
+In <a href="index_j.html#ixb101780"><font color=#000080><tt>JComponent</tt></font></a>
+gibt es zus&auml;tzlich die Methoden <a name="ixa102543"><a href="index_s.html#ixb101898"><font color=#000080><tt>setMinimumSize</tt></font></a></a>,
+<a name="ixa102544"><a href="index_s.html#ixb101899"><font color=#000080><tt>setPreferredSize</tt></font></a></a>
+und <a name="ixa102545"><a href="index_s.html#ixb101900"><font color=#000080><tt>setMaximumSize</tt></font></a></a>.
+Damit k&ouml;nnen die Gr&ouml;&szlig;envorgaben bestehender Komponenten
+ver&auml;ndert werden, ohne eine neue Klasse daraus ableiten zu m&uuml;ssen.
+
+
+<!-- Section -->
+<a name="sectlevel4id037003001008"></a>
+<h4>Invalidierung/Validierung <a name="ixa102546"></a><a name="ixa102547"></a>
+</h4>
+
+<p>
+Sowohl in Swing- als auch in AWT-Programmen kann der Aufbau eines
+Dialogs ge&auml;ndert werden, wenn er bereits auf dem Bildschirm sichtbar
+ist. Dialogelemente k&ouml;nnen hinzugef&uuml;gt oder entfernt oder
+in ihrem Aussehen ge&auml;ndert werden. Die dadurch implizierten Layout&auml;nderungen
+werden zwar oft, aber nicht immer automatisch erkannt und es kann
+sein, dass die Bildschirmdarstellung die &Auml;nderungen nicht angemessen
+wiedergibt. 
+
+<p>
+Wird beispielsweise die Beschriftung oder der Font eines Swing-Buttons
+ver&auml;ndert, so wird seine Gr&ouml;&szlig;e den neuen Erfordernissen
+angepasst und der Dialog neu aufgebaut. Bei AWT-Buttons ist das nicht
+der Fall. Wenn sich der Platzbedarf f&uuml;r die Beschriftung &auml;ndert,
+ist der Button nach der &Auml;nderung entweder zu klein oder zu gro&szlig;.
+Auch wenn neue Dialogelemente hinzugef&uuml;gt werden, sind diese
+weder im AWT noch in Swing unmittelbar sichtbar. 
+
+<p>
+Um einem Container mitzuteilen, dass das Layout seiner Komponenten
+komplett neu aufgebaut werden soll, ist dessen <a name="ixa102548"><a href="index_v.html#ixb101903"><font color=#000080><tt>validate</tt></font></a></a>-Methode
+aufzurufen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void validate()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Container.html" onClick="this.href=getApiDoc('java.awt.Container')"><font color="#660066" size=-1>java.awt.Container</font></a></td>
+</tr>
+</table>
+
+<p>
+Um einen unn&ouml;tigen Neuaufbau des Bildschirms zu vermeiden, wird
+<a href="index_v.html#ixb101903"><font color=#000080><tt>validate</tt></font></a>
+allerdings nur dann <i>wirklich</i> aktiv, wenn der Container, auf
+dem der Aufruf erfolgte, zuvor mit <a name="ixa102549"><a href="index_i.html#ixb101904"><font color=#000080><tt>invalidate</tt></font></a></a>
+als ung&uuml;ltig deklariert wurde: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void invalidate()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Component.html" onClick="this.href=getApiDoc('java.awt.Component')"><font color="#660066" size=-1>java.awt.Component</font></a></td>
+</tr>
+</table>
+
+<p>
+Wird <a href="index_i.html#ixb101904"><font color=#000080><tt>invalidate</tt></font></a>
+auf einer elementaren Komponente aufgerufen, die in einen Container
+eingebettet ist, wird der Aufruf an den Container weitergegeben und
+invalidiert auch diesen. Soll also nach der &Auml;nderung einer Komponente
+der zugeh&ouml;rige Container neu dargestellt werden, ist auf der
+Komponente <a href="index_i.html#ixb101904"><font color=#000080><tt>invalidate</tt></font></a>
+und anschlie&szlig;end auf dem Container <a href="index_v.html#ixb101903"><font color=#000080><tt>validate</tt></font></a>
+aufzurufen. In <a href="index_j.html#ixb101780"><font color=#000080><tt>JComponent</tt></font></a>
+gibt es zus&auml;tzlich die Methode <a name="ixa102550"><a href="index_r.html#ixb101905"><font color=#000080><tt>revalidate</tt></font></a></a>,
+die beide Schritte nacheinander durchf&uuml;hrt. 
+
+<!-- Section -->
+
+<a name="sectlevel4id037003001009"></a>
+<h4>Die Fokusreihenfolge </h4>
+
+<p>
+Innerhalb eines Dialogs kann immer nur eine Komponente zur Zeit den
+Fokus haben, also Maus- und Tastaturereignisse erhalten. Durch Anklicken
+mit der Maus kann dieser direkt einer bestimmten Komponente zugewiesen
+werden. Alternativ kann (meist mit Hilfe der Tasten <font color="#007700"><tt>[TAB]</tt></font>
+und <font color="#007700"><tt>[UMSCHALT]</tt></font>+<font color="#007700"><tt>[TAB]</tt></font>)
+der Fokus auch per Tastendruck ver&auml;ndert werden. Die Komponenten
+eines Dialogs durchlaufen dabei einen Zyklus, der sich an der Einf&uuml;ge-Reihenfolge
+der Elemente orientiert. Das zuerst mit <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+hinzugef&uuml;gte Element enth&auml;lt nach dem Aufrufen des Dialogs
+den Fokus zuerst. 
+
+<p>
+Mitunter ist es sinnvoll, lokale Fokuszyklen zu bilden, um Gruppen
+von Komponenten zusammenzufassen und einfacher bedienen zu k&ouml;nnen.
+Mit dem JDK 1.4 wurde das Fokus-Subsystem vollst&auml;ndig neu geschrieben.
+Hauptziel dieser &Auml;nderung war es, eine gro&szlig;e Zahl von existierenden
+Fehlern zu beheben sowie ein wohldefiniertes und plattformunabh&auml;ngiges
+Fokusverhalten zu implementieren. 
+
+<p>
+F&uuml;r das Bilden von lokalen oder vom Standard abweichenden Fokuszyklen
+gibt es die abstrakte Klasse <a name="ixa102551"><a href="index_f.html#ixb101906"><font color=#000080><tt>FocusTraversalPolicy</tt></font></a></a>
+im Paket <a href="index_j.html#ixb100198"><font color=#000080><tt>java.awt</tt></font></a>.
+Sie bietet folgende Schnittstellen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Component getComponentAfter(Container con, Component com)
+
+public Component getComponentBefore(Container con, Component com)
+
+public Component getFirstComponent(Container con)
+
+public Component getLastComponent(Container con)
+
+public Component getDefaultComponent(Container con)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/FocusTraversalPolicy.html" onClick="this.href=getApiDoc('java.awt.FocusTraversalPolicy')"><font color="#660066" size=-1>java.awt.FocusTraversalPolicy</font></a></td>
+</tr>
+</table>
+
+<p>
+Jede GUI-Komponente vom Typ <a href="index_c.html#ixb101294"><font color=#000080><tt>Container</tt></font></a>
+kann die Wurzel eines Fokuszyklus sein. Dazu ist die Methode <a name="ixa102552"><a href="index_s.html#ixb101907"><font color=#000080><tt>setFocusCycleRoot</tt></font></a></a>
+mit <font color="#000077"><tt>true</tt></font> als Parameter aufzurufen
+und anschlie&szlig;end an der Methode <a name="ixa102553"><a href="index_s.html#ixb101908"><font color=#000080><tt>setFocusTraversalPolicy</tt></font></a></a>
+die konkrete <a href="index_f.html#ixb101906"><font color=#000080><tt>FocusTraversalPolicy</tt></font></a>-Implementation
+zu setzen. 
+
+<p>
+Das JDK bringt eine Reihe von konkreten Implementationen der <a href="index_f.html#ixb101906"><font color=#000080><tt>FocusTraversalPolicy</tt></font></a>
+mit, zum Beispiel <a name="ixa102554"><a href="index_l.html#ixb101909"><font color=#000080><tt>LayoutFocusTraversalPolicy</tt></font></a></a>,
+die Default-Policy in Swing-Applikationen. 
+
+<p>
+Das <a href="k100243.html#focustraversalpolicy">Listing 37.13</a>
+verdeutlicht die Anwendung eines eigenen Fokuszyklus. Auf einem Panel
+liegen vier Buttons, deren Fokusreihenfolge jedes Mal per Zufallsgenerator
+neu bestimmt wird, wenn der Button &#187;Mischen!&#171; gedr&uuml;ckt
+wird. 
+
+<p>
+Dazu repr&auml;sentiert die Liste <font color="#000077"><tt>buttons</tt></font>
+die aktuelle Reihenfolge der Elemente. Bei jedem <font color="#007700"><tt>[TAB]</tt></font>-Tastendruck
+wird der Index des Buttons in der Liste bestimmt, der den Fokus besitzt,
+und der rechts davon liegende Button wird herausgegeben. Durch die
+Verwendung des Modulo-Operators in der Methode <font color="#000077"><tt>getComponentAfter</tt></font>
+geben wir den ersten Button aus der Liste zur&uuml;ck, wenn der aktuelle
+Button der letzte in der definierten Reihenfolge ist. Dadurch ergibt
+sich ein Zyklus. Die Methode <font color="#000077"><tt>getComponentBefore</tt></font>
+ist analog implementiert. Zudem wurde die Methode <a name="ixa102555"><a href="index_g.html#ixb101910"><font color=#000080><tt>getFirstComponent</tt></font></a></a>
+und <font color="#000077"><tt>getLastComponent</tt></font> &uuml;berschrieben.
+Sie geben das erste Element bzw. das letzte Element in der Liste zur&uuml;ck.
+
+<p>
+<a name="ixa102556"><a href="index_g.html#ixb101911"><font color=#000080><tt>getDefaultComponent</tt></font></a></a>
+liefert ebenfalls das erste Element in der Liste und damit den gleichen
+Button wie <a href="index_g.html#ixb101910"><font color=#000080><tt>getFirstComponent</tt></font></a>.
+Der Unterschied besteht darin, dass beim Eintritt in den Fokuszyklus
+das Element den Fokus erh&auml;lt, das durch <a href="index_g.html#ixb101911"><font color=#000080><tt>getDefaultComponent</tt></font></a>
+bestimmt wird. <a href="index_g.html#ixb101910"><font color=#000080><tt>getFirstComponent</tt></font></a>
+liefert dagegen das auf das letzte Element folgende. 
+<a name="focustraversalpolicy"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3713.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">006 </font><font color="#0000AA">import</font> java.util.List;
+<font color="#555555">007 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">008 </font>
+<font color="#555555">009 </font><font color="#0000AA">class</font> ZufallFocusTraversalPolicy 
+<font color="#555555">010 </font><font color="#0000AA">extends</font> FocusTraversalPolicy
+<font color="#555555">011 </font>{
+<font color="#555555">012 </font>  <font color="#0000AA">private</font> List&lt;JButton&gt; buttons;
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>  ZufallFocusTraversalPolicy(List&lt;JButton&gt; buttons)
+<font color="#555555">015 </font>  {
+<font color="#555555">016 </font>    <font color="#006699">this</font>.buttons = <font color="#0000AA">new</font> ArrayList&lt;JButton&gt;(buttons);
+<font color="#555555">017 </font>    mischen();
+<font color="#555555">018 </font>  }
+<font color="#555555">019 </font>  
+<font color="#555555">020 </font>  <font color="#0000AA">public</font> Component getComponentAfter(Container con, Component com)
+<font color="#555555">021 </font>  {
+<font color="#555555">022 </font>    <font color="#0000AA">return</font> buttons.get((buttons.indexOf(com)+1) % buttons.size());
+<font color="#555555">023 </font>  }
+<font color="#555555">024 </font>
+<font color="#555555">025 </font>  <font color="#0000AA">public</font> Component getComponentBefore(Container con, Component com)
+<font color="#555555">026 </font>  {
+<font color="#555555">027 </font>    <font color="#006699">int</font> n = buttons.size();
+<font color="#555555">028 </font>    <font color="#0000AA">return</font> buttons.get((buttons.indexOf(com) + n-1) % n);
+<font color="#555555">029 </font>  }
+<font color="#555555">030 </font>  
+<font color="#555555">031 </font>  <font color="#0000AA">public</font> Component getFirstComponent(Container con)
+<font color="#555555">032 </font>  {
+<font color="#555555">033 </font>    <font color="#0000AA">return</font> buttons.get(0);
+<font color="#555555">034 </font>  }
+<font color="#555555">035 </font>  
+<font color="#555555">036 </font>  <font color="#0000AA">public</font> Component getLastComponent(Container con)
+<font color="#555555">037 </font>  {
+<font color="#555555">038 </font>    <font color="#0000AA">return</font> buttons.get(buttons.size()-1);
+<font color="#555555">039 </font>  }
+<font color="#555555">040 </font>  
+<font color="#555555">041 </font>  <font color="#0000AA">public</font> Component getDefaultComponent(Container con)
+<font color="#555555">042 </font>  {
+<font color="#555555">043 </font>    <font color="#0000AA">return</font> getFirstComponent(con);
+<font color="#555555">044 </font>  }
+<font color="#555555">045 </font>  
+<font color="#555555">046 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> mischen()
+<font color="#555555">047 </font>  {
+<font color="#555555">048 </font>    Collections.shuffle(buttons);
+<font color="#555555">049 </font>    System.err.print(<font color="#0000FF">"Fokusreihenfolge: "</font>);
+<font color="#555555">050 </font>    <font color="#0000AA">for</font> (JButton button : buttons) {
+<font color="#555555">051 </font>      System.err.print(button.getText() + <font color="#0000FF">" "</font>);
+<font color="#555555">052 </font>    }
+<font color="#555555">053 </font>    System.err.println();
+<font color="#555555">054 </font>  }
+<font color="#555555">055 </font>}
+<font color="#555555">056 </font>
+<font color="#555555">057 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3713 
+<font color="#555555">058 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">059 </font>{
+<font color="#555555">060 </font>  Listing3713()
+<font color="#555555">061 </font>  {
+<font color="#555555">062 </font>    setLayout(<font color="#0000AA">new</font> FlowLayout());
+<font color="#555555">063 </font>    
+<font color="#555555">064 </font>    JPanel panel = <font color="#0000AA">new</font> JPanel();
+<font color="#555555">065 </font>    List&lt;JButton&gt; buttons = <font color="#0000AA">new</font> ArrayList&lt;JButton&gt;();
+<font color="#555555">066 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 1; i &lt;= 4; i++) {
+<font color="#555555">067 </font>      JButton button = <font color="#0000AA">new</font> JButton(Integer.toString(i));
+<font color="#555555">068 </font>      panel.add(button);
+<font color="#555555">069 </font>      buttons.add(button);
+<font color="#555555">070 </font>    }
+<font color="#555555">071 </font>
+<font color="#555555">072 </font>    <font color="#0000AA">final</font> ZufallFocusTraversalPolicy policy =  <a name="focustraversalpolicy.a"></a>
+<font color="#555555">073 </font>    	<font color="#0000AA">new</font> ZufallFocusTraversalPolicy(buttons);
+<font color="#555555">074 </font>    panel.setFocusCycleRoot(<font color="#006699">true</font>);
+<font color="#555555">075 </font>    panel.setFocusTraversalPolicy(policy);     <a name="focustraversalpolicy.b"></a>
+<font color="#555555">076 </font>
+<font color="#555555">077 </font>    JButton mischen = <font color="#0000AA">new</font> JButton(<font color="#0000FF">"Mischen!"</font>);
+<font color="#555555">078 </font>    mischen.addActionListener(<font color="#0000AA">new</font> ActionListener()
+<font color="#555555">079 </font>    {
+<font color="#555555">080 </font>      <font color="#0000AA">public</font> <font color="#006699">void</font> actionPerformed(ActionEvent e)
+<font color="#555555">081 </font>      {
+<font color="#555555">082 </font>        policy.mischen();
+<font color="#555555">083 </font>      }
+<font color="#555555">084 </font>    });
+<font color="#555555">085 </font>    
+<font color="#555555">086 </font>    add(panel);
+<font color="#555555">087 </font>    add(mischen);
+<font color="#555555">088 </font>    pack();
+<font color="#555555">089 </font>  }
+<font color="#555555">090 </font>  
+<font color="#555555">091 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">092 </font>  {
+<font color="#555555">093 </font>    Listing3713 frame = <font color="#0000AA">new</font> Listing3713();
+<font color="#555555">094 </font>    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+<font color="#555555">095 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">096 </font>  }
+<font color="#555555">097 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3713.java"><font color="#000055" size=-1>Listing3713.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 37.13: FocusTraversalPolicy </i></p>
+
+<p>
+Die Ausgabe des Programms ist zum Beispiel:
+<font color="#333300">
+<pre>
+Fokusreihenfolge: 2 4 1 3 
+Fokusreihenfolge: 3 2 1 4 
+Fokusreihenfolge: 2 1 3 4 
+</pre>
+</font>
+<p>
+<a name="imageid037013"></a>
+<img src="images/FocusPolicy.gif">
+<p>
+
+<p><i>
+Abbildung 37.13: Buttonpanel mit eigener FocusTraversalPolicy</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Das <a href="k100243.html#focustraversalpolicy">Listing 37.13</a>
+verwendet statt des <font color="#000077"><tt>WindowClosingAdapter</tt></font>
+die Option <a name="ixa102557"><a href="index_j.html#ixb101912"><font color=#000080><tt>JFrame.EXIT_ON_CLOSE</tt></font></a></a>.
+Dadurch wird der <a href="index_j.html#ixb100513"><font color=#000080><tt>JFrame</tt></font></a>
+beim Klick auf das Kreuz geschlossen, ohne dass ein expliziter <a href="index_w.html#ixb101162"><font color=#000080><tt>WindowListener</tt></font></a>
+registriert werden muss.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id037003001010"></a>
+<h4>Registrieren von Tastaturkommandos </h4>
+
+<p>
+Als letzte Eigenschaft der Klasse <a href="index_j.html#ixb101780"><font color=#000080><tt>JComponent</tt></font></a>
+wollen wir uns das Registrieren von Tastaturkommandos ansehen. Dabei
+wird eine bestimmte Tastenkombination bei einer Komponente angemeldet
+und l&ouml;st bei jeder Anwendung ein Action-Event aus. Tastaturkommandos
+k&ouml;nnen sowohl bei elementaren Komponenten als auch bei Containern
+angemeldet werden, und es gibt verschiedene M&ouml;glichkeiten, sie
+vom Fokus der Komponente abh&auml;ngig zu machen. Das Registrieren
+erfolgt mit der Methode <a name="ixa102558"><a href="index_r.html#ixb101913"><font color=#000080><tt>registerKeyboardAction</tt></font></a></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void registerKeyboardAction(
+  ActionListener anAction,
+  String aCommand,
+  KeyStroke aKeyStroke,
+  int aCondition
+)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JComponent.html" onClick="this.href=getApiDoc('javax.swing.JComponent')"><font color="#660066" size=-1>javax.swing.JComponent</font></a></td>
+</tr>
+</table>
+
+<p>
+Deren erstes Argument ist der <a href="index_a.html#ixb101408"><font color=#000080><tt>ActionListener</tt></font></a>,
+der im Fall des Tastendrucks (mit dem Kommando <font color="#000077"><tt>aCommand</tt></font>)
+aufgerufen werden soll. <font color="#000077"><tt>aKeyStroke</tt></font>
+definiert die zu registrierende Tastenkombination (wie man <a href="index_k.html#ixb101847"><font color=#000080><tt>KeyStroke</tt></font></a>-Objekte
+erzeugt, wurde in <a href="k100242.html#simpleswingmenu">Listing 37.8</a>
+gezeigt). Das letzte Argument gibt an, in welcher Relation der Fokus
+zur Komponente stehen muss, damit das Kommando aktiv wird. Er kann
+einen der folgenden Werte annehmen: <a name="tableid037006"></a>
+
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=33%><b>Konstante</b></td>
+<td valign=top align=left width=66%><b>Bedeutung</b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102559"><a href="index_w.html#ixb101914"><font color=#000080><tt>WHEN_FOCUSED</tt></font></a></a></td>
+<td valign=top align=left>Das Tastaturkommando wird nur ausgel&ouml;st,
+wenn die Komponente den Fokus hat.</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102560"><a href="index_w.html#ixb101915"><font color=#000080><tt>WHEN_IN_FOCUSED_WINDOW</tt></font></a></a></td>
+<td valign=top align=left>Das Tastaturkommando wird ausgel&ouml;st,
+wenn die Komponente den Fokus hat oder wenn sie zu einem Container
+geh&ouml;rt, der gerade den Fokus hat.</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102561"><a href="index_w.html#ixb101916"><font color=#000080><tt>WHEN_ANCESTOR_OF_FOCUSED_COMPONENT</tt></font></a></a></td>
+<td valign=top align=left>Das Tastaturkommando wird ausgel&ouml;st,
+wenn die Komponente oder eines der darin enthaltenen Elemente den
+Fokus hat.</td></tr>
+</table>
+<p><i>
+Tabelle 37.6: Bedingungen zur Registrierung von Tastaturkommandos</i></p>
+
+<p>
+Bei der Verwendung der zweiten und dritten Variante werden die Tastendr&uuml;cke
+immer dann ausgef&uuml;hrt, wenn der Container selbst oder eine der
+darin enthaltenen Komponenten den Fokus hat. Der Unterschied besteht
+in der Sichtweise. <a href="index_w.html#ixb101915"><font color=#000080><tt>WHEN_IN_FOCUSED_WINDOW</tt></font></a>
+wird auf die elementaren Komponenten angewendet, w&auml;hrend <a href="index_w.html#ixb101916"><font color=#000080><tt>WHEN_ANCESTOR_OF_FOCUSED_COMPONENT</tt></font></a>
+f&uuml;r den Container selbst vorgesehen ist. 
+
+<p>
+Das folgende Programm zeigt eine beispielhafte Anwendung f&uuml;r
+das Registrieren von Tastaturkommandos: 
+<a name="listingid037014"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3714.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">006 </font><font color="#0000AA">import</font> javax.swing.border.*;
+<font color="#555555">007 </font>
+<font color="#555555">008 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3714
+<font color="#555555">009 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">010 </font><font color="#0000AA">implements</font> ActionListener
+<font color="#555555">011 </font>{
+<font color="#555555">012 </font>  <font color="#0000AA">public</font> Listing3714()
+<font color="#555555">013 </font>  {
+<font color="#555555">014 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Invalidierung"</font>);
+<font color="#555555">015 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">016 </font>    Container cp = getContentPane();
+<font color="#555555">017 </font>    ((JComponent)cp).setBorder(<font color="#0000AA">new</font> EmptyBorder(5, 5, 5, 5));
+<font color="#555555">018 </font>    cp.setLayout(<font color="#0000AA">new</font> FlowLayout());
+<font color="#555555">019 </font>    <font color="#00AA00">//Textfelder erzeugen</font>
+<font color="#555555">020 </font>    JTextField tf1 = <font color="#0000AA">new</font> JTextField(<font color="#0000FF">"Zeile1"</font>, 20);
+<font color="#555555">021 </font>    JTextField tf2 = <font color="#0000AA">new</font> JTextField(<font color="#0000FF">"Zeile2"</font>, 20);
+<font color="#555555">022 </font>    JTextField tf3 = <font color="#0000AA">new</font> JTextField(<font color="#0000FF">"Zeile3"</font>, 20);
+<font color="#555555">023 </font>    <font color="#00AA00">//STRG+UMSCHALT+F6 auf Frame registrieren</font>
+<font color="#555555">024 </font>    ((JComponent)cp).registerKeyboardAction(
+<font color="#555555">025 </font>      <font color="#006699">this</font>,
+<font color="#555555">026 </font>      <font color="#0000FF">"dialog"</font>,
+<font color="#555555">027 </font>      ctrlShift(KeyEvent.VK_F6),
+<font color="#555555">028 </font>      JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT
+<font color="#555555">029 </font>    );
+<font color="#555555">030 </font>    <font color="#00AA00">//STRG+UMSCHALT+F7 auf tf1 registrieren</font>
+<font color="#555555">031 </font>    tf1.registerKeyboardAction(
+<font color="#555555">032 </font>      <font color="#006699">this</font>,
+<font color="#555555">033 </font>      <font color="#0000FF">"tf1"</font>,
+<font color="#555555">034 </font>      ctrlShift(KeyEvent.VK_F7),
+<font color="#555555">035 </font>      JComponent.WHEN_IN_FOCUSED_WINDOW
+<font color="#555555">036 </font>    );
+<font color="#555555">037 </font>    <font color="#00AA00">//STRG+UMSCHALT+F8 auf tf2 registrieren</font>
+<font color="#555555">038 </font>    tf2.registerKeyboardAction(
+<font color="#555555">039 </font>      <font color="#006699">this</font>,
+<font color="#555555">040 </font>      <font color="#0000FF">"tf2"</font>,
+<font color="#555555">041 </font>      ctrlShift(KeyEvent.VK_F8),
+<font color="#555555">042 </font>      JComponent.WHEN_FOCUSED
+<font color="#555555">043 </font>    );
+<font color="#555555">044 </font>    <font color="#00AA00">//Textfelder hinzuf&uuml;gen</font>
+<font color="#555555">045 </font>    cp.add(tf1);
+<font color="#555555">046 </font>    cp.add(tf2);
+<font color="#555555">047 </font>    cp.add(tf3);
+<font color="#555555">048 </font>  }
+<font color="#555555">049 </font>
+<font color="#555555">050 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> actionPerformed(ActionEvent event)
+<font color="#555555">051 </font>  {
+<font color="#555555">052 </font>    String cmd = event.getActionCommand();
+<font color="#555555">053 </font>    System.out.println(cmd);
+<font color="#555555">054 </font>  }
+<font color="#555555">055 </font>
+<font color="#555555">056 </font>  <font color="#0000AA">private</font> KeyStroke ctrlShift(<font color="#006699">int</font> vkey)
+<font color="#555555">057 </font>  {
+<font color="#555555">058 </font>    <font color="#0000AA">return</font> KeyStroke.getKeyStroke(
+<font color="#555555">059 </font>      vkey,
+<font color="#555555">060 </font>      Event.SHIFT_MASK + Event.CTRL_MASK
+<font color="#555555">061 </font>    );
+<font color="#555555">062 </font>  }
+<font color="#555555">063 </font>
+<font color="#555555">064 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">065 </font>  {
+<font color="#555555">066 </font>    Listing3714 frame = <font color="#0000AA">new</font> Listing3714();
+<font color="#555555">067 </font>    frame.setLocation(100, 100);
+<font color="#555555">068 </font>    frame.setSize(300, 200);
+<font color="#555555">069 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">070 </font>  }
+<font color="#555555">071 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3714.java"><font color="#000055" size=-1>Listing3714.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 37.14: Registrieren von Tastaturkommandos</i></p>
+
+<p>
+Das Hauptfenster selbst registriert die Tastenkombination <font color="#007700"><tt>[STRG]</tt></font>+<font color="#007700"><tt>[UMSCHALT]</tt></font>+<font color="#007700"><tt>[F6]</tt></font>.
+Sie funktioniert unabh&auml;ngig davon, welches der drei Textfelder
+den Fokus hat. Das oberste Textfeld registriert <font color="#007700"><tt>[STRG]</tt></font>+<font color="#007700"><tt>[UMSCHALT]</tt></font>+<font color="#007700"><tt>[F7]</tt></font>
+mit der Bedingung <a href="index_w.html#ixb101915"><font color=#000080><tt>WHEN_IN_FOCUSED_WINDOW</tt></font></a>.
+Die Tastenkombination steht in diesem Dialog also ebenfalls immer
+zur Verf&uuml;gung. Das n&auml;chste Textfeld registriert <font color="#007700"><tt>[STRG]</tt></font>+<font color="#007700"><tt>[UMSCHALT]</tt></font>+<font color="#007700"><tt>[F8]</tt></font>,
+l&auml;sst sie allerdings nur zu, wenn es selbst den Fokus hat. 
+
+<!-- Section -->
+
+<a name="sectlevel3id037003002"></a>
+<h3>37.3.2 JPanel und JLayeredPane </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id037003002001"></a>
+<h4>JPanel </h4>
+
+<p>
+<a name="ixa102562"><a href="index_j.html#ixb101779"><font color=#000080><tt>JPanel</tt></font></a></a>
+ist die Basisklasse f&uuml;r GUI-Container in Swing, die nicht Hauptfenster
+sind. Sie ist direkt aus <a href="index_j.html#ixb101780"><font color=#000080><tt>JComponent</tt></font></a>
+abgeleitet und f&uuml;gt dieser nur wenig hinzu. Wichtigstes Unterscheidungsmerkmal
+ist die Tatsache, dass einem <a href="index_j.html#ixb101779"><font color=#000080><tt>JPanel</tt></font></a>
+standardm&auml;&szlig;ig ein <a href="index_f.html#ixb101539"><font color=#000080><tt>FlowLayout</tt></font></a>
+als Layoutmanager zugeordnet ist. Instanzen von <a href="index_j.html#ixb101780"><font color=#000080><tt>JComponent</tt></font></a>
+besitzen dagegen zun&auml;chst keinen Layoutmanager. <a href="index_j.html#ixb101779"><font color=#000080><tt>JPanel</tt></font></a>
+definiert die folgenden Konstruktoren: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public JPanel()
+public JPanel(boolean isDoubleBuffered)
+public JPanel(LayoutManager layout)
+public JPanel(LayoutManager layout, boolean isDoubleBuffered)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JPanel.html" onClick="this.href=getApiDoc('javax.swing.JPanel')"><font color="#660066" size=-1>javax.swing.JPanel</font></a></td>
+</tr>
+</table>
+
+<p>
+Der parameterlose Konstruktor erzeugt ein <a href="index_j.html#ixb101779"><font color=#000080><tt>JPanel</tt></font></a>
+mit Doppelpufferung und einem <a href="index_f.html#ixb101539"><font color=#000080><tt>FlowLayout</tt></font></a>.
+Wahlweise k&ouml;nnen beide Eigenschaften durch Setzen der Argumente
+<font color="#000077"><tt>isDoubleBuffered</tt></font> und <font color="#000077"><tt>layout</tt></font>
+ge&auml;ndert werden. In der weiteren Anwendung ist <a href="index_j.html#ixb101779"><font color=#000080><tt>JPanel</tt></font></a>
+mit <a href="index_j.html#ixb101780"><font color=#000080><tt>JComponent</tt></font></a>
+identisch. 
+
+<!-- Section -->
+
+<a name="sectlevel4id037003002002"></a>
+<h4>JLayeredPane </h4>
+
+<p>
+Eine weitere Container-Klasse, die direkt aus <a href="index_j.html#ixb101780"><font color=#000080><tt>JComponent</tt></font></a>
+abgeleitet wurde, ist <a name="ixa102563"><a href="index_j.html#ixb101802"><font color=#000080><tt>JLayeredPane</tt></font></a></a>.
+Sie f&uuml;gt den Dialogen eine dritte Dimension hinzu und erm&ouml;glicht
+mit Hilfe eines Layerkonzepts die kontrollierte Anordnung von Komponenten
+&uuml;bereinander. <a href="index_j.html#ixb101802"><font color=#000080><tt>JLayeredPane</tt></font></a>
+ist Vaterklasse von <a href="index_j.html#ixb101830"><font color=#000080><tt>JDesktopPane</tt></font></a>
+(siehe <a href="k100241.html#jinternalframe">Abschnitt 37.1.6</a>)
+und wichtiger Bestandteil der Struktur von Hauptfenstern (siehe <a href="k100241.html#jframestruktur">Abschnitt 37.1.1</a>).
+In der praktischen Anwendung wird sie nur selten direkt gebraucht
+und wir wollen nicht weiter darauf eingehen. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100240.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100242.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100244.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100245.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

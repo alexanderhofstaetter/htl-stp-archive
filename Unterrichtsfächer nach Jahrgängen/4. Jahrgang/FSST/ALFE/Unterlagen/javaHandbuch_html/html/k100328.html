@@ -1,0 +1,155 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100327.html;106,k100327.html;107,k100329.html;108,k100332.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100327.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100327.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100329.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100332.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 52 - Performance-Tuning
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id052001"></a>
+<h2>52.1 Einleitung </h2>
+<hr>
+<ul>
+<li><a href="k100328.html#sectlevel2id052001">52.1 Einleitung</a>
+</ul>
+<hr>
+
+<p>
+Aufgrund der Plattformunabh&auml;ngigkeit des vom Compiler generierten
+Bytecodes kann dieser normalerweise nicht direkt auf dem jeweiligen
+Betriebssystem ausgef&uuml;hrt werden. Es wird stattdessen ein eigener
+Interpreter, die <a name="ixa103808"><i>Virtuelle Maschine</i></a>
+(kurz: VM), zur Ausf&uuml;hrung der erstellten Programme verwendet.
+
+<p>
+Interpretierter Code wird naturgem&auml;&szlig; langsamer ausgef&uuml;hrt
+als kompilierter, selbst wenn er in Form von Bytecodes vorliegt. Zwar
+ist es prinzipiell m&ouml;glich, auch Java-Programme in Native-Code
+zu &uuml;bersetzen (es gibt sogar einige kommerzielle Tools, die das
+tun), aber dann ist es mit der Plattformunabh&auml;ngigkeit aus und
+das fertige Programm l&auml;uft nur noch auf einem Betriebssystem.
+W&auml;hrend das f&uuml;r <i>Applikationen</i> in bestimmten F&auml;llen
+akzeptabel sein mag, verbietet sich diese Vorgehensweise f&uuml;r
+<i>Applets</i> von selbst, denn sie laufen im Internet auf vielen
+verschiedenen Browsern und Betriebssystemen. Zudem widersprechen native-kompilierte
+Programme der Grundidee der plattform&uuml;bergreifenden Bin&auml;rkompatibilit&auml;t,
+die eine der herausragenden Eigenschaften von Java ist. 
+
+<p>
+Heutige JREs f&uuml;hren den Bytecode mit Hilfe eines <a name="ixa103809"><i>Just-In-Time-Compiler</i></a>
+(kurz: <a name="ixa103810"><i>JIT</i></a>) aus. Ein JIT ist ein Programm,
+das den Bytecode von Methoden w&auml;hrend der Ausf&uuml;hrung des
+Programms in Maschinencode der aktuellen Plattform &uuml;bersetzt
+und so beim n&auml;chsten Aufruf wesentlich schneller ausf&uuml;hren
+kann. Vorteilhaft ist dabei, dass die Klassendateien mit dem Bytecode
+unver&auml;ndert ausgeliefert werden k&ouml;nnen und das Programm
+seinen plattform&uuml;bergreifenden Charakter beh&auml;lt. Nur der
+Just-In-Time-Compiler ist plattformspezifisch und an ein bestimmtes
+Betriebssystem gebunden. Au&szlig;erdem setzt die JIT-Technologie
+zur <i>Laufzeit</i> des Programms an und kann daher gegen&uuml;ber
+dem klassischen, statischen Compile-Link-Run-Zyklus anderer Programmiersprachen
+im Prinzip effizienter optimieren, denn sie kann Informationen ber&uuml;cksichtigen,
+die erst zur Laufzeit des Programms zur Verf&uuml;gung stehen. In
+den neuen Versionen des JDK wird der JIT &uuml;brigens als <a name="ixa103811"><i>Hotspot-Compiler</i></a>
+bezeichnet. 
+
+<p>
+Leider ist auch ein Hotspot-Compiler kein Allheilmittel gegen Performance-Probleme.
+Zwar ist er heutzutage in der Lage, bestimmte Codeteile so stark zu
+beschleunigen, dass ihre Ablaufgeschwindigkeit der von direkt kompiliertem
+Code nahekommt. Andererseits gibt es nach wie vor gen&uuml;gend Gelegenheiten,
+Programme zu schreiben, die <i>inh&auml;rent langsamen</i> Code enthalten,
+der auch von einem Just-In-Time-Compiler nicht entscheidend verbessert
+werden kann. Zudem ensteht durch den Einsatz des JIT ein gewisser
+Overhead, der m&ouml;glicherweise einen Netto-Performancegewinn verhindert,
+denn das Kompilieren des Bytecodes kostet Zeit und zus&auml;tzlichen
+Speicher. 
+
+<p>
+Am besten ist es daher, bereits w&auml;hrend der Entwicklung der Programme
+auf die Ablaufgeschwindigkeit des erzeugten Codes zu achten. Wir wollen
+uns in diesem Kapitel einige typische Java-Konstrukte ansehen, die
+bei unachtsamer Verwendung zu Performance-Problemen f&uuml;hren k&ouml;nnen.
+Gleichzeitig wollen wir M&ouml;glichkeiten aufzeigen, wie man mit
+alternativem Code den Engpass umgehen und die Ablaufgeschwindigkeit
+des Programms verbessern kann. Wenn man diese Regeln beachtet, ist
+es selbstverst&auml;ndlich m&ouml;glich, in Java gr&ouml;&szlig;ere
+Programme zu schreiben, deren Laufzeitverhalten es mit denen anderer
+Anwendungen aufnehmen kann. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Wir wollen uns in diesem Kapitel nicht mit grundlegenden Techniken
+der Codeoptimierung besch&auml;ftigen. Auch wenn sie zeitweilig kurz
+angedeutet werden, k&ouml;nnen diese Themen besser in B&uuml;chern
+&uuml;ber Programmiersprachen, Algorithmen oder Optimierungstechniken
+f&uuml;r Compiler nachgelesen werden. Auch Tipps &amp; Tricks, die
+in aller Regel nur marginale Verbesserungen bringen, sollen hier nicht
+behandelt werden. Ebenso wenig inh&auml;rent langsame Algorithmen,
+f&uuml;r die keine einfach anzuwendenden Alternativen bekannt sind.
+Stattdessen wollen wir uns auf einige wenige, wichtige Themenkomplexe
+konzentrieren, die leicht umzusetzen sind und in der Praxis schnell
+zu Verbesserungen f&uuml;hren.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100327.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100327.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100329.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100332.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

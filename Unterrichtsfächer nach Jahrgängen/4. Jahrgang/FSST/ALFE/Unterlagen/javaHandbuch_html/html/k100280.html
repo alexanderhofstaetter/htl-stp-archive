@@ -1,0 +1,658 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100278.html;106,k100279.html;107,k100281.html;108,k100284.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100278.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100279.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100281.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100284.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 44 - Datenbankzugriffe mit JDBC
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id044002"></a>
+<h2>44.2 Grundlagen von JDBC </h2>
+<hr>
+<ul>
+<li><a href="k100280.html#sectlevel2id044002">44.2 Grundlagen von JDBC</a>
+<ul>
+<li><a href="k100280.html#sectlevel3id044002001">44.2.1 &Ouml;ffnen einer Verbindung</a>
+<li><a href="k100280.html#sectlevel3id044002002">44.2.2 Erzeugen von Anweisungsobjekten</a>
+<li><a href="k100280.html#sectlevel3id044002003">44.2.3 Datenbankabfragen</a>
+<li><a href="k100280.html#sectlevel3id044002004">44.2.4 Datenbank&auml;nderungen</a>
+<li><a href="k100280.html#sectlevel3id044002005">44.2.5 Die Klasse SQLException</a>
+<li><a href="k100280.html#sectlevel3id044002006">44.2.6 Die Klasse SQLWarning</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id044002001"></a>
+<h3>44.2.1 &Ouml;ffnen einer Verbindung </h3>
+
+<p>
+Bevor mit JDBC auf eine Datenbank zugegriffen werden kann, muss zun&auml;chst
+eine Verbindung zu ihr hergestellt werden. Dazu muss der Datenbanktreiber
+geladen und initialisiert und mit Hilfe des Treibermanagers ein Verbindungsobjekt
+beschafft werden. Es bleibt w&auml;hrend der gesamten Verbindung bestehen
+und dient als Lieferant f&uuml;r spezielle Objekte zur Abfrage und
+Ver&auml;nderung der Datenbank. Alle Klassen zum Zugriff auf die JDBC-Schnittstelle
+liegen im Paket <a name="ixa103175"><a href="index_j.html#ixb100201"><font color=#000080><tt>java.sql</tt></font></a></a>,
+das am Anfang des Programms importiert werden sollte: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+import java.sql.*;
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+Jeder JDBC-Treiber hat einen statischen Initialisierer, der beim Laden
+der Klasse aufgerufen wird. Seine Aufgabe besteht darin, sich beim
+<a name="ixa103176"><i>Treibermanager</i></a> zu registrieren, um
+bei sp&auml;teren Verbindungsanfragen von diesem angesprochen werden
+zu k&ouml;nnen. Das Laden der Treiberklasse wird &uuml;blicherweise
+durch Aufruf der Methode <a href="index_f.html#ixb102370"><font color=#000080><tt>forName</tt></font></a>
+der Klasse <a href="index_c.html#ixb100654"><font color=#000080><tt>Class</tt></font></a>
+erledigt (siehe <a href="k100286.html#dieklasseclass">Abschnitt 45.2.2</a>).
+Um einen Treiber zu laden, muss man also seinen vollst&auml;ndigen
+Klassennamen kennen: 
+<font color="#000077">
+<pre>
+Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+</pre>
+</font>
+
+<p>
+<a name="ixa103177"><a href="index_s.html#ixb102371"><font color=#000080><tt>sun.jdbc.odbc.JdbcOdbcDriver</tt></font></a></a>
+ist der Name der JDBC-ODBC-Bridge, mit der die oben erw&auml;hnten
+Typ-1-Treiber realisiert werden. Die Namen alternativer Treiber sind
+der Dokumentation des jeweiligen Herstellers zu entnehmen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Bei vielen JDBC-Treibern kann dieser Schritt heutzutage entfallen,
+denn die <font color="#000077"><tt>Driver</tt></font>-Klasse wird
+vom Hersteller h&auml;ufig bereits in der Manifest-Datei des JDBC-Treibers
+definiert. </td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Nachdem der Treiber geladen wurde, kann er dazu verwendet werden,
+eine Verbindung zu einer Datenbank aufzubauen. Dazu wird an die statische
+Methode <a name="ixa103178"><a href="index_g.html#ixb102372"><font color=#000080><tt>getConnection</tt></font></a></a>
+der Klasse <a name="ixa103179"><a href="index_d.html#ixb102373"><font color=#000080><tt>DriverManager</tt></font></a></a>
+ein String und eventuell weitere Parameter &uuml;bergeben, um den
+Treibertyp, die Datenbank und n&ouml;tigenfalls weitere Informationen
+festzulegen. <a href="index_g.html#ixb102372"><font color=#000080><tt>getConnection</tt></font></a>
+gibt es in drei Auspr&auml;gungen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+static Connection getConnection(
+  String url
+)
+
+static Connection getConnection(
+  String url,
+  String user,
+  String password
+)
+
+static Connection getConnection(
+  String url,
+  Properties info
+)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/sql/DriverManager.html" onClick="this.href=getApiDoc('java.sql.DriverManager')"><font color="#660066" size=-1>java.sql.DriverManager</font></a></td>
+</tr>
+</table>
+
+<p>
+Die erste Variante erwartet lediglich einen Connection-String als
+Argument, der in Form eines URL (Uniform Ressource Locator, siehe
+<a href="k100264.html#dieklasseurl">Abschnitt 41.1.1</a>) &uuml;bergeben
+wird. Der Connection-String besteht aus mehreren Teilen, die durch
+Doppelpunkte voneinander getrennt sind. Der erste Teil ist immer &#187;jdbc&#171;
+und zeigt an, dass es sich um einen JDBC-URL handelt. Der zweite Teil
+wird als <i>Sub-Protokoll</i> bezeichnet und gibt an, welcher Treiber
+verwendet werden soll. Die &uuml;brigen Teile sind treiberspezifisch.
+Connection-Strings f&uuml;r die JDBC-ODBC-Bridge beginnen immer mit
+&#187;jdbc:odbc&#171;, gefolgt von einem weiteren Doppelpunkt, nach
+dem der Name der ODBC-Datenquelle angegeben wird: 
+<font color="#000077">
+<pre>
+con = DriverManager.getConnection("jdbc:odbc:DirDB");
+</pre>
+</font>
+
+<p>
+Die zweite Variante von <a href="index_g.html#ixb102372"><font color=#000080><tt>getConnection</tt></font></a>
+erlaubt es, zus&auml;tzlich den Benutzernamen und das Passwort an
+die Datenbank zu &uuml;bergeben. Das ist bei vielen Datenbanken erforderlich,
+um eine Verbindung aufbauen zu k&ouml;nnen. Bei der dritten Variante
+k&ouml;nnen zus&auml;tzlich mit Hilfe eines <a href="index_p.html#ixb100717"><font color=#000080><tt>Properties</tt></font></a>-Objekts
+weitere, treiberspezifische Informationen &uuml;bergeben werden. Welche
+Variante zu verwenden ist, muss der jeweiligen Treiberdokumentation
+entnommen werden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Falls die Datenbank nicht ge&ouml;ffnet werden konnte, l&ouml;st <a href="index_g.html#ixb102372"><font color=#000080><tt>getConnection</tt></font></a>
+eine Ausnahme des Typs <a name="ixa103180"><a href="index_s.html#ixb102374"><font color=#000080><tt>SQLException</tt></font></a></a>
+aus. Diese Ausnahme wird auch von fast allen anderen Methoden und
+Klassen verwendet, um einen Fehler beim Zugriff auf die Datenbank
+anzuzeigen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Wenn die Verbindung erfolgreich aufgebaut werden konnte, liefert <a href="index_g.html#ixb102372"><font color=#000080><tt>getConnection</tt></font></a>
+ein Objekt, das das Interface <a name="ixa103181"><a href="index_c.html#ixb100590"><font color=#000080><tt>Connection</tt></font></a></a>
+implementiert. Dieses Verbindungsobjekt repr&auml;sentiert die aktuelle
+Datenbanksitzung und dient dazu, Anweisungsobjekte zu erzeugen und
+globale Einstellungen an der Datenbank zu ver&auml;ndern. Das <a href="index_c.html#ixb100590"><font color=#000080><tt>Connection</tt></font></a>-Objekt
+kann durch Aufruf von <a name="ixa103182"><a href="index_c.html#ixb100596"><font color=#000080><tt>close</tt></font></a></a>
+explizit geschlossen werden. Die Verbindung wird automatisch geschlossen,
+wenn die <a href="index_c.html#ixb100590"><font color=#000080><tt>Connection</tt></font></a>-Variable
+vom Garbage Collector zerst&ouml;rt wird. Es geh&ouml;rt jedoch zu
+einem guten Programmierstil, die <a href="index_c.html#ixb100590"><font color=#000080><tt>Connection</tt></font></a>
+explizit zu schlie&szlig;en, wenn sie nicht mehr gebraucht wird. 
+
+<!-- Section -->
+
+<a name="sectlevel3id044002002"></a>
+<h3>44.2.2 Erzeugen von Anweisungsobjekten </h3>
+
+<p>
+Alle Abfragen und &Auml;nderungen der Datenbank erfolgen mit Hilfe
+von <a name="ixa103183"><i>Anweisungsobjekten</i></a>. Das sind Objekte,
+die das Interface <a name="ixa103184"><a href="index_s.html#ixb100591"><font color=#000080><tt>Statement</tt></font></a></a>
+oder eines seiner Subinterfaces implementieren und von speziellen
+Methoden des <a href="index_c.html#ixb100590"><font color=#000080><tt>Connection</tt></font></a>-Objekts
+erzeugt werden k&ouml;nnen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+Statement createStatement()
+
+PreparedStatement prepareStatement(String sql)
+
+CallableStatement prepareCall(String sql)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/sql/Connection.html" onClick="this.href=getApiDoc('java.sql.Connection')"><font color="#660066" size=-1>java.sql.Connection</font></a></td>
+</tr>
+</table>
+
+<p>
+Die einfachste Form ist dabei das von <a name="ixa103185"><a href="index_c.html#ixb102376"><font color=#000080><tt>createStatement</tt></font></a></a>
+erzeugte <a href="index_s.html#ixb100591"><font color=#000080><tt>Statement</tt></font></a>-Objekt.
+Es kann dazu verwendet werden, unparametrisierte Abfragen und &Auml;nderungen
+der Datenbank zu erzeugen. Seine beiden wichtigsten Methoden sind
+<a name="ixa103186"><a href="index_e.html#ixb102377"><font color=#000080><tt>executeQuery</tt></font></a></a>
+und <a name="ixa103187"><a href="index_e.html#ixb102378"><font color=#000080><tt>executeUpdate</tt></font></a></a>.
+Sie erwarten einen SQL-String als Argument und reichen diesen an die
+Datenbank weiter. Zur&uuml;ckgegeben wird entweder ein einfacher numerischer
+Ergebniswert, der den Erfolg der Anweisung anzeigt, oder eine Menge
+von Datenbanks&auml;tzen, die das Ergebnis der Abfrage repr&auml;sentieren.
+Auf die beiden &uuml;brigen Anweisungstypen werden wir sp&auml;ter
+zur&uuml;ckkommen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+<a href="index_s.html#ixb100591"><font color=#000080><tt>Statement</tt></font></a>-Objekte
+sind bei manchen Treibern <i>kostspielige</i> Ressourcen, deren Erzeugen
+viel Speicher oder Rechenzeit kostet. Das Erzeugen einer gro&szlig;en
+Anzahl von <a href="index_s.html#ixb100591"><font color=#000080><tt>Statement</tt></font></a>-Objekten
+(beispielsweise beim Durchlaufen einer Schleife) sollte in diesem
+Fall vermieden werden. Viele JDBC-Programme legen daher nach dem &Ouml;ffnen
+der Verbindung eine Reihe von vordefinierten <a href="index_s.html#ixb100591"><font color=#000080><tt>Statement</tt></font></a>-Objekten
+an und verwenden diese immer wieder. Obwohl das im Prinzip problemlos
+m&ouml;glich ist, kann es in der Praxis leicht dazu f&uuml;hren, dass
+ein <a href="index_s.html#ixb100591"><font color=#000080><tt>Statement</tt></font></a>-Objekt,
+das noch in Gebrauch ist (beispielsweise, weil seine Ergebnismenge
+noch nicht vollst&auml;ndig abgefragt ist), erneut verwendet wird.
+Das Verhalten des Programms ist dann nat&uuml;rlich undefiniert. Wir
+werden sp&auml;ter in <a href="k100282.html#jdbcobjekte">Abschnitt 44.4.5</a>
+eine L&ouml;sung f&uuml;r dieses Problem kennenlernen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id044002003"></a>
+<h3>44.2.3 Datenbankabfragen </h3>
+
+<p>
+Hat man ein <a href="index_s.html#ixb100591"><font color=#000080><tt>Statement</tt></font></a>-Objekt
+beschafft, kann dessen Methode <a name="ixa103188"><a href="index_e.html#ixb102377"><font color=#000080><tt>executeQuery</tt></font></a></a>
+verwendet werden, um Daten aus der Datenbank zu lesen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public ResultSet executeQuery(String sql)
+  throws SQLException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/sql/Statement.html" onClick="this.href=getApiDoc('java.sql.Statement')"><font color="#660066" size=-1>java.sql.Statement</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Methode erwartet einen SQL-String in Form einer g&uuml;ltigen
+<a name="ixa103189"><i>SELECT-Anweisung</i></a> und gibt ein Objekt
+vom Typ <a name="ixa103190"><a href="index_r.html#ixb100592"><font color=#000080><tt>ResultSet</tt></font></a></a>
+zur&uuml;ck, das die Ergebnismenge repr&auml;sentiert. Als Argument
+d&uuml;rfen beliebige SELECT-Anweisungen &uuml;bergeben werden, sofern
+sie f&uuml;r die zugrunde liegende Datenbank g&uuml;ltig sind. Die
+folgende SQL-Anweisung selektiert beispielsweise alle S&auml;tze aus
+der Tabelle <font color="#000077"><tt>dir</tt></font>, deren Feld
+<font color="#000077"><tt>did</tt></font> den Wert 7 hat: 
+<font color="#000077">
+<pre>
+SELECT * FROM dir WHERE did = 7
+</pre>
+</font>
+
+<p>
+Das zur&uuml;ckgegebene Objekt vom Typ <a href="index_r.html#ixb100592"><font color=#000080><tt>ResultSet</tt></font></a>
+besitzt eine Methode <a name="ixa103191"><a href="index_n.html#ixb100112"><font color=#000080><tt>next</tt></font></a></a>,
+mit der die Ergebnismenge schrittweise durchlaufen werden kann: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+boolean next()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/sql/ResultSet.html" onClick="this.href=getApiDoc('java.sql.ResultSet')"><font color="#660066" size=-1>java.sql.ResultSet</font></a></td>
+</tr>
+</table>
+
+<p>
+Nach dem Aufruf von <a href="index_e.html#ixb102377"><font color=#000080><tt>executeQuery</tt></font></a>
+steht der Satzzeiger zun&auml;chst <i>vor</i> dem ersten Element,
+jeder Aufruf von <a href="index_n.html#ixb100112"><font color=#000080><tt>next</tt></font></a>
+positioniert ihn auf das n&auml;chste Element. Der R&uuml;ckgabewert
+gibt an, ob die Operation erfolgreich war. Ist er <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>,
+gibt es keine weiteren Elemente in der Ergebnismenge. Ist er dagegen
+<a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>,
+konnte das n&auml;chste Element erfolgreich ausgew&auml;hlt werden,
+und mit Hilfe verschiedener <font color="#000077"><tt>get...</tt></font>-Methoden
+kann nun auf die einzelnen Spalten zugegriffen werden. Jede dieser
+Methoden steht in zwei unterschiedlichen Varianten zur Verf&uuml;gung:
+<ul>
+<li>Wird ein numerischer Wert <i>n</i> als Argument &uuml;bergeben,
+so wird dieser als Spaltenindex interpretiert und der Wert der <i>n</i>-ten
+Spalte zur&uuml;ckgegeben. Wichtig: Anders als bei Arrays hat die
+erste Spalte den Index 1.
+<li>Wird ein <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+als Argument &uuml;bergeben, so wird er als Name interpretiert und
+der Wert der Spalte mit diesem Namen zur&uuml;ckgegeben. Diese Variante
+soll zwar marginal langsamer als die erste sein, ist aber weniger
+fehlertr&auml;chtig. Da der Aufruf nicht mehr von der Spaltenreihenfolge
+der Abfrage abh&auml;ngt, ist ihr normalerweise der Vorzug zu geben
+(das klappt leider nicht immer, wie die Warnung am Ende von <a href="k100282.html#jdbcobjekte">Abschnitt 44.4.5</a>
+deutlich macht).
+</ul>
+
+<p>
+Um dem Entwickler l&auml;stige Typkonvertierungen zu ersparen, gibt
+es alle <font color="#000077"><tt>getXXX</tt></font>-Methoden in unterschiedlichen
+Typisierungen. So liefert beispielsweise <a name="ixa103192"><a href="index_g.html#ixb100959"><font color=#000080><tt>getString</tt></font></a></a>
+das gew&uuml;nschte Feld als <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>,
+w&auml;hrend <a name="ixa103193"><a href="index_g.html#ixb102380"><font color=#000080><tt>getInt</tt></font></a></a>
+es als <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>
+zur&uuml;ckgibt. Wo es m&ouml;glich und sinnvoll ist, werden automatische
+Typkonvertierungen durchgef&uuml;hrt; <a href="index_g.html#ixb100959"><font color=#000080><tt>getString</tt></font></a>
+kann beispielsweise f&uuml;r nahezu alle Typen verwendet werden. <a href="k100280.html#resultsetgetmethoden">Tabelle 44.1</a>
+gibt eine &Uuml;bersicht &uuml;ber die wichtigsten <font color="#000077"><tt>get</tt></font>-Methoden
+der Klasse <a href="index_r.html#ixb100592"><font color=#000080><tt>ResultSet</tt></font></a>.
+In <a href="k100282.html#sqldatentypen">Tabelle 44.4</a> findet sich
+eine &Uuml;bersicht der wichtigsten SQL-Datentypen. <a name="resultsetgetmethoden"></a>
+
+<p>
+<table cols=2 border width=66%>
+
+<tr>
+<td valign=top align=left width=40%><b>R&uuml;ckgabewert</b></td>
+<td valign=top align=left width=60%><b>Methodenname</b></td></tr>
+<tr>
+<td valign=top align=left><a href="index_b.html#ixb100071"><font color=#000080><tt>boolean</tt></font></a>
+</td>
+<td valign=top align=left><a name="ixa103194"><a href="index_g.html#ixb102381"><font color=#000080><tt>getBoolean</tt></font></a></a></td></tr>
+<tr>
+<td valign=top align=left><a href="index_b.html#ixb100249"><font color=#000080><tt>byte</tt></font></a>
+</td>
+<td valign=top align=left><a name="ixa103195"><a href="index_g.html#ixb102382"><font color=#000080><tt>getByte</tt></font></a></a></td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>byte[]</tt></font>
+</td>
+<td valign=top align=left><a name="ixa103196"><a href="index_g.html#ixb102383"><font color=#000080><tt>getBytes</tt></font></a></a></td></tr>
+<tr>
+<td valign=top align=left><a href="index_d.html#ixb100559"><font color=#000080><tt>Date</tt></font></a>
+</td>
+<td valign=top align=left><a name="ixa103197"><a href="index_g.html#ixb102384"><font color=#000080><tt>getDate</tt></font></a></a></td></tr>
+<tr>
+<td valign=top align=left><a href="index_d.html#ixb100254"><font color=#000080><tt>double</tt></font></a>
+</td>
+<td valign=top align=left><a name="ixa103198"><a href="index_g.html#ixb102385"><font color=#000080><tt>getDouble</tt></font></a></a></td></tr>
+<tr>
+<td valign=top align=left><a href="index_f.html#ixb100253"><font color=#000080><tt>float</tt></font></a>
+</td>
+<td valign=top align=left><a name="ixa103199"><a href="index_g.html#ixb102386"><font color=#000080><tt>getFloat</tt></font></a></a></td></tr>
+<tr>
+<td valign=top align=left><a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>
+</td>
+<td valign=top align=left><a href="index_g.html#ixb102380"><font color=#000080><tt>getInt</tt></font></a></td></tr>
+<tr>
+<td valign=top align=left><a href="index_l.html#ixb100252"><font color=#000080><tt>long</tt></font></a>
+</td>
+<td valign=top align=left><a name="ixa103200"><a href="index_g.html#ixb102387"><font color=#000080><tt>getLong</tt></font></a></a></td></tr>
+<tr>
+<td valign=top align=left><a href="index_s.html#ixb100250"><font color=#000080><tt>short</tt></font></a>
+</td>
+<td valign=top align=left><a name="ixa103201"><a href="index_g.html#ixb102388"><font color=#000080><tt>getShort</tt></font></a></a></td></tr>
+<tr>
+<td valign=top align=left><a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+</td>
+<td valign=top align=left><a href="index_g.html#ixb100959"><font color=#000080><tt>getString</tt></font></a></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103202"><a href="index_t.html#ixb102389"><font color=#000080><tt>Time</tt></font></a></a>
+</td>
+<td valign=top align=left><a name="ixa103203"><a href="index_g.html#ixb100829"><font color=#000080><tt>getTime</tt></font></a></a></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103204"><a href="index_t.html#ixb102390"><font color=#000080><tt>Timestamp</tt></font></a></a>
+</td>
+<td valign=top align=left><a name="ixa103205"><a href="index_g.html#ixb102391"><font color=#000080><tt>getTimestamp</tt></font></a></a></td></tr>
+</table>
+<p><i>
+Tabelle 44.1: get-Methoden von ResultSet</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Soll festgestellt werden, ob eine Spalte den Wert <a name="ixa103206"><a href="index_n.html#ixb102392"><font color=#000080><tt>NULL</tt></font></a></a>
+hatte, so kann das <i>nach</i> dem Aufruf der <font color="#000077"><tt>get</tt></font>-Methode
+durch Aufruf von <a name="ixa103207"><a href="index_w.html#ixb102393"><font color=#000080><tt>wasNull</tt></font></a></a>
+abgefragt werden. <a href="index_w.html#ixb102393"><font color=#000080><tt>wasNull</tt></font></a>
+gibt genau dann <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+zur&uuml;ck, wenn die letzte abgefragte Spalte einen <a href="index_n.html#ixb102392"><font color=#000080><tt>NULL</tt></font></a>-Wert
+als Inhalt hatte. Bei allen Spalten, die <a href="index_n.html#ixb102392"><font color=#000080><tt>NULL</tt></font></a>-Werte
+enthalten k&ouml;nnen, <i>muss</i> diese Abfrage also erfolgen. Bei
+den <font color="#000077"><tt>get</tt></font>-Methoden, die ein Objekt
+als Ergebniswert haben, geht es etwas einfacher. Hier wird <a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>
+zur&uuml;ckgegeben, wenn der Spaltenwert <a href="index_n.html#ixb102392"><font color=#000080><tt>NULL</tt></font></a>
+war.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id044002004"></a>
+<h3>44.2.4 Datenbank&auml;nderungen </h3>
+
+<p>
+Datenbank&auml;nderungen werden mit den SQL-Anweisungen <a name="ixa103208"><a href="index_i.html#ixb102394"><font color=#000080><tt>INSERT INTO</tt></font></a></a>,
+<a name="ixa103209"><a href="index_u.html#ixb102395"><font color=#000080><tt>UPDATE</tt></font></a></a>
+oder <a name="ixa103210"><a href="index_d.html#ixb102396"><font color=#000080><tt>DELETE FROM</tt></font></a></a>
+oder den SQL-DDL-Anweisungen (<a name="ixa103211"><i>Data Definition Language</i></a>)
+zum &Auml;ndern der Datenbankstruktur durchgef&uuml;hrt. Im Gegensatz
+zu Datenbankabfragen geben diese Anweisungen keine Ergebnismenge zur&uuml;ck,
+sondern lediglich einen einzelnen Wert. Im Falle von <a href="index_i.html#ixb102394"><font color=#000080><tt>INSERT INTO</tt></font></a>,
+<a href="index_u.html#ixb102395"><font color=#000080><tt>UPDATE</tt></font></a>
+und <a href="index_d.html#ixb102396"><font color=#000080><tt>DELETE FROM</tt></font></a>
+gibt dieser Wert an, wie viele Datens&auml;tze von der &Auml;nderung
+betroffen waren, bei DDL-Anweisungen ist er immer 0. 
+
+<p>
+Um solche Anweisungen durchzuf&uuml;hren, stellt das Interface <a href="index_s.html#ixb100591"><font color=#000080><tt>Statement</tt></font></a>
+die Methode <a name="ixa103212"><a href="index_e.html#ixb102378"><font color=#000080><tt>executeUpdate</tt></font></a></a>
+zur Verf&uuml;gung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int executeUpdate(String sql)
+  throws SQLException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/sql/Statement.html" onClick="this.href=getApiDoc('java.sql.Statement')"><font color="#660066" size=-1>java.sql.Statement</font></a></td>
+</tr>
+</table>
+
+<p>
+Auch sie erwartet als Argument einen String mit einer g&uuml;ltigen
+SQL-Anweisung, beispielsweise: 
+<font color="#000077">
+<pre>
+INSERT INTO dir VALUES (1, 'x.txt', 0)
+</pre>
+</font>
+
+<p>
+K&ouml;nnte diese Anweisung erfolgreich ausgef&uuml;hrt werden, w&uuml;rde
+sie 1 zur&uuml;ckgeben. Andernfalls w&uuml;rde eine <a name="ixa103213"><a href="index_s.html#ixb102374"><font color=#000080><tt>SQLException</tt></font></a></a>
+ausgel&ouml;st. 
+
+<!-- Section -->
+
+<a name="sectlevel3id044002005"></a>
+<h3>44.2.5 Die Klasse <a name="ixa103214">SQLException</a> </h3>
+
+<p>
+Wenn SQL-Anweisungen fehlschlagen, l&ouml;sen sie normalerweise eine
+Ausnahme des Typs <a href="index_s.html#ixb102374"><font color=#000080><tt>SQLException</tt></font></a>
+aus. Das gilt sowohl, wenn keine Verbindung zur Datenbank zustande
+gekommen ist, als auch bei allen Arten von Syntaxfehlern in SQL-Anweisungen.
+Auch bei semantischen Fehlern durch falsche Typisierung oder inhaltlich
+fehlerhafte SQL-Anweisungen wird eine solche Ausnahme ausgel&ouml;st.
+<a href="index_s.html#ixb102374"><font color=#000080><tt>SQLException</tt></font></a>
+ist eine Erweiterung der Klasse <a href="index_e.html#ixb100579"><font color=#000080><tt>Exception</tt></font></a>
+und stellt folgende zus&auml;tzliche Methoden zur Verf&uuml;gung:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+int getErrorCode()
+
+String getSQLState()
+
+SQLException getNextException()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/sql/SQLException.html" onClick="this.href=getApiDoc('java.sql.SQLException')"><font color="#660066" size=-1>java.sql.SQLException</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa103215"><a href="index_g.html#ixb102399"><font color=#000080><tt>getErrorCode</tt></font></a></a>
+kann der herstellerspezifische Fehlercode abgefragt werden, <a name="ixa103216"><a href="index_g.html#ixb102400"><font color=#000080><tt>getSQLState</tt></font></a></a>
+liefert den internen SQL-Zustandscode. Etwas ungew&ouml;hnlich ist
+die Methode <a name="ixa103217"><a href="index_g.html#ixb102401"><font color=#000080><tt>getNextException</tt></font></a></a>,
+denn sie unterst&uuml;tzt die <i>Verkettung</i> von Ausnahmen. Jeder
+Aufruf holt die n&auml;chste Ausnahme aus der Liste. Ist der R&uuml;ckgabewert
+<a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>,
+gibt es keine weiteren Ausnahmen. Code zum Behandeln einer <a href="index_s.html#ixb102374"><font color=#000080><tt>SQLException</tt></font></a>
+k&ouml;nnte also etwa so aussehen: 
+<a name="listingid044001"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>...
+<font color="#555555">002 </font><font color="#0000AA">catch</font> (SQLException e) {
+<font color="#555555">003 </font>  <font color="#0000AA">while</font> (e != <font color="#006699">null</font>) {
+<font color="#555555">004 </font>    System.err.println(e.toString());
+<font color="#555555">005 </font>    System.err.println(<font color="#0000FF">"SQL-State: "</font> + e.getSQLState());
+<font color="#555555">006 </font>    System.err.println(<font color="#0000FF">"ErrorCode: "</font> + e.getErrorCode());
+<font color="#555555">007 </font>    e = e.getNextException();
+<font color="#555555">008 </font>  }
+<font color="#555555">009 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 44.1: Behandeln einer SQLException</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id044002006"></a>
+<h3>44.2.6 Die Klasse <a name="ixa103218">SQLWarning</a> </h3>
+
+<p>
+Neben der Klasse <font color="#000077"><tt>SQLException</tt></font>
+f&uuml;r kritische Ausnahmen und Fehler enth&auml;lt das Paket <font color="#000077"><tt>java.sql</tt></font>
+auch die Klasse <font color="#000077"><tt>SQLWarning</tt></font>.
+Diese wird allerdings nicht geworfen, sondern muss &uuml;ber die Methode
+<font color="#000077"><tt>getWarnings</tt></font> abgerufen werden.
+<font color="#000077"><tt>SQLWarning</tt></font> wird von den Klassen
+<font color="#000077"><tt>Connection</tt></font>, <font color="#000077"><tt>Statement</tt></font>
+und <font color="#000077"><tt>ResultSet</tt></font> unterst&uuml;tzt.
+
+<p>
+Die Methode <font color="#000077"><tt>getWarnings</tt></font> liefert
+Ihnen gegebenenfalls das erste <font color="#000077"><tt>SQLWarning</tt></font>-Objekt
+zur Auswertung zur&uuml;ck. Sollten weitere Warnungen existieren,
+erhalten Sie diese &uuml;ber die Methode <font color="#000077"><tt>getNextWarning</tt></font>.
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100278.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100279.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100281.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100284.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

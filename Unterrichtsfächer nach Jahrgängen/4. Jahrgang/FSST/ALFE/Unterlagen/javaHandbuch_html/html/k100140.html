@@ -1,0 +1,260 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100137.html;106,k100139.html;107,k100141.html;108,k100143.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100137.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100139.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100141.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100143.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 21 - Random-Access-I/O
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id021003"></a>
+<h2>21.3 Lesezugriffe </h2>
+<hr>
+<ul>
+<li><a href="k100140.html#sectlevel2id021003">21.3 Lesezugriffe</a>
+</ul>
+<hr>
+
+<p>
+F&uuml;r die lesenden Zugriffe auf eine Random-Access-Datei stehen
+die folgenden Methoden zur Verf&uuml;gung: <a name="ixa101398"></a>
+<a name="ixa101399"></a> <a name="ixa101400"></a> <a name="ixa101401"></a>
+<a name="ixa101402"></a> <a name="ixa101403"></a> <a name="ixa101404"></a>
+<a name="ixa101405"></a> <a name="ixa101406"></a> <a name="ixa101407"></a>
+<a name="ixa101408"></a> <a name="ixa101409"></a> <a name="ixa101410"></a>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public final boolean readBoolean()
+public final byte readByte()
+public final char readChar()
+public final double readDouble()
+public final float readFloat()
+public final int readInt()
+public final long readLong()
+public final short readShort()
+public final String readUTF()
+public final void readFully(byte[] b)
+public final void readFully(byte[] b, int off, int len)
+public final String readLine()
+public final int readUnsignedByte()
+public final int readUnsignedShort()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/RandomAccessFile.html" onClick="this.href=getApiDoc('java.io.RandomAccessFile')"><font color="#660066" size=-1>java.io.RandomAccessFile</font></a></td>
+</tr>
+</table>
+
+<p>
+Sie lesen jeweils ein Element des angegebenen Typs und erwarten, dass
+es in der Datei in dem durch die korrespondierende <a href="index_w.html#ixb100967"><font color=#000080><tt>write</tt></font></a>...-Methode
+vorgegebenen bin&auml;ren Format vorliegt. <a href="index_r.html#ixb101046"><font color=#000080><tt>readFully</tt></font></a>
+kann dazu verwendet werden, beliebig viele Datenbytes ungeachtet ihres
+Datentyps einzulesen. <a href="index_r.html#ixb101004"><font color=#000080><tt>readLine</tt></font></a>
+liest eine ganze Zeile Text aus und gibt sie als <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+an den Aufrufer zur&uuml;ck. 
+
+<p>
+Dar&uuml;ber hinaus stehen auch eine Reihe von <a href="index_r.html#ixb100989"><font color=#000080><tt>read</tt></font></a>-Methoden
+<a name="ixa101411"></a> zur Verf&uuml;gung, die zum Einlesen eines
+einzelnen Bytes oder einer Menge von Bytes verwendet werden k&ouml;nnen:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int read()
+public int read(byte[] b)
+public int read(byte[] b, int off, int len)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/RandomAccessFile.html" onClick="this.href=getApiDoc('java.io.RandomAccessFile')"><font color="#660066" size=-1>java.io.RandomAccessFile</font></a></td>
+</tr>
+</table>
+
+<p>
+Das folgende Listing zeigt die Verwendung der Klasse <a href="index_r.html#ixb101021"><font color=#000080><tt>RandomAccessFile</tt></font></a>
+am Beispiel eines Programms, das die Signatur und Versionsnummer aus
+einem <font color="#660099">.class</font>-File <a name="ixa101412"></a>
+herausliest. Die Signatur einer Klassendatei ergibt das Wort &#187;CAFEBABE&#171;<a name="ixa101413"></a>,
+wenn man die hexadezimale Darstellung der ersten vier Bytes ausgibt.
+In den n&auml;chsten beiden Bytes folgt die Minor-Versionsnummer und
+in den darauffolgenden zwei Bytes die Major-Versionsnummer. Die Versionsnummer
+liegt bis zum JDK 1.6 bei 50.0 und wurde mit dem JDK 1.7 auf 51.0
+ge&auml;ndert. 
+
+<p>
+Das Programm implementiert eine Klasse <font color="#000077"><tt>ClassFileReader</tt></font>,
+die den Zugriff auf die Klassendatei erm&ouml;glicht. Der Konstruktor
+&ouml;ffnet die Datei und die Ausgabe der Signatur und Versionsinformation
+erfolgt mit Hilfe der Methoden <font color="#000077"><tt>printSignature</tt></font>
+und <font color="#000077"><tt>printVersion</tt></font>. 
+
+<p>
+Das Einlesen der Signatur erfolgt durch Lesen der ersten 4 Byte der
+Datei, die dann jeweils in High- und Lowbyte zerlegt und in ihre hexadezimale
+Darstellung umgewandelt werden. Bei der Verwendung der Methode <a href="index_r.html#ixb100989"><font color=#000080><tt>read</tt></font></a>
+zum Einlesen der Bytes ist zu beachten, dass der R&uuml;ckgabewert
+vom Typ <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>
+ist. Er darf auch nicht in ein <a href="index_b.html#ixb100249"><font color=#000080><tt>byte</tt></font></a>
+konvertiert werden, weil es sonst einen Vorzeichen&uuml;berlauf geben
+w&uuml;rde. Das Einlesen der Versionsnummern erfolgt mit der Methode
+<a href="index_r.html#ixb101069"><font color=#000080><tt>readShort</tt></font></a>,
+die einen vorzeichenlosen 16-Bit-Wert aus der Datei liest. Auch hier
+ist der R&uuml;ckgabewert vom Typ <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>,
+um den gesamten Wertebereich von 0 bis 65535 darstellen zu k&ouml;nnen.
+<a name="listingid021001"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2101.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">class</font> ClassFileReader
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">private</font> RandomAccessFile f;
+<font color="#555555">008 </font>
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> ClassFileReader(String name)
+<font color="#555555">010 </font>  <font color="#0000AA">throws</font> IOException
+<font color="#555555">011 </font>  {
+<font color="#555555">012 </font>    <font color="#0000AA">if</font> (!name.endsWith(<font color="#0000FF">".class"</font>)) {
+<font color="#555555">013 </font>      name += <font color="#0000FF">".class"</font>;
+<font color="#555555">014 </font>    }
+<font color="#555555">015 </font>    f = <font color="#0000AA">new</font> RandomAccessFile(name,<font color="#0000FF">"r"</font>);
+<font color="#555555">016 </font>  }
+<font color="#555555">017 </font>
+<font color="#555555">018 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> close()
+<font color="#555555">019 </font>  {
+<font color="#555555">020 </font>    <font color="#0000AA">if</font> (f != <font color="#006699">null</font>) {
+<font color="#555555">021 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">022 </font>        f.close();
+<font color="#555555">023 </font>      } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">024 </font>        <font color="#00AA00">//nichts</font>
+<font color="#555555">025 </font>      }
+<font color="#555555">026 </font>    }
+<font color="#555555">027 </font>  }
+<font color="#555555">028 </font>
+<font color="#555555">029 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> printSignature()
+<font color="#555555">030 </font>  <font color="#0000AA">throws</font> IOException
+<font color="#555555">031 </font>  {
+<font color="#555555">032 </font>    String ret = <font color="#0000FF">""</font>;
+<font color="#555555">033 </font>    <font color="#006699">int</font> b;
+<font color="#555555">034 </font>
+<font color="#555555">035 </font>    f.seek(0);
+<font color="#555555">036 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i=0; i&lt;4; ++i) {
+<font color="#555555">037 </font>      b = f.read();
+<font color="#555555">038 </font>      ret += (<font color="#006699">char</font>)(b/16+<font color="#0000FF">'A'</font>-10);
+<font color="#555555">039 </font>      ret += (<font color="#006699">char</font>)(b%16+<font color="#0000FF">'A'</font>-10);
+<font color="#555555">040 </font>    }
+<font color="#555555">041 </font>    System.out.println(
+<font color="#555555">042 </font>      <font color="#0000FF">"Signatur...... "</font>+
+<font color="#555555">043 </font>      ret
+<font color="#555555">044 </font>    );
+<font color="#555555">045 </font>  }
+<font color="#555555">046 </font>
+<font color="#555555">047 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> printVersion()
+<font color="#555555">048 </font>  <font color="#0000AA">throws</font> IOException
+<font color="#555555">049 </font>  {
+<font color="#555555">050 </font>    <font color="#006699">int</font> minor, major;
+<font color="#555555">051 </font>
+<font color="#555555">052 </font>    f.seek(4);
+<font color="#555555">053 </font>    minor = f.readShort();
+<font color="#555555">054 </font>    major = f.readShort();
+<font color="#555555">055 </font>    System.out.println(
+<font color="#555555">056 </font>      <font color="#0000FF">"Version....... "</font>+
+<font color="#555555">057 </font>      major+<font color="#0000FF">"."</font>+minor
+<font color="#555555">058 </font>    );
+<font color="#555555">059 </font>  }
+<font color="#555555">060 </font>}
+<font color="#555555">061 </font>
+<font color="#555555">062 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2101
+<font color="#555555">063 </font>{
+<font color="#555555">064 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">065 </font>  {
+<font color="#555555">066 </font>    ClassFileReader f;
+<font color="#555555">067 </font>
+<font color="#555555">068 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">069 </font>      f = <font color="#0000AA">new</font> ClassFileReader(<font color="#0000FF">"Listing2101"</font>);
+<font color="#555555">070 </font>      f.printSignature();
+<font color="#555555">071 </font>      f.printVersion();
+<font color="#555555">072 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">073 </font>      System.out.println(e.toString());
+<font color="#555555">074 </font>    }
+<font color="#555555">075 </font>  }
+<font color="#555555">076 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2101.java"><font color="#000055" size=-1>Listing2101.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 21.1: Lesen einer .class-Datei mit der Klasse RandomAccessFile</i></p>
+
+<p>
+Die Ausgabe des Programms ist (mit dem Compiler aus dem JDK 6 &uuml;bersetzt):
+<font color="#333300">
+<pre>
+Signatur...... CAFEBABE
+Version....... 50.0
+</pre>
+</font>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100137.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100139.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100141.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100143.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

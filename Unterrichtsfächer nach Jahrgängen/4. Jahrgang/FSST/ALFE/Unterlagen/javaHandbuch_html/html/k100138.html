@@ -1,0 +1,162 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100137.html;106,k100137.html;107,k100139.html;108,k100143.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100137.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100137.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100139.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100143.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 21 - Random-Access-I/O
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id021001"></a>
+<h2>21.1 Grundlegende Operationen </h2>
+<hr>
+<ul>
+<li><a href="k100138.html#sectlevel2id021001">21.1 Grundlegende Operationen</a>
+</ul>
+<hr>
+
+<p>
+Neben der stream-basierten Ein- und Ausgabe bietet die Java-Klassenbibliothek
+auch die M&ouml;glichkeit des wahlfreien Zugriffs auf Dateien<a name="ixa101388"></a>.
+Dabei wird eine Datei nicht als Folge von Bytes angesehen, die nur
+sequenziell durchlaufen werden kann, sondern als eine Art externes
+Array, das an beliebiger Stelle gelesen oder beschrieben werden kann.
+
+<p>
+F&uuml;r den Zugriff auf Random-Access-Dateien stellt das Paket <a href="index_j.html#ixb100197"><font color=#000080><tt>java.io</tt></font></a>
+die Klasse <a name="ixa101389"><a href="index_r.html#ixb101021"><font color=#000080><tt>RandomAccessFile</tt></font></a></a>
+zur Verf&uuml;gung. Anders als bei der stream-orientierten Ein-/Ausgabe
+kann dabei allerdings nur auf &#187;echte Dateien&#171; zugegriffen
+werden; die Verwendung von Arrays oder Pipes als Dateiersatz wird
+nicht unterst&uuml;tzt. Auch das bei Streams realisierte Filterkonzept
+ist in Random-Access-Dateien nicht zu finden. 
+
+<p>
+Die Klasse <a href="index_r.html#ixb101021"><font color=#000080><tt>RandomAccessFile</tt></font></a>
+stellt Methoden zum Anlegen neuer Dateien und zum &Ouml;ffnen vorhandener
+Dateien zur Verf&uuml;gung. F&uuml;r den lesenden oder schreibenden
+Zugriff auf die Datei gibt es &auml;hnliche Methoden wie bei der sequenziellen
+Dateiverarbeitung. Zus&auml;tzlich kann der Satzzeiger wahlfrei positioniert
+werden und es ist m&ouml;glich, seine aktuelle Position abzufragen.
+
+<p>
+Das &Ouml;ffnen von Random-Access-Dateien erfolgt mit dem Konstruktor
+der Klasse <a href="index_r.html#ixb101021"><font color=#000080><tt>RandomAccessFile</tt></font></a>,
+der in zwei verschiedenen Varianten zur Verf&uuml;gung steht: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public RandomAccessFile(File file, String mode)
+  throws IOException
+
+public RandomAccessFile(String name, String mode)
+  throws FileNotFoundException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/RandomAccessFile.html" onClick="this.href=getApiDoc('java.io.RandomAccessFile')"><font color="#660066" size=-1>java.io.RandomAccessFile</font></a></td>
+</tr>
+</table>
+
+<p>
+Bei der &Uuml;bergabe des <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Parameters
+<font color="#000077"><tt>name</tt></font> wird die Datei mit diesem
+Namen ge&ouml;ffnet und steht f&uuml;r nachfolgende Schreib- und Lesezugriffe
+zur Verf&uuml;gung. Bei der &Uuml;bergabe eines <a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a>-Objekts
+wird die durch dieses Objekt spezifizierte Datei ge&ouml;ffnet (die
+Klasse <a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a>
+wird in <a href="k100143.html#verzeichnisse">Kapitel 22</a> besprochen).
+Der zweite Parameter <font color="#000077"><tt>mode</tt></font> gibt
+die Art des Zugriffs auf die Datei an. Er kann entweder &#187;r&#171;
+sein, um die Datei nur zum Lesen zu &ouml;ffnen, oder &#187;rw&#171;,
+um sie zum Schreiben und zum Lesen zu &ouml;ffnen. Ein reiner Schreibmodus,
+wie er beispielsweise unter UNIX m&ouml;glich w&auml;re, wird nicht
+unterst&uuml;tzt. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Leider gibt es in der Klasse <a href="index_r.html#ixb101021"><font color=#000080><tt>RandomAccessFile</tt></font></a>
+keine explizite Differenzierung zwischen dem <i>&Ouml;ffnen einer
+Datei zum Schreiben</i> und dem <i>Neuanlegen</i>. Hier gilt die implizite
+Regel, dass eine Datei neu angelegt wird, wenn sie beim &Ouml;ffnen
+im Modus &#187;w&#171; nicht vorhanden ist. Existiert sie dagegen,
+wird sie unver&auml;ndert ge&ouml;ffnet und es gibt keine M&ouml;glichkeit,
+ihren Inhalt zu l&ouml;schen oder die Dateil&auml;nge auf einen bestimmten
+Wert zu setzen. Gl&uuml;cklicherweise bietet die Klasse <a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a>
+mit der Methode <a name="ixa101390"><a href="index_d.html#ixb100551"><font color=#000080><tt>delete</tt></font></a></a>
+die M&ouml;glichkeit, eine Datei zu l&ouml;schen und so das Neuanlegen
+&uuml;ber einen kleinen Umweg doch zu erreichen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Das Schlie&szlig;en einer Random-Access-Datei erfolgt wie bei Streams
+durch Aufruf der parameterlosen Methode <a name="ixa101391"><a href="index_c.html#ixb100596"><font color=#000080><tt>close</tt></font></a></a>.
+Diese leert zun&auml;chst alle internen Puffer und ruft dann die entsprechende
+Betriebssystemfunktion zum Schlie&szlig;en der Datei auf. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100137.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100137.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100139.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100143.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

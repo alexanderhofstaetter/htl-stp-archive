@@ -1,0 +1,1301 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100327.html;106,k100328.html;107,k100330.html;108,k100332.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100327.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100328.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100330.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100332.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 52 - Performance-Tuning
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id052002"></a>
+<h2>52.2 Tuning-Tipps </h2>
+<hr>
+<ul>
+<li><a href="k100329.html#sectlevel2id052002">52.2 Tuning-Tipps</a>
+<ul>
+<li><a href="k100329.html#tuningstring">52.2.1 String und StringBuilder</a>
+<ul>
+<li><a href="k100329.html#sectlevel4id052002001001">String-Verkettung</a>
+<li><a href="k100329.html#sectlevel4id052002001002">Einf&uuml;gen und L&ouml;schen in Strings</a>
+<li><a href="k100329.html#sectlevel4id052002001003">Die Methode toString der Klasse StringBuilder</a>
+<li><a href="k100329.html#sectlevel4id052002001004">Die Unver&auml;nderlichkeit von String-Objekten</a>
+<li><a href="k100329.html#sectlevel4id052002001005">Durchlaufen von Zeichenketten</a>
+<li><a href="k100329.html#sectlevel4id052002001006">Das Interface CharSequence und die Methode
+toString</a>
+</ul>
+<li><a href="k100329.html#sectlevel3id052002002">52.2.2 Methodenaufrufe</a>
+<li><a href="k100329.html#tuningvectorlist">52.2.3 Vektoren und Listen</a>
+<li><a href="k100329.html#sectlevel3id052002004">52.2.4 Dateizugriffe</a>
+<ul>
+<li><a href="k100329.html#sectlevel4id052002004001">Schreiben von Streams</a>
+<li><a href="k100329.html#sectlevel4id052002004002">Lesen von Streams</a>
+<li><a href="k100329.html#sectlevel4id052002004003">RandomAccess-Dateien</a>
+</ul>
+<li><a href="k100329.html#sectlevel3id052002005">52.2.5 JDBC</a>
+<ul>
+<li><a href="k100329.html#sectlevel4id052002005001">Autocommit</a>
+<li><a href="k100329.html#sectlevel4id052002005002">PreparedStatements</a>
+</ul>
+<li><a href="k100329.html#perfautoboxing">52.2.6 Autoboxing und Autounboxing</a>
+<li><a href="k100329.html#sectlevel3id052002007">52.2.7 Speicheroptimierung</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="tuningstring"></a>
+<h3>52.2.1 String und StringBuilder </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id052002001001"></a>
+<h4><a name="ixa103812">String-Verkettung</a></h4>
+
+<p>
+In Java gibt es zwei unterschiedliche Klassen <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+und <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>
+zur Verarbeitung von Zeichenketten, deren prinzipielle Eigenschaften
+in <a href="k100076.html#kapitelstrings">Kapitel 12</a> erl&auml;utert
+wurden. Java-Anf&auml;nger verwenden meist vorwiegend die Klasse <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>,
+denn sie stellt die meisten Methoden zur Zeichenkettenextraktion und
+-verarbeitung zur Verf&uuml;gung und bietet mit dem +-Operator eine
+bequeme M&ouml;glichkeit, Zeichenketten miteinander zu verketten.
+
+<p>
+Dass diese Bequemlichkeit ihren Preis hat, zeigt folgender Programmausschnitt:
+<a name="slowstringconcat"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>String s;
+<font color="#555555">002 </font>s = <font color="#0000FF">""</font>;
+<font color="#555555">003 </font><font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; 20000; ++i) {
+<font color="#555555">004 </font>  s += <font color="#0000FF">"x"</font>;
+<font color="#555555">005 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 52.1: Langsame String-Verkettung</i></p>
+
+<p>
+Das Programmfragment hat die Aufgabe, einen String zu erstellen, der
+aus 20000 aneinandergereihten &#187;x&#171; besteht. Das ist zwar
+nicht sehr praxisnah, illustriert aber die h&auml;ufig vorkommende
+Verwendung des +=-Operators auf Strings. Der obige Code ist sehr ineffizient,
+denn er l&auml;uft langsam und belastet das Laufzeitsystem durch 60000
+tempor&auml;re Objekte, die alloziert und vom Garbage Collector wieder
+freigegeben werden m&uuml;ssen. Der Compiler &uuml;bersetzt das Programmfragment
+etwa so: 
+<a name="stringverkettunguebersetzung"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>String s;
+<font color="#555555">002 </font>s = <font color="#0000FF">""</font>;
+<font color="#555555">003 </font><font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; 20000; ++i) {
+<font color="#555555">004 </font>  s = <font color="#0000AA">new</font> StringBuilder(s).append(<font color="#0000FF">"x"</font>).toString();
+<font color="#555555">005 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 52.2: Wie der Java-Compiler String-Verkettungen &uuml;bersetzt</i></p>
+
+<p>
+Dieser Code ist in mehrfacher Hinsicht ungl&uuml;cklich. Pro Schleifendurchlauf
+wird ein tempor&auml;res <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>-Objekt
+alloziert und mit dem zuvor erzeugten String initialisiert. Der Konstruktor
+von <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>
+erzeugt ein internes Array (also eine weitere Objektinstanz), um die
+Zeichenkette zu speichern. Immerhin ist dieses Array 16 Byte gr&ouml;&szlig;er
+als eigentlich erforderlich, so dass der nachfolgende Aufruf von <a href="index_a.html#ixb100188"><font color=#000080><tt>append</tt></font></a>
+das Array nicht neu allozieren und die Zeichen umkopieren muss. Schlie&szlig;lich
+wird durch den Aufruf von <a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a>
+ein neues <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Objekt
+erzeugt und <font color="#000077"><tt>s</tt></font> zugewiesen. Auf
+diese Weise werden pro Schleifendurchlauf drei tempor&auml;re Objekte
+erzeugt und der Code ist durch das wiederholte Kopieren der Zeichen
+im Konstruktor von <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>
+sehr ineffizient. 
+
+<p>
+Eine deutliche Verbesserung ergibt sich, wenn die Klasse <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>
+und ihre Methode <a name="ixa103813"><a href="index_a.html#ixb100188"><font color=#000080><tt>append</tt></font></a></a>
+direkt verwendet werden: 
+<a name="listingid052003"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>String s;
+<font color="#555555">002 </font>StringBuilder sb = <font color="#0000AA">new</font> StringBuilder(1000);
+<font color="#555555">003 </font><font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; 20000; ++i) {
+<font color="#555555">004 </font>  sb.append(<font color="#0000FF">"x"</font>);
+<font color="#555555">005 </font>}
+<font color="#555555">006 </font>s = sb.toString();</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 52.3: Performante String-Verkettungen mit StringBuilder.append</i></p>
+
+<p>
+Hier wird zun&auml;chst ein <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>
+erzeugt und mit einem 1000 Zeichen gro&szlig;en Puffer versehen. Da
+die <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>-Klasse
+sich die L&auml;nge der gespeicherten Zeichenkette merkt, kann der
+Aufruf <font color="#000077"><tt>append("x")</tt></font> meist in
+konstanter Laufzeit erfolgen. Dabei ist ein Umkopieren nur dann erforderlich,
+wenn der interne Puffer nicht mehr gen&uuml;gend Platz bietet, um
+die an <a href="index_a.html#ixb100188"><font color=#000080><tt>append</tt></font></a>
+&uuml;bergebenen Daten zu &uuml;bernehmen. In diesem Fall wird ein
+gr&ouml;&szlig;eres Array alloziert und der Inhalt des bisherigen
+Puffers umkopiert. Insgesamt ist die letzte Version etwa um den Faktor
+10 schneller als die ersten beiden und erzeugt 60000 tempor&auml;re
+Objekte weniger. 
+
+<p>
+Interessant ist dabei der Umfang der Puffervergr&ouml;&szlig;erung,
+den das <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>-Objekt
+vornimmt, denn er bestimmt, wann bei fortgesetztem Aufruf von <a href="index_a.html#ixb100188"><font color=#000080><tt>append</tt></font></a>
+das n&auml;chste Mal umkopiert werden muss. Anders als beispielsweise
+bei der Klasse <a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>,
+die einen ver&auml;nderbaren <a name="ixa103814"><i>Ladefaktor</i></a>
+besitzt, <i>verdoppelt</i> (!) sich die Gr&ouml;&szlig;e eines <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>-Objekts
+bei jeder Kapazit&auml;tserweiterung. Dadurch wird zwar m&ouml;glicherweise
+mehr Speicher als n&ouml;tig alloziert, aber die Anzahl der Kopiervorg&auml;nge
+w&auml;chst h&ouml;chstens logarithmisch mit der Gesamtmenge der eingef&uuml;gten
+Daten. In unserem Beispiel kann der interne Puffer zun&auml;chst 1000
+Zeichen aufnehmen, wird beim n&auml;chsten &Uuml;berlauf auf etwa
+2000 Zeichen vergr&ouml;&szlig;ert, dann auf 4000, 8000, 16000 und
+schlie&szlig;lich auf 32000 Zeichen. H&auml;tten wir die initiale
+Gr&ouml;&szlig;e auf 20000 Zeichen gesetzt, w&auml;re sogar &uuml;berhaupt
+kein Kopiervorgang erforderlich geworden und das Programm h&auml;tte
+12000 Zeichen weniger alloziert. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Bei der Verwendung der Operatoren + und += auf <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Objekten
+sollte man zus&auml;tzlich bedenken, dass deren Laufzeit nicht konstant
+ist (bzw. ausschlie&szlig;lich von der L&auml;nge des anzuh&auml;ngenden
+Strings abh&auml;ngt). Tats&auml;chlich h&auml;ngt sie auch stark
+von der L&auml;nge des Strings ab, an den angeh&auml;ngt werden soll,
+denn die Laufzeit eines Kopiervorgangs w&auml;chst nun einmal proportional
+zur L&auml;nge des zu kopierenden Objekts. Damit w&auml;chst das Laufzeitverhalten
+der Schleife in <a href="k100329.html#slowstringconcat">Listing 52.1</a>
+nicht linear, sondern ann&auml;hernd quadratisch. Es verschlechtert
+sich also mit zunehmender L&auml;nge der Schleife &uuml;berproportional.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id052002001002"></a>
+<h4>Einf&uuml;gen und L&ouml;schen in Strings </h4>
+
+<p>
+Ein immer noch deutlicher, wenn auch nicht ganz so drastischer Vorteil
+bei der Verwendung der Klasse <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>
+ergibt sich beim Einf&uuml;gen von Zeichen <i>am vorderen Ende</i>
+des Strings: 
+<a name="listingid052004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>String s;
+<font color="#555555">002 </font>s = <font color="#0000FF">""</font>;
+<font color="#555555">003 </font><font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; 10000; ++i) {
+<font color="#555555">004 </font>  s = <font color="#0000FF">"x"</font> + s;
+<font color="#555555">005 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 52.4: Langsames Einf&uuml;gen in einen String</i></p>
+
+<p>
+In diesem Beispiel wird wiederholt ein Zeichen vorne in den String
+eingef&uuml;gt. Der Compiler wandelt das Programm auch hier in wiederholte
+Aufrufe von <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>-Methoden
+um, wobei viele Zwischenobjekte entstehen, die unn&ouml;tig oft kopiert
+werden m&uuml;ssen. Eine bessere L&ouml;sung kann man auch hier durch
+die direkte Verwendung eines <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>-Objekts
+erzielen: 
+<a name="listingid052005"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>String s;
+<font color="#555555">002 </font>StringBuilder sb = <font color="#0000AA">new</font> StringBuilder(1000);
+<font color="#555555">003 </font><font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; 10000; ++i) {
+<font color="#555555">004 </font>  sb.insert(0, <font color="#0000FF">"x"</font>);
+<font color="#555555">005 </font>}
+<font color="#555555">006 </font>s = sb.toString();</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 52.5: Schnelles Einf&uuml;gen in einen String</i></p>
+
+<p>
+Im Test war die Laufzeit dieser Variante etwa um den Faktor vier besser
+als die der ersten Version; au&szlig;erdem wird nicht ein einziges
+tempor&auml;res Objekt erzeugt. Dadurch werden zus&auml;tzlich das
+Memory-Subsystem und der Garbage Collector entlastet. 
+
+<p>
+In der Klasse <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>
+(beziehungsweise in der Klasse <a href="index_s.html#ixb100289"><font color=#000080><tt>StringBuffer</tt></font></a>)
+gibt es eine Methode <a name="ixa103815"><a href="index_d.html#ixb100551"><font color=#000080><tt>delete</tt></font></a></a>,
+mit der ein Teil der Zeichenkette gel&ouml;scht werden kann. Dadurch
+k&ouml;nnen beispielsweise Programmteile der folgenden Art beschleunigt
+werden: 
+<font color="#000077">
+<pre>
+String sub1 = s.substring(0, 1000) + s.substring(2000);
+</pre>
+</font>
+
+<p>
+Anstatt hier die ersten 1000 Zeichen mit allen Zeichen ab Position
+2000 zu verbinden, kann unter Verwendung eines <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>
+auch direkt das gew&uuml;nschte St&uuml;ck gel&ouml;scht werden: 
+<font color="#000077">
+<pre>
+String sub2 = sb.delete(1000, 2000).toString();
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="sectlevel4id052002001003"></a>
+<h4>Die Methode toString der Klasse StringBuilder </h4>
+
+<p>
+Den vorangegangenen Abschnitten kann man entnehmen, dass die Verwendung
+der Klasse <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>
+meist dann sinnvoll ist, wenn die Zeichenkette zun&auml;chst aus vielen
+kleinen Teilen <i>aufgebaut</i> werden soll oder wenn sie sich h&auml;ufig
+&auml;ndert. Ist der String dagegen fertig konstruiert oder muss auf
+einen vorhandenen String lesend zugegriffen werden, geht dies im Allgemeinen
+mit den vielseitigeren Methoden der Klasse <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+besser. Um einen <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>
+in einen <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+zu konvertieren, wird die Methode <a name="ixa103816"><a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a></a>
+aufgerufen, die durch einen kleinen Trick sehr effizient arbeitet.
+Anstatt beim Aufruf von <a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a>
+einen Kopiervorgang zu starten, teilen sich <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-
+und <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>-Objekt
+nach dem Aufruf das interne Zeichenarray, d.h., beide Objekte verwenden
+ein- und denselben Puffer. Normalerweise w&auml;re diese Vorgehensweise
+indiskutabel, denn nach der n&auml;chsten &Auml;nderung des <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>-Objekts
+h&auml;tte sich dann auch der Inhalt des <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Objekts
+ver&auml;ndert (was per Definition nicht erlaubt ist). 
+
+<p>
+Um das zu verhindern, wird vom Konstruktor der <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Klasse
+w&auml;hrend des Aufrufs von <a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a>
+ein <i>shared</i>-Flag im <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>-Objekt
+gesetzt. Dieses wird bei allen <i>ver&auml;ndernden</i> <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>-Methoden
+abgefragt und f&uuml;hrt dazu, dass - wenn es gesetzt ist - der Pufferinhalt
+vor der Ver&auml;nderung kopiert und die &Auml;nderung auf der Kopie
+vorgenommen wird. Ein echter Kopiervorgang wird also so lange nicht
+erforderlich, wie auf den <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>
+nicht schreibend zugegriffen wird. 
+
+<!-- Section -->
+
+<a name="sectlevel4id052002001004"></a>
+<h4>Die Unver&auml;nderlichkeit von String-Objekten </h4>
+
+<p>
+Da die Klasse <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+keine M&ouml;glichkeit bietet, die gespeicherte Zeichenkette nach
+der Instanzierung des Objekts zu ver&auml;ndern, k&ouml;nnen einige
+Operationen auf Zeichenketten sehr effizient implementiert werden.
+So erfordert beispielsweise die einfache Zuweisung zweier <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Objekte
+lediglich das Kopieren eines Zeigers, ohne dass durch <a name="ixa103817"><i>Aliasing</i></a>
+die Gefahr besteht, beim &Auml;ndern eines Strings versehentlich weitere
+Objekte zu &auml;ndern, die auf denselben Speicherbereich zeigen.
+
+<p>
+Soll ein <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+physikalisch kopiert werden, kann das mit Hilfe eines speziellen Konstruktors
+erreicht werden: 
+<font color="#000077">
+<pre>
+String s2 = new String(s1);
+</pre>
+</font>
+
+<p>
+Da der interne Puffer hierbei kopiert wird, ist der Aufruf nat&uuml;rlich
+ineffizienter als die einfache Zuweisung. 
+
+<p>
+Auch die Methode <a name="ixa103818"><a href="index_s.html#ixb100526"><font color=#000080><tt>substring</tt></font></a></a>
+der Klasse <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+konnte sehr effizient implementiert werden. Sie erzeugt zwar ein neues
+<a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Objekt,
+aber den internen Zeichenpuffer teilt es sich mit dem bisherigen Objekt.
+Lediglich die Membervariablen, in denen die Startposition und relevante
+L&auml;nge des Puffers festgehalten werden, m&uuml;ssen im neuen Objekt
+angepasst werden. Dadurch ist auch das Extrahieren von langen Teilzeichenketten
+recht performant. Dasselbe gilt f&uuml;r die Methode <a name="ixa103819"><a href="index_t.html#ixb100527"><font color=#000080><tt>trim</tt></font></a></a>,
+die ebenfalls <a href="index_s.html#ixb100526"><font color=#000080><tt>substring</tt></font></a>
+verwendet und daher keine Zeichen kopieren muss. 
+
+<!-- Section -->
+
+<a name="sectlevel4id052002001005"></a>
+<h4>Durchlaufen von Zeichenketten </h4>
+
+<p>
+Soll ein <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+durchlaufen werden, kann mit der Methode <a href="index_l.html#ixb100286"><font color=#000080><tt>length</tt></font></a>
+seine L&auml;nge ermittelt werden und durch wiederholten Aufruf von
+<a href="index_c.html#ixb100524"><font color=#000080><tt>charAt</tt></font></a>
+k&ouml;nnen alle Zeichen nacheinander abgeholt werden. Alternativ
+k&ouml;nnte man auch zun&auml;chst ein Zeichenarray allozieren und
+durch Aufruf von <a name="ixa103820"><a href="index_g.html#ixb102894"><font color=#000080><tt>getChars</tt></font></a></a>
+alle Zeichen hineinkopieren. Beim sp&auml;teren Durchlaufen w&auml;re
+dann kein Methodenaufruf mehr erforderlich, sondern die einzelnen
+Array-Elemente k&ouml;nnten direkt verwendet werden. Die Laufzeitunterschiede
+zwischen beiden Varianten sind allerdings minimal und werden in der
+Praxis kaum ins Gewicht fallen (da die Klasse <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+als <a href="index_f.html#ixb100410"><font color=#000080><tt>final</tt></font></a>
+deklariert wurde und die Methode <a href="index_c.html#ixb100524"><font color=#000080><tt>charAt</tt></font></a>
+nicht <a href="index_s.html#ixb100727"><font color=#000080><tt>synchronized</tt></font></a>
+ist, kann sie sehr performant aufgerufen werden). 
+
+<!-- Section -->
+
+<a name="sectlevel4id052002001006"></a>
+<h4>Das Interface <a name="ixa103821">CharSequence</a> und die Methode
+toString </h4>
+
+<p>
+Um eine Zeichenkette aus Einzelst&uuml;cken zusammenzusetzen, verwendet
+man am besten die Klasse <font color="#000077"><tt>StringBuilder</tt></font>.
+Doch wenn die Zeichenkette anschlie&szlig;end als Parameter oder R&uuml;ckgabewert
+verwendet werden soll, wird dieser h&auml;ufig &uuml;ber die Methode
+<a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a>
+in einen &auml;quivalenten <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+umgewandelt. Wird die Zeichenkette anschlie&szlig;end erneut bearbeitet,
+wird der &uuml;bergebene <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+wieder in einen <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>
+umgewandelt und so weiter. 
+
+<p>
+Man k&ouml;nnte sich diese unn&ouml;tigen Kopieroperationen sparen,
+indem man in diesen F&auml;llen einfach in der Methodensignatur einen
+Parameter vom Typ <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>
+statt <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+definiert und so das Objekt direkt &uuml;bergibt. Allerdings nimmt
+man dann zu Gunsten der Performance eventuell Seiteneffekte in Kauf.
+
+<p>
+Falls man die Signatur der Methode allerdings nicht &auml;ndern will
+(etwa, weil die Methode auch mit gew&ouml;hnlichen Strings aufgerufen
+werden soll), stellt das JDK das Interface <a href="index_c.html#ixb100554"><font color=#000080><tt>CharSequence</tt></font></a>
+bereit, das bereits in <a href="k100081.html#charsequence">Abschnitt 12.5</a>
+vorgestellt wurde. Dieses Interface wird sowohl von der Klasse <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+als auch von <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>
+implementiert und gestattet es so, Objekte beiden Typs zu &uuml;bergeben.
+
+
+<!-- Section -->
+<a name="sectlevel3id052002002"></a>
+<h3>52.2.2 Methodenaufrufe </h3>
+
+<p>
+Eine der h&auml;ufigsten Operationen in objektorientierten Programmiersprachen
+ist der Aufruf einer Methode an einer Klasse oder an einem Objekt.
+Zwar werden Methodenaufrufe in Java generell recht performant ausgef&uuml;hrt,
+dennoch sollte man ihr Laufzeitverhalten einsch&auml;tzen k&ouml;nnen,
+um in gro&szlig;en Programmen keine b&ouml;sen &Uuml;berraschungen
+zu erleben. 
+
+<p>
+<a href="k100329.html#methperformance">Tabelle 52.1</a> gibt einen
+&Uuml;berblick &uuml;ber die Laufzeit (in msec.) von 500 Millionen
+Aufrufen einer trivialen Methode unter unterschiedlichen Bedingungen.
+Alle Messungen wurden mit dem JDK 1.6 auf einem AMD Dual-Core 4400+
+unter Ubuntu 10 vorgenommen. <a name="methperformance"></a>
+
+<p>
+<table cols=2 border width=66%>
+
+<tr>
+<td valign=top align=left width=66%><b>Signatur/Attribute </b></td>
+<td valign=top align=left width=33%><b>Laufzeit</b></td></tr>
+<tr>
+<td valign=top align=left>public </td>
+<td valign=top align=left>68</td></tr>
+<tr>
+<td valign=top align=left>public, mit 4 Parametern </td>
+<td valign=top align=left>68</td></tr>
+<tr>
+<td valign=top align=left>public static </td>
+<td valign=top align=left>67</td></tr>
+<tr>
+<td valign=top align=left>protected </td>
+<td valign=top align=left>68</td></tr>
+<tr>
+<td valign=top align=left>package protected </td>
+<td valign=top align=left>67</td></tr>
+<tr>
+<td valign=top align=left>private </td>
+<td valign=top align=left>68</td></tr>
+<tr>
+<td valign=top align=left>public synchronized </td>
+<td valign=top align=left>3091</td></tr>
+<tr>
+<td valign=top align=left>public final </td>
+<td valign=top align=left>67</td></tr>
+</table>
+<p><i>
+Tabelle 52.1: Geschwindigkeit von Methodenaufrufen</i></p>
+
+<p>
+Dabei fallen einige Dinge auf: 
+<ul>
+<li>Mit Abstand am langsamsten ist der Aufruf von Methoden, die das
+<a name="ixa103822"><a href="index_s.html#ixb100727"><font color=#000080><tt>synchronized</tt></font></a></a>-Attribut
+verwenden, denn der Zugriff auf die Sperre zur Synchronisation in
+Multi-Threading-Umgebungen kostet erhebliche Zeit. 
+<li>Alle anderen Methodenaufrufe sind in etwa gleich schnell. Selbst
+die &Uuml;bergabe mehrerer Parameter beeinflusst die Performance offensichtlich
+nur in einer Gr&ouml;&szlig;enordnung, die nicht messbar ist. 
+<li>Die Messungen sind kontr&auml;r zu den Ergebnissen, die mit &auml;lteren
+JDKs gemessen werden konnten (nicht in der Tabelle zu erkennen), denn
+dort hatten die Methodenattribute sehr wohl einen nennenswerten Einfluss
+auf die Performance.
+</ul>
+
+<p>
+Das Ergebnis legt den Verdacht nahe, dass die Virtuelle Maschine die
+Methoden eingebettet hat (sog. <i>Inlining</i>) und daher der Overhead
+der &Uuml;bergabe eines oder mehrerer Parameter und die Kosten des
+Methodenaufrufs selbst keine Rolle spielen - und zwar unabh&auml;ngig
+von der Anzahl der Parameter oder R&uuml;ckgabewerte. 
+
+<p>
+Der einzig wirklich allgemeing&uuml;ltige Rat besteht darin, Methoden
+nur dann als <a name="ixa103822"><a href="index_s.html#ixb100727"><font color=#000080><tt>synchronized</tt></font></a></a>
+zu deklarieren, wenn es wirklich erforderlich ist. Eine Methode, die
+keine Membervariablen verwendet, die gleichzeitig von anderen Threads
+manipuliert werden, braucht auch nicht synchronisiert zu werden. Auch
+eine Anwendung, die nur einen einzigen Thread besitzt und deren Methoden
+nicht von Hintergrund-Threads aufgerufen werden, braucht &uuml;berhaupt
+keine synchronisierten Methoden in eigenen Klassen. 
+
+<p>
+Dies haben auch die Java-Entwickler erkannt und z.B. die Klasse <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>
+zur Verf&uuml;gung gestellt, die gleichwertig zu <a href="index_s.html#ixb100289"><font color=#000080><tt>StringBuffer</tt></font></a>
+ist. Wesentlicher Unterschied ist, dass ihre Methoden nicht synchronisiert
+sind, da es so gut wie keine sinnvolle Anwendung f&uuml;r den verteilten
+Zugriff gibt. 
+
+<!-- Section -->
+
+<a name="tuningvectorlist"></a>
+<h3>52.2.3 Vektoren und Listen </h3>
+
+<p>
+Ein <a name="ixa103823"><a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a></a>
+ist ein bequemes Hilfsmittel, um Listen von Objekten zu speichern,
+auf die sowohl sequenziell als auch wahlfrei zugriffen werden kann.
+Aufgrund seiner einfachen Anwendung und seiner Flexibilit&auml;t bez&uuml;glich
+der Art und Menge der zu speichernden Elemente wird er in vielen Programmen
+ausgiebig verwendet. Bei falschem Einsatz k&ouml;nnen Vektoren aber
+durchaus zum Performance-Problem werden und wir wollen daher einige
+Hinweise zu ihrer Verwendung geben. 
+
+<p>
+Zun&auml;chst einmal ist der Datenpuffer eines Vektors als Array implementiert.
+Da die Gr&ouml;&szlig;e von Arrays nach ihrer Initialisierung nicht
+mehr ver&auml;ndert werden kann, erfordert das Einf&uuml;gen neuer
+Elemente m&ouml;glicherweise das Allozieren eines neuen Puffers und
+das Umkopieren der vorhandenen Elemente. Ein <a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>
+besitzt dazu die beiden Attribute <i>Kapazit&auml;t</i> und <i>Ladefaktor</i>.
+Die Kapazit&auml;t gibt an, wie viele Elemente insgesamt aufgenommen
+werden k&ouml;nnen, also wie gro&szlig; der interne Puffer ist. Der
+Ladefaktor bestimmt, um wie viele Elemente der interne Puffer erweitert
+wird, wenn beim Einf&uuml;gen eines neuen Elements nicht mehr ausreichend
+Platz vorhanden ist. Je kleiner die anf&auml;ngliche Kapazit&auml;t
+und der Ladefaktor sind, desto h&auml;ufiger ist beim fortgesetzten
+Einf&uuml;gen von Elementen ein zeitaufw&auml;ndiges Umkopieren erforderlich.
+
+<p>
+Wird ein <a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>
+ohne Argumente instanziert, so hat sein Puffer eine anf&auml;ngliche
+Kapazit&auml;t von 10 Objekten und der Ladefaktor ist 0. Letzteres
+bedeutet, dass die Kapazit&auml;t bei jeder Erweiterung <i>verdoppelt</i>
+wird (analog zur Klasse <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>,
+s. <a href="k100329.html#tuningstring">Abschnitt 52.2.1</a>). Alternativ
+kann die Kapazit&auml;t oder auch beide Werte beim Instanzieren an
+den Konstruktor &uuml;bergeben werden. Durch die folgende Deklaration
+wird beispielsweise ein <a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>
+mit einer anf&auml;nglichen Kapazit&auml;t von 100 Elementen und einem
+Ladefaktor von 50 angelegt: 
+<font color="#000077">
+<pre>
+Vector v = new Vector(100, 50);
+</pre>
+</font>
+
+<p>
+Ein weiteres Problem der Klasse <a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>
+ist, dass die meisten ihrer Methoden als <a href="index_s.html#ixb100727"><font color=#000080><tt>synchronized</tt></font></a>
+deklariert wurden. Dadurch kann ein <a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>
+zwar sehr einfach als gemeinsame Datenstruktur mehrerer Threads verwendet
+werden. Die Zugriffsmethoden sind aber leider auch ohne Multi-Threading-Betrieb
+entsprechend langsam. 
+
+<p>
+Seit der Version 1.2 des JDK stehen mit den Klassen <a name="ixa103824"><a href="index_l.html#ixb100709"><font color=#000080><tt>LinkedList</tt></font></a></a>
+und <a name="ixa103825"><a href="index_a.html#ixb100195"><font color=#000080><tt>ArrayList</tt></font></a></a>
+auch alternative Listenimplementierungen zur Verf&uuml;gung, die anstelle
+von <a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>
+verwendet werden k&ouml;nnen. Hier ist jedoch Vorsicht geboten, wenn
+das Programm nicht langsamer laufen soll als vorher. Die Klasse <a href="index_l.html#ixb100709"><font color=#000080><tt>LinkedList</tt></font></a>
+implementiert die Datenstruktur in klassischer Form als doppelt verkettete
+Liste ihrer Elemente. Zwar entfallen dadurch die Kopiervorg&auml;nge,
+die beim Erweitern des Arrays erforderlich waren. Durch die Vielzahl
+der allozierten Objekte, in denen die Listenelemente und die Zeiger
+gespeichert werden m&uuml;ssen, und die teilweise ineffiziente Implementierung
+einiger Grundoperationen (insbesondere <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>)
+hat sich <a href="index_l.html#ixb100709"><font color=#000080><tt>LinkedList</tt></font></a>
+jedoch im Test als relativ ineffizient herausgestellt. Wesentlich
+bessere Ergebnisse gab es mit der Klasse <a href="index_a.html#ixb100195"><font color=#000080><tt>ArrayList</tt></font></a>.
+Sie ist &auml;hnlich wie <a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>
+implementiert, verzichtet aber (wie die meisten 1.2er Collections)
+auf die <a href="index_s.html#ixb100727"><font color=#000080><tt>synchronized</tt></font></a>-Attribute
+und ist daher - insbesondere beim Zugriff mit <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+und <a href="index_g.html#ixb100713"><font color=#000080><tt>get</tt></font></a>
+- sehr performant. 
+
+<p>
+<a href="k100329.html#listenundvektoren">Listing 52.6</a> zeigt drei
+Methoden, die jeweils ein String-Array &uuml;bergeben bekommen und
+daraus eine bestimmte Anzahl von Elementen zur&uuml;ckgeben. Die erste
+Version verwendet einen <a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>,
+die zweite eine <a href="index_l.html#ixb100709"><font color=#000080><tt>LinkedList</tt></font></a>
+und die dritte eine <a href="index_a.html#ixb100195"><font color=#000080><tt>ArrayList</tt></font></a>
+zur Datenspeicherung. Im Test war die <font color="#000077"><tt>ArrayList</tt></font>-Version
+die schnellste, gefolgt von der <font color="#000077"><tt>Vector</tt></font>-Variante.
+Im Gegensatz zu fr&uuml;heren Versionen sind die Unterschiede in aktuellen
+JDKs aber nicht mehr allzu gro&szlig;. 
+<a name="listenundvektoren"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> String[] vtest1(String el[], <font color="#006699">int</font> retsize)
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  <font color="#00AA00">//Verwendet Vector</font>
+<font color="#555555">004 </font>  Vector&lt;String&gt; v = <font color="#0000AA">new</font> Vector&lt;String&gt;(el.length + 10);
+<font color="#555555">005 </font>  <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; el.length; ++i) {
+<font color="#555555">006 </font>    v.addElement(el[i]);
+<font color="#555555">007 </font>  }
+<font color="#555555">008 </font>  String[] ret = <font color="#0000AA">new</font> String[retsize];
+<font color="#555555">009 </font>  <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; retsize; ++i) {
+<font color="#555555">010 </font>    ret[i] = v.elementAt(i);
+<font color="#555555">011 </font>  }
+<font color="#555555">012 </font>  <font color="#0000AA">return</font> ret;
+<font color="#555555">013 </font>}
+<font color="#555555">014 </font>
+<font color="#555555">015 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> String[] vtest2(String el[], <font color="#006699">int</font> retsize)
+<font color="#555555">016 </font>{
+<font color="#555555">017 </font>  <font color="#00AA00">//Verwendet LinkedList</font>
+<font color="#555555">018 </font>  LinkedList&lt;String&gt; l = <font color="#0000AA">new</font> LinkedList&lt;String&gt;();
+<font color="#555555">019 </font>  <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; el.length; ++i) {
+<font color="#555555">020 </font>    l.add(el[i]);
+<font color="#555555">021 </font>  }
+<font color="#555555">022 </font>  String[] ret = <font color="#0000AA">new</font> String[retsize];
+<font color="#555555">023 </font>  Iterator&lt;String&gt; it = l.iterator();
+<font color="#555555">024 </font>  <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; retsize; ++i) {
+<font color="#555555">025 </font>    ret[i] = it.next();
+<font color="#555555">026 </font>  }
+<font color="#555555">027 </font>  <font color="#0000AA">return</font> ret;
+<font color="#555555">028 </font>}
+<font color="#555555">029 </font>
+<font color="#555555">030 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> String[] vtest3(String el[], <font color="#006699">int</font> retsize)
+<font color="#555555">031 </font>{
+<font color="#555555">032 </font>  <font color="#00AA00">//Verwendet ArrayList</font>
+<font color="#555555">033 </font>  ArrayList&lt;String&gt; l = <font color="#0000AA">new</font> ArrayList&lt;String&gt;(el.length + 10);
+<font color="#555555">034 </font>  <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; el.length; ++i) {
+<font color="#555555">035 </font>    l.add(el[i]);
+<font color="#555555">036 </font>  }
+<font color="#555555">037 </font>  String[] ret = <font color="#0000AA">new</font> String[retsize];
+<font color="#555555">038 </font>  <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; retsize; ++i) {
+<font color="#555555">039 </font>    ret[i] = l.get(i);
+<font color="#555555">040 </font>  }
+<font color="#555555">041 </font>  <font color="#0000AA">return</font> ret;
+<font color="#555555">042 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 52.6: Vergleich von Listen und Vektoren</i></p>
+
+<p>
+Ist es im Einzelfall dagegen erforderlich, viele Einf&uuml;gungen
+und L&ouml;schungen innerhalb der Liste vorzunehmen, sollte eine zeigerbasierte
+Implementierung der arraybasierten vorgezogen werden. W&auml;hrend
+es bei Letzterer stets erforderlich ist, einen Teil des Arrays umzukopieren,
+wenn ein Element eingef&uuml;gt oder gel&ouml;scht wird, brauchen
+bei den verzeigerten Datenstrukturen lediglich ein paar Verweise aktualisiert
+zu werden. 
+
+<!-- Section -->
+
+<a name="sectlevel3id052002004"></a>
+<h3>52.2.4 Dateizugriffe </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id052002004001"></a>
+<h4>Schreiben von Streams </h4>
+
+<p>
+Beim Schreiben in Dateien mit Hilfe von <a href="index_f.html#ixb101010"><font color=#000080><tt>FileOutputStream</tt></font></a>-
+oder <a href="index_f.html#ixb100969"><font color=#000080><tt>FileWriter</tt></font></a>-Objekten
+sind zwei Dinge zu beachten: 
+<ul>
+<li>Die Kapselung mit <a href="index_b.html#ixb101015"><font color=#000080><tt>BufferedOutputStream</tt></font></a>-
+bzw. <a href="index_b.html#ixb100971"><font color=#000080><tt>BufferedWriter</tt></font></a>-Objekten
+beschleunigt das Schreiben um ein Vielfaches. 
+<li>Gepufferte <a href="index_o.html#ixb100588"><font color=#000080><tt>OutputStream</tt></font></a>-Objekte
+haben ein besseres Laufzeitverhalten als gepufferte <a href="index_w.html#ixb100594"><font color=#000080><tt>Writer</tt></font></a>-Objekte,
+sind aber nicht in jedem Fall gegeneinander austauschbar.
+</ul>
+
+<p>
+Um die Performance zu erh&ouml;hen, sollten der <a href="index_f.html#ixb100969"><font color=#000080><tt>FileWriter</tt></font></a>
+in einen <a name="ixa103826"><a href="index_b.html#ixb100971"><font color=#000080><tt>BufferedWriter</tt></font></a></a>
+und der <font color="#000077"><tt>FileOutputStream</tt></font> in
+einen <font color="#000077"><tt>BufferedOutputStream</tt></font> gekapselt
+werden, der mit Hilfe eines internen Puffers die Anzahl der physikalischen
+Schreibzugriffe reduziert. Im Test (in einer JRE 1.6 auf einer AMD
+4400+ unter Ubuntu 10, vgl. <a href="k100329.html#ioperformance">Tabelle 52.2</a>)
+ergab sich gegen&uuml;ber dem ungepufferten Zugriff ein Geschwindigkeitszuwachs
+um den Faktor f&uuml;nf bei den <font color="#000077"><tt>Writer</tt></font>-Zugriffen
+und um den Faktor 500 bei den <font color="#000077"><tt>OutputStream</tt></font>-Zugriffen.
+Die Standard-Puffergr&ouml;&szlig;e von 8 kByte ist in aller Regel
+ausreichend, weitere Vergr&ouml;&szlig;erungen bringen keine nennenswerten
+Beschleunigungen. 
+
+<p>
+Mit den <a name="ixa103827"><a href="index_w.html#ixb100594"><font color=#000080><tt>Writer</tt></font></a></a>-Klassen
+k&ouml;nnen <a name="ixa103828"><i>Character-Streams</i></a> verarbeitet
+werden. Passend zur internen Darstellung des <a href="index_c.html#ixb100223"><font color=#000080><tt>char</tt></font></a>-Typs
+in Java verwenden sie 16-Bit breite UNICODE-Zeichen zur Ein- und Ausgabe.
+Um eine Datei zu erzeugen, kann ein <a href="index_f.html#ixb100969"><font color=#000080><tt>FileWriter</tt></font></a>-Objekt
+angelegt werden, und die Zeichen werden mit den <a href="index_w.html#ixb100967"><font color=#000080><tt>write</tt></font></a>-Methoden
+geschrieben. 
+
+<p>
+Das Dilemma der <a href="index_w.html#ixb100594"><font color=#000080><tt>Writer</tt></font></a>-Klassen
+besteht darin, dass die meisten externen Dateien mit 8-Bit-Zeichen
+arbeiten, statt mit 16-Bit-UNICODE-Zeichen. Ein <a href="index_f.html#ixb100969"><font color=#000080><tt>FileWriter</tt></font></a>
+f&uuml;hrt also vor der Ausgabe eine Konvertierung der UNICODE-Zeichen
+durch, um sie im korrekten Format abzuspeichern. Der Aufruf der dazu
+verwendeten Methoden der Klasse <a name="ixa103829"><a href="index_s.html#ixb102896"><font color=#000080><tt>StreamEncoder</tt></font></a></a>
+aus dem Paket <font color="#000077"><tt>sun.nio.cs</tt></font> kostet
+nat&uuml;rlich Zeit und vermindert die Performance der <a href="index_w.html#ixb100594"><font color=#000080><tt>Writer</tt></font></a>-Klasse.
+Etwas schneller sind die (gepufferten) <a name="ixa103830"><a href="index_o.html#ixb100588"><font color=#000080><tt>OutputStream</tt></font></a></a>-Klassen,
+die nicht mit Zeichen, sondern mit Bytes arbeiten. Sie f&uuml;hren
+keine aufw&auml;ndige Konvertierung durch, sondern geben je Zeichen
+einfach dessen niederwertige 8 Bit aus. Das spart Zeit und f&uuml;hrte
+im Test zu einer Beschleunigung um den Faktor 2. 
+
+<p>
+Die gepufferten <a href="index_o.html#ixb100588"><font color=#000080><tt>OutputStream</tt></font></a>-Klassen
+sind also an performancekritischen Stellen dann den <a href="index_w.html#ixb100594"><font color=#000080><tt>Writer</tt></font></a>-Klassen
+vorzuziehen, wenn entweder sowieso Bin&auml;rdaten ausgegeben werden
+sollen oder wenn sichergestellt ist, dass keine UNICODE-Zeichen verwendet
+werden, die durch das simple Abschneiden der oberen 8 Bit falsch ausgegeben
+w&uuml;rden. Da der UNICODE-Zeichensatz in den ersten 256 Zeichen
+zum ISO-8859-1-Zeichensatz kompatibel ist, sollten sich f&uuml;r die
+meisten europ&auml;ischen und angels&auml;chsischen Sprachen keine
+Probleme ergeben, wenn zur Ausgabe von Zeichen die <a href="index_o.html#ixb100588"><font color=#000080><tt>OutputStream</tt></font></a>-Klassen
+verwendet werden. 
+
+<p>
+<a href="k100329.html#streamwriteperformance">Listing 52.7</a> erzeugt
+eine etwa 3 MB gro&szlig;e Datei, bei der die <a href="index_w.html#ixb100594"><font color=#000080><tt>Writer</tt></font></a>-
+und die <a href="index_o.html#ixb100588"><font color=#000080><tt>OutputStream</tt></font></a>-Klassen
+verwendet werden, jeweils gepuffert und ungepuffert. Das Ergebnis
+finden Sie in <a href="k100329.html#ioperformance">Tabelle 52.2</a>:
+<a name="streamwriteperformance"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>  <font color="#0000AA">private</font> <font color="#0000AA">final</font> <font color="#0000AA">static</font> String FILENAME = <font color="#0000FF">"performancetest.txt"</font>;
+<font color="#555555">002 </font>  <font color="#0000AA">private</font> <font color="#0000AA">final</font> <font color="#0000AA">static</font> <font color="#006699">int</font> LINES = 50000;
+<font color="#555555">003 </font>  <font color="#0000AA">private</font> <font color="#0000AA">final</font> <font color="#0000AA">static</font> String NL = System.getProperty(<font color="#0000FF">"line.separator"</font>);
+<font color="#555555">004 </font>
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> createFileMitFileWriter() <font color="#0000AA">throws</font> IOException
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    Writer writer = <font color="#0000AA">new</font> FileWriter(FILENAME);
+<font color="#555555">008 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; LINES; ++i) {
+<font color="#555555">009 </font>      <font color="#0000AA">for</font> (<font color="#006699">int</font> j = 0; j &lt; 60; ++j) {
+<font color="#555555">010 </font>        writer.write(<font color="#0000FF">'x'</font>);
+<font color="#555555">011 </font>      }
+<font color="#555555">012 </font>      writer.write(NL);
+<font color="#555555">013 </font>    }
+<font color="#555555">014 </font>    writer.close();
+<font color="#555555">015 </font>  }
+<font color="#555555">016 </font>
+<font color="#555555">017 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> createFileMitBufferedFileWriter() <font color="#0000AA">throws</font> IOException
+<font color="#555555">018 </font>  {
+<font color="#555555">019 </font>    Writer writer = <font color="#0000AA">new</font> BufferedWriter(<font color="#0000AA">new</font> FileWriter(FILENAME));
+<font color="#555555">020 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; LINES; ++i) {
+<font color="#555555">021 </font>      <font color="#0000AA">for</font> (<font color="#006699">int</font> j = 0; j &lt; 60; ++j) {
+<font color="#555555">022 </font>        writer.write(<font color="#0000FF">'x'</font>);
+<font color="#555555">023 </font>      }
+<font color="#555555">024 </font>      writer.write(NL);
+<font color="#555555">025 </font>    }
+<font color="#555555">026 </font>    writer.close();
+<font color="#555555">027 </font>  }
+<font color="#555555">028 </font>  
+<font color="#555555">029 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> createFileMitFileOutputStream() <font color="#0000AA">throws</font> IOException
+<font color="#555555">030 </font>  {
+<font color="#555555">031 </font>    OutputStream os = <font color="#0000AA">new</font> FileOutputStream(FILENAME);
+<font color="#555555">032 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; LINES; ++i) {
+<font color="#555555">033 </font>      <font color="#0000AA">for</font> (<font color="#006699">int</font> j = 0; j &lt; 60; ++j) {
+<font color="#555555">034 </font>        os.write(<font color="#0000FF">'x'</font>);
+<font color="#555555">035 </font>      }
+<font color="#555555">036 </font>      os.write(<font color="#0000FF">'\r'</font>);
+<font color="#555555">037 </font>      os.write(<font color="#0000FF">'\n'</font>);
+<font color="#555555">038 </font>    }
+<font color="#555555">039 </font>    os.close();
+<font color="#555555">040 </font>  }
+<font color="#555555">041 </font>  
+<font color="#555555">042 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> createFileMitBufferedFileOutputStream() <font color="#0000AA">throws</font> IOException
+<font color="#555555">043 </font>  {
+<font color="#555555">044 </font>    OutputStream os = <font color="#0000AA">new</font> BufferedOutputStream(<font color="#0000AA">new</font> FileOutputStream(FILENAME));
+<font color="#555555">045 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; LINES; ++i) {
+<font color="#555555">046 </font>      <font color="#0000AA">for</font> (<font color="#006699">int</font> j = 0; j &lt; 60; ++j) {
+<font color="#555555">047 </font>        os.write(<font color="#0000FF">'x'</font>);
+<font color="#555555">048 </font>      }
+<font color="#555555">049 </font>      os.write(<font color="#0000FF">'\r'</font>);
+<font color="#555555">050 </font>      os.write(<font color="#0000FF">'\n'</font>);
+<font color="#555555">051 </font>    }
+<font color="#555555">052 </font>    os.close();
+<font color="#555555">053 </font>  }
+</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 52.7: Performance von Writer und OutputStream</i></p>
+
+<p>
+<a name="ioperformance"></a>
+<p>
+<table cols=2 border width=66%>
+
+<tr>
+<td valign=top align=left width=66%><b>Signatur/Attribute </b></td>
+<td valign=top align=left width=33%><b>Laufzeit (in msec)</b></td></tr>
+<tr>
+<td valign=top align=left>FileWriter </td>
+<td valign=top align=left>798</td></tr>
+<tr>
+<td valign=top align=left>Buffered-FileWriter </td>
+<td valign=top align=left>160</td></tr>
+<tr>
+<td valign=top align=left>FileOutputStream </td>
+<td valign=top align=left>33034</td></tr>
+<tr>
+<td valign=top align=left>Buffered-FileOutputStream </td>
+<td valign=top align=left>71</td></tr>
+</table>
+<p><i>
+Tabelle 52.2: Geschwindigkeit beim Schreiben von Streams</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id052002004002"></a>
+<h4>Lesen von Streams </h4>
+
+<p>
+Die Performance des sequenziellen Lesens von Zeichen- oder Byte-Streams
+zeigt ein &auml;hnliches Verhalten wie die des sequenziellen Schreibens.
+Am langsamsten waren die ungepufferten Zugriffe mit der Klasse <a href="index_f.html#ixb100995"><font color=#000080><tt>FileReader</tt></font></a>
+und <a href="index_f.html#ixb100595"><font color=#000080><tt>FileInputStream</tt></font></a>.
+Die gr&ouml;&szlig;ten Geschwindigkeitsgewinne ergaben sich durch
+das Kapseln des <a href="index_f.html#ixb100995"><font color=#000080><tt>FileReader</tt></font></a>
+und des <a href="index_f.html#ixb100595"><font color=#000080><tt>FileInputStream</tt></font></a>
+in einen <a href="index_b.html#ixb100998"><font color=#000080><tt>BufferedReader</tt></font></a>
+bzw. <a href="index_b.html#ixb101044"><font color=#000080><tt>BufferedInputStream</tt></font></a>.
+Die Performance war dann ca. zwanzig bis drei&szlig;ig Mal h&ouml;her
+als im ungepufferten Fall. 
+
+<p>
+Der Umstieg auf das byte-orientierte Einlesen mit den Klassen <a href="index_f.html#ixb100595"><font color=#000080><tt>FileInputStream</tt></font></a>
+und <a name="ixa103831"><a href="index_b.html#ixb101044"><font color=#000080><tt>BufferedInputStream</tt></font></a></a>
+brachte dagegen keine Vorteile. M&ouml;glicherweise muss der zur Eingabekonvertierung
+in den <a href="index_r.html#ixb100593"><font color=#000080><tt>Reader</tt></font></a>-Klassen
+verwendete <a name="ixa103832"><a href="index_b.html#ixb101002"><font color=#000080><tt>ByteToCharConverter</tt></font></a></a>
+weniger Aufwand treiben, als ausgabeseitig n&ouml;tig war. 
+
+<!-- Section -->
+
+<a name="sectlevel4id052002004003"></a>
+<h4>RandomAccess-Dateien </h4>
+
+<p>
+Der wahlfreie Zugriff auf eine Datei zum Lesen oder Schreiben erfolgt
+in Java mit der Klasse <a name="ixa103833"><a href="index_r.html#ixb101021"><font color=#000080><tt>RandomAccessFile</tt></font></a></a>.
+Da sie nicht Bestandteil der <a href="index_r.html#ixb100593"><font color=#000080><tt>Reader</tt></font></a>-
+<a href="index_w.html#ixb100594"><font color=#000080><tt>Writer</tt></font></a>-,
+<a href="index_i.html#ixb100587"><font color=#000080><tt>InputStream</tt></font></a>-
+oder <a href="index_o.html#ixb100588"><font color=#000080><tt>OutputStream</tt></font></a>-Hierarchien
+ist, besteht auch nicht die M&ouml;glichkeit, sie zum Zweck der Pufferung
+zu schachteln. Tats&auml;chlich ist der ungepufferte byteweise Zugriff
+auf ein <a href="index_r.html#ixb101021"><font color=#000080><tt>RandomAccessFile</tt></font></a>
+sehr langsam, er liegt etwa in der Gr&ouml;&szlig;enordnung des ungepufferten
+Zugriffs auf Character-Streams. Wesentlich schneller kann mit Hilfe
+der <a href="index_r.html#ixb100989"><font color=#000080><tt>read</tt></font></a>-
+und <a href="index_w.html#ixb100967"><font color=#000080><tt>write</tt></font></a>-Methoden
+gearbeitet werden, wenn nicht nur ein einzelnes, sondern ein ganzes
+Array von Bytes verarbeitet wird. Je nach Puffergr&ouml;&szlig;e und
+Verarbeitungsaufwand werden dann Geschwindigkeiten wie bei gepufferten
+Bytestreams oder h&ouml;her erzielt. Das folgende Beispiel zeigt,
+wie man mit einem nur 100 Byte gro&szlig;en Puffer eine Random-Access-Datei
+bereits sehr schnell lesen kann. 
+<a name="listingid052008"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> randomtest2()
+<font color="#555555">002 </font><font color="#0000AA">throws</font> IOException
+<font color="#555555">003 </font>{
+<font color="#555555">004 </font>  RandomAccessFile file = <font color="#0000AA">new</font> RandomAccessFile(FILENAME, <font color="#0000FF">"rw"</font>);
+<font color="#555555">005 </font>  <font color="#006699">int</font> cnt = 0;
+<font color="#555555">006 </font>  <font color="#006699">byte</font>[] buf = <font color="#0000AA">new</font> <font color="#006699">byte</font>[100];
+<font color="#555555">007 </font>  <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">008 </font>    <font color="#006699">int</font> num = file.read(buf);
+<font color="#555555">009 </font>    <font color="#0000AA">if</font> (num &lt;= 0) {
+<font color="#555555">010 </font>      <font color="#0000AA">break</font>;
+<font color="#555555">011 </font>    }
+<font color="#555555">012 </font>    cnt += num;
+<font color="#555555">013 </font>  }
+<font color="#555555">014 </font>  System.out.println(cnt + <font color="#0000FF">" Bytes read"</font>);
+<font color="#555555">015 </font>  file.close();
+<font color="#555555">016 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 52.8: Gepufferter Zugriff auf Random-Access-Dateien</i></p>
+
+<p>
+Das Programm liest die komplette Datei in St&uuml;cken von jeweils
+100 Byte ein. Der R&uuml;ckgabewert von <a href="index_r.html#ixb100989"><font color=#000080><tt>read</tt></font></a>
+gibt die tats&auml;chliche Zahl gelesener Bytes an. Sie entspricht
+normalerweise der Puffergr&ouml;&szlig;e, liegt aber beim letzten
+Datenpaket darunter, wenn die Dateigr&ouml;&szlig;e nicht zuf&auml;llig
+ein Vielfaches der Puffergr&ouml;&szlig;e ist. Die Performance von
+<font color="#000077"><tt>randomtest2</tt></font> ist sehr gut, sie
+lag auf dem Testrechner (AMD 4400+ Dual Core, Ubuntu 10 mit JDK 1.6)
+bei etwa 50 MByte pro Sekunde. Ein wesentlicher Grund ist darin zu
+suchen, dass durch den programmeigenen Puffer ein Gro&szlig;teil der
+Methodenaufrufe zum Lesen einzelner Bytes vermieden wird. Auf die
+gleiche Weise lassen sich auch die streamorientierten Dateizugriffe
+beschleunigen, wenn die Anwendung nicht unbedingt darauf angewiesen
+ist, <i>zeichenweise</i> zu lesen bzw. zu schreiben. 
+
+<!-- Section -->
+
+<a name="sectlevel3id052002005"></a>
+<h3>52.2.5 JDBC </h3>
+
+<p>
+Bei der Verwendung der JDBC-API, also bei der Arbeit mit relationalen
+Datenbanken, gibt es aus Performance-Sicht ein paar Dinge zu beachten.
+Nat&uuml;rlich h&auml;ngt das Laufzeitverhalten vom konkret verwendeten
+Datenbanksystem und seinem Treiber ab, denn die Produkte der verschiedenen
+Hersteller besitzen unterschiedliche St&auml;rken und Schw&auml;chen.
+Einige wichtige Aussagen zur Performance lassen sich aber auch in
+allgemeing&uuml;ltiger Weise treffen. 
+
+<!-- Section -->
+
+<a name="sectlevel4id052002005001"></a>
+<h4>Autocommit </h4>
+
+<p>
+Wenn wir uns via JDBC mit einer Datenbank verbinden, erhalten wir
+ein Objekt vom Typ <a href="index_c.html#ixb100590"><font color=#000080><tt>Connection</tt></font></a>.
+<i>Standardm&auml;&szlig;ig</i> ist diese Verbindung im Autocommit-Modus,
+d.h. wenn wir diesen Modus nicht explizit mit <font color="#000077"><tt>setAutocommit(false)</tt></font>
+ausschalten, wird jedes Statement vom Treiber automatisch mit einem
+<a name="ixa103834"><a href="index_c.html#ixb102897"><font color=#000080><tt>COMMIT</tt></font></a></a>
+quittiert. Dies wirkt sich nat&uuml;rlich negativ auf die Performance
+aus, denn das Persistieren der Transaktion ben&ouml;tigt wegen der
+erforderlichen externen Schreibzugriffe relativ viel Zeit. <a href="k100329.html#perfpreparedstatement">Listing 52.9</a>
+ist beispielsweise mit eingeschaltetem Autocommit nur etwa halb so
+schnell wie ohne (gemessen mit der JavaDB mit eingebetteter Datenbank).
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Abgesehen von den negativen Auswirkungen auf die Performance ist der
+Autocommit-Modus in der Praxis auch aus fachlichen Erw&auml;gungen
+oft nicht gew&uuml;nscht. Gerade die M&ouml;glichkeit, bei einer relationalen
+Datenbank die Transaktionsgrenzen selbst setzen zu k&ouml;nnen, ist
+ein h&auml;ufig ben&ouml;tigtes Feature bei der Entwicklung mehrbenutzerf&auml;higer
+Anwendungen, das mit dem Autocommit-Modus de facto ausgeschaltet wird.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id052002005002"></a>
+<h4>PreparedStatements<a name="ixa103835"></a></h4>
+
+<p>
+In der Praxis werden aus einer Anwendung heraus h&auml;ufig gleiche
+oder &auml;hnliche Anfragen wiederholt an die Datenbank gesendet.
+Die Anfragen werden in SQL formuliert und vom Datenbankmanagementsystem
+zur Laufzeit &uuml;bersetzt. Das DBMS erstellt einen sogenannten <i>Accessplan</i>
+(aka Zugriffsplan oder Zugriffspfad), der anschlie&szlig;end zur Ausf&uuml;hrung
+kommt. Je komplexer die Anfrage ist, desto gr&ouml;&szlig;er ist der
+Aufwand, einen guten Zugriffspfad zu finden. Bei einem Join beispielsweise
+steigt der Aufwand f&uuml;r das Auffinden eines guten Zugriffsplans
+&uuml;berlinear mit der Anzahl der beteiligten Tabellen. 
+
+<p>
+F&uuml;r das Datenbankmanagementsystem ist es in solchen F&auml;llen
+eine gro&szlig;e Hilfe, wenn man ein <a href="index_p.html#ixb102431"><font color=#000080><tt>PreparedStatement</tt></font></a>
+verwendet. Nachdem es durch Aufruf von <a href="index_p.html#ixb102432"><font color=#000080><tt>prepareStatement</tt></font></a>
+an der <a href="index_c.html#ixb100590"><font color=#000080><tt>Connection</tt></font></a>
+erzeugt wurde, kann man es wiederholt durch Aufruf von <font color="#000077"><tt>execute</tt></font>-Methode
+zur Ausf&uuml;hrung bringen. Das DBMS braucht in diesem Fall nur <i>ein
+einziges Mal</i> (n&auml;mlich beim Aufruf von <a href="index_p.html#ixb102432"><font color=#000080><tt>prepareStatement</tt></font></a>)
+einen passenden Zugriffspfad zu berechnen und spart so bei jedem weiteren
+Aufruf eine Menge Zeit gegen&uuml;ber der Verwendung eines nicht preparierten
+Statements. 
+
+<p>
+Das folgende Listing schreibt in einer Schleife 100 S&auml;tze in
+eine Tabelle und benutzt dazu ein <a href="index_p.html#ixb102431"><font color=#000080><tt>PreparedStatement</tt></font></a>:
+<a name="perfpreparedstatement"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>PreparedStatement ps = conn.prepareStatement(
+<font color="#555555">002 </font>  <font color="#0000FF">"insert into test (col) values (?)"</font>
+<font color="#555555">003 </font>);
+<font color="#555555">004 </font><font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; 100; i++) {
+<font color="#555555">005 </font>  ps.setInt(1, i);
+<font color="#555555">006 </font>  ps.execute();
+<font color="#555555">007 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 52.9: Verwendung von PreparedStatements</i></p>
+
+<p>
+Die Laufzeit eines gleichwertigen Programms ben&ouml;tigt unter Verwendung
+gew&ouml;hnlicher <a href="index_s.html#ixb100591"><font color=#000080><tt>Statement</tt></font></a>-Objekte
+mehr als zehnmal so lang (gemessen mit der JavaDB mit eingebetteter
+Datenbank): 
+<a name="perfstatement"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>Statement s = conn.createStatement();
+<font color="#555555">002 </font><font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; 100; i++) {
+<font color="#555555">003 </font>  s.execute(<font color="#0000FF">"insert into test (col) values ("</font> + i + <font color="#0000FF">")"</font>);
+<font color="#555555">004 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 52.10: Ung&uuml;nstige Verwendung von Statements</i></p>
+
+
+<!-- Section -->
+<a name="perfautoboxing"></a>
+<h3>52.2.6 Autoboxing und Autounboxing </h3>
+
+<p>
+Mit der Version 5 des JDK wurde das Konzept des <a name="ixa103836"></a>Autoboxing
+eingef&uuml;hrt, also die automatische, transparente &Uuml;berf&uuml;hrung
+von primitiven Datentypen in ihre Wrapper-Klassen (vgl. <a href="k100072.html#autoboxing">Abschnitt 11.2.3</a>).
+Dies erleichert zwar die Lesbarkeit des Codes, aber der sorglose Umgang
+mit Autoboxing und Autounboxing kann zu Performance-Problemen f&uuml;hren.
+
+<p>
+Das folgende Programm berechnet die ersten 500.000 Fibonacci-Zahlen.
+(Zur Erinnerung: Eine Fibonacci-Folge beginnt mit den Zahlen 0 und
+1, alle weiteren werden aus der Summe ihrer beiden Vorg&auml;nger
+errechnet.) Die Folge lautet also 0, 1, 1, 2, 3, 5, 8 usw. Das Ergebnis
+wird von unserem Programm in einem Array gespeichert: 
+<a name="fibonacci"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Fibonacci.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Fibonacci
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">private</font> <font color="#0000AA">final</font> <font color="#0000AA">static</font> <font color="#006699">int</font> N = 500000;
+<font color="#555555">006 </font>  <font color="#0000AA">private</font> <font color="#0000AA">final</font> <font color="#006699">int</font>[] werte = <font color="#0000AA">new</font> <font color="#006699">int</font>[N]; <a name="fibonacci.a"></a>
+<font color="#555555">007 </font>  
+<font color="#555555">008 </font>  Fibonacci()
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    werte[0] = 0;
+<font color="#555555">011 </font>    werte[1] = 1;
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>  
+<font color="#555555">014 </font>  <font color="#0000AA">private</font> <font color="#006699">void</font> fibonacci()
+<font color="#555555">015 </font>  {
+<font color="#555555">016 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 2; i &lt; N; i++) {
+<font color="#555555">017 </font>      werte[i] = werte[i-1] + werte[i-2]; <a name="fibonacci.b"></a>
+<font color="#555555">018 </font>    }
+<font color="#555555">019 </font>  }
+<font color="#555555">020 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Fibonacci.java"><font color="#000055" size=-1>Fibonacci.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 52.11: Programm zum Berechnen von Fibonacci-Zahlen</i></p>
+
+<p>
+Das abgebildete Listing berechnet die Fibonacci-Folge sehr schnell,
+denn es arbeitet ausschlie&szlig;lich mit <font color="#000077"><tt>int</tt></font>-Primitiven.
+Etwa zehnmal langsamer ist das Programm, wenn man <a href="k100329.html#fibonacci.a">Zeile 006</a>
+durch folgende ersetzt: 
+<font color="#000077">
+<pre>
+  private final Integer[] werte = new Integer[N]; 
+</pre>
+</font>
+
+<p>
+Durch diese kleine &Auml;nderung findet in <a href="k100329.html#fibonacci.b">Zeile 017</a>
+mehrfach Autoboxing statt: 
+<ul>
+<li>Die Ausdr&uuml;cke <font color="#000077"><tt>werte[i-1]</tt></font>
+und <font color="#000077"><tt>werte[i-2]</tt></font> m&uuml;ssen vom
+Typ <a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>
+in ihr primitives Pendant &uuml;berf&uuml;hrt werden, um anschlie&szlig;end
+die Addition durchf&uuml;hren zu k&ouml;nnen.
+<li>Nun muss f&uuml;r das primitive Ergebnis das passende <a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>-Objekt
+erzeugt werden, um die Zuweisung auf <font color="#000077"><tt>werte[i]</tt></font>
+durchf&uuml;hren zu k&ouml;nnen. 
+</ul>
+
+<p>
+Diese Verkomplizierung f&uuml;hrt zu der oben beschriebenen deutlichen
+Verlangsamung des Programms. Autoboxing ist leider nicht immer auf
+den ersten Blick zu erkennen, sondern kann leicht &uuml;bersehen werden.
+Eine h&auml;ufige Falle sind beispielsweise typisierte Collections,
+die vom Typ <a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>,
+<a href="index_d.html#ixb100268"><font color=#000080><tt>Double</tt></font></a>
+usw. sind. 
+
+<!-- Section -->
+
+<a name="sectlevel3id052002007"></a>
+<h3>52.2.7 Speicheroptimierung </h3>
+
+<p>
+Neben den direkten Prozessoraktivit&auml;ten hat auch die Art und
+Weise, in der das Programm mit dem Hauptspeicher umgeht, einen erheblichen
+Einfluss auf dessen Performance. Einige der Aspekte, die dabei eine
+Rolle spielen, sind: 
+<ul>
+<li>Jede Allozierung von Speicher kostet Rechenzeit. Der Speicher
+muss entweder vom Betriebssystem oder vom Laufzeitsystem der VM beschafft
+werden. Auch das (automatische) Initialisieren des Speichers kostet
+Zeit. Das Anlegen eines Arrays mit 1000 Elementen dauert wesentlich
+l&auml;nger als das eines mit 10 Elementen.
+<li>In ung&uuml;nstigen F&auml;llen kann es sein, dass die VM den
+ben&ouml;tigten Speicher schrittweise in relativ kleinen St&uuml;cken
+beim Betriebssystem anfordert. Das kostet unter Umst&auml;nden sehr
+viel Zeit. In diesem Fall kann es sinnvoll sein, mit Hilfe des Schalters
+<a name="ixa103837"><a href="index_0.html#ixb102898"><font color=#000080><tt>-Xms</tt></font></a></a>
+den beim Start der VM anzufordernden Speicher auf einen h&ouml;heren
+Wert einzustellen.
+<li>Objekte mit aufw&auml;ndigen Konstruktoren ben&ouml;tigen m&ouml;glicherweise
+viel Zeit zur Initialisierung. Bei solchen Objekten kann es sinnvoll
+sein, sie zu &#187;recyceln&#171;. Dazu werden sie nach Gebrauch in
+einer geeigneten Datenstruktur gesammelt und k&ouml;nnen dem n&auml;chsten
+Interessenten erneut zur Verf&uuml;gung gestellt werden. Vor der weiteren
+Verwendung muss das Objekt nat&uuml;rlich geeignet reinitialisiert
+werden.
+<li>Nicht mehr referenzierter Speicher belastet den Garbage Collector
+und ben&ouml;tigt CPU-Zeit, um dem Programm wieder zugef&uuml;hrt
+werden zu k&ouml;nnen.
+<li>Gro&szlig;e Mengen an tempor&auml;ren, kurzlebigen Objekten belasten
+die VM ebenfalls. Derartige Allokationsszenarien entstehen beispielsweise
+beim wiederholten Modifizieren von Strings in Schleifen oder wenn
+primitive Typen mit Hilfe ihrer Wrapper-Klassen in Collections gespeichert
+werden sollen. In <a href="k100330.html#profilereinsatz">Abschnitt 52.3</a>
+zeigen wir ein harmlos aussehendes Programm, das beim Anlegen von
+wenigen kByte Nutzdaten 1,3 GByte Datenm&uuml;ll erzeugt. Einen ersten
+Eindruck von der Garbage-Collector-Aktivit&auml;t bekommt man, wenn
+man der JVM beim Starten den Parameter <font color="#000077"><tt>-verbose:gc</tt></font>
+mitgibt. Die Arbeit des Garbage-Collectors wird nun auf der Konsole
+protokolliert. 
+<li>Werden Referenzen auf Objekte nicht gel&ouml;scht, bleibt der
+zugeordnete Speicher belegt und der Garbage Collector kann ihn nicht
+wieder freigeben. Das belastet nicht nur die VM, die zunehmend neuen
+Speicher beim Betriebssystem anfordern muss, sondern f&uuml;hrt fr&uuml;her
+oder sp&auml;ter zum Absturz des Programms wegen Speichermangels,
+also zu einem <a name="ixa103838"><a href="index_o.html#ixb102899"><font color=#000080><tt>OutOfMemoryError</tt></font></a></a>.
+Derartige Speicherlecks entstehen, wenn eigentlich nicht mehr ben&ouml;tigte
+Objekte an &#187;lebenden&#171; Referenzen h&auml;ngen (also an Variablen,
+die im Programm noch ben&ouml;tigt werden). Lebende Referenzen sind
+die lokalen Variablen auf den Stacks aller laufenden Threads plus
+alle statischen Variablen des Programms. Zudem nat&uuml;rlich alle
+Variablen, die indirekt daran h&auml;ngen. Als Programmierer sollte
+man diesbez&uuml;glich den statischen Variablen (insbesondere wenn
+sie auf Collections verweisen) besonderes Augenmerk schenken.
+<li>In Ausnahmef&auml;llen, n&auml;mlich dann, wenn Programmpausen
+sicher vorhergesehen werden k&ouml;nnen, kann man dem Garbage Collector
+die Arbeit erleichtern, in dem man die Methode <a name="ixa103839"><a href="index_g.html#ixb100865"><font color=#000080><tt>gc</tt></font></a></a>
+der Klasse <a href="index_s.html#ixb100182"><font color=#000080><tt>System</tt></font></a>
+explizit aufruft.
+</ul>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100327.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100328.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100330.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100332.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

@@ -1,0 +1,411 @@
+   1               		.file	"main.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   8               		.text
+   9               	.Ltext0:
+ 104               	.global	sende
+ 106               	sende:
+   1:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c **** #define F_CPU 4000000UL
+   2:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c **** #include <avr/io.h>
+   3:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c **** #include <avr/delay.h>
+   4:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c **** #define DIN_0 PORTB=PORTB&~(1<<PB0); //DIN = 0
+   5:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c **** #define DIN_1 PORTB=PORTB|(1<<PB0); //DIN = 1
+   6:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c **** #define CLK_0 PORTB=PORTB&~(1<<PB1); //CLK = 0
+   7:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c **** #define CLK_1 PORTB=PORTB|(1<<PB1); //CLK = 1
+   8:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c **** #define CS_0 PORTB=PORTB&~(1<<PB2); //CS = 0
+   9:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c **** #define CS_1 PORTB=PORTB|(1<<PB2); //CS = 1
+  10:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c **** void sende (unsigned char reg_adr, unsigned char daten);
+  11:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c **** int main(void)
+  12:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c **** {
+  13:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     CLKPR = 0x80; //Ändern des internen CLK-Prescalers
+  14:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     CLKPR = 0x02; //16 Mhz :1 = 8 MHz
+  15:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     _delay_ms(1000);
+  16:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     ///////// μC Init. für DIN, CLK, CS /////////////////////////
+  17:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     DDRB = DDRB|(1<<DDB0)|(1<<DDB1)|(1<<DDB2); //DIN, CLK und CS als Output
+  18:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     ///////// Initialisierung des MAX7221 /////////////////////////
+  19:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     sende (0x0C,0x01); // Shut Down - Normal Operation
+  20:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     sende (0x0A,0xFF); // Intensity maximal
+  21:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     sende (0x0B,0x01); // LED Display mit 8 Stellen
+  22:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     sende (0x09,0xFF); // BCD-B Codierung für alle 8 Stellen
+  23:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     //sende (0x0F,0xFF); // Display Test
+  24:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     ////////// Ausgabe von 7 6 5 4 3 2 1 0 am Display ////////////
+  25:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     sende (0x01,0x00); // Ausgabe von 0
+  26:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     char i;
+  27:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     while(1)
+  28:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     {
+  29:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****         for(i = 0;i < 10;i++)
+  30:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****         {
+  31:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****             sende (0x01,i+0x80); // Ausgabe von 0
+  32:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****             _delay_ms(1000);
+  33:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****         }
+  34:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     }
+  35:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c **** }
+  36:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c **** void sende (unsigned char reg_adr, unsigned char daten)
+  37:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c **** {
+ 108               	.LM0:
+ 109               	.LFBB1:
+ 110               	/* prologue: function */
+ 111               	/* frame size = 0 */
+ 112               	/* stack size = 0 */
+ 113               	.L__stack_usage = 0
+  38:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     unsigned char Maske = 0x80; // 1000 0000
+  39:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     unsigned char i; // Zählvariable
+  40:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     CS_0;
+ 115               	.LM1:
+ 116 0000 2A98      		cbi 0x5,2
+  41:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     CLK_0; // Start serielle Datenübertragung
+ 118               	.LM2:
+ 119 0002 2998      		cbi 0x5,1
+ 120 0004 98E0      		ldi r25,lo8(8)
+  38:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     unsigned char Maske = 0x80; // 1000 0000
+ 122               	.LM3:
+ 123 0006 20E8      		ldi r18,lo8(-128)
+ 124               	.L5:
+  42:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     for(i=1; i<=8; i++) // Schleife zur Ausgabe der 8 Adress-Bits
+  43:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     {
+  44:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****         if(reg_adr & Maske) {DIN_1;} //Parallel => Serienwandlung
+ 126               	.LM4:
+ 127 0008 322F      		mov r19,r18
+ 128 000a 3823      		and r19,r24
+ 129 000c 01F0      		breq .L2
+ 131               	.LM5:
+ 132 000e 289A      		sbi 0x5,0
+ 133 0010 00C0      		rjmp .L3
+ 134               	.L2:
+  45:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****         else {DIN_0;}
+ 136               	.LM6:
+ 137 0012 2898      		cbi 0x5,0
+ 138               	.L3:
+  46:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****         CLK_1; //CLK ausgeben
+ 140               	.LM7:
+ 141 0014 299A      		sbi 0x5,1
+  47:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****         CLK_0;
+ 143               	.LM8:
+ 144 0016 2998      		cbi 0x5,1
+  48:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****         Maske = Maske>>1; // 1 Bit nach rechts verschieben
+ 146               	.LM9:
+ 147 0018 2695      		lsr r18
+ 148 001a 9150      		subi r25,lo8(-(-1))
+  42:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     for(i=1; i<=8; i++) // Schleife zur Ausgabe der 8 Adress-Bits
+ 150               	.LM10:
+ 151 001c 01F4      		brne .L5
+ 152 001e 88E0      		ldi r24,lo8(8)
+ 153 0020 90E8      		ldi r25,lo8(-128)
+ 154               	.L9:
+  49:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     }
+  50:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     Maske = 0x80;
+  51:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     for(i=1; i<=8; i++) // Schleif zur Ausgabe der 8 Daten-Bits
+  52:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     {
+  53:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****         if(daten & Maske){ DIN_1;} // Parallel => Serienumwandlung
+ 156               	.LM11:
+ 157 0022 292F      		mov r18,r25
+ 158 0024 2623      		and r18,r22
+ 159 0026 01F0      		breq .L6
+ 161               	.LM12:
+ 162 0028 289A      		sbi 0x5,0
+ 163 002a 00C0      		rjmp .L7
+ 164               	.L6:
+  54:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****         else {DIN_0;}
+ 166               	.LM13:
+ 167 002c 2898      		cbi 0x5,0
+ 168               	.L7:
+  55:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****         CLK_1;
+ 170               	.LM14:
+ 171 002e 299A      		sbi 0x5,1
+  56:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****         CLK_0;
+ 173               	.LM15:
+ 174 0030 2998      		cbi 0x5,1
+  57:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****         Maske = Maske>>1; // Maske um 1 Bit nach rechts verschieben
+ 176               	.LM16:
+ 177 0032 9695      		lsr r25
+ 178 0034 8150      		subi r24,lo8(-(-1))
+  51:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     for(i=1; i<=8; i++) // Schleif zur Ausgabe der 8 Daten-Bits
+ 180               	.LM17:
+ 181 0036 01F4      		brne .L9
+  58:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     }
+  59:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     DIN_0; // Serielle Datenleitung auf 0
+ 183               	.LM18:
+ 184 0038 2898      		cbi 0x5,0
+  60:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     CS_1; // Übernahme der Adr.- und Daten-Bits
+ 186               	.LM19:
+ 187 003a 2A9A      		sbi 0x5,2
+ 188 003c 0895      		ret
+ 190               	.Lscope1:
+ 191               		.section	.text.startup,"ax",@progbits
+ 193               	.global	main
+ 195               	main:
+  12:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c **** {
+ 197               	.LM20:
+ 198               	.LFBB2:
+ 199               	/* prologue: function */
+ 200               	/* frame size = 0 */
+ 201               	/* stack size = 0 */
+ 202               	.L__stack_usage = 0
+  13:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     CLKPR = 0x80; //Ändern des internen CLK-Prescalers
+ 204               	.LM21:
+ 205 0000 80E8      		ldi r24,lo8(-128)
+ 206 0002 8093 6100 		sts 97,r24
+  14:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     CLKPR = 0x02; //16 Mhz :1 = 8 MHz
+ 208               	.LM22:
+ 209 0006 82E0      		ldi r24,lo8(2)
+ 210 0008 8093 6100 		sts 97,r24
+ 211               	.LBB6:
+ 212               	.LBB7:
+ 214               	.Ltext1:
+   1:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** /* Copyright (c) 2002, Marek Michalkiewicz
+   2:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    Copyright (c) 2004,2005,2007 Joerg Wunsch
+   3:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    Copyright (c) 2007  Florin-Viorel Petrov
+   4:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    All rights reserved.
+   5:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+   6:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    Redistribution and use in source and binary forms, with or without
+   7:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    modification, are permitted provided that the following conditions are met:
+   8:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+   9:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    * Redistributions of source code must retain the above copyright
+  10:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****      notice, this list of conditions and the following disclaimer.
+  11:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  12:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    * Redistributions in binary form must reproduce the above copyright
+  13:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****      notice, this list of conditions and the following disclaimer in
+  14:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****      the documentation and/or other materials provided with the
+  15:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****      distribution.
+  16:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  17:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    * Neither the name of the copyright holders nor the names of
+  18:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****      contributors may be used to endorse or promote products derived
+  19:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****      from this software without specific prior written permission.
+  20:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  21:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  22:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****   AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  23:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****   IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  24:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****   ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  25:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****   LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  26:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****   CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  27:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****   SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  28:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****   INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  29:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****   CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  30:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  31:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****   POSSIBILITY OF SUCH DAMAGE. */
+  32:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  33:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** /* $Id$ */
+  34:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  35:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #ifndef _UTIL_DELAY_H_
+  36:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #define _UTIL_DELAY_H_ 1
+  37:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  38:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #ifndef __HAS_DELAY_CYCLES
+  39:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #define __HAS_DELAY_CYCLES 1
+  40:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #endif
+  41:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  42:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #include <inttypes.h>
+  43:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #include <util/delay_basic.h>
+  44:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #include <math.h>
+  45:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  46:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** /** \file */
+  47:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** /** \defgroup util_delay <util/delay.h>: Convenience functions for busy-wait delay loops
+  48:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     \code
+  49:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     #define F_CPU 1000000UL  // 1 MHz
+  50:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     //#define F_CPU 14.7456E6
+  51:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     #include <util/delay.h>
+  52:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     \endcode
+  53:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  54:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     \note As an alternative method, it is possible to pass the
+  55:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     F_CPU macro down to the compiler from the Makefile.
+  56:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     Obviously, in that case, no \c \#define statement should be
+  57:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     used.
+  58:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  59:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     The functions in this header file are wrappers around the basic
+  60:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     busy-wait functions from <util/delay_basic.h>.  They are meant as
+  61:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     convenience functions where actual time values can be specified
+  62:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     rather than a number of cycles to wait for.  The idea behind is
+  63:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     that compile-time constant expressions will be eliminated by
+  64:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     compiler optimization so floating-point expressions can be used
+  65:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     to calculate the number of delay cycles needed based on the CPU
+  66:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     frequency passed by the macro F_CPU.
+  67:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  68:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     \note In order for these functions to work as intended, compiler
+  69:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     optimizations <em>must</em> be enabled, and the delay time
+  70:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     <em>must</em> be an expression that is a known constant at
+  71:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     compile-time.  If these requirements are not met, the resulting
+  72:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     delay will be much longer (and basically unpredictable), and
+  73:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     applications that otherwise do not use floating-point calculations
+  74:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     will experience severe code bloat by the floating-point library
+  75:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     routines linked into the application.
+  76:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  77:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     The functions available allow the specification of microsecond, and
+  78:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     millisecond delays directly, using the application-supplied macro
+  79:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     F_CPU as the CPU clock frequency (in Hertz).
+  80:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  81:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** */
+  82:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  83:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #if !defined(__DOXYGEN__)
+  84:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** static inline void _delay_us(double __us) __attribute__((always_inline));
+  85:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** static inline void _delay_ms(double __ms) __attribute__((always_inline));
+  86:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #endif
+  87:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  88:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #ifndef F_CPU
+  89:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** /* prevent compiler error by supplying a default */
+  90:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** # warning "F_CPU not defined for <util/delay.h>"
+  91:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** # define F_CPU 1000000UL
+  92:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #endif
+  93:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  94:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #ifndef __OPTIMIZE__
+  95:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** # warning "Compiler optimizations disabled; functions from <util/delay.h> won't work as designed"
+  96:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #endif
+  97:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  98:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+  99:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****   !defined(__DELAY_BACKWARD_COMPATIBLE__) &&	   \
+ 100:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****   __STDC_HOSTED__
+ 101:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #  include <math.h>
+ 102:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #endif
+ 103:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+ 104:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** /**
+ 105:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    \ingroup util_delay
+ 106:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+ 107:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    Perform a delay of \c __ms milliseconds, using _delay_loop_2().
+ 108:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+ 109:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    The macro F_CPU is supposed to be defined to a
+ 110:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    constant defining the CPU clock frequency (in Hertz).
+ 111:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+ 112:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    The maximal possible delay is 262.14 ms / F_CPU in MHz.
+ 113:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+ 114:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    When the user request delay which exceed the maximum possible one,
+ 115:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    _delay_ms() provides a decreased resolution functionality. In this
+ 116:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    mode _delay_ms() will work with a resolution of 1/10 ms, providing
+ 117:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    delays up to 6.5535 seconds (independent from CPU frequency).  The
+ 118:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    user will not be informed about decreased resolution.
+ 119:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+ 120:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    If the avr-gcc toolchain has __builtin_avr_delay_cycles(unsigned long)
+ 121:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    support, maximal possible delay is 4294967.295 ms/ F_CPU in MHz. For
+ 122:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    values greater than the maximal possible delay, overflows results in
+ 123:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    no delay i.e., 0ms.
+ 124:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+ 125:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    Conversion of __us into clock cycles may not always result in integer.
+ 126:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    By default, the clock cycles rounded up to next integer. This ensures that
+ 127:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    the user gets atleast __us microseconds of delay.
+ 128:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+ 129:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    Alternatively, user can define __DELAY_ROUND_DOWN__ and __DELAY_ROUND_CLOSEST__
+ 130:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    to round down and round to closest integer.
+ 131:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+ 132:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    Note: The new implementation of _delay_ms(double __ms) with 
+ 133:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     __builtin_avr_delay_cycles(unsigned long) support is not backward compatible. 
+ 134:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    User can define __DELAY_BACKWARD_COMPATIBLE__ to get a backward compatible delay.
+ 135:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    Also, the backward compatible
+ 136:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    algorithm will be chosen if the code is compiled in a <em>freestanding
+ 137:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    environment</em> (GCC option \c -ffreestanding), as the math functions
+ 138:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    required for rounding are not available to the compiler then.
+ 139:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+ 140:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****  */
+ 141:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** void
+ 142:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** _delay_ms(double __ms)
+ 143:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** {
+ 144:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 	double __tmp ; 
+ 145:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 146:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****   !defined(__DELAY_BACKWARD_COMPATIBLE__) &&	   \
+ 147:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****   __STDC_HOSTED__
+ 148:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 	uint32_t __ticks_dc;
+ 149:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 	extern void __builtin_avr_delay_cycles(unsigned long);
+ 150:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 	__tmp = ((F_CPU) / 1e3) * __ms;
+ 151:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+ 152:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 	#if defined(__DELAY_ROUND_DOWN__)
+ 153:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 		__ticks_dc = (uint32_t)fabs(__tmp);
+ 154:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+ 155:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 	#elif defined(__DELAY_ROUND_CLOSEST__)
+ 156:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 		__ticks_dc = (uint32_t)(fabs(__tmp)+0.5);
+ 157:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+ 158:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 	#else
+ 159:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 		//round up by default
+ 160:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+ 161:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 	#endif
+ 162:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+ 163:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 	__builtin_avr_delay_cycles(__ticks_dc);
+ 216               	.LM23:
+ 217 000c 2FEF      		ldi r18,lo8(799999)
+ 218 000e 84E3      		ldi r24,hi8(799999)
+ 219 0010 9CE0      		ldi r25,hlo8(799999)
+ 220 0012 2150      		1: subi r18,1
+ 221 0014 8040      		sbci r24,0
+ 222 0016 9040      		sbci r25,0
+ 223 0018 01F4      		brne 1b
+ 224 001a 00C0      		rjmp .
+ 225 001c 0000      		nop
+ 226               	.LBE7:
+ 227               	.LBE6:
+ 229               	.Ltext2:
+  17:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     DDRB = DDRB|(1<<DDB0)|(1<<DDB1)|(1<<DDB2); //DIN, CLK und CS als Output
+ 231               	.LM24:
+ 232 001e 84B1      		in r24,0x4
+ 233 0020 8760      		ori r24,lo8(7)
+ 234 0022 84B9      		out 0x4,r24
+  19:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     sende (0x0C,0x01); // Shut Down - Normal Operation
+ 236               	.LM25:
+ 237 0024 61E0      		ldi r22,lo8(1)
+ 238 0026 8CE0      		ldi r24,lo8(12)
+ 239 0028 0E94 0000 		call sende
+  20:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     sende (0x0A,0xFF); // Intensity maximal
+ 241               	.LM26:
+ 242 002c 6FEF      		ldi r22,lo8(-1)
+ 243 002e 8AE0      		ldi r24,lo8(10)
+ 244 0030 0E94 0000 		call sende
+  21:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     sende (0x0B,0x01); // LED Display mit 8 Stellen
+ 246               	.LM27:
+ 247 0034 61E0      		ldi r22,lo8(1)
+ 248 0036 8BE0      		ldi r24,lo8(11)
+ 249 0038 0E94 0000 		call sende
+  22:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     sende (0x09,0xFF); // BCD-B Codierung für alle 8 Stellen
+ 251               	.LM28:
+ 252 003c 6FEF      		ldi r22,lo8(-1)
+ 253 003e 89E0      		ldi r24,lo8(9)
+ 254 0040 0E94 0000 		call sende
+  25:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****     sende (0x01,0x00); // Ausgabe von 0
+ 256               	.LM29:
+ 257 0044 60E0      		ldi r22,0
+ 258 0046 81E0      		ldi r24,lo8(1)
+ 259 0048 0E94 0000 		call sende
+ 260               	.L14:
+  29:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****         for(i = 0;i < 10;i++)
+ 262               	.LM30:
+ 263 004c C0E0      		ldi r28,0
+ 264               	.L12:
+  31:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****             sende (0x01,i+0x80); // Ausgabe von 0
+ 266               	.LM31:
+ 267 004e 60E8      		ldi r22,lo8(-128)
+ 268 0050 6C0F      		add r22,r28
+ 269 0052 81E0      		ldi r24,lo8(1)
+ 270 0054 0E94 0000 		call sende
+ 271               	.LBB8:
+ 272               	.LBB9:
+ 274               	.Ltext3:
+ 276               	.LM32:
+ 277 0058 2FEF      		ldi r18,lo8(799999)
+ 278 005a 84E3      		ldi r24,hi8(799999)
+ 279 005c 9CE0      		ldi r25,hlo8(799999)
+ 280 005e 2150      		1: subi r18,1
+ 281 0060 8040      		sbci r24,0
+ 282 0062 9040      		sbci r25,0
+ 283 0064 01F4      		brne 1b
+ 284 0066 00C0      		rjmp .
+ 285 0068 0000      		nop
+ 286               	.LBE9:
+ 287               	.LBE8:
+ 289               	.Ltext4:
+  29:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/2-MAX7221/Code/MAX7221/MAX7221/main.c ****         for(i = 0;i < 10;i++)
+ 291               	.LM33:
+ 292 006a CF5F      		subi r28,lo8(-(1))
+ 293 006c CA30      		cpi r28,lo8(10)
+ 294 006e 00F0      		brlo .L12
+ 295 0070 00C0      		rjmp .L14
+ 300               	.Lscope2:
+ 301               		.text
+ 303               	.Letext0:
+ 304               		.ident	"GCC: (GNU) 4.8.1"
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccjFHloI.s:2      *ABS*:0000003e __SP_H__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccjFHloI.s:3      *ABS*:0000003d __SP_L__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccjFHloI.s:4      *ABS*:0000003f __SREG__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccjFHloI.s:5      *ABS*:00000000 __tmp_reg__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccjFHloI.s:6      *ABS*:00000001 __zero_reg__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccjFHloI.s:106    .text:00000000 sende
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccjFHloI.s:195    .text.startup:00000000 main
+
+NO UNDEFINED SYMBOLS

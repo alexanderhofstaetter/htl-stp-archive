@@ -1,0 +1,374 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100193.html;106,k100197.html;107,k100199.html;108,k100202.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100193.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100197.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100199.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100202.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 30 - Men&uuml;s
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="actionevents"></a>
+<h2>30.5 <a name="ixa101972">Action-Events</a></h2>
+<hr>
+<ul>
+<li><a href="k100198.html#actionevents">30.5 Action-Events</a>
+</ul>
+<hr>
+
+<p>
+Ein Action-Event wird generiert, wenn der Anwender einen Men&uuml;punkt
+selektiert und ausgew&auml;hlt hat. Das Programm kann den ausl&ouml;senden
+Men&uuml;eintrag erkennen und so geeignet darauf reagieren. Action-Events
+werden von der Klasse <a href="index_m.html#ixb101411"><font color=#000080><tt>MenuItem</tt></font></a>
+und drei weiteren Klassen (auf die wir in den folgenden Kapiteln zur&uuml;ckkommen)
+gesendet: 
+<ul>
+<li><a href="index_m.html#ixb101411"><font color=#000080><tt>MenuItem</tt></font></a>
+sendet ein <a href="index_a.html#ixb101343"><font color=#000080><tt>ActionEvent</tt></font></a>,
+wenn der Men&uuml;punkt aufgerufen wurde.
+<li>Ein <a href="index_b.html#ixb101410"><font color=#000080><tt>Button</tt></font></a>
+sendet ein <a href="index_a.html#ixb101343"><font color=#000080><tt>ActionEvent</tt></font></a>,
+nachdem er vom Anwender gedr&uuml;ckt wurde.
+<li>Ein Objekt vom Typ <a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>
+sendet ein <a href="index_a.html#ixb101343"><font color=#000080><tt>ActionEvent</tt></font></a>
+nach einem Doppelklick des Anwenders.
+<li>Ein <a href="index_t.html#ixb101412"><font color=#000080><tt>TextField</tt></font></a>
+sendet ein <a href="index_a.html#ixb101343"><font color=#000080><tt>ActionEvent</tt></font></a>,
+wenn der Anwender die Taste <font color="#007700"><tt>[ENTER]</tt></font>
+gedr&uuml;ckt hat.
+</ul>
+
+<p>
+Ein Empf&auml;nger f&uuml;r Action-Events muss das Interface <a href="index_a.html#ixb101408"><font color=#000080><tt>ActionListener</tt></font></a>
+implementieren und bekommt Events des Typs <a href="index_a.html#ixb101343"><font color=#000080><tt>ActionEvent</tt></font></a>
+&uuml;bergeben. <a href="index_a.html#ixb101343"><font color=#000080><tt>ActionEvent</tt></font></a>
+erweitert die Klasse <a href="index_a.html#ixb101341"><font color=#000080><tt>AWTEvent</tt></font></a>
+und stellt neben <a href="index_g.html#ixb101348"><font color=#000080><tt>getID</tt></font></a>
+und <a href="index_g.html#ixb101340"><font color=#000080><tt>getSource</tt></font></a>
+vor allem die Methode <a name="ixa101973"><a href="index_g.html#ixb101512"><font color=#000080><tt>getActionCommand</tt></font></a></a>
+zur Verf&uuml;gung, mit der die verschiedenen Ereignisquellen unterschieden
+werden k&ouml;nnen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public String getActionCommand()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/event/ActionEvent.html" onClick="this.href=getApiDoc('java.awt.event.ActionEvent')"><font color="#660066" size=-1>java.awt.event.ActionEvent</font></a></td>
+</tr>
+</table>
+
+<p>
+Wird das Action-Event durch ein <a href="index_m.html#ixb101411"><font color=#000080><tt>MenuItem</tt></font></a>
+ausgel&ouml;st, liefert dessen Methode <a href="index_g.html#ixb101512"><font color=#000080><tt>getActionCommand</tt></font></a>
+die Bezeichnung des Men&uuml;punkts, wie sie an den Konstruktor &uuml;bergeben
+wurde. Durch einen expliziten Aufruf von <a name="ixa101974"><a href="index_s.html#ixb101513"><font color=#000080><tt>setActionCommand</tt></font></a></a>
+kann dieser String auch unabh&auml;ngig von der Beschriftung des Men&uuml;punkts
+ge&auml;ndert werden. Ein Aufruf von <a href="index_g.html#ixb101512"><font color=#000080><tt>getActionCommand</tt></font></a>
+liefert den aktuellen Inhalt des Men&uuml;punkts bzw. seine Beschriftung,
+falls <a href="index_s.html#ixb101513"><font color=#000080><tt>setActionCommand</tt></font></a>
+noch nicht aufgerufen wurde: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setActionCommand(String command)
+
+public String getActionCommand()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/MenuItem.html" onClick="this.href=getApiDoc('java.awt.MenuItem')"><font color="#660066" size=-1>java.awt.MenuItem</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Registrierung der Empf&auml;ngerklasse erfolgt mit der Methode
+<a name="ixa101975"><a href="index_a.html#ixb101409"><font color=#000080><tt>addActionListener</tt></font></a></a>,
+die in den Klassen <a href="index_m.html#ixb101411"><font color=#000080><tt>MenuItem</tt></font></a>,
+<a href="index_b.html#ixb101410"><font color=#000080><tt>Button</tt></font></a>,
+<a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>
+und <a href="index_t.html#ixb101412"><font color=#000080><tt>TextField</tt></font></a>
+zur Verf&uuml;gung steht: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void addActionListener(ActionListener l)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Button.html" onClick="this.href=getApiDoc('java.awt.Button')"><font color="#660066" size=-1>java.awt.Button</font></a></td>
+</tr>
+</table>
+
+<p>
+Das Interface <a name="ixa101976"><a href="index_a.html#ixb101408"><font color=#000080><tt>ActionListener</tt></font></a></a>
+stellt lediglich die Methode <a name="ixa101977"><a href="index_a.html#ixb101413"><font color=#000080><tt>actionPerformed</tt></font></a></a>
+zur Verf&uuml;gung, die beim Aufruf ein <a name="ixa101978"><a href="index_a.html#ixb101343"><font color=#000080><tt>ActionEvent</tt></font></a></a>
+&uuml;bergeben bekommt: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public abstract void actionPerformed(ActionEvent e)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/event/ActionListener.html" onClick="this.href=getApiDoc('java.awt.event.ActionListener')"><font color="#660066" size=-1>java.awt.event.ActionListener</font></a></td>
+</tr>
+</table>
+
+<p>
+&Uuml;blicherweise wird in <a href="index_a.html#ixb101413"><font color=#000080><tt>actionPerformed</tt></font></a>
+zun&auml;chst durch Aufruf von <a href="index_g.html#ixb101512"><font color=#000080><tt>getActionCommand</tt></font></a>
+und/oder <a href="index_g.html#ixb101340"><font color=#000080><tt>getSource</tt></font></a>
+die Quelle des Action-Events ermittelt, bevor der Code folgt, der
+die Reaktion auf das Ereignis implementiert. 
+
+<p>
+Das folgende Programm zeigt die Reaktion auf Action-Events. Das Programm
+&ouml;ffnet ein Fenster, das mit Hilfe von Men&uuml;eintr&auml;gen
+auf dem Bildschirm verschoben oder in der Gr&ouml;&szlig;e ver&auml;ndert
+werden kann: 
+<a name="listingid030005"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3005.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">class</font> MainMenu4
+<font color="#555555">007 </font><font color="#0000AA">extends</font> MenuBar
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">private</font> MenuItem miRueck;
+<font color="#555555">010 </font>  <font color="#0000AA">private</font> CheckboxMenuItem miFarbe;
+<font color="#555555">011 </font>
+<font color="#555555">012 </font>  <font color="#0000AA">private</font> <font color="#0000AA">static</font> <font color="#006699">void</font>
+<font color="#555555">013 </font>  addNewMenuItem(Menu menu, String name, ActionListener listener)
+<font color="#555555">014 </font>  {
+<font color="#555555">015 </font>    <font color="#006699">int</font> pos = name.indexOf(<font color="#0000FF">'&amp;'</font>);
+<font color="#555555">016 </font>    MenuShortcut shortcut = <font color="#006699">null</font>;
+<font color="#555555">017 </font>    MenuItem mi;
+<font color="#555555">018 </font>    <font color="#0000AA">if</font> (pos != -1) {
+<font color="#555555">019 </font>      <font color="#0000AA">if</font> (pos &lt; name.length() - 1) {
+<font color="#555555">020 </font>        <font color="#006699">char</font> c = name.charAt(pos + 1);
+<font color="#555555">021 </font>        shortcut=<font color="#0000AA">new</font> MenuShortcut(Character.toLowerCase(c));
+<font color="#555555">022 </font>        name=name.substring(0,pos)+name.substring(pos + 1);
+<font color="#555555">023 </font>      }
+<font color="#555555">024 </font>    }
+<font color="#555555">025 </font>    <font color="#0000AA">if</font> (shortcut != <font color="#006699">null</font>) {
+<font color="#555555">026 </font>      mi = <font color="#0000AA">new</font> MenuItem(name, shortcut);
+<font color="#555555">027 </font>    } <font color="#0000AA">else</font> {
+<font color="#555555">028 </font>      mi = <font color="#0000AA">new</font> MenuItem(name);
+<font color="#555555">029 </font>    }
+<font color="#555555">030 </font>    mi.setActionCommand(name);
+<font color="#555555">031 </font>    mi.addActionListener(listener);
+<font color="#555555">032 </font>    menu.add(mi);
+<font color="#555555">033 </font>  }
+<font color="#555555">034 </font>
+<font color="#555555">035 </font>  <font color="#0000AA">public</font> MainMenu4(ActionListener listener)
+<font color="#555555">036 </font>  {
+<font color="#555555">037 </font>    Menu m;
+<font color="#555555">038 </font>
+<font color="#555555">039 </font>    <font color="#00AA00">//Men&uuml; "Gr&ouml;&szlig;e"</font>
+<font color="#555555">040 </font>    m = <font color="#0000AA">new</font> Menu(<font color="#0000FF">"Gr&ouml;&szlig;e"</font>);
+<font color="#555555">041 </font>    addNewMenuItem(m, <font color="#0000FF">"&amp;Gr&ouml;&szlig;er"</font>, listener);
+<font color="#555555">042 </font>    addNewMenuItem(m, <font color="#0000FF">"&amp;Kleiner"</font>, listener);
+<font color="#555555">043 </font>    m.addSeparator();
+<font color="#555555">044 </font>    addNewMenuItem(m, <font color="#0000FF">"B&amp;eenden"</font>, listener);
+<font color="#555555">045 </font>    add(m);
+<font color="#555555">046 </font>
+<font color="#555555">047 </font>    <font color="#00AA00">//Men&uuml; "Position"</font>
+<font color="#555555">048 </font>    m = <font color="#0000AA">new</font> Menu(<font color="#0000FF">"Position"</font>);
+<font color="#555555">049 </font>    addNewMenuItem(m, <font color="#0000FF">"&amp;Links"</font>, listener);
+<font color="#555555">050 </font>    addNewMenuItem(m, <font color="#0000FF">"&amp;Rechts"</font>, listener);
+<font color="#555555">051 </font>    addNewMenuItem(m, <font color="#0000FF">"&amp;Oben"</font>, listener);
+<font color="#555555">052 </font>    addNewMenuItem(m, <font color="#0000FF">"&amp;Unten"</font>, listener);
+<font color="#555555">053 </font>    add(m);
+<font color="#555555">054 </font>  }
+<font color="#555555">055 </font>}
+<font color="#555555">056 </font>
+<font color="#555555">057 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3005
+<font color="#555555">058 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">059 </font><font color="#0000AA">implements</font> ActionListener
+<font color="#555555">060 </font>{
+<font color="#555555">061 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">062 </font>  {
+<font color="#555555">063 </font>    Listing3005 wnd = <font color="#0000AA">new</font> Listing3005();
+<font color="#555555">064 </font>  }
+<font color="#555555">065 </font>
+<font color="#555555">066 </font>  <font color="#0000AA">public</font> Listing3005()
+<font color="#555555">067 </font>  {
+<font color="#555555">068 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Men&uuml;-ActionEvents"</font>);
+<font color="#555555">069 </font>    setLocation(100,100);
+<font color="#555555">070 </font>    setSize(300,200);
+<font color="#555555">071 </font>    setMenuBar(<font color="#0000AA">new</font> MainMenu4(<font color="#006699">this</font>));
+<font color="#555555">072 </font>    setVisible(<font color="#006699">true</font>);
+<font color="#555555">073 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">074 </font>  }
+<font color="#555555">075 </font>
+<font color="#555555">076 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">077 </font>  {
+<font color="#555555">078 </font>    Insets   in = getInsets();
+<font color="#555555">079 </font>    Dimension d = getSize();
+<font color="#555555">080 </font>    g.setColor(Color.red);
+<font color="#555555">081 </font>    g.drawLine(
+<font color="#555555">082 </font>      in.left, in.top,
+<font color="#555555">083 </font>      d.width - in.right, d.height - in.bottom
+<font color="#555555">084 </font>    );
+<font color="#555555">085 </font>    g.drawLine(
+<font color="#555555">086 </font>      in.left, d.height - in.bottom,
+<font color="#555555">087 </font>      d.width - in.right, in.top
+<font color="#555555">088 </font>    );
+<font color="#555555">089 </font>  }
+<font color="#555555">090 </font>
+<font color="#555555">091 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> actionPerformed(ActionEvent event)
+<font color="#555555">092 </font>  {
+<font color="#555555">093 </font>    String cmd = event.getActionCommand();
+<font color="#555555">094 </font>    <font color="#0000AA">if</font> (cmd.equals(<font color="#0000FF">"Gr&ouml;&szlig;er"</font>)) {
+<font color="#555555">095 </font>      Dimension d = getSize();
+<font color="#555555">096 </font>      d.height *= 1.05;
+<font color="#555555">097 </font>      d.width  *= 1.05;
+<font color="#555555">098 </font>      setSize(d);
+<font color="#555555">099 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (cmd.equals(<font color="#0000FF">"Kleiner"</font>)) {
+<font color="#555555">100 </font>      Dimension d = getSize();
+<font color="#555555">101 </font>      d.height *= 0.95;
+<font color="#555555">102 </font>      d.width  *= 0.95;
+<font color="#555555">103 </font>      setSize(d);
+<font color="#555555">104 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (cmd.equals(<font color="#0000FF">"Beenden"</font>)) {
+<font color="#555555">105 </font>      setVisible(<font color="#006699">false</font>);
+<font color="#555555">106 </font>      dispose();
+<font color="#555555">107 </font>      System.exit(0);
+<font color="#555555">108 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (cmd.equals(<font color="#0000FF">"Links"</font>)) {
+<font color="#555555">109 </font>      setLocation(getLocation().x-10, getLocation().y);
+<font color="#555555">110 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (cmd.equals(<font color="#0000FF">"Rechts"</font>)) {
+<font color="#555555">111 </font>      setLocation(getLocation().x+10, getLocation().y);
+<font color="#555555">112 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (cmd.equals(<font color="#0000FF">"Oben"</font>)) {
+<font color="#555555">113 </font>      setLocation(getLocation().x, getLocation().y-10);
+<font color="#555555">114 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (cmd.equals(<font color="#0000FF">"Unten"</font>)) {
+<font color="#555555">115 </font>      setLocation(getLocation().x, getLocation().y+10);
+<font color="#555555">116 </font>    }
+<font color="#555555">117 </font>  }
+<font color="#555555">118 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3005.java"><font color="#000055" size=-1>Listing3005.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 30.5: Reaktion auf Action-Events aus einem Men&uuml;</i></p>
+
+<p>
+Das Programm besitzt eine Klasse <font color="#000077"><tt>MainMenu4</tt></font>,
+in der das Men&uuml; definiert wird. Um die Definition der Men&uuml;eintr&auml;ge
+zu vereinfachen, wurde die Methode <font color="#000077"><tt>addNewMenuItem</tt></font>
+implementiert, die einen neuen Men&uuml;eintrag erzeugt, ggfs. mit
+einem Beschleuniger versieht, den <a href="index_a.html#ixb101408"><font color=#000080><tt>ActionListener</tt></font></a>
+registriert und schlie&szlig;lich an das &uuml;bergebene Men&uuml;
+anh&auml;ngt. Der erste Parameter von <font color="#000077"><tt>addnewMenuItem</tt></font>
+ist das Men&uuml;, f&uuml;r das ein Men&uuml;eintrag erstellt werden
+soll. Der zweite Parameter ist die Bezeichnung des Men&uuml;eintrags.
+Ist darin ein &#187;&amp;&#171; enthalten, so wird dieses als Pr&auml;fix
+f&uuml;r die Beschleunigertaste angesehen und der nachfolgende Buchstabe
+als Beschleuniger registriert. Anschlie&szlig;end wird das &#187;&amp;&#171;
+entfernt. Als drittes Argument wird der <a href="index_a.html#ixb101408"><font color=#000080><tt>ActionListener</tt></font></a>
+&uuml;bergeben, der beim Men&uuml;eintrag registriert werden soll.
+
+<p>
+Wir verwenden in diesem Beispiel lediglich einen einzigen ActionListener,
+der bei allen Men&uuml;eintr&auml;gen registriert wird. &Uuml;ber
+den <a href="index_t.html#ixb100284"><font color=#000080><tt>this</tt></font></a>-Zeiger
+wird das Fenster an den Konstruktor von <font color="#000077"><tt>MainMenu4</tt></font>
+&uuml;bergeben und von dort an <font color="#000077"><tt>addNewMenuItem</tt></font>
+weitergegeben. Voraussetzung daf&uuml;r ist, dass das Fenster das
+Interface <a href="index_a.html#ixb101408"><font color=#000080><tt>ActionListener</tt></font></a>
+implementiert und die Methode <a href="index_a.html#ixb101413"><font color=#000080><tt>actionPerformed</tt></font></a>
+zur Verf&uuml;gung stellt. 
+
+<p>
+Die Unterscheidung der verschiedenen Ereignisquellen wird innerhalb
+von <a href="index_a.html#ixb101413"><font color=#000080><tt>actionPerformed</tt></font></a>
+durch Aufruf von <a href="index_g.html#ixb101512"><font color=#000080><tt>getActionCommand</tt></font></a>
+erledigt. Deren R&uuml;ckgabewert wird abgefragt, um das passende
+Kommando auszuf&uuml;hren. Die Gr&ouml;&szlig;en&auml;nderung erfolgt
+durch Aufruf von <a href="index_g.html#ixb101203"><font color=#000080><tt>getSize</tt></font></a>
+und <a href="index_s.html#ixb101167"><font color=#000080><tt>setSize</tt></font></a>,
+die Positionierung mit <a href="index_g.html#ixb101300"><font color=#000080><tt>getLocation</tt></font></a>
+und <a href="index_s.html#ixb101299"><font color=#000080><tt>setLocation</tt></font></a>.
+Zur Kontrolle zeichnet das Programm in <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>
+zwei rote Diagonalen &uuml;ber die volle L&auml;nge der Client-Area:
+<p>
+<a name="imageid030003"></a>
+<img src="images/ActionEvents.gif">
+<p>
+
+<p><i>
+Abbildung 30.3: Ein Programm, das auf Action-Events reagiert</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100193.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100197.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100199.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100202.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

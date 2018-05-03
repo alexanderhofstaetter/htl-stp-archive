@@ -1,0 +1,157 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100207.html;106,k100209.html;107,k100211.html;108,k100221.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100207.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100209.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100211.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100221.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 32 - AWT-Dialogelemente
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id032003"></a>
+<h2>32.3 Label </h2>
+<hr>
+<ul>
+<li><a href="k100210.html#sectlevel2id032003">32.3 Label</a>
+</ul>
+<hr>
+
+<p>
+Ein <a name="ixa102079"><a href="index_l.html#ixb101584"><font color=#000080><tt>Label</tt></font></a></a>
+dient zur Beschriftung von Dialogboxen. Es enth&auml;lt eine Zeile
+Text, die auf dem Bildschirm angezeigt wird und vom Programm ver&auml;ndert
+werden kann. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Label()
+
+public Label(String text)
+
+public Label(String text, int align)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Label.html" onClick="this.href=getApiDoc('java.awt.Label')"><font color="#660066" size=-1>java.awt.Label</font></a></td>
+</tr>
+</table>
+
+<p>
+Der parameterlose Konstruktor erzeugt ein <a href="index_l.html#ixb101584"><font color=#000080><tt>Label</tt></font></a>
+ohne Text. Wird der Parameter <a href="index_t.html#ixb101277"><font color=#000080><tt>text</tt></font></a>
+&uuml;bergeben, verwendet das Label diesen als Beschriftung. Der Parameter
+<font color="#000077"><tt>align</tt></font> bestimmt die Ausrichtung
+des Texts. Hier kann eine der Konstanten <a name="ixa102080"><a href="index_l.html#ixb101555"><font color=#000080><tt>Label.LEFT</tt></font></a></a>,
+<a name="ixa102081"><a href="index_r.html#ixb101556"><font color=#000080><tt>Label.RIGHT</tt></font></a></a>
+oder <a name="ixa102082"><a href="index_c.html#ixb101549"><font color=#000080><tt>Label.CENTER</tt></font></a></a>
+&uuml;bergeben werden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setText(String text)
+
+public String getText()
+
+public void setAlignment(int align)
+
+public int getAlignment()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Label.html" onClick="this.href=getApiDoc('java.awt.Label')"><font color="#660066" size=-1>java.awt.Label</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa102083"><a href="index_s.html#ixb101585"><font color=#000080><tt>setText</tt></font></a></a>
+und <a name="ixa102084"><a href="index_g.html#ixb101586"><font color=#000080><tt>getText</tt></font></a></a>
+erlauben den Zugriff auf den Text des Labels und <font color="#000077"><tt>setAlignment</tt></font>
+und <font color="#000077"><tt>getAlignment</tt></font> auf die Ausrichtung
+des Texts. Die Parameter dieser Methoden haben dieselbe Bedeutung
+wie im Konstruktor. 
+<a name="listingid032002"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Label.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">private</font> <font color="#006699">void</font> customizeLayout(Panel panel)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  panel.setLayout(<font color="#0000AA">new</font> GridLayout(4,1));
+<font color="#555555">006 </font>  panel.add(<font color="#0000AA">new</font> Label(<font color="#0000FF">"Default"</font>));
+<font color="#555555">007 </font>  panel.add(<font color="#0000AA">new</font> Label(<font color="#0000FF">"Links"</font>,Label.LEFT));
+<font color="#555555">008 </font>  panel.add(<font color="#0000AA">new</font> Label(<font color="#0000FF">"Zentriert"</font>,Label.CENTER));
+<font color="#555555">009 </font>  panel.add(<font color="#0000AA">new</font> Label(<font color="#0000FF">"Rechts"</font>,Label.RIGHT));
+<font color="#555555">010 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Label.inc"><font color="#000055" size=-1>Label.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 32.2: Verwendung von Label-Komponenten</i></p>
+<p>
+<a name="imageid032003"></a>
+<img src="images/Label.gif">
+<p>
+
+<p><i>
+Abbildung 32.3: Ein Dialog mit Label-Komponenten</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100207.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100209.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100211.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100221.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

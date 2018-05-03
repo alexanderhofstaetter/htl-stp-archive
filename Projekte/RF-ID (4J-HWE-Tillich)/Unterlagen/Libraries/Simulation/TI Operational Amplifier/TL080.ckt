@@ -1,0 +1,44 @@
+*TL080
+*OpAmp
+* Connections: 
+*             Non-Inverting Input
+*             |   Inverting Input
+*             |   |   Positive Power Supply
+*             |   |   |   Negative Power Supply
+*             |   |   |   |   Output
+*             |   |   |   |   |   N1/Comp
+*             |   |   |   |   |   |   Comp
+*             |   |   |   |   |   |   |
+.SUBCKT TL080 1   2   3   4   5   6   7
+*
+  C1   11 12 5.197E-12
+  DC    5 53 DX
+  DE   54  5 DX
+  DLP  90 91 DX
+  DLN  92 90 DX
+  DP    4  3 DX
+  BGND 99  0 V=V(3)*.5 + V(4)*.5
+  BB    7 99 I=I(VB)*3.803E6 - I(VC)*4E6 + I(VE)*4E6 +
++              I(VLP)*4E6 - I(VLN)*4E6
+  GA    6  0 11 12 377.6E-6
+  GCM   0  6 10 99 9.882E-9
+  ISS   3 10 DC 234E-6
+  HLIM 90  0 VLIM 1K
+  J1   11  2 10 JX
+  J2   12  1 10 JX
+  R2    6  9 100E3
+  RD1   4 11 2.852E3
+  RD2   4 12 2.852E3
+  RO1   8  5 150
+  RO2   7 99 150
+  RP    3  4 21.43E3
+  RSS  10 99 854.7E3
+  VB    9  0 DC 0
+  VC    3 53 DC 2.2
+  VE   54  4 DC 2.2
+  VLIM  7  8 DC 0
+  VLP  91  0 DC 25
+  VLN   0 92 DC 25
+.MODEL DX D(IS=800E-18)
+.MODEL JX PJF(IS=32.5E-12 BETA=332E-6 VTO=-1)
+.ENDS TL080

@@ -1,0 +1,224 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100207.html;106,k100212.html;107,k100214.html;108,k100221.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100207.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100212.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100214.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100221.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 32 - AWT-Dialogelemente
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id032006"></a>
+<h2>32.6 CheckboxGroup </h2>
+<hr>
+<ul>
+<li><a href="k100213.html#sectlevel2id032006">32.6 CheckboxGroup</a>
+</ul>
+<hr>
+
+<p>
+Eine <a name="ixa102104"><a href="index_c.html#ixb101588"><font color=#000080><tt>CheckboxGroup</tt></font></a></a>
+ist die Java-Variante einer Gruppe von <a name="ixa102105"><i>Radiobuttons</i></a>,
+also einer Kollektion von Buttons, von denen immer genau einer aktiviert
+ist. Wird ein anderer Button aktiviert, so &auml;ndert er seinen internen
+Status auf <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+und der zuvor gesetzte wird <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>.
+
+<p>
+Eine <a href="index_c.html#ixb101588"><font color=#000080><tt>CheckboxGroup</tt></font></a>
+ist nichts anderes als eine <a href="index_c.html#ixb101422"><font color=#000080><tt>Checkbox</tt></font></a>,
+deren <a href="index_c.html#ixb101588"><font color=#000080><tt>CheckboxGroup</tt></font></a>-Parameter
+gesetzt ist. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Checkbox(String label, CheckboxGroup cbg, boolean state)
+
+public Checkbox(String label, boolean state, CheckboxGroup cbg)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Checkbox.html" onClick="this.href=getApiDoc('java.awt.Checkbox')"><font color="#660066" size=-1>java.awt.Checkbox</font></a></td>
+</tr>
+</table>
+
+<p>
+Anders als bei einer gew&ouml;hnlichen <a href="index_c.html#ixb101422"><font color=#000080><tt>Checkbox</tt></font></a>
+stehen jetzt nur noch zwei Konstruktoren zur Verf&uuml;gung. An diese
+werden die Beschriftung, der Anfangszustand und ein Objekt der Klasse
+<a href="index_c.html#ixb101588"><font color=#000080><tt>CheckboxGroup</tt></font></a>
+&uuml;bergeben. 
+
+<p>
+Die <a href="index_c.html#ixb101588"><font color=#000080><tt>CheckboxGroup</tt></font></a>
+sorgt dabei f&uuml;r den Gruppierungseffekt und die Logik beim Umschalten
+der Radiobuttons. F&uuml;r jede zusammenh&auml;ngende Gruppe von Radiobuttons
+ist daher ein eigenes Objekt der Klasse <a href="index_c.html#ixb101588"><font color=#000080><tt>CheckboxGroup</tt></font></a>
+zu instanzieren und an den Konstruktor zu &uuml;bergeben. 
+
+<p>
+Die <a href="index_c.html#ixb101588"><font color=#000080><tt>CheckboxGroup</tt></font></a>
+bietet alle Methoden, die auch bei einer <a href="index_c.html#ixb101422"><font color=#000080><tt>Checkbox</tt></font></a>
+verf&uuml;gbar sind. <a href="index_s.html#ixb101305"><font color=#000080><tt>setState</tt></font></a>
+funktioniert allerdings nur dann, wenn als Parameter <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+&uuml;bergeben wird. In diesem Fall wird der Zustand der zugeh&ouml;rigen
+<a href="index_c.html#ixb101422"><font color=#000080><tt>Checkbox</tt></font></a>
+gesetzt und der aller anderen Checkboxes derselben Gruppe zur&uuml;ckgenommen.
+Bei der &Uuml;bergabe von <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>
+an <a href="index_s.html#ixb101305"><font color=#000080><tt>setState</tt></font></a>
+passiert gar nichts. Zus&auml;tzlich gibt es zwei Methoden <a name="ixa102106"><a href="index_g.html#ixb101590"><font color=#000080><tt>getCheckboxGroup</tt></font></a></a>
+und <a name="ixa102107"><a href="index_s.html#ixb101591"><font color=#000080><tt>setCheckboxGroup</tt></font></a></a>,
+die den Zugriff auf die zugeordnete <a href="index_c.html#ixb101588"><font color=#000080><tt>CheckboxGroup</tt></font></a>
+erlauben: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setCheckboxGroup(CheckboxGroup cbg)
+
+public CheckboxGroup getCheckboxGroup()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Checkbox.html" onClick="this.href=getApiDoc('java.awt.Checkbox')"><font color="#660066" size=-1>java.awt.Checkbox</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a href="index_s.html#ixb101591"><font color=#000080><tt>setCheckboxGroup</tt></font></a>
+kann die Zuordnung der Checkboxes zu einer <a href="index_c.html#ixb101588"><font color=#000080><tt>CheckboxGroup</tt></font></a>
+auch nach der Konstruktion ge&auml;ndert werden. Das beim Aufruf von
+<font color="#000077"><tt>getCheckboxGroup</tt></font> zur&uuml;ckgegebene
+Objekt kann dazu verwendet werden, mit Hilfe der Methoden <a name="ixa102108"><a href="index_g.html#ixb101592"><font color=#000080><tt>getCurrent</tt></font></a></a>
+und <a name="ixa102109"><a href="index_s.html#ixb101593"><font color=#000080><tt>setCurrent</tt></font></a></a>
+der Klasse <a href="index_c.html#ixb101588"><font color=#000080><tt>CheckboxGroup</tt></font></a>
+auf das selektierte Element der <a href="index_c.html#ixb101588"><font color=#000080><tt>CheckboxGroup</tt></font></a>
+zuzugreifen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Checkbox getCurrent()
+
+public void setCurrent(Checkbox box)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/CheckboxGroup.html" onClick="this.href=getApiDoc('java.awt.CheckboxGroup')"><font color="#660066" size=-1>java.awt.CheckboxGroup</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_g.html#ixb101592"><font color=#000080><tt>getCurrent</tt></font></a>
+liefert die <a href="index_c.html#ixb101422"><font color=#000080><tt>Checkbox</tt></font></a>,
+deren Zustand <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+ist. Um mit <a href="index_s.html#ixb101593"><font color=#000080><tt>setCurrent</tt></font></a>
+eine <a href="index_c.html#ixb101422"><font color=#000080><tt>Checkbox</tt></font></a>
+zu aktivieren, muss diese als Parameter &uuml;bergeben werden. Alle
+anderen Checkboxes derselben Gruppe bekommen dann den Zustand <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>.
+
+<p>
+Die einzelnen Checkboxes einer <a href="index_c.html#ixb101588"><font color=#000080><tt>CheckboxGroup</tt></font></a>
+senden ein ITEM-Event, wenn die <a href="index_c.html#ixb101422"><font color=#000080><tt>Checkbox</tt></font></a>
+selektiert wird. Dagegen wird kein Ereignis gesendet, wenn die <a href="index_c.html#ixb101422"><font color=#000080><tt>Checkbox</tt></font></a>
+deselektiert wird oder wenn ihr Zustand nicht vom Anwender, sondern
+vom Programm ver&auml;ndert wird. 
+
+<p>
+Das folgende Beispiel zeigt die Definition von zwei Objekten des Typs
+<a href="index_c.html#ixb101588"><font color=#000080><tt>CheckboxGroup</tt></font></a>
+mit jeweils drei Elementen. In jeder der beiden Gruppen ist immer
+genau ein Element markiert, das unabh&auml;ngig von den Elementen
+der anderen Gruppe ausgew&auml;hlt werden kann: 
+<a name="listingid032005"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* CheckboxGroup.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">private</font> <font color="#006699">void</font> customizeLayout(Panel panel)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  panel.setLayout(<font color="#0000AA">new</font> GridLayout(3,2));
+<font color="#555555">006 </font>  CheckboxGroup cbg1 = <font color="#0000AA">new</font> CheckboxGroup();
+<font color="#555555">007 </font>  CheckboxGroup cbg2 = <font color="#0000AA">new</font> CheckboxGroup();
+<font color="#555555">008 </font>  panel.add(<font color="#0000AA">new</font> Checkbox(<font color="#0000FF">"rot"</font>,cbg1,<font color="#006699">true</font>));
+<font color="#555555">009 </font>  panel.add(<font color="#0000AA">new</font> Checkbox(<font color="#0000FF">"eckig"</font>,cbg2,<font color="#006699">true</font>));
+<font color="#555555">010 </font>  panel.add(<font color="#0000AA">new</font> Checkbox(<font color="#0000FF">"blau"</font>,cbg1,<font color="#006699">false</font>));
+<font color="#555555">011 </font>  panel.add(<font color="#0000AA">new</font> Checkbox(<font color="#0000FF">"rund"</font>,cbg2,<font color="#006699">false</font>));
+<font color="#555555">012 </font>  panel.add(<font color="#0000AA">new</font> Checkbox(<font color="#0000FF">"gelb"</font>,cbg1,<font color="#006699">false</font>));
+<font color="#555555">013 </font>  panel.add(<font color="#0000AA">new</font> Checkbox(<font color="#0000FF">"schief"</font>,cbg2,<font color="#006699">false</font>));
+<font color="#555555">014 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/CheckboxGroup.inc"><font color="#000055" size=-1>CheckboxGroup.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 32.5: Verwendung einer CheckboxGroup</i></p>
+<p>
+<a name="imageid032005"></a>
+<img src="images/CheckboxGroup.gif">
+<p>
+
+<p><i>
+Abbildung 32.5: Ein Dialog mit CheckboxGroup-Elementen</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100207.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100212.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100214.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100221.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

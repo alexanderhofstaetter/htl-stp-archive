@@ -1,0 +1,1482 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100226.html;106,k100227.html;107,k100229.html;108,k100230.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100226.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100227.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100229.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100230.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 34 - Bitmaps und Animationen
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="animation"></a>
+<h2>34.2 <a name="ixa102257">Animation</a></h2>
+<hr>
+<ul>
+<li><a href="k100228.html#animation">34.2 Animation</a>
+<ul>
+<li><a href="k100228.html#sectlevel3id034002001">34.2.1 Prinzipielle Vorgehensweise</a>
+<ul>
+<li><a href="k100228.html#sectlevel4id034002001001">Die repaint-Schleife</a>
+<li><a href="k100228.html#sectlevel4id034002001002">Verwendung von Threads</a>
+</ul>
+<li><a href="k100228.html#sectlevel3id034002002">34.2.2 Abspielen einer Folge von Bitmaps</a>
+<li><a href="k100228.html#sectlevel3id034002003">34.2.3 Animation mit Grafikprimitiven</a>
+<li><a href="k100228.html#flackernreduzieren">34.2.4 Reduktion des Bildschirmflackerns</a>
+<ul>
+<li><a href="k100228.html#sectlevel4id034002004001">Bildschirm nicht l&ouml;schen</a>
+<li><a href="k100228.html#sectlevel4id034002004002">Nur den wirklich ben&ouml;tigten Teil des Bildschirms l&ouml;schen</a>
+<li><a href="k100228.html#sectlevel4id034002004003">Doppelpufferung</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id034002001"></a>
+<h3>34.2.1 Prinzipielle Vorgehensweise </h3>
+
+<p>
+Das Darstellen einer Animation auf dem Bildschirm ist im Prinzip nichts
+anderes als die schnell aufeinanderfolgende Anzeige einer Sequenz
+von Einzelbildern. Die Bildfolge erscheint dem menschlichen Auge aufgrund
+seiner Tr&auml;gheit als zusammenh&auml;ngende Bewegung. 
+
+<p>
+Obwohl die prinzipielle Vorgehensweise damit klar umrissen ist, steckt
+die T&uuml;cke bei der Darstellung von animierten Bildsequenzen im
+Detail. Zu den Problemen, die in diesem Zusammenhang zu l&ouml;sen
+sind, geh&ouml;ren: 
+<ul>
+<li>F&uuml;r die Anzeige der Einzelbilder muss das richtige <i>Timing</i>
+gew&auml;hlt werden. Werden zu wenig Bilder je Zeiteinheit angezeigt,
+erscheint das Ergebnis ruckelig. Werden zu viele gezeigt, kann es
+sein, dass <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>-Events
+verlorengehen und Teile des Bilds nicht korrekt angezeigt werden.
+<li>Wird zur Anzeige der Einzelbilder der normale <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>-/<a href="index_r.html#ixb101449"><font color=#000080><tt>repaint</tt></font></a>-Mechanismus
+von Java verwendet, wird die Darstellung durch ein starkes <i>Flackern</i>
+gest&ouml;rt. Wir werden eine Reihe von Techniken kennenlernen, mit
+denen dieses Flackern verhindert werden kann.
+<li>Die Darstellung der Einzelbilder darf nicht die <i>Interaktivit&auml;t</i>
+des Programms beeintr&auml;chtigen. Vor allem darf die Nachrichtenschleife
+nicht blockiert werden. Wir werden lernen, wie man diese Probleme
+mit Hilfe separater Threads umgehen kann.
+</ul>
+
+<p>
+All dies sind Standardprobleme, die vom Programmierer bei der Entwicklung
+von Animationen zu l&ouml;sen sind. Wir werden feststellen, dass Java
+daf&uuml;r durchweg brauchbare L&ouml;sungen zu bieten hat und die
+Programmierung kleiner Animationen recht einfach zu realisieren ist.
+
+
+<!-- Section -->
+<a name="sectlevel4id034002001001"></a>
+<h4>Die <a name="ixa102258">repaint-Schleife</a> </h4>
+
+<p>
+Das Grundprinzip einer Animation besteht darin, in einer Schleife
+die Methode <a href="index_r.html#ixb101449"><font color=#000080><tt>repaint</tt></font></a>
+wiederholt aufzurufen. Ein Aufruf von <a href="index_r.html#ixb101449"><font color=#000080><tt>repaint</tt></font></a>
+f&uuml;hrt dazu, dass die <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>-Methode
+aufgerufen wird, und innerhalb von <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>
+generiert die Anwendung dann die f&uuml;r das aktuelle Einzelbild
+ben&ouml;tigte Bildschirmausgabe. 
+
+<p>
+<a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>
+muss sich also merken (oder mitgeteilt bekommen), welches Bild bei
+welchem Aufruf erzeugt werden soll. Typischerweise wird dazu ein Schleifenz&auml;hler
+verwendet, der das gerade anzuzeigende Bild bezeichnet. Nach dem Ausf&uuml;hren
+der Ausgabeanweisungen terminiert <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>
+und der Aufrufer wartet eine bestimmte Zeitspanne. Dann z&auml;hlt
+er den Bildz&auml;hler hoch und f&uuml;hrt den n&auml;chsten Aufruf
+von <a href="index_r.html#ixb101449"><font color=#000080><tt>repaint</tt></font></a>
+durch. Dies setzt sich so lange fort, bis die Animation beendet ist
+oder das Programm abgebrochen wird. 
+
+<p>
+Das folgende Listing stellt eines der einfachsten Beispiele f&uuml;r
+eine Grafikanimation dar: 
+<a name="listingid034006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3406.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3406
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#006699">int</font> cnt = 0;
+<font color="#555555">010 </font>
+<font color="#555555">011 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">012 </font>  {
+<font color="#555555">013 </font>    Listing3406 wnd = <font color="#0000AA">new</font> Listing3406();
+<font color="#555555">014 </font>    wnd.setSize(250,150);
+<font color="#555555">015 </font>    wnd.setVisible(<font color="#006699">true</font>);
+<font color="#555555">016 </font>    wnd.startAnimation();
+<font color="#555555">017 </font>  }
+<font color="#555555">018 </font>
+<font color="#555555">019 </font>  <font color="#0000AA">public</font> Listing3406()
+<font color="#555555">020 </font>  {
+<font color="#555555">021 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Animierter Z&auml;hler"</font>);
+<font color="#555555">022 </font>    setBackground(Color.lightGray);
+<font color="#555555">023 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">024 </font>  }
+<font color="#555555">025 </font>
+<font color="#555555">026 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> startAnimation()
+<font color="#555555">027 </font>  {
+<font color="#555555">028 </font>    <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">029 </font>      repaint();
+<font color="#555555">030 </font>    }
+<font color="#555555">031 </font>  }
+<font color="#555555">032 </font>
+<font color="#555555">033 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">034 </font>  {
+<font color="#555555">035 </font>    ++cnt;
+<font color="#555555">036 </font>    g.drawString(<font color="#0000FF">"Counter = "</font>+cnt,10,50);
+<font color="#555555">037 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">038 </font>      Thread.sleep(1000);
+<font color="#555555">039 </font>    } <font color="#0000AA">catch</font> (InterruptedException e) {
+<font color="#555555">040 </font>    }
+<font color="#555555">041 </font>  }
+<font color="#555555">042 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3406.java"><font color="#000055" size=-1>Listing3406.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 34.6: Ein animierter Z&auml;hler</i></p>
+
+<p>
+Das Programm &ouml;ffnet ein Fenster und z&auml;hlt in Sekundenabst&auml;nden
+einen Z&auml;hler um eins hoch: 
+<p>
+<a name="imageid034003"></a>
+<img src="images/ZaehlerAnim.gif">
+<p>
+
+<p><i>
+Abbildung 34.3: Ein animierter Z&auml;hler</i></p>
+
+<p>
+Leider hat das Programm einen entscheidenden Nachteil. Die Animation
+selbst funktioniert zwar wunderbar, aber das Programm reagiert nur
+noch sehr schleppend auf Windows-Nachrichten. Wir wollen zun&auml;chst
+dieses Problem abstellen und uns ansehen, wie man die <a href="index_r.html#ixb101449"><font color=#000080><tt>repaint</tt></font></a>-Schleife
+in einem eigenen <a href="index_t.html#ixb100606"><font color=#000080><tt>Thread</tt></font></a>
+laufen l&auml;sst. 
+
+<!-- Section -->
+
+<a name="sectlevel4id034002001002"></a>
+<h4>Verwendung von <a name="ixa102259">Threads</a> </h4>
+
+<p>
+Um die vorherige Version des Programms zu verbessern, sollte die <a href="index_r.html#ixb101449"><font color=#000080><tt>repaint</tt></font></a>-Schleife
+in einem eigenen <a href="index_t.html#ixb100606"><font color=#000080><tt>Thread</tt></font></a>
+laufen. Zus&auml;tzlich ist es erforderlich, die Zeitverz&ouml;gerung
+aus <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>
+herauszunehmen und stattdessen in die <a href="index_r.html#ixb101449"><font color=#000080><tt>repaint</tt></font></a>-Schleife
+zu verlagern. So bekommt der Haupt-Thread des Animationsprogramms
+gen&uuml;gend Zeit, die Bildschirmausgabe durchzuf&uuml;hren, und
+kann andere <font color="#000077"><tt>Events</tt></font> bearbeiten.
+Dass in einem anderen <a href="index_t.html#ixb100606"><font color=#000080><tt>Thread</tt></font></a>
+eine Endlosschleife l&auml;uft, merkt er nur noch daran, dass in regelm&auml;&szlig;igen
+Abst&auml;nden <a href="index_r.html#ixb101449"><font color=#000080><tt>repaint</tt></font></a>-Ereignisse
+eintreffen. 
+
+<p>
+Um das Programm auf die Verwendung mehrerer Threads umzustellen, sollte
+die Fensterklasse das Interface <a href="index_r.html#ixb101110"><font color=#000080><tt>Runnable</tt></font></a>
+implementieren und eine Instanzvariable vom Typ <a href="index_t.html#ixb100606"><font color=#000080><tt>Thread</tt></font></a>
+anlegen. Dann wird die Methode <font color="#000077"><tt>startAnimation</tt></font>
+so modifiziert, dass sie den neuen <a href="index_t.html#ixb100606"><font color=#000080><tt>Thread</tt></font></a>
+instanziert und startet. Die eigentliche <a href="index_r.html#ixb101449"><font color=#000080><tt>repaint</tt></font></a>-Schleife
+wird in die Methode <a href="index_r.html#ixb101111"><font color=#000080><tt>run</tt></font></a>
+verlagert. Schlie&szlig;lich sollte beim Beenden des Programms auch
+der laufende <a href="index_t.html#ixb100606"><font color=#000080><tt>Thread</tt></font></a>
+beendet werden. Hier ist die modifizierte Fassung: 
+<a name="listingid034007"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3407.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3407
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">008 </font><font color="#0000AA">implements</font> Runnable
+<font color="#555555">009 </font>{
+<font color="#555555">010 </font>  <font color="#006699">int</font> cnt = 0;
+<font color="#555555">011 </font>
+<font color="#555555">012 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">013 </font>  {
+<font color="#555555">014 </font>    Listing3407 wnd = <font color="#0000AA">new</font> Listing3407();
+<font color="#555555">015 </font>    wnd.setSize(250,150);
+<font color="#555555">016 </font>    wnd.setVisible(<font color="#006699">true</font>);
+<font color="#555555">017 </font>    wnd.startAnimation();
+<font color="#555555">018 </font>  }
+<font color="#555555">019 </font>
+<font color="#555555">020 </font>  <font color="#0000AA">public</font> Listing3407()
+<font color="#555555">021 </font>  {
+<font color="#555555">022 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Animations-Threads"</font>);
+<font color="#555555">023 </font>    setBackground(Color.lightGray);
+<font color="#555555">024 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">025 </font>  }
+<font color="#555555">026 </font>
+<font color="#555555">027 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> startAnimation()
+<font color="#555555">028 </font>  {
+<font color="#555555">029 </font>    Thread th = <font color="#0000AA">new</font> Thread(<font color="#006699">this</font>);
+<font color="#555555">030 </font>    th.start();
+<font color="#555555">031 </font>  }
+<font color="#555555">032 </font>
+<font color="#555555">033 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> run()
+<font color="#555555">034 </font>  {
+<font color="#555555">035 </font>    <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">036 </font>      repaint();
+<font color="#555555">037 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">038 </font>        Thread.sleep(1000);
+<font color="#555555">039 </font>      } <font color="#0000AA">catch</font> (InterruptedException e) {
+<font color="#555555">040 </font>        <font color="#00AA00">//nichts</font>
+<font color="#555555">041 </font>      }
+<font color="#555555">042 </font>    }
+<font color="#555555">043 </font>  }
+<font color="#555555">044 </font>
+<font color="#555555">045 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">046 </font>  {
+<font color="#555555">047 </font>    ++cnt;
+<font color="#555555">048 </font>    g.drawString(<font color="#0000FF">"Counter = "</font>+cnt,10,50);
+<font color="#555555">049 </font>  }
+<font color="#555555">050 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3407.java"><font color="#000055" size=-1>Listing3407.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 34.7: Verwendung von Threads zur Animation</i></p>
+
+<p>
+Das so modifizierte Programm erzeugt dieselbe Ausgabe wie das vorige,
+ist aber in der Lage, in der gewohnten Weise auf Ereignisse zu reagieren.
+Selbst wenn der Aufruf von <a href="index_s.html#ixb100867"><font color=#000080><tt>Thread.sleep</tt></font></a>
+und der Hauptprozess pausenlos mit <a href="index_r.html#ixb101449"><font color=#000080><tt>repaint</tt></font></a>-Anforderungen
+bombardiert w&uuml;rden, k&ouml;nnte das Programm noch normal beendet
+werden. 
+
+<!-- Section -->
+
+<a name="sectlevel3id034002002"></a>
+<h3>34.2.2 Abspielen einer Folge von Bitmaps </h3>
+
+<p>
+Eine der einfachsten und am h&auml;ufigsten verwendeten M&ouml;glichkeiten,
+eine Animation zu erzeugen, besteht darin, die zur Darstellung erforderliche
+Folge von Bitmaps aus einer Reihe von Bilddateien zu laden. Jedem
+Einzelbild wird dabei ein <a href="index_i.html#ixb100655"><font color=#000080><tt>Image</tt></font></a>-Objekt
+zugeordnet, das vor dem Start der Animation geladen wird. Alle Images
+liegen in einem Array oder einem anderen Container und werden in der
+<a href="index_r.html#ixb101449"><font color=#000080><tt>repaint</tt></font></a>-Schleife
+nacheinander angezeigt. 
+
+<p>
+Das folgende Programm speichert die 30 anzuzeigenden Einzelbilder
+in einem Array <font color="#000077"><tt>arImg</tt></font>, das nach
+dem Start des Programms komplett geladen wird. Da dieser Vorgang einige
+Sekunden dauern kann, zeigt das Programm den Ladefortschritt auf dem
+Bildschirm an: 
+<p>
+<a name="imageid034004"></a>
+<img src="images/LadeVorgang.gif">
+<p>
+
+<p><i>
+Abbildung 34.4: Die Ausgabe w&auml;hrend des Ladevorgangs</i></p>
+
+<p>
+Erst nach dem vollst&auml;ndigen Abschluss des Ladevorgangs, der mit
+einem <a href="index_m.html#ixb101678"><font color=#000080><tt>MediaTracker</tt></font></a>
+&uuml;berwacht wird, beginnt die eigentliche Animation. Die ganzzahlige
+Instanzvariable <font color="#000077"><tt>actimage</tt></font> dient
+als Z&auml;hler f&uuml;r die Bildfolge und wird nacheinander von 0
+bis 29 hochgez&auml;hlt, um dann wieder bei 0 zu beginnen. Nach jedem
+Einzelbild wartet das Programm 50 Millisekunden und f&uuml;hrt dann
+den n&auml;chsten Aufruf von <a href="index_r.html#ixb101449"><font color=#000080><tt>repaint</tt></font></a>
+durch: 
+<a name="listingid034008"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3408.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3408
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">008 </font><font color="#0000AA">implements</font> Runnable
+<font color="#555555">009 </font>{
+<font color="#555555">010 </font>  Image[] arImg;
+<font color="#555555">011 </font>  <font color="#006699">int</font> actimage;
+<font color="#555555">012 </font>
+<font color="#555555">013 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">014 </font>  {
+<font color="#555555">015 </font>    Listing3408 wnd = <font color="#0000AA">new</font> Listing3408();
+<font color="#555555">016 </font>    wnd.setSize(200,150);
+<font color="#555555">017 </font>    wnd.setVisible(<font color="#006699">true</font>);
+<font color="#555555">018 </font>    wnd.startAnimation();
+<font color="#555555">019 </font>  }
+<font color="#555555">020 </font>
+<font color="#555555">021 </font>  <font color="#0000AA">public</font> Listing3408()
+<font color="#555555">022 </font>  {
+<font color="#555555">023 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Bitmap-Folge"</font>);
+<font color="#555555">024 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">025 </font>  }
+<font color="#555555">026 </font>
+<font color="#555555">027 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> startAnimation()
+<font color="#555555">028 </font>  {
+<font color="#555555">029 </font>    Thread th = <font color="#0000AA">new</font> Thread(<font color="#006699">this</font>);
+<font color="#555555">030 </font>    actimage = -1;
+<font color="#555555">031 </font>    th.start();
+<font color="#555555">032 </font>  }
+<font color="#555555">033 </font>
+<font color="#555555">034 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> run()
+<font color="#555555">035 </font>  {
+<font color="#555555">036 </font>    <font color="#00AA00">//Bilder laden</font>
+<font color="#555555">037 </font>    arImg = <font color="#0000AA">new</font> Image[30];
+<font color="#555555">038 </font>    MediaTracker mt = <font color="#0000AA">new</font> MediaTracker(<font color="#006699">this</font>);
+<font color="#555555">039 </font>    Toolkit tk = getToolkit();
+<font color="#555555">040 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 1; i &lt;= 30; ++i) {
+<font color="#555555">041 </font>      arImg[i-1] = tk.getImage(<font color="#0000FF">"images/jana"</font>+i+<font color="#0000FF">".gif"</font>);
+<font color="#555555">042 </font>      mt.addImage(arImg[i-1], 0);
+<font color="#555555">043 </font>      actimage = -i;
+<font color="#555555">044 </font>      repaint();
+<font color="#555555">045 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">046 </font>        mt.waitForAll();
+<font color="#555555">047 </font>      } <font color="#0000AA">catch</font> (InterruptedException e) {
+<font color="#555555">048 </font>        <font color="#00AA00">//nothing</font>
+<font color="#555555">049 </font>      }
+<font color="#555555">050 </font>    }
+<font color="#555555">051 </font>    <font color="#00AA00">//Animation beginnen</font>
+<font color="#555555">052 </font>    actimage = 0;
+<font color="#555555">053 </font>    <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">054 </font>      repaint();
+<font color="#555555">055 </font>      actimage = (actimage + 1) % 30;
+<font color="#555555">056 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">057 </font>        Thread.sleep(50);
+<font color="#555555">058 </font>      } <font color="#0000AA">catch</font> (InterruptedException e) {
+<font color="#555555">059 </font>        <font color="#00AA00">//nichts</font>
+<font color="#555555">060 </font>      }
+<font color="#555555">061 </font>    }
+<font color="#555555">062 </font>  }
+<font color="#555555">063 </font>
+<font color="#555555">064 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">065 </font>  {
+<font color="#555555">066 </font>    <font color="#0000AA">if</font> (actimage &lt; 0) {
+<font color="#555555">067 </font>      g.drawString(<font color="#0000FF">"Lade Bitmap "</font>+(-actimage),10,50);
+<font color="#555555">068 </font>    } <font color="#0000AA">else</font> {
+<font color="#555555">069 </font>      g.drawImage(arImg[actimage],10,30,<font color="#006699">this</font>);
+<font color="#555555">070 </font>    }
+<font color="#555555">071 </font>  }
+<font color="#555555">072 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3408.java"><font color="#000055" size=-1>Listing3408.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 34.8: Abspielen einer Folge von Bitmaps</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Das vorliegende Beispiel verwendet die Bilddateien <font color="#660099">jana1.gif</font>
+bis <font color="#660099">jana30.gif</font>. Sie zeigen die verschiedenen
+Phasen des in Schreibschrift geschriebenen Namens &#187;Jana&#171;.
+Alternativ kann aber auch jede andere Sequenz von Bilddateien verwendet
+werden. Die folgenden Abbildungen zeigen einige Schnappsch&uuml;sse
+der Programmausgabe:</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<p>
+<a name="imageid034005"></a>
+<img src="images/JanaAnim1.gif">
+<p>
+
+<p><i>
+Abbildung 34.5: Animation eines Schriftzugs, Schnappschuss 1</i></p>
+<p>
+<a name="imageid034006"></a>
+<img src="images/JanaAnim2.gif">
+<p>
+
+<p><i>
+Abbildung 34.6: Animation eines Schriftzugs, Schnappschuss 2</i></p>
+<p>
+<a name="imageid034007"></a>
+<img src="images/JanaAnim3.gif">
+<p>
+
+<p><i>
+Abbildung 34.7: Animation eines Schriftzugs, Schnappschuss 3</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id034002003"></a>
+<h3>34.2.3 Animation mit Grafikprimitiven </h3>
+
+<p>
+Alternativ zur Anzeige von Bilddateien kann jedes Einzelbild der Animation
+nat&uuml;rlich auch mit den Ausgabeprimitiven der Klasse <a href="index_g.html#ixb101156"><font color=#000080><tt>Graphics</tt></font></a>
+erzeugt werden. Dies hat den Vorteil, dass der Anwender nicht auf
+das Laden der Bilder warten muss. Au&szlig;erdem ist das Verfahren
+flexibler als der bitmap-basierte Ansatz. Der Nachteil ist nat&uuml;rlich,
+dass die Grafikoperationen zeitaufw&auml;ndiger sind und eine z&uuml;gige
+Bildfolge bei komplexen Sequenzen schwieriger zu erzielen ist. 
+
+<p>
+Als Beispiel f&uuml;r diese Art von Animation wollen wir uns die Aufgabe
+stellen, eine aus rechteckigen K&auml;stchen bestehende bunte Schlange
+&uuml;ber den Bildschirm laufen zu lassen. Sie soll an den Bildschirmr&auml;ndern
+automatisch umkehren und auch innerhalb des Ausgabefensters von Zeit
+zu Zeit ihre Richtung wechseln. 
+
+<p>
+Das folgende Programm stellt die Schlange als <a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>
+von Objekten des Typs <font color="#000077"><tt>ColorRectangle</tt></font>
+dar. <font color="#000077"><tt>ColorRectangle</tt></font> ist aus
+<a name="ixa102260"><a href="index_r.html#ixb101685"><font color=#000080><tt>Rectangle</tt></font></a></a>
+abgeleitet und besitzt zus&auml;tzlich eine Membervariable zur Darstellung
+der Farbe des Rechtecks. 
+
+<p>
+Dieses Beispiel folgt dem allgemeinen Architekturschema f&uuml;r Animationen,
+das wir auch in den letzten Beispielen verwendet haben. Der erste
+Schritt innerhalb von <a href="index_r.html#ixb101111"><font color=#000080><tt>run</tt></font></a>
+besteht darin, die Schlange zu konstruieren. Dazu wird eine Folge
+von Objekten der Klasse <font color="#000077"><tt>ColorRectangle</tt></font>
+konstruiert und ab Position <font color="#000077"><tt>(100,100)</tt></font>
+werden die Objekte horizontal nebeneinander angeordnet. Die Farben
+werden dabei so vergeben, dass die Schlange in flie&szlig;enden &Uuml;berg&auml;ngen
+von rot bis blau dargestellt wird. Alle Elemente werden in dem <a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>
+<font color="#000077"><tt>snake</tt></font> gespeichert. 
+
+<p>
+Nachdem die Schlange konstruiert wurde, beginnt die Animation. Dazu
+wird die aktuelle Schlange angezeigt, eine Weile pausiert und dann
+durch Aufruf der Methode <font color="#000077"><tt>moveSnake</tt></font>
+die n&auml;chste Position der Schlange berechnet. <font color="#000077"><tt>moveSnake</tt></font>
+ist relativ aufw&auml;ndig, denn hier liegt der L&ouml;wenanteil der
+&#187;Intelligenz&#171; der Animation. Die Richtung der Bewegung der
+Schlange wird durch die Variablen <font color="#000077"><tt>dx</tt></font>
+und <font color="#000077"><tt>dy</tt></font> getrennt f&uuml;r die
+<i>x</i>- und <i>y</i>-Richtung bestimmt. Steht hier der Wert -1,
+bewegt sich die Schlange im n&auml;chsten Schritt um die Breite eines
+Rechtecks in Richtung kleinerer Koordinaten. Bei 1 vergr&ouml;&szlig;ert
+sie die Koordinate entsprechend, und wenn der Wert 0 enthalten ist,
+ver&auml;ndert sich der zugeh&ouml;rige Koordinatenwert im n&auml;chsten
+Schritt gar nicht. 
+
+<p>
+<font color="#000077"><tt>dx</tt></font> und <font color="#000077"><tt>dy</tt></font>
+werden entweder dann ver&auml;ndert, wenn die Schlange an einem der
+vier Bildschirmr&auml;nder angekommen ist und umkehren muss oder (im
+Mittel bei jedem zehnten Schritt) auch auf freier Strecke. Nachdem
+auf diese Weise die neue Richtung bestimmt wurde, wird das erste Element
+der Schlange auf die neue Position bewegt. Alle anderen Elemente der
+Schlange bekommen dann die Position zugewiesen, die zuvor ihr Vorg&auml;nger
+hatte. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Eine alternative Art, die Schlange neu zu berechnen, w&uuml;rde darin
+bestehen, lediglich ein neues erstes Element zu generieren, an vorderster
+Stelle in den <a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>
+einzuf&uuml;gen und das letzte Element zu l&ouml;schen. Dies h&auml;tte
+allerdings den Nachteil, dass die Farbinformationen von vorne nach
+hinten durchgereicht w&uuml;rden und so jedes Element seine Farbe
+st&auml;ndig &auml;ndern w&uuml;rde. Dieses (sehr viel performantere)
+Verfahren k&ouml;nnte verwendet werden, wenn alle Elemente der Schlange
+dieselbe Farbe h&auml;tten.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Hier ist der Quellcode zu der Schlangenanimation: 
+<a name="listingid034009"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3409.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">class</font> ColorRectangle
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Rectangle
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> Color color;
+<font color="#555555">010 </font>}
+<font color="#555555">011 </font>
+<font color="#555555">012 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3409
+<font color="#555555">013 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">014 </font><font color="#0000AA">implements</font> Runnable
+<font color="#555555">015 </font>{
+<font color="#555555">016 </font>  <font color="#00AA00">//Konstanten</font>
+<font color="#555555">017 </font>  <font color="#0000AA">private</font> <font color="#0000AA">static</font> <font color="#0000AA">final</font> <font color="#006699">int</font>   SIZERECT    = 7;
+<font color="#555555">018 </font>  <font color="#0000AA">private</font> <font color="#0000AA">static</font> <font color="#0000AA">final</font> <font color="#006699">int</font>   SLEEP       = 40;
+<font color="#555555">019 </font>  <font color="#0000AA">private</font> <font color="#0000AA">static</font> <font color="#0000AA">final</font> <font color="#006699">int</font>   NUMELEMENTS = 20;
+<font color="#555555">020 </font>  <font color="#0000AA">private</font> <font color="#0000AA">static</font> <font color="#0000AA">final</font> Color BGCOLOR     = Color.lightGray;
+<font color="#555555">021 </font>
+<font color="#555555">022 </font>  <font color="#00AA00">//Instanzvariablen</font>
+<font color="#555555">023 </font>  <font color="#0000AA">private</font> Thread th;
+<font color="#555555">024 </font>  <font color="#0000AA">private</font> Vector&lt;ColorRectangle&gt; snake;
+<font color="#555555">025 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font> dx;
+<font color="#555555">026 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font> dy;
+<font color="#555555">027 </font>
+<font color="#555555">028 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">029 </font>  {
+<font color="#555555">030 </font>    Listing3409 frame = <font color="#0000AA">new</font> Listing3409();
+<font color="#555555">031 </font>    frame.setSize(200,150);
+<font color="#555555">032 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">033 </font>    frame.startAnimation();
+<font color="#555555">034 </font>  }
+<font color="#555555">035 </font>
+<font color="#555555">036 </font>  <font color="#0000AA">public</font> Listing3409()
+<font color="#555555">037 </font>  {
+<font color="#555555">038 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Animierte Schlange"</font>);
+<font color="#555555">039 </font>    setBackground(BGCOLOR);
+<font color="#555555">040 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">041 </font>    snake = <font color="#0000AA">new</font> Vector&lt;ColorRectangle&gt;();
+<font color="#555555">042 </font>  }
+<font color="#555555">043 </font>
+<font color="#555555">044 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> startAnimation()
+<font color="#555555">045 </font>  {
+<font color="#555555">046 </font>    th = <font color="#0000AA">new</font> Thread(<font color="#006699">this</font>);
+<font color="#555555">047 </font>    th.start();
+<font color="#555555">048 </font>  }
+<font color="#555555">049 </font>
+<font color="#555555">050 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> run()
+<font color="#555555">051 </font>  {
+<font color="#555555">052 </font>    <font color="#00AA00">//Schlange konstruieren</font>
+<font color="#555555">053 </font>    ColorRectangle cr;
+<font color="#555555">054 </font>    <font color="#006699">int</font> x = 100;
+<font color="#555555">055 </font>    <font color="#006699">int</font> y = 100;
+<font color="#555555">056 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i=0; i &lt; NUMELEMENTS; ++i) {
+<font color="#555555">057 </font>      cr = <font color="#0000AA">new</font> ColorRectangle();
+<font color="#555555">058 </font>      cr.x = x;
+<font color="#555555">059 </font>      cr.y = y;
+<font color="#555555">060 </font>      cr.width = SIZERECT;
+<font color="#555555">061 </font>      cr.height = SIZERECT;
+<font color="#555555">062 </font>      x += SIZERECT;
+<font color="#555555">063 </font>      cr.color = <font color="#0000AA">new</font> Color(
+<font color="#555555">064 </font>        i*(256/NUMELEMENTS),
+<font color="#555555">065 </font>        0,
+<font color="#555555">066 </font>        240-i*(256/NUMELEMENTS)
+<font color="#555555">067 </font>      );
+<font color="#555555">068 </font>      snake.addElement(cr);
+<font color="#555555">069 </font>    }
+<font color="#555555">070 </font>
+<font color="#555555">071 </font>    <font color="#00AA00">//Vorzugsrichtung festlegen</font>
+<font color="#555555">072 </font>    dx = -1;
+<font color="#555555">073 </font>    dy = -1;
+<font color="#555555">074 </font>
+<font color="#555555">075 </font>    <font color="#00AA00">//Schlange laufen lassen</font>
+<font color="#555555">076 </font>    <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">077 </font>      repaint();
+<font color="#555555">078 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">079 </font>        Thread.sleep(SLEEP);
+<font color="#555555">080 </font>      } <font color="#0000AA">catch</font> (InterruptedException e){
+<font color="#555555">081 </font>        <font color="#00AA00">//nichts</font>
+<font color="#555555">082 </font>      }
+<font color="#555555">083 </font>      moveSnake();
+<font color="#555555">084 </font>    }
+<font color="#555555">085 </font>  }
+<font color="#555555">086 </font>
+<font color="#555555">087 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> moveSnake()
+<font color="#555555">088 </font>  {
+<font color="#555555">089 </font>    Dimension size = getSize();
+<font color="#555555">090 </font>    <font color="#006699">int</font> sizex = size.width-getInsets().left-getInsets().right;
+<font color="#555555">091 </font>    <font color="#006699">int</font> sizey = size.height-getInsets().top-getInsets().bottom;
+<font color="#555555">092 </font>    ColorRectangle cr = snake.firstElement();
+<font color="#555555">093 </font>    <font color="#006699">boolean</font> lBorder = <font color="#006699">false</font>;
+<font color="#555555">094 </font>    <font color="#006699">int</font> xalt, yalt;
+<font color="#555555">095 </font>    <font color="#006699">int</font> xtmp, ytmp;
+<font color="#555555">096 </font>
+<font color="#555555">097 </font>    <font color="#00AA00">//Kopf der Schlange neu berechnen</font>
+<font color="#555555">098 </font>    <font color="#0000AA">if</font> (cr.x &lt;= 1) {
+<font color="#555555">099 </font>      dx = 1;
+<font color="#555555">100 </font>      lBorder = <font color="#006699">true</font>;
+<font color="#555555">101 </font>    }
+<font color="#555555">102 </font>    <font color="#0000AA">if</font> (cr.x + cr.width &gt;= sizex) {
+<font color="#555555">103 </font>      dx = -1;
+<font color="#555555">104 </font>      lBorder = <font color="#006699">true</font>;
+<font color="#555555">105 </font>    }
+<font color="#555555">106 </font>    <font color="#0000AA">if</font> (cr.y &lt;= 1) {
+<font color="#555555">107 </font>      dy = 1;
+<font color="#555555">108 </font>      lBorder = <font color="#006699">true</font>;
+<font color="#555555">109 </font>    }
+<font color="#555555">110 </font>    <font color="#0000AA">if</font> (cr.y + cr.height &gt;= sizey) {
+<font color="#555555">111 </font>      dy = -1;
+<font color="#555555">112 </font>      lBorder = <font color="#006699">true</font>;
+<font color="#555555">113 </font>    }
+<font color="#555555">114 </font>    <font color="#0000AA">if</font> (! lBorder) {
+<font color="#555555">115 </font>      <font color="#0000AA">if</font> (rand(10) == 0) {
+<font color="#555555">116 </font>        <font color="#0000AA">if</font> (rand(2) == 0) {
+<font color="#555555">117 </font>          <font color="#0000AA">switch</font> (rand(5)) {
+<font color="#555555">118 </font>          <font color="#0000AA">case</font> 0: <font color="#0000AA">case</font> 1:
+<font color="#555555">119 </font>            dx = -1;
+<font color="#555555">120 </font>            <font color="#0000AA">break</font>;
+<font color="#555555">121 </font>          <font color="#0000AA">case</font> 2:
+<font color="#555555">122 </font>            dx = 0;
+<font color="#555555">123 </font>            <font color="#0000AA">break</font>;
+<font color="#555555">124 </font>          <font color="#0000AA">case</font> 3: <font color="#0000AA">case</font> 4:
+<font color="#555555">125 </font>            dx = 1;
+<font color="#555555">126 </font>            <font color="#0000AA">break</font>;
+<font color="#555555">127 </font>          }
+<font color="#555555">128 </font>        } <font color="#0000AA">else</font> {
+<font color="#555555">129 </font>          <font color="#0000AA">switch</font> (rand(5)) {
+<font color="#555555">130 </font>          <font color="#0000AA">case</font> 0: <font color="#0000AA">case</font> 1:
+<font color="#555555">131 </font>            dy = -1;
+<font color="#555555">132 </font>            <font color="#0000AA">break</font>;
+<font color="#555555">133 </font>          <font color="#0000AA">case</font> 2:
+<font color="#555555">134 </font>            dy = 0;
+<font color="#555555">135 </font>            <font color="#0000AA">break</font>;
+<font color="#555555">136 </font>          <font color="#0000AA">case</font> 3: <font color="#0000AA">case</font> 4:
+<font color="#555555">137 </font>            dy = 1;
+<font color="#555555">138 </font>            <font color="#0000AA">break</font>;
+<font color="#555555">139 </font>          }
+<font color="#555555">140 </font>        }
+<font color="#555555">141 </font>      }
+<font color="#555555">142 </font>    }
+<font color="#555555">143 </font>    xalt = cr.x + SIZERECT * dx;
+<font color="#555555">144 </font>    yalt = cr.y + SIZERECT * dy;
+<font color="#555555">145 </font>    <font color="#00AA00">//Rest der Schlange hinterherziehen</font>
+<font color="#555555">146 </font>    Enumeration&lt;ColorRectangle&gt; e = snake.elements();
+<font color="#555555">147 </font>    <font color="#0000AA">while</font> (e.hasMoreElements()) {
+<font color="#555555">148 </font>      cr = e.nextElement();
+<font color="#555555">149 </font>      xtmp = cr.x;
+<font color="#555555">150 </font>      ytmp = cr.y;
+<font color="#555555">151 </font>      cr.x = xalt;
+<font color="#555555">152 </font>      cr.y = yalt;
+<font color="#555555">153 </font>      xalt = xtmp;
+<font color="#555555">154 </font>      yalt = ytmp;
+<font color="#555555">155 </font>    }
+<font color="#555555">156 </font>  }
+<font color="#555555">157 </font>
+<font color="#555555">158 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">159 </font>  {
+<font color="#555555">160 </font>    ColorRectangle cr;
+<font color="#555555">161 </font>    Enumeration&lt;ColorRectangle&gt; e = snake.elements();
+<font color="#555555">162 </font>    <font color="#006699">int</font> inleft    = getInsets().left;
+<font color="#555555">163 </font>    <font color="#006699">int</font> intop     = getInsets().top;
+<font color="#555555">164 </font>    <font color="#0000AA">while</font> (e.hasMoreElements()) {
+<font color="#555555">165 </font>      cr = e.nextElement();
+<font color="#555555">166 </font>      g.setColor(cr.color);
+<font color="#555555">167 </font>      g.fillRect(cr.x+inleft,cr.y+intop,cr.width,cr.height);
+<font color="#555555">168 </font>    }
+<font color="#555555">169 </font>  }
+<font color="#555555">170 </font>
+<font color="#555555">171 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font> rand(<font color="#006699">int</font> limit)
+<font color="#555555">172 </font>  {
+<font color="#555555">173 </font>    <font color="#0000AA">return</font> (<font color="#006699">int</font>)(Math.random() * limit);
+<font color="#555555">174 </font>  }
+<font color="#555555">175 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3409.java"><font color="#000055" size=-1>Listing3409.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 34.9: Die animierte Schlange</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Schlange kann in einem beliebig kleinen oder gro&szlig;en Fenster
+laufen. Hier sind ein paar Beispiele f&uuml;r die Ausgabe des Programms,
+nachdem das Fenster in der Gr&ouml;&szlig;e ver&auml;ndert wurde:</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<p>
+<a name="imageid034008"></a>
+<img src="images/SchlangeAnim1.gif">
+<p>
+
+<p><i>
+Abbildung 34.8: Die animierte Schlange, Schnappschuss 1</i></p>
+<p>
+<a name="imageid034009"></a>
+<img src="images/SchlangeAnim2.gif">
+<p>
+
+<p><i>
+Abbildung 34.9: Die animierte Schlange, Schnappschuss 2</i></p>
+<p>
+<a name="imageid034010"></a>
+<img src="images/SchlangeAnim3.gif">
+<p>
+
+<p><i>
+Abbildung 34.10: Die animierte Schlange, Schnappschuss 3</i></p>
+
+
+<!-- Section -->
+<a name="flackernreduzieren"></a>
+<h3>34.2.4 Reduktion des Bildschirmflackerns<a name="ixa102261"></a>
+</h3>
+
+<p>
+Alle bisher entwickelten Animationen zeigen w&auml;hrend der Ausf&uuml;hrung
+ein ausgepr&auml;gtes Flackern, das um so st&auml;rker ist, je sp&auml;ter
+ein Bildanteil innerhalb eines Animationsschritts angezeigt wird.
+Der Grund f&uuml;r dieses Flackern liegt darin, dass vor jedem Aufruf
+von <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>
+zun&auml;chst das Fenster gel&ouml;scht wird und dadurch unmittelbar
+vor der Ausgabe des n&auml;chsten Bilds ganz kurz ein vollst&auml;ndig
+leerer Hintergrund erscheint. 
+
+<p>
+Leider besteht die L&ouml;sung f&uuml;r dieses Problem nicht einfach
+darin, das L&ouml;schen zu unterdr&uuml;cken. Bei einer animierten
+Bewegung beispielsweise ist es erforderlich, all die Bestandteile
+des vorigen Bilds zu l&ouml;schen, die im aktuellen Bild nicht mehr
+oder an einer anderen Stelle angezeigt werden. 
+
+<p>
+Auch wenn <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>
+deshalb aufgerufen wird, weil ein bisher verdeckter Bildausschnitt
+wieder sichtbar wird, muss nat&uuml;rlich der entsprechende Bildausschnitt
+zun&auml;chst gel&ouml;scht werden, um die Bestandteile des anderen
+Fensters zu entfernen. Im Grunde ist es also eine ganz vern&uuml;nftige
+Vorgehensweise, das Fenster vor jedem Aufruf von <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>
+zu l&ouml;schen. 
+
+<p>
+Das Flackern kann nun auf unterschiedliche Weise unterdr&uuml;ckt
+werden. Die drei gebr&auml;uchlichsten Methoden sind folgende: 
+<ul>
+<li>den Bildschirm gar nicht zu l&ouml;schen (was - wie zuvor erw&auml;hnt
+- problematisch ist)
+<li>nur den wirklich ben&ouml;tigten Teil des Bildschirms zu l&ouml;schen
+<li>das Verfahren der Doppelpufferung anzuwenden
+</ul>
+
+<p>
+Jedes dieser Verfahren hat Vor- und Nachteile und kann in verschiedenen
+Situationen unterschiedlich gut angewendet werden. Wir werden sie
+in den folgenden Unterabschnitten kurz vorstellen und ein Beispiel
+f&uuml;r ihre Anwendung geben. Es gibt noch einige zus&auml;tzliche
+M&ouml;glichkeiten, das Flackern zu unterdr&uuml;cken oder einzuschr&auml;nken,
+wie beispielsweise das Clipping der Ausgabe auf den tats&auml;chlich
+ver&auml;nderten Bereich, aber darauf wollen wir hier nicht n&auml;her
+eingehen. 
+
+<!-- Section -->
+
+<a name="sectlevel4id034002004001"></a>
+<h4>Bildschirm nicht l&ouml;schen </h4>
+
+<p>
+Den Bildschirm &uuml;berhaupt nicht zu l&ouml;schen, um das Flackern
+zu unterdr&uuml;cken, ist nur bei nicht bewegten Animationen m&ouml;glich.
+Wir wollen uns als Beispiel f&uuml;r ein Programm, das hierf&uuml;r
+geeignet ist, das folgende Lauflicht ansehen: 
+<a name="listingid034010"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3410.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3410
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">008 </font><font color="#0000AA">implements</font> Runnable
+<font color="#555555">009 </font>{
+<font color="#555555">010 </font>  <font color="#00AA00">//Konstanten</font>
+<font color="#555555">011 </font>  <font color="#0000AA">private</font> <font color="#0000AA">static</font> <font color="#0000AA">final</font> <font color="#006699">int</font> NUMLEDS  = 20;
+<font color="#555555">012 </font>  <font color="#0000AA">private</font> <font color="#0000AA">static</font> <font color="#0000AA">final</font> <font color="#006699">int</font> SLEEP    = 60;
+<font color="#555555">013 </font>  <font color="#0000AA">private</font> <font color="#0000AA">static</font> <font color="#0000AA">final</font> <font color="#006699">int</font> LEDSIZE  = 10;
+<font color="#555555">014 </font>  <font color="#0000AA">private</font> <font color="#0000AA">static</font> <font color="#0000AA">final</font> Color ONCOLOR  = <font color="#0000AA">new</font> Color(255,0,0);
+<font color="#555555">015 </font>  <font color="#0000AA">private</font> <font color="#0000AA">static</font> <font color="#0000AA">final</font> Color OFFCOLOR = <font color="#0000AA">new</font> Color(100,0,0);
+<font color="#555555">016 </font>
+<font color="#555555">017 </font>  <font color="#00AA00">//Instanzvariablen</font>
+<font color="#555555">018 </font>  <font color="#0000AA">private</font> Thread th;
+<font color="#555555">019 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font> switched;
+<font color="#555555">020 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font> dx;
+<font color="#555555">021 </font>
+<font color="#555555">022 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">023 </font>  {
+<font color="#555555">024 </font>    Listing3410 frame = <font color="#0000AA">new</font> Listing3410();
+<font color="#555555">025 </font>    frame.setSize(270,150);
+<font color="#555555">026 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">027 </font>    frame.startAnimation();
+<font color="#555555">028 </font>  }
+<font color="#555555">029 </font>
+<font color="#555555">030 </font>  <font color="#0000AA">public</font> Listing3410()
+<font color="#555555">031 </font>  {
+<font color="#555555">032 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Leuchtdiodenkette"</font>);
+<font color="#555555">033 </font>    setBackground(Color.lightGray);
+<font color="#555555">034 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">035 </font>  }
+<font color="#555555">036 </font>
+<font color="#555555">037 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> startAnimation()
+<font color="#555555">038 </font>  {
+<font color="#555555">039 </font>    th = <font color="#0000AA">new</font> Thread(<font color="#006699">this</font>);
+<font color="#555555">040 </font>    th.start();
+<font color="#555555">041 </font>  }
+<font color="#555555">042 </font>
+<font color="#555555">043 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> run()
+<font color="#555555">044 </font>  {
+<font color="#555555">045 </font>    switched = -1;
+<font color="#555555">046 </font>    dx = 1;
+<font color="#555555">047 </font>    <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">048 </font>      repaint();
+<font color="#555555">049 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">050 </font>        Thread.sleep(SLEEP);
+<font color="#555555">051 </font>      } <font color="#0000AA">catch</font> (InterruptedException e){
+<font color="#555555">052 </font>        <font color="#00AA00">//nichts</font>
+<font color="#555555">053 </font>      }
+<font color="#555555">054 </font>      switched += dx;
+<font color="#555555">055 </font>      <font color="#0000AA">if</font> (switched &lt; 0 || switched &gt; NUMLEDS - 1) {
+<font color="#555555">056 </font>        dx = -dx;
+<font color="#555555">057 </font>        switched += 2*dx;
+<font color="#555555">058 </font>      }
+<font color="#555555">059 </font>    }
+<font color="#555555">060 </font>  }
+<font color="#555555">061 </font>
+<font color="#555555">062 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">063 </font>  {
+<font color="#555555">064 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; NUMLEDS; ++i) {
+<font color="#555555">065 </font>      g.setColor(i == switched ? ONCOLOR : OFFCOLOR);
+<font color="#555555">066 </font>      g.fillOval(10+i*(LEDSIZE+2),80,LEDSIZE,LEDSIZE);
+<font color="#555555">067 </font>    }
+<font color="#555555">068 </font>  }
+<font color="#555555">069 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3410.java"><font color="#000055" size=-1>Listing3410.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 34.10: Bildschirmflackern reduzieren bei stehenden Animationen</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Das Programm zeigt eine Kette von 20 Leuchtdioden, die nacheinander
+an- und ausgeschaltet werden und dadurch ein Lauflicht simulieren,
+das zwischen linkem und rechtem Rand hin- und herl&auml;uft:</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<p>
+<a name="imageid034011"></a>
+<img src="images/LauflichtAnim.gif">
+<p>
+
+<p><i>
+Abbildung 34.11: Die Lauflichtanimation</i></p>
+
+<p>
+Wie kann nun aber das L&ouml;schen verhindert werden? Die L&ouml;sung
+basiert auf der Tatsache, dass bei einem Aufruf von <a href="index_r.html#ixb101449"><font color=#000080><tt>repaint</tt></font></a>
+nicht <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>
+direkt, sondern <a href="index_u.html#ixb101687"><font color=#000080><tt>update</tt></font></a>
+aufgerufen wird. In der Standardversion der Klasse <a href="index_c.html#ixb101293"><font color=#000080><tt>Component</tt></font></a>
+k&ouml;nnte <a name="ixa102262"><a href="index_u.html#ixb101687"><font color=#000080><tt>update</tt></font></a></a>
+etwa so implementiert sein: 
+<a name="listingid034011"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#006699">void</font> update(Graphics g)
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  g.setColor(getBackground());
+<font color="#555555">004 </font>  g.fillRect(0, 0, width, height);
+<font color="#555555">005 </font>  g.setColor(getForeground());
+<font color="#555555">006 </font>  paint(g);
+<font color="#555555">007 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 34.11: Standardimplementierung von update</i></p>
+
+<p>
+Zun&auml;chst wird die aktuelle Hintergrundfarbe ausgew&auml;hlt,
+um in dieser Farbe ein ausgef&uuml;lltes Rechteck in der Gr&ouml;&szlig;e
+des Bildschirms zu zeichnen. Erst nach diesem L&ouml;schvorgang wird
+die Vordergrundfarbe gesetzt und <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>
+aufgerufen. 
+
+<p>
+Da in Java alle Methodenaufrufe dynamisch gebunden werden, kann das
+L&ouml;schen dadurch verhindert werden, dass <a href="index_u.html#ixb101687"><font color=#000080><tt>update</tt></font></a>
+durch eine eigene Version &uuml;berlagert wird, die den Hintergrund
+unver&auml;ndert l&auml;sst. Durch einfaches Hinzuf&uuml;gen der folgenden
+drei Zeilen kann das Flackern des Lauflichts vollkommen unterdr&uuml;ckt
+werden: 
+<a name="listingid034012"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* update1.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#006699">void</font> update(Graphics g)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  paint(g);
+<font color="#555555">006 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/update1.inc"><font color="#000055" size=-1>update1.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 34.12: Modifizierte Version von update</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id034002004002"></a>
+<h4>Nur den wirklich ben&ouml;tigten Teil des Bildschirms l&ouml;schen
+</h4>
+
+<p>
+Wie schon erw&auml;hnt, kann auf das L&ouml;schen des Bildschirms
+nur dann komplett verzichtet werden, wenn die Animation keine Bewegung
+enth&auml;lt. Ist sie dagegen bewegt, kann es sinnvoll sein, nur die
+Teile des Bilds zu l&ouml;schen, die beim aktuellen Animationsschritt
+leer sind, im vorigen Schritt aber Grafikelemente enthielten. 
+
+<p>
+Um welche Teile der Grafik es sich dabei handelt, ist nat&uuml;rlich
+von der Art der Animation abh&auml;ngig. Zudem muss jeder Animationsschritt
+Informationen &uuml;ber den vorigen Schritt haben, um die richtigen
+Stellen l&ouml;schen zu k&ouml;nnen. Ein Beispiel, bei dem diese Technik
+gut angewendet werden kann, ist die bunte Schlange aus dem Abschnitt
+&#187;Animation mit Grafikprimitiven&#171;. 
+
+<p>
+Da die Schlange bei jedem Schritt einen neuen Kopf bekommt und alle
+anderen Elemente die Pl&auml;tze ihres jeweiligen Vorg&auml;ngers
+einnehmen, verbleibt als einziges wirklich zu l&ouml;schendes Element
+das letzte Element der Schlange aus dem vorherigen Animationsschritt
+&uuml;brig. Dessen Position k&ouml;nnte man sich bei jedem Schritt
+merken und im n&auml;chsten Schritt in der Hintergrundfarbe neu zeichnen.
+
+<p>
+Noch einfacher geht es, indem man an die Schlange einfach ein zus&auml;tzliches
+unsichtbares Element anh&auml;ngt. Wird n&auml;mlich das letzte Element
+grunds&auml;tzlich in der Hintergrundfarbe dargestellt, hinterl&auml;sst
+es keine Spuren auf dem Bildschirm und braucht damit auch nicht explizit
+gel&ouml;scht zu werden! Wir brauchen also nur hinter die <a href="index_f.html#ixb100077"><font color=#000080><tt>for</tt></font></a>-<font color="#000077"><tt>next</tt></font>-Schleife
+zur Konstruktion der Schlange ein weiteres, unsichtbares Element an
+den <font color="#000077"><tt>snake</tt></font>-<a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>
+anzuh&auml;ngen (in <a href="k100228.html#schlange2">Listing 34.13</a>
+in den Zeilen <a href="k100228.html#schlange2.a">025</a> bis <a href="k100228.html#schlange2.b">031</a>
+eingef&uuml;gt): 
+<a name="schlange2"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Schlange2.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#006699">void</font> run()
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#00AA00">//Schlange konstruieren</font>
+<font color="#555555">006 </font>  ColorRectangle cr;
+<font color="#555555">007 </font>  <font color="#006699">int</font> x = 100;
+<font color="#555555">008 </font>  <font color="#006699">int</font> y = 100;
+<font color="#555555">009 </font>  <font color="#0000AA">for</font> (<font color="#006699">int</font> i=0; i &lt; NUMELEMENTS; ++i) {
+<font color="#555555">010 </font>    cr = <font color="#0000AA">new</font> ColorRectangle();
+<font color="#555555">011 </font>    cr.x = x;
+<font color="#555555">012 </font>    cr.y = y;
+<font color="#555555">013 </font>    cr.width = SIZERECT;
+<font color="#555555">014 </font>    cr.height = SIZERECT;
+<font color="#555555">015 </font>    x += SIZERECT;
+<font color="#555555">016 </font>    cr.color = <font color="#0000AA">new</font> Color(
+<font color="#555555">017 </font>      i*(256/NUMELEMENTS),
+<font color="#555555">018 </font>      0,
+<font color="#555555">019 </font>      240-i*(256/NUMELEMENTS)
+<font color="#555555">020 </font>    );
+<font color="#555555">021 </font>    snake.addElement(cr);
+<font color="#555555">022 </font>  }
+<font color="#555555">023 </font>
+<font color="#555555">024 </font>  <font color="#00AA00">//L&ouml;schelement anh&auml;ngen</font>
+<font color="#555555">025 </font>  cr = <font color="#0000AA">new</font> ColorRectangle(); <a name="schlange2.a"></a>
+<font color="#555555">026 </font>  cr.x = x;
+<font color="#555555">027 </font>  cr.y = y;
+<font color="#555555">028 </font>  cr.width = SIZERECT;
+<font color="#555555">029 </font>  cr.height = SIZERECT;
+<font color="#555555">030 </font>  cr.color = BGCOLOR;
+<font color="#555555">031 </font>  snake.addElement(cr); <a name="schlange2.b"></a>
+<font color="#555555">032 </font>
+<font color="#555555">033 </font>  <font color="#00AA00">//Vorzugsrichtung festlegen</font>
+<font color="#555555">034 </font>  dx = -1;
+<font color="#555555">035 </font>  dy = -1;
+<font color="#555555">036 </font>
+<font color="#555555">037 </font>  <font color="#00AA00">//Schlange laufen lassen</font>
+<font color="#555555">038 </font>  <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">039 </font>    repaint();
+<font color="#555555">040 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">041 </font>      Thread.sleep(SLEEP);
+<font color="#555555">042 </font>    } <font color="#0000AA">catch</font> (InterruptedException e){
+<font color="#555555">043 </font>      <font color="#00AA00">//nichts</font>
+<font color="#555555">044 </font>    }
+<font color="#555555">045 </font>    moveSnake();
+<font color="#555555">046 </font>  }
+<font color="#555555">047 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Schlange2.inc"><font color="#000055" size=-1>Schlange2.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 34.13: Modifizierte Schlangenanimation</i></p>
+
+<p>
+Wird nun zus&auml;tzlich die Methode <a href="index_u.html#ixb101687"><font color=#000080><tt>update</tt></font></a>
+&uuml;berlagert, wie es auch im vorigen Abschnitt getan wurde, l&auml;uft
+die Schlange vollkommen flackerfrei. 
+
+<!-- Section -->
+
+<a name="sectlevel4id034002004003"></a>
+<h4><a name="ixa102263">Doppelpufferung</a></h4>
+
+<p>
+Das Doppelpuffern bietet sich immer dann an, wenn die beiden vorigen
+Methoden versagen. Das kann beispielsweise dann der Fall sein, wenn
+es bei einer bewegten Animation zu aufw&auml;ndig ist, nur den nicht
+mehr ben&ouml;tigten Teil der Bildschirmausgabe zu l&ouml;schen, oder
+wenn der aktuelle Animationsschritt keine Informationen dar&uuml;ber
+besitzt, welcher Teil zu l&ouml;schen ist. 
+
+<p>
+Beim Doppelpuffern wird bei jedem Animationsschritt zun&auml;chst
+die gesamte Bildschirmausgabe in ein <a name="ixa102264"><i>Offscreen-Image</i></a>
+geschrieben. Erst wenn alle Ausgabeoperationen abgeschlossen sind,
+wird dieses Offscreen-Image auf die Fensteroberfl&auml;che kopiert.
+Im Detail sind dazu folgende Schritte erforderlich: 
+<ul>
+<li>Das Fensterobjekt beschafft sich durch Aufruf von <a name="ixa102265"><a href="index_c.html#ixb100656"><font color=#000080><tt>createImage</tt></font></a></a>
+ein Offscreen-Image und speichert es in einer Instanzvariablen.
+<li>Durch Aufruf von <a name="ixa102266"><a href="index_g.html#ixb101459"><font color=#000080><tt>getGraphics</tt></font></a></a>
+wird ein Grafikkontext zu diesem Image beschafft.
+<li>Alle Bildschirmausgaben (inklusive L&ouml;schen des Bildschirms)
+gehen zun&auml;chst auf den Offscreen-Grafikkontext.
+<li>Wenn alle Ausgabeoperationen abgeschlossen sind, wird das Offscreen-Image
+mit <a name="ixa102267"><a href="index_d.html#ixb101671"><font color=#000080><tt>drawImage</tt></font></a></a>
+in das Ausgabefenster kopiert.
+</ul>
+
+<p>
+Durch diese Vorgehensweise wird erreicht, dass das Bild komplett aufgebaut
+ist, bevor es angezeigt wird. Da beim anschlie&szlig;enden Kopieren
+die neuen Pixel direkt &uuml;ber die alten kopiert werden, erscheinen
+dem Betrachter nur die Teile des Bilds ver&auml;ndert, die auch tats&auml;chlich
+ge&auml;ndert wurden. Ein Flackern, das entsteht, weil Fl&auml;chen
+f&uuml;r einen kurzen Zeitraum gel&ouml;scht und dann wieder gef&uuml;llt
+werden, kann nicht mehr auftreten. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Anwendung des Doppelpufferns ist nicht immer sinnvoll. Sollte
+eine der anderen Methoden mit vertretbarem Aufwand implementiert werden
+k&ouml;nnen, kann es sinnvoller sein, diese zu verwenden. Nachteilig
+sind vor allem der Speicherbedarf f&uuml;r die Konstruktion des Offscreen-Image
+und die Verz&ouml;gerungen durch das doppelte Schreiben der Bilddaten.
+Hier muss im Einzelfall entschieden werden, welche Variante zum Einsatz
+kommen soll. In vielen F&auml;llen allerdings k&ouml;nnen die genannten
+Nachteile vernachl&auml;ssigt werden und die Doppelpufferung ist ein
+probates Mittel, um das Bildschirmflackern zu verhindern.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Das folgende Programm ist ein Beispiel f&uuml;r die Anwendung des
+Doppelpufferns bei der Ausgabe einer bewegten Animation. Wir wollen
+uns daf&uuml;r die Aufgabe stellen, eine gro&szlig;e Scheibe &uuml;ber
+den Bildschirm laufen zu lassen, &uuml;ber deren Rand zwei stilisierte
+&#187;Ameisen&#171; mit unterschiedlicher Geschwindigkeit in entgegengesetzte
+Richtungen laufen. 
+
+<p>
+Das folgende Programm l&ouml;st diese Aufgabe. Dabei folgt die Animation
+unserem bekannten Architekturschema f&uuml;r bewegte Grafik und braucht
+hier nicht weiter erkl&auml;rt zu werden. Um das Flackern zu verhindern,
+deklarieren wir zwei Instanzvariablen, <font color="#000077"><tt>dbImage</tt></font>
+und <font color="#000077"><tt>dbGraphics</tt></font>: 
+<font color="#000077">
+<pre>
+private Image dbImage;
+private Graphics dbGraphics;
+</pre>
+</font>
+
+<p>
+Nun k&ouml;nnen die zum Doppelpuffern erforderlichen Schritte gekapselt
+werden, indem wir die Methode <a href="index_u.html#ixb101687"><font color=#000080><tt>update</tt></font></a>
+geeignet &uuml;berlagern: 
+<a name="updatedoppelpuffer"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* update2.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#006699">void</font> update(Graphics g)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#00AA00">//Double-Buffer initialisieren</font>
+<font color="#555555">006 </font>  <font color="#0000AA">if</font> (dbImage == <font color="#006699">null</font>) {
+<font color="#555555">007 </font>    dbImage = createImage(
+<font color="#555555">008 </font>     <font color="#006699">this</font>.getSize().width,
+<font color="#555555">009 </font>     <font color="#006699">this</font>.getSize().height
+<font color="#555555">010 </font>    );
+<font color="#555555">011 </font>    dbGraphics = dbImage.getGraphics();
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>  <font color="#00AA00">//Hintergrund l&ouml;schen</font>
+<font color="#555555">014 </font>  dbGraphics.setColor(getBackground());
+<font color="#555555">015 </font>  dbGraphics.fillRect(
+<font color="#555555">016 </font>    0,
+<font color="#555555">017 </font>    0,
+<font color="#555555">018 </font>    <font color="#006699">this</font>.getSize().width,
+<font color="#555555">019 </font>    <font color="#006699">this</font>.getSize().height
+<font color="#555555">020 </font>  );
+<font color="#555555">021 </font>  <font color="#00AA00">//Vordergrund zeichnen</font>
+<font color="#555555">022 </font>  dbGraphics.setColor(getForeground());
+<font color="#555555">023 </font>  paint(dbGraphics);
+<font color="#555555">024 </font>  <font color="#00AA00">//Offscreen anzeigen</font>
+<font color="#555555">025 </font>  g.drawImage(dbImage,0,0,<font color="#006699">this</font>);
+<font color="#555555">026 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/update2.inc"><font color="#000055" size=-1>update2.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 34.14: update-Methode mit Doppelpufferung</i></p>
+
+<p>
+Falls nicht schon geschehen, werden hier zun&auml;chst die beiden
+Variablen <font color="#000077"><tt>dbImage</tt></font> und <font color="#000077"><tt>dbGraphics</tt></font>
+initialisiert. Anschlie&szlig;end wird der Hintergrund gel&ouml;scht,
+wie es auch in der Standardversion von <a href="index_u.html#ixb101687"><font color=#000080><tt>update</tt></font></a>
+der Fall ist. Im Gegensatz zu dieser erfolgt das L&ouml;schen aber
+auf dem Offscreen-Image und ist somit f&uuml;r den Anwender nicht
+zu sehen. Nun wird <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>
+aufgerufen und bekommt anstelle des normalen den Offscreen-Grafikkontext
+&uuml;bergeben. Ohne selbst etwas davon zu wissen, sendet <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>
+damit alle seine Grafikbefehle auf das Offscreen-Image. Nachdem <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>
+beendet wurde, wird durch Aufruf von <a href="index_d.html#ixb101671"><font color=#000080><tt>drawImage</tt></font></a>
+das Offscreen-Image auf dem Bildschirm angezeigt. 
+
+<p>
+Hier ist der komplette Quellcode des Programms: 
+<a name="listingid034015"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3415.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3415
+<font color="#555555">006 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">007 </font><font color="#0000AA">implements</font> Runnable
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font> actx;
+<font color="#555555">010 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font> dx;
+<font color="#555555">011 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font> actarc1;
+<font color="#555555">012 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font> actarc2;
+<font color="#555555">013 </font>  <font color="#0000AA">private</font> Image dbImage;
+<font color="#555555">014 </font>  <font color="#0000AA">private</font> Graphics dbGraphics;
+<font color="#555555">015 </font>
+<font color="#555555">016 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">017 </font>  {
+<font color="#555555">018 </font>    Listing3415 frame = <font color="#0000AA">new</font> Listing3415();
+<font color="#555555">019 </font>    frame.setSize(210,170);
+<font color="#555555">020 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">021 </font>    frame.startAnimation();
+<font color="#555555">022 </font>  }
+<font color="#555555">023 </font>
+<font color="#555555">024 </font>  <font color="#0000AA">public</font> Listing3415()
+<font color="#555555">025 </font>  {
+<font color="#555555">026 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Ameisenanimation"</font>);
+<font color="#555555">027 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">028 </font>  }
+<font color="#555555">029 </font>
+<font color="#555555">030 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> startAnimation()
+<font color="#555555">031 </font>  {
+<font color="#555555">032 </font>    Thread th = <font color="#0000AA">new</font> Thread(<font color="#006699">this</font>);
+<font color="#555555">033 </font>    th.start();
+<font color="#555555">034 </font>  }
+<font color="#555555">035 </font>
+<font color="#555555">036 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> run()
+<font color="#555555">037 </font>  {
+<font color="#555555">038 </font>    actx = 0;
+<font color="#555555">039 </font>    dx = 1;
+<font color="#555555">040 </font>    actarc1 = 0;
+<font color="#555555">041 </font>    actarc2 = 0;
+<font color="#555555">042 </font>    <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">043 </font>      repaint();
+<font color="#555555">044 </font>      actx += dx;
+<font color="#555555">045 </font>      <font color="#0000AA">if</font> (actx &lt; 0 || actx &gt; 100) {
+<font color="#555555">046 </font>        dx = -dx;
+<font color="#555555">047 </font>        actx += 2*dx;
+<font color="#555555">048 </font>      }
+<font color="#555555">049 </font>      actarc1 = (actarc1 + 1) % 360;
+<font color="#555555">050 </font>      actarc2 = (actarc2 + 2) % 360;
+<font color="#555555">051 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">052 </font>        Thread.sleep(40);
+<font color="#555555">053 </font>      } <font color="#0000AA">catch</font> (InterruptedException e) {
+<font color="#555555">054 </font>        <font color="#00AA00">//nichts</font>
+<font color="#555555">055 </font>      }
+<font color="#555555">056 </font>    }
+<font color="#555555">057 </font>  }
+<font color="#555555">058 </font>
+<font color="#555555">059 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> update(Graphics g)
+<font color="#555555">060 </font>  {
+<font color="#555555">061 </font>    <font color="#00AA00">//Double-Buffer initialisieren</font>
+<font color="#555555">062 </font>    <font color="#0000AA">if</font> (dbImage == <font color="#006699">null</font>) {
+<font color="#555555">063 </font>      dbImage = createImage(
+<font color="#555555">064 </font>        <font color="#006699">this</font>.getSize().width,
+<font color="#555555">065 </font>        <font color="#006699">this</font>.getSize().height
+<font color="#555555">066 </font>      );
+<font color="#555555">067 </font>      dbGraphics = dbImage.getGraphics();
+<font color="#555555">068 </font>    }
+<font color="#555555">069 </font>    <font color="#00AA00">//Hintergrund l&ouml;schen</font>
+<font color="#555555">070 </font>    dbGraphics.setColor(getBackground());
+<font color="#555555">071 </font>    dbGraphics.fillRect(
+<font color="#555555">072 </font>      0,
+<font color="#555555">073 </font>      0,
+<font color="#555555">074 </font>      <font color="#006699">this</font>.getSize().width,
+<font color="#555555">075 </font>      <font color="#006699">this</font>.getSize().height
+<font color="#555555">076 </font>    );
+<font color="#555555">077 </font>    <font color="#00AA00">//Vordergrund zeichnen</font>
+<font color="#555555">078 </font>    dbGraphics.setColor(getForeground());
+<font color="#555555">079 </font>    paint(dbGraphics);
+<font color="#555555">080 </font>    <font color="#00AA00">//Offscreen anzeigen</font>
+<font color="#555555">081 </font>    g.drawImage(dbImage,0,0,<font color="#006699">this</font>);
+<font color="#555555">082 </font>  }
+<font color="#555555">083 </font>
+<font color="#555555">084 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">085 </font>  {
+<font color="#555555">086 </font>    <font color="#006699">int</font> xoffs = getInsets().left;
+<font color="#555555">087 </font>    <font color="#006699">int</font> yoffs = getInsets().top;
+<font color="#555555">088 </font>    g.setColor(Color.lightGray);
+<font color="#555555">089 </font>    g.fillOval(xoffs+actx,yoffs+20,100,100);
+<font color="#555555">090 </font>    g.setColor(Color.red);
+<font color="#555555">091 </font>    g.drawArc(xoffs+actx,yoffs+20,100,100,actarc1,10);
+<font color="#555555">092 </font>    g.drawArc(xoffs+actx-1,yoffs+19,102,102,actarc1,10);
+<font color="#555555">093 </font>    g.setColor(Color.blue);
+<font color="#555555">094 </font>    g.drawArc(xoffs+actx,yoffs+20,100,100,360-actarc2,10);
+<font color="#555555">095 </font>    g.drawArc(xoffs+actx-1,yoffs+19,102,102,360-actarc2,10);
+<font color="#555555">096 </font>  }
+<font color="#555555">097 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3415.java"><font color="#000055" size=-1>Listing3415.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 34.15: Animation mit Doppelpufferung</i></p>
+
+<p>
+Ein Schnappschuss des laufenden Programms sieht so aus (die beiden
+&#187;Ameisen&#171; sind in der Abbildung etwas schwer zu erkennen,
+im laufenden Programm sieht man sie besser): 
+<p>
+<a name="imageid034012"></a>
+<img src="images/AmeisenAnim.gif">
+<p>
+
+<p><i>
+Abbildung 34.12: Eine Animation mit Doppelpufferung</i></p>
+
+<p>
+Durch die Kapselung des Doppelpufferns k&ouml;nnen Programme sogar
+nachtr&auml;glich flackerfrei gemacht werden, ohne dass in den eigentlichen
+Ausgaberoutinen irgendetwas ge&auml;ndert werden m&uuml;sste. Man
+k&ouml;nnte beispielsweise aus <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>
+eine neue Klasse <font color="#000077"><tt>DoubleBufferFrame</tt></font>
+ableiten, die die beiden privaten Membervariablen <font color="#000077"><tt>dbImage</tt></font>
+und <font color="#000077"><tt>dbGraphics</tt></font> besitzt und <a href="index_u.html#ixb101687"><font color=#000080><tt>update</tt></font></a>
+in der beschriebenen Weise implementiert. Alle Klassen, die dann von
+<font color="#000077"><tt>DoubleBufferFrame</tt></font> anstelle von
+<a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>
+abgeleitet werden, unterst&uuml;tzen das Doppelpuffern ihrer Grafikausgaben
+automatisch. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100226.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100227.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100229.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100230.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

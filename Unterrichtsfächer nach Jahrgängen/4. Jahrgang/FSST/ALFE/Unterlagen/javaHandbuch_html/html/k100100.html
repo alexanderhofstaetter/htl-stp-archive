@@ -1,0 +1,228 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100097.html;106,k100099.html;107,k100101.html;108,k100104.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100097.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100099.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100101.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100104.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 15 - Collections I
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id015003"></a>
+<h2>15.3 Die Klasse Stack </h2>
+<hr>
+<ul>
+<li><a href="k100100.html#sectlevel2id015003">15.3 Die Klasse Stack</a>
+</ul>
+<hr>
+
+<p>
+Ein Stack ist eine Datenstruktur, die nach dem <a name="ixa100881"><i>LIFO-Prinzip</i></a>
+(last-in-first-out) arbeitet. Die Elemente werden am vorderen Ende
+der Liste eingef&uuml;gt und von dort auch wieder entnommen. Das hei&szlig;t,
+die zuletzt eingef&uuml;gten Elemente werden zuerst entnommen und
+die zuerst eingef&uuml;gten zuletzt. 
+
+<p>
+In Java ist ein <a name="ixa100882"><a href="index_s.html#ixb100686"><font color=#000080><tt>Stack</tt></font></a></a>
+eine Ableitung eines Vektors, der um neue Zugriffsfunktionen erweitert
+wurde, um das typische Verhalten eines Stacks zu implementieren. Obwohl
+dies eine &ouml;konomische Vorgehensweise ist, bedeutet es, dass ein
+<a href="index_s.html#ixb100686"><font color=#000080><tt>Stack</tt></font></a>
+alle Methoden eines Vektors erbt und damit auch wie ein Vektor verwendet
+werden kann. Wir wollen diese Tatsache hier ignorieren und uns mit
+den spezifischen Eigenschaften eines Stacks besch&auml;ftigen. 
+
+<p>
+Der Konstruktor der Klasse <a href="index_s.html#ixb100686"><font color=#000080><tt>Stack</tt></font></a>
+ist parameterlos: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Stack()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Stack.html" onClick="this.href=getApiDoc('java.util.Stack')"><font color="#660066" size=-1>java.util.Stack</font></a></td>
+</tr>
+</table>
+
+<p>
+Das Anf&uuml;gen neuer Elemente wird durch einen Aufruf der Methode
+<a name="ixa100883"><a href="index_p.html#ixb100702"><font color=#000080><tt>push</tt></font></a></a>
+erledigt und erfolgt wie &uuml;blich am oberen Ende des Stacks. Die
+Methode liefert als R&uuml;ckgabewert das eingef&uuml;gte Objekt:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Object push(Object item)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Stack.html" onClick="this.href=getApiDoc('java.util.Stack')"><font color="#660066" size=-1>java.util.Stack</font></a></td>
+</tr>
+</table>
+
+<p>
+Der Zugriff auf das oberste Element kann mit einer der Methoden <a name="ixa100884"><a href="index_p.html#ixb100703"><font color=#000080><tt>pop</tt></font></a></a>
+oder <a name="ixa100885"><a href="index_p.html#ixb100704"><font color=#000080><tt>peek</tt></font></a></a>
+erfolgen. Beide liefern das oberste Element des Stacks, <a href="index_p.html#ixb100703"><font color=#000080><tt>pop</tt></font></a>
+entfernt es anschlie&szlig;end vom Stack: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Object pop()
+
+public Object peek()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Stack.html" onClick="this.href=getApiDoc('java.util.Stack')"><font color="#660066" size=-1>java.util.Stack</font></a></td>
+</tr>
+</table>
+
+<p>
+Des Weiteren gibt es eine Methode <a name="ixa100886"><a href="index_e.html#ixb100705"><font color=#000080><tt>empty</tt></font></a></a>,
+um festzustellen, ob der <a href="index_s.html#ixb100686"><font color=#000080><tt>Stack</tt></font></a>
+leer ist, und eine Methode <a name="ixa100887"><a href="index_s.html#ixb100706"><font color=#000080><tt>search</tt></font></a></a>,
+die nach einem beliebigen Element sucht und als R&uuml;ckgabewert
+die Distanz zwischen gefundenem Element und oberstem Stack-Element
+angibt: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public boolean empty()
+
+public int search(Object o)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Stack.html" onClick="this.href=getApiDoc('java.util.Stack')"><font color="#660066" size=-1>java.util.Stack</font></a></td>
+</tr>
+</table>
+
+<p>
+Das folgende Beispiel verdeutlicht die Anwendung eines Stacks: 
+<a name="listingid015002"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1502.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1502
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    Stack s = <font color="#0000AA">new</font> Stack();
+<font color="#555555">010 </font>
+<font color="#555555">011 </font>    s.push(<font color="#0000FF">"Erstes Element"</font>);
+<font color="#555555">012 </font>    s.push(<font color="#0000FF">"Zweites Element"</font>);
+<font color="#555555">013 </font>    s.push(<font color="#0000FF">"Drittes Element"</font>);
+<font color="#555555">014 </font>    <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">015 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">016 </font>        System.out.println(s.pop());
+<font color="#555555">017 </font>      } <font color="#0000AA">catch</font> (EmptyStackException e) {
+<font color="#555555">018 </font>        <font color="#0000AA">break</font>;
+<font color="#555555">019 </font>      }
+<font color="#555555">020 </font>    }
+<font color="#555555">021 </font>  }
+<font color="#555555">022 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1502.java"><font color="#000055" size=-1>Listing1502.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 15.2: Anwendung eines Stacks</i></p>
+
+<p>
+Das Programm erzeugt einen <a href="index_s.html#ixb100686"><font color=#000080><tt>Stack</tt></font></a>
+und f&uuml;gt die Werte &#187;Erstes Element&#171;, &#187;Zweites
+Element&#171; und &#187;Drittes Element&#171; ein. Anschlie&szlig;end
+entfernt es so lange Elemente aus dem Stack, bis die Ausgabeschleife
+durch eine Ausnahme des Typs <a name="ixa100888"><a href="index_e.html#ixb100707"><font color=#000080><tt>EmptyStackException</tt></font></a></a>
+beendet wird. Durch die Arbeitsweise des <a href="index_s.html#ixb100686"><font color=#000080><tt>Stack</tt></font></a>
+werden die Elemente in der umgekehrten Eingabereihenfolge auf dem
+Bildschirm ausgegeben: 
+<font color="#333300">
+<pre>
+Drittes Element
+Zweites Element
+Erstes Element
+</pre>
+</font>
+
+<p>
+Mit dem JDK 6 wurde das Interface <a name="ixa100889"><a href="index_d.html#ixb100708"><font color=#000080><tt>java.util.Deque</tt></font></a></a>
+eingef&uuml;hrt, welches beispielsweise von der Klasse <a href="index_l.html#ixb100709"><font color=#000080><tt>LinkedList</tt></font></a>
+implementiert wird und die gleichen Operationen wie ein Stack anbietet.
+Dieses Interface wird in <a href="k100106.html#sectionlists">Abschnitt 16.2</a>
+erl&auml;utert. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100097.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100099.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100101.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100104.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

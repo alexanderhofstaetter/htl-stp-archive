@@ -1,0 +1,402 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100207.html;106,k100213.html;107,k100215.html;108,k100221.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100207.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100213.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100215.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100221.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 32 - AWT-Dialogelemente
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="textfield"></a>
+<h2>32.7 TextField </h2>
+<hr>
+<ul>
+<li><a href="k100214.html#textfield">32.7 TextField</a>
+</ul>
+<hr>
+
+<p>
+Ein <a name="ixa102110"><a href="index_t.html#ixb101412"><font color=#000080><tt>TextField</tt></font></a></a>
+dient zur Darstellung und zur Eingabe von Text. Sowohl der Anwender
+als auch das Programm k&ouml;nnen den dargestellten Text auslesen
+und ver&auml;ndern. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public TextField()
+
+public TextField(int width)
+
+public TextField(String text)
+
+public TextField(String text, int width)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/TextField.html" onClick="this.href=getApiDoc('java.awt.TextField')"><font color="#660066" size=-1>java.awt.TextField</font></a></td>
+</tr>
+</table>
+
+<p>
+Der parameterlose Konstruktor erzeugt ein leeres Textfeld, in das
+der Anwender beliebig viel Text eingeben kann. Wird mit <font color="#000077"><tt>width</tt></font>
+die Breite des Textfelds vorgegeben, so beschr&auml;nkt sich die Anzahl
+der auf dem Bildschirm angezeigten Zeichen auf den angegebenen Wert.
+Die Anzahl <i>einzugebender</i> Zeichen wird allerdings nicht begrenzt.
+Ist der Text l&auml;nger, scrollt er innerhalb des Textfelds. Mit
+dem Parameter <font color="#000077"><tt>text</tt></font> kann eine
+Zeichenkette vorgegeben werden, die beim Aufruf des Textfelds vorgelegt
+wird. 
+
+<p>
+Die Klasse <font color="#000077"><tt>Textfield</tt></font> ist aus
+<a name="ixa102111"><a href="index_t.html#ixb101594"><font color=#000080><tt>TextComponent</tt></font></a></a>
+abgeleitet. Sie besitzt eine ganze Reihe von Methoden, mit denen es
+m&ouml;glich ist, auf den Text zuzugreifen oder die Eigenschaften
+des Textfelds zu ver&auml;ndern. Die Methoden <a name="ixa102112"><a href="index_g.html#ixb101586"><font color=#000080><tt>getText</tt></font></a></a>
+und <a name="ixa102113"><a href="index_s.html#ixb101585"><font color=#000080><tt>setText</tt></font></a></a>
+werden zum Lesen und Ver&auml;ndern des Textes verwendet: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public String getText()
+
+public void setText(String text)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/TextField.html" onClick="this.href=getApiDoc('java.awt.TextField')"><font color="#660066" size=-1>java.awt.TextField</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa102114"><a href="index_g.html#ixb101595"><font color=#000080><tt>getColumns</tt></font></a></a>
+kann die Anzahl der darstellbaren Zeichen des Textfelds abgefragt
+und mit <a name="ixa102115"><a href="index_s.html#ixb101596"><font color=#000080><tt>setColumns</tt></font></a></a>
+ver&auml;ndert werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int getColumns()
+
+public void setColumns(int columns)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/TextField.html" onClick="this.href=getApiDoc('java.awt.TextField')"><font color="#660066" size=-1>java.awt.TextField</font></a></td>
+</tr>
+</table>
+
+<p>
+Zwei weitere Methoden stehen f&uuml;r das Markieren von Text zur Verf&uuml;gung:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void selectAll()
+
+public void select(int first, int last)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/TextField.html" onClick="this.href=getApiDoc('java.awt.TextField')"><font color="#660066" size=-1>java.awt.TextField</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa102116"><a href="index_s.html#ixb101597"><font color=#000080><tt>selectAll</tt></font></a></a>
+markiert den kompletten Text und <a name="ixa102117"><a href="index_s.html#ixb101598"><font color=#000080><tt>select</tt></font></a></a>
+den Bereich von <font color="#000077"><tt>first</tt></font> bis <font color="#000077"><tt>last</tt></font>
+(die Z&auml;hlung beginnt bei 0). Mit den beiden Methoden <a name="ixa102118"><a href="index_g.html#ixb101599"><font color=#000080><tt>getSelectionStart</tt></font></a></a>
+und <a name="ixa102119"><a href="index_g.html#ixb101600"><font color=#000080><tt>getSelectionEnd</tt></font></a></a>
+kann die aktuelle Selektion abgefragt werden, <a name="ixa102120"><a href="index_g.html#ixb101601"><font color=#000080><tt>getSelectedText</tt></font></a></a>
+liefert den selektierten Text: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int getSelectionStart()
+
+public int getSelectionEnd()
+
+public String getSelectedText()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/TextField.html" onClick="this.href=getApiDoc('java.awt.TextField')"><font color="#660066" size=-1>java.awt.TextField</font></a></td>
+</tr>
+</table>
+
+<p>
+Auf die aktuelle Cursorposition innerhalb des Textes kann mit den
+Methoden <a name="ixa102121"><a href="index_g.html#ixb101602"><font color=#000080><tt>getCaretPosition</tt></font></a></a>
+und <a name="ixa102122"><a href="index_s.html#ixb101603"><font color=#000080><tt>setCaretPosition</tt></font></a></a>
+zugegriffen werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int getCaretPosition()
+
+public void setCaretPosition(int position)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/TextField.html" onClick="this.href=getApiDoc('java.awt.TextField')"><font color="#660066" size=-1>java.awt.TextField</font></a></td>
+</tr>
+</table>
+
+<p>
+Des Weiteren kann man verhindern, dass der Text ge&auml;ndert wird,
+und es besteht die M&ouml;glichkeit, verdeckte Eingaben (etwa f&uuml;r
+Passw&ouml;rter) zu realisieren: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setEditable(boolean allowed)
+
+public boolean isEditable()
+
+public void setEchoCharacter(char c)
+
+public char getEchoChar()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/TextField.html" onClick="this.href=getApiDoc('java.awt.TextField')"><font color="#660066" size=-1>java.awt.TextField</font></a></td>
+</tr>
+</table>
+
+<p>
+Durch einen Aufruf von <a name="ixa102123"><a href="index_s.html#ixb101604"><font color=#000080><tt>setEditable</tt></font></a></a>
+mit <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>
+als Parameter werden weitere Eingaben unterbunden. Der aktuelle Status
+kann mit <a name="ixa102124"><a href="index_i.html#ixb101605"><font color=#000080><tt>isEditable</tt></font></a></a>
+abgefragt werden. Mit Hilfe von <a name="ixa102125"><a href="index_s.html#ixb101606"><font color=#000080><tt>setEchoCharacter</tt></font></a></a>
+kann ein Zeichen &uuml;bergeben werden, das bei jedem Tastendruck
+anstelle des vom Anwender eingegebenen Zeichens ausgegeben wird. Durch
+&Uuml;bergabe eines '*' kann beispielsweise die verdeckte Eingabe
+eines Passworts realisiert werden. 
+
+<p>
+Ein Textfeld generiert ein Action-Event, wenn der Anwender innerhalb
+des Textfelds die ENTER-Taste dr&uuml;ckt. In diesem Fall liefert
+die Methode <a name="ixa102126"><a href="index_g.html#ixb101512"><font color=#000080><tt>getActionCommand</tt></font></a></a>
+des Action-Events den Inhalt des Textfelds. Eine Methode <a href="index_s.html#ixb101513"><font color=#000080><tt>setActionCommand</tt></font></a>,
+die es wie bei Buttons erlaubt, den R&uuml;ckgabewert von <a href="index_g.html#ixb101512"><font color=#000080><tt>getActionCommand</tt></font></a>
+zu ver&auml;ndern, gibt es bei Textfeldern nicht. Um die Action-Events
+mehrerer Textfelder, die einen gemeinsamen Empf&auml;nger haben, unterscheiden
+zu k&ouml;nnen, kann mit <a name="ixa102127"><a href="index_g.html#ixb101340"><font color=#000080><tt>getSource</tt></font></a></a>
+die Ereignisquelle abgefragt werden. Wird ein gemeinsamer Empf&auml;nger
+f&uuml;r alle Action-Events verwendet, so kann das von <a href="index_g.html#ixb101340"><font color=#000080><tt>getSource</tt></font></a>
+gelieferte Objekt mit dem Operator <a name="ixa102128"><a href="index_i.html#ixb100341"><font color=#000080><tt>instanceof</tt></font></a></a>
+daraufhin untersucht werden, ob es sich um ein <a href="index_t.html#ixb101412"><font color=#000080><tt>TextField</tt></font></a>
+oder einen <a href="index_b.html#ixb101410"><font color=#000080><tt>Button</tt></font></a>
+handelt. F&uuml;r das nachfolgende Beispiel k&ouml;nnte das etwa so
+aussehen: 
+<a name="listingid032006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* TextField1.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#006699">void</font> actionPerformed(ActionEvent event)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  Object obj = event.getSource();
+<font color="#555555">006 </font>  <font color="#0000AA">if</font> (obj <font color="#0000AA">instanceof</font> TextField) {
+<font color="#555555">007 </font>    System.out.println(
+<font color="#555555">008 </font>      <font color="#0000FF">"ButtonAction: "</font>+event.getActionCommand()
+<font color="#555555">009 </font>    );
+<font color="#555555">010 </font>  } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (obj <font color="#0000AA">instanceof</font> Button) {
+<font color="#555555">011 </font>    <font color="#0000AA">if</font> (event.getActionCommand().equals(<font color="#0000FF">"Ende"</font>)) {
+<font color="#555555">012 </font>      endDialog();
+<font color="#555555">013 </font>    }
+<font color="#555555">014 </font>  }
+<font color="#555555">015 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/TextField1.inc"><font color="#000055" size=-1>TextField1.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 32.6: Verwendung von Textfeldern</i></p>
+
+<p>
+Neben dem Action-Ereignis generiert ein Textfeld bei jeder Text&auml;nderung
+ein <i>Text-Ereignis</i>. Ein Empf&auml;nger f&uuml;r Text-Ereignisse
+kann mit der Methode <a name="ixa102129"><a href="index_a.html#ixb101427"><font color=#000080><tt>addTextListener</tt></font></a></a>
+von <a href="index_t.html#ixb101412"><font color=#000080><tt>TextField</tt></font></a>
+registriert werden, die als Argument ein Objekt erwartet, das das
+Interface <a name="ixa102130"><a href="index_t.html#ixb101426"><font color=#000080><tt>TextListener</tt></font></a></a>
+implementiert. Beim Auftreten eines Text-Ereignisses wird im <a href="index_t.html#ixb101426"><font color=#000080><tt>TextListener</tt></font></a>
+die Methode <a name="ixa102131"><a href="index_t.html#ixb101429"><font color=#000080><tt>textValueChanged</tt></font></a></a>
+mit einem <a name="ixa102132"><a href="index_t.html#ixb101346"><font color=#000080><tt>TextEvent</tt></font></a></a>
+als Parameter aufgerufen. <a href="index_t.html#ixb101346"><font color=#000080><tt>TextEvent</tt></font></a>
+ist aus <a href="index_a.html#ixb101341"><font color=#000080><tt>AWTEvent</tt></font></a>
+abgeleitet und erbt die Methoden <a href="index_g.html#ixb101348"><font color=#000080><tt>getID</tt></font></a>
+und <a href="index_g.html#ixb101340"><font color=#000080><tt>getSource</tt></font></a>,
+stellt dar&uuml;ber hinaus aber keine eigenen Methoden zur Verf&uuml;gung.
+Typischerweise wird innerhalb von <a href="index_t.html#ixb101429"><font color=#000080><tt>textValueChanged</tt></font></a>
+mit <a href="index_g.html#ixb101340"><font color=#000080><tt>getSource</tt></font></a>
+das zugeh&ouml;rige <a href="index_t.html#ixb101412"><font color=#000080><tt>TextField</tt></font></a>
+beschafft und mit <a href="index_g.html#ixb101586"><font color=#000080><tt>getText</tt></font></a>
+auf seinen Inhalt zugegriffen: 
+<a name="listingid032007"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* TextField2.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#006699">void</font> textValueChanged(TextEvent event)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  TextField tf = (TextField)event.getSource();
+<font color="#555555">006 </font>  System.out.println(<font color="#0000FF">"textValueChanged: "</font>+tf.getText());
+<font color="#555555">007 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/TextField2.inc"><font color="#000055" size=-1>TextField2.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 32.7: Behandlung von Text-Events</i></p>
+
+<p>
+Das folgende Beispiel zeigt die Anwendung von Textfeldern und die
+Registrierung von Empf&auml;ngern f&uuml;r Text-Events und Action-Events.
+Das Beispiel demonstriert auch, wie man Textfelder und Beschriftungen
+kombinieren kann. Innerhalb des Dialogs werden in einem <a href="index_f.html#ixb101539"><font color=#000080><tt>FlowLayout</tt></font></a>
+zwei Panels nebeneinander angeordnet. Das erste Panel enth&auml;lt
+ein <a href="index_g.html#ixb101540"><font color=#000080><tt>GridLayout</tt></font></a>
+mit drei Zeilen Beschriftung und das zweite ein <a href="index_g.html#ixb101540"><font color=#000080><tt>GridLayout</tt></font></a>
+mit drei Textfeldern. Da die H&ouml;he der Elemente im <a href="index_g.html#ixb101540"><font color=#000080><tt>GridLayout</tt></font></a>
+in beiden Panels identisch ist, stehen Beschriftung und Text jeweils
+auf der gleichen H&ouml;he nebeneinander. 
+<a name="listingid032008"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* TextField3.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">private</font> <font color="#006699">void</font> customizeLayout(Panel panel)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  panel.setLayout(<font color="#0000AA">new</font> FlowLayout(FlowLayout.LEFT));
+<font color="#555555">006 </font>  Panel labelPanel = <font color="#0000AA">new</font> Panel();
+<font color="#555555">007 </font>  labelPanel.setLayout(<font color="#0000AA">new</font> GridLayout(3,1));
+<font color="#555555">008 </font>  labelPanel.add(<font color="#0000AA">new</font> Label(<font color="#0000FF">"Name"</font>,Label.LEFT));
+<font color="#555555">009 </font>  labelPanel.add(<font color="#0000AA">new</font> Label(<font color="#0000FF">"Vorname"</font>,Label.LEFT));
+<font color="#555555">010 </font>  labelPanel.add(<font color="#0000AA">new</font> Label(<font color="#0000FF">"Ort"</font>,Label.LEFT));
+<font color="#555555">011 </font>  Panel editPanel = <font color="#0000AA">new</font> Panel();
+<font color="#555555">012 </font>  editPanel.setLayout(<font color="#0000AA">new</font> GridLayout(3,1));
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>  <font color="#00AA00">//Dieses Textfeld sendet Action- und Text-Ereignisse</font>
+<font color="#555555">015 </font>  TextField tf = <font color="#0000AA">new</font> TextField(<font color="#0000FF">"Meier"</font>,20);
+<font color="#555555">016 </font>  tf.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">017 </font>  tf.addTextListener(<font color="#006699">this</font>);
+<font color="#555555">018 </font>  editPanel.add(tf);
+<font color="#555555">019 </font>
+<font color="#555555">020 </font>  <font color="#00AA00">//Diese Textfelder senden keine Ereignisse</font>
+<font color="#555555">021 </font>  editPanel.add(<font color="#0000AA">new</font> TextField(<font color="#0000FF">"Luise"</font>,20));
+<font color="#555555">022 </font>  editPanel.add(<font color="#0000AA">new</font> TextField(<font color="#0000FF">"Hamburg"</font>,20));
+<font color="#555555">023 </font>  panel.add(labelPanel);
+<font color="#555555">024 </font>  panel.add(editPanel);
+<font color="#555555">025 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/TextField3.inc"><font color="#000055" size=-1>TextField3.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 32.8: Textfelder mit Beschriftung</i></p>
+<p>
+<a name="imageid032006"></a>
+<img src="images/TextField.gif">
+<p>
+
+<p><i>
+Abbildung 32.6: Ein Dialog mit beschrifteten Textfeldern</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100207.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100213.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100215.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100221.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

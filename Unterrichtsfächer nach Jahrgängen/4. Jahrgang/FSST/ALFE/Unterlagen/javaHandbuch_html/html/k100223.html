@@ -1,0 +1,491 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100221.html;106,k100222.html;107,k100224.html;108,k100226.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100221.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100222.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100224.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100226.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 33 - Eigene Dialogelemente
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id033002"></a>
+<h2>33.2 Entwicklung einer <a name="ixa102211">7-Segment-Anzeige</a>
+</h2>
+<hr>
+<ul>
+<li><a href="k100223.html#sectlevel2id033002">33.2 Entwicklung einer 7-Segment-Anzeige</a>
+<ul>
+<li><a href="k100223.html#sectlevel3id033002001">33.2.1 Anforderungen</a>
+<li><a href="k100223.html#gui7segmentanzeige">33.2.2 Bildschirmanzeige</a>
+<li><a href="k100223.html#sectlevel3id033002003">33.2.3 Ereignisbehandlung</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id033002001"></a>
+<h3>33.2.1 Anforderungen </h3>
+
+<p>
+In diesem Abschnitt wollen wir uns ein konkretes Beispiel zur Komponentenentwicklung
+ansehen. Dazu soll eine einstellige 7-Segment-Anzeige entwickelt werden,
+die in der Lage ist, die Ziffern 0 bis 9 darzustellen. Des Weiteren
+sollen folgende Eigenschaften realisiert werden: 
+<ul>
+<li>Die Anzeige soll in der Gr&ouml;&szlig;e skalierbar sein und sich
+zu allen Layoutmanagern kompatibel verhalten.
+<li>Die 7-Segment-Anzeige soll auf Mausklicks reagieren. Nach einem
+Mausklick soll sie den Fokus erhalten. Nach Dr&uuml;cken der linken
+Maustaste soll der Anzeigewert herunter- und nach Dr&uuml;cken der
+rechten Maustaste heraufgez&auml;hlt werden. Wird w&auml;hrend des
+Mausklicks die <font color="#007700"><tt>[UMSCHALT]</tt></font>-Taste
+gedr&uuml;ckt, so soll lediglich der Fokus zugewiesen werden, der
+Wert aber unver&auml;ndert bleiben.
+<li>Der Anzeigewert soll durch Dr&uuml;cken der Tasten <font color="#007700"><tt>[+]</tt></font>
+und <font color="#007700"><tt>[-]</tt></font> herauf- bzw. heruntergez&auml;hlt
+werden. Wird eine Zifferntaste gedr&uuml;ckt, so soll die Anzeige
+auf diesen Wert gesetzt werden.
+<li>Eine Anzeige, die den Fokus hat, soll visuell von einer ohne Fokus
+unterscheidbar sein. Der Fokus soll weiterhin - wie unter Windows
+&uuml;blich - mit Hilfe der Tasten <font color="#007700"><tt>[TAB]</tt></font>
+und <font color="#007700"><tt>[UMSCHALT]</tt></font>+<font color="#007700"><tt>[TAB]</tt></font>
+von einem Dialogelement zum n&auml;chsten weitergereicht werden k&ouml;nnen.
+</ul>
+
+
+<!-- Section -->
+<a name="gui7segmentanzeige"></a>
+<h3>33.2.2 Bildschirmanzeige </h3>
+
+<p>
+Die Architektur unserer Anzeigekomponente ist denkbar einfach. Wir
+definieren dazu eine neue Klasse <a name="ixa102212"><a href="index_s.html#ixb101654"><font color=#000080><tt>Segment7</tt></font></a></a>,
+die aus <a href="index_c.html#ixb101652"><font color=#000080><tt>Canvas</tt></font></a>
+abgeleitet wird. <a href="index_s.html#ixb101654"><font color=#000080><tt>Segment7</tt></font></a>
+besitzt eine Membervariable <font color="#000077"><tt>digit</tt></font>,
+die den aktuellen Anzeigewert speichert. Dieser kann mit den &ouml;ffentlichen
+Methoden <font color="#000077"><tt>getValue</tt></font> und <font color="#000077"><tt>setValue</tt></font>
+abgefragt bzw. gesetzt werden. Die Klasse bekommt zwei Konstruktoren,
+die es erlauben, den Anzeigewert wahlweise bei der Instanzierung zu
+setzen oder die Voreinstellung 0 zu verwenden. 
+
+<p>
+<a href="index_s.html#ixb101654"><font color=#000080><tt>Segment7</tt></font></a>
+&uuml;berlagert die Methoden <a name="ixa102213"><a href="index_g.html#ixb101646"><font color=#000080><tt>getPreferredSize</tt></font></a></a>
+und <a name="ixa102214"><a href="index_g.html#ixb101655"><font color=#000080><tt>getMinimumSize</tt></font></a></a>
+der Klasse <a href="index_c.html#ixb101293"><font color=#000080><tt>Component</tt></font></a>,
+um den Layoutmanagern die gew&uuml;nschte Gr&ouml;&szlig;e mitzuteilen:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Dimension getPreferredSize()
+
+public Dimension getMinimumSize()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Component.html" onClick="this.href=getApiDoc('java.awt.Component')"><font color="#660066" size=-1>java.awt.Component</font></a></td>
+</tr>
+</table>
+
+<p>
+Beide Methoden liefern ein Objekt der Klasse <a name="ixa102215"><a href="index_d.html#ixb101656"><font color=#000080><tt>Dimension</tt></font></a></a>,
+also ein rechteckiges Element mit einer H&ouml;he und Breite. <a href="index_g.html#ixb101646"><font color=#000080><tt>getPreferredSize</tt></font></a>
+teilt dem Layoutmanager mit, welches die <i>gew&uuml;nschte</i> Gr&ouml;&szlig;e
+der Komponente ist, und <a href="index_g.html#ixb101655"><font color=#000080><tt>getMinimumSize</tt></font></a>
+gibt an, welches die kleinste akzeptable Gr&ouml;&szlig;e ist. Der
+Layoutmanager <a href="index_f.html#ixb101539"><font color=#000080><tt>FlowLayout</tt></font></a>
+beispielsweise verwendet <a href="index_g.html#ixb101646"><font color=#000080><tt>getPreferredSize</tt></font></a>,
+um die Gr&ouml;&szlig;e der Komponente zu bestimmen. <a href="index_g.html#ixb101540"><font color=#000080><tt>GridLayout</tt></font></a>
+gibt die Gr&ouml;&szlig;e selbst vor und passt sie an die Gitterelemente
+an. Durch Aufruf von <a name="ixa102216"><a href="index_p.html#ixb101552"><font color=#000080><tt>pack</tt></font></a></a>
+kann allerdings auch <a href="index_g.html#ixb101540"><font color=#000080><tt>GridLayout</tt></font></a>
+dazu veranlasst werden, die gew&uuml;nschte Gr&ouml;&szlig;e der Komponenten
+abzufragen und zur Dimensionierung des Fensters (und damit letztlich
+zur Dimensionierung der Einzelkomponenten) zu verwenden. Daneben gibt
+es noch eine dritte Methode <a name="ixa102217"><a href="index_g.html#ixb101657"><font color=#000080><tt>getMaximumSize</tt></font></a></a>,
+mit der die Komponente ihre maximale Gr&ouml;&szlig;e mitteilen kann.
+Sie wird in unserem Beispiel nicht ben&ouml;tigt. 
+
+<p>
+Zur Darstellung der Leuchtdiodenanzeige auf dem Bildschirm wird die
+Methode <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>
+&uuml;berlagert; in ihr befindet sich die Logik zur Darstellung der
+sieben Segmente (siehe <a href="k100223.html#aufbau7segment">Abbildung 33.1</a>).
+In <a href="index_s.html#ixb101654"><font color=#000080><tt>Segment7</tt></font></a>
+wurden dazu drei Arrays <font color="#000077"><tt>digits</tt></font>,
+<font color="#000077"><tt>polysx</tt></font> und <font color="#000077"><tt>polysy</tt></font>
+definiert, die die Belegung der Segmente f&uuml;r jede einzelne Ziffer
+darstellen und die Eckpunkte jedes einzelnen Segments vorgeben. 
+
+<p>
+<a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>
+verwendet das Array <font color="#000077"><tt>digits</tt></font>,
+um herauszufinden, welche Segmente zur Darstellung der aktuellen Ziffer
+verwendet werden. F&uuml;r jedes der beteiligten Segmente wird dann
+aus den Arrays <font color="#000077"><tt>polysx</tt></font> und <font color="#000077"><tt>polysy</tt></font>
+das passende Polygon gebildet und mit <a href="index_f.html#ixb101186"><font color=#000080><tt>fillPolygon</tt></font></a>
+angezeigt. Als interne Berechnungseinheit werden zwei Parameter <font color="#000077"><tt>dx</tt></font>
+und <font color="#000077"><tt>dy</tt></font> verwendet, die beim Aufruf
+von <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>
+aus dem f&uuml;r die Komponente verf&uuml;gbaren Platz berechnet werden.
+<p>
+<a name="aufbau7segment"></a>
+<img src="images/SiebenSegment.gif">
+<p>
+
+<p><i>
+Abbildung 33.1: Der Aufbau der 7-Segment-Anzeige</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id033002003"></a>
+<h3>33.2.3 Ereignisbehandlung </h3>
+
+<p>
+Wie in <a href="k100183.html#eventhandlingpattern4">Abschnitt 28.2.4</a>
+erw&auml;hnt, erfolgt die Ereignisbehandlung in selbst definierten
+Komponenten &uuml;blicherweise auf der Basis des vierten vorgestellten
+Architekturmodells. Bei diesem werden die Ereignisse nicht durch registrierte
+Listener-Klassen bearbeitet, sondern durch &Uuml;berlagern der Methoden
+<font color="#000077"><tt>process...Event</tt></font> der Klasse <a href="index_c.html#ixb101293"><font color=#000080><tt>Component</tt></font></a>.
+
+<p>
+Damit die Ereignisse tats&auml;chlich an diese Methoden weitergegeben
+werden, m&uuml;ssen sie zuvor durch Aufruf von <a name="ixa102218"><a href="index_e.html#ixb101439"><font color=#000080><tt>enableEvents</tt></font></a></a>
+und &Uuml;bergabe der zugeh&ouml;rigen Ereignismaske aktiviert werden.
+Da wir Component-, Focus-, Key- und Mouse-Ereignisse behandeln wollen,
+rufen wir <a href="index_e.html#ixb101439"><font color=#000080><tt>enableEvents</tt></font></a>
+mit den Konstanten <a name="ixa102219"><a href="index_c.html#ixb101442"><font color=#000080><tt>AWTEvent.COMPONENT_EVENT_MASK</tt></font></a></a>,
+<a name="ixa102220"><a href="index_f.html#ixb101658"><font color=#000080><tt>AWTEvent.FOCUS_EVENT_MASK</tt></font></a></a>,
+<a name="ixa102221"><a href="index_m.html#ixb101659"><font color=#000080><tt>AWTEvent.MOUSE_EVENT_MASK</tt></font></a></a>
+und <a name="ixa102222"><a href="index_k.html#ixb101660"><font color=#000080><tt>AWTEvent.KEY_EVENT_MASK</tt></font></a></a>
+auf. Beim &Uuml;berlagern dieser Methoden sollte in jedem Fall der
+entsprechende Ereignishandler der Superklasse aufgerufen werden, um
+die korrekte Standard-Ereignisbehandlung sicherzustellen. 
+
+<p>
+Die Reaktion auf Mausklicks wird durch &Uuml;berlagern der Methode
+<a name="ixa102223"><a href="index_p.html#ixb101438"><font color=#000080><tt>processMouseEvent</tt></font></a></a>
+realisiert. Hier wird zun&auml;chst &uuml;berpr&uuml;ft, ob es sich
+um ein <a name="ixa102224"><a href="index_m.html#ixb101661"><font color=#000080><tt>MOUSE_PRESSED</tt></font></a></a>-Ereignis
+handelt, also ob eine der Maustasten <i>gedr&uuml;ckt</i> wurde. Ist
+dies der Fall, wird dem Anzeigeelement durch Aufruf von <a name="ixa102225"><a href="index_r.html#ixb101463"><font color=#000080><tt>requestFocusInWindow</tt></font></a></a>
+der Eingabefokus zugewiesen. 
+
+<p>
+Anschlie&szlig;end wird &uuml;berpr&uuml;ft, ob die <font color="#007700"><tt>[UMSCHALT]</tt></font>-Taste
+gedr&uuml;ckt wurde. Ist das der Fall, wird die Ereignisbehandlung
+beendet, andernfalls wird der Anzeigewert hoch- bzw. heruntergez&auml;hlt,
+je nachdem, ob die rechte oder linke Maustaste gedr&uuml;ckt wurde.
+Am Ende von <a href="index_p.html#ixb101438"><font color=#000080><tt>processMouseEvent</tt></font></a>
+wird in jedem Fall <font color="#000077"><tt>super.processMouseEvent</tt></font>
+aufgerufen, um sicherzustellen, dass die normale Ereignisbehandlung
+aufgerufen wird. 
+
+<p>
+Ein selbst definiertes Dialogelement bekommt nicht automatisch den
+Fokus zugewiesen, wenn mit der Maus darauf geklickt wird. Stattdessen
+muss es selbst auf Mausklicks reagieren und sich - wie zuvor beschrieben
+- durch Aufruf von <a href="index_r.html#ixb101463"><font color=#000080><tt>requestFocusInWindow</tt></font></a>
+selbst den Fokus zuweisen. Bei jeder Fokus&auml;nderung wird ein Focus-Event
+ausgel&ouml;st, das wir durch &Uuml;berlagern der Methode <a name="ixa102226"><a href="index_p.html#ixb101662"><font color=#000080><tt>processFocusEvent</tt></font></a></a>
+bearbeiten. Hier unterscheiden wir zun&auml;chst, ob es sich um ein
+<a name="ixa102227"><a href="index_f.html#ixb101663"><font color=#000080><tt>FOCUS_GAINED</tt></font></a></a>-
+oder <a name="ixa102228"><a href="index_f.html#ixb101664"><font color=#000080><tt>FOCUS_LOST</tt></font></a></a>-Ereignis
+handelt, und setzen eine interne Statusvariable <font color="#000077"><tt>hasfocus</tt></font>
+entsprechend. Diese wird nach dem anschlie&szlig;enden Aufruf von
+<a name="ixa102229"><a href="index_r.html#ixb101449"><font color=#000080><tt>repaint</tt></font></a></a>
+verwendet, um in <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>
+durch Modifikation der Anzeigefarbe ein visuelles Feedback zu geben.
+Hat ein Element den Fokus, so ist die Farbe der Anzeigesegmente gelb,
+andernfalls rot. 
+
+<p>
+Im JDK gibt es einen Mechanismus, der es erlaubt, mit den Tasten <font color="#007700"><tt>[TAB]</tt></font>
+und <font color="#007700"><tt>[UMSCHALT]</tt></font>+<font color="#007700"><tt>[TAB]</tt></font>
+zwischen den Eingabefeldern eines Dialogs zu wechseln. Genauer gesagt
+wird dadurch der Fokus an das n&auml;chste Element weiter- bzw. zum
+vorigen zur&uuml;ckgegeben. Da diese Vorgehensweise nicht bei jedem
+Dialogelement sinnvoll ist, kann das Dialogelement sie durch &Uuml;berlagern
+der Methode <a name="ixa102230"><a href="index_i.html#ixb101665"><font color=#000080><tt>isFocusable</tt></font></a></a>
+selbst bestimmen. Liefert <a href="index_i.html#ixb101665"><font color=#000080><tt>isFocusable</tt></font></a>
+den R&uuml;ckgabewert <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>,
+so nimmt das Objekt an der <font color="#007700"><tt>[TAB]</tt></font>-Behandlung
+teil, andernfalls nicht. Die Klasse <a href="index_s.html#ixb101654"><font color=#000080><tt>Segment7</tt></font></a>
+&uuml;berlagert <a href="index_i.html#ixb101665"><font color=#000080><tt>isFocusable</tt></font></a>
+und gibt <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+zur&uuml;ck. So kann mit <font color="#007700"><tt>[TAB]</tt></font>
+und <font color="#007700"><tt>[UMSCHALT]</tt></font>+<font color="#007700"><tt>[TAB]</tt></font>
+wie besprochen zwischen den 7-Segment-Anzeigen gewechselt werden.
+
+<p>
+Ein Dialogelement enth&auml;lt nur dann Tastatureingaben, wenn es
+den Fokus hat. Durch den zuvor beschriebenen Mechanismus des Aufrufs
+von <a href="index_r.html#ixb101463"><font color=#000080><tt>requestFocusInWindow</tt></font></a>
+stellen wir sicher, dass nach einem Mausklick bzw. nach dem Wechsel
+des Fokus mit <font color="#007700"><tt>[TAB]</tt></font> und <font color="#007700"><tt>[UMSCHALT]</tt></font>+<font color="#007700"><tt>[TAB]</tt></font>
+Tastaturereignisse an das Element gesendet werden. Diese werden durch
+&Uuml;berlagern der Methode <a name="ixa102231"><a href="index_p.html#ixb101443"><font color=#000080><tt>processKeyEvent</tt></font></a></a>
+behandelt. Wir &uuml;berpr&uuml;fen darin zun&auml;chst, ob das Ereignis
+vom Typ <a name="ixa102232"><a href="index_k.html#ixb101666"><font color=#000080><tt>KEY_PRESSED</tt></font></a></a>
+ist, und besorgen dann mit <a name="ixa102233"><a href="index_g.html#ixb101352"><font color=#000080><tt>getKeyChar</tt></font></a></a>
+den Wert der gedr&uuml;ckten Taste. Ist er '+', so wird der Anzeigewert
+um 1 erh&ouml;ht, bei '-' entsprechend verringert. Wurde eine der
+Zifferntasten gedr&uuml;ckt, so erh&auml;lt das Anzeigeelement diesen
+Wert. Anschlie&szlig;end wird durch Aufruf von <a href="index_r.html#ixb101449"><font color=#000080><tt>repaint</tt></font></a>
+die Anzeige neu gezeichnet. 
+
+<p>
+Ein Component-Ereignis brauchen wir in unserem Beispiel nur, damit
+wir dem Dialogelement unmittelbar nach der Anzeige auf dem Bildschirm
+den Fokus zuweisen k&ouml;nnen. Dazu &uuml;berlagern wir die Methode
+<a name="ixa102234"><a href="index_p.html#ixb101667"><font color=#000080><tt>processComponentEvent</tt></font></a></a>
+und &uuml;berpr&uuml;fen, ob das Ereignis vom Typ <a name="ixa102235"><a href="index_c.html#ixb101668"><font color=#000080><tt>COMPONENT_SHOWN</tt></font></a></a>
+ist. In diesem Fall wird <a href="index_r.html#ixb101463"><font color=#000080><tt>requestFocusInWindow</tt></font></a>
+aufgerufen, andernfalls passiert nichts. 
+
+<p>
+Damit ist die Konstruktion der Komponente auch schon abgeschlossen.
+Durch die Definition von <a href="index_g.html#ixb101646"><font color=#000080><tt>getPreferredSize</tt></font></a>
+und <a href="index_g.html#ixb101655"><font color=#000080><tt>getMinimumSize</tt></font></a>
+und die automatische Skalierung in der <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>-Methode
+verh&auml;lt sich unsere neue Komponente so, wie es die Layoutmanager
+von ihr erwarten. Daher kann sie wie eine vordefinierte Komponente
+verwendet werden. Hier ist der Quellcode von <a href="index_s.html#ixb101654"><font color=#000080><tt>Segment7</tt></font></a>:
+<a name="listing7segmentanzeige"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Segment7.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">class</font> Segment7
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Canvas
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font> digit;
+<font color="#555555">010 </font>  <font color="#0000AA">private</font> <font color="#006699">boolean</font> hasfocus;
+<font color="#555555">011 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font>[][] polysx = {
+<font color="#555555">012 </font>    { 1, 2, 8, 9, 8, 2},    <font color="#00AA00">//Segment 0</font>
+<font color="#555555">013 </font>    { 9,10,10, 9, 8, 8},    <font color="#00AA00">//Segment 1</font>
+<font color="#555555">014 </font>    { 9,10,10, 9, 8, 8},    <font color="#00AA00">//Segment 2</font>
+<font color="#555555">015 </font>    { 1, 2, 8, 9, 8, 2},    <font color="#00AA00">//Segment 3</font>
+<font color="#555555">016 </font>    { 1, 2, 2, 1, 0, 0},    <font color="#00AA00">//Segment 4</font>
+<font color="#555555">017 </font>    { 1, 2, 2, 1, 0, 0},    <font color="#00AA00">//Segment 5</font>
+<font color="#555555">018 </font>    { 1, 2, 8, 9, 8, 2},    <font color="#00AA00">//Segment 6</font>
+<font color="#555555">019 </font>  };
+<font color="#555555">020 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font>[][] polysy = {
+<font color="#555555">021 </font>    { 1, 0, 0, 1, 2, 2},    <font color="#00AA00">//Segment 0</font>
+<font color="#555555">022 </font>    { 1, 2, 8, 9, 8, 2},    <font color="#00AA00">//Segment 1</font>
+<font color="#555555">023 </font>    { 9,10,16,17,16,10},    <font color="#00AA00">//Segment 2</font>
+<font color="#555555">024 </font>    {17,16,16,17,18,18},    <font color="#00AA00">//Segment 3</font>
+<font color="#555555">025 </font>    { 9,10,16,17,16,10},    <font color="#00AA00">//Segment 4</font>
+<font color="#555555">026 </font>    { 1, 2, 8, 9, 8, 2},    <font color="#00AA00">//Segment 5</font>
+<font color="#555555">027 </font>    { 9, 8, 8, 9,10,10},    <font color="#00AA00">//Segment 6</font>
+<font color="#555555">028 </font>  };
+<font color="#555555">029 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font>[][] digits = {
+<font color="#555555">030 </font>    {1,1,1,1,1,1,0},         <font color="#00AA00">//Ziffer 0</font>
+<font color="#555555">031 </font>    {0,1,1,0,0,0,0},         <font color="#00AA00">//Ziffer 1</font>
+<font color="#555555">032 </font>    {1,1,0,1,1,0,1},         <font color="#00AA00">//Ziffer 2</font>
+<font color="#555555">033 </font>    {1,1,1,1,0,0,1},         <font color="#00AA00">//Ziffer 3</font>
+<font color="#555555">034 </font>    {0,1,1,0,0,1,1},         <font color="#00AA00">//Ziffer 4</font>
+<font color="#555555">035 </font>    {1,0,1,1,0,1,1},         <font color="#00AA00">//Ziffer 5</font>
+<font color="#555555">036 </font>    {1,0,1,1,1,1,1},         <font color="#00AA00">//Ziffer 6</font>
+<font color="#555555">037 </font>    {1,1,1,0,0,0,0},         <font color="#00AA00">//Ziffer 7</font>
+<font color="#555555">038 </font>    {1,1,1,1,1,1,1},         <font color="#00AA00">//Ziffer 8</font>
+<font color="#555555">039 </font>    {1,1,1,1,0,1,1}          <font color="#00AA00">//Ziffer 9</font>
+<font color="#555555">040 </font>  };
+<font color="#555555">041 </font>
+<font color="#555555">042 </font>  <font color="#0000AA">public</font> Segment7()
+<font color="#555555">043 </font>  {
+<font color="#555555">044 </font>    <font color="#006699">this</font>(0);
+<font color="#555555">045 </font>  }
+<font color="#555555">046 </font>
+<font color="#555555">047 </font>  <font color="#0000AA">public</font> Segment7(<font color="#006699">int</font> digit)
+<font color="#555555">048 </font>  {
+<font color="#555555">049 </font>    <font color="#006699">super</font>();
+<font color="#555555">050 </font>    <font color="#006699">this</font>.digit = digit;
+<font color="#555555">051 </font>    <font color="#006699">this</font>.hasfocus = <font color="#006699">false</font>;
+<font color="#555555">052 </font>    enableEvents(AWTEvent.COMPONENT_EVENT_MASK);
+<font color="#555555">053 </font>    enableEvents(AWTEvent.FOCUS_EVENT_MASK);
+<font color="#555555">054 </font>    enableEvents(AWTEvent.MOUSE_EVENT_MASK);
+<font color="#555555">055 </font>    enableEvents(AWTEvent.KEY_EVENT_MASK);
+<font color="#555555">056 </font>  }
+<font color="#555555">057 </font>
+<font color="#555555">058 </font>  <font color="#0000AA">public</font> Dimension getPreferredSize()
+<font color="#555555">059 </font>  {
+<font color="#555555">060 </font>    <font color="#0000AA">return</font> <font color="#0000AA">new</font> Dimension(5*10,5*18);
+<font color="#555555">061 </font>  }
+<font color="#555555">062 </font>
+<font color="#555555">063 </font>  <font color="#0000AA">public</font> Dimension getMinimumSize()
+<font color="#555555">064 </font>  {
+<font color="#555555">065 </font>    <font color="#0000AA">return</font> <font color="#0000AA">new</font> Dimension(1*10,1*18);
+<font color="#555555">066 </font>  }
+<font color="#555555">067 </font>
+<font color="#555555">068 </font>  <font color="#0000AA">public</font> <font color="#006699">boolean</font> isFocusable()
+<font color="#555555">069 </font>  {
+<font color="#555555">070 </font>    <font color="#0000AA">return</font> <font color="#006699">true</font>;
+<font color="#555555">071 </font>  }
+<font color="#555555">072 </font>
+<font color="#555555">073 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">074 </font>  {
+<font color="#555555">075 </font>    Color darkred  = <font color="#0000AA">new</font> Color(127,0,0);
+<font color="#555555">076 </font>    Color lightred = <font color="#0000AA">new</font> Color(255,0,0);
+<font color="#555555">077 </font>    Color yellow   = <font color="#0000AA">new</font> Color(255,255,0);
+<font color="#555555">078 </font>    <font color="#00AA00">//dx und dy berechnen</font>
+<font color="#555555">079 </font>    <font color="#006699">int</font> dx = getSize().width / 10;
+<font color="#555555">080 </font>    <font color="#006699">int</font> dy = getSize().height / 18;
+<font color="#555555">081 </font>    <font color="#00AA00">//Hintergrund</font>
+<font color="#555555">082 </font>    g.setColor(darkred);
+<font color="#555555">083 </font>    g.fillRect(0,0,getSize().width,getSize().height);
+<font color="#555555">084 </font>    <font color="#00AA00">//Segmente</font>
+<font color="#555555">085 </font>    <font color="#0000AA">if</font> (hasfocus) {
+<font color="#555555">086 </font>      g.setColor(yellow);
+<font color="#555555">087 </font>    } <font color="#0000AA">else</font> {
+<font color="#555555">088 </font>      g.setColor(lightred);
+<font color="#555555">089 </font>    }
+<font color="#555555">090 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i=0; i &lt; 7; ++i) { <font color="#00AA00">//alle Segmente</font>
+<font color="#555555">091 </font>      <font color="#0000AA">if</font> (digits[digit][i] == 1) {
+<font color="#555555">092 </font>        Polygon poly = <font color="#0000AA">new</font> Polygon();
+<font color="#555555">093 </font>        <font color="#0000AA">for</font> (<font color="#006699">int</font> j = 0; j &lt; 6; ++j) { <font color="#00AA00">//alle Eckpunkte</font>
+<font color="#555555">094 </font>          poly.addPoint(dx*polysx[i][j],dy*polysy[i][j]);
+<font color="#555555">095 </font>        }
+<font color="#555555">096 </font>        g.fillPolygon(poly);
+<font color="#555555">097 </font>      }
+<font color="#555555">098 </font>    }
+<font color="#555555">099 </font>    <font color="#00AA00">//Trennlinien</font>
+<font color="#555555">100 </font>    g.setColor(darkred);
+<font color="#555555">101 </font>    g.drawLine(0,0,dx*10,dy*10);
+<font color="#555555">102 </font>    g.drawLine(0,8*dy,10*dx,18*dy);
+<font color="#555555">103 </font>    g.drawLine(0,10*dy,10*dx,0);
+<font color="#555555">104 </font>    g.drawLine(0,18*dy,10*dx,8*dy);
+<font color="#555555">105 </font>  }
+<font color="#555555">106 </font>
+<font color="#555555">107 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> getValue()
+<font color="#555555">108 </font>  {
+<font color="#555555">109 </font>    <font color="#0000AA">return</font> digit;
+<font color="#555555">110 </font>  }
+<font color="#555555">111 </font>
+<font color="#555555">112 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setValue(<font color="#006699">int</font> value)
+<font color="#555555">113 </font>  {
+<font color="#555555">114 </font>    digit = value % 10;
+<font color="#555555">115 </font>  }
+<font color="#555555">116 </font>
+<font color="#555555">117 </font>  <font color="#0000AA">protected</font> <font color="#006699">void</font> processComponentEvent(ComponentEvent event)
+<font color="#555555">118 </font>  {
+<font color="#555555">119 </font>    <font color="#0000AA">if</font> (event.getID() == ComponentEvent.COMPONENT_SHOWN) {
+<font color="#555555">120 </font>      requestFocusInWindow();
+<font color="#555555">121 </font>    }
+<font color="#555555">122 </font>    <font color="#006699">super</font>.processComponentEvent(event);
+<font color="#555555">123 </font>  }
+<font color="#555555">124 </font>
+<font color="#555555">125 </font>  <font color="#0000AA">protected</font> <font color="#006699">void</font> processFocusEvent(FocusEvent event)
+<font color="#555555">126 </font>  {
+<font color="#555555">127 </font>    <font color="#0000AA">if</font> (event.getID() == FocusEvent.FOCUS_GAINED) {
+<font color="#555555">128 </font>      hasfocus = <font color="#006699">true</font>;
+<font color="#555555">129 </font>      repaint();
+<font color="#555555">130 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (event.getID() == FocusEvent.FOCUS_LOST) {
+<font color="#555555">131 </font>      hasfocus = <font color="#006699">false</font>;
+<font color="#555555">132 </font>      repaint();
+<font color="#555555">133 </font>    }
+<font color="#555555">134 </font>    <font color="#006699">super</font>.processFocusEvent(event);
+<font color="#555555">135 </font>  }
+<font color="#555555">136 </font>
+<font color="#555555">137 </font>  <font color="#0000AA">protected</font> <font color="#006699">void</font> processMouseEvent(MouseEvent event)
+<font color="#555555">138 </font>  {
+<font color="#555555">139 </font>    <font color="#0000AA">if</font> (event.getID() == MouseEvent.MOUSE_PRESSED) {
+<font color="#555555">140 </font>      requestFocusInWindow();
+<font color="#555555">141 </font>      <font color="#0000AA">if</font> (!event.isShiftDown()) {
+<font color="#555555">142 </font>        <font color="#0000AA">if</font> (event.isMetaDown()) {
+<font color="#555555">143 </font>          setValue(getValue() + 1); <font color="#00AA00">//increment by 1</font>
+<font color="#555555">144 </font>        } <font color="#0000AA">else</font> {
+<font color="#555555">145 </font>          setValue(getValue() + 9); <font color="#00AA00">//decrement by 1</font>
+<font color="#555555">146 </font>        }
+<font color="#555555">147 </font>      }
+<font color="#555555">148 </font>      repaint();
+<font color="#555555">149 </font>    }
+<font color="#555555">150 </font>    <font color="#006699">super</font>.processMouseEvent(event);
+<font color="#555555">151 </font>  }
+<font color="#555555">152 </font>
+<font color="#555555">153 </font>  <font color="#0000AA">protected</font> <font color="#006699">void</font> processKeyEvent(KeyEvent event)
+<font color="#555555">154 </font>  {
+<font color="#555555">155 </font>    <font color="#0000AA">if</font> (event.getID() == KeyEvent.KEY_PRESSED) {
+<font color="#555555">156 </font>      <font color="#006699">char</font> key = event.getKeyChar();
+<font color="#555555">157 </font>      <font color="#0000AA">if</font> (key &gt;= <font color="#0000FF">'0'</font> &amp;&amp; key &lt;= <font color="#0000FF">'9'</font>) {
+<font color="#555555">158 </font>        setValue(key - <font color="#0000FF">'0'</font>);
+<font color="#555555">159 </font>        repaint();
+<font color="#555555">160 </font>      } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (key == <font color="#0000FF">'+'</font>) {
+<font color="#555555">161 </font>        setValue(getValue() + 1); <font color="#00AA00">//increment by 1</font>
+<font color="#555555">162 </font>        repaint();
+<font color="#555555">163 </font>      } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (key == <font color="#0000FF">'-'</font>) {
+<font color="#555555">164 </font>        setValue(getValue() + 9); <font color="#00AA00">//decrement by 1</font>
+<font color="#555555">165 </font>        repaint();
+<font color="#555555">166 </font>      }
+<font color="#555555">167 </font>    }
+<font color="#555555">168 </font>    <font color="#006699">super</font>.processKeyEvent(event);
+<font color="#555555">169 </font>  }
+<font color="#555555">170 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Segment7.java"><font color="#000055" size=-1>Segment7.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 33.1: Eine 7-Segment-Anzeige</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100221.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100222.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100224.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100226.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

@@ -1,0 +1,1022 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100150.html;106,k100153.html;107,k100155.html;108,k100157.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100150.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100153.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100155.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100157.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 23 - Multithreading
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id023004"></a>
+<h2>23.4 Synchronisation<a name="ixa101482"></a><a name="ixa101483"></a>
+</h2>
+<hr>
+<ul>
+<li><a href="k100154.html#sectlevel2id023004">23.4 Synchronisation</a>
+<ul>
+<li><a href="k100154.html#sectlevel3id023004001">23.4.1 Synchronisationsprobleme</a>
+<li><a href="k100154.html#monitore">23.4.2 Monitore</a>
+<ul>
+<li><a href="k100154.html#sectlevel4id023004002001">Anwendung von synchronized auf einen Block von Anweisungen</a>
+<li><a href="k100154.html#sectlevel4id023004002002">Anwendung von synchronized auf eine Methode</a>
+</ul>
+<li><a href="k100154.html#sectlevel3id023004003">23.4.3 wait und notify</a>
+<li><a href="k100154.html#sectlevel3id023004004">23.4.4 BlockingQueue</a>
+<li><a href="k100154.html#pipedthreads">23.4.5 PipedInputStream und PipedOutputStream</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id023004001"></a>
+<h3>23.4.1 Synchronisationsprobleme </h3>
+
+<p>
+Wenn man sich mit Nebenl&auml;ufigkeit besch&auml;ftigt, muss man
+sich in aller Regel auch mit Fragen der <i>Synchronisation</i> nebenl&auml;ufiger
+Prozesse befassen. In Java erfolgt die Kommunikation zweier Threads
+auf der Basis gemeinsamer Variablen, die von beiden Threads erreicht
+werden k&ouml;nnen. F&uuml;hren beide Prozesse &Auml;nderungen auf
+den gemeinsamen Daten durch, so m&uuml;ssen sie synchronisiert werden,
+denn andernfalls k&ouml;nnen undefinierte Ergebnisse entstehen. 
+
+<p>
+Wir wollen uns als einleitendes Beispiel ein kleines Programm ansehen,
+bei dem zwei Threads einen gemeinsamen Z&auml;hler hochz&auml;hlen:
+<a name="listingid023009"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2309.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2309
+<font color="#555555">004 </font><font color="#0000AA">extends</font> Thread
+<font color="#555555">005 </font>{
+<font color="#555555">006 </font>  <font color="#0000AA">static</font> <font color="#006699">int</font> cnt = 0;
+<font color="#555555">007 </font>
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    Thread t1 = <font color="#0000AA">new</font> Listing2309();
+<font color="#555555">011 </font>    Thread t2 = <font color="#0000AA">new</font> Listing2309();
+<font color="#555555">012 </font>    t1.start();
+<font color="#555555">013 </font>    t2.start();
+<font color="#555555">014 </font>  }
+<font color="#555555">015 </font>
+<font color="#555555">016 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> run()
+<font color="#555555">017 </font>  {
+<font color="#555555">018 </font>    <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">019 </font>      System.out.println(cnt++);
+<font color="#555555">020 </font>    }
+<font color="#555555">021 </font>  }
+<font color="#555555">022 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2309.java"><font color="#000055" size=-1>Listing2309.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 23.9: Zwei Z&auml;hlerthreads</i></p>
+
+<p>
+L&auml;&szlig;t man das Programm eine Weile laufen, k&ouml;nnte es
+beispielsweise zu folgender Ausgabe kommen: 
+<font color="#333300">
+<pre>
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+33    &lt;-- Nanu? Wo ist die 32?
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+32    &lt;-- Ach so, hier!
+58
+59
+</pre>
+</font>
+
+<p>
+Beide Prozesse greifen unsynchronisiert auf die gemeinsame Klassenvariable
+<font color="#000077"><tt>cnt</tt></font> zu. Da die Operation <font color="#000077"><tt>System.out.println(cnt++);</tt></font>
+nicht <i>atomar</i> ist, kommt es dazu, dass die Operation mitten
+in der Ausf&uuml;hrung unterbrochen wird und der Scheduler mit dem
+anderen Thread fortf&auml;hrt. Erst sp&auml;ter, wenn der unterbrochene
+Prozess wieder Rechenzeit erh&auml;lt, kann er seinen vor der Unterbrechung
+errechneten Z&auml;hlerwert von 32 ausgeben. Sein Pendant war in der
+Zwischenzeit allerdings bereits bis 56 fortgefahren. Um diese Art
+von Inkonsistenzen zu beseitigen, bedarf es der <i>Synchronisation</i>
+der beteiligten Prozesse. 
+
+<!-- Section -->
+
+<a name="monitore"></a>
+<h3>23.4.2 Monitore </h3>
+
+<p>
+Zur Synchronisation nebenl&auml;ufiger Prozesse hat Java das Konzept
+des <i>Monitors</i> implementiert. Ein Monitor ist die Kapselung eines
+<a name="ixa101484"><i>kritischen Bereichs</i></a> (also eines Programmteils,
+der nur von jeweils einem Prozess zur Zeit durchlaufen werden darf)
+mit Hilfe einer automatisch verwalteten Sperre. Diese Sperre wird
+beim Betreten des Monitors gesetzt und beim Verlassen wieder zur&uuml;ckgenommen.
+Ist sie beim Eintritt in den Monitor bereits von einem anderen Prozess
+gesetzt, so muss der aktuelle Prozess warten, bis der Konkurrent die
+Sperre freigegeben und den Monitor verlassen hat. 
+
+<p>
+Das Monitor-Konzept wird mit Hilfe des in die Sprache integrierten
+Schl&uuml;sselworts <a name="ixa101485"><a href="index_s.html#ixb100727"><font color=#000080><tt>synchronized</tt></font></a></a>
+realisiert. Durch <a href="index_s.html#ixb100727"><font color=#000080><tt>synchronized</tt></font></a>
+kann entweder eine komplette Methode oder ein Block innerhalb einer
+Methode gesch&uuml;tzt werden. Der Eintritt in den so deklarierten
+Monitor wird durch das Setzen einer Sperre auf einer Objektvariablen
+erreicht. Bezieht sich <a href="index_s.html#ixb100727"><font color=#000080><tt>synchronized</tt></font></a>
+auf eine komplette Methode, wird als Sperre der <a href="index_t.html#ixb100284"><font color=#000080><tt>this</tt></font></a>-Pointer
+verwendet, andernfalls ist eine Objektvariable explizit anzugeben.
+
+
+<!-- Section -->
+<a name="sectlevel4id023004002001"></a>
+<h4>Anwendung von synchronized auf einen Block von Anweisungen </h4>
+
+<p>
+Wir wollen uns diese Art der Verwendung an einem Beispiel ansehen,
+welches das oben demonstrierte Synchronisationsproblem l&ouml;st.
+Die naheliegende L&ouml;sung, die Anweisung <font color="#000077"><tt>System.out.println(cnt++);</tt></font>
+durch einen <a href="index_s.html#ixb100727"><font color=#000080><tt>synchronized</tt></font></a>-Block
+auf der Variablen <a href="index_t.html#ixb100284"><font color=#000080><tt>this</tt></font></a>
+zu synchronisieren, funktioniert leider nicht. Da der Zeiger <a href="index_t.html#ixb100284"><font color=#000080><tt>this</tt></font></a>
+f&uuml;r jeden der beiden Threads, die ja unterschiedliche Instanzen
+repr&auml;sentieren, neu vergeben wird, w&auml;re f&uuml;r jeden Thread
+der Eintritt in den Monitor grunds&auml;tzlich erlaubt. 
+
+<p>
+Stattdessen verwenden wir die (in <a href="k100286.html#dieklasseclass">Abschnitt 45.2.2</a>
+erl&auml;uterte) Methode <a name="ixa101486"><a href="index_g.html#ixb100792"><font color=#000080><tt>getClass</tt></font></a></a>,
+die uns ein Klassenobjekt beschafft (ein und dasselbe f&uuml;r alle
+Instanzen), mit dem wir die Klassenvariable <font color="#000077"><tt>cnt</tt></font>
+sch&uuml;tzen k&ouml;nnen: 
+<a name="listingid023010"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2310.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2310
+<font color="#555555">004 </font><font color="#0000AA">extends</font> Thread
+<font color="#555555">005 </font>{
+<font color="#555555">006 </font>  <font color="#0000AA">static</font> <font color="#006699">int</font> cnt = 0;
+<font color="#555555">007 </font>
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    Thread t1 = <font color="#0000AA">new</font> Listing2310();
+<font color="#555555">011 </font>    Thread t2 = <font color="#0000AA">new</font> Listing2310();
+<font color="#555555">012 </font>    t1.start();
+<font color="#555555">013 </font>    t2.start();
+<font color="#555555">014 </font>  }
+<font color="#555555">015 </font>
+<font color="#555555">016 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> run()
+<font color="#555555">017 </font>  {
+<font color="#555555">018 </font>    <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">019 </font>      <font color="#0000AA">synchronized</font> (getClass()) {
+<font color="#555555">020 </font>        System.out.println(cnt++);
+<font color="#555555">021 </font>      }
+<font color="#555555">022 </font>    }
+<font color="#555555">023 </font>  }
+<font color="#555555">024 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2310.java"><font color="#000055" size=-1>Listing2310.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 23.10: Synchronisation von Threads mit Klassenobjekten</i></p>
+
+<p>
+Nun werden alle Z&auml;hlerwerte in aufsteigender Reihenfolge ausgegeben.
+
+
+<!-- Section -->
+<a name="sectlevel4id023004002002"></a>
+<h4>Anwendung von synchronized auf eine Methode </h4>
+
+<p>
+Ein anderer Fall ist der, bei dem der Zugriff auf ein Objekt selbst
+synchronisiert werden muss, weil damit zu rechnen ist, dass mehr als
+ein Thread zur gleichen Zeit das Objekt verwenden will. 
+
+<p>
+Im Folgenden werden die potenziellen Probleme am Beispiel eines Z&auml;hlerobjekts
+erl&auml;utert, dessen Aufgabe es ist, einen internen Z&auml;hler
+zu kapseln, auf Anforderung den aktuellen Z&auml;hlerstand zu liefern
+und den internen Z&auml;hler zu inkrementieren. Hierbei handelt es
+sich um eine Aufgabe, die beispielsweise in der Datenbankprogrammierung
+sehr h&auml;ufig vorkommt, um Schl&uuml;sselnummern zu generieren.
+
+<p>
+In der Praxis wird das Synchronisationsproblem dadurch versch&auml;rft,
+dass die Verwendung des Z&auml;hlers einige vergleichsweise langsame
+Festplattenzugriffe erforderlich macht. In unserem Beispiel wird der
+Z&auml;hler von f&uuml;nf Threads verwendet. Die Langsamkeit und damit
+die Wahrscheinlichkeit, dass der Scheduler die Zugriffsoperation unterbricht,
+wird in unserem Beispiel durch eine Sequenz eingestreuter Flie&szlig;kommaoperationen
+erh&ouml;ht: 
+<a name="listingid023011"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2311.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">class</font> Counter2311
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#006699">int</font> cnt;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> Counter2311(<font color="#006699">int</font> cnt)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#006699">this</font>.cnt = cnt;
+<font color="#555555">010 </font>  }
+<font color="#555555">011 </font>
+<font color="#555555">012 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> nextNumber()
+<font color="#555555">013 </font>  {
+<font color="#555555">014 </font>    <font color="#006699">int</font> ret = cnt;
+<font color="#555555">015 </font>    <font color="#00AA00">//Hier erfolgen ein paar zeitaufw&auml;ndige Berechnungen, um</font>
+<font color="#555555">016 </font>    <font color="#00AA00">//so zu tun, als sei das Errechnen des Nachfolgez&auml;hlers</font>
+<font color="#555555">017 </font>    <font color="#00AA00">//eine langwierige Operation, die leicht durch den</font>
+<font color="#555555">018 </font>    <font color="#00AA00">//Scheduler unterbrochen werden kann.</font>
+<font color="#555555">019 </font>    <font color="#006699">double</font> x = 1.0, y, z;
+<font color="#555555">020 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i= 0; i &lt; 1000000; ++i) {
+<font color="#555555">021 </font>      x = Math.sin((x*i%35)*1.13);
+<font color="#555555">022 </font>      y = Math.log(x+10.0);
+<font color="#555555">023 </font>      z = Math.sqrt(x+y);
+<font color="#555555">024 </font>    }
+<font color="#555555">025 </font>    <font color="#00AA00">//Jetzt ist der Wert gefunden</font>
+<font color="#555555">026 </font>    cnt++;
+<font color="#555555">027 </font>    <font color="#0000AA">return</font> ret;
+<font color="#555555">028 </font>  }
+<font color="#555555">029 </font>}
+<font color="#555555">030 </font>
+<font color="#555555">031 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2311
+<font color="#555555">032 </font><font color="#0000AA">extends</font> Thread
+<font color="#555555">033 </font>{
+<font color="#555555">034 </font>  <font color="#0000AA">private</font> String name;
+<font color="#555555">035 </font>  <font color="#0000AA">private</font> Counter2311 counter;
+<font color="#555555">036 </font>
+<font color="#555555">037 </font>  <font color="#0000AA">public</font> Listing2311(String name, Counter2311 counter)
+<font color="#555555">038 </font>  {
+<font color="#555555">039 </font>    <font color="#006699">this</font>.name = name;
+<font color="#555555">040 </font>    <font color="#006699">this</font>.counter = counter;
+<font color="#555555">041 </font>  }
+<font color="#555555">042 </font>
+<font color="#555555">043 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">044 </font>  {
+<font color="#555555">045 </font>    Thread[] t = <font color="#0000AA">new</font> Thread[5];
+<font color="#555555">046 </font>    Counter2311 cnt = <font color="#0000AA">new</font> Counter2311(10);
+<font color="#555555">047 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; 5; ++i) {
+<font color="#555555">048 </font>      t[i] = <font color="#0000AA">new</font> Listing2311(<font color="#0000FF">"Thread-"</font>+i,cnt);
+<font color="#555555">049 </font>      t[i].start();
+<font color="#555555">050 </font>    }
+<font color="#555555">051 </font>  }
+<font color="#555555">052 </font>
+<font color="#555555">053 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> run()
+<font color="#555555">054 </font>  {
+<font color="#555555">055 </font>    <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">056 </font>      System.out.println(counter.nextNumber()+<font color="#0000FF">" for "</font>+name);
+<font color="#555555">057 </font>    }
+<font color="#555555">058 </font>  }
+<font color="#555555">059 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2311.java"><font color="#000055" size=-1>Listing2311.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 23.11: Eine unzureichend synchronisierte Z&auml;hlerklasse</i></p>
+
+<p>
+Das Ergebnis des Programms ist - wie nicht anders zu erwarten - schlecht,
+denn es werden sehr viele doppelte Schl&uuml;ssel produziert. Ein
+Beispiellauf brachte bereits in den ersten 15 Aufrufen 6 doppelte
+Z&auml;hlerwerte: 
+<font color="#333300">
+<pre>
+10 for Thread-2
+11 for Thread-4
+10 for Thread-0
+10 for Thread-1
+11 for Thread-2
+11 for Thread-3
+12 for Thread-4
+13 for Thread-0
+14 for Thread-1
+15 for Thread-2
+16 for Thread-3
+17 for Thread-4
+18 for Thread-0
+19 for Thread-1
+20 for Thread-2
+</pre>
+</font>
+
+<p>
+Auch hier gibt es eine einfache L&ouml;sung f&uuml;r das Synchronisationsproblem.
+Eine einfache Markierung der Methode <font color="#000077"><tt>nextNumber</tt></font>
+als <a href="index_s.html#ixb100727"><font color=#000080><tt>synchronized</tt></font></a>
+macht diese zu einem Monitor und sorgt daf&uuml;r, dass der komplette
+Code innerhalb der Methode als atomares Programmfragment behandelt
+wird. Eine Unterbrechung des kritischen Abschnitts durch einen anderen
+Thread ist dann nicht mehr m&ouml;glich: 
+<a name="listingid023012"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">synchronized</font> <font color="#006699">int</font> nextNumber()
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  <font color="#006699">int</font> ret = cnt;
+<font color="#555555">004 </font>  <font color="#00AA00">//Hier erfolgen ein paar zeitaufw&auml;ndige Berechnungen, um so</font>
+<font color="#555555">005 </font>  <font color="#00AA00">//zu tun, als sei das Errechnen des Nachfolgez&auml;hlerstandes</font>
+<font color="#555555">006 </font>  <font color="#00AA00">//eine langwierige Operation, die leicht durch den</font>
+<font color="#555555">007 </font>  <font color="#00AA00">//Scheduler unterbrochen werden kann.</font>
+<font color="#555555">008 </font>  <font color="#006699">double</font> x = 1.0, y, z;
+<font color="#555555">009 </font>  <font color="#0000AA">for</font> (<font color="#006699">int</font> i= 0; i &lt; 1000; ++i) {
+<font color="#555555">010 </font>    x = Math.sin((x*i%35)*1.13);
+<font color="#555555">011 </font>    y = Math.log(x+10.0);
+<font color="#555555">012 </font>    z = Math.sqrt(x+y);
+<font color="#555555">013 </font>  }
+<font color="#555555">014 </font>  <font color="#00AA00">//Jetzt ist der Wert gefunden</font>
+<font color="#555555">015 </font>  cnt++;
+<font color="#555555">016 </font>  <font color="#0000AA">return</font> ret;
+<font color="#555555">017 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 23.12: Synchronisieren der Z&auml;hlermethode</i></p>
+
+<p>
+Durch das <a href="index_s.html#ixb100727"><font color=#000080><tt>synchronized</tt></font></a>-Attribut
+wird beim Aufruf der Methode die Instanzvariable <a href="index_t.html#ixb100284"><font color=#000080><tt>this</tt></font></a>
+gesperrt und damit der Zugriff f&uuml;r andere Threads unm&ouml;glich
+gemacht. Erst nach Verlassen der Methode und Entsperren von <a href="index_t.html#ixb100284"><font color=#000080><tt>this</tt></font></a>
+kann <font color="#000077"><tt>nextNumber</tt></font> wieder von anderen
+Threads aufgerufen werden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Diese Art des Zugriffschutzes wird in Java von vielen Klassen verwendet,
+um ihre Methoden <i>thread-sicher</i> zu machen. Nach Aussage der
+Sprachspezifikation kann davon ausgegangen werden, dass die gesamte
+Java-Klassenbibliothek in diesem Sinne thread-sicher ist. Dies gilt
+allerdings nicht f&uuml;r die Swing-Klassen (siehe <a href="k100236.html#kapitelswinggrundlagen">Kapitel 36</a>).</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id023004003"></a>
+<h3>23.4.3 wait und notify </h3>
+
+<p>
+Neben dem Monitorkonzept stehen mit den Methoden <a name="ixa101487"><a href="index_w.html#ixb101123"><font color=#000080><tt>wait</tt></font></a></a>
+und <a name="ixa101488"><a href="index_n.html#ixb101127"><font color=#000080><tt>notify</tt></font></a></a>
+der Klasse <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+noch weitere Synchronisationsprimitive zur Verf&uuml;gung. Zus&auml;tzlich
+zu der bereits erw&auml;hnten Sperre, die einem Objekt zugeordnet
+ist, besitzt ein Objekt n&auml;mlich auch noch eine <a name="ixa101489"><i>Warteliste</i></a>.
+Dabei handelt es sich um eine (m&ouml;glicherweise leere) Menge von
+Threads, die vom Scheduler unterbrochen wurden und auf ein Ereignis
+warten, um fortgesetzt werden zu k&ouml;nnen. 
+
+<p>
+Sowohl <a href="index_w.html#ixb101123"><font color=#000080><tt>wait</tt></font></a>
+als auch <a href="index_n.html#ixb101127"><font color=#000080><tt>notify</tt></font></a>
+d&uuml;rfen nur aufgerufen werden, wenn das Objekt bereits gesperrt
+ist, also nur innerhalb eines <a href="index_s.html#ixb100727"><font color=#000080><tt>synchronized</tt></font></a>-Blocks
+f&uuml;r dieses Objekt. Ein Aufruf von <a href="index_w.html#ixb101123"><font color=#000080><tt>wait</tt></font></a>
+nimmt die bereits gew&auml;hrten Sperren (tempor&auml;r) zur&uuml;ck
+und stellt den Prozess, der den Aufruf von <a href="index_w.html#ixb101123"><font color=#000080><tt>wait</tt></font></a>
+verursachte, in die Warteliste des Objekts. Dadurch wird er unterbrochen
+und im Scheduler als <i>wartend</i> markiert. Ein Aufruf von <a href="index_n.html#ixb101127"><font color=#000080><tt>notify</tt></font></a>
+entfernt einen (beliebigen) Prozess aus der Warteliste des Objekts,
+stellt die (tempor&auml;r) aufgehobenen Sperren wieder her und f&uuml;hrt
+ihn dem normalen Scheduling zu. <a href="index_w.html#ixb101123"><font color=#000080><tt>wait</tt></font></a>
+und <a href="index_n.html#ixb101127"><font color=#000080><tt>notify</tt></font></a>
+sind damit f&uuml;r elementare Synchronisationsaufgaben geeignet,
+bei denen es weniger auf die Kommunikation als auf die Steuerung der
+zeitlichen Abl&auml;ufe ankommt. 
+
+<p>
+Das folgende Beispiel demonstriert den Einsatz von <a href="index_w.html#ixb101123"><font color=#000080><tt>wait</tt></font></a>
+und <a href="index_n.html#ixb101127"><font color=#000080><tt>notify</tt></font></a>
+an einem <a name="ixa101490"><i>Producer/Consumer-Beispiel</i></a>.
+Ein Prozess arbeitet dabei als Produzent, der Flie&szlig;kommazahlen
+&#187;herstellt&#171;, und ein anderer als Konsument, der die produzierten
+Daten verbraucht. Die Kommunikation zwischen beiden erfolgt &uuml;ber
+ein gemeinsam verwendetes <a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>-Objekt,
+das die produzierten Elemente zwischenspeichert und als Medium f&uuml;r
+die <a href="index_w.html#ixb101123"><font color=#000080><tt>wait</tt></font></a>-/<a href="index_n.html#ixb101127"><font color=#000080><tt>notify</tt></font></a>-Aufrufe
+dient: 
+<a name="listingid023013"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2313.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">class</font> Producer2313
+<font color="#555555">006 </font><font color="#0000AA">extends</font> Thread
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">private</font> Vector&lt;String&gt; v;
+<font color="#555555">009 </font>
+<font color="#555555">010 </font>  <font color="#0000AA">public</font> Producer2313(Vector&lt;String&gt; v)
+<font color="#555555">011 </font>  {
+<font color="#555555">012 </font>    <font color="#006699">this</font>.v = v;
+<font color="#555555">013 </font>  }
+<font color="#555555">014 </font>
+<font color="#555555">015 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> run()
+<font color="#555555">016 </font>  {
+<font color="#555555">017 </font>    String s;
+<font color="#555555">018 </font>
+<font color="#555555">019 </font>    <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">020 </font>      <font color="#0000AA">synchronized</font> (v) {
+<font color="#555555">021 </font>        s = <font color="#0000FF">"Wert "</font>+Math.random();
+<font color="#555555">022 </font>        v.addElement(s);
+<font color="#555555">023 </font>        System.out.println(<font color="#0000FF">"Produzent erzeugte "</font>+s);
+<font color="#555555">024 </font>        v.notify();
+<font color="#555555">025 </font>      }
+<font color="#555555">026 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">027 </font>        Thread.sleep((<font color="#006699">int</font>)(100*Math.random()));
+<font color="#555555">028 </font>      } <font color="#0000AA">catch</font> (InterruptedException e) {
+<font color="#555555">029 </font>        <font color="#00AA00">//nichts</font>
+<font color="#555555">030 </font>      }
+<font color="#555555">031 </font>    }
+<font color="#555555">032 </font>  }
+<font color="#555555">033 </font>}
+<font color="#555555">034 </font>
+<font color="#555555">035 </font><font color="#0000AA">class</font> Consumer2313
+<font color="#555555">036 </font><font color="#0000AA">extends</font> Thread
+<font color="#555555">037 </font>{
+<font color="#555555">038 </font>   <font color="#0000AA">private</font> Vector&lt;String&gt; v;
+<font color="#555555">039 </font>
+<font color="#555555">040 </font>   <font color="#0000AA">public</font> Consumer2313(Vector&lt;String&gt; v)
+<font color="#555555">041 </font>   {
+<font color="#555555">042 </font>      <font color="#006699">this</font>.v = v;
+<font color="#555555">043 </font>   }
+<font color="#555555">044 </font>
+<font color="#555555">045 </font>   <font color="#0000AA">public</font> <font color="#006699">void</font> run()
+<font color="#555555">046 </font>   {
+<font color="#555555">047 </font>      <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">048 </font>         <font color="#0000AA">synchronized</font> (v) {
+<font color="#555555">049 </font>            <font color="#0000AA">if</font> (v.size() &lt; 1) {
+<font color="#555555">050 </font>               <font color="#0000AA">try</font> {
+<font color="#555555">051 </font>                  v.wait();
+<font color="#555555">052 </font>               } <font color="#0000AA">catch</font> (InterruptedException e) {
+<font color="#555555">053 </font>                  <font color="#00AA00">//nichts</font>
+<font color="#555555">054 </font>               }
+<font color="#555555">055 </font>            }
+<font color="#555555">056 </font>            System.out.print(
+<font color="#555555">057 </font>              <font color="#0000FF">" Konsument fand "</font>+ v.elementAt(0)
+<font color="#555555">058 </font>            );
+<font color="#555555">059 </font>            v.removeElementAt(0);
+<font color="#555555">060 </font>            System.out.println(<font color="#0000FF">" (verbleiben: "</font>+v.size()+<font color="#0000FF">")"</font>);
+<font color="#555555">061 </font>         }
+<font color="#555555">062 </font>         <font color="#0000AA">try</font> {
+<font color="#555555">063 </font>            Thread.sleep((<font color="#006699">int</font>)(100*Math.random()));
+<font color="#555555">064 </font>         } <font color="#0000AA">catch</font> (InterruptedException e) {
+<font color="#555555">065 </font>            <font color="#00AA00">//nichts</font>
+<font color="#555555">066 </font>         }
+<font color="#555555">067 </font>      }
+<font color="#555555">068 </font>   }
+<font color="#555555">069 </font>}
+<font color="#555555">070 </font>
+<font color="#555555">071 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2313
+<font color="#555555">072 </font>{
+<font color="#555555">073 </font>   <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">074 </font>   {
+<font color="#555555">075 </font>      Vector&lt;String&gt; v = <font color="#0000AA">new</font> Vector&lt;String&gt;();
+<font color="#555555">076 </font>
+<font color="#555555">077 </font>      Producer2313 p = <font color="#0000AA">new</font> Producer2313(v);
+<font color="#555555">078 </font>      Consumer2313 c = <font color="#0000AA">new</font> Consumer2313(v);
+<font color="#555555">079 </font>      p.start();
+<font color="#555555">080 </font>      c.start();
+<font color="#555555">081 </font>   }
+<font color="#555555">082 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2313.java"><font color="#000055" size=-1>Listing2313.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 23.13: Ein Producer-/Consumer-Beispiel mit wait und notify</i></p>
+
+<p>
+Um die Arbeitsverteilung zwischen den Prozessen etwas interessanter
+zu gestalten, werden beide gezwungen, nach jedem Schritt eine kleine
+Pause einzulegen. Da die Wartezeit zuf&auml;llig ausgew&auml;hlt wird,
+kann es durchaus dazu kommen, dass der Produzent eine gr&ouml;&szlig;ere
+Anzahl an Elementen anh&auml;uft, die der Konsument noch nicht abgeholt
+hat. Der umgekehrte Fall ist nat&uuml;rlich nicht m&ouml;glich, da
+der Konsument warten muss, wenn keine Elemente verf&uuml;gbar sind.
+Eine Beispielsitzung k&ouml;nnte etwa so aussehen: 
+<font color="#333300">
+<pre>
+Produzent erzeugte Wert 0.09100924684649958
+ Konsument fand Wert 0.09100924684649958 (verbleiben: 0)
+Produzent erzeugte Wert 0.5429652807455857
+ Konsument fand Wert 0.5429652807455857 (verbleiben: 0)
+Produzent erzeugte Wert 0.6548096532111007
+ Konsument fand Wert 0.6548096532111007 (verbleiben: 0)
+Produzent erzeugte Wert 0.02311095955845288
+ Konsument fand Wert 0.02311095955845288 (verbleiben: 0)
+Produzent erzeugte Wert 0.6277057416210464
+ Konsument fand Wert 0.6277057416210464 (verbleiben: 0)
+Produzent erzeugte Wert 0.6965546173953919
+Produzent erzeugte Wert 0.6990053250441516
+Produzent erzeugte Wert 0.9874467815778902
+Produzent erzeugte Wert 0.12110075531692543
+Produzent erzeugte Wert 0.5957795111549329
+ Konsument fand Wert 0.6965546173953919 (verbleiben: 4)
+Produzent erzeugte Wert 0.019655027417308846
+ Konsument fand Wert 0.6990053250441516 (verbleiben: 4)
+ Konsument fand Wert 0.9874467815778902 (verbleiben: 3)
+Produzent erzeugte Wert 0.14247583735074354
+ Konsument fand Wert 0.12110075531692543 (verbleiben: 3)
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Durch eine konstante Pause nach jedem produzierten Element k&ouml;nnte
+der Produzent bewusst langsamer gemacht werden. Der schnellere Konsument
+w&uuml;rde dann einen Gro&szlig;teil seiner Zeit damit verbringen,
+festzustellen, dass keine Elemente verf&uuml;gbar sind. Zwar w&uuml;rde
+das Beispiel (in leicht modifizierter Form) auch ohne den Einsatz
+von <a href="index_w.html#ixb101123"><font color=#000080><tt>wait</tt></font></a>/<a href="index_n.html#ixb101127"><font color=#000080><tt>notify</tt></font></a>
+funktionieren. Durch ihre Verwendung aber ist der Konsumentenprozess
+nicht gezwungen, <i>aktiv</i> zu warten, sondern wird vom Produzenten
+benachrichtigt, wenn ein neues Element verf&uuml;gbar ist. Der Rechenzeitbedarf
+reduziert sich dadurch auf einen Bruchteil dessen, was andernfalls
+ben&ouml;tigt w&uuml;rde.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id023004004"></a>
+<h3>23.4.4 BlockingQueue </h3>
+
+<p>
+Seit Version 5 des JDK existieren eine Reihe weiterer Klassen im Multithreading-Umfeld.
+Sie liegen im Paket <a name="ixa101491"><a href="index_j.html#ixb101130"><font color=#000080><tt>java.util.concurrent</tt></font></a></a>
+und seinen Unterpaketen <a name="ixa101492"><a href="index_j.html#ixb101131"><font color=#000080><tt>java.util.concurrent.atomic</tt></font></a></a>
+und <a name="ixa101493"><a href="index_j.html#ixb101132"><font color=#000080><tt>java.util.concurrent.locks</tt></font></a></a>.
+Unter anderem befindet sich dort die Klasse <a name="ixa101494"><a href="index_l.html#ixb101133"><font color=#000080><tt>LinkedBlockingQueue</tt></font></a></a>,
+mit der das obige Beispiel kompakter geschrieben werden kann. Man
+kann sich die <a href="index_l.html#ixb101133"><font color=#000080><tt>LinkedBlockingQueue</tt></font></a>
+als eine Datenstruktur mit zwei Enden vorstellen - von der einen Seite
+werden Elemente eingef&uuml;gt, auf der anderen Seite werden sie herausgeholt.
+Die <a href="index_l.html#ixb101133"><font color=#000080><tt>LinkedBlockingQueue</tt></font></a>
+ist selbstverst&auml;ndlich threadsafe. Es gibt verschiedene Methoden
+zum Einf&uuml;gen und Herausholen von Objekten, die sich leicht unterschiedlich
+verhalten: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public boolean add(E e)
+
+public void put(E e)
+
+public boolean offer(E e)
+
+public E poll()
+
+public E peek()
+
+public E take()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/concurrent/LinkedBlockingQueue.html" onClick="this.href=getApiDoc('java.util.concurrent.LinkedBlockingQueue')"><font color="#660066" size=-1>java.util.concurrent.LinkedBlockingQueue</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa101495"><a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a></a>
+f&uuml;gen Sie ein Element in die Queue ein. Es wird eine <font color="#000077"><tt>IllegalStateException</tt></font>
+geworfen, wenn die Queue voll ist und keine Elemente mehr aufnehmen
+kann. <a name="ixa101496"><a href="index_o.html#ixb101134"><font color=#000080><tt>offer</tt></font></a></a>
+funktioniert wie <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>,
+jedoch wird keine Exception geworfen, sondern <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>
+zur&uuml;ckgegeben, wenn die Queue keine Elemente mehr aufnehmen kann.
+<a name="ixa101497"><a href="index_p.html#ixb101135"><font color=#000080><tt>poll</tt></font></a></a>
+liefert und l&ouml;scht das Element am Ende der Queue oder gibt <a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>
+zur&uuml;ck, wenn die Queue leer ist. <a name="ixa101498"><a href="index_p.html#ixb100704"><font color=#000080><tt>peek</tt></font></a></a>
+liefert das Element am Ende der Queue, ohne es zu entfernen. Ist die
+Queue leer, liefert sie <a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>
+zur&uuml;ck. <a name="ixa101499"><a href="index_t.html#ixb101136"><font color=#000080><tt>take</tt></font></a></a>
+funktioniert wie <a href="index_p.html#ixb101135"><font color=#000080><tt>poll</tt></font></a>,
+wartet aber, wenn die Queue leer ist, bis ein Element zur Verf&uuml;gung
+steht. 
+<a name="listingid023014"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2314.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.util.concurrent.LinkedBlockingQueue;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">class</font> Producer2314 <font color="#0000AA">extends</font> Thread
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">private</font> <font color="#0000AA">final</font> LinkedBlockingQueue&lt;String&gt; v;
+<font color="#555555">008 </font>
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> Producer2314(LinkedBlockingQueue&lt;String&gt; v)
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    <font color="#006699">this</font>.v = v;
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> run()
+<font color="#555555">015 </font>  {
+<font color="#555555">016 </font>    String s;
+<font color="#555555">017 </font>
+<font color="#555555">018 </font>    <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">019 </font>      s = <font color="#0000FF">"Wert "</font> + Math.random();
+<font color="#555555">020 </font>      v.add(s);
+<font color="#555555">021 </font>      System.out.println(<font color="#0000FF">"Produzent erzeugte "</font> + s);
+<font color="#555555">022 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">023 </font>        Thread.sleep((<font color="#006699">int</font>) (100 * Math.random()));
+<font color="#555555">024 </font>      }
+<font color="#555555">025 </font>      <font color="#0000AA">catch</font> (InterruptedException x) {
+<font color="#555555">026 </font>        <font color="#00AA00">// nichts</font>
+<font color="#555555">027 </font>      }
+<font color="#555555">028 </font>    }
+<font color="#555555">029 </font>  }
+<font color="#555555">030 </font>}
+<font color="#555555">031 </font>
+<font color="#555555">032 </font><font color="#0000AA">class</font> Consumer2314 <font color="#0000AA">extends</font> Thread
+<font color="#555555">033 </font>{
+<font color="#555555">034 </font>  <font color="#0000AA">private</font> <font color="#0000AA">final</font> LinkedBlockingQueue&lt;String&gt; v;
+<font color="#555555">035 </font>
+<font color="#555555">036 </font>  <font color="#0000AA">public</font> Consumer2314(LinkedBlockingQueue&lt;String&gt; v)
+<font color="#555555">037 </font>  {
+<font color="#555555">038 </font>    <font color="#006699">this</font>.v = v;
+<font color="#555555">039 </font>  }
+<font color="#555555">040 </font>
+<font color="#555555">041 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> run()
+<font color="#555555">042 </font>  {
+<font color="#555555">043 </font>    <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">044 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">045 </font>        String s = v.take();
+<font color="#555555">046 </font>        System.out.print(<font color="#0000FF">" Konsument fand "</font> + s);
+<font color="#555555">047 </font>        System.out.println(<font color="#0000FF">" (verbleiben: "</font> + v.size() + <font color="#0000FF">")"</font>);
+<font color="#555555">048 </font>        Thread.sleep((<font color="#006699">int</font>) (100 * Math.random()));
+<font color="#555555">049 </font>      }
+<font color="#555555">050 </font>      <font color="#0000AA">catch</font> (InterruptedException e) {
+<font color="#555555">051 </font>        <font color="#00AA00">// nichts</font>
+<font color="#555555">052 </font>      }
+<font color="#555555">053 </font>    }
+<font color="#555555">054 </font>  }
+<font color="#555555">055 </font>}
+<font color="#555555">056 </font>
+<font color="#555555">057 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2314
+<font color="#555555">058 </font>{
+<font color="#555555">059 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">060 </font>  {
+<font color="#555555">061 </font>    LinkedBlockingQueue&lt;String&gt; v = 
+<font color="#555555">062 </font>      <font color="#0000AA">new</font> LinkedBlockingQueue&lt;String&gt;();
+<font color="#555555">063 </font>
+<font color="#555555">064 </font>    Producer2314 p = <font color="#0000AA">new</font> Producer2314(v);
+<font color="#555555">065 </font>    Consumer2314 c = <font color="#0000AA">new</font> Consumer2314(v);
+<font color="#555555">066 </font>    p.start();
+<font color="#555555">067 </font>    c.start();
+<font color="#555555">068 </font>  }
+<font color="#555555">069 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2314.java"><font color="#000055" size=-1>Listing2314.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 23.14: Ein Producer-/Consumer-Beispiel mit LinkedBlockingQueue</i></p>
+
+
+<!-- Section -->
+<a name="pipedthreads"></a>
+<h3>23.4.5 PipedInputStream und PipedOutputStream </h3>
+
+<p>
+Sollen wie im vorigen Beispiel zwei Threads so miteinander verbunden
+werden, dass einer von beiden Daten erzeugt, die der andere verarbeitet,
+gibt es die M&ouml;glichkeit, beide mit Hilfe einer <a name="ixa101500"><i>Pipe</i></a>
+zu synchronisieren. Dabei werden die beiden Threads &uuml;ber einen
+ByteStream miteinander verbunden, der von einem Thread geschrieben
+und von dem anderen gelesen wird. 
+
+<p>
+Dieses Piping-Konzept wird in Java durch die Klassen <a name="ixa101501"><a href="index_p.html#ixb100976"><font color=#000080><tt>PipedInputStream</tt></font></a></a>
+und <a name="ixa101502"><a href="index_p.html#ixb100977"><font color=#000080><tt>PipedOutputStream</tt></font></a></a>
+realisiert. Beide Klassen werden immer paarweise und immer in getrennten
+Threads verwendet. Daten, die der eine Thread in den <a href="index_p.html#ixb100977"><font color=#000080><tt>PipedOutputStream</tt></font></a>
+schreibt, kann der andere aus dem angebundenen <a href="index_p.html#ixb100976"><font color=#000080><tt>PipedInputStream</tt></font></a>
+lesen. 
+
+<p>
+Da die Kommunikation <i>gepuffert</i> erfolgt, kann der schreibende
+Thread in einem gewissen Rahmen mehr Daten produzieren, als der lesende
+verarbeiten kann. Ist der Puffer voll, wird der schreibende Thread
+angehalten, bis der lesende ausreichend Zeichen gelesen hat. Greift
+der lesende Thread auf eine Pipe zu, die nicht gen&uuml;gend Daten
+enth&auml;lt, muss er warten, bis ein anderer Thread die erforderliche
+Anzahl an Bytes hineingeschrieben hat. 
+
+<p>
+Wir k&ouml;nnen das Producer-/Consumer-Beispiel unter Verwendung von
+<a href="index_p.html#ixb100976"><font color=#000080><tt>PipedInputStream</tt></font></a>
+und <a href="index_p.html#ixb100977"><font color=#000080><tt>PipedOutputStream</tt></font></a>
+vereinfachen, denn die gesamte Synchronisationsarbeit wird automatisch
+beim Aufruf der <a href="index_r.html#ixb100989"><font color=#000080><tt>read</tt></font></a>-
+und <a href="index_w.html#ixb100967"><font color=#000080><tt>write</tt></font></a>-Methoden
+erledigt. 
+
+<p>
+Das folgende Listing zeigt zwei Threads, die &uuml;ber eine Pipe einzelne
+Datenbytes miteinander austauschen. Die Pipe wird vom Hauptprogramm
+erzeugt, indem zun&auml;chst der <a href="index_p.html#ixb100976"><font color=#000080><tt>PipedInputStream</tt></font></a>
+angelegt und an den danach erzeugten <a href="index_p.html#ixb100977"><font color=#000080><tt>PipedOutputStream</tt></font></a>
+&uuml;bergeben wird. Alternativ h&auml;tte die Verbindung auch hergestellt
+werden k&ouml;nnen, indem einer der beiden Streams an die <a name="ixa101503"><a href="index_c.html#ixb101138"><font color=#000080><tt>connect</tt></font></a></a>-Methode
+des anderen &uuml;bergeben worden w&auml;re. 
+<a name="listingid023015"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2315.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">class</font> Producer2315
+<font color="#555555">006 </font><font color="#0000AA">extends</font> Thread
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">private</font> PipedOutputStream pipe;
+<font color="#555555">009 </font>
+<font color="#555555">010 </font>  <font color="#0000AA">public</font> Producer2315(PipedOutputStream pipe)
+<font color="#555555">011 </font>  {
+<font color="#555555">012 </font>    <font color="#006699">this</font>.pipe = pipe;
+<font color="#555555">013 </font>  }
+<font color="#555555">014 </font>
+<font color="#555555">015 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> run()
+<font color="#555555">016 </font>  {
+<font color="#555555">017 </font>    <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">018 </font>      <font color="#006699">byte</font> b = (<font color="#006699">byte</font>)(Math.random() * 128);
+<font color="#555555">019 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">020 </font>        pipe.write(b);
+<font color="#555555">021 </font>        System.out.println(<font color="#0000FF">"Produzent erzeugte "</font> + b);
+<font color="#555555">022 </font>      } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">023 </font>        System.err.println(e.toString());
+<font color="#555555">024 </font>      }
+<font color="#555555">025 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">026 </font>        Thread.sleep((<font color="#006699">int</font>)(100*Math.random()));
+<font color="#555555">027 </font>      } <font color="#0000AA">catch</font> (InterruptedException e) {
+<font color="#555555">028 </font>        <font color="#00AA00">//nichts</font>
+<font color="#555555">029 </font>      }
+<font color="#555555">030 </font>    }
+<font color="#555555">031 </font>  }
+<font color="#555555">032 </font>}
+<font color="#555555">033 </font>
+<font color="#555555">034 </font><font color="#0000AA">class</font> Consumer2315
+<font color="#555555">035 </font><font color="#0000AA">extends</font> Thread
+<font color="#555555">036 </font>{
+<font color="#555555">037 </font>  <font color="#0000AA">private</font> PipedInputStream pipe;
+<font color="#555555">038 </font>
+<font color="#555555">039 </font>  <font color="#0000AA">public</font> Consumer2315(PipedInputStream pipe)
+<font color="#555555">040 </font>  {
+<font color="#555555">041 </font>    <font color="#006699">this</font>.pipe = pipe;
+<font color="#555555">042 </font>  }
+<font color="#555555">043 </font>
+<font color="#555555">044 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> run()
+<font color="#555555">045 </font>  {
+<font color="#555555">046 </font>    <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">047 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">048 </font>        <font color="#006699">byte</font> b = (<font color="#006699">byte</font>)pipe.read();
+<font color="#555555">049 </font>        System.out.println(<font color="#0000FF">" Konsument fand "</font> + b);
+<font color="#555555">050 </font>      } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">051 </font>        System.err.println(e.toString());
+<font color="#555555">052 </font>      }
+<font color="#555555">053 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">054 </font>        Thread.sleep((<font color="#006699">int</font>)(100*Math.random()));
+<font color="#555555">055 </font>      } <font color="#0000AA">catch</font> (InterruptedException e) {
+<font color="#555555">056 </font>        <font color="#00AA00">//nichts</font>
+<font color="#555555">057 </font>      }
+<font color="#555555">058 </font>    }
+<font color="#555555">059 </font>  }
+<font color="#555555">060 </font>}
+<font color="#555555">061 </font>
+<font color="#555555">062 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2315
+<font color="#555555">063 </font>{
+<font color="#555555">064 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">065 </font>  <font color="#0000AA">throws</font> Exception
+<font color="#555555">066 </font>  {
+<font color="#555555">067 </font>    PipedInputStream inPipe = <font color="#0000AA">new</font> PipedInputStream();
+<font color="#555555">068 </font>    PipedOutputStream outPipe = <font color="#0000AA">new</font> PipedOutputStream(inPipe);
+<font color="#555555">069 </font>    Producer2315 p = <font color="#0000AA">new</font> Producer2315(outPipe);
+<font color="#555555">070 </font>    Consumer2315 c = <font color="#0000AA">new</font> Consumer2315(inPipe);
+<font color="#555555">071 </font>    p.start();
+<font color="#555555">072 </font>    c.start();
+<font color="#555555">073 </font>  }
+<font color="#555555">074 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2315.java"><font color="#000055" size=-1>Listing2315.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 23.15: Das Producer-/Consumer-Beispiel mit einer Pipe</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Piping gibt es auch f&uuml;r zeichenbasierte Kommunikation. Dazu werden
+die Klassen <a name="ixa101504"><a href="index_p.html#ixb100974"><font color=#000080><tt>PipedWriter</tt></font></a></a>
+und <a name="ixa101505"><a href="index_p.html#ixb100975"><font color=#000080><tt>PipedReader</tt></font></a></a>
+verwendet. Bis auf den Unterschied, dass Zeichen anstelle von Bytes
+ausgetauscht werden, entspricht ihre Arbeitsweise genau den hier vorgestellten
+Byte-Pipes.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100150.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100153.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100155.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100157.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

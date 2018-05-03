@@ -1,0 +1,226 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100143.html;106,k100147.html;107,k100149.html;108,k100150.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100143.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100147.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100149.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100150.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 22 - Datei- und Verzeichnis-Handling
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id022005"></a>
+<h2>22.5 Tempor&auml;re Dateien und Lockdateien </h2>
+<hr>
+<ul>
+<li><a href="k100148.html#sectlevel2id022005">22.5 Tempor&auml;re Dateien und Lockdateien</a>
+<ul>
+<li><a href="k100148.html#sectlevel3id022005001">22.5.1 Tempor&auml;re Dateien</a>
+<li><a href="k100148.html#sectlevel3id022005002">22.5.2 Lockdateien</a>
+</ul>
+</ul>
+<hr>
+
+<p>
+Das Anlegen von Dateien wurde ja bereits in fr&uuml;heren Abschnitten
+behandelt. Hier soll es noch einmal erw&auml;hnt werden, weil die
+Klasse <a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a>
+zus&auml;tzlich die M&ouml;glichkeit bietet, tempor&auml;re Dateien
+und Lockdateien anzulegen. Beide Varianten haben ihre Anwendungen
+und wir wollen sie im Folgenden kurz vorstellen. 
+
+<!-- Section -->
+
+<a name="sectlevel3id022005001"></a>
+<h3>22.5.1 <a name="ixa101451">Tempor&auml;re Dateien</a></h3>
+
+<p>
+Zum Anlegen von tempor&auml;ren Dateien stehen zwei Varianten der
+Methode <a name="ixa101452"><a href="index_c.html#ixb101104"><font color=#000080><tt>createTempFile</tt></font></a></a>
+zur Verf&uuml;gung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static File createTempFile(
+  String prefix, String suffix, File dir
+)
+  throws IOException
+
+public static File createTempFile(
+  String prefix, String suffix
+)
+  throws IOException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/File.html" onClick="this.href=getApiDoc('java.io.File')"><font color="#660066" size=-1>java.io.File</font></a></td>
+</tr>
+</table>
+
+<p>
+In beiden F&auml;llen ist es erforderlich, einen Pr&auml;fix- und
+einen Suffix-String zu spezifizieren. Als Pr&auml;fix sollte normalerweise
+ein kurzer String von drei oder vier Buchstaben verwendet werden,
+der den Typ der tempor&auml;ren Datei identifiziert. Der Suffix wird
+als Dateierweiterung verwendet, er k&ouml;nnte beispielsweise <font color="#660099">.tmp</font>
+oder <font color="#660099">.$$$</font> sein. <a href="index_c.html#ixb101104"><font color=#000080><tt>createTempFile</tt></font></a>
+f&uuml;llt den Platz zwischen Pr&auml;fix und Erweiterung mit einer
+Zeichenkette, so dass der resultierende Dateiname eindeutig ist. Wird
+kein weiterer Parameter angegeben, legt die Methode eine neue tempor&auml;re
+Datei in einem systemspezifischen Verzeichnis an (typischerweise <font color="#660099">\tmp</font>
+oder <font color="#660099">\temp</font>). Optional kann als drittes
+Argument ein <a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a>-Objekt
+&uuml;bergeben werden, das ein alternatives Verzeichnis f&uuml;r die
+tempor&auml;re Datei angibt. 
+
+<p>
+Das folgende Listing zeigt ein einfaches Beispiel f&uuml;r die Anwendung
+der Methode <a href="index_c.html#ixb101104"><font color=#000080><tt>createTempFile</tt></font></a>:
+<a name="listingid022007"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2207.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2207
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">010 </font>      File tmp = File.createTempFile(<font color="#0000FF">"xyz"</font>, <font color="#0000FF">".tmp"</font>, <font color="#006699">null</font>);
+<font color="#555555">011 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">012 </font>      System.out.println(e.toString());
+<font color="#555555">013 </font>    }
+<font color="#555555">014 </font>  }
+<font color="#555555">015 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2207.java"><font color="#000055" size=-1>Listing2207.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 22.7: Anlegen einer tempor&auml;ren Datei</i></p>
+
+<p>
+Auf dem Testrechner wurden bei zweimaligem Aufruf des Programms im
+Verzeichnis <font color="#660099">c:\tmp</font> die beiden folgenden
+Dateien angelegt: 
+<font color="#000077">
+<pre>
+xyz11626.tmp
+xyz39639.tmp
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="sectlevel3id022005002"></a>
+<h3>22.5.2 <a name="ixa101453">Lockdateien</a></h3>
+
+<p>
+Mit den Methoden <a name="ixa101454"><a href="index_c.html#ixb101106"><font color=#000080><tt>createNewFile</tt></font></a></a>
+und <a name="ixa101455"><a href="index_d.html#ixb101107"><font color=#000080><tt>deleteOnExit</tt></font></a></a>
+bietet das JDK seit der Version 1.2 nun eine rudiment&auml;re M&ouml;glichkeit,
+diese F&auml;higkeiten zu realisieren: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public boolean createNewFile()
+  throws IOException
+
+public void deleteOnExit()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/File.html" onClick="this.href=getApiDoc('java.io.File')"><font color="#660066" size=-1>java.io.File</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_c.html#ixb101106"><font color=#000080><tt>createNewFile</tt></font></a>
+erzeugt eine neue Datei aus dem Dateinamen des zugeh&ouml;rigen <a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a>-Objekts.
+Die Datei wird aber nur dann erzeugt, wenn sie bisher noch nicht vorhanden
+war. War sie dagegen bereits vorhanden, schl&auml;gt der Aufruf fehl
+und liefert <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>
+als R&uuml;ckgabewert. Bei Erfolg wird die Datei angelegt und <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+zur&uuml;ckgegeben. Das JDK garantiert, dass die beiden erforderlichen
+Teiloperationen <i>Feststellen, ob die Datei bereits existiert</i>
+und <i>Anlegen einer neuen Datei</i> auf der Ebene des kompletten
+Dateisystems atomar ablaufen, also nicht unterbrechbar sind. Durch
+Aufruf von <a href="index_d.html#ixb101107"><font color=#000080><tt>deleteOnExit</tt></font></a>
+kann sichergestellt werden, dass die Datei beim Beenden der VM in
+jedem Fall gel&ouml;scht wird, selbst wenn das Ende durch eine Ausnahme
+ausgel&ouml;st wurde. 
+
+<p>
+Beide Methoden k&ouml;nnen nun auf unterschiedliche Weise zur Realisierung
+eines Locking-Systems verwendet werden. So kann beispielsweise der
+Name der Datei als zu sperrende Ressource und die Datei selbst als
+eigentliche Sperre angesehen werden. Dann w&uuml;rde es f&uuml;r jede
+zu sperrende Ressource eine eigene Sperrdatei geben (was bei einer
+gro&szlig;en Anzahl von potenziellen Ressourcen sehr viele einzelne
+Dateien bedeuten w&uuml;rde). Oder es ist denkbar, dass alle Sperrinformationen
+in einer einzigen Datei gehalten werden und nur der Zugriff auf diese
+Datei mit Hilfe einer Sperrdatei gesichert wird. Diese w&uuml;rde
+dann mit <a href="index_c.html#ixb101106"><font color=#000080><tt>createNewFile</tt></font></a>
+in der Art eines Semaphors angelegt werden, um die Sperrdatei zu betreten,
+und nach Ende der Bearbeitung wieder entfernt werden. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100143.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100147.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100149.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100150.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

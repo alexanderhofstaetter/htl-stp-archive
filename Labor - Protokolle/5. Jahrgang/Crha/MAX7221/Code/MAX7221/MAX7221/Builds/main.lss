@@ -1,0 +1,261 @@
+
+Builds/main.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00800100  00000178  000001ec  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         00000178  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .stab         00000684  00000000  00000000  000001ec  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  3 .stabstr      00000c8b  00000000  00000000  00000870  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .comment      00000011  00000000  00000000  000014fb  2**0
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000020  00000000  00000000  00001510  2**3
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   000000be  00000000  00000000  00001530  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000014  00000000  00000000  000015ee  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   00000058  00000000  00000000  00001602  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 56 00 	jmp	0xac	; 0xac <__ctors_end>
+   4:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+   8:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+   c:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  10:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  14:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  18:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  1c:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  20:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  24:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  28:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  2c:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  30:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  34:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  38:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  3c:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  40:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  44:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  48:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  4c:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  50:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  54:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  58:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  5c:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  60:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  64:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  68:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  6c:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  70:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  74:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  78:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  7c:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  80:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  84:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  88:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  8c:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  90:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  94:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  98:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  9c:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  a0:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  a4:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  a8:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+
+000000ac <__ctors_end>:
+  ac:	11 24       	eor	r1, r1
+  ae:	1f be       	out	0x3f, r1	; 63
+  b0:	cf ef       	ldi	r28, 0xFF	; 255
+  b2:	da e0       	ldi	r29, 0x0A	; 10
+  b4:	de bf       	out	0x3e, r29	; 62
+  b6:	cd bf       	out	0x3d, r28	; 61
+  b8:	0e 94 81 00 	call	0x102	; 0x102 <main>
+  bc:	0c 94 ba 00 	jmp	0x174	; 0x174 <_exit>
+
+000000c0 <__bad_interrupt>:
+  c0:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+000000c4 <sende>:
+}
+void sende (unsigned char reg_adr, unsigned char daten)
+{
+    unsigned char Maske = 0x80; // 1000 0000
+    unsigned char i; // Zählvariable
+    CS_0;
+  c4:	2a 98       	cbi	0x05, 2	; 5
+    CLK_0; // Start serielle Datenübertragung
+  c6:	29 98       	cbi	0x05, 1	; 5
+  c8:	98 e0       	ldi	r25, 0x08	; 8
+        }
+    }
+}
+void sende (unsigned char reg_adr, unsigned char daten)
+{
+    unsigned char Maske = 0x80; // 1000 0000
+  ca:	20 e8       	ldi	r18, 0x80	; 128
+    unsigned char i; // Zählvariable
+    CS_0;
+    CLK_0; // Start serielle Datenübertragung
+    for(i=1; i<=8; i++) // Schleife zur Ausgabe der 8 Adress-Bits
+    {
+        if(reg_adr & Maske) {DIN_1;} //Parallel => Serienwandlung
+  cc:	32 2f       	mov	r19, r18
+  ce:	38 23       	and	r19, r24
+  d0:	11 f0       	breq	.+4      	; 0xd6 <sende+0x12>
+  d2:	28 9a       	sbi	0x05, 0	; 5
+  d4:	01 c0       	rjmp	.+2      	; 0xd8 <sende+0x14>
+        else {DIN_0;}
+  d6:	28 98       	cbi	0x05, 0	; 5
+        CLK_1; //CLK ausgeben
+  d8:	29 9a       	sbi	0x05, 1	; 5
+        CLK_0;
+  da:	29 98       	cbi	0x05, 1	; 5
+        Maske = Maske>>1; // 1 Bit nach rechts verschieben
+  dc:	26 95       	lsr	r18
+  de:	91 50       	subi	r25, 0x01	; 1
+{
+    unsigned char Maske = 0x80; // 1000 0000
+    unsigned char i; // Zählvariable
+    CS_0;
+    CLK_0; // Start serielle Datenübertragung
+    for(i=1; i<=8; i++) // Schleife zur Ausgabe der 8 Adress-Bits
+  e0:	a9 f7       	brne	.-22     	; 0xcc <sende+0x8>
+  e2:	88 e0       	ldi	r24, 0x08	; 8
+  e4:	90 e8       	ldi	r25, 0x80	; 128
+        Maske = Maske>>1; // 1 Bit nach rechts verschieben
+    }
+    Maske = 0x80;
+    for(i=1; i<=8; i++) // Schleif zur Ausgabe der 8 Daten-Bits
+    {
+        if(daten & Maske){ DIN_1;} // Parallel => Serienumwandlung
+  e6:	29 2f       	mov	r18, r25
+  e8:	26 23       	and	r18, r22
+  ea:	11 f0       	breq	.+4      	; 0xf0 <sende+0x2c>
+  ec:	28 9a       	sbi	0x05, 0	; 5
+  ee:	01 c0       	rjmp	.+2      	; 0xf2 <sende+0x2e>
+        else {DIN_0;}
+  f0:	28 98       	cbi	0x05, 0	; 5
+        CLK_1;
+  f2:	29 9a       	sbi	0x05, 1	; 5
+        CLK_0;
+  f4:	29 98       	cbi	0x05, 1	; 5
+        Maske = Maske>>1; // Maske um 1 Bit nach rechts verschieben
+  f6:	96 95       	lsr	r25
+  f8:	81 50       	subi	r24, 0x01	; 1
+        CLK_1; //CLK ausgeben
+        CLK_0;
+        Maske = Maske>>1; // 1 Bit nach rechts verschieben
+    }
+    Maske = 0x80;
+    for(i=1; i<=8; i++) // Schleif zur Ausgabe der 8 Daten-Bits
+  fa:	a9 f7       	brne	.-22     	; 0xe6 <sende+0x22>
+        else {DIN_0;}
+        CLK_1;
+        CLK_0;
+        Maske = Maske>>1; // Maske um 1 Bit nach rechts verschieben
+    }
+    DIN_0; // Serielle Datenleitung auf 0
+  fc:	28 98       	cbi	0x05, 0	; 5
+    CS_1; // Übernahme der Adr.- und Daten-Bits
+  fe:	2a 9a       	sbi	0x05, 2	; 5
+ 100:	08 95       	ret
+
+00000102 <main>:
+#define CS_0 PORTB=PORTB&~(1<<PB2); //CS = 0
+#define CS_1 PORTB=PORTB|(1<<PB2); //CS = 1
+void sende (unsigned char reg_adr, unsigned char daten);
+int main(void)
+{
+    CLKPR = 0x80; //Ändern des internen CLK-Prescalers
+ 102:	80 e8       	ldi	r24, 0x80	; 128
+ 104:	80 93 61 00 	sts	0x0061, r24
+    CLKPR = 0x02; //16 Mhz :1 = 8 MHz
+ 108:	82 e0       	ldi	r24, 0x02	; 2
+ 10a:	80 93 61 00 	sts	0x0061, r24
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 10e:	2f ef       	ldi	r18, 0xFF	; 255
+ 110:	84 e3       	ldi	r24, 0x34	; 52
+ 112:	9c e0       	ldi	r25, 0x0C	; 12
+ 114:	21 50       	subi	r18, 0x01	; 1
+ 116:	80 40       	sbci	r24, 0x00	; 0
+ 118:	90 40       	sbci	r25, 0x00	; 0
+ 11a:	e1 f7       	brne	.-8      	; 0x114 <main+0x12>
+ 11c:	00 c0       	rjmp	.+0      	; 0x11e <main+0x1c>
+ 11e:	00 00       	nop
+    _delay_ms(1000);
+    ///////// μC Init. für DIN, CLK, CS /////////////////////////
+    DDRB = DDRB|(1<<DDB0)|(1<<DDB1)|(1<<DDB2); //DIN, CLK und CS als Output
+ 120:	84 b1       	in	r24, 0x04	; 4
+ 122:	87 60       	ori	r24, 0x07	; 7
+ 124:	84 b9       	out	0x04, r24	; 4
+    ///////// Initialisierung des MAX7221 /////////////////////////
+    sende (0x0C,0x01); // Shut Down - Normal Operation
+ 126:	61 e0       	ldi	r22, 0x01	; 1
+ 128:	8c e0       	ldi	r24, 0x0C	; 12
+ 12a:	0e 94 62 00 	call	0xc4	; 0xc4 <sende>
+    sende (0x0A,0xFF); // Intensity maximal
+ 12e:	6f ef       	ldi	r22, 0xFF	; 255
+ 130:	8a e0       	ldi	r24, 0x0A	; 10
+ 132:	0e 94 62 00 	call	0xc4	; 0xc4 <sende>
+    sende (0x0B,0x01); // LED Display mit 8 Stellen
+ 136:	61 e0       	ldi	r22, 0x01	; 1
+ 138:	8b e0       	ldi	r24, 0x0B	; 11
+ 13a:	0e 94 62 00 	call	0xc4	; 0xc4 <sende>
+    sende (0x09,0xFF); // BCD-B Codierung für alle 8 Stellen
+ 13e:	6f ef       	ldi	r22, 0xFF	; 255
+ 140:	89 e0       	ldi	r24, 0x09	; 9
+ 142:	0e 94 62 00 	call	0xc4	; 0xc4 <sende>
+    //sende (0x0F,0xFF); // Display Test
+    ////////// Ausgabe von 7 6 5 4 3 2 1 0 am Display ////////////
+    sende (0x01,0x00); // Ausgabe von 0
+ 146:	60 e0       	ldi	r22, 0x00	; 0
+ 148:	81 e0       	ldi	r24, 0x01	; 1
+ 14a:	0e 94 62 00 	call	0xc4	; 0xc4 <sende>
+    char i;
+    while(1)
+    {
+        for(i = 0;i < 10;i++)
+ 14e:	c0 e0       	ldi	r28, 0x00	; 0
+        {
+            sende (0x01,i+0x80); // Ausgabe von 0
+ 150:	60 e8       	ldi	r22, 0x80	; 128
+ 152:	6c 0f       	add	r22, r28
+ 154:	81 e0       	ldi	r24, 0x01	; 1
+ 156:	0e 94 62 00 	call	0xc4	; 0xc4 <sende>
+ 15a:	2f ef       	ldi	r18, 0xFF	; 255
+ 15c:	84 e3       	ldi	r24, 0x34	; 52
+ 15e:	9c e0       	ldi	r25, 0x0C	; 12
+ 160:	21 50       	subi	r18, 0x01	; 1
+ 162:	80 40       	sbci	r24, 0x00	; 0
+ 164:	90 40       	sbci	r25, 0x00	; 0
+ 166:	e1 f7       	brne	.-8      	; 0x160 <main+0x5e>
+ 168:	00 c0       	rjmp	.+0      	; 0x16a <main+0x68>
+ 16a:	00 00       	nop
+    ////////// Ausgabe von 7 6 5 4 3 2 1 0 am Display ////////////
+    sende (0x01,0x00); // Ausgabe von 0
+    char i;
+    while(1)
+    {
+        for(i = 0;i < 10;i++)
+ 16c:	cf 5f       	subi	r28, 0xFF	; 255
+ 16e:	ca 30       	cpi	r28, 0x0A	; 10
+ 170:	78 f3       	brcs	.-34     	; 0x150 <main+0x4e>
+ 172:	ed cf       	rjmp	.-38     	; 0x14e <main+0x4c>
+
+00000174 <_exit>:
+ 174:	f8 94       	cli
+
+00000176 <__stop_program>:
+ 176:	ff cf       	rjmp	.-2      	; 0x176 <__stop_program>

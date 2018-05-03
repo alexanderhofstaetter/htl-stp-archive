@@ -1,0 +1,415 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100163.html;106,k100165.html;107,k100167.html;108,k100168.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100163.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100165.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100167.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100168.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 25 - Textausgabe
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id025003"></a>
+<h2>25.3 Eigenschaften von Schriftarten </h2>
+<hr>
+<ul>
+<li><a href="k100166.html#sectlevel2id025003">25.3 Eigenschaften von Schriftarten</a>
+<ul>
+<li><a href="k100166.html#sectlevel3id025003001">25.3.1 Font-Informationen</a>
+<li><a href="k100166.html#sectlevel3id025003002">25.3.2 Font-Metriken</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id025003001"></a>
+<h3>25.3.1 <a name="ixa101601">Font-Informationen</a></h3>
+
+<p>
+Die Klasse <a href="index_f.html#ixb101206"><font color=#000080><tt>Font</tt></font></a>
+besitzt Methoden, um Informationen &uuml;ber den aktuellen Font zu
+gewinnen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public String getFamily()
+public int getStyle()
+public int getSize()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Font.html" onClick="this.href=getApiDoc('java.awt.Font')"><font color="#660066" size=-1>java.awt.Font</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa101602"><a href="index_g.html#ixb101225"><font color=#000080><tt>getFamily</tt></font></a></a>
+liefert den systemspezifischen Namen eines Fonts, <a name="ixa101603"><a href="index_g.html#ixb101226"><font color=#000080><tt>getStyle</tt></font></a></a>
+den Style-Parameter und <a name="ixa101604"><a href="index_g.html#ixb101203"><font color=#000080><tt>getSize</tt></font></a></a>
+die Gr&ouml;&szlig;e des Fonts. Auf diese Weise l&auml;sst sich ein
+neues Font-Objekt als Variation eines bestehenden Fonts erzeugen.
+Das folgende Beispiel zeigt eine <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>-Methode,
+die den zur Anzeige verwendeten Font bei jedem Aufruf um 1 Punkt vergr&ouml;&szlig;ert:
+<a name="listingid025004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* SchriftGroesser.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  Font font = getFont();
+<font color="#555555">006 </font>
+<font color="#555555">007 </font>  <font color="#0000AA">if</font> (font.getSize() &lt;= 64) {
+<font color="#555555">008 </font>    setFont(
+<font color="#555555">009 </font>      <font color="#0000AA">new</font> Font(
+<font color="#555555">010 </font>        font.getFamily(),
+<font color="#555555">011 </font>        font.getStyle(),
+<font color="#555555">012 </font>        font.getSize() + 1
+<font color="#555555">013 </font>      )
+<font color="#555555">014 </font>    );
+<font color="#555555">015 </font>  }
+<font color="#555555">016 </font>  g.drawString(<font color="#0000FF">"Hello, World"</font>,40,100);
+<font color="#555555">017 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/SchriftGroesser.inc"><font color="#000055" size=-1>SchriftGroesser.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 25.4: Vergr&ouml;&szlig;ern der Schriftart</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Dieses Beispiel hat eine Besonderheit, denn es werden nicht die Methoden
+<a href="index_g.html#ixb101208"><font color=#000080><tt>getFont</tt></font></a>
+und <a href="index_s.html#ixb101207"><font color=#000080><tt>setFont</tt></font></a>
+der Klasse <a href="index_g.html#ixb101156"><font color=#000080><tt>Graphics</tt></font></a>
+aufgerufen, sondern diejenigen aus der Fensterklasse <a name="ixa101605"><a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a></a>.
+Dadurch bleiben die Font-Informationen auch zwischen zwei Aufrufen
+von <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>
+erhalten.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id025003002"></a>
+<h3>25.3.2 <a name="ixa101606">Font-Metriken</a><a name="ixa101607"></a></h3>
+
+<p>
+Oft ben&ouml;tigt man Informationen &uuml;ber die Gr&ouml;&szlig;e
+eines einzelnen Zeichens oder eines kompletten Strings. Anders als
+in textbasierten Systemen ist die Gr&ouml;&szlig;e von Schriftzeichen
+bei der Programmierung unter einer grafischen Oberfl&auml;che n&auml;mlich
+nicht konstant, sondern von der Art des Fonts, dem Ausgabeger&auml;t
+und vor allem von der Breite der Zeichen selbst abh&auml;ngig. 
+
+<p>
+Das Gr&ouml;&szlig;enmodell von Java sieht f&uuml;r ein Textzeichen
+f&uuml;nf unterschiedliche Ma&szlig;zahlen vor (siehe <a href="k100166.html#groessenmasszahlefonts">Abbildung 25.5</a>),
+die teilweise zu den im Schriftsatz verwendeten Begriffen kompatibel
+sind. Wichtigste Bezugsmarke f&uuml;r die verschiedenen Ma&szlig;e
+ist dabei die <a name="ixa101608"><i>Grundlinie</i></a> des Zeichens,
+die den oberen und unteren Teil voneinander trennt. Die <a name="ixa101609"><i>Unterl&auml;nge</i></a>
+gibt die L&auml;nge zwischen Grundlinie und unterer Begrenzung des
+Zeichens an. Die <a name="ixa101610"><i>Oberl&auml;nge</i></a> bezeichnet
+die L&auml;nge zwischen Grundlinie und oberem Rand des Zeichens. Die
+<a name="ixa101611"><i>Breite eines Zeichens</i></a> ist der Abstand
+vom linken Rand des Zeichens bis zum linken Rand des darauffolgenden
+Zeichens. Der <a name="ixa101612"><i>Zeilenabstand</i></a> ist der
+Abstand zwischen dem unteren Rand einer Zeile und dem oberen Rand
+der n&auml;chsten Zeile. Die <a name="ixa101613"><i>H&ouml;he</i></a>
+ist die Summe aus Oberl&auml;nge, Unterl&auml;nge und Zeilenabstand.
+<p>
+<a name="groessenmasszahlefonts"></a>
+<img src="images/FontMetriken.gif">
+<p>
+
+<p><i>
+Abbildung 25.5: Gr&ouml;&szlig;enma&szlig;zahlen f&uuml;r Fonts in
+Java</i></p>
+
+<p>
+Zur Bestimmung der Gr&ouml;&szlig;eneigenschaften von Zeichen wird
+die Klasse <a name="ixa101614"><a href="index_f.html#ixb101235"><font color=#000080><tt>FontMetrics</tt></font></a></a>
+verwendet. <a href="index_f.html#ixb101235"><font color=#000080><tt>FontMetrics</tt></font></a>
+ist eine abstrakte Klasse, die nicht direkt instanziert werden kann.
+Stattdessen wird sie durch Aufruf der Methode <a name="ixa101615"><a href="index_g.html#ixb101236"><font color=#000080><tt>getFontMetrics</tt></font></a></a>
+aus dem Grafikkontext gewonnen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public FontMetrics getFontMetrics(Font font)
+public FontMetrics getFontMetrics()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Graphics.html" onClick="this.href=getApiDoc('java.awt.Graphics')"><font color="#660066" size=-1>java.awt.Graphics</font></a></td>
+</tr>
+</table>
+
+<p>
+Die parameterlose Variante dient dazu, Metriken zum aktuellen Font
+zu ermitteln, an die andere kann der zu untersuchende Font als Argument
+&uuml;bergeben werden. Nun stehen Methoden zur Verf&uuml;gung, die
+zur Bestimmung der genannten Eigenschaften aufgerufen werden k&ouml;nnen.
+Nachfolgend werden die wichtigsten von ihnen vorgestellt. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int charWidth(char ch)
+
+public int stringWidth(String s)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/FontMetrics.html" onClick="this.href=getApiDoc('java.awt.FontMetrics')"><font color="#660066" size=-1>java.awt.FontMetrics</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa101616"><a href="index_c.html#ixb101237"><font color=#000080><tt>charWidth</tt></font></a></a>
+wird die Breite eines einzelnen Zeichens <font color="#000077"><tt>ch</tt></font>
+bestimmt, mit <a name="ixa101617"><a href="index_s.html#ixb101238"><font color=#000080><tt>stringWidth</tt></font></a></a>
+die eines kompletten Strings. Der R&uuml;ckgabewert dieser Methoden
+wird dabei stets in Bildschirmpixeln angegeben. Bei der Anwendung
+von <a href="index_s.html#ixb101238"><font color=#000080><tt>stringWidth</tt></font></a>
+werden auch Unterschneidungen oder andere Sonderbehandlungen ber&uuml;cksichtigt,
+die bei der Ausgabe der Zeichenkette erfolgen w&uuml;rden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int getAscent()
+
+public int getDescent()
+
+public int getHeight()
+
+public int getLeading()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/FontMetrics.html" onClick="this.href=getApiDoc('java.awt.FontMetrics')"><font color="#660066" size=-1>java.awt.FontMetrics</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa101618"><a href="index_g.html#ixb101239"><font color=#000080><tt>getAscent</tt></font></a></a>
+liefert die Oberl&auml;nge des Fonts, <a name="ixa101619"><a href="index_g.html#ixb101240"><font color=#000080><tt>getDescent</tt></font></a></a>
+die Unterl&auml;nge, <a name="ixa101620"><a href="index_g.html#ixb101241"><font color=#000080><tt>getLeading</tt></font></a></a>
+den Zeilenabstand und <a name="ixa101621"><a href="index_g.html#ixb101242"><font color=#000080><tt>getHeight</tt></font></a></a>
+die H&ouml;he. Obwohl diese Informationen f&uuml;r die meisten Zeichen
+des ausgew&auml;hlten Fonts g&uuml;ltig sind, garantiert Java nicht,
+dass dies f&uuml;r alle Zeichen der Fall ist. Insbesondere kann es
+einzelne Zeichen geben, die eine gr&ouml;&szlig;ere Ober- oder Unterl&auml;nge
+haben. Zur Behandlung dieser Sonderf&auml;lle gibt es zus&auml;tzliche
+Methoden in <a href="index_f.html#ixb101235"><font color=#000080><tt>FontMetrics</tt></font></a>,
+die hier nicht n&auml;her behandelt werden sollen. 
+
+<p>
+Das nachfolgende Beispiel zeigt eine <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>-Methode,
+die einige Schriftzeichen in 72 Punkt Gr&ouml;&szlig;e zusammen mit
+einem 10*10 Pixel gro&szlig;en Koordinatengitter ausgibt. Zus&auml;tzlich
+gibt das Programm die Font-Metriken aus: 
+<a name="listingid025005"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Fontmetriken.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  Font font = <font color="#0000AA">new</font> Font(<font color="#0000FF">"TimesRoman"</font>,Font.PLAIN,72);
+<font color="#555555">006 </font>
+<font color="#555555">007 </font>  <font color="#00AA00">//---Linien</font>
+<font color="#555555">008 </font>  g.setColor(Color.blue);
+<font color="#555555">009 </font>  <font color="#0000AA">for</font> (<font color="#006699">int</font> x = 10; x &lt;= 260; x += 10) {
+<font color="#555555">010 </font>    g.drawLine(x,30,x,130);
+<font color="#555555">011 </font>  }
+<font color="#555555">012 </font>  <font color="#0000AA">for</font> (<font color="#006699">int</font> y = 30; y &lt;= 130; y += 10) {
+<font color="#555555">013 </font>    g.drawLine(10,y,260,y);
+<font color="#555555">014 </font>  }
+<font color="#555555">015 </font>  <font color="#00AA00">//---Schrift</font>
+<font color="#555555">016 </font>  g.setColor(Color.black);
+<font color="#555555">017 </font>  g.drawLine(0,100,270,100);
+<font color="#555555">018 </font>  g.setFont(font);
+<font color="#555555">019 </font>  g.drawString(<font color="#0000FF">"mgdAW"</font>,10,100);
+<font color="#555555">020 </font>  <font color="#00AA00">//---Font-Metriken</font>
+<font color="#555555">021 </font>  FontMetrics fm = getFontMetrics(font);
+<font color="#555555">022 </font>  System.out.println(<font color="#0000FF">"Oberl&auml;nge     = "</font> + fm.getAscent());
+<font color="#555555">023 </font>  System.out.println(<font color="#0000FF">"Unterl&auml;nge    = "</font> + fm.getDescent());
+<font color="#555555">024 </font>  System.out.println(<font color="#0000FF">"H&ouml;he          = "</font> + fm.getHeight());
+<font color="#555555">025 </font>  System.out.println(<font color="#0000FF">"Zeilenabstand = "</font> + fm.getLeading());
+<font color="#555555">026 </font>  System.out.println(<font color="#0000FF">"---"</font>);
+<font color="#555555">027 </font>  System.out.println(<font color="#0000FF">"Breite(m)     = "</font> + fm.charWidth(<font color="#0000FF">'m'</font>));
+<font color="#555555">028 </font>  System.out.println(<font color="#0000FF">"Breite(g)     = "</font> + fm.charWidth(<font color="#0000FF">'g'</font>));
+<font color="#555555">029 </font>  System.out.println(<font color="#0000FF">"Breite(d)     = "</font> + fm.charWidth(<font color="#0000FF">'d'</font>));
+<font color="#555555">030 </font>  System.out.println(<font color="#0000FF">"Breite(A)     = "</font> + fm.charWidth(<font color="#0000FF">'A'</font>));
+<font color="#555555">031 </font>  System.out.println(<font color="#0000FF">"Breite(W)     = "</font> + fm.charWidth(<font color="#0000FF">'W'</font>));
+<font color="#555555">032 </font>  System.out.println(<font color="#0000FF">"---"</font>);
+<font color="#555555">033 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Fontmetriken.inc"><font color="#000055" size=-1>Fontmetriken.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 25.5: Anzeige von Font-Metriken</i></p>
+
+<p>
+Die Grafikausgabe des Programms ist wie folgt: 
+<p>
+<a name="imageid025006"></a>
+<img src="images/FontMetrikBsp.gif">
+<p>
+
+<p><i>
+Abbildung 25.6: Anzeige von Font-Metriken</i></p>
+
+<p>
+Zus&auml;tzlich werden die Font-Metriken auf die Konsole geschrieben:
+<font color="#333300">
+<pre>
+Oberl&auml;nge     = 73
+Unterl&auml;nge    = 16
+H&ouml;he          = 93
+Zeilenabstand = 4
+---
+Breite(m)     = 55
+Breite(g)     = 35
+Breite(d)     = 36
+Breite(A)     = 52
+Breite(W)     = 68
+</pre>
+</font>
+
+<p>
+Als abschlie&szlig;ende Anwendung der Font-Metriken wollen wir <a href="k100164.html#textausgabebsp">Listing 25.1</a>
+wie versprochen komplettieren und den Text zentriert ausgeben: 
+<a name="listingid025006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Zentriert.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#006699">int</font> maxX=getSize().width-getInsets().left-getInsets().right;
+<font color="#555555">006 </font>  <font color="#006699">int</font> maxY=getSize().height-getInsets().top-getInsets().bottom;
+<font color="#555555">007 </font>  String s=<font color="#0000FF">"Die Client-Area ist "</font>+maxX+<font color="#0000FF">"*"</font>+maxY+<font color="#0000FF">" Pixel gro&szlig;"</font>;
+<font color="#555555">008 </font>  FontMetrics fm = g.getFontMetrics();
+<font color="#555555">009 </font>  <font color="#006699">int</font> slen = fm.stringWidth(s);
+<font color="#555555">010 </font>  g.drawString(
+<font color="#555555">011 </font>    s,
+<font color="#555555">012 </font>    getInsets().left + ((maxX - slen)/2),
+<font color="#555555">013 </font>    getInsets().top  + (maxY/2)
+<font color="#555555">014 </font>  );
+<font color="#555555">015 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Zentriert.inc"><font color="#000055" size=-1>Zentriert.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 25.6: Zentrierte Textausgabe</i></p>
+
+<p>
+Die Programmausgabe ist: 
+<p>
+<a name="imageid025007"></a>
+<img src="images/TextZentriert.gif">
+<p>
+
+<p><i>
+Abbildung 25.7: Zentrierte Textausgabe</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100163.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100165.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100167.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100168.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

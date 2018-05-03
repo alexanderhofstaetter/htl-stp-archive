@@ -1,0 +1,835 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100084.html;106,k100085.html;107,k100087.html;108,k100090.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100084.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100085.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100087.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100090.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 13 - Exceptions
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id013002"></a>
+<h2>13.2 Behandlung von Exceptions </h2>
+<hr>
+<ul>
+<li><a href="k100086.html#sectlevel2id013002">13.2 Behandlung von Exceptions</a>
+<ul>
+<li><a href="k100086.html#sectlevel3id013002001">13.2.1 Die try-catch-Anweisung</a>
+<li><a href="k100086.html#dasfehlerobjekt">13.2.2 Das Fehlerobjekt</a>
+<li><a href="k100086.html#sectlevel3id013002003">13.2.3 Die Fehlerklassen von Java</a>
+<li><a href="k100086.html#sectlevel3id013002004">13.2.4 Fortfahren nach Fehlern</a>
+<li><a href="k100086.html#sectlevel3id013002005">13.2.5 Mehr als eine catch-Klausel</a>
+<li><a href="k100086.html#sectlevel3id013002006">13.2.6 Mehrere catch-Klauseln zusammenfassen</a>
+<li><a href="k100086.html#sectlevel3id013002007">13.2.7 Exakter Weiterwurf von Exceptions</a>
+<li><a href="k100086.html#sectlevel3id013002008">13.2.8 Die finally-Klausel</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id013002001"></a>
+<h3>13.2.1 Die <a name="ixa100722">try-catch-Anweisung</a> </h3>
+
+<p>
+Das Behandeln von Ausnahmen erfolgt mit Hilfe der <a name="ixa100723"><a href="index_t.html#ixb100571"><font color=#000080><tt>try</tt></font></a></a>-<a name="ixa100724"><a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a></a>-Anweisung:
+<a name="listingid013001"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">try</font> {
+<font color="#555555">002 </font>  Anweisung;
+<font color="#555555">003 </font>  ...
+<font color="#555555">004 </font>} <font color="#0000AA">catch</font> (Ausnahmetyp x) {
+<font color="#555555">005 </font>  Anweisung;
+<font color="#555555">006 </font>  ...
+<font color="#555555">007 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 13.1: Die try-catch-Anweisung</i></p>
+
+<p>
+Der <a href="index_t.html#ixb100571"><font color=#000080><tt>try</tt></font></a>-Block
+enth&auml;lt dabei eine oder mehrere Anweisungen, bei deren Ausf&uuml;hrung
+ein Fehler des Typs <font color="#000077"><tt>Ausnahmetyp</tt></font>
+auftreten kann. In diesem Fall wird die normale Programmausf&uuml;hrung
+unterbrochen und der Programmablauf f&auml;hrt mit der ersten Anweisung
+nach der <a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a>-Klausel
+fort, die den passenden Ausnahmetyp deklariert hat. Hier kann nun
+Code untergebracht werden, der eine angemessene Reaktion auf den Fehler
+realisiert. 
+
+<p>
+Wir wollen das folgende fehlerhafte Programm betrachten: 
+<a name="listingid013002"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* RTErrorProg1.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> RTErrorProg1
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#006699">int</font> i, base = 0;
+<font color="#555555">008 </font>
+<font color="#555555">009 </font>    <font color="#0000AA">for</font> (base = 10; base &gt;= 2; --base) {
+<font color="#555555">010 </font>      i = Integer.parseInt(<font color="#0000FF">"40"</font>,base);
+<font color="#555555">011 </font>      System.out.println(<font color="#0000FF">"40 base "</font>+base+<font color="#0000FF">" = "</font>+i);
+<font color="#555555">012 </font>    }
+<font color="#555555">013 </font>  }
+<font color="#555555">014 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/RTErrorProg1.java"><font color="#000055" size=-1>RTErrorProg1.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 13.2: Ein Programm mit einem Laufzeitfehler</i></p>
+
+<p>
+Hier soll der String &#187;40&#171; aus verschiedenen Zahlensystemen
+in ein <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>
+konvertiert und als Dezimalzahl ausgegeben werden. Die dazu verwendete
+Methode <a href="index_p.html#ixb100483"><font color=#000080><tt>parseInt</tt></font></a>
+&uuml;berpr&uuml;ft, ob der &uuml;bergebene String einen g&uuml;ltigen
+Zahlenwert zur angegebenen Basis darstellt. Ist dies nicht der Fall,
+l&ouml;st sie eine Ausnahme des Typs <a name="ixa100725"><a href="index_n.html#ixb100573"><font color=#000080><tt>NumberFormatException</tt></font></a></a>
+aus. Ohne weitere Ma&szlig;nahmen st&uuml;rzt das Programm dann beim
+Versuch, den String &#187;40&#171; als Zahl zur Basis 4 anzusehen,
+ab: 
+<font color="#333300">
+<pre>
+40 base 10 = 40
+40 base 9 = 36
+40 base 8 = 32
+40 base 7 = 28
+40 base 6 = 24
+40 base 5 = 20
+Exception in thread "main" java.lang.NumberFormatException: 40
+        at java.lang.Integer.parseInt(Compiled Code)
+        at RTErrorProg1.main(Compiled Code)
+</pre>
+</font>
+
+<p>
+Das Programm l&auml;sst sich nun leicht gegen solche Fehler absichern,
+indem die Programmsequenz, die den Fehler verursacht, in eine <a href="index_t.html#ixb100571"><font color=#000080><tt>try</tt></font></a>-<a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a>-Anweisung
+eingeschlossen wird: 
+<a name="listingid013003"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1303.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1303
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#006699">int</font> i, base = 0;
+<font color="#555555">008 </font>
+<font color="#555555">009 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">010 </font>      <font color="#0000AA">for</font> (base = 10; base &gt;= 2; --base) {
+<font color="#555555">011 </font>        i = Integer.parseInt(<font color="#0000FF">"40"</font>,base);
+<font color="#555555">012 </font>        System.out.println(<font color="#0000FF">"40 base "</font>+base+<font color="#0000FF">" = "</font>+i);
+<font color="#555555">013 </font>      }
+<font color="#555555">014 </font>    } <font color="#0000AA">catch</font> (NumberFormatException e) {
+<font color="#555555">015 </font>      System.out.println(
+<font color="#555555">016 </font>        <font color="#0000FF">"40 ist keine Zahl zur Basis "</font>+base
+<font color="#555555">017 </font>      );
+<font color="#555555">018 </font>    }
+<font color="#555555">019 </font>  }
+<font color="#555555">020 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1303.java"><font color="#000055" size=-1>Listing1303.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 13.3: Abfangen des Laufzeitfehlers mit einer try-catch-Anweisung</i></p>
+
+<p>
+Zwar ist 40 immer noch keine Zahl zur Basis 4, aber das Programm f&auml;ngt
+diesen Fehler nun ab und gibt eine geeignete Fehlermeldung aus: 
+<font color="#333300">
+<pre>
+40 base 10 = 40
+40 base 9 = 36
+40 base 8 = 32
+40 base 7 = 28
+40 base 6 = 24
+40 base 5 = 20
+40 ist keine Zahl zur Basis 4
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="dasfehlerobjekt"></a>
+<h3>13.2.2 Das <a name="ixa100726">Fehlerobjekt</a> </h3>
+
+<p>
+In der <a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a>-Klausel
+wird nicht nur die Art des abzufangenden Fehlers definiert, sondern
+auch ein formaler Parameter angegeben, der beim Auftreten der Ausnahme
+ein Fehlerobjekt &uuml;bernehmen soll. Fehlerobjekte sind dabei Instanzen
+der Klasse <a name="ixa100727"><a href="index_t.html#ixb100575"><font color=#000080><tt>Throwable</tt></font></a></a>
+oder einer ihrer Unterklassen. Sie werden vom Aufrufer der Ausnahme
+erzeugt und als Parameter an die <a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a>-Klausel
+&uuml;bergeben. Das Fehlerobjekt enth&auml;lt Informationen &uuml;ber
+die Art des aufgetretenen Fehlers. So liefert beispielsweise die Methode
+<a name="ixa100728"><a href="index_g.html#ixb100576"><font color=#000080><tt>getMessage</tt></font></a></a>
+einen Fehlertext (wenn dieser explizit gesetzt wurde) und <a name="ixa100729"><a href="index_p.html#ixb100577"><font color=#000080><tt>printStackTrace</tt></font></a></a>
+druckt einen Auszug aus dem Laufzeit-Stack. Am einfachsten kann der
+Fehlertext mit der Methode <a name="ixa100730"><a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a></a>
+der Klasse <a href="index_t.html#ixb100575"><font color=#000080><tt>Throwable</tt></font></a>
+ausgegeben werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public String getMessage()
+
+public void printStackTrace()
+
+public String toString()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/Throwable.html" onClick="this.href=getApiDoc('java.lang.Throwable')"><font color="#660066" size=-1>java.lang.Throwable</font></a></td>
+</tr>
+</table>
+
+<p>
+Unser Beispielprogramm k&ouml;nnte dann wie folgt umgeschrieben werden:
+<a name="listingid013004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* RTErrorProg2.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> RTErrorProg2
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#006699">int</font> i, base = 0;
+<font color="#555555">008 </font>
+<font color="#555555">009 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">010 </font>      <font color="#0000AA">for</font> (base = 10; base &gt;= 2; --base) {
+<font color="#555555">011 </font>        i = Integer.parseInt(<font color="#0000FF">"40"</font>,base);
+<font color="#555555">012 </font>        System.out.println(<font color="#0000FF">"40 base "</font>+base+<font color="#0000FF">" = "</font>+i);
+<font color="#555555">013 </font>      }
+<font color="#555555">014 </font>    } <font color="#0000AA">catch</font> (NumberFormatException e) {
+<font color="#555555">015 </font>      System.out.println(<font color="#0000FF">"***Fehler aufgetreten***"</font>);
+<font color="#555555">016 </font>      System.out.println(<font color="#0000FF">"Ursache: "</font>+e.getMessage());
+<font color="#555555">017 </font>      e.printStackTrace();
+<font color="#555555">018 </font>    }
+<font color="#555555">019 </font>  }
+<font color="#555555">020 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/RTErrorProg2.java"><font color="#000055" size=-1>RTErrorProg2.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 13.4: Verwendung des Fehlerobjekts nach einem Laufzeitfehler</i></p>
+
+<p>
+Die Ausgabe des Programms w&auml;re dann: 
+<font color="#333300">
+<pre>
+40 base 10 = 40
+40 base 9 = 36
+40 base 8 = 32
+40 base 7 = 28
+40 base 6 = 24
+40 base 5 = 20
+***Fehler aufgetreten***
+Ursache: 40
+java.lang.NumberFormatException: 40
+        at java.lang.Integer.parseInt(Compiled Code)
+        at RTErrorProg2.main(Compiled Code)
+</pre>
+</font>
+
+<p>
+Wie man sieht, &auml;hnelt die Ausgabe des Programms der ersten Version,
+die ohne expliziten Fehler-Handler geschrieben wurde. Das liegt daran,
+dass das Java-Laufzeitsystem beim Auftreten eines Fehlers, der von
+keiner Methode behandelt wurde, <a name="ixa100729"><a href="index_p.html#ixb100577"><font color=#000080><tt>printStackTrace</tt></font></a></a>
+aufruft, bevor es das Programm beendet. 
+
+<!-- Section -->
+
+<a name="sectlevel3id013002003"></a>
+<h3>13.2.3 Die Fehlerklassen von Java </h3>
+
+<p>
+Alle Laufzeitfehler in Java sind Unterklassen der Klasse <a name="ixa100731"><a href="index_t.html#ixb100575"><font color=#000080><tt>Throwable</tt></font></a></a>.
+<a href="index_t.html#ixb100575"><font color=#000080><tt>Throwable</tt></font></a>
+ist eine allgemeine Fehlerklasse, die im Wesentlichen eine Klartext-Fehlermeldung
+speichern und einen Auszug des Laufzeit-Stacks ausgeben kann. Unterhalb
+von <a href="index_t.html#ixb100575"><font color=#000080><tt>Throwable</tt></font></a>
+befinden sich zwei gro&szlig;e Vererbungshierarchien: 
+<ul>
+<li>Die Klasse <a name="ixa100732"><a href="index_e.html#ixb100578"><font color=#000080><tt>Error</tt></font></a></a>
+ist Superklasse aller <i>schwerwiegenden</i> Fehler. Diese werden
+haupts&auml;chlich durch Probleme in der virtuellen Java-Maschine
+ausgel&ouml;st. Fehler der Klasse <a href="index_e.html#ixb100578"><font color=#000080><tt>Error</tt></font></a>
+sollten in der Regel nicht abgefangen werden, sondern (durch den Standard-Fehlerhandler)
+nach einer entsprechenden Meldung zum Abbruch des Programms f&uuml;hren.
+<li>Alle Fehler, die m&ouml;glicherweise f&uuml;r die Anwendung selbst
+von Interesse sind, befinden sich in der Klasse <a name="ixa100733"><a href="index_e.html#ixb100579"><font color=#000080><tt>Exception</tt></font></a></a>
+oder einer ihrer Unterklassen. Ein Fehler dieser Art signalisiert
+einen abnormen Zustand, der vom Programm abgefangen und behandelt
+werden kann.
+</ul>
+
+<p>
+Viele Pakete der Java-Klassenbibliothek definieren ihre eigenen Fehlerklassen.
+So gibt es spezielle Fehlerklassen f&uuml;r die Dateiein- und -ausgabe,
+die Netzwerkkommunikation oder den Zugriff auf Arrays. Wir werden
+diese speziellen Fehlerklassen immer dann erl&auml;utern, wenn eine
+Methode besprochen wird, die diese Art von Fehler erzeugt. 
+
+<!-- Section -->
+
+<a name="sectlevel3id013002004"></a>
+<h3>13.2.4 Fortfahren nach Fehlern </h3>
+
+<p>
+Die Reaktion auf eine Ausnahme muss keinesfalls zwangsl&auml;ufig
+darin bestehen, das Programm zu beenden. Stattdessen kann auch versucht
+werden, den Fehler zu beheben oder zu umgehen, um dann mit dem Programm
+fortzufahren. Wird im obigen Programm die <a href="index_t.html#ixb100571"><font color=#000080><tt>try</tt></font></a>-<a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a>-Anweisung
+in die Schleife gesetzt, so f&auml;hrt das Programm nach jedem Fehler
+fort und versucht, die Konvertierung zur n&auml;chsten Basis vorzunehmen:
+<a name="listingid013005"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1305.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1305
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#006699">int</font> i, base = 0;
+<font color="#555555">008 </font>
+<font color="#555555">009 </font>    <font color="#0000AA">for</font> (base = 10; base &gt;= 2; --base) {
+<font color="#555555">010 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">011 </font>        i = Integer.parseInt(<font color="#0000FF">"40"</font>,base);
+<font color="#555555">012 </font>        System.out.println(<font color="#0000FF">"40 base "</font>+base+<font color="#0000FF">" = "</font>+i);
+<font color="#555555">013 </font>      } <font color="#0000AA">catch</font> (NumberFormatException e) {
+<font color="#555555">014 </font>        System.out.println(
+<font color="#555555">015 </font>          <font color="#0000FF">"40 ist keine Zahl zur Basis "</font>+base
+<font color="#555555">016 </font>        );
+<font color="#555555">017 </font>      }
+<font color="#555555">018 </font>    }
+<font color="#555555">019 </font>  }
+<font color="#555555">020 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1305.java"><font color="#000055" size=-1>Listing1305.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 13.5: Fortfahren nach Laufzeitfehlern</i></p>
+
+<p>
+Die Ausgabe des Programms lautet nun: 
+<font color="#333300">
+<pre>
+40 base 10 = 40
+40 base 9 = 36
+40 base 8 = 32
+40 base 7 = 28
+40 base 6 = 24
+40 base 5 = 20
+40 ist keine Zahl zur Basis 4
+40 ist keine Zahl zur Basis 3
+40 ist keine Zahl zur Basis 2
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Ob es sinnvoller ist, nach einem Fehler mit der Programmausf&uuml;hrung
+fortzufahren oder das Programm abzubrechen, ist von der Art des Fehlers
+und der Stelle im Programm, an der er aufgetreten ist, abh&auml;ngig.
+Hier muss von Fall zu Fall entschieden werden, wie vorgegangen werden
+soll.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id013002005"></a>
+<h3>13.2.5 Mehr als eine catch-Klausel </h3>
+
+<p>
+Bisher sind wir davon ausgegangen, dass innerhalb eines <a href="index_t.html#ixb100571"><font color=#000080><tt>try</tt></font></a>-Blocks
+nur eine Ausnahme auftreten kann. Tats&auml;chlich ist es nat&uuml;rlich
+ohne Weiteres m&ouml;glich, dass zwei oder mehrere unterschiedliche
+Ausnahmen ausgel&ouml;st werden. Das Programm kann auf verschiedene
+Fehler reagieren, indem es mehr als eine <a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a>-Klausel
+verwendet. Jede <a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a>-Klausel
+f&auml;ngt die Fehler ab, die zum Typ des angegebenen Fehlerobjekts
+zuweisungskompatibel sind. Dazu geh&ouml;ren alle Fehler der angegebenen
+Klasse und all ihrer Unterklassen (das wichtige Konzept der Zuweisungskompatibilit&auml;t
+von Objekttypen wurde in <a href="k100053.html#polymorphismus">Abschnitt 8.1.6</a>
+erl&auml;utert). Die einzelnen <a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a>-Klauseln
+werden in der Reihenfolge ihres Auftretens abgearbeitet. 
+
+<p>
+Wir wollen das Beispielprogramm nun so erweitern, dass nicht nur ein
+einzelner String in eine Zahl konvertiert wird, sondern ein Array
+von Strings. Aufgrund eines Fehlers in der verwendeten <a href="index_f.html#ixb100077"><font color=#000080><tt>for</tt></font></a>-Schleife
+verursacht das Programm einen Zugriff auf ein nicht vorhandenes Array-Element
+und l&ouml;st damit eine Ausnahme des Typs <a name="ixa100734"><a href="index_i.html#ixb100580"><font color=#000080><tt>IndexOutOfBoundsException</tt></font></a></a>
+aus. Diese kann zusammen mit der Ausnahme <a href="index_n.html#ixb100573"><font color=#000080><tt>NumberFormatException</tt></font></a>
+in einer gemeinsamen <a href="index_t.html#ixb100571"><font color=#000080><tt>try</tt></font></a>-<a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a>-Anweisung
+behandelt werden: 
+<a name="mehrerecatches"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1306.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1306
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#006699">int</font> i, j, base = 0;
+<font color="#555555">008 </font>    String[] numbers = <font color="#0000AA">new</font> String[3];
+<font color="#555555">009 </font>
+<font color="#555555">010 </font>    numbers[0] = <font color="#0000FF">"10"</font>;
+<font color="#555555">011 </font>    numbers[1] = <font color="#0000FF">"20"</font>;
+<font color="#555555">012 </font>    numbers[2] = <font color="#0000FF">"30"</font>;
+<font color="#555555">013 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">014 </font>      <font color="#0000AA">for</font> (base = 10; base &gt;= 2; --base) {
+<font color="#555555">015 </font>        <font color="#0000AA">for</font> (j = 0; j &lt;= 3; ++j) {
+<font color="#555555">016 </font>          i = Integer.parseInt(numbers[j],base);
+<font color="#555555">017 </font>          System.out.println(
+<font color="#555555">018 </font>            numbers[j]+<font color="#0000FF">" base "</font>+base+<font color="#0000FF">" = "</font>+i
+<font color="#555555">019 </font>          );
+<font color="#555555">020 </font>        }
+<font color="#555555">021 </font>      }
+<font color="#555555">022 </font>    } <font color="#0000AA">catch</font> (IndexOutOfBoundsException e1) {
+<font color="#555555">023 </font>      System.out.println(
+<font color="#555555">024 </font>        <font color="#0000FF">"***IndexOutOfBoundsException: "</font> + e1.toString()
+<font color="#555555">025 </font>      );
+<font color="#555555">026 </font>    } <font color="#0000AA">catch</font> (NumberFormatException e2) {
+<font color="#555555">027 </font>      System.out.println(
+<font color="#555555">028 </font>        <font color="#0000FF">"***NumberFormatException: "</font> + e2.toString()
+<font color="#555555">029 </font>      );
+<font color="#555555">030 </font>    }
+<font color="#555555">031 </font>  }
+<font color="#555555">032 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1306.java"><font color="#000055" size=-1>Listing1306.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 13.6: Mehr als eine catch-Klausel</i></p>
+
+<p>
+Die Ausgabe des Programms ist nun: 
+<font color="#333300">
+<pre>
+10 base 10 = 10
+20 base 10 = 20
+30 base 10 = 30
+***IndexOutOfBoundsException: java.lang.ArrayIndexOutOfBoundsException
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="sectlevel3id013002006"></a>
+<h3>13.2.6 Mehrere catch-Klauseln zusammenfassen </h3>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#FF9900"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#FF9900"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+In der Praxis kommt es h&auml;ufiger vor, dass in einem <font color="#000077"><tt>try-catch</tt></font>-Block
+auf mehrere Exceptions gleichartig reagiert wird. Entsprechend enthalten
+dann die <a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a>-Bl&ouml;cke
+identischen Code. Solche Redundanzen sind nat&uuml;rlich unsch&ouml;n.
+Ab Version 7 gibt es f&uuml;r dieses Problem eine L&ouml;sung, denn
+mehrere Exceptions, die nicht zuweisungskompatibel sind, k&ouml;nnen
+nun in einem einzigen <a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a>-Block
+zusammen gefasst werden. Die Exception-Typen lassen sich dazu in der
+<a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a>-Klausel
+mit dem Pipe-Symbol &#187;|&#171; verketten.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#FF9900">
+<tr>
+<td><font color="#FFFFFF">&nbsp;JDK6.0-7.0&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#FF9900"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Die beiden catch-Bl&ouml;cke in <a href="k100086.html#mehrerecatches">Listing 13.6</a>
+k&ouml;nnen mit der Java Version 7 wie folgt zu einem zusammengefasst
+werden (<a href="k100086.html#zusammenfassungvoncatchbloecken.a">Zeile 022</a>
+und <a href="k100086.html#zusammenfassungvoncatchbloecken.b">Zeile 023</a>):
+<a name="zusammenfassungvoncatchbloecken"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1307.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1307
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#006699">int</font> i, j, base = 0;
+<font color="#555555">008 </font>    String[] numbers = <font color="#0000AA">new</font> String[3];
+<font color="#555555">009 </font>
+<font color="#555555">010 </font>    numbers[0] = <font color="#0000FF">"10"</font>;
+<font color="#555555">011 </font>    numbers[1] = <font color="#0000FF">"20"</font>;
+<font color="#555555">012 </font>    numbers[2] = <font color="#0000FF">"30"</font>;
+<font color="#555555">013 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">014 </font>      <font color="#0000AA">for</font> (base = 10; base &gt;= 2; --base) {
+<font color="#555555">015 </font>        <font color="#0000AA">for</font> (j = 0; j &lt;= 3; ++j) {
+<font color="#555555">016 </font>          i = Integer.parseInt(numbers[j],base);
+<font color="#555555">017 </font>          System.out.println(
+<font color="#555555">018 </font>            numbers[j]+<font color="#0000FF">" base "</font>+base+<font color="#0000FF">" = "</font>+i
+<font color="#555555">019 </font>          );
+<font color="#555555">020 </font>        }
+<font color="#555555">021 </font>      }
+<font color="#555555">022 </font>    } <font color="#0000AA">catch</font> (IndexOutOfBoundsException | <a name="zusammenfassungvoncatchbloecken.a"></a>
+<font color="#555555">023 </font>             NumberFormatException x) {  <a name="zusammenfassungvoncatchbloecken.b"></a>
+<font color="#555555">024 </font>      System.out.println(
+<font color="#555555">025 </font>        <font color="#0000FF">"***"</font> + x.getClass().getSimpleName() + <font color="#0000FF">": "</font> +	
+<font color="#555555">026 </font>        x.toString()
+<font color="#555555">027 </font>      );
+<font color="#555555">028 </font>    }
+<font color="#555555">029 </font>  }
+<font color="#555555">030 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1307.java"><font color="#000055" size=-1>Listing1307.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 13.7: Mehrere catch-Klauseln zusammengefasst</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id013002007"></a>
+<h3>13.2.7 Exakter Weiterwurf von Exceptions </h3>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#FF9900"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#FF9900"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Zudem erkennt der Compiler ab Version 7 des JDK den richtigen Exception-Typ
+beim Weiterwurf von Ausnahmen. Das folgende Beispiel verdeutlicht
+dies. In dem <font color="#000077"><tt>try-catch</tt></font>-Block
+k&ouml;nnen potenziell zwei Exceptions auftreten, <font color="#000077"><tt>Exception_A</tt></font>
+und <font color="#000077"><tt>Exception_B</tt></font>. Beide werden
+in einem gemeinsamen catch-Block gefangen (<a href="k100086.html#exakterweiterwurf.a">Zeile 030</a>)
+und weiter geworfen (<a href="k100086.html#exakterweiterwurf.b">Zeile 031</a>).
+Der Compiler ab Version 7 erkennt, dass es sich nur um eine der beiden
+Exceptions handeln kann, und erlaubt es, diese in der <font color="#000077"><tt>throws</tt></font>-Klausel
+der <font color="#000077"><tt>main</tt></font>-Methode zu deklarieren
+(<a href="k100086.html#exakterweiterwurf.c">Zeile 023</a>). </td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#FF9900">
+<tr>
+<td><font color="#FFFFFF">&nbsp;JDK6.0-7.0&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#FF9900"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<a name="exakterweiterwurf"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1308.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">class</font> Exception_A <font color="#0000AA">extends</font> Exception
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#00AA00">// Typ A</font>
+<font color="#555555">006 </font>}
+<font color="#555555">007 </font>
+<font color="#555555">008 </font><font color="#0000AA">class</font> Exception_B <font color="#0000AA">extends</font> Exception
+<font color="#555555">009 </font>{
+<font color="#555555">010 </font>  <font color="#00AA00">// Typ B</font>
+<font color="#555555">011 </font>}
+<font color="#555555">012 </font>
+<font color="#555555">013 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1308
+<font color="#555555">014 </font>{
+<font color="#555555">015 </font>  <font color="#006699">void</font> methode_A() <font color="#0000AA">throws</font> Exception_A
+<font color="#555555">016 </font>  {
+<font color="#555555">017 </font>  }
+<font color="#555555">018 </font>
+<font color="#555555">019 </font>  <font color="#006699">void</font> methode_B() <font color="#0000AA">throws</font> Exception_B
+<font color="#555555">020 </font>  {
+<font color="#555555">021 </font>  }
+<font color="#555555">022 </font>  
+<font color="#555555">023 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args) <font color="#0000AA">throws</font> Exception_A, Exception_B <a name="exakterweiterwurf.c"></a>
+<font color="#555555">024 </font>  {
+<font color="#555555">025 </font>    Listing1308 l = <font color="#0000AA">new</font> Listing1308();
+<font color="#555555">026 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">027 </font>      l.methode_A();
+<font color="#555555">028 </font>      l.methode_B();
+<font color="#555555">029 </font>    }
+<font color="#555555">030 </font>    <font color="#0000AA">catch</font> (Exception x) {  <a name="exakterweiterwurf.a"></a>
+<font color="#555555">031 </font>      <font color="#0000AA">throw</font> x; <a name="exakterweiterwurf.b"></a>
+<font color="#555555">032 </font>    }
+<font color="#555555">033 </font>  }
+<font color="#555555">034 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1308.java"><font color="#000055" size=-1>Listing1308.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 13.8: Exakter Weiterwurf von Exceptions</i></p>
+
+<p>
+In einer JDK-6-kompatiblen Version des obigen Listings h&auml;tte
+die <font color="#000077"><tt>main</tt></font>-Methode in <a href="k100086.html#exakterweiterwurf.c">Zeile 023</a>
+den Typ <a href="index_e.html#ixb100579"><font color=#000080><tt>Exception</tt></font></a>
+in der throws-Klausel deklarieren m&uuml;ssen. 
+
+<!-- Section -->
+
+<a name="sectlevel3id013002008"></a>
+<h3>13.2.8 Die finally-Klausel </h3>
+
+<p>
+Die <a href="index_t.html#ixb100571"><font color=#000080><tt>try</tt></font></a>-<a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a>-Anweisung
+enth&auml;lt einen optionalen Bestandteil, der bisher noch nicht erl&auml;utert
+wurde. Mit Hilfe der <a name="ixa100735"><a href="index_f.html#ixb100581"><font color=#000080><tt>finally</tt></font></a></a>-Klausel,
+die als letzter Bestandteil einer <a href="index_t.html#ixb100571"><font color=#000080><tt>try</tt></font></a>-<a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a>-Anweisung
+verwendet werden darf, kann ein Programmfragment definiert werden,
+das immer dann ausgef&uuml;hrt wird, wenn die zugeh&ouml;rige <a href="index_t.html#ixb100571"><font color=#000080><tt>try</tt></font></a>-Klausel
+betreten wurde. Dabei spielt es keine Rolle, <i>welches</i> Ereignis
+daf&uuml;r verantwortlich war, dass die <a href="index_t.html#ixb100571"><font color=#000080><tt>try</tt></font></a>-Klausel
+verlassen wurde. Die <a href="index_f.html#ixb100581"><font color=#000080><tt>finally</tt></font></a>-Klausel
+wird insbesondere dann ausgef&uuml;hrt, wenn der <a href="index_t.html#ixb100571"><font color=#000080><tt>try</tt></font></a>-Block
+durch eine der folgenden Anweisungen verlassen wurde: 
+<ul>
+<li>wenn das normale Ende des <a href="index_t.html#ixb100571"><font color=#000080><tt>try</tt></font></a>-Blocks
+erreicht wurde
+<li>wenn eine Ausnahme aufgetreten ist, die durch eine <a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a>-Klausel
+behandelt wurde
+<li>wenn eine Ausnahme aufgetreten ist, die nicht durch eine <a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a>-Klausel
+behandelt wurde
+<li>wenn der <a href="index_t.html#ixb100571"><font color=#000080><tt>try</tt></font></a>-Block
+durch eine der Sprunganweisungen <a name="ixa100736"><a href="index_b.html#ixb100079"><font color=#000080><tt>break</tt></font></a></a>,
+<a name="ixa100737"><a href="index_c.html#ixb100080"><font color=#000080><tt>continue</tt></font></a></a>
+oder <a name="ixa100738"><a href="index_r.html#ixb100344"><font color=#000080><tt>return</tt></font></a></a>
+verlassen werden soll
+</ul>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die <a href="index_f.html#ixb100581"><font color=#000080><tt>finally</tt></font></a>-Klausel
+ist also der ideale Ort, um Aufr&auml;umarbeiten durchzuf&uuml;hren.
+Hier k&ouml;nnen beispielsweise Dateien geschlossen oder Ressourcen
+freigegeben werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Die folgende Variation unseres Beispielprogramms benutzt <a href="index_f.html#ixb100581"><font color=#000080><tt>finally</tt></font></a>
+dazu, am Ende des Programms eine Meldung auszugeben: 
+<a name="listingid013009"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1309.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1309
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#006699">int</font> i, base = 0;
+<font color="#555555">008 </font>
+<font color="#555555">009 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">010 </font>      <font color="#0000AA">for</font> (base = 10; base &gt;= 2; --base) {
+<font color="#555555">011 </font>        i = Integer.parseInt(<font color="#0000FF">"40"</font>,base);
+<font color="#555555">012 </font>        System.out.println(<font color="#0000FF">"40 base "</font>+base+<font color="#0000FF">" = "</font>+i);
+<font color="#555555">013 </font>      }
+<font color="#555555">014 </font>    } <font color="#0000AA">catch</font> (NumberFormatException e) {
+<font color="#555555">015 </font>      System.out.println(
+<font color="#555555">016 </font>        <font color="#0000FF">"40 ist keine Zahl zur Basis "</font>+base
+<font color="#555555">017 </font>      );
+<font color="#555555">018 </font>    } <font color="#0000AA">finally</font> {
+<font color="#555555">019 </font>      System.out.println(
+<font color="#555555">020 </font>        <font color="#0000FF">"Sie haben ein einfaches Beispiel "</font> +
+<font color="#555555">021 </font>        <font color="#0000FF">"sehr gl&uuml;cklich gemacht."</font>
+<font color="#555555">022 </font>      );
+<font color="#555555">023 </font>    }
+<font color="#555555">024 </font>  }
+<font color="#555555">025 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1309.java"><font color="#000055" size=-1>Listing1309.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 13.9: Verwendung der finally-Klausel</i></p>
+
+<p>
+Die Ausgabe des Programms ist: 
+<font color="#333300">
+<pre>
+40 base 10 = 40
+40 base 9 = 36
+40 base 8 = 32
+40 base 7 = 28
+40 base 6 = 24
+40 base 5 = 20
+40 ist keine Zahl zur Basis 4
+Sie haben ein einfaches Beispiel sehr gl&uuml;cklich gemacht.
+</pre>
+</font>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100084.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100085.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100087.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100090.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

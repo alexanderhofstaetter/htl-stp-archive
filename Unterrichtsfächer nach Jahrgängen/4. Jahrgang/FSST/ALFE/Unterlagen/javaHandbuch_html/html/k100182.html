@@ -1,0 +1,1043 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100181.html;106,k100181.html;107,k100183.html;108,k100185.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100181.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100181.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100183.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100185.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 28 - Event-Handling
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id028001"></a>
+<h2>28.1 Das Event-Handling seit dem JDK 1.1 </h2>
+<hr>
+<ul>
+<li><a href="k100182.html#sectlevel2id028001">28.1 Das Event-Handling seit dem JDK 1.1</a>
+<ul>
+<li><a href="k100182.html#sectlevel3id028001001">28.1.1 Grundlagen</a>
+<li><a href="k100182.html#sectlevel3id028001002">28.1.2 Ereignistypen</a>
+<li><a href="k100182.html#sectlevel3id028001003">28.1.3 Ereignisempf&auml;nger</a>
+<li><a href="k100182.html#sectlevel3id028001004">28.1.4 Ereignisquellen</a>
+<li><a href="k100182.html#sectlevel3id028001005">28.1.5 Adapterklassen</a>
+<li><a href="k100182.html#sectlevel3id028001006">28.1.6 Zusammenfassung</a>
+<ul>
+<li><a href="k100182.html#sectlevel4id028001006001">Focus-Ereignisse</a>
+<li><a href="k100182.html#sectlevel4id028001006002">Key-Ereignisse</a>
+<li><a href="k100182.html#sectlevel4id028001006003">Mouse-Ereignisse</a>
+<li><a href="k100182.html#sectlevel4id028001006004">MouseMotion-Ereignisse</a>
+<li><a href="k100182.html#sectlevel4id028001006005">Component-Ereignisse</a>
+<li><a href="k100182.html#sectlevel4id028001006006">Container-Ereignisse</a>
+<li><a href="k100182.html#sectlevel4id028001006007">Window-Ereignisse</a>
+<li><a href="k100182.html#sectlevel4id028001006008">Action-Ereignisse</a>
+<li><a href="k100182.html#sectlevel4id028001006009">Adjustment-Ereignisse</a>
+<li><a href="k100182.html#sectlevel4id028001006010">Item-Ereignisse</a>
+<li><a href="k100182.html#sectlevel4id028001006011">Text-Ereignisse</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id028001001"></a>
+<h3>28.1.1 Grundlagen </h3>
+
+<p>
+Bei der Programmierung unter einer grafischen Oberfl&auml;che erfolgt
+die Kommunikation zwischen Betriebssystem und Anwendungsprogramm zu
+einem wesentlichen Teil durch das Versenden von Nachrichten. Die Anwendung
+wird dabei &uuml;ber alle Arten von Ereignissen und Zustands&auml;nderungen
+vom Betriebssystem informiert. Dazu z&auml;hlen beispielsweise Mausklicks,
+Bewegungen des Mauszeigers, Tastatureingaben oder Ver&auml;nderungen
+an der Gr&ouml;&szlig;e oder Lage des Fensters. 
+
+<p>
+Bei der Verarbeitung des Nachrichtenverkehrs sind zwei verschiedene
+Arten von Objekten beteiligt. Die <a name="ixa101723"><i>Ereignisquellen</i></a>
+(<a name="ixa101724"><i>Event Sources</i></a>) sind die Ausl&ouml;ser
+der Nachrichten. Eine Ereignisquelle kann beispielsweise ein Button
+sein, der auf einen Mausklick reagiert, oder ein Fenster, das mitteilt,
+dass es &uuml;ber das Systemmen&uuml; geschlossen werden soll. Die
+Reaktion auf diese Nachrichten erfolgt in den speziellen <a name="ixa101725"><i>Ereignisempf&auml;ngern</i></a>
+(den <a name="ixa101726"><i>EventListeners</i></a>); das sind Objekte,
+die das zum Ereignis passende Empf&auml;nger-Interface implementieren.
+Damit ein Ereignisempf&auml;nger die Nachrichten einer bestimmten
+Ereignisquelle erh&auml;lt, muss er sich bei dieser registrieren.
+
+<p>
+Dieses Kommunikationsmodell nennt sich <i>Delegation Event Model</i>
+oder <a name="ixa101727"><i>Delegation Based Event Handling</i></a>
+und wurde mit der Version 1.1 des JDK eingef&uuml;hrt. Um beispielsweise
+auf einen Buttonklick zu reagieren, muss man eine <a name="ixa101728"><a href="index_e.html#ixb101336"><font color=#000080><tt>EventListener</tt></font></a></a>-Klasse
+schreiben, instanzieren und bei der Ereignisquelle registrieren. 
+
+<p>
+Wir werden feststellen, dass das Modell eine Vielzahl von unterschiedlichen
+M&ouml;glichkeiten impliziert, Ereignishandler zu implementieren.
+Diese sind je nach Anwendungsfall unterschiedlich gut oder schlecht
+geeignet, den jeweiligen Nachrichtenverkehr abzubilden. Wir werden
+uns in diesem Kapitel insbesondere mit folgenden Entwurfsmustern besch&auml;ftigen:
+<ul>
+<li>Die Fensterklasse implementiert die erforderlichen <a href="index_e.html#ixb101336"><font color=#000080><tt>EventListener</tt></font></a>-Interfaces,
+stellt die erforderlichen Callback-Methoden zur Verf&uuml;gung und
+registriert sich selbst bei den Ereignisquellen.
+<li>In der Fensterklasse werden lokale oder anonyme Klassen definiert,
+die einen <a href="index_e.html#ixb101336"><font color=#000080><tt>EventListener</tt></font></a>
+implementieren oder sich aus einer <a name="ixa101729"><i>Adapterklasse</i></a>
+ableiten (eine Adapterklasse implementiert ein Interface mit mehreren
+Methoden und erlaubt es somit abgeleiteten Klassen, nur noch die Methoden
+zu &uuml;berlagern, die tats&auml;chlich von Interesse sind).
+<li>GUI-Code und Ereignisbehandlung werden vollkommen getrennt und
+auf unterschiedliche Klassen verteilt.
+<li>In der Komponentenklasse werden die Methoden &uuml;berlagert,
+die f&uuml;r das Empfangen und Verteilen der Nachrichten erforderlich
+sind.
+</ul>
+
+<p>
+Wir werden uns jede dieser Varianten in den nachfolgenden Abschnitten
+ansehen und ihre jeweiligen Einsatzm&ouml;glichkeiten anhand eines
+Beispiels aufzeigen. Zun&auml;chst sollen jedoch die verschiedenen
+Ereignistypen sowie die Ereignisempf&auml;nger und Ereignisquellen
+n&auml;her beleuchtet werden. Wir wollen dabei (etwas unscharf) die
+Begriffe Ereignis, Nachricht und Event in diesem Kapitel synonym verwenden,
+wenn wir innerhalb eines GUI-Programms die ausgetauschten Nachrichten
+oder ihre ausl&ouml;senden Ereignisse meinen. 
+
+<p>
+Die Details einzelner Ereignisarten werden in den nachfolgenden Kapiteln
+schrittweise erkl&auml;rt und zusammen mit den zugeh&ouml;rigen Ereignisquellen
+vorgestellt. 
+
+<!-- Section -->
+
+<a name="sectlevel3id028001002"></a>
+<h3>28.1.2 <a name="ixa101730">Ereignistypen</a></h3>
+
+<p>
+Die Ereignistypen werden durch eine Hierarchie von Ereignisklassen,
+die aus der Klasse <a name="ixa101731"><a href="index_e.html#ixb101339"><font color=#000080><tt>java.util.EventObject</tt></font></a></a>
+abgeleitet sind, repr&auml;sentiert. Die Motivation der Java-Designer,
+diese Klasse in das Paket <a name="ixa101732"><a href="index_j.html#ixb100149"><font color=#000080><tt>java.util</tt></font></a></a>
+zu legen, resultierte wohl aus der &Uuml;berlegung, dass der Transfer
+von Nachrichten nicht allein auf den Oberfl&auml;chenteil beschr&auml;nkt
+sein muss, sondern auch zwischen anderen Elementen einer komplexen
+Anwendung sinnvoll sein kann. Die Klasse <a href="index_e.html#ixb101339"><font color=#000080><tt>java.util.EventObject</tt></font></a>
+fungiert damit als allgemeine Oberklasse aller Arten von Ereignissen,
+die zwischen verschiedenen Programmteilen ausgetauscht werden k&ouml;nnen.
+Ihre einzige nennenswerte F&auml;higkeit besteht darin, das Objekt
+zu speichern, das die Nachricht ausgel&ouml;st hat, und durch Aufruf
+der Methode <a name="ixa101733"><a href="index_g.html#ixb101340"><font color=#000080><tt>getSource</tt></font></a></a>
+anzugeben:
+
+<p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Object getSource()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/EventObject.html" onClick="this.href=getApiDoc('java.util.EventObject')"><font color="#660066" size=-1>java.util.EventObject</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Hierarchie der AWT-spezifischen Ereignisklassen beginnt eine Ebene
+tiefer mit der Klasse <a name="ixa101734"><a href="index_a.html#ixb101341"><font color=#000080><tt>AWTEvent</tt></font></a></a>,
+die aus <a name="ixa101731"><a href="index_e.html#ixb101339"><font color=#000080><tt>EventObject</tt></font></a></a>
+abgeleitet wurde und sich im Paket <a href="index_j.html#ixb100198"><font color=#000080><tt>java.awt</tt></font></a>
+befindet. <a href="index_a.html#ixb101341"><font color=#000080><tt>AWTEvent</tt></font></a>
+ist Oberklasse aller Ereignisklassen des AWT. Diese befinden sich
+im Paket <a name="ixa101735"><a href="index_j.html#ixb100199"><font color=#000080><tt>java.awt.event</tt></font></a></a>,
+das damit praktisch in jede Klasse einzubinden ist, die sich mit dem
+Event-Handling von GUI-Anwendungen besch&auml;ftigt. <a href="k100182.html#hierarchieereignisklassen">Abbildung 28.1</a>
+gibt einen &Uuml;berblick &uuml;ber die Vererbungshierarchie der Ereignisklassen.
+<p>
+<a name="hierarchieereignisklassen"></a>
+<img src="images/VererbEvent.gif">
+<p>
+
+<p><i>
+Abbildung 28.1: Die Hierarchie der Ereignisklassen</i></p>
+
+<p>
+Die Dokumentation zum JDK unterteilt diese Klassen in zwei gro&szlig;e
+Hierarchien. Unterhalb der Klasse <a name="ixa101736"><a href="index_c.html#ixb101342"><font color=#000080><tt>ComponentEvent</tt></font></a></a>
+befinden sich alle <i>Low-Level-Ereignisse</i>. Sie sind f&uuml;r
+den Transfer von elementaren Nachrichten zust&auml;ndig, die von Fenstern
+oder Dialogelementen stammen. Die &uuml;brigen Klassen <a name="ixa101737"><a href="index_a.html#ixb101343"><font color=#000080><tt>ActionEvent</tt></font></a></a>,
+<a name="ixa101738"><a href="index_a.html#ixb101344"><font color=#000080><tt>AdjustmentEvent</tt></font></a></a>,
+<a name="ixa101739"><a href="index_i.html#ixb101345"><font color=#000080><tt>ItemEvent</tt></font></a></a>
+und <a name="ixa101740"><a href="index_t.html#ixb101346"><font color=#000080><tt>TextEvent</tt></font></a></a>
+werden als <i>semantische Ereignisse</i> bezeichnet. Sie sind nicht
+an ein bestimmtes GUI-Element gebunden, sondern &uuml;bermitteln h&ouml;herwertige
+Ereignisse wie das Ausf&uuml;hren eines Kommandos oder die &Auml;nderung
+eines Zustands. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Ein Problem der AWT-Designer war es, einen guten Kompromiss zwischen
+der Gr&ouml;&szlig;e und der Anzahl der zu implementierenden Ereignisklassen
+zu finden. Da der Ableitungsbaum sehr un&uuml;bersichtlich geworden
+w&auml;re, wenn f&uuml;r jedes Elementarereignis eine eigene Klasse
+implementiert worden w&auml;re, hat man sich teilweise dazu entschlossen,
+mehrere unterschiedliche Ereignisse durch eine einzige Klasse zu realisieren.
+So ist beispielsweise die Klasse <a name="ixa101741"><a href="index_m.html#ixb101347"><font color=#000080><tt>MouseEvent</tt></font></a></a>
+sowohl f&uuml;r Mausbewegungen als auch f&uuml;r alle Arten von Klick-
+oder Drag-Ereignissen zust&auml;ndig. Mit Hilfe der Methode <a name="ixa101742"><a href="index_g.html#ixb101348"><font color=#000080><tt>getID</tt></font></a></a>
+und der in den jeweiligen Eventklassen definierten symbolischen Konstanten
+kann das Programm herausfinden, um welche Art von Ereignis es sich
+handelt:</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int getID()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/AWTEvent.html" onClick="this.href=getApiDoc('java.awt.AWTEvent')"><font color="#660066" size=-1>java.awt.AWTEvent</font></a></td>
+</tr>
+</table>
+
+<p>
+Falls das Programm eigene Eventklassen definieren will und Konstanten
+zur Vergabe der Event-Ids vergeben muss, sollten diese oberhalb der
+symbolischen Konstante <a name="ixa101743"><a href="index_r.html#ixb101349"><font color=#000080><tt>RESERVED_ID_MAX</tt></font></a></a>
+liegen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Eventklassen enthalten keine frei zug&auml;nglichen Felder. Stattdessen
+sind alle Eigenschaften durch <a href="index_s.html#ixb100160"><font color=#000080><tt>set</tt></font></a>-/<a href="index_g.html#ixb100713"><font color=#000080><tt>get</tt></font></a>-Methoden
+gekapselt, die je nach Ereignisklasse unterschiedlich sind. So gibt
+es beispielsweise in <a href="index_m.html#ixb101347"><font color=#000080><tt>MouseEvent</tt></font></a>
+die Methode <a name="ixa101744"><a href="index_g.html#ixb101350"><font color=#000080><tt>getPoint</tt></font></a></a>,
+mit der die Mauszeigerposition abgefragt werden kann, in <a name="ixa101745"><a href="index_k.html#ixb101351"><font color=#000080><tt>KeyEvent</tt></font></a></a>
+die Methode <a name="ixa101746"><a href="index_g.html#ixb101352"><font color=#000080><tt>getKeyChar</tt></font></a></a>
+zur Bestimmung der gedr&uuml;ckten Taste und in der &uuml;bergeordneten
+Klasse <a name="ixa101747"><a href="index_i.html#ixb101353"><font color=#000080><tt>InputEvent</tt></font></a></a>
+die Methode <a name="ixa101748"><a href="index_g.html#ixb101354"><font color=#000080><tt>getModifiers</tt></font></a></a>,
+mit der sowohl f&uuml;r Maus- als auch f&uuml;r Tastaturevents der
+Zustand der Sondertasten bestimmt werden kann. Wir werden bei der
+Besprechung der einzelnen Ereignisarten auf die Details eingehen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id028001003"></a>
+<h3>28.1.3 <a name="ixa101749">Ereignisempf&auml;nger</a></h3>
+
+<p>
+Damit ein Objekt Nachrichten empfangen kann, muss es eine Reihe von
+Methoden implementieren, die von der Nachrichtenquelle, bei der es
+sich registriert hat, aufgerufen werden k&ouml;nnen. Um sicherzustellen,
+dass diese Methoden vorhanden sind, m&uuml;ssen die Ereignisempf&auml;nger
+bestimmte Interfaces implementieren, die aus der Klasse <a name="ixa101750"><a href="index_e.html#ixb101336"><font color=#000080><tt>EventListener</tt></font></a></a>
+des Pakets <a href="index_j.html#ixb100149"><font color=#000080><tt>java.util</tt></font></a>
+abgeleitet sind. Diese <a href="index_e.html#ixb101336"><font color=#000080><tt>EventListener</tt></font></a>-Interfaces
+befinden sich im Paket <font color="#000077"><tt>java.awt.event</tt></font>.
+
+<p>
+Je Ereignisklasse gibt es ein <a href="index_e.html#ixb101336"><font color=#000080><tt>EventListener</tt></font></a>-Interface.
+Es definiert eine separate Methode f&uuml;r jede Ereignisart dieser
+Ereignisklasse. So besitzt beispielsweise das Interface <a href="index_m.html#ixb101355"><font color=#000080><tt>MouseListener</tt></font></a>
+die Methoden <a href="index_m.html#ixb101356"><font color=#000080><tt>mouseClicked</tt></font></a>,
+<a href="index_m.html#ixb101357"><font color=#000080><tt>mouseEntered</tt></font></a>,
+<a href="index_m.html#ixb101358"><font color=#000080><tt>mouseExited</tt></font></a>,
+<a href="index_m.html#ixb101359"><font color=#000080><tt>mousePressed</tt></font></a>
+und <a href="index_m.html#ixb101360"><font color=#000080><tt>mouseReleased</tt></font></a>,
+die bei Auftreten des jeweiligen Ereignisses aufgerufen werden. <a href="k100182.html#hierarchieeventlistener">Abbildung 28.2</a>
+gibt eine &Uuml;bersicht &uuml;ber die Hierarchie der <a href="index_e.html#ixb101336"><font color=#000080><tt>EventListener</tt></font></a>-Interfaces.
+<p>
+<a name="hierarchieeventlistener"></a>
+<img src="images/VererbListener.gif">
+<p>
+
+<p><i>
+Abbildung 28.2: Die Hierarchie der EventListener-Interfaces</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Jede der Methoden eines Listener-Interface enth&auml;lt als einziges
+Argument ein Objekt vom zugeh&ouml;rigen Ereignistyp. Alle Methoden
+sind vom Typ <a href="index_v.html#ixb100345"><font color=#000080><tt>void</tt></font></a>,
+erzeugen also keinen R&uuml;ckgabewert.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id028001004"></a>
+<h3>28.1.4 <a name="ixa101751">Ereignisquellen</a></h3>
+
+<p>
+Die Ereignisse stammen von den <i>Ereignisquellen</i>, also von Fenstern,
+Dialogelementen oder h&ouml;heren Programmobjekten. Eine Ereignisquelle
+sendet aber nur dann Ereignisse an einen Ereignisempf&auml;nger, wenn
+dieser sich bei der Ereignisquelle <i>registriert</i> hat. Fehlt eine
+solche Registrierung, wird die Ereignisquelle keine Ereignisse senden
+und der Empf&auml;nger folglich auch keine erhalten. 
+
+<p>
+Die Registrierung erfolgt mit speziellen Methoden, an die ein Objekt
+&uuml;bergeben wird, das das jeweilige <a href="index_e.html#ixb101336"><font color=#000080><tt>EventListener</tt></font></a>-Interface
+implementiert. So gibt es beispielsweise eine Methode <a href="index_a.html#ixb101361"><font color=#000080><tt>addMouseListener</tt></font></a>
+in der Klasse <a href="index_c.html#ixb101293"><font color=#000080><tt>Component</tt></font></a>,
+mit der ein Objekt, das das Interface <a href="index_m.html#ixb101355"><font color=#000080><tt>MouseListener</tt></font></a>
+implementiert, sich f&uuml;r den Empfang von Mausereignissen bei der
+Komponente registrieren lassen kann. Nach erfolgter Registrierung
+wird bei jedem Mausereignis die entsprechende Methode <a href="index_m.html#ixb101356"><font color=#000080><tt>mouseClicked</tt></font></a>,
+<a href="index_m.html#ixb101357"><font color=#000080><tt>mouseEntered</tt></font></a>,
+<a href="index_m.html#ixb101358"><font color=#000080><tt>mouseExited</tt></font></a>,
+<a href="index_m.html#ixb101359"><font color=#000080><tt>mousePressed</tt></font></a>
+oder <a href="index_m.html#ixb101360"><font color=#000080><tt>mouseReleased</tt></font></a>
+aufgerufen.
+
+<p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Ereignisquellen unterst&uuml;tzen das Multicasting von Ereignissen.
+Dabei kann eine Ereignisquelle nicht nur einen einzelnen <a href="index_e.html#ixb101336"><font color=#000080><tt>EventListener</tt></font></a>
+mit Nachrichten versorgen, sondern eine beliebige Anzahl von ihnen.
+Jeder Aufruf von <font color="#000077"><tt>addXYZListener</tt></font>
+registriert dabei einen weiteren Listener in der Ereignisquelle. Das
+AWT definiert nicht, in welcher Reihenfolge die verschiedenen Ereignisempf&auml;nger
+beim Auftreten eines Ereignisses aufgerufen werden, und empfiehlt
+den Programmen, hier&uuml;ber keine Annahmen zu treffen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id028001005"></a>
+<h3>28.1.5 Adapterklassen </h3>
+
+<p>
+Eine <a name="ixa101752"><i>Adapterklasse</i></a> in Java ist eine
+Klasse, die ein vorgegebenes Interface mit leeren Methodenr&uuml;mpfen
+implementiert. Adapterklassen k&ouml;nnen verwendet werden, wenn aus
+einem Interface lediglich ein Teil der Methoden ben&ouml;tigt wird,
+der Rest aber uninteressant ist. In diesem Fall leitet man einfach
+eine neue Klasse aus der Adapterklasse ab, anstatt das zugeh&ouml;rige
+Interface zu implementieren, und &uuml;berlagert die ben&ouml;tigten
+Methoden. Alle &uuml;brigen Methoden des Interface werden von der
+Basisklasse zur Verf&uuml;gung gestellt. 
+
+<p>
+Zu jedem der Low-Level-Ereignisempf&auml;nger stellt das Paket <a href="index_j.html#ixb100199"><font color=#000080><tt>java.awt.event</tt></font></a>
+eine passende Adapterklasse zur Verf&uuml;gung. So gibt es die Adapterklassen
+<a name="ixa101753"><a href="index_f.html#ixb101362"><font color=#000080><tt>FocusAdapter</tt></font></a></a>,
+<a name="ixa101754"><a href="index_k.html#ixb101363"><font color=#000080><tt>KeyAdapter</tt></font></a></a>,
+<a name="ixa101755"><a href="index_m.html#ixb101364"><font color=#000080><tt>MouseAdapter</tt></font></a></a>,
+<a name="ixa101756"><a href="index_m.html#ixb101365"><font color=#000080><tt>MouseMotionAdapter</tt></font></a></a>,
+<a name="ixa101757"><a href="index_c.html#ixb101366"><font color=#000080><tt>ComponentAdapter</tt></font></a></a>,
+<a name="ixa101758"><a href="index_c.html#ixb101367"><font color=#000080><tt>ContainerAdapter</tt></font></a></a>
+und <a name="ixa101759"><a href="index_w.html#ixb101368"><font color=#000080><tt>WindowAdapter</tt></font></a></a>.
+Sie implementieren die korrespondierenden Interfaces. Wir werden sp&auml;ter
+bei der Beschreibung der lokalen und anonymen Klassen sehen, wie die
+Adapterklassen bei der Realisierung der Ereignisempf&auml;nger hilfreich
+sein k&ouml;nnen. 
+
+<!-- Section -->
+
+<a name="sectlevel3id028001006"></a>
+<h3>28.1.6 Zusammenfassung </h3>
+
+<p>
+Der folgende &Uuml;berblick b&uuml;ndelt die bisherigen Ausf&uuml;hrungen
+und gibt eine Zusammenfassung aller Ereignisse nebst zugeh&ouml;rigen
+Ereignisempf&auml;ngern und ihren Methoden. Au&szlig;erdem sind die
+Ereignisquellen und die Methoden zur Registrierung der Ereignisse
+angegeben. Jeder Ereignistyp wird dabei durch zwei Tabellen dargestellt.
+Die erste gibt die zugeh&ouml;rige Ereignisklasse, das Listener-Interface
+und den Namen der Methode zur Registrierung von Ereignisempf&auml;ngern
+an. Sie listet au&szlig;erdem die als Ereignisquelle in Frage kommenden
+Klassen auf. Die zweite Tabelle enth&auml;lt alle Methoden des zugeh&ouml;rigen
+Listener-Interface und beschreibt damit die zu diesem Ereignistyp
+geh&ouml;renden Elementarereignisse. 
+
+<p>
+Dieser Abschnitt nimmt damit Informationen vorweg, die in sp&auml;teren
+Teilen des Buchs konkretisiert werden. Obwohl zum jetzigen Zeitpunkt
+nicht alle Ereignisse in ihrer vollen Bedeutung dargestellt werden
+k&ouml;nnen, mag diese &Uuml;bersicht f&uuml;r die weitere Arbeit
+mit dem AWT und zum Nachschlagen hilfreich sein. 
+
+<!-- Section -->
+
+<a name="sectlevel4id028001006001"></a>
+<h4><a name="ixa101760">Focus-Ereignisse</a></h4>
+<a name="tableid028001"></a>
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=50%><b>Eigenschaft</b></td>
+<td valign=top align=left width=50%><b>Klasse, Interface oder Methode
+</b></td></tr>
+<tr>
+<td valign=top align=left>Ereignisklasse</td>
+<td valign=top align=left><a name="ixa101761"><a href="index_f.html#ixb101370"><font color=#000080><tt>FocusEvent</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>Listener-Interface</td>
+<td valign=top align=left><a name="ixa101762"><a href="index_f.html#ixb101371"><font color=#000080><tt>FocusListener</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>Registrierungsmethode</td>
+<td valign=top align=left><a name="ixa101763"><a href="index_a.html#ixb101372"><font color=#000080><tt>addFocusListener</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>M&ouml;gliche Ereignisquellen</td>
+<td valign=top align=left><a href="index_c.html#ixb101293"><font color=#000080><tt>Component</tt></font></a>
+</td></tr>
+</table>
+<p><i>
+Tabelle 28.1: Focus-Ereignisse </i></p>
+<a name="tableid028002"></a>
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=40%><b>Ereignismethode</b></td>
+<td valign=top align=left width=60%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101764"><a href="index_f.html#ixb101373"><font color=#000080><tt>focusGained</tt></font></a></a></td>
+<td valign=top align=left>Eine Komponente erh&auml;lt den Focus. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101765"><a href="index_f.html#ixb101374"><font color=#000080><tt>focusLost</tt></font></a></a></td>
+<td valign=top align=left>Eine Komponente verliert den Focus. </td></tr>
+</table>
+<p><i>
+Tabelle 28.2: Methoden f&uuml;r Focus-Ereignisse </i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id028001006002"></a>
+<h4><a name="ixa101766">Key-Ereignisse</a></h4>
+<a name="tableid028003"></a>
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=50%><b>Eigenschaft</b></td>
+<td valign=top align=left width=50%><b>Klasse, Interface oder Methode
+</b></td></tr>
+<tr>
+<td valign=top align=left>Ereignisklasse</td>
+<td valign=top align=left><a name="ixa101767"><a href="index_k.html#ixb101351"><font color=#000080><tt>KeyEvent</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>Listener-Interface</td>
+<td valign=top align=left><a name="ixa101768"><a href="index_k.html#ixb101376"><font color=#000080><tt>KeyListener</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>Registrierungsmethode</td>
+<td valign=top align=left><a name="ixa101769"><a href="index_a.html#ixb101304"><font color=#000080><tt>addKeyListener</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>M&ouml;gliche Ereignisquellen</td>
+<td valign=top align=left><a href="index_c.html#ixb101293"><font color=#000080><tt>Component</tt></font></a>
+</td></tr>
+</table>
+<p><i>
+Tabelle 28.3: Key-Ereignisse </i></p>
+<a name="tableid028004"></a>
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=40%><b>Ereignismethode</b></td>
+<td valign=top align=left width=60%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101770"><a href="index_k.html#ixb101377"><font color=#000080><tt>keyPressed</tt></font></a></a></td>
+<td valign=top align=left>Eine Taste wurde gedr&uuml;ckt. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101771"><a href="index_k.html#ixb101378"><font color=#000080><tt>keyReleased</tt></font></a></a></td>
+<td valign=top align=left>Eine Taste wurde losgelassen. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101772"><a href="index_k.html#ixb101379"><font color=#000080><tt>keyTyped</tt></font></a></a></td>
+<td valign=top align=left>Eine Taste wurde gedr&uuml;ckt und wieder
+losgelassen. </td></tr>
+</table>
+<p><i>
+Tabelle 28.4: Methoden f&uuml;r Key-Ereignisse </i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id028001006003"></a>
+<h4><a name="ixa101773">Mouse-Ereignisse</a></h4>
+<a name="tableid028005"></a>
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=50%><b>Eigenschaft</b></td>
+<td valign=top align=left width=50%><b>Klasse, Interface oder Methode
+</b></td></tr>
+<tr>
+<td valign=top align=left>Ereignisklasse</td>
+<td valign=top align=left><a name="ixa101774"><a href="index_m.html#ixb101347"><font color=#000080><tt>MouseEvent</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>Listener-Interface</td>
+<td valign=top align=left><a name="ixa101775"><a href="index_m.html#ixb101355"><font color=#000080><tt>MouseListener</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>Registrierungsmethode</td>
+<td valign=top align=left><a name="ixa101776"><a href="index_a.html#ixb101361"><font color=#000080><tt>addMouseListener</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>M&ouml;gliche Ereignisquellen</td>
+<td valign=top align=left><a href="index_c.html#ixb101293"><font color=#000080><tt>Component</tt></font></a>
+</td></tr>
+</table>
+<p><i>
+Tabelle 28.5: Mouse-Ereignisse </i></p>
+<a name="tableid028006"></a>
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=40%><b>Ereignismethode</b></td>
+<td valign=top align=left width=60%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101777"><a href="index_m.html#ixb101356"><font color=#000080><tt>mouseClicked</tt></font></a></a></td>
+<td valign=top align=left>Eine Maustaste wurde gedr&uuml;ckt und wieder
+losgelassen. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101778"><a href="index_m.html#ixb101357"><font color=#000080><tt>mouseEntered</tt></font></a></a></td>
+<td valign=top align=left>Der Mauszeiger betritt die Komponente. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101779"><a href="index_m.html#ixb101358"><font color=#000080><tt>mouseExited</tt></font></a></a></td>
+<td valign=top align=left>Der Mauszeiger verl&auml;sst die Komponente.
+</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101780"><a href="index_m.html#ixb101359"><font color=#000080><tt>mousePressed</tt></font></a></a></td>
+<td valign=top align=left>Eine Maustaste wurde gedr&uuml;ckt. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101781"><a href="index_m.html#ixb101360"><font color=#000080><tt>mouseReleased</tt></font></a></a></td>
+<td valign=top align=left>Eine Maustaste wurde losgelassen. </td></tr>
+</table>
+<p><i>
+Tabelle 28.6: Methoden f&uuml;r Mouse-Ereignisse </i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id028001006004"></a>
+<h4><a name="ixa101782">MouseMotion-Ereignisse</a></h4>
+<a name="tableid028007"></a>
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=50%><b>Eigenschaft</b></td>
+<td valign=top align=left width=50%><b>Klasse, Interface oder Methode
+</b></td></tr>
+<tr>
+<td valign=top align=left>Ereignisklasse</td>
+<td valign=top align=left><a name="ixa101783"><a href="index_m.html#ixb101347"><font color=#000080><tt>MouseEvent</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>Listener-Interface</td>
+<td valign=top align=left><a name="ixa101784"><a href="index_m.html#ixb101382"><font color=#000080><tt>MouseMotionListener</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>Registrierungsmethode</td>
+<td valign=top align=left><a name="ixa101785"><a href="index_a.html#ixb101383"><font color=#000080><tt>addMouseMotionListener</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>M&ouml;gliche Ereignisquellen</td>
+<td valign=top align=left><a href="index_c.html#ixb101293"><font color=#000080><tt>Component</tt></font></a>
+</td></tr>
+</table>
+<p><i>
+Tabelle 28.7: MouseMotion-Ereignisse </i></p>
+<a name="tableid028008"></a>
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=40%><b>Ereignismethode</b></td>
+<td valign=top align=left width=60%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101786"><a href="index_m.html#ixb101384"><font color=#000080><tt>mouseDragged</tt></font></a></a></td>
+<td valign=top align=left>Die Maus wurde bei gedr&uuml;ckter Taste
+bewegt. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101787"><a href="index_m.html#ixb101385"><font color=#000080><tt>mouseMoved</tt></font></a></a></td>
+<td valign=top align=left>Die Maus wurde bewegt, ohne dass eine Taste
+gedr&uuml;ckt wurde. </td></tr>
+</table>
+<p><i>
+Tabelle 28.8: Methoden f&uuml;r MouseMotion-Ereignisse </i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id028001006005"></a>
+<h4><a name="ixa101788">Component-Ereignisse</a></h4>
+<a name="tableid028009"></a>
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=50%><b>Eigenschaft</b></td>
+<td valign=top align=left width=50%><b>Klasse, Interface oder Methode
+</b></td></tr>
+<tr>
+<td valign=top align=left>Ereignisklasse</td>
+<td valign=top align=left><a name="ixa101789"><a href="index_c.html#ixb101342"><font color=#000080><tt>ComponentEvent</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>Listener-Interface</td>
+<td valign=top align=left><a name="ixa101790"><a href="index_c.html#ixb101387"><font color=#000080><tt>ComponentListener</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>Registrierungsmethode</td>
+<td valign=top align=left><a name="ixa101791"><a href="index_a.html#ixb101388"><font color=#000080><tt>addComponentListener</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>M&ouml;gliche Ereignisquellen</td>
+<td valign=top align=left><a href="index_c.html#ixb101293"><font color=#000080><tt>Component</tt></font></a>
+</td></tr>
+</table>
+<p><i>
+Tabelle 28.9: Komponenten-Ereignisse </i></p>
+<a name="tableid028010"></a>
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=40%><b>Ereignismethode</b></td>
+<td valign=top align=left width=60%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101792"><a href="index_c.html#ixb101389"><font color=#000080><tt>componentHidden</tt></font></a></a></td>
+<td valign=top align=left>Eine Komponente wurde unsichtbar. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101793"><a href="index_c.html#ixb101390"><font color=#000080><tt>componentMoved</tt></font></a></a></td>
+<td valign=top align=left>Eine Komponente wurde verschoben. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101794"><a href="index_c.html#ixb101391"><font color=#000080><tt>componentResized</tt></font></a></a></td>
+<td valign=top align=left>Die Gr&ouml;&szlig;e einer Komponente hat
+sich ge&auml;ndert. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101795"><a href="index_c.html#ixb101392"><font color=#000080><tt>componentShown</tt></font></a></a></td>
+<td valign=top align=left>Eine Komponente wurde sichtbar. </td></tr>
+</table>
+<p><i>
+Tabelle 28.10: Methoden f&uuml;r Komponenten-Ereignisse </i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id028001006006"></a>
+<h4><a name="ixa101796">Container-Ereignisse</a></h4>
+<a name="tableid028011"></a>
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=50%><b>Eigenschaft</b></td>
+<td valign=top align=left width=50%><b>Klasse, Interface oder Methode
+</b></td></tr>
+<tr>
+<td valign=top align=left>Ereignisklasse</td>
+<td valign=top align=left><a name="ixa101797"><a href="index_c.html#ixb101394"><font color=#000080><tt>ContainerEvent</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>Listener-Interface</td>
+<td valign=top align=left><a name="ixa101798"><a href="index_c.html#ixb101395"><font color=#000080><tt>ContainerListener</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>Registrierungsmethode</td>
+<td valign=top align=left><a name="ixa101799"><a href="index_a.html#ixb101396"><font color=#000080><tt>addContainerListener</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>M&ouml;gliche Ereignisquellen</td>
+<td valign=top align=left><a href="index_c.html#ixb101294"><font color=#000080><tt>Container</tt></font></a>
+</td></tr>
+</table>
+<p><i>
+Tabelle 28.11: Container-Ereignisse </i></p>
+<a name="tableid028012"></a>
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=40%><b>Ereignismethode</b></td>
+<td valign=top align=left width=60%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101800"><a href="index_c.html#ixb101397"><font color=#000080><tt>componentAdded</tt></font></a></a></td>
+<td valign=top align=left>Eine Komponente wurde hinzugef&uuml;gt.
+</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101801"><a href="index_c.html#ixb101398"><font color=#000080><tt>componentRemoved</tt></font></a></a></td>
+<td valign=top align=left>Eine Komponente wurde entfernt. </td></tr>
+</table>
+<p><i>
+Tabelle 28.12: Methoden f&uuml;r Container-Ereignisse </i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id028001006007"></a>
+<h4><a name="ixa101802">Window-Ereignisse</a></h4>
+<a name="tableid028013"></a>
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=50%><b>Eigenschaft</b></td>
+<td valign=top align=left width=50%><b>Klasse, Interface oder Methode
+</b></td></tr>
+<tr>
+<td valign=top align=left>Ereignisklasse</td>
+<td valign=top align=left><a name="ixa101803"><a href="index_w.html#ixb101400"><font color=#000080><tt>WindowEvent</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>Listener-Interface</td>
+<td valign=top align=left><a name="ixa101804"><a href="index_w.html#ixb101162"><font color=#000080><tt>WindowListener</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>Registrierungsmethode</td>
+<td valign=top align=left><a name="ixa101805"><a href="index_a.html#ixb101164"><font color=#000080><tt>addWindowListener</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>M&ouml;gliche Ereignisquellen</td>
+<td valign=top align=left><a href="index_d.html#ixb101152"><font color=#000080><tt>Dialog</tt></font></a>,
+<a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>
+</td></tr>
+</table>
+<p><i>
+Tabelle 28.13: Window-Ereignisse </i></p>
+<a name="tableid028014"></a>
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=40%><b>Ereignismethode</b></td>
+<td valign=top align=left width=60%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101806"><a href="index_w.html#ixb101401"><font color=#000080><tt>windowActivated</tt></font></a></a></td>
+<td valign=top align=left>Das Fenster wurde aktiviert. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101807"><a href="index_w.html#ixb101402"><font color=#000080><tt>windowClosed</tt></font></a></a></td>
+<td valign=top align=left>Das Fenster wurde geschlossen. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101808"><a href="index_w.html#ixb101163"><font color=#000080><tt>windowClosing</tt></font></a></a></td>
+<td valign=top align=left>Das Fenster wird geschlossen. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101809"><a href="index_w.html#ixb101403"><font color=#000080><tt>windowDeactivated</tt></font></a></a></td>
+<td valign=top align=left>Das Fenster wurde deaktiviert. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101810"><a href="index_w.html#ixb101404"><font color=#000080><tt>windowDeiconified</tt></font></a></a></td>
+<td valign=top align=left>Das Fenster wurde wiederhergestellt. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101811"><a href="index_w.html#ixb101405"><font color=#000080><tt>windowIconified</tt></font></a></a></td>
+<td valign=top align=left>Das Fenster wurde auf Symbolgr&ouml;&szlig;e
+verkleinert. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101812"><a href="index_w.html#ixb101406"><font color=#000080><tt>windowOpened</tt></font></a></a></td>
+<td valign=top align=left>Das Fenster wurde ge&ouml;ffnet. </td></tr>
+</table>
+<p><i>
+Tabelle 28.14: Methoden f&uuml;r Window-Ereignisse </i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id028001006008"></a>
+<h4><a name="ixa101813">Action-Ereignisse</a></h4>
+<a name="tableid028015"></a>
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=50%><b>Eigenschaft</b></td>
+<td valign=top align=left width=50%><b>Klasse, Interface oder Methode
+</b></td></tr>
+<tr>
+<td valign=top align=left>Ereignisklasse</td>
+<td valign=top align=left><a name="ixa101814"><a href="index_a.html#ixb101343"><font color=#000080><tt>ActionEvent</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>Listener-Interface</td>
+<td valign=top align=left><a name="ixa101815"><a href="index_a.html#ixb101408"><font color=#000080><tt>ActionListener</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>Registrierungsmethode</td>
+<td valign=top align=left><a name="ixa101816"><a href="index_a.html#ixb101409"><font color=#000080><tt>addActionListener</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>M&ouml;gliche Ereignisquellen</td>
+<td valign=top align=left><a href="index_b.html#ixb101410"><font color=#000080><tt>Button</tt></font></a>,
+<a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>,
+<a href="index_m.html#ixb101411"><font color=#000080><tt>MenuItem</tt></font></a>,
+<a href="index_t.html#ixb101412"><font color=#000080><tt>TextField</tt></font></a>
+</td></tr>
+</table>
+<p><i>
+Tabelle 28.15: Action-Ereignisse </i></p>
+<a name="tableid028016"></a>
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=40%><b>Ereignismethode</b></td>
+<td valign=top align=left width=60%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101817"><a href="index_a.html#ixb101413"><font color=#000080><tt>actionPerformed</tt></font></a></a></td>
+<td valign=top align=left>Eine Aktion wurde ausgel&ouml;st. </td></tr>
+</table>
+<p><i>
+Tabelle 28.16: Methoden f&uuml;r Action-Ereignisse </i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id028001006009"></a>
+<h4><a name="ixa101818">Adjustment-Ereignisse</a></h4>
+<a name="tableid028017"></a>
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=50%><b>Eigenschaft</b></td>
+<td valign=top align=left width=50%><b>Klasse, Interface oder Methode
+</b></td></tr>
+<tr>
+<td valign=top align=left>Ereignisklasse</td>
+<td valign=top align=left><a name="ixa101819"><a href="index_a.html#ixb101344"><font color=#000080><tt>AdjustmentEvent</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>Listener-Interface</td>
+<td valign=top align=left><a name="ixa101820"><a href="index_a.html#ixb101415"><font color=#000080><tt>AdjustmentListener</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>Registrierungsmethode</td>
+<td valign=top align=left><a name="ixa101821"><a href="index_a.html#ixb101416"><font color=#000080><tt>addAdjustmentListener</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>M&ouml;gliche Ereignisquellen</td>
+<td valign=top align=left><a href="index_s.html#ixb101417"><font color=#000080><tt>Scrollbar</tt></font></a>
+</td></tr>
+</table>
+<p><i>
+Tabelle 28.17: Adjustment-Ereignisse </i></p>
+<a name="tableid028018"></a>
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=40%><b>Ereignismethode</b></td>
+<td valign=top align=left width=60%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101822"><a href="index_a.html#ixb101418"><font color=#000080><tt>adjustmentValueChanged</tt></font></a></a></td>
+<td valign=top align=left>Der Wert wurde ver&auml;ndert. </td></tr>
+</table>
+<p><i>
+Tabelle 28.18: Methoden f&uuml;r Adjustment-Ereignisse </i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id028001006010"></a>
+<h4><a name="ixa101823">Item-Ereignisse</a></h4>
+<a name="tableid028019"></a>
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=50%><b>Eigenschaft</b></td>
+<td valign=top align=left width=50%><b>Klasse, Interface oder Methode
+</b></td></tr>
+<tr>
+<td valign=top align=left>Ereignisklasse</td>
+<td valign=top align=left><a name="ixa101824"><a href="index_i.html#ixb101345"><font color=#000080><tt>ItemEvent</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>Listener-Interface</td>
+<td valign=top align=left><a name="ixa101825"><a href="index_i.html#ixb101420"><font color=#000080><tt>ItemListener</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>Registrierungsmethode</td>
+<td valign=top align=left><a name="ixa101826"><a href="index_a.html#ixb101421"><font color=#000080><tt>addItemListener</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>M&ouml;gliche Ereignisquellen</td>
+<td valign=top align=left><a href="index_c.html#ixb101422"><font color=#000080><tt>Checkbox</tt></font></a>,
+<a href="index_c.html#ixb101423"><font color=#000080><tt>Choice</tt></font></a>,
+<a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>,
+<a href="index_c.html#ixb101424"><font color=#000080><tt>CheckboxMenuItem</tt></font></a>
+</td></tr>
+</table>
+<p><i>
+Tabelle 28.19: Item-Ereignisse </i></p>
+<a name="tableid028020"></a>
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=40%><b>Ereignismethode</b></td>
+<td valign=top align=left width=60%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101827"><a href="index_i.html#ixb101425"><font color=#000080><tt>itemStateChanged</tt></font></a></a></td>
+<td valign=top align=left>Der Zustand hat sich ver&auml;ndert. </td></tr>
+</table>
+<p><i>
+Tabelle 28.20: Methoden f&uuml;r Item-Ereignisse </i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id028001006011"></a>
+<h4>Text-Ereignisse </h4>
+<a name="tableid028021"></a>
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=50%><b>Eigenschaft</b></td>
+<td valign=top align=left width=50%><b>Klasse, Interface oder Methode
+</b></td></tr>
+<tr>
+<td valign=top align=left>Ereignisklasse</td>
+<td valign=top align=left><a name="ixa101828"><a href="index_t.html#ixb101346"><font color=#000080><tt>TextEvent</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>Listener-Interface</td>
+<td valign=top align=left><a name="ixa101829"><a href="index_t.html#ixb101426"><font color=#000080><tt>TextListener</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>Registrierungsmethode</td>
+<td valign=top align=left><a name="ixa101830"><a href="index_a.html#ixb101427"><font color=#000080><tt>addTextListener</tt></font></a></a>
+</td></tr>
+<tr>
+<td valign=top align=left>M&ouml;gliche Ereignisquellen</td>
+<td valign=top align=left><a href="index_t.html#ixb101412"><font color=#000080><tt>TextField</tt></font></a>,
+<a href="index_t.html#ixb101428"><font color=#000080><tt>TextArea</tt></font></a>
+</td></tr>
+</table>
+<p><i>
+Tabelle 28.21: Text-Ereignisse </i></p>
+<a name="tableid028022"></a>
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=40%><b>Ereignismethode</b></td>
+<td valign=top align=left width=60%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101831"><a href="index_t.html#ixb101429"><font color=#000080><tt>textValueChanged</tt></font></a></a></td>
+<td valign=top align=left>Der Text wurde ver&auml;ndert. </td></tr>
+</table>
+<p><i>
+Tabelle 28.22: Methoden f&uuml;r Text-Ereignisse </i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100181.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100181.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100183.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100185.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

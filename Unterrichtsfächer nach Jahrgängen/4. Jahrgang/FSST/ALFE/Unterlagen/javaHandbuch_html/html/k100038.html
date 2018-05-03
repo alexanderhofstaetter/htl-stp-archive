@@ -1,0 +1,153 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100036.html;106,k100037.html;107,k100039.html;108,k100046.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100036.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100037.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100039.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100046.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 6 - Ausdr&uuml;cke
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id006002"></a>
+<h2>6.2 <a name="ixa100331">Arithmetische Operatoren</a><a name="ixa100332"></a></h2>
+<hr>
+<ul>
+<li><a href="k100038.html#sectlevel2id006002">6.2 Arithmetische Operatoren</a>
+</ul>
+<hr>
+
+<p>
+Java kennt die &uuml;blichen arithmetischen Operatoren der meisten
+imperativen Programmiersprachen, n&auml;mlich die <a name="ixa100333"><i>Addition</i></a>,
+<a name="ixa100334"><i>Subtraktion</i></a>, <a name="ixa100335"><i>Multiplikation</i></a>,
+<a name="ixa100336"><i>Division</i></a> und den <a name="ixa100337"><i>Restwertoperator</i></a><a name="ixa100338"></a>.
+Zus&auml;tzlich gibt es die einstelligen Operatoren f&uuml;r positives
+und negatives Vorzeichen sowie die nebeneffektbehafteten <a name="ixa100339"><i>Pr&auml;</i></a>-
+und <a name="ixa100340"><i>Postinkrement</i></a>- und <a name="ixa100341"><i>Pr&auml;</i></a>-
+und <a name="ixa100342"><i>Postdekrement</i></a>-Operatoren. 
+
+<p>
+Die arithmetischen Operatoren erwarten numerische Operanden und liefern
+einen numerischen R&uuml;ckgabewert. Haben die Operanden unterschiedliche
+Typen, beispielsweise <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>
+und <a href="index_f.html#ixb100253"><font color=#000080><tt>float</tt></font></a>,
+so entspricht der <a name="ixa100343">Ergebnistyp</a> des Teilausdrucks
+dem gr&ouml;&szlig;eren der beiden Operanden. Zuvor wird der kleinere
+der beiden Operanden mit Hilfe einer erweiternden Konvertierung in
+den Typ des gr&ouml;&szlig;eren konvertiert. 
+
+<p>
+<a href="k100038.html#arithmetischeoperatoren">Tabelle 6.1</a> gibt
+eine &Uuml;bersicht der in Java verf&uuml;gbaren arithmetischen Operatoren.
+<a name="arithmetischeoperatoren"></a>
+<p>
+<table cols=3 border width=100%>
+
+<tr>
+<td valign=top align=left width=33%><b>Operator</b></td>
+<td valign=top align=left width=33%><b>Bezeichnung</b></td>
+<td valign=top align=left width=33%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left>+</td>
+<td valign=top align=left>Positives Vorzeichen</td>
+<td valign=top align=left>+n ist gleichbedeutend mit n </td></tr>
+<tr>
+<td valign=top align=left>-</td>
+<td valign=top align=left>Negatives Vorzeichen</td>
+<td valign=top align=left>-n kehrt das Vorzeichen von n um </td></tr>
+<tr>
+<td valign=top align=left>+</td>
+<td valign=top align=left>Summe</td>
+<td valign=top align=left>a + b ergibt die Summe von a und b </td></tr>
+<tr>
+<td valign=top align=left>-</td>
+<td valign=top align=left>Differenz</td>
+<td valign=top align=left>a - b ergibt die Differenz von a und b </td></tr>
+<tr>
+<td valign=top align=left>*</td>
+<td valign=top align=left>Produkt</td>
+<td valign=top align=left>a * b ergibt das Produkt aus a und b </td></tr>
+<tr>
+<td valign=top align=left>/</td>
+<td valign=top align=left>Quotient</td>
+<td valign=top align=left>a / b ergibt den Quotienten von a und b.
+Bei integralen Typen handelt es sich hierbei um die ganzzahlige Division
+ohne Rest. </td></tr>
+<tr>
+<td valign=top align=left>%</td>
+<td valign=top align=left>Restwert</td>
+<td valign=top align=left>a % b ergibt den Rest der ganzzahligen Division
+von a durch b. In Java l&auml;sst sich dieser Operator auch auf Flie&szlig;kommazahlen
+anwenden. </td></tr>
+<tr>
+<td valign=top align=left>++</td>
+<td valign=top align=left>Pr&auml;inkrement</td>
+<td valign=top align=left>++a ergibt a+1 und erh&ouml;ht a um 1. In
+Java l&auml;sst sich dieser Operator auch auf Flie&szlig;kommazahlen
+anwenden. </td></tr>
+<tr>
+<td valign=top align=left>++</td>
+<td valign=top align=left>Postinkrement</td>
+<td valign=top align=left>a++ ergibt a und erh&ouml;ht a um 1. In
+Java l&auml;sst sich dieser Operator auch auf Flie&szlig;kommazahlen
+anwenden. </td></tr>
+<tr>
+<td valign=top align=left>--</td>
+<td valign=top align=left>Pr&auml;dekrement</td>
+<td valign=top align=left>--a ergibt a-1 und verringert a um 1. In
+Java l&auml;sst sich dieser Operator auch auf Flie&szlig;kommazahlen
+anwenden. </td></tr>
+<tr>
+<td valign=top align=left>--</td>
+<td valign=top align=left>Postdekrement</td>
+<td valign=top align=left>a-- ergibt a und verringert a um 1. In Java
+l&auml;sst sich dieser Operator auch auf Flie&szlig;kommazahlen anwenden.
+</td></tr>
+</table>
+<p><i>
+Tabelle 6.1: Arithmetische Operatoren </i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100036.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100037.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100039.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100046.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

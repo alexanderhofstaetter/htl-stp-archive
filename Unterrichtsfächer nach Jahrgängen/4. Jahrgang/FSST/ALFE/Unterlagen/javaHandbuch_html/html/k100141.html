@@ -1,0 +1,195 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100137.html;106,k100140.html;107,k100142.html;108,k100143.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100137.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100140.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100142.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100143.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 21 - Random-Access-I/O
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="schreibrandomaccess"></a>
+<h2>21.4 Schreibzugriffe </h2>
+<hr>
+<ul>
+<li><a href="k100141.html#schreibrandomaccess">21.4 Schreibzugriffe</a>
+</ul>
+<hr>
+
+<p>
+Die schreibenden Zugriffe erfolgen mit Methoden, die mit denen f&uuml;r
+die Lesezugriffe korrespondieren: <a name="ixa101414"></a> <a name="ixa101415"></a>
+<a name="ixa101416"></a> <a name="ixa101417"></a> <a name="ixa101418"></a>
+<a name="ixa101419"></a> <a name="ixa101420"></a> <a name="ixa101421"></a>
+<a name="ixa101422"></a> <a name="ixa101423"></a> <a name="ixa101424"></a>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public final void writeBoolean(boolean v)
+public final void writeByte(int v)
+public final void writeBytes(String s)
+public final void writeChar(int v)
+public final void writeChars(String s)
+public final void writeDouble(double v)
+public final void writeFloat(float v)
+public final void writeInt(int v)
+public final void writeLong(long v)
+public final void writeShort(int v)
+public final void writeUTF(String str)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/RandomAccessFile.html" onClick="this.href=getApiDoc('java.io.RandomAccessFile')"><font color="#660066" size=-1>java.io.RandomAccessFile</font></a></td>
+</tr>
+</table>
+
+<p>
+Zus&auml;tzlich gibt es auch hier einige Methoden zum Schreiben von
+untypisierten Daten<a name="ixa101425"></a>: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void write(int b)
+public void write(byte[] b)
+public void write(byte[] b, int off, int len)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/RandomAccessFile.html" onClick="this.href=getApiDoc('java.io.RandomAccessFile')"><font color="#660066" size=-1>java.io.RandomAccessFile</font></a></td>
+</tr>
+</table>
+
+<p>
+Das folgende Beispiel zeigt ein Programm, das den Inhalt der als Argument
+&uuml;bergebenen Datei liest und spiegelverkehrt an Ende anh&auml;ngt:
+<a name="listingid021002"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2102.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2102
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">010 </font>      RandomAccessFile f1 = <font color="#0000AA">new</font> RandomAccessFile(
+<font color="#555555">011 </font>        args[0], <font color="#0000FF">"rw"</font>
+<font color="#555555">012 </font>      );
+<font color="#555555">013 </font>      <font color="#006699">long</font> len = f1.length();
+<font color="#555555">014 </font>      f1.setLength(2 * len);
+<font color="#555555">015 </font>      <font color="#0000AA">for</font> (<font color="#006699">long</font> i = 0; i &lt; len; ++i) {
+<font color="#555555">016 </font>        f1.seek(i);
+<font color="#555555">017 </font>        <font color="#006699">int</font> c = f1.read();
+<font color="#555555">018 </font>        f1.seek(2 * len - i - 1);
+<font color="#555555">019 </font>        f1.write(c);
+<font color="#555555">020 </font>      }
+<font color="#555555">021 </font>      f1.close();
+<font color="#555555">022 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">023 </font>      System.err.println(e.toString());
+<font color="#555555">024 </font>    }
+<font color="#555555">025 </font>  }
+<font color="#555555">026 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2102.java"><font color="#000055" size=-1>Listing2102.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 21.2: Spiegeln einer Datei</i></p>
+
+<p>
+Das Programm bestimmt zun&auml;chst die L&auml;nge der Datei und verdoppelt
+diese durch Aufruf von <a href="index_s.html#ixb101061"><font color=#000080><tt>setLength</tt></font></a>.
+Dann wird die Datei von Beginn an zeichenweise gelesen und - beginnend
+am neuen Ende der Datei r&uuml;ckw&auml;rts - beschrieben. Als Resultat
+entsteht eine Datei, deren zweite H&auml;lfte das Spiegelbild ihrer
+ersten ist. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Klasse <a href="index_r.html#ixb101021"><font color=#000080><tt>RandomAccessFile</tt></font></a>
+implementiert die beiden Interfaces <a href="index_d.html#ixb101018"><font color=#000080><tt>DataOutput</tt></font></a>
+und <a href="index_d.html#ixb101022"><font color=#000080><tt>DataInput</tt></font></a>,
+die in <a href="k100134.html#filteroutputstream">Abschnitt 20.2.3</a>
+und <a href="k100135.html#filterinputstream">Abschnitt 20.3.3</a>
+erl&auml;utert wurden. Dadurch steht ein einheitliches Interface f&uuml;r
+den Zugriff auf Streams und Random-Access-Dateien zur Verf&uuml;gung
+und es ist m&ouml;glich, primitive Typen wahlweise streambasiert oder
+wahlfrei zu verarbeiten.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100137.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100140.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100142.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100143.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

@@ -1,0 +1,299 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100104.html;106,k100110.html;107,k100112.html;108,k100114.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100104.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100110.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100112.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100114.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 16 - Collections II
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id016007"></a>
+<h2>16.7 Die Klasse Collections </h2>
+<hr>
+<ul>
+<li><a href="k100111.html#sectlevel2id016007">16.7 Die Klasse Collections</a>
+<ul>
+<li><a href="k100111.html#sectlevel3id016007001">16.7.1 Sortieren und Suchen</a>
+<li><a href="k100111.html#subsectionsynccollections">16.7.2 Synchronisieren von Collections</a>
+<li><a href="k100111.html#sectlevel3id016007003">16.7.3 Erzeugen unver&auml;nderlicher Collections</a>
+</ul>
+</ul>
+<hr>
+
+<p>
+Im Paket <a href="index_j.html#ixb100149"><font color=#000080><tt>java.util</tt></font></a>
+gibt es eine Klasse <a name="ixa101005"><a href="index_c.html#ixb100776"><font color=#000080><tt>Collections</tt></font></a></a>
+(man achte auf das &#187;s&#171; am Ende), die eine gro&szlig;e Anzahl
+statischer Methoden zur Manipulation und Verarbeitung von Collections
+enth&auml;lt. Darunter finden sich Methoden zum Durchsuchen, Sortieren,
+Kopieren und Synchronisieren von Collections sowie solche zur Extraktion
+von Elementen mit bestimmten Eigenschaften. Wir wollen uns hier nur
+einige der interessanten Methoden dieser Klasse ansehen und verweisen
+f&uuml;r weitere Informationen auf die JDK-Dokumentation. 
+
+<!-- Section -->
+
+<a name="sectlevel3id016007001"></a>
+<h3>16.7.1 Sortieren und Suchen </h3>
+
+<p>
+Die Klasse <a href="index_c.html#ixb100776"><font color=#000080><tt>Collections</tt></font></a>
+enth&auml;lt zwei Methoden <a name="ixa101006"><a href="index_s.html#ixb100777"><font color=#000080><tt>sort</tt></font></a></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+static void sort(List list)
+static void sort(List list, Comparator c)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Collections.html" onClick="this.href=getApiDoc('java.util.Collections')"><font color="#660066" size=-1>java.util.Collections</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit Hilfe von <a href="index_s.html#ixb100777"><font color=#000080><tt>sort</tt></font></a>
+k&ouml;nnen beliebige Listen sortiert werden. Als Argument werden
+die Liste und wahlweise ein <a href="index_c.html#ixb100767"><font color=#000080><tt>Comparator</tt></font></a>
+&uuml;bergeben. Fehlt der <a href="index_c.html#ixb100767"><font color=#000080><tt>Comparator</tt></font></a>,
+wird die Liste in ihrer nat&uuml;rlichen Ordnung sortiert. Dazu m&uuml;ssen
+alle Elemente das <a href="index_c.html#ixb100454"><font color=#000080><tt>Comparable</tt></font></a>-Interface
+implementieren und ohne Typfehler paarweise miteinander vergleichbar
+sein. Gem&auml;&szlig; JDK-Dokumentation verwendet diese Methode ein
+modifiziertes Mergesort, das auch im Worst-Case eine Laufzeit von
+<i>n*log(n)</i> hat (auch bei der Klasse <a href="index_l.html#ixb100709"><font color=#000080><tt>LinkedList</tt></font></a>)
+und damit auch f&uuml;r gro&szlig;e Listen geeignet sein sollte. 
+
+<p>
+Wir wollen als Beispiel noch einmal <a href="k100110.html#treesetsortieren">Listing 16.5</a>
+aufgreifen und zeigen, wie man die unsortierten Elemente einer Liste
+mit Hilfe der Methode <a href="index_s.html#ixb100777"><font color=#000080><tt>sort</tt></font></a>
+sortieren kann: 
+<a name="listingid016007"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1607.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1607
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#00AA00">//Konstruieren des Sets</font>
+<font color="#555555">010 </font>    List l = <font color="#0000AA">new</font> ArrayList();
+<font color="#555555">011 </font>    l.add(<font color="#0000FF">"Kiwi"</font>);
+<font color="#555555">012 </font>    l.add(<font color="#0000FF">"Kirsche"</font>);
+<font color="#555555">013 </font>    l.add(<font color="#0000FF">"Ananas"</font>);
+<font color="#555555">014 </font>    l.add(<font color="#0000FF">"Zitrone"</font>);
+<font color="#555555">015 </font>    l.add(<font color="#0000FF">"Grapefruit"</font>);
+<font color="#555555">016 </font>    l.add(<font color="#0000FF">"Banane"</font>);
+<font color="#555555">017 </font>    <font color="#00AA00">//Unsortierte Ausgabe</font>
+<font color="#555555">018 </font>    Iterator it = l.iterator();
+<font color="#555555">019 </font>    <font color="#0000AA">while</font> (it.hasNext()) {
+<font color="#555555">020 </font>      System.out.println((String)it.next());
+<font color="#555555">021 </font>    }
+<font color="#555555">022 </font>    System.out.println(<font color="#0000FF">"---"</font>);
+<font color="#555555">023 </font>    <font color="#00AA00">//Sortierte Ausgabe</font>
+<font color="#555555">024 </font>    Collections.sort(l);
+<font color="#555555">025 </font>    it = l.iterator();
+<font color="#555555">026 </font>    <font color="#0000AA">while</font> (it.hasNext()) {
+<font color="#555555">027 </font>      System.out.println((String)it.next());
+<font color="#555555">028 </font>    }
+<font color="#555555">029 </font>  }
+<font color="#555555">030 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1607.java"><font color="#000055" size=-1>Listing1607.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 16.7: Sortieren einer Liste</i></p>
+
+<p>
+Die Ausgabe des Programms lautet: 
+<font color="#333300">
+<pre>
+Kiwi
+Kirsche
+Ananas
+Zitrone
+Grapefruit
+Banane
+---
+Ananas
+Banane
+Grapefruit
+Kirsche
+Kiwi
+Zitrone
+</pre>
+</font>
+
+<p>
+Muss in einer gro&szlig;en Liste wiederholt gesucht werden, macht
+es Sinn, diese einmal zu sortieren und anschlie&szlig;end eine <a name="ixa101007"><i>bin&auml;re
+Suche</i></a> zu verwenden. Dabei wird das
+gew&uuml;nschte Element durch eine Intervallschachtelung mit fortgesetzter
+Halbierung der Intervallgr&ouml;&szlig;e immer weiter eingegrenzt
+und das gesuchte Element ist nach sp&auml;testens log(n) Schritten
+gefunden. Die bin&auml;re Suche wird mit Hilfe der Methode <a name="ixa101008"><a href="index_b.html#ixb100779"><font color=#000080><tt>binarySearch</tt></font></a></a>
+realisiert: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+static int binarySearch(List list, Object key)
+static int binarySearch(List list, Object key, Comparator c)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Collections.html" onClick="this.href=getApiDoc('java.util.Collections')"><font color="#660066" size=-1>java.util.Collections</font></a></td>
+</tr>
+</table>
+
+<p>
+Auch hier gibt es wieder eine Variante, die gem&auml;&szlig; der nat&uuml;rlichen
+Ordnung vorgeht, und eine zweite, die einen expliziten <a href="index_c.html#ixb100767"><font color=#000080><tt>Comparator</tt></font></a>
+erfordert. 
+
+<!-- Section -->
+
+<a name="subsectionsynccollections"></a>
+<h3>16.7.2 Synchronisieren von Collections<a name="ixa101009"></a>
+</h3>
+
+<p>
+Wir haben bereits mehrfach erw&auml;hnt, dass die neuen Collections
+nicht thread-sicher sind, wir aber aus Performance-Gr&uuml;nden meist
+auf den Gebrauch des Schl&uuml;sselworts <a href="index_s.html#ixb100727"><font color=#000080><tt>synchronized</tt></font></a>
+verzichtet haben. Damit in einer Umgebung, bei der von mehr als einem
+Thread auf eine Collection zugegriffen werden kann, nicht alle Manipulationen
+vom Aufrufer synchronisiert werden m&uuml;ssen, gibt es einige Methoden,
+die eine unsynchronisierte Collection in eine synchronisierte verwandeln:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+static Collection synchronizedCollection(Collection c)
+static List synchronizedList(List list)
+static Map synchronizedMap(Map m)
+static Set synchronizedSet(Set s)
+static SortedMap synchronizedSortedMap(SortedMap m)
+static SortedSet synchronizedSortedSet(SortedSet s)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Collections.html" onClick="this.href=getApiDoc('java.util.Collections')"><font color="#660066" size=-1>java.util.Collections</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Methoden erzeugen jeweils aus der als Argument &uuml;bergebenen
+Collection eine synchronisierte Variante und geben diese an den Aufrufer
+zur&uuml;ck. Erreicht wird dies, indem eine neue Collection desselben
+Typs erzeugt wird, deren s&auml;mtliche Methoden synchronisiert sind.
+Wird eine ihrer Methoden aufgerufen, leitet sie den Aufruf innerhalb
+eines <a href="index_s.html#ixb100727"><font color=#000080><tt>synchronized</tt></font></a>-Blocks
+einfach an die als Membervariable gehaltene Original-Collection weiter
+(dieses Design-Pattern entspricht etwa dem in <a href="k100074.html#delegatepattern">Abschnitt 11.4.6</a>
+vorgestellten <a name="ixa101010">Delegate-Pattern</a>). 
+
+<!-- Section -->
+
+<a name="sectlevel3id016007003"></a>
+<h3>16.7.3 Erzeugen unver&auml;nderlicher Collections<a name="ixa101011"></a>
+</h3>
+
+<p>
+Analog zum Erzeugen von synchronisierten Collections gibt es einige
+Methoden, mit denen aus gew&ouml;hnlichen Collections <i>unver&auml;nderliche</i>
+Collections erzeugt werden k&ouml;nnen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+static Collection unmodifiableCollection(Collection c)
+static List unmodifiableList(List list)
+static Map unmodifiableMap(Map m)
+static Set unmodifiableSet(Set s)
+static SortedMap unmodifiableSortedMap(SortedMap m)
+static SortedSet unmodifiableSortedSet(SortedSet s)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Collections.html" onClick="this.href=getApiDoc('java.util.Collections')"><font color="#660066" size=-1>java.util.Collections</font></a></td>
+</tr>
+</table>
+
+<p>
+Auch hier wird jeweils eine Wrapper-Klasse erzeugt, deren Methodenaufrufe
+an die Original-Collection delegiert werden. Alle Methoden, mit denen
+die Collection ver&auml;ndert werden k&ouml;nnte, werden so implementiert,
+dass sie beim Aufruf eine Ausnahme des Typs <a href="index_u.html#ixb100735"><font color=#000080><tt>UnsupportedOperationException</tt></font></a>
+ausl&ouml;sen. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100104.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100110.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100112.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100114.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100263.html;106,k100266.html;107,k100268.html;108,k100269.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100263.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100266.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100268.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100269.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 41 - Applets II
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="javaplugin"></a>
+<h2>41.4 Das <a name="ixa102977">Java-Plugin</a><a name="ixa102978"></a>
+</h2>
+<hr>
+<ul>
+<li><a href="k100267.html#javaplugin">41.4 Das Java-Plugin</a>
+<ul>
+<li><a href="k100267.html#sectlevel3id041004001">41.4.1 Funktionsweise</a>
+<li><a href="k100267.html#sectlevel3id041004002">41.4.2 Verwendung des Plugins</a>
+<ul>
+<li><a href="k100267.html#sectlevel4id041004002001">Installation</a>
+<li><a href="k100267.html#sectlevel4id041004002002">Konvertierung der HTML-Seiten</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id041004001"></a>
+<h3>41.4.1 Funktionsweise </h3>
+
+<p>
+Obwohl Applets einer der Hauptgr&uuml;nde f&uuml;r das gro&szlig;e
+Interesse an Java waren und mit Netscape 2.0 bereits fr&uuml;h eine
+weitverbreitete Plattform f&uuml;r JDK-1.0-Applets zur Verf&uuml;gung
+stand, stellte sich bei vielen Entwicklern bald eine gewisse Ern&uuml;chterung
+ein. Bereits zur Version 1.1 des JDK hatten die Browser-Hersteller
+Probleme, mit der Entwicklung von Java Schritt zu halten. W&auml;hrend
+Netscape den Applet-Entwicklern mit Qualit&auml;tsproblemen die fr&uuml;hen
+4er Versionen des Communicators verhagelte, wurden beim Internet Explorer
+aus unternehmenspolitischen Gr&uuml;nden bestimmte JDK-1.1-Eigenschaften
+gar nicht erst zur Verf&uuml;gung gestellt. Daher wurden Applets auch
+zu 1.1er-Zeiten nicht selten mit dem JDK 1.0 entwickelt, um m&ouml;glichen
+Kompatibilit&auml;tsproblemen von vorneherein aus dem Weg zu gehen.
+
+<p>
+Nat&uuml;rlich hat auch SUN diese f&uuml;r Java ung&uuml;nstige Entwicklung
+erkannt und versucht, gegenzusteuern. L&ouml;sung dieses Problems
+sollte das <i>Java-Plugin</i> sein, eine eigene Browser-Erweiterung
+zur Ausf&uuml;hrung von Applets. Diese l&auml;uft sowohl mit dem Communicator
+als auch mit dem Internet Explorer und wird zusammen mit dem SUN-JRE
+bzw. -JDK installiert. Entsprechend pr&auml;parierte Applets laufen
+dann nicht mehr unter den Browser-eigenen Java-Implementierungen,
+sondern verwenden die VM und die Laufzeitumgebung der Original-SUN-Implementierung.
+Der Browser stellt nur noch das Fenster zur Bildschirmausgabe zur
+Verf&uuml;gung. Auf diese Weise konnten Applets alle Eigenschaften
+der aktuellen Java-Versionen verwenden (Collections, Java-2D, Swing
+usw.), ohne auf den Portierungsfortschritt der Browser-Hersteller
+warten zu m&uuml;ssen. 
+
+<p>
+Allerdings hat die Sache einen kleinen Haken. Um das Plugin zum Ausf&uuml;hren
+eines Applets zu bewegen, darf dieses im HTML-Quelltext n&auml;mlich
+nicht mehr innerhalb eines <a href="index_a.html#ixb102191"><font color=#000080><tt>APPLET</tt></font></a>-Tags
+stehen, sondern muss mit dem <a name="ixa102979"><a href="index_e.html#ixb102224"><font color=#000080><tt>EMBED</tt></font></a></a>-
+bzw. <a href="index_o.html#ixb102175"><font color=#000080><tt>OBJECT</tt></font></a>-Tag
+eingebunden werden. Zwar stellt SUN ein automatisches Werkzeug zur
+Konvertierung von Webseiten zur Verf&uuml;gung, aber das kann nat&uuml;rlich
+nur auf Seiten angewendet werden, deren Quelltext modifizierbar ist.
+W&auml;hrend beispielsweise unternehmensinterne Webseiten im Intranet
+entsprechend pr&auml;pariert werden k&ouml;nnen, werden aus dem Internet
+geladene HTML-Seiten mit eingebetteten Applets nach wie vor von der
+im Browser eingebauten Java-Implementierung ausgef&uuml;hrt. 
+
+<p>
+Des Weiteren muss nat&uuml;rlich auf dem Client ein geeignetes JRE
+inklusive des Plugins installiert sein, damit die modifizierten Applets
+ausgef&uuml;hrt werden k&ouml;nnen. Zwar k&ouml;nnen die HTML-Seiten
+so aufgebaut werden, dass beim Fehlen des Plugins ein Verweis auf
+eine Download-Seite angezeigt wird. In diesem Fall muss das JRE dann
+aber erst vom Anwender auf dem Client installiert werden, was aus
+verschiedenen Gr&uuml;nden problematisch sein kann (fehlende Kenntnisse
+des Anwenders, Programme d&uuml;rfen nur vom Administrator installiert
+werden, Sicherheitsbedenken usw.). Einer der Hauptvorteile von Applets,
+die &#187;installationsfreie&#171; Ausf&uuml;hrbarkeit von Programmen,
+ist verloren. 
+
+<p>
+Dies m&ouml;gen Gr&uuml;nde daf&uuml;r sein, dass sich das Plugin
+noch nicht f&uuml;r Internet-Applets durchsetzen konnte. F&uuml;r
+Intranet-Installationen, bei denen die Ausstattung der Clients kontrollierbar
+ist, kann es aber eine echte Alternative gegen&uuml;ber dem Betrieb
+von autonomen Java-Applikationen sein. Wir wollen im n&auml;chsten
+Abschnitt die Schritte aufzeigen, die erforderlich sind, um ein Applet
+mit dem Plugin auszuf&uuml;hren. 
+
+<p>
+Seit der Version 1.4 des JDK k&ouml;nnen bestimmte Web-Browser dazu
+gebracht werden, auch bei einem normalen <a href="index_a.html#ixb102191"><font color=#000080><tt>APPLET</tt></font></a>-Tag
+auf die Runtime der Version 1.4 zur&uuml;ckzugreifen, statt auf die
+eingebaute Java-Implementierung. Dies gilt im Wesentlichen f&uuml;r
+die 4er-, 5er- und 6er-Versionen des Internet Explorers sowie f&uuml;r
+die 6.0er- und 6.1er-Versionen des Netscape Communicators. Ein entsprechendes
+Verhalten der Browser kann entweder bei der Installation des JDK festgelegt
+werden (siehe <a href="k100013.html#jdkinstallationdetails">Abschnitt 2.1.2</a>)
+oder auch nachtr&auml;glich &uuml;ber den Eintrag &#187;Java-Plug-in
+1.4.0&#171; in der Systemsteuerung. 
+
+<!-- Section -->
+
+<a name="sectlevel3id041004002"></a>
+<h3>41.4.2 Verwendung des Plugins </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id041004002001"></a>
+<h4>Installation </h4>
+
+<p>
+Das Java-Plugin ist seit der Version 1.2 fester Bestandteil des JRE
+(<i>Java Runtime Environment</i>). Wird ein JRE 1.2 oder h&ouml;her
+(oder ein entsprechendes JDK) installiert, so f&uuml;gt die Installationsroutine
+den installierten Browsern das Plugin automatisch hinzu. Unter Windows
+gibt es nach der Installation in der Systemsteuerung einen neuen Eintrag
+&#187;Java-Plugin&#171;, mit dem das Plugin konfiguriert werden kann.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Wenn den Anwendern, die noch kein Plugin haben, eine einfache M&ouml;glichkeit
+zur Installation gegeben werden soll, kann in den <a href="index_e.html#ixb102224"><font color=#000080><tt>EMBED</tt></font></a>-
+bzw. <a href="index_o.html#ixb102175"><font color=#000080><tt>OBJECT</tt></font></a>-Tags
+ein Verweis auf die Plugin-Download-Seite untergebracht werden. Der
+im n&auml;chsten Abschnitt vorgestellte Plugin-Konverter macht das
+automatisch und f&uuml;gt Verweise auf die Download-Seiten von <font color="#000077"><tt>java.sun.com</tt></font>
+ein. Im Intranet kann nat&uuml;rlich auch eine lokale Seite angegeben
+werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id041004002002"></a>
+<h4>Konvertierung der HTML-Seiten </h4>
+
+<p>
+Das Konvertieren der <a href="index_a.html#ixb102191"><font color=#000080><tt>APPLET</tt></font></a>-Tags
+ist leider keine triviale Angelegenheit. Einerseits arbeiten die Plugin-Mechanismen
+der verschiedenen Browser unterschiedlich, andererseits gibt es Unterschiede
+zwischen den verschiedenen Browser-Versionen. Am einfachsten ist es,
+die Konvertierung der HTML-Seiten dem Konvertierungstool <a name="ixa102980"><a href="index_h.html#ixb102225"><font color=#000080><tt>HTMLConverter</tt></font></a></a>
+zu &uuml;berlassen, das seit dem JDK 1.3.1 fester Bestandteil des
+JDK ist. 
+
+<p>
+Nachdem das Konvertierungstool installiert wurde, kann seine Hauptklasse
+<a href="index_h.html#ixb102225"><font color=#000080><tt>HTMLConverter</tt></font></a>
+gestartet werden (auf manchen Plattformen gibt es auch ein direkt
+ausf&uuml;hrbares Programm): 
+<font color="#333300">
+<pre>
+javaw HTMLConverter
+</pre>
+</font>
+
+<p>
+Der Konverter wird dann als Swing-Applikation aufgerufen und erlaubt
+die interaktive Konfiguration der verschiedenen Optionen. Er kann
+eine einzige oder alle Dateien in einem vorgegebenen Verzeichnis konvertieren
+und wahlweise auch Unterverzeichnisse durchlaufen. Die Konvertierung
+wird mit Hilfe von Template-Dateien erledigt. Mit ihnen wird festgelegt,
+auf welchen Plattformen und Browsern die konvertierte HTML-Datei laufen
+soll. F&uuml;r den Communicator werden die <a href="index_a.html#ixb102191"><font color=#000080><tt>APPLET</tt></font></a>-Tags
+in <a href="index_e.html#ixb102224"><font color=#000080><tt>EMBED</tt></font></a>-Tags
+umgewandelt, f&uuml;r den Internet Explorer in <a href="index_o.html#ixb102175"><font color=#000080><tt>OBJECT</tt></font></a>-Tags.
+Standardm&auml;&szlig;ig ist ein Template aktiviert, das trickreichen
+Code erzeugt, der auf beiden Browsern l&auml;uft. 
+
+<p>
+Bei der Konvertierung werden die urspr&uuml;nglichen HTML-Seiten in
+einem Backup-Verzeichnis gesichert. Zus&auml;tzlich werden die alten
+<a href="index_a.html#ixb102191"><font color=#000080><tt>APPLET</tt></font></a>-Tags
+in einem Kommentar am Ende des neuen Tags abgelegt. Nach der Konvertierung
+kann die HTML-Seite wie gewohnt im Browser aufgerufen werden. Die
+Applets werden nun allerdings nicht mehr mit der im Browser eingebauten
+Java-Implementierung betrieben, sondern mit dem installierten JRE.
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100263.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100266.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100268.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100269.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

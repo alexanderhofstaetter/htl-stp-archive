@@ -1,0 +1,1926 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100070.html;106,k100073.html;107,k100075.html;108,k100076.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100070.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100073.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100075.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100076.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 11 - OOP IV: Verschiedenes
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id011004"></a>
+<h2>11.4 <a name="ixa100623">Design-Patterns</a></h2>
+<hr>
+<ul>
+<li><a href="k100074.html#sectlevel2id011004">11.4 Design-Patterns</a>
+<ul>
+<li><a href="k100074.html#singletonpattern">11.4.1 Singleton </a>
+<li><a href="k100074.html#sectlevel3id011004002">11.4.2 Immutable </a>
+<li><a href="k100074.html#sectlevel3id011004003">11.4.3 Interface </a>
+<li><a href="k100074.html#factorypattern">11.4.4 Factory </a>
+<ul>
+<li><a href="k100074.html#sectlevel4id011004004001">Factory-Methode</a>
+<li><a href="k100074.html#sectlevel4id011004004002">Factory-Klasse</a>
+<li><a href="k100074.html#sectlevel4id011004004003">Abstrakte Factory</a>
+</ul>
+<li><a href="k100074.html#iteratorpattern">11.4.5 Iterator </a>
+<li><a href="k100074.html#delegatepattern">11.4.6 Delegate </a>
+<li><a href="k100074.html#compositepattern">11.4.7 Composite </a>
+<li><a href="k100074.html#visitorpattern">11.4.8 Visitor </a>
+<li><a href="k100074.html#observerpattern">11.4.9 Observer </a>
+</ul>
+</ul>
+<hr>
+
+<p>
+<i>Design-Patterns</i> (oder <a name="ixa100624"><i>Entwurfsmuster</i></a>)
+sind eine der wichtigsten und interessantesten Entwicklungen der objektorientierten
+Programmierung der letzten Jahre. Basierend auf den Ideen des Architekten
+<a name="ixa100625"><i>Christopher Alexander</i></a> wurden sie durch
+das Buch &#187;Design-Patterns - Elements of Reusable Object-Oriented
+Software&#171; von <a name="ixa100626"><i>Erich Gamma</i></a>, <a name="ixa100627"><i>Richard
+Helm</i></a>, <a name="ixa100628"><i>Ralph Johnson</i></a>
+und <a name="ixa100629"><i>John Vlissides</i></a> 1995 einer breiten
+&Ouml;ffentlichkeit bekannt. 
+
+<p>
+Als Design-Patterns bezeichnet man (wohl&uuml;berlegte) Designvorschl&auml;ge
+f&uuml;r den Entwurf objektorientierter Software-Systeme. Ein Design-Pattern
+deckt dabei ein ganz bestimmtes Entwurfsproblem ab und beschreibt
+in rezeptartiger Weise das Zusammenwirken von Klassen, Objekten und
+Methoden. Meist sind daran mehrere Algorithmen und/oder Datenstrukturen
+beteiligt. Design-Patterns stellen wie Datenstrukturen oder Algorithmen
+vordefinierte L&ouml;sungen f&uuml;r konkrete Programmierprobleme
+dar, allerdings auf einer h&ouml;heren Abstraktionsebene. 
+
+<p>
+Einer der wichtigsten Verdienste standardisierter Design-Patterns
+ist es, Softwaredesigns <i>Namen</i> zu geben. Zwar ist es in der
+Praxis nicht immer m&ouml;glich oder sinnvoll, ein bestimmtes Design-Pattern
+in allen Details zu &uuml;bernehmen. Die konsistente Verwendung ihrer
+Namen und ihres prinzipiellen Aufbaus erweitern jedoch das Handwerkszeug
+und die Kommunikationsf&auml;higkeit des OOP-Programmierers betr&auml;chtlich.
+Begriffe wie <i>Factory</i>, <i>Iterator</i> oder <i>Singleton</i>
+werden in OO-Projekten routinem&auml;&szlig;ig verwendet und sollten
+f&uuml;r jeden betroffenen Entwickler dieselbe Bedeutung haben. 
+
+<p>
+Wir wollen nachfolgend einige der wichtigsten Design-Patterns vorstellen
+und ihre Implementierung in Java skizzieren. Die Ausf&uuml;hrungen
+sollten allerdings nur als erster Einstieg in das Thema angesehen
+werden. Viele Patterns k&ouml;nnen hier aus Platzgr&uuml;nden gar
+nicht erw&auml;hnt werden, obwohl sie in der Praxis einen hohen Stellenwert
+haben (z.B. Adapter, Bridge, Mediator, Command etc.). Zudem ist die
+Bedeutung eines Pattern f&uuml;r den OOP-Anf&auml;nger oft gar nicht
+verst&auml;ndlich, sondern erschlie&szlig;t sich erst nach Monaten
+oder Jahren zus&auml;tzlicher Programmiererfahrung. 
+
+<p>
+Die folgenden Abschnitte ersetzen also nicht die Lekt&uuml;re weiterf&uuml;hrender
+Literatur zu diesem Thema. Das oben erw&auml;hnte Werk von Gamma et
+al. ist nach wie vor einer der Klassiker schlechthin (die Autoren
+und ihr Buch werden meist als &#187;GoF&#171; bezeichnet, ein Akronym
+f&uuml;r &#187;Gang of Four&#171;<a name="ixa100630"></a>). Daneben
+existieren auch spezifische Kataloge, in denen die Design-Patterns
+zu bestimmten Anwendungsgebieten oder auf der Basis einer ganz bestimmten
+Sprache, wie etwa C++ oder Java, beschrieben werden. 
+
+<!-- Section -->
+
+<a name="singletonpattern"></a>
+<h3>11.4.1 Singleton<a name="ixa100631"></a> <a name="ixa100632"></a>
+</h3>
+
+<p>
+Ein <i>Singleton</i> ist eine Klasse, von der nur ein einziges Objekt
+erzeugt werden darf. Es stellt eine globale Zugriffsm&ouml;glichkeit
+auf dieses Objekt zur Verf&uuml;gung und instanziert es beim ersten
+Zugriff automatisch. Es gibt viele Beispiele f&uuml;r Singletons.
+So ist etwa der Spooler in einem Drucksystem ein Singleton oder der
+Fenstermanager unter Windows, der Firmenstamm in einem Abrechnungssystem
+oder die &Uuml;bersetzungstabelle in einem Parser. 
+
+<p>
+Wichtige Designmerkmale einer Singleton-Klasse sind: 
+<ul>
+<li>Sie besitzt eine statische Membervariable ihres eigenen Typs,
+in dem die einzige Instanz gespeichert wird.
+<li>Sie besitzt eine statische Methode <font color="#000077"><tt>getInstance</tt></font>,
+mit der auf die Instanz zugegriffen werden kann.
+<li>Sie besitzt einen privaten parameterlosen Konstruktor, um zu verhindern,
+dass andere Klassen durch Anwendung des <a href="index_n.html#ixb100088"><font color=#000080><tt>new</tt></font></a>-Operators
+eine Instanz erzeugen (er verhindert allerdings auch das Ableiten
+anderer Klassen).
+</ul>
+
+<p>
+Eine beispielhafte Implementierung k&ouml;nnte so aussehen: 
+<a name="singletonimp"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Singleton
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  <font color="#0000AA">private</font> <font color="#0000AA">static</font> Singleton instance = <font color="#006699">null</font>;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> Singleton getInstance()
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#0000AA">if</font> (instance == <font color="#006699">null</font>) {
+<font color="#555555">008 </font>      instance = <font color="#0000AA">new</font> Singleton();
+<font color="#555555">009 </font>    }
+<font color="#555555">010 </font>    <font color="#0000AA">return</font> instance;
+<font color="#555555">011 </font>  }
+<font color="#555555">012 </font>
+<font color="#555555">013 </font>  <font color="#0000AA">private</font> Singleton()
+<font color="#555555">014 </font>  {
+<font color="#555555">015 </font>  }
+<font color="#555555">016 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Singleton.java"><font color="#000055" size=-1>Singleton.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 11.10: Implementierung eines Singleton</i></p>
+
+<p>
+Singletons sind oft n&uuml;tzlich, um den Zugriff auf statische Variablen
+zu kapseln und ihre Instanzierung zu kontrollieren. Da in der vorgestellten
+Implementierung das Singleton immer an einer statischen Variable h&auml;ngt,
+ist zu beachten, dass es w&auml;hrend der Laufzeit des Programms nie
+an den Garbage Collector zur&uuml;ckgegeben und der zugeordnete Speicher
+freigegeben wird. Dies gilt nat&uuml;rlich auch f&uuml;r weitere Objekte,
+auf die von diesem Objekt verwiesen wird. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Manchmal begegnet man Klassen, die zwar nicht auf eine einzige, aber
+doch auf sehr wenige Instanzen beschr&auml;nkt sind. Auch bei solchen
+&#187;relativen Singletons&#171;, &#187;Fewtons&#171; oder &#187;Oligotons&#171;
+(Achtung, Wortsch&ouml;pfungen des Autors) kann es sinnvoll sein,
+ihre Instanzierung wie zuvor beschrieben zu kontrollieren. Mitunter
+darf beispielsweise f&uuml;r eine Menge unterschiedlicher Kategorien
+jeweils nur <i>eine Instanz pro Kategorie</i> erzeugt werden (etwa
+ein Objekt der Klasse <font color="#000077"><tt>Uebersetzer</tt></font>
+je unterst&uuml;tzter Sprache). Dann m&uuml;ssten lediglich die <font color="#000077"><tt>getInstance</tt></font>-Methode
+parametrisiert und die erzeugten Instanzen anstelle einer einfachen
+Variable in einer statischen Hashtable gehalten werden (siehe <a href="k100101.html#klassehashtable">Abschnitt 15.4</a>).</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id011004002"></a>
+<h3>11.4.2 Immutable<a name="ixa100633"></a> <a name="ixa100634"></a>
+</h3>
+
+<p>
+Als <i>immutable</i> (unver&auml;nderlich) bezeichnet man Objekte,
+die nach ihrer Instanzierung nicht mehr ver&auml;ndert werden k&ouml;nnen.
+Ihre Membervariablen werden im Konstruktor oder in Initialisierern
+gesetzt und danach ausschlie&szlig;lich im lesenden Zugriff verwendet.
+Unver&auml;nderliche Objekte gibt es an verschiedenen Stellen in der
+Java-Klassenbibliothek. Bekannte Beispiele sind die Klassen <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+(siehe <a href="k100076.html#kapitelstrings">Kapitel 12</a>) oder
+die in <a href="k100072.html#wrapperklassen">Abschnitt 11.2</a> erl&auml;uterten
+Wrapper-Klassen. Unver&auml;nderliche Objekte k&ouml;nnen gefahrlos
+mehrfach referenziert werden und erfordern im Multithreading keinen
+Synchronisationsaufwand. 
+
+<p>
+Wichtige Designmerkmale einer Immutable-Klasse sind: 
+<ul>
+<li>Alle Membervariablen sind privat.
+<li>Schreibende Zugriffe auf Membervariablen finden ausschlie&szlig;lich
+im Konstruktor oder in Initialisierern statt.
+<li>Lesende Zugriffe auf Membervariablen sind verboten, wenn der Member
+ein ver&auml;nderliches Objekt oder ein Array ist.
+<li>Werden ver&auml;nderliche Objekte oder Arrays an einen Konstruktor
+&uuml;bergeben, so m&uuml;ssen sie geklont (also kopiert) werden,
+bevor sie Membervariablen zugewiesen werden d&uuml;rfen.
+</ul>
+
+<p>
+Eine beispielhafte Implementierung k&ouml;nnte so aussehen: 
+<a name="listingid011011"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Immutable
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font>      value1;
+<font color="#555555">004 </font>  <font color="#0000AA">private</font> String[] value2;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font>  <font color="#0000AA">public</font> Immutable(<font color="#006699">int</font> value1, String[] value2)
+<font color="#555555">007 </font>  {
+<font color="#555555">008 </font>    <font color="#006699">this</font>.value1 = value1;
+<font color="#555555">009 </font>    <font color="#006699">this</font>.value2 = (String[])value2.clone();
+<font color="#555555">010 </font>  }
+<font color="#555555">011 </font>
+<font color="#555555">012 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> getValue1()
+<font color="#555555">013 </font>  {
+<font color="#555555">014 </font>    <font color="#0000AA">return</font> value1;
+<font color="#555555">015 </font>  }
+<font color="#555555">016 </font>
+<font color="#555555">017 </font>  <font color="#0000AA">public</font> String getValue2(<font color="#006699">int</font> index)
+<font color="#555555">018 </font>  {
+<font color="#555555">019 </font>    <font color="#0000AA">return</font> value2[index];
+<font color="#555555">020 </font>  }
+<font color="#555555">021 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Immutable.java"><font color="#000055" size=-1>Immutable.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 11.11: Implementierung eines Immutable</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Durch Ableitung k&ouml;nnte ein unver&auml;nderliches Objekt wieder
+ver&auml;nderlich werden. Zwar ist es der abgeleiteten Klasse nicht
+m&ouml;glich, die privaten Membervariablen der Basisklasse zu ver&auml;ndern.
+Sie k&ouml;nnte aber ohne Weiteres eigene Membervariablen einf&uuml;hren,
+die die Immutable-Kriterien verletzen. N&ouml;tigenfalls ist die Klasse
+als <a href="index_f.html#ixb100410"><font color=#000080><tt>final</tt></font></a>
+zu deklarieren, um weitere Ableitungen zu verhindern.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id011004003"></a>
+<h3>11.4.3 Interface<a name="ixa100635"></a> <a name="ixa100636"></a>
+</h3>
+
+<p>
+Ein Interface trennt die Beschreibung von Eigenschaften einer Klasse
+von ihrer Implementierung. Dabei ist es sowohl erlaubt, dass ein Interface
+von mehr als einer Klasse implementiert wird, als auch, dass eine
+Klasse mehrere Interfaces implementiert. In Java ist ein Interface
+ein fundamentales Sprachelement. Es wurde in <a href="k100063.html#kapiteloop3">Kapitel 10</a>
+ausf&uuml;hrlich beschrieben und soll hier nur der Vollst&auml;ndigkeit
+halber aufgez&auml;hlt werden. F&uuml;r Details verweisen wir auf
+die dort gemachten Ausf&uuml;hrungen. 
+
+<!-- Section -->
+
+<a name="factorypattern"></a>
+<h3>11.4.4 Factory<a name="ixa100637"></a> <a name="ixa100638"></a>
+</h3>
+
+<p>
+Eine <i>Factory</i> ist ein Hilfsmittel zum Erzeugen von Objekten.
+Sie wird verwendet, wenn das Instanzieren eines Objekts mit dem <a href="index_n.html#ixb100088"><font color=#000080><tt>new</tt></font></a>-Operator
+alleine nicht m&ouml;glich oder sinnvoll ist - etwa weil das Objekt
+schwierig zu konstruieren ist oder aufw&auml;ndig konfiguriert werden
+muss, bevor es verwendet werden kann. Manchmal m&uuml;ssen Objekte
+auch aus einer Datei, &uuml;ber eine Netzwerkverbindung oder aus einer
+Datenbank geladen werden, oder sie werden auf der Basis von Konfigurationsinformationen
+aus systemnahen Modulen generiert. Eine Factory wird auch dann eingesetzt,
+wenn die Menge der Klassen, aus denen Objekte erzeugbar sind, dynamisch
+ist und zur Laufzeit des Programms erweitert werden kann. 
+
+<p>
+In diesen F&auml;llen ist es sinnvoll, das Erzeugen neuer Objekte
+von einer Factory erledigen zu lassen. Wir wollen nachfolgend die
+drei wichtigsten Varianten einer Factory vorstellen. 
+
+<!-- Section -->
+
+<a name="sectlevel4id011004004001"></a>
+<h4>Factory-Methode<a name="ixa100639"></a> </h4>
+
+<p>
+Gibt es in einer Klasse, von der Instanzen erzeugt werden sollen,
+eine oder mehrere statische Methoden, die Objekte desselben Typs erzeugen
+und an den Aufrufer zur&uuml;ckgeben, so bezeichnet man diese als
+<i>Factory-Methoden</i>. Sie rufen implizit den <a href="index_n.html#ixb100088"><font color=#000080><tt>new</tt></font></a>-Operator
+auf, um Objekte zu instanzieren, und f&uuml;hren alle Konfigurationen
+durch, die erforderlich sind, um ein Objekt in der gew&uuml;nschten
+Weise zu konstruieren. 
+
+<p>
+Das Klassendiagramm f&uuml;r eine Factory-Methode sieht so aus: 
+<p>
+<a name="imageid011001"></a>
+<img src="images/FactoryMethode.gif">
+<p>
+
+<p><i>
+Abbildung 11.1: Klassendiagramm einer Factory-Methode</i></p>
+
+<p>
+Wir wollen beispielhaft die Implementierung einer <font color="#000077"><tt>Icon</tt></font>-Klasse
+skizzieren, die eine Factory-Methode <font color="#000077"><tt>loadFromFile</tt></font>
+enth&auml;lt. Sie erwartet als Argument einen Dateinamen, dessen Erweiterung
+sie dazu verwendet, die Art des Ladevorgangs zu bestimmen. <font color="#000077"><tt>loadFromFile</tt></font>
+instanziert ein <font color="#000077"><tt>Icon</tt></font>-Objekt
+und f&uuml;llt es auf der Basis des angegebenen Formats mit den Informationen
+aus der Datei: 
+<a name="listingid011012"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Icon
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  <font color="#0000AA">private</font> Icon()
+<font color="#555555">004 </font>  {
+<font color="#555555">005 </font>    <font color="#00AA00">//Verhindert das manuelle Instanzieren</font>
+<font color="#555555">006 </font>  }
+<font color="#555555">007 </font>
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> Icon loadFromFile(String name)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    Icon ret = <font color="#006699">null</font>;
+<font color="#555555">011 </font>    <font color="#0000AA">if</font> (name.endsWith(<font color="#0000FF">".gif"</font>)) {
+<font color="#555555">012 </font>      <font color="#00AA00">//Code zum Erzeugen eines Icons aus einer gif-Datei...</font>
+<font color="#555555">013 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (name.endsWith(<font color="#0000FF">".jpg"</font>)) {
+<font color="#555555">014 </font>      <font color="#00AA00">//Code zum Erzeugen eines Icons aus einer jpg-Datei...</font>
+<font color="#555555">015 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (name.endsWith(<font color="#0000FF">".png"</font>)) {
+<font color="#555555">016 </font>      <font color="#00AA00">//Code zum Erzeugen eines Icons aus einer png-Datei...</font>
+<font color="#555555">017 </font>    }
+<font color="#555555">018 </font>    <font color="#0000AA">return</font> ret;
+<font color="#555555">019 </font>  }
+<font color="#555555">020 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Icon.java"><font color="#000055" size=-1>Icon.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 11.12: Eine Klasse mit einer Factory-Methode</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Eine Klasse mit einer Factory-Methode hat gro&szlig;e &Auml;hnlichkeit
+mit der Implementierung des Singleton, die in <a href="k100074.html#singletonimp">Listing 11.10</a>
+vorgestellt wurde. Anders als beim Singleton kann allerdings nicht
+nur eine einzige Instanz erzeugt werden, sondern beliebig viele von
+ihnen. Auch merkt sich die Factory-Methode nicht die erzeugten Objekte.
+Die Singleton-Implementierung kann damit gewisserma&szlig;en als Spezialfall
+einer Klasse mit einer Factory-Methode angesehen werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id011004004002"></a>
+<h4>Factory-Klasse<a name="ixa100640"></a> </h4>
+
+<p>
+Eine Erweiterung des Konzepts der Factory-Methode ist die <i>Factory-Klasse</i>.
+Hier ist nicht eine einzelne Methode innerhalb der <i>eigenen</i>
+Klasse f&uuml;r das Instanzieren neuer Objekte zust&auml;ndig, sondern
+es gibt eine eigenst&auml;ndige Klasse f&uuml;r diesen Vorgang. Das
+kann beispielsweise sinnvoll sein, wenn der Herstellungsvorgang zu
+aufw&auml;ndig ist, um innerhalb der zu instanzierenden Klasse vorgenommen
+zu werden. Eine Factory-Klasse k&ouml;nnte auch sinnvoll sein, wenn
+es sp&auml;ter erforderlich werden k&ouml;nnte, die Factory selbst
+<i>austauschbar</i> zu machen. Ein dritter Grund kann sein, dass es
+gar keine Klasse gibt, in der eine Factory-Methode untergebracht werden
+k&ouml;nnte. Das ist insbesondere dann der Fall, wenn unterschiedliche
+Objekte hergestellt werden sollen, die lediglich ein gemeinsames Interface
+implementieren. 
+
+<p>
+Das Klassendiagramm f&uuml;r eine Factory-Klasse sieht so aus: 
+<p>
+<a name="imageid011002"></a>
+<img src="images/FactoryKlasse.gif">
+<p>
+
+<p><i>
+Abbildung 11.2: Klassendiagramm einer Factory-Klasse</i></p>
+
+<p>
+Als Beispiel wollen wir noch einmal das Interface <font color="#000077"><tt>DoubleMethod</tt></font>
+aus <a href="k100067.html#doublemethod">Listing 10.14</a> aufgreifen.
+Wir wollen dazu eine Factory-Klasse <font color="#000077"><tt>DoubleMethodFactory</tt></font>
+entwickeln, die verschiedene Methoden zur Konstruktion von Objekten
+zur Verf&uuml;gung stellt, die das Interface <font color="#000077"><tt>DoubleMethod</tt></font>
+implementieren: 
+<a name="listingid011013"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> DoubleMethodFactory
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  <font color="#0000AA">public</font> DoubleMethodFactory()
+<font color="#555555">004 </font>  {
+<font color="#555555">005 </font>    <font color="#00AA00">//Hier wird die Factory selbst erzeugt und konfiguriert</font>
+<font color="#555555">006 </font>  }
+<font color="#555555">007 </font>
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> DoubleMethod createFromClassFile(String name)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    <font color="#00AA00">//L&auml;dt die Klassendatei mit dem angegebenen Namen,</font>
+<font color="#555555">011 </font>    <font color="#00AA00">//pr&uuml;ft, ob sie DoubleMethod implementiert, und</font>
+<font color="#555555">012 </font>    <font color="#00AA00">//instanziert sie gegebenenfalls...</font>
+<font color="#555555">013 </font>    <font color="#0000AA">return</font> <font color="#006699">null</font>;
+<font color="#555555">014 </font>  }
+<font color="#555555">015 </font>
+<font color="#555555">016 </font>  <font color="#0000AA">public</font> DoubleMethod createFromStatic(String clazz,
+<font color="#555555">017 </font>                                       String method)
+<font color="#555555">018 </font>  {
+<font color="#555555">019 </font>    <font color="#00AA00">//Erzeugt ein Wrapper-Objekt, das das Interface</font>
+<font color="#555555">020 </font>    <font color="#00AA00">//DoubleMethod implementiert und beim Aufruf von</font>
+<font color="#555555">021 </font>    <font color="#00AA00">//compute die angegebene Methode der vorgegebenen</font>
+<font color="#555555">022 </font>    <font color="#00AA00">//Klasse aufruft...</font>
+<font color="#555555">023 </font>    <font color="#0000AA">return</font> <font color="#006699">null</font>;
+<font color="#555555">024 </font>  }
+<font color="#555555">025 </font>
+<font color="#555555">026 </font>  <font color="#0000AA">public</font> DoubleMethod createFromPolynom(String expr)
+<font color="#555555">027 </font>  {
+<font color="#555555">028 </font>    <font color="#00AA00">//Erzeugt aus dem angegebenen Polynom-Ausdruck ein</font>
+<font color="#555555">029 </font>    <font color="#00AA00">//DoubleMethod-Objekt, in dem ein &auml;quivalentes</font>
+<font color="#555555">030 </font>    <font color="#00AA00">//Polynom implementiert wird...</font>
+<font color="#555555">031 </font>    <font color="#0000AA">return</font> <font color="#006699">null</font>;
+<font color="#555555">032 </font>  }
+<font color="#555555">033 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/DoubleMethodFactory.java"><font color="#000055" size=-1>DoubleMethodFactory.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 11.13: Eine Factory-Klasse</i></p>
+
+<p>
+Die Anwendung einer Factory-Klasse ist hier sinnvoll, weil der Code
+zum Erzeugen der Objekte sehr aufw&auml;ndig ist und weil Objekte
+geliefert werden sollen, die zwar ein gemeinsames Interface implementieren,
+aber aus sehr unterschiedlichen Vererbungshierarchien stammen k&ouml;nnen.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Aus Gr&uuml;nden der &Uuml;bersichtlichkeit wurde das Erzeugen des
+R&uuml;ckgabewerts im Beispielprogramm lediglich angedeutet. Anstelle
+von <font color="#000077"><tt>return null;</tt></font> w&uuml;rde
+in der vollst&auml;ndigen Implementierung nat&uuml;rlich der Code
+zum Erzeugen der jeweiligen <font color="#000077"><tt>DoubleMethod</tt></font>-Objekte
+stehen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id011004004003"></a>
+<h4><a name="ixa100641">Abstrakte Factory</a></h4>
+
+<p>
+Eine <i>Abstracte Factory</i> ist eine recht aufw&auml;ndige Erweiterung
+der Factory-Klasse, bei der zwei zus&auml;tzliche Gedanken im Vordergrund
+stehen: 
+<ul>
+<li>Erstens soll nicht nur ein einzelner Objekttyp erzeugt werden,
+sondern mehrere von ihnen. Deren Klassen stehen in einer bestimmten
+Beziehung zueinander und die erzeugten Objekte m&uuml;ssen miteinander
+vertr&auml;glich sein. Die Objekttypen k&ouml;nnen als <i>Produkte</i>,
+die Gesamtheit der von einer Factory erzeugten Produkte als <i>Produktgruppe</i>
+bezeichnet werden.
+<li>Zweitens soll die Factory austauschbar sein. Dann kann auf einfache
+Weise eine andere <i>Implementierungsvariante</i> gemeinsam f&uuml;r
+alle zu erzeugenden Objekte gew&auml;hlt werden.
+</ul>
+
+<p>
+Eine abstrakte Factory wird auch als <a name="ixa100642"><i>Toolkit</i></a>
+bezeichnet. Ein Beispiel daf&uuml;r findet sich in grafischen Ausgabesystemen
+bei der Erzeugung von Dialogelementen (<i>Widgets</i>) f&uuml;r unterschiedliche
+Fenstermanager. Eine konkrete Factory muss in der Lage sein, unterschiedliche
+Dialogelemente so zu erzeugen, dass sie in Aussehen und Bedienung
+konsistent sind. Auch die Schnittstelle f&uuml;r Programme sollte
+&uuml;ber Fenstergrenzen hinweg konstant sein. Konkrete Factories
+k&ouml;nnte es etwa f&uuml;r Windows, X-Window oder die Macintosh-Oberfl&auml;che
+geben. 
+
+<p>
+Eine abstrakte Factory kann durch folgende Bestandteile beschrieben
+werden: 
+<ul>
+<li>Jedes Produkt besitzt eine Basisklasse, die seine spezifischen
+Eigenschaften angibt (die <i>abstrakte Produktklasse</i>). Jede Factory-Methode
+hat einen R&uuml;ckgabewert, dessen Typ einer der abstrakten Produktklassen
+entspricht.
+<li>Je Implementierungsvariante gibt es aus den abstrakten Produkten
+abgeleitete <i>konkrete Produkte</i>, die von der zugeh&ouml;rigen
+konkreten Factory erzeugt werden.
+<li>Alle Factory-Methoden werden in der abstrakten Factory-Klasse
+zusammengefasst. Sie bildet das Interface f&uuml;r das Erzeugen der
+Produkte.
+<li>Zu jeder Implementierungsvariante gibt es eine aus der abstrakten
+Factory abgeleitete konkrete Factory. Sie implementiert alle abstrakten
+Factory-Methoden und ist in der Lage, die konkreten Produkte einer
+Implementierungsvariante zu erzeugen.
+<li>Schlie&szlig;lich gibt es eine M&ouml;glichkeit, eine konkrete
+Factory zu erzeugen. Das kann beispielsweise durch eine statische
+Methode in der abstrakten Factory realisiert werden.
+</ul>
+
+<p>
+Das Klassendiagramm f&uuml;r eine abstrakte Factory sieht so aus:
+<p>
+<a name="imageid011003"></a>
+<img src="images/AbstractFactory.gif">
+<p>
+
+<p><i>
+Abbildung 11.3: Klassendiagramm einer abstrakten Factory</i></p>
+
+<p>
+Das folgende Listing skizziert ihre Implementierung: 
+<a name="listingid011014"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1114.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#00AA00">//------------------------------------------------------------------</font>
+<font color="#555555">004 </font><font color="#00AA00">//Abstrakte Produkte</font>
+<font color="#555555">005 </font><font color="#00AA00">//------------------------------------------------------------------</font>
+<font color="#555555">006 </font><font color="#0000AA">abstract</font> <font color="#0000AA">class</font> Product1
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>}
+<font color="#555555">009 </font>
+<font color="#555555">010 </font><font color="#0000AA">abstract</font> <font color="#0000AA">class</font> Product2
+<font color="#555555">011 </font>{
+<font color="#555555">012 </font>}
+<font color="#555555">013 </font>
+<font color="#555555">014 </font><font color="#00AA00">//------------------------------------------------------------------</font>
+<font color="#555555">015 </font><font color="#00AA00">//Abstrakte Factory</font>
+<font color="#555555">016 </font><font color="#00AA00">//------------------------------------------------------------------</font>
+<font color="#555555">017 </font><font color="#0000AA">abstract</font> <font color="#0000AA">class</font> ProductFactory
+<font color="#555555">018 </font>{
+<font color="#555555">019 </font>  <font color="#0000AA">public</font> <font color="#0000AA">abstract</font> Product1 createProduct1();
+<font color="#555555">020 </font>
+<font color="#555555">021 </font>  <font color="#0000AA">public</font> <font color="#0000AA">abstract</font> Product2 createProduct2();
+<font color="#555555">022 </font>
+<font color="#555555">023 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> ProductFactory getFactory(String variant)
+<font color="#555555">024 </font>  {
+<font color="#555555">025 </font>    ProductFactory ret = <font color="#006699">null</font>;
+<font color="#555555">026 </font>    <font color="#0000AA">if</font> (variant.equals(<font color="#0000FF">"A"</font>)) {
+<font color="#555555">027 </font>      ret = <font color="#0000AA">new</font> ConcreteFactoryVariantA();
+<font color="#555555">028 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (variant.equals(<font color="#0000FF">"B"</font>)) {
+<font color="#555555">029 </font>      ret = <font color="#0000AA">new</font> ConcreteFactoryVariantB();
+<font color="#555555">030 </font>    }
+<font color="#555555">031 </font>    <font color="#0000AA">return</font> ret;
+<font color="#555555">032 </font>  }
+<font color="#555555">033 </font>
+<font color="#555555">034 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> ProductFactory getDefaultFactory()
+<font color="#555555">035 </font>  {
+<font color="#555555">036 </font>    <font color="#0000AA">return</font> getFactory(<font color="#0000FF">"A"</font>);
+<font color="#555555">037 </font>  }
+<font color="#555555">038 </font>}
+<font color="#555555">039 </font>
+<font color="#555555">040 </font><font color="#00AA00">//------------------------------------------------------------------</font>
+<font color="#555555">041 </font><font color="#00AA00">//Konkrete Produkte f&uuml;r Implementierungsvariante A</font>
+<font color="#555555">042 </font><font color="#00AA00">//------------------------------------------------------------------</font>
+<font color="#555555">043 </font><font color="#0000AA">class</font> Product1VariantA
+<font color="#555555">044 </font><font color="#0000AA">extends</font> Product1
+<font color="#555555">045 </font>{
+<font color="#555555">046 </font>}
+<font color="#555555">047 </font>
+<font color="#555555">048 </font><font color="#0000AA">class</font> Product2VariantA
+<font color="#555555">049 </font><font color="#0000AA">extends</font> Product2
+<font color="#555555">050 </font>{
+<font color="#555555">051 </font>}
+<font color="#555555">052 </font>
+<font color="#555555">053 </font><font color="#00AA00">//------------------------------------------------------------------</font>
+<font color="#555555">054 </font><font color="#00AA00">//Konkrete Factory f&uuml;r Implementierungsvariante A</font>
+<font color="#555555">055 </font><font color="#00AA00">//------------------------------------------------------------------</font>
+<font color="#555555">056 </font><font color="#0000AA">class</font> ConcreteFactoryVariantA
+<font color="#555555">057 </font><font color="#0000AA">extends</font> ProductFactory
+<font color="#555555">058 </font>{
+<font color="#555555">059 </font>  <font color="#0000AA">public</font> Product1 createProduct1()
+<font color="#555555">060 </font>  {
+<font color="#555555">061 </font>    <font color="#0000AA">return</font> <font color="#0000AA">new</font> Product1VariantA();
+<font color="#555555">062 </font>  }
+<font color="#555555">063 </font>
+<font color="#555555">064 </font>  <font color="#0000AA">public</font> Product2 createProduct2()
+<font color="#555555">065 </font>  {
+<font color="#555555">066 </font>    <font color="#0000AA">return</font> <font color="#0000AA">new</font> Product2VariantA();
+<font color="#555555">067 </font>  }
+<font color="#555555">068 </font>}
+<font color="#555555">069 </font>
+<font color="#555555">070 </font><font color="#00AA00">//------------------------------------------------------------------</font>
+<font color="#555555">071 </font><font color="#00AA00">//Konkrete Produkte f&uuml;r Implementierungsvariante B</font>
+<font color="#555555">072 </font><font color="#00AA00">//------------------------------------------------------------------</font>
+<font color="#555555">073 </font><font color="#0000AA">class</font> Product1VariantB
+<font color="#555555">074 </font><font color="#0000AA">extends</font> Product1
+<font color="#555555">075 </font>{
+<font color="#555555">076 </font>}
+<font color="#555555">077 </font>
+<font color="#555555">078 </font><font color="#0000AA">class</font> Product2VariantB
+<font color="#555555">079 </font><font color="#0000AA">extends</font> Product2
+<font color="#555555">080 </font>{
+<font color="#555555">081 </font>}
+<font color="#555555">082 </font>
+<font color="#555555">083 </font><font color="#00AA00">//------------------------------------------------------------------</font>
+<font color="#555555">084 </font><font color="#00AA00">//Konkrete Factory f&uuml;r Implementierungsvariante B</font>
+<font color="#555555">085 </font><font color="#00AA00">//------------------------------------------------------------------</font>
+<font color="#555555">086 </font><font color="#0000AA">class</font> ConcreteFactoryVariantB
+<font color="#555555">087 </font><font color="#0000AA">extends</font> ProductFactory
+<font color="#555555">088 </font>{
+<font color="#555555">089 </font>  <font color="#0000AA">public</font> Product1 createProduct1()
+<font color="#555555">090 </font>  {
+<font color="#555555">091 </font>    <font color="#0000AA">return</font> <font color="#0000AA">new</font> Product1VariantB();
+<font color="#555555">092 </font>  }
+<font color="#555555">093 </font>
+<font color="#555555">094 </font>  <font color="#0000AA">public</font> Product2 createProduct2()
+<font color="#555555">095 </font>  {
+<font color="#555555">096 </font>    <font color="#0000AA">return</font> <font color="#0000AA">new</font> Product2VariantB();
+<font color="#555555">097 </font>  }
+<font color="#555555">098 </font>}
+<font color="#555555">099 </font>
+<font color="#555555">100 </font><font color="#00AA00">//------------------------------------------------------------------</font>
+<font color="#555555">101 </font><font color="#00AA00">//Beispielanwendung</font>
+<font color="#555555">102 </font><font color="#00AA00">//------------------------------------------------------------------</font>
+<font color="#555555">103 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1114
+<font color="#555555">104 </font>{
+<font color="#555555">105 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">106 </font>  {
+<font color="#555555">107 </font>    ProductFactory fact = ProductFactory.getDefaultFactory();
+<font color="#555555">108 </font>    Product1 prod1 = fact.createProduct1();
+<font color="#555555">109 </font>    Product2 prod2 = fact.createProduct2();
+<font color="#555555">110 </font>  }
+<font color="#555555">111 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1114.java"><font color="#000055" size=-1>Listing1114.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 11.14: Eine abstrakte Factory</i></p>
+
+<p>
+Bemerkenswert an diesem Pattern ist, wie geschickt es die komplexen
+Details seiner Implementierung versteckt. Der Aufrufer kennt lediglich
+die Produkte, die abstrakte Factory und besitzt eine M&ouml;glichkeit,
+eine konkrete Factory zu beschaffen. Er braucht weder zu wissen, welche
+konkreten Factories oder Produkte es gibt, noch m&uuml;ssen ihn Details
+ihrer Implementierung interessieren. Diese Sichtweise ver&auml;ndert
+sich auch nicht, wenn eine neue Implementierungsvariante hinzugef&uuml;gt
+wird. Das w&uuml;rde sich lediglich in einem neuen Wert im <font color="#000077"><tt>variant</tt></font>-Parameter
+der Methode <font color="#000077"><tt>getFactory</tt></font> der <font color="#000077"><tt>ProductFactory</tt></font>
+&auml;u&szlig;ern. 
+
+<p>
+Ein wenig mehr Aufwand muss allerdings getrieben werden, wenn ein
+neues Produkt hinzukommt. Dann m&uuml;ssen nicht nur neue abstrakte
+und konkrete Produktklassen definiert werden, sondern auch die Factories
+m&uuml;ssen um eine Methode erweitert werden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Mit Absicht wurde bei der Benennung der abstrakten Klassen nicht die
+Vor- oder Nachsilbe &#187;Abstract&#171; verwendet. Da die Clients
+nur mit den Schnittstellen der abstrakten Klassen arbeiten und die
+Namen der konkreten Klassen normalerweise nie zu sehen bekommen, ist
+es vollkommen unn&ouml;tig, sie bei jeder Deklaration daran zu erinnern,
+dass sie eigentlich nur mit Abstraktionen arbeiten.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Auch in Java gibt es Klassen, die nach dem Prinzip der abstrakten
+Factory implementiert sind. Ein Beispiel ist die Klasse <a href="index_t.html#ixb100510"><font color=#000080><tt>Toolkit</tt></font></a>
+des Pakets <a href="index_j.html#ixb100198"><font color=#000080><tt>java.awt</tt></font></a>.
+Sie dient dazu, Fenster, Dialogelemente und andere plattformabh&auml;ngige
+Objekte f&uuml;r die grafische Oberfl&auml;che eines bestimmten Betriebssystems
+zu erzeugen. In <a href="k100165.html#standardschriftarten">Abschnitt 25.2.2</a>
+finden sich ein paar Beispiele f&uuml;r die Anwendung dieser Klasse.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="iteratorpattern"></a>
+<h3>11.4.5 Iterator<a name="ixa100643"></a> <a name="ixa100644"></a>
+</h3>
+
+<p>
+Ein <i>Iterator</i> ist ein Objekt, das es erm&ouml;glicht, die Elemente
+eines <i>Collection</i>-Objekts nacheinander zu durchlaufen. Als <i>Collection</i>-Objekt
+bezeichnet man ein Objekt, das eine Sammlung (meist gleichartiger)
+Elemente eines anderen Typs enth&auml;lt. In Java gibt es eine Vielzahl
+von vordefinierten Collections, sie werden in <a href="k100097.html#kapitelcollections1">Kapitel 15</a>
+und <a href="k100104.html#kapitelcollections2">Kapitel 16</a> ausf&uuml;hrlich
+erl&auml;utert. 
+
+<p>
+Obwohl die Objekte in den Collections unterschiedlich strukturiert
+und auf sehr unterschiedliche Art und Weise gespeichert sein k&ouml;nnen,
+ist es bei den meisten von ihnen fr&uuml;her oder sp&auml;ter erforderlich,
+auf alle darin enthaltenen Elemente zuzugreifen. Dazu stellt die Collection
+einen oder mehrere Iteratoren zur Verf&uuml;gung, die das Durchlaufen
+der Elemente erm&ouml;glichen, ohne dass die innere Struktur der Collection
+dem Aufrufer bekannt sein muss. 
+
+<p>
+Ein Iterator enth&auml;lt folgende Bestandteile: 
+<ul>
+<li>Eine Methode <a href="index_h.html#ixb100111"><font color=#000080><tt>hasNext</tt></font></a>,
+mit der &uuml;berpr&uuml;ft wird, ob Elemente vorhanden sind, die
+noch nicht besucht wurden
+<li>Eine Methode <a href="index_n.html#ixb100112"><font color=#000080><tt>next</tt></font></a>,
+die das n&auml;chste unbesuchte Element liefert
+<li>Die Collection-Klasse selbst enth&auml;lt Methoden wie <font color="#000077"><tt>getAllElements</tt></font>
+oder <font color="#000077"><tt>getKeys</tt></font>, mit denen Iteratoren
+f&uuml;r bestimmte Teilmengen der enthaltenen Objekte angefordert
+werden k&ouml;nnen.
+</ul>
+
+<p>
+Das Klassendiagramm f&uuml;r einen Iterator sieht so aus: 
+<p>
+<a name="imageid011004"></a>
+<img src="images/Iterator.gif">
+<p>
+
+<p><i>
+Abbildung 11.4: Klassendiagramm eines Iterators</i></p>
+
+<p>
+Das folgende Listing zeigt die Implementierung eines Iterators, mit
+dem die Elemente der Klasse <font color="#000077"><tt>StringArray</tt></font>
+(die ein einfaches Array von Strings kapselt) durchlaufen werden k&ouml;nnen:
+<a name="listingid011015"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1115.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">interface</font> StringIterator
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#006699">boolean</font> hasNext();
+<font color="#555555">006 </font>  <font color="#0000AA">public</font> String next();
+<font color="#555555">007 </font>}
+<font color="#555555">008 </font>
+<font color="#555555">009 </font><font color="#0000AA">class</font> StringArray
+<font color="#555555">010 </font>{
+<font color="#555555">011 </font>  String[] data;
+<font color="#555555">012 </font>
+<font color="#555555">013 </font>  <font color="#0000AA">public</font> StringArray(String[] data)
+<font color="#555555">014 </font>  {
+<font color="#555555">015 </font>    <font color="#006699">this</font>.data = data;
+<font color="#555555">016 </font>  }
+<font color="#555555">017 </font>
+<font color="#555555">018 </font>  <font color="#0000AA">public</font> StringIterator getElements()
+<font color="#555555">019 </font>  {
+<font color="#555555">020 </font>    <font color="#0000AA">return</font> <font color="#0000AA">new</font> StringIterator()
+<font color="#555555">021 </font>    {
+<font color="#555555">022 </font>      <font color="#006699">int</font> index = 0;
+<font color="#555555">023 </font>      <font color="#0000AA">public</font> <font color="#006699">boolean</font> hasNext()
+<font color="#555555">024 </font>      {
+<font color="#555555">025 </font>        <font color="#0000AA">return</font> index &lt; data.length;
+<font color="#555555">026 </font>      }
+<font color="#555555">027 </font>      <font color="#0000AA">public</font> String next()
+<font color="#555555">028 </font>      {
+<font color="#555555">029 </font>        <font color="#0000AA">return</font> data[index++];
+<font color="#555555">030 </font>      }
+<font color="#555555">031 </font>    };
+<font color="#555555">032 </font>  }
+<font color="#555555">033 </font>}
+<font color="#555555">034 </font>
+<font color="#555555">035 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1115
+<font color="#555555">036 </font>{
+<font color="#555555">037 </font>  <font color="#0000AA">static</font> <font color="#0000AA">final</font> String[] SAYHI = {<font color="#0000FF">"Hi"</font>, <font color="#0000FF">"Iterator"</font>, <font color="#0000FF">"Buddy"</font>};
+<font color="#555555">038 </font>
+<font color="#555555">039 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">040 </font>  {
+<font color="#555555">041 </font>    <font color="#00AA00">//Collection erzeugen</font>
+<font color="#555555">042 </font>    StringArray strar = <font color="#0000AA">new</font> StringArray(SAYHI);
+<font color="#555555">043 </font>    <font color="#00AA00">//Iterator beschaffen und Elemente durchlaufen</font>
+<font color="#555555">044 </font>    StringIterator it = strar.getElements();
+<font color="#555555">045 </font>    <font color="#0000AA">while</font> (it.hasNext()) {
+<font color="#555555">046 </font>      System.out.println(it.next());
+<font color="#555555">047 </font>    }
+<font color="#555555">048 </font>  }
+<font color="#555555">049 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1115.java"><font color="#000055" size=-1>Listing1115.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 11.15: Implementierung eines Iterators</i></p>
+
+<p>
+Der Iterator wurde in <font color="#000077"><tt>StringIterator</tt></font>
+als Interface realisiert, um in unterschiedlicher Weise implementiert
+werden zu k&ouml;nnen. Die Methode <font color="#000077"><tt>getElements</tt></font>
+erzeugt beispielsweise eine anonyme Klasse, die das Iterator-Interface
+implementiert und an den Aufrufer zur&uuml;ckgibt. Dazu wird in diesem
+Fall lediglich eine Hilfsvariable ben&ouml;tigt, die als Zeiger auf
+das n&auml;chste zu liefernde Element zeigt. Im Hauptprogramm wird
+nach dem Erzeugen der Collection der Iterator beschafft und mit seiner
+Hilfe werden die Elemente durch fortgesetzten Aufruf von <a href="index_h.html#ixb100111"><font color=#000080><tt>hasNext</tt></font></a>
+und <a href="index_n.html#ixb100112"><font color=#000080><tt>next</tt></font></a>
+sukzessive durchlaufen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Implementierung eines Iterators erfolgt h&auml;ufig mit Hilfe
+lokaler oder anonymer Klassen. Das hat den Vorteil, dass alle ben&ouml;tigten
+Hilfsvariablen <i>je Aufruf</i> angelegt werden. W&uuml;rde die Klasse
+<font color="#000077"><tt>StringArray</tt></font> dagegen selbst das
+<font color="#000077"><tt>StringIterator</tt></font>-Interface implementieren
+(und die Hilfsvariable <font color="#000077"><tt>index</tt></font>
+als Membervariable halten), so k&ouml;nnte sie jeweils nur einen einzigen
+aktiven Iterator zur Verf&uuml;gung stellen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Iteratoren k&ouml;nnen auch gut mit Hilfe von <a href="index_f.html#ixb100077"><font color=#000080><tt>for</tt></font></a>-Schleifen
+verwendet werden. Das folgende Programmfragment ist &auml;quivalent
+zum vorigen Beispiel: 
+<font color="#000077">
+<pre>
+for (StringIterator it = strar.getElements(); it.hasNext(); ) {
+  System.out.println(it.next());
+}
+</pre>
+</font>
+</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="delegatepattern"></a>
+<h3>11.4.6 Delegate<a name="ixa100645"></a> <a name="ixa100646"></a>
+</h3>
+
+<p>
+In objektorientierten Programmiersprachen gibt es zwei grundverschiedene
+M&ouml;glichkeiten, Programmcode wiederzuverwenden. Die erste von
+ihnen ist die <i>Vererbung</i>, bei der eine abgeleitete Klasse alle
+Eigenschaften ihrer Basisklasse erbt und deren nichtprivaten Methoden
+aufrufen kann. Die zweite M&ouml;glichkeit wird als <a name="ixa100647"><i>Delegation</i></a>
+bezeichnet. Hierbei verwendet eine Klasse die Dienste von Objekten,
+aus denen sie nicht abgeleitet ist. Diese Objekte werden oft als Membervariablen
+gehalten. 
+
+<p>
+Das w&auml;re an sich noch nichts Besonderes, denn Programme verwenden
+fast immer Code, der in anderen Programmteilen liegt, und delegieren
+damit einen Teil ihrer Aufgaben. Ein Design-Pattern wird daraus, wenn
+Aufgaben weitergegeben werden m&uuml;ssen, die eigentlich in der eigenen
+Klasse erledigt werden sollten. Wenn also der Leser des Programms
+sp&auml;ter erwarten w&uuml;rde, den Code in der eigenen Klasse vorzufinden.
+In diesem Fall ist es sinnvoll, die &Uuml;bertragung der Aufgaben
+<i>explizit</i> zu machen und das <i>Delegate</i>-Design-Pattern anzuwenden.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Anwendungen f&uuml;r das Delegate-Pattern finden sich meist, wenn
+identische Funktionalit&auml;ten in Klassen untergebracht werden sollen,
+die nicht in einer gemeinsamen Vererbungslinie stehen. Ein Beispiel
+bilden die Klassen <a name="ixa100648"><a href="index_j.html#ixb100513"><font color=#000080><tt>JFrame</tt></font></a></a>
+und <a href="index_j.html#ixb100514"><font color=#000080><tt>JInternalFrame</tt></font></a>
+aus dem Swing-Toolkit (sie werden in <a href="k100240.html#kapitelswingcontainermenues">Kapitel 37</a>
+ausf&uuml;hrlich besprochen). Beide Klassen stellen Hauptfenster f&uuml;r
+die Grafikausgabe dar. Eines von ihnen ist ein eigenst&auml;ndiges
+Top-Level-Window, das andere wird meist zusammen mit anderen Fenstern
+in ein Desktop eingebettet. Soll eine Anwendung wahlweise in einem
+<a href="index_j.html#ixb100513"><font color=#000080><tt>JFrame</tt></font></a>
+oder einem <a href="index_j.html#ixb100514"><font color=#000080><tt>JInternalFrame</tt></font></a>
+laufen, m&uuml;ssen alle Funktionalit&auml;ten in beiden Klassen zur
+Verf&uuml;gung gestellt werden. Ungl&uuml;cklicherweise sind beide
+nicht Bestandteil einer gemeinsamen Vererbungslinie. Hier empfiehlt
+es sich, die Gemeinsamkeiten in einer neuen Klasse zusammenzufassen
+und beiden Fensterklassen durch Delegation zur Verf&uuml;gung zu stellen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Das Delegate-Pattern besitzt folgende Bestandteile: 
+<ul>
+<li>Die zu delegierende Funktionalit&auml;t wird in einer <a name="ixa100649"><i>Delegate</i></a>-Klasse
+untergebracht und &uuml;ber deren &ouml;ffentliche Schnittstelle zur
+Verf&uuml;gung gestellt. Um deren Bedeutung deutlich zu machen, kann
+ihr Name mit &#187;Delegate&#171; enden (z.B. <font color="#000077"><tt>XYZFrameDelegate</tt></font>).
+<li>Alle Clienten halten eine Delegate-Membervariable, die bei der
+Konstruktion initialisiert wird. Wird eine bestimmte Funktionalit&auml;t
+delegiert, ist einfach die korrespondierende Methode des Delegate
+aufzurufen.
+<li>Falls das Delegate auch Methoden der Clients aufrufen muss, sollte
+ein <a name="ixa100650"><i>Delegator</i></a>-Interface definiert und
+von allen Clients implementiert werden. Der Client &uuml;bergibt bei
+der Konstruktion des Delegate einen Zeiger auf sich selbst und stellt
+sich selbst dem Delegate als Delegator zur Verf&uuml;gung.
+</ul>
+
+<p>
+Das Klassendiagramm f&uuml;r ein Delegate sieht so aus: 
+<p>
+<a name="imageid011005"></a>
+<img src="images/Delegate.gif">
+<p>
+
+<p><i>
+Abbildung 11.5: Klassendiagramm eines Delegate</i></p>
+
+<p>
+Eine Implementierungsskizze k&ouml;nnte so aussehen: 
+<a name="listingid011016"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1116.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">class</font> Delegate
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">private</font> Delegator delegator;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> Delegate(Delegator delegator)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#006699">this</font>.delegator = delegator;
+<font color="#555555">010 </font>  }
+<font color="#555555">011 </font>
+<font color="#555555">012 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> service1()
+<font color="#555555">013 </font>  {
+<font color="#555555">014 </font>  }
+<font color="#555555">015 </font>
+<font color="#555555">016 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> service2()
+<font color="#555555">017 </font>  {
+<font color="#555555">018 </font>  }
+<font color="#555555">019 </font>}
+<font color="#555555">020 </font>
+<font color="#555555">021 </font><font color="#0000AA">interface</font> Delegator
+<font color="#555555">022 </font>{
+<font color="#555555">023 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> commonDelegatorServiceA();
+<font color="#555555">024 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> commonDelegatorServiceB();
+<font color="#555555">025 </font>}
+<font color="#555555">026 </font>
+<font color="#555555">027 </font><font color="#0000AA">class</font> Client1
+<font color="#555555">028 </font><font color="#0000AA">implements</font> Delegator
+<font color="#555555">029 </font>{
+<font color="#555555">030 </font>  <font color="#0000AA">private</font> Delegate delegate;
+<font color="#555555">031 </font>
+<font color="#555555">032 </font>  <font color="#0000AA">public</font> Client1()
+<font color="#555555">033 </font>  {
+<font color="#555555">034 </font>    delegate = <font color="#0000AA">new</font> Delegate(<font color="#006699">this</font>);
+<font color="#555555">035 </font>  }
+<font color="#555555">036 </font>
+<font color="#555555">037 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> service1()
+<font color="#555555">038 </font>  {
+<font color="#555555">039 </font>    <font color="#00AA00">//implementiert einen Service und benutzt</font>
+<font color="#555555">040 </font>    <font color="#00AA00">//dazu eigene Methoden und die des</font>
+<font color="#555555">041 </font>    <font color="#00AA00">//Delegate-Objekts</font>
+<font color="#555555">042 </font>  }
+<font color="#555555">043 </font>
+<font color="#555555">044 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> commonDelegatorServiceA()
+<font color="#555555">045 </font>  {
+<font color="#555555">046 </font>  }
+<font color="#555555">047 </font>
+<font color="#555555">048 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> commonDelegatorServiceB()
+<font color="#555555">049 </font>  {
+<font color="#555555">050 </font>  }
+<font color="#555555">051 </font>}
+<font color="#555555">052 </font>
+<font color="#555555">053 </font><font color="#0000AA">class</font> Client2
+<font color="#555555">054 </font><font color="#0000AA">implements</font> Delegator
+<font color="#555555">055 </font>{
+<font color="#555555">056 </font>  <font color="#0000AA">private</font> Delegate delegate;
+<font color="#555555">057 </font>
+<font color="#555555">058 </font>  <font color="#0000AA">public</font> Client2()
+<font color="#555555">059 </font>  {
+<font color="#555555">060 </font>    delegate = <font color="#0000AA">new</font> Delegate(<font color="#006699">this</font>);
+<font color="#555555">061 </font>  }
+<font color="#555555">062 </font>
+<font color="#555555">063 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> commonDelegatorServiceA()
+<font color="#555555">064 </font>  {
+<font color="#555555">065 </font>  }
+<font color="#555555">066 </font>
+<font color="#555555">067 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> commonDelegatorServiceB()
+<font color="#555555">068 </font>  {
+<font color="#555555">069 </font>  }
+<font color="#555555">070 </font>}
+<font color="#555555">071 </font>
+<font color="#555555">072 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1116
+<font color="#555555">073 </font>{
+<font color="#555555">074 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">075 </font>  {
+<font color="#555555">076 </font>    Client1 client = <font color="#0000AA">new</font> Client1();
+<font color="#555555">077 </font>    client.service1();
+<font color="#555555">078 </font>  }
+<font color="#555555">079 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1116.java"><font color="#000055" size=-1>Listing1116.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 11.16: Das Delegate-/Delegator-Pattern</i></p>
+
+<p>
+Die Klasse <font color="#000077"><tt>Delegate</tt></font> implementiert
+die Methoden <font color="#000077"><tt>service1</tt></font> und <font color="#000077"><tt>service2</tt></font>.
+Zus&auml;tzlich h&auml;lt sie einen Verweis auf ein <font color="#000077"><tt>Delegator</tt></font>-Objekt,
+&uuml;ber das sie die Callback-Methoden <font color="#000077"><tt>commonDelegatorServiceA</tt></font>
+und <font color="#000077"><tt>commonDelegatorServiceB</tt></font>
+der delegierenden Klasse erreichen kann. Die beiden Klassen <font color="#000077"><tt>Client1</tt></font>
+und <font color="#000077"><tt>Client2</tt></font> verwenden das Delegate,
+um Services zur Verf&uuml;gung zu stellen (am Beispiel der Methode
+<font color="#000077"><tt>service1</tt></font> angedeutet). 
+
+<!-- Section -->
+
+<a name="compositepattern"></a>
+<h3>11.4.7 Composite<a name="ixa100651"></a> <a name="ixa100652"></a>
+</h3>
+
+<p>
+In der Programmierpraxis werden h&auml;ufig Datenstrukturen ben&ouml;tigt,
+bei denen die einzelnen Objekte zu Baumstrukturen zusammengesetzt
+werden k&ouml;nnen. 
+
+<p>
+Es gibt viele Beispiele f&uuml;r derartige Strukturen: 
+<ul>
+<li>Die Men&uuml;s in einem Programm enthalten Men&uuml;punkte und
+Untermen&uuml;s. Untermen&uuml;s enthalten weitere Men&uuml;punkte,
+sind aber selbst Men&uuml;punkte im &uuml;bergeordneten Men&uuml;.
+<li>Ein Verzeichnis in einem Dateisystem enth&auml;lt Dateien und
+Unterverzeichnisse. Unterverzeichnisse weisen dieselbe prinzipielle
+Struktur wie ihre &uuml;bergeordneten Verzeichnisse auf. Sowohl Dateien
+als auch Unterverzeichnisse haben gemeinsame Eigenschaften, wie etwa
+einen Namen oder zugeordnete Rechte.
+<li>Die Komponenten einer grafischen Oberfl&auml;che k&ouml;nnen sowohl
+einfache Dialogelemente (Buttons, Textfelder, Listboxen) als auch
+Container (Unterfenster, Split-Panels, Tab-Panels) sein. Container
+enthalten ebenfalls Komponenten (vergleiche zum Beispiel die Hierarchie
+der AWT-Fensterklassen in <a href="k100175.html#hierarchiefensterklassen">Abbildung 27.1</a>).
+<li>Ein mechanisches Bauteil besteht aus elementaren Teilen, die nicht
+mehr weiter zerlegt werden k&ouml;nnen, und zusammengesetzten Bauteilen,
+die aus Unterbauteilen bestehen.
+</ul>
+
+<p>
+F&uuml;r diese h&auml;ufig anzutreffende Abstraktion gibt es ein Design-Pattern,
+das als <i>Composite</i> bezeichnet wird. Es erm&ouml;glicht derartige
+Kompositionen und erlaubt eine einheitliche Handhabung von individuellen
+und zusammengesetzten Objekten. Ein <i>Composite</i> enth&auml;lt
+folgende Bestandteile: 
+<ul>
+<li>Eine (oft abstrakte) Basisklasse, die sowohl zusammengesetzte
+als auch elementare Objekte repr&auml;sentiert. Diese Basisklasse
+wird auch als &#187;Component&#171; bezeichnet.
+<li>Alle elementaren Objekte sind aus dieser Basisklasse abgeleitet.
+<li>Daraus abgeleitet gibt es mindestens eine Containerklasse, die
+in der Lage ist, eine Menge von Objekten der Basisklasse aufzunehmen.
+</ul>
+
+<p>
+Somit sind beide Bedingungen erf&uuml;llt. Der Container erm&ouml;glicht
+die Komposition der Objekte zu Baumstrukturen und die Basisklasse
+stellt die einheitliche Schnittstelle f&uuml;r elementare Objekte
+und Container zur Verf&uuml;gung. Das Klassendiagramm f&uuml;r ein
+Composite sieht so aus: 
+<p>
+<a name="imageid011006"></a>
+<img src="images/Composite.gif">
+<p>
+
+<p><i>
+Abbildung 11.6: Klassendiagramm eines Composite</i></p>
+
+<p>
+Das folgende Listing skizziert dieses Design-Pattern am Beispiel einer
+einfachen Men&uuml;struktur: 
+<a name="listingid011017"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1117.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">class</font> MenuEntry1
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">protected</font> String name;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> MenuEntry1(String name)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#006699">this</font>.name = name;
+<font color="#555555">010 </font>  }
+<font color="#555555">011 </font>
+<font color="#555555">012 </font>  <font color="#0000AA">public</font> String toString()
+<font color="#555555">013 </font>  {
+<font color="#555555">014 </font>    <font color="#0000AA">return</font> name;
+<font color="#555555">015 </font>  }
+<font color="#555555">016 </font>}
+<font color="#555555">017 </font>
+<font color="#555555">018 </font><font color="#0000AA">class</font> IconizedMenuEntry1
+<font color="#555555">019 </font><font color="#0000AA">extends</font> MenuEntry1
+<font color="#555555">020 </font>{
+<font color="#555555">021 </font>  <font color="#0000AA">private</font> String iconName;
+<font color="#555555">022 </font>
+<font color="#555555">023 </font>  <font color="#0000AA">public</font> IconizedMenuEntry1(String name, String iconName)
+<font color="#555555">024 </font>  {
+<font color="#555555">025 </font>    <font color="#006699">super</font>(name);
+<font color="#555555">026 </font>    <font color="#006699">this</font>.iconName = iconName;
+<font color="#555555">027 </font>  }
+<font color="#555555">028 </font>}
+<font color="#555555">029 </font>
+<font color="#555555">030 </font><font color="#0000AA">class</font> CheckableMenuEntry1
+<font color="#555555">031 </font><font color="#0000AA">extends</font> MenuEntry1
+<font color="#555555">032 </font>{
+<font color="#555555">033 </font>  <font color="#0000AA">private</font> <font color="#006699">boolean</font> checked;
+<font color="#555555">034 </font>
+<font color="#555555">035 </font>  <font color="#0000AA">public</font> CheckableMenuEntry1(String name, <font color="#006699">boolean</font> checked)
+<font color="#555555">036 </font>  {
+<font color="#555555">037 </font>    <font color="#006699">super</font>(name);
+<font color="#555555">038 </font>    <font color="#006699">this</font>.checked = checked;
+<font color="#555555">039 </font>  }
+<font color="#555555">040 </font>}
+<font color="#555555">041 </font>
+<font color="#555555">042 </font><font color="#0000AA">class</font> Menu1
+<font color="#555555">043 </font><font color="#0000AA">extends</font> MenuEntry1
+<font color="#555555">044 </font>{
+<font color="#555555">045 </font>  MenuEntry1[] entries;
+<font color="#555555">046 </font>  <font color="#006699">int</font>          entryCnt;
+<font color="#555555">047 </font>
+<font color="#555555">048 </font>  <font color="#0000AA">public</font> Menu1(String name, <font color="#006699">int</font> maxElements)
+<font color="#555555">049 </font>  {
+<font color="#555555">050 </font>    <font color="#006699">super</font>(name);
+<font color="#555555">051 </font>    <font color="#006699">this</font>.entries = <font color="#0000AA">new</font> MenuEntry1[maxElements];
+<font color="#555555">052 </font>    entryCnt = 0;
+<font color="#555555">053 </font>  }
+<font color="#555555">054 </font>
+<font color="#555555">055 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> add(MenuEntry1 entry)
+<font color="#555555">056 </font>  {
+<font color="#555555">057 </font>    entries[entryCnt++] = entry;
+<font color="#555555">058 </font>  }
+<font color="#555555">059 </font>
+<font color="#555555">060 </font>  <font color="#0000AA">public</font> String toString()
+<font color="#555555">061 </font>  {
+<font color="#555555">062 </font>    String ret = <font color="#0000FF">"("</font>;
+<font color="#555555">063 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; entryCnt; ++i) {
+<font color="#555555">064 </font>      ret += (i != 0 ? <font color="#0000FF">","</font> : <font color="#0000FF">""</font>) + entries[i].toString();
+<font color="#555555">065 </font>    }
+<font color="#555555">066 </font>    <font color="#0000AA">return</font> ret + <font color="#0000FF">")"</font>;
+<font color="#555555">067 </font>  }
+<font color="#555555">068 </font>}
+<font color="#555555">069 </font>
+<font color="#555555">070 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1117
+<font color="#555555">071 </font>{
+<font color="#555555">072 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">073 </font>  {
+<font color="#555555">074 </font>    Menu1 filemenu = <font color="#0000AA">new</font> Menu1(<font color="#0000FF">"Datei"</font>, 5);
+<font color="#555555">075 </font>    filemenu.add(<font color="#0000AA">new</font> MenuEntry1(<font color="#0000FF">"Neu"</font>));
+<font color="#555555">076 </font>    filemenu.add(<font color="#0000AA">new</font> MenuEntry1(<font color="#0000FF">"Laden"</font>));
+<font color="#555555">077 </font>    filemenu.add(<font color="#0000AA">new</font> MenuEntry1(<font color="#0000FF">"Speichern"</font>));
+<font color="#555555">078 </font>
+<font color="#555555">079 </font>    Menu1 confmenu = <font color="#0000AA">new</font> Menu1(<font color="#0000FF">"Konfiguration"</font>, 3);
+<font color="#555555">080 </font>    confmenu.add(<font color="#0000AA">new</font> MenuEntry1(<font color="#0000FF">"Farben"</font>));
+<font color="#555555">081 </font>    confmenu.add(<font color="#0000AA">new</font> MenuEntry1(<font color="#0000FF">"Fenster"</font>));
+<font color="#555555">082 </font>    confmenu.add(<font color="#0000AA">new</font> MenuEntry1(<font color="#0000FF">"Pfade"</font>));
+<font color="#555555">083 </font>    filemenu.add(confmenu);
+<font color="#555555">084 </font>
+<font color="#555555">085 </font>    filemenu.add(<font color="#0000AA">new</font> MenuEntry1(<font color="#0000FF">"Beenden"</font>));
+<font color="#555555">086 </font>
+<font color="#555555">087 </font>    System.out.println(filemenu.toString());
+<font color="#555555">088 </font>  }
+<font color="#555555">089 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1117.java"><font color="#000055" size=-1>Listing1117.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 11.17: Das Composite-Pattern</i></p>
+
+<p>
+Die Komponentenklasse hat den Namen <font color="#000077"><tt>MenuEntry1</tt></font>.
+Sie repr&auml;sentiert Men&uuml;eintr&auml;ge und ist Vaterklasse
+der spezialisierteren Men&uuml;eintr&auml;ge <font color="#000077"><tt>IconizedMenuEntry1</tt></font>
+und <font color="#000077"><tt>CheckableMenuEntry1</tt></font>. Zudem
+ist sie Vaterklasse des Containers <font color="#000077"><tt>Menu1</tt></font>,
+der Men&uuml;eintr&auml;ge aufnehmen kann. 
+
+<p>
+Bestandteil der gemeinsamen Schnittstelle ist die Methode <font color="#000077"><tt>toString</tt></font>.
+In der Basisklasse und den elementaren Men&uuml;eintr&auml;gen liefert
+sie lediglich den Namen des Objekts. In der Containerklasse wird sie
+&uuml;berlagert und liefert eine geklammerte Liste aller darin enthaltenen
+Men&uuml;eintr&auml;ge. Dabei arbeitet sie unabh&auml;ngig davon,
+ob es sich bei dem jeweiligen Eintrag um einen elementaren oder einen
+zusammengesetzten Eintrag handelt, denn es wird lediglich die immer
+verf&uuml;gbare Methode <font color="#000077"><tt>toString</tt></font>
+aufgerufen. 
+
+<p>
+Das Testprogramm erzeugt ein &#187;Datei&#171;-Men&uuml; mit einigen
+Elementareintr&auml;gen und einem Untermen&uuml; &#187;Konfiguration&#171;
+und gibt es auf der Standardausgabe aus: 
+<font color="#333300">
+<pre>
+(Neu,Laden,Speichern,(Farben,Fenster,Pfade),Beenden)
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="visitorpattern"></a>
+<h3>11.4.8 Visitor<a name="ixa100653"></a> <a name="ixa100654"></a>
+</h3>
+
+<p>
+Das vorige Pattern hat gezeigt, wie man komplexe Datenstrukturen mit
+einer inh&auml;renten Teile-Ganzes-Beziehung aufbaut. Solche Strukturen
+m&uuml;ssen oft auf unterschiedliche Arten durchlaufen und verarbeitet
+werden. Ein Men&uuml; muss beispielsweise auf dem Bildschirm angezeigt
+werden, aber es kann auch die Gliederung f&uuml;r einen Teil eines
+Benutzerhandbuchs zur Verf&uuml;gung stellen. Verzeichnisse in einem
+Dateisystem m&uuml;ssen nach einem bestimmten Namen durchsucht werden,
+die kumulierte Gr&ouml;&szlig;e ihrer Verzeichnisse und Unterverzeichnisse
+soll ermittelt werden oder es sollen alle Dateien eines bestimmten
+Typs gel&ouml;scht werden k&ouml;nnen. 
+
+<p>
+All diese Operationen erfordern einen flexiblen Mechanismus zum Durchlaufen
+und Verarbeiten der Datenstruktur. Nat&uuml;rlich k&ouml;nnte man
+die einzelnen Bestandteile jeder Operation in den Komponenten- und
+Containerklassen unterbringen, aber dadurch w&uuml;rden diese schnell
+un&uuml;bersichtlich und f&uuml;r jede neu hinzugef&uuml;gte Operation
+m&uuml;ssten alle Klassen ge&auml;ndert werden. 
+
+<p>
+Das <i>Visitor</i>-Pattern zeigt einen eleganteren Weg, Datenstrukturen
+mit Verarbeitungsalgorithmen zu versehen. Es besteht aus folgenden
+Teilen: 
+<ul>
+<li>Einem Interface <font color="#000077"><tt>Visitor</tt></font>,
+das Methoden definiert, die beim Durchlaufen der Datenstruktur aufgerufen
+werden. Typischerweise gibt es zu jeder Klasse der Datenstruktur eine
+einzelne Methode, die genau dann aufgerufen wird, wenn ein Element
+dieses Typs durchlaufen wird. Bei Containern kann es sinnvoll sein,
+zwei Methoden zu definieren: eine, die am Anfang aufgerufen wird,
+und eine zweite, die aufgerufen wird, nachdem alle Elemente des Containers
+durchlaufen wurden. Jede Methode des Visitors erh&auml;lt ein Argument,
+das vom Typ der Klasse ist, die sie besucht. Die Namen der Methoden
+setzen sich meist aus dem Pr&auml;fix &#187;visit&#171; und dem Typ
+des besuchten Elements zusammen.
+<li>Die Basisklasse der Datenstruktur (also die Komponentenklasse)
+erh&auml;lt eine Methode <font color="#000077"><tt>accept</tt></font>,
+die ein <font color="#000077"><tt>Visitor</tt></font>-Objekt als Argument
+erh&auml;lt. <font color="#000077"><tt>accept</tt></font> ruft die
+zu seiner Klasse passende Methode des Visitors auf. In jeder abgeleiteten
+Komponentenklasse kann <font color="#000077"><tt>accept</tt></font>
+&uuml;berlagert werden, wenn f&uuml;r diese Klasse eine eigene Methode
+im Visitor zur Verf&uuml;gung steht, die anstelle der Basisklassenmethode
+aufgerufen werden soll. Bei Containern ruft <font color="#000077"><tt>accept</tt></font>
+zus&auml;tzlich die <font color="#000077"><tt>accept</tt></font>-Methoden
+der darin enthaltenen Elemente auf.
+<li>F&uuml;r jede zu implementierende Operation wird ein konkreter
+Visitor definiert, der die ben&ouml;tigte Funktionalit&auml;t in den
+Aufrufen der &#187;visit...&#171;-Methoden implementiert.
+<li>Will ein Client die Funktionalit&auml;t eines bestimmten Visitors
+benutzen, instanziert er ein passendes konkretes Visitor-Objekt und
+&uuml;bergibt es an das Hauptobjekt der Datenstruktur.
+</ul>
+
+<p>
+Das Klassendiagramm f&uuml;r einen Visitor sieht so aus: 
+<p>
+<a name="imageid011007"></a>
+<img src="images/Visitor.gif">
+<p>
+
+<p><i>
+Abbildung 11.7: Klassendiagramm eines Visitor</i></p>
+
+<p>
+Das folgende Listing erweitert das Composite des vorigen Abschnitts
+um einen Visitor-Mechanismus: 
+<a name="listingid011018"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1118.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">interface</font> MenuVisitor
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">abstract</font> <font color="#006699">void</font> visitMenuEntry(MenuEntry2 entry);
+<font color="#555555">006 </font>  <font color="#0000AA">abstract</font> <font color="#006699">void</font> visitMenuStarted(Menu2 menu);
+<font color="#555555">007 </font>  <font color="#0000AA">abstract</font> <font color="#006699">void</font> visitMenuEnded(Menu2 menu);
+<font color="#555555">008 </font>}
+<font color="#555555">009 </font>
+<font color="#555555">010 </font><font color="#0000AA">class</font> MenuEntry2
+<font color="#555555">011 </font>{
+<font color="#555555">012 </font>  <font color="#0000AA">protected</font> String name;
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>  <font color="#0000AA">public</font> MenuEntry2(String name)
+<font color="#555555">015 </font>  {
+<font color="#555555">016 </font>    <font color="#006699">this</font>.name = name;
+<font color="#555555">017 </font>  }
+<font color="#555555">018 </font>
+<font color="#555555">019 </font>  <font color="#0000AA">public</font> String toString()
+<font color="#555555">020 </font>  {
+<font color="#555555">021 </font>    <font color="#0000AA">return</font> name;
+<font color="#555555">022 </font>  }
+<font color="#555555">023 </font>
+<font color="#555555">024 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> accept(MenuVisitor visitor)
+<font color="#555555">025 </font>  {
+<font color="#555555">026 </font>    visitor.visitMenuEntry(<font color="#006699">this</font>);
+<font color="#555555">027 </font>  }
+<font color="#555555">028 </font>}
+<font color="#555555">029 </font>
+<font color="#555555">030 </font><font color="#0000AA">class</font> Menu2
+<font color="#555555">031 </font><font color="#0000AA">extends</font> MenuEntry2
+<font color="#555555">032 </font>{
+<font color="#555555">033 </font>  MenuEntry2[] entries;
+<font color="#555555">034 </font>  <font color="#006699">int</font>         entryCnt;
+<font color="#555555">035 </font>
+<font color="#555555">036 </font>  <font color="#0000AA">public</font> Menu2(String name, <font color="#006699">int</font> maxElements)
+<font color="#555555">037 </font>  {
+<font color="#555555">038 </font>    <font color="#006699">super</font>(name);
+<font color="#555555">039 </font>    <font color="#006699">this</font>.entries = <font color="#0000AA">new</font> MenuEntry2[maxElements];
+<font color="#555555">040 </font>    entryCnt = 0;
+<font color="#555555">041 </font>  }
+<font color="#555555">042 </font>
+<font color="#555555">043 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> add(MenuEntry2 entry)
+<font color="#555555">044 </font>  {
+<font color="#555555">045 </font>    entries[entryCnt++] = entry;
+<font color="#555555">046 </font>  }
+<font color="#555555">047 </font>
+<font color="#555555">048 </font>  <font color="#0000AA">public</font> String toString()
+<font color="#555555">049 </font>  {
+<font color="#555555">050 </font>    String ret = <font color="#0000FF">"("</font>;
+<font color="#555555">051 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; entryCnt; ++i) {
+<font color="#555555">052 </font>      ret += (i != 0 ? <font color="#0000FF">","</font> : <font color="#0000FF">""</font>) + entries[i].toString();
+<font color="#555555">053 </font>    }
+<font color="#555555">054 </font>    <font color="#0000AA">return</font> ret + <font color="#0000FF">")"</font>;
+<font color="#555555">055 </font>  }
+<font color="#555555">056 </font>
+<font color="#555555">057 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> accept(MenuVisitor visitor)
+<font color="#555555">058 </font>  {
+<font color="#555555">059 </font>    visitor.visitMenuStarted(<font color="#006699">this</font>);
+<font color="#555555">060 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; entryCnt; ++i) {
+<font color="#555555">061 </font>      entries[i].accept(visitor);
+<font color="#555555">062 </font>    }
+<font color="#555555">063 </font>    visitor.visitMenuEnded(<font color="#006699">this</font>);
+<font color="#555555">064 </font>  }
+<font color="#555555">065 </font>}
+<font color="#555555">066 </font>
+<font color="#555555">067 </font><font color="#0000AA">class</font> MenuPrintVisitor
+<font color="#555555">068 </font><font color="#0000AA">implements</font> MenuVisitor
+<font color="#555555">069 </font>{
+<font color="#555555">070 </font>  String indent = <font color="#0000FF">""</font>;
+<font color="#555555">071 </font>
+<font color="#555555">072 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> visitMenuEntry(MenuEntry2 entry)
+<font color="#555555">073 </font>  {
+<font color="#555555">074 </font>    System.out.println(indent + entry.name);
+<font color="#555555">075 </font>  }
+<font color="#555555">076 </font>
+<font color="#555555">077 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> visitMenuStarted(Menu2 menu)
+<font color="#555555">078 </font>  {
+<font color="#555555">079 </font>    System.out.println(indent + menu.name);
+<font color="#555555">080 </font>    indent += <font color="#0000FF">" "</font>;
+<font color="#555555">081 </font>  }
+<font color="#555555">082 </font>
+<font color="#555555">083 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> visitMenuEnded(Menu2 menu)
+<font color="#555555">084 </font>  {
+<font color="#555555">085 </font>    indent = indent.substring(1);
+<font color="#555555">086 </font>  }
+<font color="#555555">087 </font>}
+<font color="#555555">088 </font>
+<font color="#555555">089 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1118
+<font color="#555555">090 </font>{
+<font color="#555555">091 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">092 </font>  {
+<font color="#555555">093 </font>    Menu2 filemenu = <font color="#0000AA">new</font> Menu2(<font color="#0000FF">"Datei"</font>, 5);
+<font color="#555555">094 </font>    filemenu.add(<font color="#0000AA">new</font> MenuEntry2(<font color="#0000FF">"Neu"</font>));
+<font color="#555555">095 </font>    filemenu.add(<font color="#0000AA">new</font> MenuEntry2(<font color="#0000FF">"Laden"</font>));
+<font color="#555555">096 </font>    filemenu.add(<font color="#0000AA">new</font> MenuEntry2(<font color="#0000FF">"Speichern"</font>));
+<font color="#555555">097 </font>    Menu2 confmenu = <font color="#0000AA">new</font> Menu2(<font color="#0000FF">"Konfiguration"</font>, 3);
+<font color="#555555">098 </font>    confmenu.add(<font color="#0000AA">new</font> MenuEntry2(<font color="#0000FF">"Farben"</font>));
+<font color="#555555">099 </font>    confmenu.add(<font color="#0000AA">new</font> MenuEntry2(<font color="#0000FF">"Fenster"</font>));
+<font color="#555555">100 </font>    confmenu.add(<font color="#0000AA">new</font> MenuEntry2(<font color="#0000FF">"Pfade"</font>));
+<font color="#555555">101 </font>    filemenu.add(confmenu);
+<font color="#555555">102 </font>    filemenu.add(<font color="#0000AA">new</font> MenuEntry2(<font color="#0000FF">"Beenden"</font>));
+<font color="#555555">103 </font>
+<font color="#555555">104 </font>    filemenu.accept(<font color="#0000AA">new</font> MenuPrintVisitor());
+<font color="#555555">105 </font>  }
+<font color="#555555">106 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1118.java"><font color="#000055" size=-1>Listing1118.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 11.18: Das Visitor-Pattern</i></p>
+
+<p>
+Das Interface <font color="#000077"><tt>MenuVisitor</tt></font> stellt
+den abstrakten Visitor f&uuml;r Men&uuml;eintr&auml;ge dar. Die Methode
+<font color="#000077"><tt>visitMenuEntry</tt></font> wird bei jedem
+Durchlauf eines <font color="#000077"><tt>MenuEntry2</tt></font>-Objekts
+aufgerufen; die Methoden <font color="#000077"><tt>visitMenuStarted</tt></font>
+und <font color="#000077"><tt>visitMenuEnded</tt></font> zu Beginn
+und Ende des Besuchs eines <font color="#000077"><tt>Menu2</tt></font>-Objekts.
+In der Basisklasse <font color="#000077"><tt>MenuEntry2</tt></font>
+ruft <font color="#000077"><tt>accept</tt></font> die Methode <font color="#000077"><tt>visitMenuEntry</tt></font>
+auf. F&uuml;r die beiden abgeleiteten Elementklassen <font color="#000077"><tt>IconizedMenuEntry</tt></font>
+und <font color="#000077"><tt>CheckableMenuEntry</tt></font> gibt
+es keine Spezialisierungen; auch f&uuml;r diese Objekte wird <font color="#000077"><tt>visitMenuEntry</tt></font>
+aufgerufen. Lediglich der Container <font color="#000077"><tt>Menu2</tt></font>
+verfeinert den Aufruf und unterteilt ihn in drei Schritte. Zun&auml;chst
+wird <font color="#000077"><tt>visitMenuStarted</tt></font> aufgerufen,
+um anzuzeigen, dass ein Men&uuml;durchlauf beginnt. Dann werden die
+<font color="#000077"><tt>accept</tt></font>-Methoden aller Elemente
+aufgerufen und schlie&szlig;lich wird durch Aufruf von <font color="#000077"><tt>visitMenuEnded</tt></font>
+das Ende des Men&uuml;durchlaufs angezeigt. 
+
+<p>
+Der konkrete Visitor <font color="#000077"><tt>MenuPrintVisitor</tt></font>
+hat die Aufgabe, ein Men&uuml; mit allen Elementen zeilenweise und
+entsprechend der Schachtelung seiner Untermen&uuml;s einger&uuml;ckt
+auszugeben. Die letzte Zeile des Beispielprogramms zeigt, wie er verwendet
+wird. Die Ausgabe des Programms ist: 
+<font color="#333300">
+<pre>
+Datei
+ Neu
+ Laden
+ Speichern
+ Konfiguration
+  Farben
+  Fenster
+  Pfade
+ Beenden
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+In <a href="k100147.html#verzeichnisselesen">Abschnitt 22.4.1</a>
+zeigen wir eine weitere Anwendung des Visitor-Pattern. Dort wird eine
+generische L&ouml;sung f&uuml;r den rekursiven Durchlauf von geschachtelten
+Verzeichnisstrukturen vorgestellt.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="observerpattern"></a>
+<h3>11.4.9 Observer<a name="ixa100655"></a> <a name="ixa100656"></a>
+</h3>
+
+<p>
+Bei der objektorientierten Programmierung werden Programme in viele
+kleine Bestandteile zerlegt, die f&uuml;r sich genommen autonom arbeiten.
+Mit zunehmender Anzahl von Bausteinen steigt allerdings der Kommunikationsbedarf
+zwischen diesen Objekten und der Aufwand, sie konsistent zu halten,
+w&auml;chst an. 
+
+<p>
+Ein <i>Observer</i> ist ein Design-Pattern, das eine Beziehung zwischen
+einem <i>Subject</i> und seinen <i>Beobachtern</i> aufbaut. Als <i>Subject</i>
+wird dabei ein Objekt bezeichnet, dessen Zustands&auml;nderung f&uuml;r
+andere Objekte interessant ist. Als <i>Beobachter</i> werden die Objekte
+bezeichnet, die von Zustands&auml;nderungen des Subjekts abh&auml;ngig
+sind; deren Zustand also dem Zustand des Subjekts konsistent folgen
+muss. 
+
+<p>
+Das Observer-Pattern wird sehr h&auml;ufig bei der Programmierung
+grafischer Oberfl&auml;chen angewendet. Ist beispielsweise die Grafikausgabe
+mehrerer Fenster von einer bestimmten Datenstruktur abh&auml;ngig,
+so m&uuml;ssen die Fenster ihre Ausgabe ver&auml;ndern, wenn die Datenstruktur
+sich &auml;ndert. Auch Dialogelemente wie Buttons, Auswahlfelder oder
+Listen m&uuml;ssen das Programm benachrichtigen, wenn der Anwender
+eine Ver&auml;nderung an ihnen vorgenommen hat. In diesen F&auml;llen
+kann das Observer-Pattern angewendet werden. Es besteht aus folgenden
+Teilen: 
+<ul>
+<li>Ein Interface <font color="#000077"><tt>Observer</tt></font> definiert
+eine Methode <font color="#000077"><tt>update</tt></font>, die immer
+dann aufgerufen wird, wenn sich der Zustand des beobachteten Subjekts
+&auml;ndert.
+<li>Eine Klasse <font color="#000077"><tt>Subject</tt></font> definiert
+Methoden, mit denen sich Observer registrieren und deregistrieren
+lassen k&ouml;nnen. Tritt eine Zustands&auml;nderung des Subjekts
+auf, wird bei allen registrierten Observern die <font color="#000077"><tt>update</tt></font>-Methode
+aufgerufen.
+<li>Ein konkretes Subjekt wird aus <font color="#000077"><tt>Subject</tt></font>
+abgeleitet (oder verwendet ein <font color="#000077"><tt>Subject</tt></font>-Objekt
+per Delegation) und ruft nach jeder Zustands&auml;nderung <font color="#000077"><tt>fireUpdate</tt></font>
+auf. Dadurch werden alle registrierten Beobachter aufgerufen und k&ouml;nnen
+auf die Zustands&auml;nderung reagieren.
+<li>Ein konkreter Beobachter implementiert das Interface <font color="#000077"><tt>Observer</tt></font>
+und registriert sich bei allen Subjekten, &uuml;ber deren Zustands&auml;nderungen
+er unterrichtet werden m&ouml;chte. Er implementiert in <font color="#000077"><tt>update</tt></font>
+den Code, der zur Bearbeitung der Zustands&auml;nderung erforderlich
+ist.
+</ul>
+
+<p>
+Das Klassendiagramm f&uuml;r einen Observer sieht so aus: 
+<p>
+<a name="imageid011008"></a>
+<img src="images/Observer.gif">
+<p>
+
+<p><i>
+Abbildung 11.8: Klassendiagramm eines Observer</i></p>
+
+<p>
+Das folgende Listing zeigt eine beispielhafte Implementierung: 
+<a name="listingid011019"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1119.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">interface</font> Observer
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> update(Subject subject);
+<font color="#555555">006 </font>}
+<font color="#555555">007 </font>
+<font color="#555555">008 </font><font color="#0000AA">class</font> Subject
+<font color="#555555">009 </font>{
+<font color="#555555">010 </font>  Observer[] observers   = <font color="#0000AA">new</font> Observer[5];
+<font color="#555555">011 </font>  <font color="#006699">int</font>        observerCnt = 0;
+<font color="#555555">012 </font>
+<font color="#555555">013 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> attach(Observer observer)
+<font color="#555555">014 </font>  {
+<font color="#555555">015 </font>    observers[observerCnt++] = observer;
+<font color="#555555">016 </font>  }
+<font color="#555555">017 </font>
+<font color="#555555">018 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> detach(Observer observer)
+<font color="#555555">019 </font>  {
+<font color="#555555">020 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; observerCnt; ++i) {
+<font color="#555555">021 </font>      <font color="#0000AA">if</font> (observers[i] == observer) {
+<font color="#555555">022 </font>        --observerCnt;
+<font color="#555555">023 </font>        <font color="#0000AA">for</font> (;i &lt; observerCnt; ++i) {
+<font color="#555555">024 </font>          observers[i] = observers[i + 1];
+<font color="#555555">025 </font>        }
+<font color="#555555">026 </font>        <font color="#0000AA">break</font>;
+<font color="#555555">027 </font>      }
+<font color="#555555">028 </font>    }
+<font color="#555555">029 </font>  }
+<font color="#555555">030 </font>
+<font color="#555555">031 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> fireUpdate()
+<font color="#555555">032 </font>  {
+<font color="#555555">033 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; observerCnt; ++i) {
+<font color="#555555">034 </font>      observers[i].update(<font color="#006699">this</font>);
+<font color="#555555">035 </font>    }
+<font color="#555555">036 </font>  }
+<font color="#555555">037 </font>}
+<font color="#555555">038 </font>
+<font color="#555555">039 </font><font color="#0000AA">class</font> Counter
+<font color="#555555">040 </font>{
+<font color="#555555">041 </font>  <font color="#006699">int</font> cnt = 0;
+<font color="#555555">042 </font>  Subject subject = <font color="#0000AA">new</font> Subject();
+<font color="#555555">043 </font>
+<font color="#555555">044 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> attach(Observer observer)
+<font color="#555555">045 </font>  {
+<font color="#555555">046 </font>    subject.attach(observer);
+<font color="#555555">047 </font>  }
+<font color="#555555">048 </font>
+<font color="#555555">049 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> detach(Observer observer)
+<font color="#555555">050 </font>  {
+<font color="#555555">051 </font>    subject.detach(observer);
+<font color="#555555">052 </font>  }
+<font color="#555555">053 </font>
+<font color="#555555">054 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> inc()
+<font color="#555555">055 </font>  {
+<font color="#555555">056 </font>    <font color="#0000AA">if</font> (++cnt % 3 == 0) {
+<font color="#555555">057 </font>      subject.fireUpdate();
+<font color="#555555">058 </font>    }
+<font color="#555555">059 </font>  }
+<font color="#555555">060 </font>}
+<font color="#555555">061 </font>
+<font color="#555555">062 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1119
+<font color="#555555">063 </font>{
+<font color="#555555">064 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">065 </font>  {
+<font color="#555555">066 </font>    Counter counter = <font color="#0000AA">new</font> Counter();
+<font color="#555555">067 </font>    counter.attach(
+<font color="#555555">068 </font>      <font color="#0000AA">new</font> Observer()
+<font color="#555555">069 </font>      {
+<font color="#555555">070 </font>        <font color="#0000AA">public</font> <font color="#006699">void</font> update(Subject subject)
+<font color="#555555">071 </font>        {
+<font color="#555555">072 </font>          System.out.print(<font color="#0000FF">"divisible by 3: "</font>);
+<font color="#555555">073 </font>        }
+<font color="#555555">074 </font>      }
+<font color="#555555">075 </font>    );
+<font color="#555555">076 </font>    <font color="#0000AA">while</font> (counter.cnt &lt; 10) {
+<font color="#555555">077 </font>      counter.inc();
+<font color="#555555">078 </font>      System.out.println(counter.cnt);
+<font color="#555555">079 </font>    }
+<font color="#555555">080 </font>  }
+<font color="#555555">081 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1119.java"><font color="#000055" size=-1>Listing1119.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 11.19: Das Observer-Pattern</i></p>
+
+<p>
+Als konkretes Subjekt wird hier die Klasse <font color="#000077"><tt>Counter</tt></font>
+verwendet. Sie erh&ouml;ht bei jedem Aufruf von <font color="#000077"><tt>inc</tt></font>
+den eingebauten Z&auml;hler um eins und informiert alle registrierten
+Beobachter, falls der neue Z&auml;hlerstand durch drei teilbar ist.
+Im Hauptprogramm instanzieren wir ein <font color="#000077"><tt>Counter</tt></font>-Objekt
+und registrieren eine lokale anonyme Klasse als Listener, die bei
+jeder Benachrichtigung eine Meldung ausgibt. W&auml;hrend des anschlie&szlig;enden
+Z&auml;hlerlaufs von 1 bis 10 wird sie dreimal aufgerufen: 
+<font color="#333300">
+<pre>
+1
+2
+divisible by 3: 3
+4
+5
+divisible by 3: 6
+7
+8
+divisible by 3: 9
+10
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Das Observer-Pattern ist in Java sehr verbreitet, denn die Kommunikation
+zwischen grafischen Dialogelementen und ihrer Anwendung basiert vollst&auml;ndig
+auf dieser Idee. Allerdings wurde es etwas erweitert, die Beobachter
+werden als <a name="ixa100657"><i>Listener</i></a> bezeichnet und
+es gibt von ihnen eine Vielzahl unterschiedlicher Typen mit unterschiedlichen
+Aufgaben. Da es zudem &uuml;blich ist, dass ein Listener sich bei
+mehr als einem Subjekt registriert, wird ein Aufruf von <font color="#000077"><tt>update</tt></font>
+statt des einfachen Arguments jeweils ein Listener-spezifisches Ereignisobjekt
+&uuml;bergeben. Darin werden neben dem Subjekt weitere spezifische
+Informationen untergebracht. Zudem haben die Methoden gegen&uuml;ber
+der urspr&uuml;nglichen Definition eine andere Namensstruktur und
+es kann sein, dass ein Listener nicht nur eine, sondern mehrere unterschiedliche
+Update-Methoden zur Verf&uuml;gung stellen muss, um auf unterschiedliche
+Ereignistypen zu reagieren. Das Listener-Konzept von Java wird auch
+als <a name="ixa100658"><i>Delegation Based Event Handling</i></a>
+bezeichnet und in <a href="k100181.html#kapiteleventhandling">Kapitel 28</a>
+ausf&uuml;hrlich erl&auml;utert.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100070.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100073.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100075.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100076.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

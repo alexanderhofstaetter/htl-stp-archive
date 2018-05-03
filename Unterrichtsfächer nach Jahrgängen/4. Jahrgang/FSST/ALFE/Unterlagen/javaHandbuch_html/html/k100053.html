@@ -1,0 +1,609 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100052.html;106,k100052.html;107,k100054.html;108,k100057.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100052.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100052.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100054.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100057.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 8 - OOP I: Grundlagen
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id008001"></a>
+<h2>8.1 Konzepte objektorientierter Programmiersprachen </h2>
+<hr>
+<ul>
+<li><a href="k100053.html#sectlevel2id008001">8.1 Konzepte objektorientierter Programmiersprachen</a>
+<ul>
+<li><a href="k100053.html#sectlevel3id008001001">8.1.1 Einf&uuml;hrung</a>
+<li><a href="k100053.html#sectlevel3id008001002">8.1.2 Abstraktion</a>
+<li><a href="k100053.html#kapselung">8.1.3 Kapselung</a>
+<li><a href="k100053.html#sectlevel3id008001004">8.1.4 Wiederverwendung</a>
+<li><a href="k100053.html#sectlevel3id008001005">8.1.5 Beziehungen</a>
+<ul>
+<li><a href="k100053.html#sectlevel4id008001005001">Generalisierung und Spezialisierung</a>
+<li><a href="k100053.html#sectlevel4id008001005002">Aggregation und Komposition</a>
+<li><a href="k100053.html#sectlevel4id008001005003">Verwendungs- und Aufrufbeziehungen</a>
+</ul>
+<li><a href="k100053.html#polymorphismus">8.1.6 Polymorphismus</a>
+<li><a href="k100053.html#sectlevel3id008001007">8.1.7 Fazit</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id008001001"></a>
+<h3>8.1.1 Einf&uuml;hrung </h3>
+
+<p>
+<a name="ixa100440">Objektorientierte Programmierung</a> (kurz <a name="ixa100441"><i>OOP</i></a>)
+war <i>das</i> Programmierparadigma der 1990er Jahre. Viele der heute
+verwendeten Programmiersprachen sind entweder von Grund auf objektorientiert
+(Java, Eiffel, SmallTalk) oder wurden im Laufe der Zeit mit objektorientierten
+Erweiterungen versehen (Basic, Pascal, ADA). Selbst manche Scriptsprachen
+erlauben den Zugriff auf (mitunter vordefinierte) Objekte oder besitzen
+objektorientierte Eigenschaften (JavaScript, Python). Die objektorientierte
+Programmierung war eine der &#187;Silver Bullets&#171;, die die Software-Industrie
+aus ihrer Krise f&uuml;hren und zu robusteren, fehler&auml;rmeren
+und besser wartbaren Programmen f&uuml;hren sollte. 
+
+<p>
+Was sind nun die Geheimnisse der objektorientierten Programmierung?
+Was verbirgt sich hinter dem Begriff und welches sind seine wichtigsten
+Konzepte? Wir wollen uns zun&auml;chst mit den Grundideen objektorientierter
+Programmierung auseinandersetzen und dann in diesem und den n&auml;chsten
+Kapiteln Schritt f&uuml;r Schritt erl&auml;utern, wie sie in Java
+umgesetzt wurden. 
+
+<!-- Section -->
+
+<a name="sectlevel3id008001002"></a>
+<h3>8.1.2 Abstraktion </h3>
+
+<p>
+Eine der wichtigsten Ideen der objektorientierten Programmierung ist
+die Trennung zwischen <i>Konzept</i> und <i>Umsetzung</i>, etwa zwischen
+einem <i>Bauteil</i> und seinem <i>Bauplan</i>, einer <i>Speise</i>
+und dem f&uuml;r die Zubereitung erforderlichen <i>Rezept</i> oder
+einem <i>technischen Handbuch</i> und der <i>konkreten Apparatur</i>,
+die dadurch beschrieben wird. Diese Art von Unterscheidung ist in
+der wirklichen Welt sehr bedeutsam. Wer wei&szlig;, wie man <i>einen
+einzigen</i> Lichtschalter bedient, kann andere, gleichartige Schalter
+ebenfalls bedienen. Wer ein Rezept f&uuml;r eine Sachertorte besitzt,
+ist in der Lage, diese zu backen, selbst wenn er ansonsten &uuml;ber
+keine Koch- oder Backk&uuml;nste verf&uuml;gt. Wer einen F&uuml;hrerschein
+gemacht hat, kann ein Auto fahren, ohne im Detail &uuml;ber das komplizierte
+Innenleben desselben unterrichtet zu sein. 
+
+<p>
+In der objektorientierten Programmierung manifestiert sich diese Unterscheidung
+in den Begriffen <i>Objekt</i> und <i>Klasse</i>. Ein Objekt ist ein
+tats&auml;chlich existierendes &#187;Ding&#171; aus der Anwendungswelt
+des Programms. Es spielt dabei keine Rolle, ob es sich um die programmierte
+Umsetzung eines konkret existierenden Gegenstands handelt oder ob
+&#187;nur&#171; ein abstraktes Konzept modelliert wird. Eine &#187;Klasse&#171;
+ist dagegen die Beschreibung eines oder mehrerer &auml;hnlicher Objekte.
+&#187;&Auml;hnlich&#171; bedeutet dabei, dass eine Klasse nur Objekte
+eines bestimmten Typs beschreibt. Diese m&uuml;ssen sich zwar nicht
+in allen Details gleichen, aber doch in so vielen von ihnen &uuml;bereinstimmen,
+dass eine gemeinsame Beschreibung angebracht ist. Eine Klasse beschreibt
+mindestens drei wichtige Dinge: 
+<ul>
+<li>Wie ist das Objekt zu bedienen?
+<li>Welche Eigenschaften hat das Objekt und wie verh&auml;lt es sich?
+<li>Wie wird das Objekt hergestellt?
+</ul>
+
+<p>
+&Auml;hnlich wie ein Rezept zur Herstellung von Hunderten von Sachertorten
+verwendet werden kann, erm&ouml;glicht eine Klasse das Erzeugen einer
+prinzipiell beliebigen Anzahl von Objekten. Jedes hat dabei seine
+eigene Identit&auml;t und mag sich in gewissen Details von allen anderen
+unterscheiden. Letzlich ist das Objekt aber immer eine <i>Instanz</i>
+der Klasse, nach der es modelliert wurde. In einem Haus kann es beispielsweise
+f&uuml;nfzig Lichtschalter-Objekte geben. Sie alle sind Instanzen
+der Klasse &#187;Lichtschalter&#171;, lassen sich in vergleichbarer
+Weise bedienen und sind identisch konstruiert. Dennoch unterscheiden
+wir sehr wohl zwischen dem Lichtschalter-Objekt, das die Flurbeleuchtung
+bedient, und jenem, das den Keller erhellt. Und beide wiederum unterscheiden
+sich eindeutig von allen anderen Lichschalterinstanzen im Haus. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Es ist &uuml;brigens kein Zufall, dass wir die Begriffe &#187;Instanz&#171;
+und &#187;Objekt&#171; synonym verwenden. In der objektorientierten
+Programmierung ist das sehr verbreitet (auch wenn Puristen zwischen
+beiden Begriffen noch Unterschiede sehen) und wir wollen uns diesem
+Wortgebrauch anschlie&szlig;en.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Diese Unterscheidung zwischen Objekten und Klassen kann als <a name="ixa100442"><i>Abstraktion</i></a>
+angesehen werden. Sie bildet die erste wichtige Eigenschaft objektorientierter
+Sprachen. Abstraktion hilft, Details zu ignorieren, und reduziert
+damit die Komplexit&auml;t des Problems. Die F&auml;higkeit zur Abstraktion
+ist eine der wichtigsten Voraussetzungen zur Beherrschung komplexer
+Apparate und Techniken und kann in ihrer Bedeutung nicht hoch genug
+eingesch&auml;tzt werden. 
+
+<!-- Section -->
+
+<a name="kapselung"></a>
+<h3>8.1.3 Kapselung </h3>
+
+<p>
+In objektorientierten Programmiersprachen wird eine Klasse durch die
+Zusammenfassung einer Menge von Daten und darauf operierender Funktionen
+(die nun <a name="ixa100443"><i>Methoden</i></a> genannt werden) definiert.
+Die Daten werden durch einen Satz Variablen repr&auml;sentiert, der
+f&uuml;r jedes instanziierte Objekt neu angelegt wird (diese werden
+als <a name="ixa100444"><i>Attribute</i></a>, <a name="ixa100445"><i>Membervariablen</i></a>,
+<a name="ixa100446"><i>Instanzvariablen</i></a> oder <a name="ixa100447"><i>Instanzmerkmale</i></a>
+bezeichnet). Die Methoden sind im ausf&uuml;hrbaren Programmcode nur
+einmal vorhanden, operieren aber bei jedem Aufruf auf den Daten eines
+ganz bestimmten Objekts (das Laufzeitsystem &uuml;bergibt bei jedem
+Aufruf einer Methode einen Verweis auf den Satz Instanzvariablen,
+mit dem die Methode gerade arbeiten soll). 
+
+<p>
+Die Instanzvariablen repr&auml;sentieren den <i>Zustand</i> eines
+Objekts. Sie k&ouml;nnen bei jeder Instanz einer Klasse unterschiedlich
+sein und sich w&auml;hrend seiner Lebensdauer ver&auml;ndern. Die
+Methoden repr&auml;sentieren das <i>Verhalten</i> des Objekts. Sie
+sind - von gewollten Ausnahmen abgesehen, bei denen Variablen bewusst
+von au&szlig;en zug&auml;nglich gemacht werden - die einzige M&ouml;glichkeit,
+mit dem Objekt zu kommunizieren und so Informationen &uuml;ber seinen
+Zustand zu gewinnen oder diesen zu ver&auml;ndern. Das Verhalten der
+Objekte einer Klasse wird in seinen Methodendefinitionen festgelegt
+und ist von dem darin enthaltenen Programmcode und dem aktuellen Zustand
+des Objekts abh&auml;ngig. 
+
+<p>
+Diese Zusammenfassung von Methoden und Variablen zu Klassen bezeichnet
+man als <a name="ixa100448"><i>Kapselung</i></a>. Sie stellt die zweite
+wichtige Eigenschaft objektorientierter Programmiersprachen dar. Kapselung
+hilft vor allem, die Komplexit&auml;t der Bedienung eines Objekts
+zu reduzieren. Um eine Lampe anzuschalten, muss man nicht viel &uuml;ber
+den inneren Aufbau des Lichtschalters wissen. Sie vermindert aber
+auch die Komplexit&auml;t der Implementierung, denn undefinierte Interaktionen
+mit anderen Bestandteilen des Programms werden verhindert oder reduziert.
+
+
+<!-- Section -->
+<a name="sectlevel3id008001004"></a>
+<h3>8.1.4 Wiederverwendung </h3>
+
+<p>
+Durch die Abstraktion und Kapselung wird die <a name="ixa100449"><i>Wiederverwendung</i></a>
+von Programmelementen gef&ouml;rdert, die dritte wichtige Eigenschaft
+objektorientierter Programmiersprachen. Ein einfaches Beispiel daf&uuml;r
+sind <i>Collections</i>, also Objekte, die Sammlungen anderer Objekte
+aufnehmen und auf eine bestimmte Art und Weise verarbeiten k&ouml;nnen.
+Collections sind oft sehr kompliziert aufgebaut (typischerweise zur
+Geschwindigkeitssteigerung oder Reduzierung des Speicherbedarfs),
+besitzen aber in aller Regel eine einfache Schnittstelle. Werden sie
+als Klasse implementiert und werden durch die Kapselung der Code-
+und Datenstrukturen die komplexen Details &#187;wegabstrahiert&#171;,
+k&ouml;nnen sie sehr einfach wiederverwendet werden. Immer, wenn im
+Programm eine entsprechende Collection ben&ouml;tigt wird, muss lediglich
+ein Objekt der passenden Klasse instanziert werden, und das Programm
+kann &uuml;ber die einfach zu bedienende Schnittstelle darauf zugreifen.
+Wiederverwendung ist ein wichtiger Schl&uuml;ssel zur Erh&ouml;hung
+der Effizienz und Fehlerfreiheit beim Programmieren. 
+
+<!-- Section -->
+
+<a name="sectlevel3id008001005"></a>
+<h3>8.1.5 Beziehungen </h3>
+
+<p>
+Objekte und Klassen existieren f&uuml;r gew&ouml;hnlich nicht v&ouml;llig
+alleine, sondern stehen in Beziehungen zueinander. So &auml;hnelt
+ein Fahrrad beispielsweise einem Motorrad, hat aber auch mit einem
+Auto Gemeinsamkeiten. Ein Auto &auml;hnelt dagegen einem Lastwagen.
+Dieser kann einen Anh&auml;nger haben, auf dem ein Motorrad steht.
+Ein F&auml;hrschiff ist ebenfalls ein Transportmittel und kann viele
+Autos oder Lastwagen aufnehmen, genauso wie ein langer G&uuml;terzug.
+Dieser wird von einer Lokomotive gezogen. Ein Lastwagen kann auch
+einen Anh&auml;nger ziehen, muss es aber nicht. Bei einem F&auml;hrschiff
+ist keine Zugmaschine erforderlich und es kann nicht nur Transportmittel
+bef&ouml;rdern, sondern auch Menschen, Tiere oder Lebensmittel.
+
+<p>
+Wir wollen ein wenig Licht in diese Beziehungen bringen und zeigen,
+wie sie sich in objektorientierten Programmiersprachen auf wenige
+Grundtypen reduzieren lassen: 
+<ul>
+<li>&#187;is-a&#171;-Beziehungen (Generalisierung, Spezialisierung)
+<li>&#187;part-of&#171;-Beziehungen (Aggregation, Komposition)
+<li>Verwendungs- oder Aufrufbeziehungen
+</ul>
+
+
+<!-- Section -->
+<a name="sectlevel4id008001005001"></a>
+<h4>Generalisierung und Spezialisierung </h4>
+
+<p>
+Zuerst wollen wir die &#187;is-a&#171;-Beziehung betrachten. &#187;is-a&#171;
+bedeutet &#187;ist ein&#171; und meint die Beziehung zwischen &#187;&auml;hnlichen&#171;
+Klassen. Ein Fahrrad ist kein Motorrad, aber beide sind Zweir&auml;der.
+Ein Zweirad, und damit sowohl das Fahrrad als auch das Motorrad, ist
+ein Stra&szlig;enfahrzeug, ebenso wie das Auto und der Lastwagen.
+All diese Klassen repr&auml;sentieren Transportmittel, zu denen aber
+auch die Schiffe und G&uuml;terz&uuml;ge z&auml;hlen. 
+
+<p>
+Die &#187;is-a&#171;-Beziehung zwischen zwei Klassen <i>A</i> und
+<i>B</i> sagt aus, dass &#187;<i>B</i> ein <i>A</i> ist&#171;, also
+alle Eigenschaften von <i>A</i> besitzt und vermutlich noch ein paar
+mehr. <i>B</i> ist demnach eine Spezialisierung von <i>A</i>. Andersherum
+betrachtet, ist <i>A</i> eine Generalisierung (Verallgemeinerung)
+von <i>B</i>. 
+
+<p>
+&#187;is-a&#171;-Beziehungen werden in objektorientierten Programmiersprachen
+durch <a name="ixa100450"><i>Vererbung</i></a> ausgedr&uuml;ckt. Eine
+Klasse wird dabei nicht komplett neu definiert, sondern von einer
+anderen Klasse <i>abgeleitet</i>. In diesem Fall erbt sie alle Eigenschaften
+dieser Klasse und kann nach Belieben eigene hinzuf&uuml;gen. In unserem
+Fall w&auml;re also <i>B</i> von <i>A</i> abgeleitet. <i>A</i> wird
+als <a name="ixa100451"><i>Basisklasse</i></a> (manchmal auch als
+<a name="ixa100452"><i>Vaterklasse</i></a>), <i>B</i> als <a name="ixa100453"><i>abgeleitete
+Klasse</i></a> bezeichnet. 
+
+<p>
+Vererbungen k&ouml;nnen mehrstufig sein, d.h., eine abgeleitete Klasse
+kann Basisklasse f&uuml;r weitere Klassen sein. Auf diese Weise k&ouml;nnen
+vielstufige <i>Vererbungshierarchien</i> entstehen, die in nat&uuml;rlicher
+Weise die Taxonomie (also die gegliederte Begriffsstruktur) der zu
+modellierenden Anwendungswelt repr&auml;sentieren. Vererbungshierarchien
+werden wegen ihrer Baumstruktur auch als <a name="ixa100454"><i>Ableitungsb&auml;ume</i></a>
+bezeichnet. Sie werden meist durch Graphen dargestellt, in denen die
+abgeleiteten Klassen durch Pfeile mit den Basisklassen verbunden sind
+und die Basisklassen oberhalb der abgeleiteten Klassen stehen. F&uuml;r
+unsere Fahrzeugwelt erg&auml;be sich beispielsweise folgender Ableitungsbaum:
+<p>
+<a name="transportmittel"></a>
+<img src="images/VererbTransp.gif">
+<p>
+
+<p><i>
+Abbildung 8.1: Vererbungshierarchie f&uuml;r Transportmittel</i></p>
+
+<p>
+Als Eigenschaften der Basisklasse <i>Transportmittel</i> k&ouml;nnten
+etwa deren Anschaffungskosten, ihre Lebensdauer oder die Transportgeschwindigkeit
+angesehen werden. Sie gelten f&uuml;r alle abgeleiteten Klassen. In
+der zweiten Ableitungsebene unterscheiden wir nach der Art der Fortbewegung
+(wir h&auml;tten allerdings ebensogut nach der Farbe, dem Verwendungszweck
+oder einem beliebigen anderen Merkmal unterscheiden k&ouml;nnen).
+In der Klasse <i>Wasserfahrzeug</i> k&ouml;nnten nun Eigenschaften
+wie Verdr&auml;ngung, Hochseetauglichkeit und erforderliche Besatzung
+festgehalten werden. Das F&auml;hrschiff schlie&szlig;lich f&uuml;gt
+seine Transportkapazit&auml;ten f&uuml;r Autos, Lastwagen und Personen
+hinzu, gibt die Anzahl der Kabinen der unterschiedlichen Kategorien
+an und definiert, ob es im RORO-Verfahren be- und entladen werden
+kann oder nicht. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+In manchen objektorientierten Programmiersprachen kann eine abgeleitete
+Klasse mehr als eine Basisklasse besitzen (z.B. in C++ oder Eiffel).
+In diesem Fall spricht man von <a name="ixa100455"><i>Mehrfachvererbung</i></a>.
+Die Vererbungshierarchie ist dann nicht mehr zwangsl&auml;ufig ein
+Baum, sondern muss zu einem gerichteten Graph verallgemeinert werden.
+In Java gibt es allerdings keine Mehrfachvererbung und wir wollen
+daher nicht weiter auf die Besonderheiten dieser Technik eingehen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id008001005002"></a>
+<h4>Aggregation und Komposition </h4>
+
+<p>
+Der zweite Beziehungstyp, die &#187;part-of&#171;-Beziehungen, beschreibt
+die <i>Zusammensetzung</i> eines Objekts aus anderen Objekten (dies
+wird auch als <a name="ixa100456"><i>Komposition</i></a> bezeichnet).
+So besteht beispielsweise der G&uuml;terzug aus einer (oder manchmal
+zwei) Lokomotiven und einer gro&szlig;en Anzahl G&uuml;terzuganh&auml;nger.
+Der Lastwagen besteht aus der LKW-Zugmaschine und eventuell einem
+Anh&auml;nger. Ein Fahrrad besteht aus vielen Einzelteilen. Objektorientierte
+Sprachen implementieren &#187;part-of&#171;-Beziehungen durch Instanzvariablen,
+die Objekte aufnehmen k&ouml;nnen. Der G&uuml;terzug k&ouml;nnte also
+eine (oder zwei) Instanzvariablen vom Typ <i>Lokomotive</i> und ein
+Array von Instanzvariablen vom Typ <i>G&uuml;terzuganh&auml;nger</i>
+besitzen. 
+
+<p>
+&#187;part-of&#171;-Beziehungen m&uuml;ssen nicht zwangsl&auml;ufig
+beschreiben, <i>woraus</i> ein Objekt zusammengesetzt ist. Vielmehr
+k&ouml;nnen sie auch den allgemeineren Fall des <i>einfachen Aufnehmens</i>
+anderer Objekte beschreiben (was auch als <a name="ixa100457"><i>Aggregation</i></a>
+bezeichnet wird). Zwischen dem Motorrad, das auf dem Lastwagenanh&auml;nger
+steht, oder den Stra&szlig;enfahrzeugen, die auf einem F&auml;hrschiff
+untergebracht sind, besteht zwar eine &#187;part-of&#171;-Beziehung,
+sie ist aber nicht <i>essenziell</i> f&uuml;r die Existenz des aufnehmenden
+Objekts. Der Anh&auml;nger existiert auch, wenn kein Motorrad darauf
+platziert ist. Und das F&auml;hrschiff kann auch leer von Kiel nach
+Oslo fahren. 
+
+<p>
+W&auml;hrend bei der objektorientierten Modellierung sorgsam zwischen
+beiden F&auml;llen unterschieden wird (Komposition bezeichnet die
+strenge Form der Aggregation auf Grund einer existenziellen Abh&auml;ngigkeit),
+behandeln objektorientierte Programmiersprachen sie prinzipiell gleich.
+In beiden F&auml;llen gibt es Instanzvariablen, die Objekte aufnehmen
+k&ouml;nnen. Ist ein optionales Objekt nicht vorhanden, wird dies
+durch die Zuweisung eines speziellen <a name="ixa100458"><i>null-Objekts</i></a>
+ausgedr&uuml;ckt. F&uuml;r die semantischen Eigenschaften der Beziehung
+ist die Klasse selbst verantwortlich. 
+
+<!-- Section -->
+
+<a name="sectlevel4id008001005003"></a>
+<h4>Verwendungs- und Aufrufbeziehungen </h4>
+
+<p>
+Die dritte Art von Beziehungen zwischen Objekten oder Klassen hat
+den allgemeinsten Charakter. Benutzt beispielsweise eine Methode w&auml;hrend
+ihrer Ausf&uuml;hrung ein tempor&auml;res Objekt, so besteht zwischen
+beiden eine Verwendungsbeziehung: Objekt <i>x</i> verwendet eine Instanz
+der Klasse <i>Y</i>, um bestimmte Operationen auszuf&uuml;hren. Taucht
+in der Argumentliste einer Methode eine Objektvariable der Klasse
+<i>T</i> auf, so entsteht eine &auml;hnliche Beziehung zu <i>T</i>.
+Zwar ist dies keine &#187;part-of&#171;-Beziehung und auch die Ableitungsbeziehung
+zwischen beiden Klassen spielt keine Rolle. Wenigstens muss aber die
+Methode die Argumentklasse kennen und in der Lage sein, Methoden darauf
+aufzurufen oder das Objekt an Dritte weiterzugeben. 
+
+<p>
+Allgemeine Verwendungs- oder Aufrufbeziehungen finden in objektorientierten
+Programmiersprachen ihren Niederschlag darin, dass Objekte als lokale
+Variablen oder Methodenargumente verwendet werden. Sie werden auch
+mit dem Begriff <a name="ixa100459"><i>Assoziationen</i></a> bezeichnet.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+In den vorangegangenen Abschnitten wurden mehrfach die Begriffe <i>Membervariable</i>,
+<i>Instanzvariable</i> und <i>Objektvariable</i> verwendet. Als <a name="ixa100460"><i>Objektvariable</i></a>
+bezeichnen wir stets eine Variable, die ein Objekt aufnehmen kann,
+also vom Typ einer Klasse ist. Das Gegenteil einer Objektvariable
+ist eine primitive Variable. <a name="ixa100461"></a> Die Begriffe
+<i>Membervariable</i> und <i>Instanzvariable</i> werden synonym verwendet.
+Sie bezeichnen eine Variable, die innerhalb einer Klasse definiert
+wurde und mit jeder Instanz neu angelegt wird.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="polymorphismus"></a>
+<h3>8.1.6 Polymorphismus </h3>
+
+<p>
+Als letztes wichtiges Konzept objektorientierter Programmiersprachen
+wollen wir uns mit dem <a name="ixa100462"><i>Polymorphismus</i></a>
+besch&auml;ftigen. Polymorphismus bedeutet direkt &uuml;bersetzt etwa
+&#187;Vielgestaltigkeit&#171; und bezeichnet zun&auml;chst einmal
+die F&auml;higkeit von Objektvariablen, Objekte unterschiedlicher
+Klassen aufzunehmen. Das geschieht allerdings nicht unkontrolliert,
+sondern beschr&auml;nkt sich f&uuml;r eine Objektvariable des Typs
+<i>X</i> auf alle Objekte der Klasse <i>X</i> oder einer daraus abgeleiteten
+Klasse. 
+
+<p>
+Eine Objektvariable vom Typ <i>Stra&szlig;enfahrzeug</i> kann also
+nicht nur Objekte der Klasse <i>Stra&szlig;enfahrzeug</i> aufnehmen,
+sondern auch Objekte der Klassen <i>Zweirad</i>, <i>Vierrad</i>, <i>Anh&auml;nger</i>,
+<i>Motorrad</i>, <i>Fahrrad</i>, <i>Auto</i> und <i>Lastwagen</i>.
+Diese auf den ersten Blick erstaunliche L&auml;ssigkeit entspricht
+allerdings genau dem gewohnten Umgang mit Vererbungsbeziehungen. Ein
+<i>Zweirad</i> ist nunmal ein <i>Stra&szlig;enfahrzeug</i>, hat alle
+Eigenschaften eines Stra&szlig;enfahrzeugs und kann daher durch eine
+Variable repr&auml;sentiert werden, die auf ein Stra&szlig;enfahrzeug
+verweist. Dass es m&ouml;glicherweise ein paar zus&auml;tzliche Eigenschaften
+besitzt, st&ouml;rt den Compiler nicht. Er hat nur sicherzustellen,
+dass die Eigenschaften eines Stra&szlig;enfahrzeugs vollst&auml;ndig
+vorhanden sind, denn mehr stellt er dem Programm beim Zugriff auf
+eine Variable dieses Typs nicht zur Verf&uuml;gung. Davon kann er
+aber aufgrund der Vererbungshierarchie ausgehen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Anders herum funktioniert Polymorphismus nicht. W&auml;re es beispielsweise
+m&ouml;glich, einer Variable des Typs <i>Motorrad</i> ein Objekt des
+Typs <i>Zweirad</i> zuzuzweisen, k&ouml;nnte das Laufzeitsystem in
+Schwierigkeiten geraten. Immer wenn auf der <i>Motorrad</i>-Variablen
+eine Eigenschaft benutzt w&uuml;rde, die in der Basisklasse <i>Zweirad</i>
+noch nicht vorhanden ist, w&auml;re das Verhalten des Programms undefiniert,
+wenn zum Ausf&uuml;hrungszeitpunkt nicht ein <i>Motorrad</i>, sondern
+ein Objekt aus der Basisklasse darin gespeichert w&auml;re.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Interessant wird Polymorphismus, wenn die Programmiersprache zus&auml;tzlich
+das Konzept des <a name="ixa100463"><i>Late Binding</i></a> implementiert.
+Im Unterschied zum &#187;Early Binding&#171; wird dabei nicht bereits
+zur Compile-Zeit entschieden, welche Auspr&auml;gung einer bestimmten
+Methode aufgerufen werden soll, sondern erst zur Laufzeit. Wenn beispielsweise
+auf einem Objekt der Klasse <i>X</i> eine Methode mit dem Namen <i>f</i>
+aufgerufen werden soll, ist zwar prinzipiell bereits zur Compile-Zeit
+klar, wie der Name lautet. Objektorientierte Programmiersprachen erlauben
+aber das <a name="ixa100464"><i>&Uuml;berlagern</i></a> von Methoden
+in abgeleiteten Klassen, und da - wie zuvor erw&auml;hnt - eine Objektvariable
+des Typs <i>X</i> auch Objekte aus allen von <i>X</i> abgeleiteten
+Klassen aufnehmen kann, k&ouml;nnte <i>f</i> in einer dieser nachgelagerten
+Klassen &uuml;berlagert worden sein. Welche konkrete Methode also
+aufgerufen werden muss, kann damit erst zur Laufzeit entschieden werden.
+Wir werden in <a href="k100061.html#abstraktpolymorph">Abschnitt 9.4</a>
+ein ausf&uuml;hrliches Anwendungsbeispiel vorstellen. 
+
+<p>
+Nun ist dieses Verhalten keinesfalls hinderlich oder unerw&uuml;nscht,
+sondern kann sehr elegant dazu genutzt werden, automatische typbasierte
+Fallunterscheidungen vorzunehmen. Betrachten wir dazu noch einmal
+unsere Hierarchie von Transportmitteln. Angenommen, unser Unternehmen
+verf&uuml;gt &uuml;ber einen breit gef&auml;cherten Fuhrpark von Transportmitteln
+aus allen Teilen des Ableitungsbaums. Als Unternehmer interessieren
+uns nat&uuml;rlich die Kosten jedes Transportmittels pro Monat und
+wir w&uuml;rden dazu eine Methode <i>getMonatsKosten</i> in der Basisklasse
+<i>Transportmittel</i> definieren. Ganz offensichtlich l&auml;sst
+sich diese dort aber nicht <i>implementieren</i>, denn beispielsweise
+die Berechnung der monatlichen Kosten unseres F&auml;hrschiffs gestaltet
+sich ungleich schwieriger als die der drei Fahrr&auml;der, die auch
+im Fahrzeugfundus sind. 
+
+<p>
+Anstatt nun in aufw&auml;ndigen Fallunterscheidungen f&uuml;r jedes
+Objekt zu pr&uuml;fen, von welchem Typ es ist, muss lediglich diese
+Methode in jeder abgeleiteten Klasse implementiert werden. Besitzt
+das Programm etwa ein Array von <i>Transportmittel</i>-Objekten, kann
+dieses einfach durchlaufen und f&uuml;r jedes Element <i>getMonatsKosten</i>
+aufgerufen werden. Das Laufzeitsystem kennt den jeweiligen konkreten
+Typ und kann die korrekte Methode aufrufen (und das ist die aus der
+eigenen Klasse, nicht die in <i>Transportmittel</i> definierte). 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Falls es vorkommt, dass die Implementierung in einer bestimmten Klasse
+mit der ihrer Basisklasse &uuml;bereinstimmt, braucht die Methode
+nicht noch einmal &uuml;berlagert zu werden. Das Laufzeitsystem verwendet
+in diesem Fall die Implementierung aus der Vaterklasse, die der eigenen
+Klasse am n&auml;chsten liegt.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id008001007"></a>
+<h3>8.1.7 Fazit </h3>
+
+<p>
+Objektorientierte Programmierung erlaubt eine nat&uuml;rliche Modellierung
+vieler Problemstellungen. Sie vermindert die Komplexit&auml;t eines
+Programms durch Abstraktion, Kapselung, definierte Schnittstellen
+und Reduzierung von Querzugriffen. Sie stellt Hilfsmittel zur Darstellung
+von Beziehungen zwischen Klassen und Objekten dar und sie erh&ouml;ht
+die Effizienz des Entwicklers durch F&ouml;rderung der Wiederverwendung
+von Programmcode. Wir werden in den n&auml;chsten Abschnitten zeigen,
+wie die objektorientierte Programmierung sich in Java gestaltet. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100052.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100052.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100054.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100057.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

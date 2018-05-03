@@ -1,0 +1,157 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100168.html;106,k100168.html;107,k100170.html;108,k100174.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100168.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100168.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100170.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100174.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 26 - Farben
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id026001"></a>
+<h2>26.1 Das Java-Farbmodell </h2>
+<hr>
+<ul>
+<li><a href="k100169.html#sectlevel2id026001">26.1 Das Java-Farbmodell</a>
+</ul>
+<hr>
+
+<p>
+Das Java-Farbmodell basiert auf dem <a name="ixa101622"><i>RGB-Farbmodell</i></a>.
+Dieses stellt Farben mit 24 Bit Tiefe dar und setzt jede Farbe aus
+einer Mischung der drei Grundfarben Rot, Gr&uuml;n und Blau zusammen.
+Da jede dieser Grundfarben einen Anteil von 0 bis 255 haben kann und
+so mit jeweils 8 Datenbits darstellbar ist, ergibt sich eine gesamte
+Farbtiefe von 24 Bit. Ein Wert von 0 f&uuml;r eine der Grundfarben
+bedeutet dabei, dass diese Grundfarbe nicht in das Ergebnis eingeht,
+ein Wert von 255 zeigt die maximale Intensit&auml;t dieser Farbe an.
+RGB-Farben werden &uuml;blicherweise durch ganzzahlige Tripel (<i>r,g,b</i>)
+dargestellt, die den Anteil an der jeweiligen Grundfarbe in der Reihenfolge
+Rot, Gr&uuml;n und Blau darstellen. <a href="k100169.html#gebraeuchlichefarbwerte">Tabelle 26.1</a>
+listet einige gebr&auml;uchliche Farben und ihre RGB-Werte auf: <a name="gebraeuchlichefarbwerte"></a>
+
+<p>
+<table cols=4 border width=100%>
+
+<tr>
+<td valign=top align=left width=25%><b>Farbe</b></td>
+<td valign=top align=left width=25%><b>Rot-Anteil</b></td>
+<td valign=top align=left width=25%><b>Gr&uuml;n-Anteil</b></td>
+<td valign=top align=left width=25%><b>Blau-Anteil </b></td></tr>
+<tr>
+<td valign=top align=left>Wei&szlig;</td>
+<td valign=top align=left>255</td>
+<td valign=top align=left>255</td>
+<td valign=top align=left>255 </td></tr>
+<tr>
+<td valign=top align=left>Schwarz</td>
+<td valign=top align=left>0</td>
+<td valign=top align=left>0</td>
+<td valign=top align=left>0 </td></tr>
+<tr>
+<td valign=top align=left>Grau</td>
+<td valign=top align=left>127</td>
+<td valign=top align=left>127</td>
+<td valign=top align=left>127 </td></tr>
+<tr>
+<td valign=top align=left>Rot</td>
+<td valign=top align=left>255</td>
+<td valign=top align=left>0</td>
+<td valign=top align=left>0 </td></tr>
+<tr>
+<td valign=top align=left>Gr&uuml;n</td>
+<td valign=top align=left>0</td>
+<td valign=top align=left>255</td>
+<td valign=top align=left>0 </td></tr>
+<tr>
+<td valign=top align=left>Blau</td>
+<td valign=top align=left>0</td>
+<td valign=top align=left>0</td>
+<td valign=top align=left>255 </td></tr>
+<tr>
+<td valign=top align=left>Yellow</td>
+<td valign=top align=left>255</td>
+<td valign=top align=left>255</td>
+<td valign=top align=left>0 </td></tr>
+<tr>
+<td valign=top align=left>Magenta</td>
+<td valign=top align=left>255</td>
+<td valign=top align=left>0</td>
+<td valign=top align=left>255 </td></tr>
+<tr>
+<td valign=top align=left>Cyan</td>
+<td valign=top align=left>0</td>
+<td valign=top align=left>255</td>
+<td valign=top align=left>255 </td></tr>
+</table>
+<p><i>
+Tabelle 26.1: Gebr&auml;uchliche Farbwerte </i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Neben dem RGB-Farbmodell unterst&uuml;tzt Java auch das <i>HSB-Farbmodell</i>.
+Dieses stellt eine Farbe durch die drei Parameter <i>Farbton</i>,
+<i>Intensit&auml;t</i> und <i>Helligkeit</i> dar. Java stellt einige
+Methoden zur Konvertierung zwischen RGB und HSB zur Verf&uuml;gung,
+auf die wir aber nicht weiter eingehen werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100168.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100168.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100170.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100174.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

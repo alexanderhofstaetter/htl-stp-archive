@@ -1,0 +1,252 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100084.html;106,k100087.html;107,k100089.html;108,k100090.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100084.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100087.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100089.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100090.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 13 - Exceptions
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="trywithresources"></a>
+<h2>13.4 Automatisches Schlie&szlig;en von Ressourcen </h2>
+<hr>
+<ul>
+<li><a href="k100088.html#trywithresources">13.4 Automatisches Schlie&szlig;en von Ressourcen</a>
+</ul>
+<hr>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#FF9900"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#FF9900"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Mit der Version 7 des JDK wurde das <a name="ixa100747"><a href="index_a.html#ixb100585"><font color=#000080><tt>AutoCloseable</tt></font></a></a>-Interface
+eingef&uuml;hrt. Zudem wurde die <font color="#000077"><tt>try-catch</tt></font>-Klausel
+um den <a name="ixa100748"><a href="index_t.html#ixb100586"><font color=#000080><tt>try-with-resources</tt></font></a></a>-Teil
+erweitert, in dem sich Objekte vom Typ <a name="ixa100747"><a href="index_a.html#ixb100585"><font color=#000080><tt>AutoCloseable</tt></font></a></a>
+deklarieren lassen. Das Laufzeitsystem garantiert, dass f&uuml;r diese
+Objekte vor dem Austritt aus dem <font color="#000077"><tt>try-catch</tt></font>-Block
+die <font color="#000077"><tt>close</tt></font>-Methode aufgerufen
+wird. 
+
+<p>
+Im JDK implementieren u.a. die Klassen <a href="index_i.html#ixb100587"><font color=#000080><tt>InputStream</tt></font></a>,
+<a href="index_o.html#ixb100588"><font color=#000080><tt>OutputStream</tt></font></a>,
+<a href="index_p.html#ixb100562"><font color=#000080><tt>PrintStream</tt></font></a>,
+<a href="index_s.html#ixb100589"><font color=#000080><tt>Socket</tt></font></a>,
+<a href="index_c.html#ixb100590"><font color=#000080><tt>Connection</tt></font></a>,
+<a href="index_s.html#ixb100591"><font color=#000080><tt>Statement</tt></font></a>,
+<a href="index_r.html#ixb100592"><font color=#000080><tt>ResultSet</tt></font></a>
+sowie alle <a href="index_r.html#ixb100593"><font color=#000080><tt>Reader</tt></font></a>
+und <a href="index_w.html#ixb100594"><font color=#000080><tt>Writer</tt></font></a>
+dieses Interface. </td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#FF9900">
+<tr>
+<td><font color="#FFFFFF">&nbsp;JDK6.0-7.0&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#FF9900"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void close() throws Exception
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/AutoCloseable.html" onClick="this.href=getApiDoc('java.lang.AutoCloseable')"><font color="#660066" size=-1>java.lang.AutoCloseable</font></a></td>
+</tr>
+</table>
+
+<p>
+Um den Nutzen dieses Konzepts zu erkl&auml;ren, greifen wir in dem
+folgenden Beispiel auf die Klasse <a href="index_f.html#ixb100595"><font color=#000080><tt>FileInputStream</tt></font></a>
+zur&uuml;ck, um den Inhalt einer Datei zu lesen. Das Lesen aus einer
+Datei wird zwar erst in <a href="k100127.html#kapitelcharacterstreams">Kapitel 19</a>
+bzw. in <a href="k100132.html#kapitelbytestreams">Kapitel 20</a> erkl&auml;rt.
+Wichtig an dieser Stelle ist dabei lediglich, dass nach Verwendung
+eines <a href="index_f.html#ixb100595"><font color=#000080><tt>FileInputStream</tt></font></a>-Objekts
+die Methode <a href="index_c.html#ixb100596"><font color=#000080><tt>close</tt></font></a>
+aufgerufen werden sollte, um die belegten Ressourcen wieder freizugeben.
+
+<p>
+Das Beispielprogramm liest die Datei <font color="#660099">test.txt</font>
+ein und schlie&szlig;t das <a href="index_f.html#ixb100595"><font color=#000080><tt>FileInputStream</tt></font></a>-Objekt
+im <a href="index_f.html#ixb100581"><font color=#000080><tt>finally</tt></font></a>-Block
+durch den Aufruf der Methode <a href="index_c.html#ixb100596"><font color=#000080><tt>close</tt></font></a>.
+Das erste Listing zeigt die Implementation mit der Java-Version 6;
+das zweite die vereinfachte Implementation, die ab Java Version 7
+m&ouml;glich ist. 
+<a name="exceptionhandlingfileinputstream"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1312.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1312
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args) {
+<font color="#555555">008 </font>    
+<font color="#555555">009 </font>    FileInputStream fin = <font color="#006699">null</font>;  <a name="exceptionhandlingfileinputstream.a"></a>
+<font color="#555555">010 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">011 </font>      fin = <font color="#0000AA">new</font> FileInputStream(<font color="#0000FF">"test.txt"</font>);
+<font color="#555555">012 </font>      <font color="#006699">int</font> b;
+<font color="#555555">013 </font>      <font color="#0000AA">while</font> ((b = fin.read()) &gt; -1) {
+<font color="#555555">014 </font>        <font color="#00AA00">// verarbeite b ...</font>
+<font color="#555555">015 </font>      }                          <a name="exceptionhandlingfileinputstream.b"></a>
+<font color="#555555">016 </font>    }
+<font color="#555555">017 </font>    <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">018 </font>      e.printStackTrace();
+<font color="#555555">019 </font>    }
+<font color="#555555">020 </font>    <font color="#0000AA">finally</font> {
+<font color="#555555">021 </font>      <font color="#0000AA">if</font> (fin != <font color="#006699">null</font>) {
+<font color="#555555">022 </font>        <font color="#0000AA">try</font> {
+<font color="#555555">023 </font>          fin.close();
+<font color="#555555">024 </font>        }
+<font color="#555555">025 </font>        <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">026 </font>          e.printStackTrace();
+<font color="#555555">027 </font>        }
+<font color="#555555">028 </font>      }
+<font color="#555555">029 </font>    }
+<font color="#555555">030 </font>  }
+<font color="#555555">031 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1312.java"><font color="#000055" size=-1>Listing1312.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 13.12: Manuelles Schlie&szlig;en von Ressourcen mit dem JDK
+6 </i></p>
+
+<p>
+Die fachliche Logik, <a href="k100088.html#exceptionhandlingfileinputstream.a">Zeile 009</a>
+bis <a href="k100088.html#exceptionhandlingfileinputstream.b">Zeile 015</a>,
+geht in <a href="k100088.html#exceptionhandlingfileinputstream">Listing 13.12</a>
+im Exception Handling regelrecht unter, u.a. deshalb, weil die <font color="#000077"><tt>close</tt></font>-Methode
+selbst wieder eine <a href="index_i.html#ixb100597"><font color=#000080><tt>IOException</tt></font></a>
+werfen kann, die wiederum im <font color="#000077"><tt>finally</tt></font>-Block
+behandelt werden muss. 
+
+<p>
+Mit Version 7 l&auml;sst sich das gleiche Programm viel &uuml;bersichtlicher
+schreiben. Die (optionale) <a href="index_t.html#ixb100586"><font color=#000080><tt>try-with-resources</tt></font></a>-Klausel
+folgt in runden Klammern nach dem <a href="index_t.html#ixb100571"><font color=#000080><tt>try</tt></font></a>-Schl&uuml;sselwort
+und deklariert die Objekte, deren <font color="#000077"><tt>close</tt></font>-Methode
+automatisch aufgerufen werden soll. Werden mehrere <a href="index_a.html#ixb100585"><font color=#000080><tt>AutoCloseable</tt></font></a>-Objekte
+deklariert, sind sie durch Semikolons voneinander zu trennen und werden
+ggfs. in umgekehrter Reihenfolge geschlossen. 
+
+<p>
+In unserem Beispiel deklarieren wir in der <a href="index_t.html#ixb100586"><font color=#000080><tt>try-with-resources</tt></font></a>-Klausel
+ein <a href="index_f.html#ixb100595"><font color=#000080><tt>FileInputStream</tt></font></a>-Objekt:
+<a name="listingid013013"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1313.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1313
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args) {
+<font color="#555555">008 </font>    
+<font color="#555555">009 </font>    <font color="#0000AA">try</font> ( FileInputStream fin = <font color="#0000AA">new</font> FileInputStream(<font color="#0000FF">"test.txt"</font>) )
+<font color="#555555">010 </font>    {
+<font color="#555555">011 </font>      <font color="#006699">int</font> b;
+<font color="#555555">012 </font>      <font color="#0000AA">while</font> ((b = fin.read()) &gt; -1) {
+<font color="#555555">013 </font>        <font color="#00AA00">// verarbeite b ...</font>
+<font color="#555555">014 </font>      }
+<font color="#555555">015 </font>    }
+<font color="#555555">016 </font>    <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">017 </font>      e.printStackTrace();
+<font color="#555555">018 </font>    }
+<font color="#555555">019 </font>  }
+<font color="#555555">020 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1313.java"><font color="#000055" size=-1>Listing1313.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 13.13: Automatisches Schlie&szlig;en von Ressourcen mit dem
+JDK 7</i></p>
+
+<p>
+Tritt im <font color="#000077"><tt>try-catch</tt></font>-Block eine
+Exception auf, ruft das System die <a href="index_c.html#ixb100596"><font color=#000080><tt>close</tt></font></a>-Methoden
+der deklarierten <a href="index_a.html#ixb100585"><font color=#000080><tt>AutoCloseable</tt></font></a>-Objekte
+auf und sorgt so daf&uuml;r, dass alle belegten Ressourcen ordnungsgem&auml;&szlig;
+freigegeben werden. Falls die <a href="index_c.html#ixb100596"><font color=#000080><tt>close</tt></font></a>-Methoden
+ihrerseits Exceptions ausl&ouml;sen, werden diese unterdr&uuml;ckt.
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100084.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100087.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100089.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100090.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

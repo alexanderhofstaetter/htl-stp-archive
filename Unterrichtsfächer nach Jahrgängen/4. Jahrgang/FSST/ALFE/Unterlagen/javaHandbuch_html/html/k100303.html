@@ -1,0 +1,438 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100300.html;106,k100302.html;107,k100304.html;108,k100307.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100300.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100302.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100304.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100307.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 47 - Objektorientierte Persistenz
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id047003"></a>
+<h2>47.3 Verwendung des Java Persistenz API </h2>
+<hr>
+<ul>
+<li><a href="k100303.html#sectlevel2id047003">47.3 Verwendung des Java Persistenz API</a>
+<ul>
+<li><a href="k100303.html#sectlevel3id047003001">47.3.1 Der EntityManager</a>
+<li><a href="k100303.html#sectlevel3id047003002">47.3.2 Transaktionen mit dem EntityManager</a>
+<li><a href="k100303.html#sectlevel3id047003003">47.3.3 Anlegen eines neuen Datensatzes</a>
+<li><a href="k100303.html#sectlevel3id047003004">47.3.4 Laden eines Datensatzes</a>
+<li><a href="k100303.html#sectlevel3id047003005">47.3.5 L&ouml;schen eines Datensatzes</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id047003001"></a>
+<h3>47.3.1 Der EntityManager </h3>
+
+<p>
+Nachdem die Java-Klasse <font color="#000077"><tt>Verzeichnis</tt></font>
+mit Metainformationen zur abgebildeten Tabelle ausgestattet und der
+Zugang zur Datenbank mit Hilfe des Persistenz Descriptor konfiguriert
+wurde, k&ouml;nnen wir die im Hintergrund arbeitende Datenbank im
+Grunde vergessen und uns ganz auf die Arbeit mit den Java-Klassen
+bzw. -Objekten konzentrieren. Die Transformation der Java-Operationen
+auf ihre SQL-Pendants und zur&uuml;ck &uuml;bernimmt die Persistenzschicht,
+auf die wir mit Hilfe des <a name="ixa103480"><a href="index_e.html#ixb102609"><font color=#000080><tt>EntityManager</tt></font></a></a>
+zugreifen k&ouml;nnen: 
+<a name="zugriffentitymanager"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4704.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> javax.persistence.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4704
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#00AA00">//Erzeugen einer EntityManagerFactory mit Hilfe des symbolischen</font>
+<font color="#555555">010 </font>    <font color="#00AA00">//Namens aus dem Persistenz Descriptor (persistence.xml)</font>
+<font color="#555555">011 </font>    EntityManagerFactory emf =
+<font color="#555555">012 </font>       Persistence.createEntityManagerFactory(<font color="#0000FF">"persistenceExample"</font>); <a name="zugriffentitymanager.a"></a>
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>    <font color="#00AA00">//Erzeugen eines EntityManagers f&uuml;r den Zugriff auf</font>
+<font color="#555555">015 </font>    <font color="#00AA00">//die Datenbank</font>
+<font color="#555555">016 </font>    EntityManager manager = emf.createEntityManager();
+<font color="#555555">017 </font>
+<font color="#555555">018 </font>    <font color="#00AA00">//An dieser Stelle k&ouml;nnen Sie mit Hilfe des EntityManagers auf</font>
+<font color="#555555">019 </font>    <font color="#00AA00">//die Datenbank zugreifen</font>
+<font color="#555555">020 </font>   
+<font color="#555555">021 </font>    <font color="#00AA00">//Freigabe der Ressourcen des EntityManagers</font>
+<font color="#555555">022 </font>    manager.close();
+<font color="#555555">023 </font>
+<font color="#555555">024 </font>    <font color="#00AA00">//Schlie&szlig;en der EntityManagerFactory und Freigeben der</font>
+<font color="#555555">025 </font>    <font color="#00AA00">//belegten Ressourcen</font>
+<font color="#555555">026 </font>    emf.close();    
+<font color="#555555">027 </font>  }
+<font color="#555555">028 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4704.java"><font color="#000055" size=-1>Listing4704.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 47.4: Zugriff auf den EntityManager</i></p>
+
+<p>
+Zun&auml;chst erzeugen wir eine <a name="ixa103481"><a href="index_e.html#ixb102610"><font color=#000080><tt>EntityManagerFactory</tt></font></a></a>,
+die dazu verwendet wird, einen <a name="ixa103480"><a href="index_e.html#ixb102609"><font color=#000080><tt>EntityManager</tt></font></a></a>
+zu erzeugen. Hierf&uuml;r verwenden wir in <a href="k100303.html#zugriffentitymanager.a">Zeile 012</a>
+den symbolischen Namen des Persistenz Descriptor aus <a href="k100302.html#persistence.z">Zeile 007</a>
+des <a href="k100302.html#persistence">Listing 47.3</a>. Ist der <a href="index_e.html#ixb102609"><font color=#000080><tt>EntityManager</tt></font></a>
+erzeugt, k&ouml;nnen wir mit seiner Hilfe nun alle lesenden und schreibenden
+Operationen auf der Datenbank ausf&uuml;hren. Da sowohl der <a href="index_e.html#ixb102609"><font color=#000080><tt>EntityManager</tt></font></a>
+als auch die <a href="index_e.html#ixb102610"><font color=#000080><tt>EntityManagerFactory</tt></font></a>
+auf die Datenbank zugreifen und Ressourcen belegen, m&uuml;ssen wir
+diese am Ende eines Programms durch Aufruf von <font color="#000077"><tt>close</tt></font>
+zur&uuml;ckgeben. 
+
+<!-- Section -->
+
+<a name="sectlevel3id047003002"></a>
+<h3>47.3.2 Transaktionen mit dem EntityManager </h3>
+
+<p>
+Das Java Persistenz API gestattet Datenbankzugriffe nur innerhalb
+von <i>Transaktionen</i> (siehe auch <a href="k100282.html#subsectiontransaktionen">Abschnitt 44.4.3</a>)
+- selbst wenn diese nur lesend sind. Derartige Datenbanktransaktionen
+lassen sich mit dem <a href="index_e.html#ixb102609"><font color=#000080><tt>EntityManager</tt></font></a>
+jedoch leicht realisieren, indem wir eine <a name="ixa103482"><a href="index_e.html#ixb102611"><font color=#000080><tt>EntityTransaction</tt></font></a></a>
+erzeugen und mit der Methode <font color="#000077"><tt>begin</tt></font>
+starten. Alle folgenden Zugriffe und Manipulationen erfolgen dann
+so lange innerhalb der Transaktion, bis diese durch Aufruf der Methode
+<font color="#000077"><tt>commit</tt></font> abgeschlossen oder via
+<font color="#000077"><tt>rollback</tt></font> zur&uuml;ckgesetzt
+wird. 
+<a name="persistenztransaktion"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4705.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> javax.persistence.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4705
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#00AA00">//Erzeugen einer EntityManagerFactory mit Hilfe des symbolischen</font>
+<font color="#555555">010 </font>    <font color="#00AA00">//Namens aus dem Persistenz Descriptor (persistence.xml)</font>
+<font color="#555555">011 </font>    EntityManagerFactory emf =
+<font color="#555555">012 </font>       Persistence.createEntityManagerFactory(<font color="#0000FF">"persistenceExample"</font>);
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>    <font color="#00AA00">//Erzeugen eines EntityManagers f&uuml;r den Zugriff auf</font>
+<font color="#555555">015 </font>    <font color="#00AA00">//die Datenbank</font>
+<font color="#555555">016 </font>    EntityManager manager = emf.createEntityManager();
+<font color="#555555">017 </font>
+<font color="#555555">018 </font>    <font color="#00AA00">//Beginn einer neuen Transanktion</font>
+<font color="#555555">019 </font>    EntityTransaction tx = manager.getTransaction();   
+<font color="#555555">020 </font>    tx.begin();                                        <a name="persistenztransaktion.a"></a>
+<font color="#555555">021 </font>
+<font color="#555555">022 </font>    <font color="#00AA00">//An dieser Stelle k&ouml;nnen Sie mit Hilfe des EntityManagers auf</font>
+<font color="#555555">023 </font>    <font color="#00AA00">//die Datenbank zugreifen</font>
+<font color="#555555">024 </font>
+<font color="#555555">025 </font>    <font color="#00AA00">//Abschluss der Transaktion mit einem Commit</font>
+<font color="#555555">026 </font>    tx.commit();                                       <a name="persistenztransaktion.b"></a>
+<font color="#555555">027 </font>    
+<font color="#555555">028 </font>    <font color="#00AA00">//Freigabe der Ressourcen des EntityManagers</font>
+<font color="#555555">029 </font>    manager.close();
+<font color="#555555">030 </font>
+<font color="#555555">031 </font>    <font color="#00AA00">//Schlie&szlig;en der EntityManagerFactory und Freigeben der</font>
+<font color="#555555">032 </font>    <font color="#00AA00">//belegten Ressourcen</font>
+<font color="#555555">033 </font>    emf.close(); 
+<font color="#555555">034 </font>  }
+<font color="#555555">035 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4705.java"><font color="#000055" size=-1>Listing4705.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 47.5: Transaktionen im EntityManager</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id047003003"></a>
+<h3>47.3.3 Anlegen eines neuen Datensatzes </h3>
+
+<p>
+Das Anlegen eines neuen Datensatzes haben wir in <a href="k100281.html#tabellenfuellen">Listing 44.5</a>
+im JDBC-Kapitel mit Hilfe eines <font color="#000077"><tt>INSERT</tt></font>-Statements
+realisiert. Bei Verwendung des Java Persistenz API verwenden wir den
+Konstruktor der Klasse <font color="#000077"><tt>Verzeichnis</tt></font>,
+um ein neues Java-Objekt zu erzeugen, und speichern es anschlie&szlig;end
+mit Hilfe der Methode <a name="ixa103483"><a href="index_p.html#ixb102612"><font color=#000080><tt>persist</tt></font></a></a>
+des <a href="index_e.html#ixb102609"><font color=#000080><tt>EntityManager</tt></font></a>
+ab. Die einzelnen Member-Variablen haben wir zuvor durch Aufruf der
+Setter-Methoden gesetzt.  
+<a name="persistenzanlegendir"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4706.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> javax.persistence.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4706
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#00AA00">//Erzeugen einer EntityManagerFactory mit Hilfe des symbolischen</font>
+<font color="#555555">010 </font>    <font color="#00AA00">//Namens aus dem Persistenz Descriptor (persistence.xml)</font>
+<font color="#555555">011 </font>    EntityManagerFactory emf =
+<font color="#555555">012 </font>       Persistence.createEntityManagerFactory(<font color="#0000FF">"persistenceExample"</font>);
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>    <font color="#00AA00">//Erzeugen eines EntityManagers f&uuml;r den Zugriff auf</font>
+<font color="#555555">015 </font>    <font color="#00AA00">//die Datenbank</font>
+<font color="#555555">016 </font>    EntityManager manager = emf.createEntityManager();
+<font color="#555555">017 </font>
+<font color="#555555">018 </font>    <font color="#00AA00">//Beginn einer neuen Transanktion</font>
+<font color="#555555">019 </font>    EntityTransaction tx = manager.getTransaction();
+<font color="#555555">020 </font>    tx.begin();    
+<font color="#555555">021 </font>
+<font color="#555555">022 </font>    <font color="#00AA00">//Erzeugen eines neuen Java-Objekts</font>
+<font color="#555555">023 </font>    Verzeichnis dir = <font color="#0000AA">new</font> Verzeichnis(); <a name="persistenzanlegendir.a"></a>
+<font color="#555555">024 </font>    dir.setDid(0);
+<font color="#555555">025 </font>    dir.setDname(<font color="#0000FF">"temp"</font>);
+<font color="#555555">026 </font>
+<font color="#555555">027 </font>    <font color="#00AA00">//Speichern des Java-Objekts mit Hilfe des EntityManagers</font>
+<font color="#555555">028 </font>    manager.persist(dir); <a name="persistenzanlegendir.b"></a>
+<font color="#555555">029 </font>
+<font color="#555555">030 </font>    <font color="#00AA00">//Abschluss der Transaktion mit einem Commit</font>
+<font color="#555555">031 </font>    tx.commit();
+<font color="#555555">032 </font>    
+<font color="#555555">033 </font>    <font color="#00AA00">//Freigabe der Ressourcen des EntityManagers</font>
+<font color="#555555">034 </font>    manager.close();
+<font color="#555555">035 </font>
+<font color="#555555">036 </font>    <font color="#00AA00">//Schlie&szlig;en der EntityManagerFactory und Freigeben der</font>
+<font color="#555555">037 </font>    <font color="#00AA00">//belegten Ressourcen</font>
+<font color="#555555">038 </font>    emf.close();
+<font color="#555555">039 </font>  }
+<font color="#555555">040 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 47.6: Anlegen eines Datensatzes</i></p>
+
+<p>
+Wie man sieht, reichen die Anweisungen von <a href="k100303.html#persistenzanlegendir.a">Zeile 023</a>
+bis <a href="k100303.html#persistenzanlegendir.b">Zeile 028</a>, um
+einen neuen Datensatz anzulegen. Wir ben&ouml;tigen keinerlei Wissen
+&uuml;ber die im Hintergrund arbeitende Datenbank und m&uuml;ssen
+auch keinerlei SQL-Kommandos formulieren. All diese Details nimmt
+uns das Persistenz API ab. 
+
+<!-- Section -->
+
+<a name="sectlevel3id047003004"></a>
+<h3>47.3.4 Laden eines Datensatzes </h3>
+
+<p>
+Nachdem wir den Datensatz in der Datenbank gespeichert haben, m&ouml;chten
+wir ihn nun auch wieder aus dieser laden k&ouml;nnen. Daf&uuml;r k&ouml;nnen
+wir beispielsweise die Methode <a name="ixa103484"><a href="index_f.html#ixb102613"><font color=#000080><tt>find</tt></font></a></a>
+des <a href="index_e.html#ixb102609"><font color=#000080><tt>EntityManager</tt></font></a>
+verwenden: 
+<a name="persistenzladendir"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4707.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> javax.persistence.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4707
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#00AA00">//Erzeugen einer EntityManagerFactory mit Hilfe des symbolischen</font>
+<font color="#555555">010 </font>    <font color="#00AA00">//Namens aus dem Persistenz Descriptor (persistence.xml)</font>
+<font color="#555555">011 </font>    EntityManagerFactory emf =
+<font color="#555555">012 </font>       Persistence.createEntityManagerFactory(<font color="#0000FF">"persistenceExample"</font>);
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>    <font color="#00AA00">//Erzeugen eines EntityManagers f&uuml;r den Zugriff auf</font>
+<font color="#555555">015 </font>    <font color="#00AA00">//die Datenbank</font>
+<font color="#555555">016 </font>    EntityManager manager = emf.createEntityManager();
+<font color="#555555">017 </font>
+<font color="#555555">018 </font>    <font color="#00AA00">//Beginn einer neuen Transanktion</font>
+<font color="#555555">019 </font>    EntityTransaction tx = manager.getTransaction();
+<font color="#555555">020 </font>    tx.begin();    
+<font color="#555555">021 </font>
+<font color="#555555">022 </font>    <font color="#00AA00">//Laden des Verzeichnis-Objekts mit der Id=0</font>
+<font color="#555555">023 </font>    Verzeichnis dir = manager.find(Verzeichnis.<font color="#0000AA">class</font>, 0); <a name="persistenzladendir.a"></a>
+<font color="#555555">024 </font>
+<font color="#555555">025 </font>    <font color="#00AA00">//Ausgabe des gefundenen Objekts</font>
+<font color="#555555">026 </font>    System.out.println(dir);
+<font color="#555555">027 </font>
+<font color="#555555">028 </font>    <font color="#00AA00">//Abschluss der Transaktion mit einem Commit</font>
+<font color="#555555">029 </font>    tx.commit();
+<font color="#555555">030 </font>
+<font color="#555555">031 </font>    <font color="#00AA00">//Freigabe der Ressourcen des EntityManagers</font>
+<font color="#555555">032 </font>    manager.close();
+<font color="#555555">033 </font>
+<font color="#555555">034 </font>    <font color="#00AA00">//Schlie&szlig;en der EntityManagerFactory und Freigeben der</font>
+<font color="#555555">035 </font>    <font color="#00AA00">//belegten Ressourcen</font>
+<font color="#555555">036 </font>    emf.close();
+<font color="#555555">037 </font>  }
+<font color="#555555">038 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4707.java"><font color="#000055" size=-1>Listing4707.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 47.7: Laden eines Datensatzes</i></p>
+
+<p>
+Statt das Java-Objekt selbst zu erzeugen, rufen wir <a href="index_f.html#ixb102613"><font color=#000080><tt>find</tt></font></a>
+auf, um den Datensatz aus der Datenbank zu laden. <a href="index_f.html#ixb102613"><font color=#000080><tt>find</tt></font></a>
+erh&auml;lt als ersten Parameter die gesuchte Klasse und als zweiten
+Parameter den eindeutigen Schl&uuml;ssel des zu ladenden Datensatzes
+(in diesem Fall die Nummer <font color="#000077"><tt>0</tt></font>).
+
+<p>
+Der <font color="#000077"><tt>EntityManager</tt></font> wird nun ein
+entsprechendes <font color="#000077"><tt>SELECT</tt></font>-Statement
+formulieren und versuchen, den Datensatz aus der Tabelle <font color="#000077"><tt>dir</tt></font>
+auszulesen. Findet er den gesuchten Datensatz, liefert er ihn als
+Objekt der Klasse <font color="#000077"><tt>Verzeichnis</tt></font>
+zur&uuml;ck, andernfalls ist der R&uuml;ckgabewert <font color="#000077"><tt>null</tt></font>.
+Wir werden sp&auml;ter M&ouml;glichkeiten kennenlernen, mit denen
+Datens&auml;tze nicht nur nach ID, sondern nach beliebigen Kriterien
+gesucht werden k&ouml;nnen. 
+
+<!-- Section -->
+
+<a name="sectlevel3id047003005"></a>
+<h3>47.3.5 L&ouml;schen eines Datensatzes </h3>
+
+<p>
+Um einen Satz aus der Datenbank zu l&ouml;schen, bietet der <a href="index_e.html#ixb102609"><font color=#000080><tt>EntityManager</tt></font></a>
+die Methode <a href="index_r.html#ixb100739"><font color=#000080><tt>remove</tt></font></a>:
+<a name="persistenzdeletedir"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4708.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> javax.persistence.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4708
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#00AA00">//Erzeugen einer EntityManagerFactory mit Hilfe des symbolischen</font>
+<font color="#555555">010 </font>    <font color="#00AA00">//Namens aus dem Persistenz Descriptor (persistence.xml)</font>
+<font color="#555555">011 </font>    EntityManagerFactory emf =
+<font color="#555555">012 </font>       Persistence.createEntityManagerFactory(<font color="#0000FF">"persistenceExample"</font>);
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>    <font color="#00AA00">//Erzeugen eines EntityManagers f&uuml;r den Zugriff auf</font>
+<font color="#555555">015 </font>    <font color="#00AA00">//die Datenbank</font>
+<font color="#555555">016 </font>    EntityManager manager = emf.createEntityManager();
+<font color="#555555">017 </font>
+<font color="#555555">018 </font>    <font color="#00AA00">//Beginn einer neuen Transanktion</font>
+<font color="#555555">019 </font>    EntityTransaction tx = manager.getTransaction();
+<font color="#555555">020 </font>    tx.begin();
+<font color="#555555">021 </font>
+<font color="#555555">022 </font>    <font color="#00AA00">//Laden des Verzeichnis-Objekts mit der Id=0</font>
+<font color="#555555">023 </font>    Verzeichnis dir = manager.find(Verzeichnis.<font color="#0000AA">class</font>, 0); 
+<font color="#555555">024 </font>
+<font color="#555555">025 </font>    <font color="#0000AA">if</font> (dir != <font color="#006699">null</font>) {
+<font color="#555555">026 </font>      <font color="#00AA00">//L&ouml;schen des Datensatzes aus der Datenbank</font>
+<font color="#555555">027 </font>      manager.remove(dir); <a name="persistenzdeletedir.a"></a>
+<font color="#555555">028 </font>    }
+<font color="#555555">029 </font>    
+<font color="#555555">030 </font>    <font color="#00AA00">//Abschluss der Transaktion mit einem Commit</font>
+<font color="#555555">031 </font>    tx.commit();
+<font color="#555555">032 </font>
+<font color="#555555">033 </font>    <font color="#00AA00">//Freigabe der Ressourcen des EntityManagers</font>
+<font color="#555555">034 </font>    manager.close();
+<font color="#555555">035 </font>
+<font color="#555555">036 </font>    <font color="#00AA00">//Schlie&szlig;en der EntityManagerFactory und Freigeben der</font>
+<font color="#555555">037 </font>    <font color="#00AA00">//belegten Ressourcen</font>
+<font color="#555555">038 </font>    emf.close();
+<font color="#555555">039 </font>  }
+<font color="#555555">040 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4708.java"><font color="#000055" size=-1>Listing4708.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 47.8: L&ouml;schen eines Datensatzes</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100300.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100302.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100304.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100307.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

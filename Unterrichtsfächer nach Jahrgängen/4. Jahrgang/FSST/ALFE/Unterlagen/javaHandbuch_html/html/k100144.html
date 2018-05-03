@@ -1,0 +1,142 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100143.html;106,k100143.html;107,k100145.html;108,k100150.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100143.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100143.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100145.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100150.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 22 - Datei- und Verzeichnis-Handling
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id022001"></a>
+<h2>22.1 Konstruktion eines File-Objekts </h2>
+<hr>
+<ul>
+<li><a href="k100144.html#sectlevel2id022001">22.1 Konstruktion eines File-Objekts</a>
+</ul>
+<hr>
+
+<p>
+Im Paket <a href="index_j.html#ixb100197"><font color=#000080><tt>java.io</tt></font></a>
+gibt es eine Klasse <a name="ixa101427"><a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a></a>,
+die als Abstraktion einer Datei oder eines Verzeichnisses angesehen
+werden kann. <a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a>
+kann sowohl absolute als auch relative Namen unter UNIX, MAC/OS und
+DOS/Windows repr&auml;sentieren. Im Gegensatz zu den bisher besprochenen
+Klassen, die sich mit dem Zugriff auf den <i>Inhalt</i> einer Datei
+besch&auml;ftigten, spielt dieser in der Klasse <a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a>
+keine Rolle. Stattdessen abstrahiert sie den Namen und Zugriffspfad
+einer Datei und die im Verzeichniseintrag zu ihr gespeicherten Eigenschaften.
+
+<p>
+Die Klasse <a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a>
+besitzt drei Konstruktoren: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public File(String pathname)
+
+public File(String parent, String child)
+
+public File(File parent, String child)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/File.html" onClick="this.href=getApiDoc('java.io.File')"><font color="#660066" size=-1>java.io.File</font></a></td>
+</tr>
+</table>
+
+<p>
+Wird lediglich der String <font color="#000077"><tt>pathname</tt></font>
+&uuml;bergeben, so wird ein <a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a>-Objekt
+zu dem angegebenen Datei- oder Verzeichnisnamen konstruiert. Alternativ
+kann der zweite Konstruktor verwendet werden, wenn Verzeichnis- und
+Dateiname getrennt &uuml;bergeben werden sollen. Eine &auml;hnliche
+Funktion &uuml;bernimmt auch der dritte Konstruktor. Hier wird jedoch
+der &uuml;bergebene Verzeichnisname als <a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a>-Objekt
+zur Verf&uuml;gung gestellt. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Bei der Konstruktion von Datei- und Verzeichnisnamen unter Windows
+ist zu beachten, dass der Separator (Backslash) gleichzeitig Escape-Zeichen
+f&uuml;r Strings ist und daher in Verzeichnis- oder Dateiliteralen
+doppelt angegeben werden muss (siehe <a href="k100030.html#derzeichentyp">Abschnitt 5.2.2</a>).</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Beispiele f&uuml;r g&uuml;ltige Konstruktoraufrufe sind: 
+<font color="#000077">
+<pre>
+new File("TestFile.java");
+new File("c:\\arc\\doku\\javacafe\\kap01.doc");
+new File(".", "TestFile.java");
+new File("/etc/hosts");
+</pre>
+</font>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100143.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100143.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100145.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100150.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

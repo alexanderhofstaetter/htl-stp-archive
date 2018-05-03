@@ -1,0 +1,897 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100252.html;106,k100252.html;107,k100254.html;108,k100257.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100252.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100252.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100254.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100257.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 39 - Swing: Komponenten II
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id039001"></a>
+<h2>39.1 Spezielle Panels </h2>
+<hr>
+<ul>
+<li><a href="k100253.html#sectlevel2id039001">39.1 Spezielle Panels</a>
+<ul>
+<li><a href="k100253.html#jscrollpane">39.1.1 JScrollPane</a>
+<li><a href="k100253.html#sectlevel3id039001002">39.1.2 JSplitPane</a>
+<li><a href="k100253.html#sectlevel3id039001003">39.1.3 JTabbedPane</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="jscrollpane"></a>
+<h3>39.1.1 JScrollPane </h3>
+
+<p>
+Die Klasse <a name="ixa102719"><a href="index_j.html#ixb101791"><font color=#000080><tt>JScrollPane</tt></font></a></a>
+wurde in den vorigen Abschnitten bereits mehrfach verwendet. In Verbindung
+mit den Klassen <a href="index_j.html#ixb101932"><font color=#000080><tt>JTextArea</tt></font></a>
+und <a href="index_j.html#ixb101789"><font color=#000080><tt>JList</tt></font></a>
+bestand ihre Aufgabe darin, Dialogelemente, die zu gro&szlig; f&uuml;r
+den zur Verf&uuml;gung stehenden Platz waren, mit Hilfe eines verschiebbaren
+Fensters ausschnittsweise sichtbar zu machen. Dabei war es ausreichend,
+das betreffende Dialogelement an den Konstruktor von <a href="index_j.html#ixb101791"><font color=#000080><tt>JScrollPane</tt></font></a>
+zu &uuml;bergeben und anstelle des Dialogelements selbst die <a href="index_j.html#ixb101791"><font color=#000080><tt>JScrollPane</tt></font></a>-Instanz
+an den Container zu &uuml;bergeben. 
+
+<p>
+<a href="index_j.html#ixb101791"><font color=#000080><tt>JScrollPane</tt></font></a>
+besitzt aber noch weitere F&auml;higkeiten, die hier kurz vorgestellt
+werden sollen. Zun&auml;chst wollen wir uns ihre wichtigsten Konstruktoren
+ansehen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public JScrollPane(Component view)
+public JScrollPane(Component view, int vsbPolicy, int hsbPolicy)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JScrollPane.html" onClick="this.href=getApiDoc('javax.swing.JScrollPane')"><font color="#660066" size=-1>javax.swing.JScrollPane</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Argumente <font color="#000077"><tt>vsbPolicy</tt></font> und
+<font color="#000077"><tt>hsbPolicy</tt></font> geben an, wann ein
+horizontaler bzw. vertikaler Schieberegler eingeblendet wird. Hier
+k&ouml;nnen folgende Werte angegeben werden: <a name="tableid039001"></a>
+
+<p>
+<table cols=2 border width=66%>
+
+<tr>
+<td valign=top align=left width=33%><b>Konstante</b></td>
+<td valign=top align=left width=66%><b>Bedeutung</b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102720"><a href="index_v.html#ixb102019"><font color=#000080><tt>VERTICAL_SCROLLBAR_NEVER</tt></font></a></a></td>
+<td valign=top align=left>Der vertikale Schieberegler wird nie angezeigt.</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102721"><a href="index_v.html#ixb102020"><font color=#000080><tt>VERTICAL_SCROLLBAR_ALWAYS</tt></font></a></a></td>
+<td valign=top align=left>Der vertikale Schieberegler wird immer angezeigt.</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102722"><a href="index_v.html#ixb102021"><font color=#000080><tt>VERTICAL_SCROLLBAR_AS_NEEDED</tt></font></a></a></td>
+<td valign=top align=left>Der vertikale Schieberegler wird nur angezeigt,
+wenn er tats&auml;chlich ben&ouml;tigt wird.</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102723"><a href="index_h.html#ixb102022"><font color=#000080><tt>HORIZONTAL_SCROLLBAR_NEVER</tt></font></a></a></td>
+<td valign=top align=left>Der horizontale Schieberegler wird nie angezeigt.</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102724"><a href="index_h.html#ixb102023"><font color=#000080><tt>HORIZONTAL_SCROLLBAR_ALWAYS</tt></font></a></a></td>
+<td valign=top align=left>Der horizontale Schieberegler wird immer
+angezeigt.</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102725"><a href="index_h.html#ixb102024"><font color=#000080><tt>HORIZONTAL_SCROLLBAR_AS_NEEDED</tt></font></a></a></td>
+<td valign=top align=left>Der horizontale Schieberegler wird nur angezeigt,
+wenn er tats&auml;chlich ben&ouml;tigt wird.</td></tr>
+</table>
+<p><i>
+Tabelle 39.1: Anzeige der Schieberegler bei JScrollPane</i></p>
+
+<p>
+Wenn die Argumente <font color="#000077"><tt>vsbPolicy</tt></font>
+und <font color="#000077"><tt>hsbPolicy</tt></font> nicht angegeben
+werden, blendet <a href="index_j.html#ixb101791"><font color=#000080><tt>JScrollPane</tt></font></a>
+die Schieberegler nur dann ein, wenn sie wirklich ben&ouml;tigt werden,
+wenn also das Dialogelement in der jeweiligen Ausdehnung gr&ouml;&szlig;er
+als der verf&uuml;gbare Platz ist. 
+
+<p>
+Die beiden wichtigsten zus&auml;tzlichen F&auml;higkeiten von <a href="index_j.html#ixb101791"><font color=#000080><tt>JScrollPane</tt></font></a>
+bestehen darin, Spalten- und Zeilenheader anzeigen und die Eckelemente
+mit beliebigen Komponenten belegen zu k&ouml;nnen (siehe <a href="k100253.html#anatomiejscrollpane">Abbildung 39.1</a>):
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setColumnHeaderView(Component view)
+public void setRowHeaderView(Component view)
+
+public void setCorner(String key, Component corner)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JScrollPane.html" onClick="this.href=getApiDoc('javax.swing.JScrollPane')"><font color="#660066" size=-1>javax.swing.JScrollPane</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa102726"><a href="index_s.html#ixb102025"><font color=#000080><tt>setColumnHeaderView</tt></font></a></a>
+kann eine Komponente f&uuml;r den Spaltenkopf angegeben werden. Sie
+wird &uuml;ber dem eigentlichen Dialogelement angezeigt und bei horizontalen
+Bewegungen zusammen mit diesem verschoben. Bei vertikalen Schieberbewegungen
+bleibt sie dagegen an ihrem Platz. Analog dazu kann mit <a name="ixa102727"><a href="index_s.html#ixb102026"><font color=#000080><tt>setRowHeaderView</tt></font></a></a>
+ein Zeilenkopf angegeben werden, der links neben der eigentlichen
+Komponente platziert wird. Er wird bei vertikalen Bewegungen verschoben
+und beh&auml;lt bei horizontalen Bewegungen seinen Platz bei. 
+
+<p>
+Mit <a name="ixa102728"><a href="index_s.html#ixb102027"><font color=#000080><tt>setCorner</tt></font></a></a>
+kann in einer beliebigen der vier ungenutzten Ecken einer <a href="index_j.html#ixb101791"><font color=#000080><tt>JScrollPane</tt></font></a>
+ein Dialogelement platziert werden. Der Parameter <font color="#000077"><tt>key</tt></font>
+gibt dabei an, welche Ecke belegt werden soll. Als Argument kann eine
+der Konstanten <a name="ixa102729"><a href="index_l.html#ixb102028"><font color=#000080><tt>LOWER_LEFT_CORNER</tt></font></a></a>,
+<a name="ixa102730"><a href="index_l.html#ixb102029"><font color=#000080><tt>LOWER_RIGHT_CORNER </tt></font></a></a>,
+<a name="ixa102731"><a href="index_u.html#ixb102030"><font color=#000080><tt>UPPER_LEFT_CORNER</tt></font></a></a>
+oder <a name="ixa102732"><a href="index_u.html#ixb102031"><font color=#000080><tt>UPPER_RIGHT_CORNER</tt></font></a></a>
+der Klasse <a href="index_j.html#ixb101791"><font color=#000080><tt>JScrollPane</tt></font></a>
+angegeben werden. 
+
+<p>
+Zu beachten ist dabei, dass die Eckfl&auml;chen unter Umst&auml;nden
+gar nicht zur Verf&uuml;gung stehen. Die beiden Ecken auf der linken
+Seite sind beispielsweise nur dann vorhanden, wenn ein Zeilenkopf
+eingeblendet wurde. Die rechte obere ist nur vorhanden, wenn ein vertikaler
+Schieberegler eingeblendet wurde, und die rechte untere erfordert
+sogar die Anwesenheit beider Schieberegler. Auch kann die Anwendung
+praktisch keinen Einfluss auf die Gr&ouml;&szlig;e der Ecken nehmen.
+Diese wird ausschlie&szlig;lich durch die Ausdehnung der Schieberegler
+und des Zeilenkopfs bestimmt. Insgesamt ist die M&ouml;glichkeit,
+die Ecken belegen zu k&ouml;nnen, eine eher nur in Ausnahmef&auml;llen
+n&uuml;tzliche Eigenschaft. 
+<p>
+<a name="anatomiejscrollpane"></a>
+<img src="images/ScrollPaneAnato.gif">
+<p>
+
+<p><i>
+Abbildung 39.1: Die Anatomie einer JScrollPane</i></p>
+
+<p>
+Das folgende Beispiel zeigt ein Programm, in dem eine <a href="index_j.html#ixb101791"><font color=#000080><tt>JScrollPane</tt></font></a>
+ein zu gro&szlig;es <a href="index_j.html#ixb101779"><font color=#000080><tt>JPanel</tt></font></a>
+mit hundert Checkboxen aufnimmt. In den beiden rechten Ecken wird
+jeweils ein <a href="index_j.html#ixb101781"><font color=#000080><tt>JLabel</tt></font></a>
+platziert und als Spaltenkopf wird eine Instanz der Klasse <font color="#000077"><tt>ColumnHeader</tt></font>
+verwendet: 
+<a name="listingid039001"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3901.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3901
+<font color="#555555">008 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">009 </font>{
+<font color="#555555">010 </font>  <font color="#0000AA">public</font> Listing3901()
+<font color="#555555">011 </font>  {
+<font color="#555555">012 </font>    <font color="#006699">super</font>(<font color="#0000FF">"JScrollPane"</font>);
+<font color="#555555">013 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">014 </font>    <font color="#00AA00">//Dialogpanel erzeugen</font>
+<font color="#555555">015 </font>    JPanel panel = <font color="#0000AA">new</font> JPanel();
+<font color="#555555">016 </font>    panel.setLayout(<font color="#0000AA">new</font> GridLayout(10, 10));
+<font color="#555555">017 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 1; i &lt;= 100; ++i) {
+<font color="#555555">018 </font>      panel.add(<font color="#0000AA">new</font> JCheckBox(<font color="#0000FF">"Frage "</font> + i));
+<font color="#555555">019 </font>    }
+<font color="#555555">020 </font>    <font color="#00AA00">//JScrollPane erzeugen</font>
+<font color="#555555">021 </font>    JScrollPane scroll = <font color="#0000AA">new</font> JScrollPane(panel);
+<font color="#555555">022 </font>    scroll.setCorner(
+<font color="#555555">023 </font>      JScrollPane.UPPER_RIGHT_CORNER,
+<font color="#555555">024 </font>      <font color="#0000AA">new</font> JLabel(<font color="#0000FF">"1"</font>, JLabel.CENTER)
+<font color="#555555">025 </font>    );
+<font color="#555555">026 </font>    scroll.setCorner(
+<font color="#555555">027 </font>      JScrollPane.LOWER_RIGHT_CORNER,
+<font color="#555555">028 </font>      <font color="#0000AA">new</font> JLabel(<font color="#0000FF">"2"</font>, JLabel.CENTER)
+<font color="#555555">029 </font>    );
+<font color="#555555">030 </font>    scroll.setColumnHeaderView(<font color="#0000AA">new</font> ColumnHeader(panel, 10));
+<font color="#555555">031 </font>    <font color="#00AA00">//JScrollPane zur ContentPane hinzuf&uuml;gen</font>
+<font color="#555555">032 </font>    getContentPane().add(scroll, BorderLayout.CENTER);
+<font color="#555555">033 </font>  }
+<font color="#555555">034 </font>
+<font color="#555555">035 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">036 </font>  {
+<font color="#555555">037 </font>    Listing3901 frame = <font color="#0000AA">new</font> Listing3901();
+<font color="#555555">038 </font>    frame.setLocation(100, 100);
+<font color="#555555">039 </font>    frame.setSize(300, 150);
+<font color="#555555">040 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">041 </font>  }
+<font color="#555555">042 </font>}
+<font color="#555555">043 </font>
+<font color="#555555">044 </font><font color="#0000AA">class</font> ColumnHeader
+<font color="#555555">045 </font><font color="#0000AA">extends</font> JComponent
+<font color="#555555">046 </font>{
+<font color="#555555">047 </font>  JComponent component;
+<font color="#555555">048 </font>  <font color="#006699">int</font>        columns;
+<font color="#555555">049 </font>
+<font color="#555555">050 </font>  <font color="#0000AA">public</font> ColumnHeader(JComponent component, <font color="#006699">int</font> columns)
+<font color="#555555">051 </font>  {
+<font color="#555555">052 </font>    <font color="#006699">this</font>.component = component;
+<font color="#555555">053 </font>    <font color="#006699">this</font>.columns   = columns;
+<font color="#555555">054 </font>  }
+<font color="#555555">055 </font>
+<font color="#555555">056 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paintComponent(Graphics g)
+<font color="#555555">057 </font>  {
+<font color="#555555">058 </font>    <font color="#006699">int</font> width = component.getSize().width;
+<font color="#555555">059 </font>    <font color="#006699">int</font> height = getSize().height;
+<font color="#555555">060 </font>    <font color="#006699">int</font> colwid = width / columns;
+<font color="#555555">061 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; columns; ++i) {
+<font color="#555555">062 </font>      g.setColor(i % 2 == 0 ? Color.yellow : Color.gray);
+<font color="#555555">063 </font>      g.fillRect(i * colwid, 0, colwid, height);
+<font color="#555555">064 </font>    }
+<font color="#555555">065 </font>    g.setColor(Color.black);
+<font color="#555555">066 </font>    g.drawLine(0, height - 1, width, height - 1);
+<font color="#555555">067 </font>  }
+<font color="#555555">068 </font>
+<font color="#555555">069 </font>  <font color="#0000AA">public</font> Dimension getPreferredSize()
+<font color="#555555">070 </font>  {
+<font color="#555555">071 </font>    <font color="#0000AA">return</font> <font color="#0000AA">new</font> Dimension(component.getSize().width, 20);
+<font color="#555555">072 </font>  }
+<font color="#555555">073 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3901.java"><font color="#000055" size=-1>Listing3901.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 39.1: Die Klasse JScrollPane</i></p>
+
+<p>
+Die Klasse <font color="#000077"><tt>ColumnHeader</tt></font> ist
+aus <a href="index_j.html#ixb101780"><font color=#000080><tt>JComponent</tt></font></a>
+abgeleitet und wird als Spaltenkopf f&uuml;r die <a href="index_j.html#ixb101779"><font color=#000080><tt>JPanel</tt></font></a>-Komponente
+verwendet. Deren Spalten sind in diesem Sonderfall alle gleich breit.
+Das Panel selbst und die Spaltenzahl werden an den Konstruktor &uuml;bergeben
+und mit Hilfe dieser Angaben werden die nebeneinanderliegenden Spalten
+als abwechselnd grau und gelb gef&auml;rbte Rechtecke angezeigt. Zus&auml;tzlich
+wird eine schwarze Linie als untere Begrenzung des Spaltenkopfs gezeichnet.
+Durch &Uuml;berlagern von <a href="index_g.html#ixb101646"><font color=#000080><tt>getPreferredSize</tt></font></a>
+teilt <font color="#000077"><tt>ColumnHeader</tt></font> der <a href="index_j.html#ixb101791"><font color=#000080><tt>JScrollPane</tt></font></a>
+seine Gr&ouml;&szlig;e mit. Die Breite entspricht dabei der Breite
+der scrollbaren Komponente, die H&ouml;he ist fest auf zwanzig Pixel
+eingestellt. 
+
+<p>
+Die Ausgabe des Programms ist: 
+<p>
+<a name="imageid039002"></a>
+<img src="images/JScrollPane1.gif">
+<p>
+
+<p><i>
+Abbildung 39.2: Die Klasse JScrollPane</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id039001002"></a>
+<h3>39.1.2 JSplitPane </h3>
+
+<p>
+<a name="ixa102733"><a href="index_j.html#ixb102032"><font color=#000080><tt>JSplitPane</tt></font></a></a>
+ist ein Panel, mit dem zwei Komponenten neben- oder &uuml;bereinander
+platziert werden k&ouml;nnen. Die Komponenten werden dabei durch einen
+sichtbaren Separator voneinander getrennt. Der Anwender kann den Separator
+verschieben und so den Platz variieren, der beiden Komponenten zur
+Verf&uuml;gung steht. Ein <a href="index_j.html#ixb102032"><font color=#000080><tt>JSplitPane</tt></font></a>
+ist beispielsweise n&uuml;tzlich, wenn Komponenten dargestellt werden
+sollen, deren Breite oder H&ouml;he von den darin enthaltenen Daten
+abh&auml;ngig ist. Das Programm braucht dann den ben&ouml;tigten Platz
+nur grob vorzugeben und der Anwender kann durch Verschieben des Separators
+zur Laufzeit festlegen, wie viel Platz er jeder Komponente zur Verf&uuml;gung
+stellen will. 
+
+<p>
+Die Konstruktoren von <a href="index_j.html#ixb102032"><font color=#000080><tt>JSplitPane</tt></font></a>
+sind: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public JSplitPane(int orientation)
+
+public JSplitPane(
+  int orientation,
+  boolean continuousLayout
+)
+
+public JSplitPane(
+  int orientation,
+  Component leftComponent,
+  Component rightComponent
+)
+
+public JSplitPane(
+  int orientation,
+  boolean continuousLayout,
+  Component leftComponent,
+  Component rightComponent
+)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JSplitPane.html" onClick="this.href=getApiDoc('javax.swing.JSplitPane')"><font color="#660066" size=-1>javax.swing.JSplitPane</font></a></td>
+</tr>
+</table>
+
+<p>
+Der Parameter <font color="#000077"><tt>orientation</tt></font> gibt
+an, wie die Elemente zueinander angeordnet werden sollen. Hat er den
+Wert <a name="ixa102734"><a href="index_h.html#ixb102033"><font color=#000080><tt>HORIZONTAL_SPLIT</tt></font></a></a>,
+werden sie nebeneinander angeordnet, bei <a name="ixa102735"><a href="index_v.html#ixb102034"><font color=#000080><tt>VERTICAL_SPLIT</tt></font></a></a>
+&uuml;bereinander. Hat <font color="#000077"><tt>continuousLayout</tt></font>
+den Wert <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>,
+wird schon beim Verschieben des Separators der Bildschirminhalt aktualisiert.
+Andernfalls erfolgt das erst nach Ende des Verschiebevorgangs. In
+den Parametern <font color="#000077"><tt>leftComponent</tt></font>
+und <font color="#000077"><tt>rightComponent</tt></font> werden die
+beiden einzubettenden Komponenten &uuml;bergeben. Alle Eigenschaften
+k&ouml;nnen auch nach der Instanzierung ver&auml;ndert bzw. abgefragt
+werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setOrientation(int orientation)
+public void setContinuousLayout(boolean continuousLayout)
+public void setLeftComponent(Component comp)
+public void setRightComponent(Component comp)
+public void setTopComponent(Component comp)
+public void setBottomComponent(Component comp)
+
+public int getOrientation()
+public boolean isContinuousLayout()
+public Component getLeftComponent()
+public Component getTopComponent()
+public Component getRightComponent()
+public Component getBottomComponent()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JSplitPane.html" onClick="this.href=getApiDoc('javax.swing.JSplitPane')"><font color="#660066" size=-1>javax.swing.JSplitPane</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Gr&ouml;&szlig;e der beiden Komponenten richtet sich nach ihren
+minimalen und gew&uuml;nschten Abmessungen. <a href="index_j.html#ixb102032"><font color=#000080><tt>JSplitPane</tt></font></a>
+ermittelt diese Werte durch Aufruf von <a href="index_g.html#ixb101646"><font color=#000080><tt>getPreferredSize</tt></font></a>
+und <a href="index_g.html#ixb101655"><font color=#000080><tt>getMinimumSize</tt></font></a>
+auf den Komponentenobjekten. Es gilt: 
+<ul>
+<li>Bei der initialen Darstellung der Komponenten wird zun&auml;chst
+gepr&uuml;ft, ob beide in ihrer <i>gew&uuml;nschten</i> Gr&ouml;&szlig;e
+angezeigt werden k&ouml;nnen (es wird also <a href="index_g.html#ixb101646"><font color=#000080><tt>getPreferredSize</tt></font></a>
+aufgerufen). Ist das der Fall, wird die linke (obere) Komponente in
+der gew&uuml;nschten Gr&ouml;&szlig;e angezeigt und die rechte (untere)
+erh&auml;lt den verbleibenden Platz.
+<li>Ist das nicht der Fall, wird die linke (untere) Komponente in
+ihrer minimalen Gr&ouml;&szlig;e angezeigt und die rechte erh&auml;lt
+den verbleibenden Platz.
+<li>Reicht der Platz nicht einmal aus, um die Komponenten in ihrer
+jeweils minimalen Ausdehnung anzuzeigen, ist das Verhalten undefiniert.
+Typischerweise steht der Separator danach komplett auf einer Seite
+und es ist nur noch eine der beiden Komponenten sichtbar.
+<li>Sind die Komponenten auf dem Bildschirm sichtbar, kann der Separator
+so weit in jede Richtung verschoben werden, bis die minimale Gr&ouml;&szlig;e
+der jeweiligen Komponente erreicht ist.
+</ul>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Manche Komponenten liefern beim Aufruf von <a href="index_g.html#ixb101655"><font color=#000080><tt>getMinimumSize</tt></font></a>
+die Gr&ouml;&szlig;e, die sie beim ersten Sichtbarwerden auf dem Bildschirm
+hatten. In diesem Fall ist der Separator &uuml;berhaupt nicht ver&auml;nderbar,
+denn jede Verschiebung w&uuml;rde die minimale Gr&ouml;&szlig;e einer
+der beiden Komponenten unterschreiten. Falls ein solches Problem auftritt,
+kann Abhilfe geschaffen werden, indem durch Aufruf von <a name="ixa102736"><a href="index_s.html#ixb101898"><font color=#000080><tt>setMinimumSize</tt></font></a></a>
+die minimale Gr&ouml;&szlig;e der Komponenten vermindert wird.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Eine interessante Methode zur Verschiebung des Separators ist <a name="ixa102737"><a href="index_s.html#ixb102035"><font color=#000080><tt>setOneTouchExpandable</tt></font></a></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setOneTouchExpandable(boolean newValue)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JSplitPane.html" onClick="this.href=getApiDoc('javax.swing.JSplitPane')"><font color="#660066" size=-1>javax.swing.JSplitPane</font></a></td>
+</tr>
+</table>
+
+<p>
+Wird sie mit <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+als Argument aufgerufen, erh&auml;lt der Separator zwei kleine Pfeile,
+die jeweils auf eine der beiden Komponenten zeigen. Wird einer von
+ihnen angeklickt, so wird der Separator komplett auf die ausgew&auml;hlte
+Seite verschoben. Die auf dieser Seite liegende Komponente wird also
+verdeckt und die andere erh&auml;lt den vollen zur Verf&uuml;gung
+stehenden Platz (die von <a href="index_g.html#ixb101655"><font color=#000080><tt>getMinimumSize</tt></font></a>
+definierten Grenzen werden dabei ignoriert). Ein weiterer Klick auf
+den Separator gibt der verdeckten Komponente wieder ihre Minimalgr&ouml;&szlig;e.
+
+<p>
+Das folgende Programm zeigt einen <a href="index_j.html#ixb100513"><font color=#000080><tt>JFrame</tt></font></a>
+mit einem horizontal geteilten <a href="index_j.html#ixb102032"><font color=#000080><tt>JSplitPane</tt></font></a>.
+Als Komponenten werden zwei Instanzen der weiter unten definierten
+Klasse <font color="#000077"><tt>GridComponent</tt></font> verwendet,
+die ein Gitternetz anzeigt, dessen Maschengr&ouml;&szlig;e proportional
+zur Ausdehnung der Komponente ist: 
+<a name="listingid039002"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3902.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3902
+<font color="#555555">008 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">009 </font>{
+<font color="#555555">010 </font>  <font color="#0000AA">public</font> Listing3902()
+<font color="#555555">011 </font>  {
+<font color="#555555">012 </font>    <font color="#006699">super</font>(<font color="#0000FF">"JSplitPane"</font>);
+<font color="#555555">013 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">014 </font>    <font color="#00AA00">//Linkes Element erzeugen</font>
+<font color="#555555">015 </font>    GridComponent grid1 = <font color="#0000AA">new</font> GridComponent();
+<font color="#555555">016 </font>    grid1.setMinimumSize(<font color="#0000AA">new</font> Dimension(50, 100));
+<font color="#555555">017 </font>    grid1.setPreferredSize(<font color="#0000AA">new</font> Dimension(180, 100));
+<font color="#555555">018 </font>    <font color="#00AA00">//Rechtes Element erzeugen</font>
+<font color="#555555">019 </font>    GridComponent grid2 = <font color="#0000AA">new</font> GridComponent();
+<font color="#555555">020 </font>    grid2.setMinimumSize(<font color="#0000AA">new</font> Dimension(100, 100));
+<font color="#555555">021 </font>    grid2.setPreferredSize(<font color="#0000AA">new</font> Dimension(80, 100));
+<font color="#555555">022 </font>    <font color="#00AA00">//JSplitPane erzeugen</font>
+<font color="#555555">023 </font>    JSplitPane sp = <font color="#0000AA">new</font> JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+<font color="#555555">024 </font>    sp.setLeftComponent(grid1);
+<font color="#555555">025 </font>    sp.setRightComponent(grid2);
+<font color="#555555">026 </font>    sp.setOneTouchExpandable(<font color="#006699">true</font>);
+<font color="#555555">027 </font>    sp.setContinuousLayout(<font color="#006699">true</font>);
+<font color="#555555">028 </font>    getContentPane().add(sp, BorderLayout.CENTER);
+<font color="#555555">029 </font>  }
+<font color="#555555">030 </font>
+<font color="#555555">031 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">032 </font>  {
+<font color="#555555">033 </font>    Listing3902 frame = <font color="#0000AA">new</font> Listing3902();
+<font color="#555555">034 </font>    frame.setLocation(100, 100);
+<font color="#555555">035 </font>    frame.setSize(300, 200);
+<font color="#555555">036 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">037 </font>  }
+<font color="#555555">038 </font>}
+<font color="#555555">039 </font>
+<font color="#555555">040 </font><font color="#0000AA">class</font> GridComponent
+<font color="#555555">041 </font><font color="#0000AA">extends</font> JComponent
+<font color="#555555">042 </font>{
+<font color="#555555">043 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paintComponent(Graphics g)
+<font color="#555555">044 </font>  {
+<font color="#555555">045 </font>    g.setColor(Color.gray);
+<font color="#555555">046 </font>    <font color="#006699">int</font> width = getSize().width;
+<font color="#555555">047 </font>    <font color="#006699">int</font> height = getSize().height;
+<font color="#555555">048 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; 10; ++i) {
+<font color="#555555">049 </font>      g.drawLine(i * width / 10, 0, i * width / 10, height);
+<font color="#555555">050 </font>    }
+<font color="#555555">051 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; 10; ++i) {
+<font color="#555555">052 </font>      g.drawLine(0, i * height / 10, width, i * height / 10);
+<font color="#555555">053 </font>    }
+<font color="#555555">054 </font>    g.setColor(Color.black);
+<font color="#555555">055 </font>    g.drawString(<font color="#0000FF">""</font> + width, 5, 15);
+<font color="#555555">056 </font>  }
+<font color="#555555">057 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3902.java"><font color="#000055" size=-1>Listing3902.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 39.2: Die Klasse JSplitPane</i></p>
+
+<p>
+Die Ausgabe des Programms ist: 
+<p>
+<a name="imageid039003"></a>
+<img src="images/JSplitPane1.gif">
+<p>
+
+<p><i>
+Abbildung 39.3: Die Klasse JSplitPane</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id039001003"></a>
+<h3>39.1.3 JTabbedPane </h3>
+
+<p>
+Als letztes der speziellen Panels wollen wir uns die Klasse <a name="ixa102738"><a href="index_j.html#ixb102036"><font color=#000080><tt>JTabbedPane</tt></font></a></a>
+ansehen. Mit ihr ist es m&ouml;glich, Dialoge zu erstellen, die eine
+Reihe von Registerkarten enthalten. Das sind Unterdialoge, die &uuml;ber
+ein am Rand befindliches Register einzeln ausgew&auml;hlt werden k&ouml;nnen.
+Derartige Registerkarten werden beispielsweise in Konfigurationsdialogen
+verwendet, wenn die zu bearbeitenden Optionen nicht alle auf eine
+Seite passen. 
+
+<p>
+<a href="index_j.html#ixb102036"><font color=#000080><tt>JTabbedPane</tt></font></a>
+stellt zwei Konstruktoren zur Verf&uuml;gung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public JTabbedPane()
+public JTabbedPane(int tabPlacement)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTabbedPane.html" onClick="this.href=getApiDoc('javax.swing.JTabbedPane')"><font color="#660066" size=-1>javax.swing.JTabbedPane</font></a></td>
+</tr>
+</table>
+
+<p>
+Der erste von beiden erzeugt ein <a href="index_j.html#ixb102036"><font color=#000080><tt>JTabbedPane</tt></font></a>
+mit oben liegenden Registern. Beim zweiten kann explizit angegeben
+werden, auf welcher Seite die Register angeordnet werden sollen. Hier
+k&ouml;nnen die Konstanten <a href="index_t.html#ixb101863"><font color=#000080><tt>TOP</tt></font></a>,
+<a href="index_b.html#ixb101858"><font color=#000080><tt>BOTTOM</tt></font></a>,
+<a href="index_l.html#ixb101555"><font color=#000080><tt>LEFT</tt></font></a>
+oder <a href="index_r.html#ixb101556"><font color=#000080><tt>RIGHT</tt></font></a>
+aus dem Interface <a href="index_s.html#ixb101857"><font color=#000080><tt>SwingConstants</tt></font></a>
+&uuml;bergeben werden. &Uuml;blich ist es, die Register links oder
+oben anzuordnen. Mit den Methoden <a name="ixa102739"><a href="index_g.html#ixb102037"><font color=#000080><tt>getTabPlacement</tt></font></a></a>
+und <a name="ixa102740"><a href="index_s.html#ixb102038"><font color=#000080><tt>setTabPlacement</tt></font></a></a>
+kann auch nachtr&auml;glich auf die Anordnung zugegriffen werden.
+
+<p>
+Nach der Instanzierung ist der Registerdialog zun&auml;chst leer.
+Um Registerkarten hinzuzuf&uuml;gen, kann eine der Methoden <a name="ixa102741"><a href="index_a.html#ixb102039"><font color=#000080><tt>addTab</tt></font></a></a>
+oder <a name="ixa102742"><a href="index_i.html#ixb102040"><font color=#000080><tt>insertTab</tt></font></a></a>
+aufgerufen werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void addTab(
+  String title,
+  Icon icon,
+  Component component,
+  String tip
+)
+
+public void insertTab(
+  String title,
+  Icon icon,
+  Component component,
+  String tip,
+  int index
+)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTabbedPane.html" onClick="this.href=getApiDoc('javax.swing.JTabbedPane')"><font color="#660066" size=-1>javax.swing.JTabbedPane</font></a></td>
+</tr>
+</table>
+
+<p>
+Der Parameter <font color="#000077"><tt>title</tt></font> gibt die
+Beschriftung des Registereintrags an. Mit <font color="#000077"><tt>icon</tt></font>
+kann zus&auml;tzlich ein Icon und mit <font color="#000077"><tt>tip</tt></font>
+ein Tooltip-Text hinzugef&uuml;gt werden. Der Parameter <font color="#000077"><tt>component</tt></font>
+gibt das darzustellende Dialogelement an. Meist wird hier eine Containerklasse
+&uuml;bergeben (z.B. ein <a href="index_j.html#ixb101779"><font color=#000080><tt>JPanel</tt></font></a>),
+die den entsprechenden Unterdialog enth&auml;lt. Die Parameter <font color="#000077"><tt>icon</tt></font>
+und <font color="#000077"><tt>tip</tt></font> sind optional, d.h.,
+es gibt die beiden Methoden auch ohne sie. <a href="index_a.html#ixb102039"><font color=#000080><tt>addTab</tt></font></a>
+f&uuml;gt die Registerkarte am Ende ein, bei <a href="index_i.html#ixb102040"><font color=#000080><tt>insertTab</tt></font></a>
+kann die Einf&uuml;geposition mit dem Parameter <font color="#000077"><tt>index</tt></font>
+selbst angegeben werden. 
+
+<p>
+Bereits definierte Registerkarten k&ouml;nnen auch wieder entfernt
+werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void removeTabAt(int index)
+public void removeAll()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTabbedPane.html" onClick="this.href=getApiDoc('javax.swing.JTabbedPane')"><font color="#660066" size=-1>javax.swing.JTabbedPane</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa102743"><a href="index_r.html#ixb102041"><font color=#000080><tt>removeTabAt</tt></font></a></a>
+entfernt die Karte mit dem angegebenen Index, <a name="ixa102744"><a href="index_r.html#ixb100740"><font color=#000080><tt>removeAll</tt></font></a></a>
+entfernt alle Karten. 
+
+<p>
+Mit <a name="ixa102745"><a href="index_g.html#ixb102042"><font color=#000080><tt>getTabCount</tt></font></a></a>
+kann die Anzahl der Registerkarten ermittelt werden und mit <a name="ixa102746"><a href="index_g.html#ixb102043"><font color=#000080><tt>getComponentAt</tt></font></a></a>
+kann die Komponente einer beliebigen Registerkarte ermittelt werden.
+Mit <a name="ixa102747"><a href="index_s.html#ixb102044"><font color=#000080><tt>setComponentAt</tt></font></a></a>
+kann der Inhalt einer Registerkarte sogar nachtr&auml;glich ausgetauscht
+werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int getTabCount()
+
+public Component getComponentAt(int index)
+public void setComponentAt(int index, Component component)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTabbedPane.html" onClick="this.href=getApiDoc('javax.swing.JTabbedPane')"><font color="#660066" size=-1>javax.swing.JTabbedPane</font></a></td>
+</tr>
+</table>
+
+<p>
+In einem Registerdialog ist immer genau eine der Karten selektiert.
+Mit <a name="ixa102748"><a href="index_g.html#ixb101616"><font color=#000080><tt>getSelectedIndex</tt></font></a></a>
+kann deren Index ermittelt werden, mit <a name="ixa102749"><a href="index_g.html#ixb102045"><font color=#000080><tt>getSelectedComponent</tt></font></a></a>
+kann sogar direkt auf ihren Inhalt zugegriffen werden. Die Methode
+<a name="ixa102750"><a href="index_s.html#ixb101974"><font color=#000080><tt>setSelectedIndex</tt></font></a></a>
+erlaubt es, programmgesteuert eine beliebige Registerkarte auszuw&auml;hlen:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int getSelectedIndex()
+public Component getSelectedComponent()
+
+public void setSelectedIndex(int index)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTabbedPane.html" onClick="this.href=getApiDoc('javax.swing.JTabbedPane')"><font color="#660066" size=-1>javax.swing.JTabbedPane</font></a></td>
+</tr>
+</table>
+
+<p>
+Registerkarten besitzen eine Reihe von Eigenschaften, die einzeln
+ver&auml;ndert werden k&ouml;nnen. Die wichtigste von ihnen ist die
+M&ouml;glichkeit, sie zu aktivieren oder zu deaktivieren. Nur aktivierte
+Karten k&ouml;nnen ausgew&auml;hlt werden, deaktivierte dagegen nicht.
+Der Zugriff auf den Aktivierungsstatus erfolgt mit den Methoden <a name="ixa102751"><a href="index_s.html#ixb102046"><font color=#000080><tt>setEnabledAt</tt></font></a></a>
+und <a name="ixa102752"><a href="index_i.html#ixb102047"><font color=#000080><tt>isEnabledAt</tt></font></a></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public boolean isEnabledAt(int index)
+public void setEnabledAt(int index, boolean enabled)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTabbedPane.html" onClick="this.href=getApiDoc('javax.swing.JTabbedPane')"><font color="#660066" size=-1>javax.swing.JTabbedPane</font></a></td>
+</tr>
+</table>
+
+<p>
+Bei jeder &Auml;nderung der Selektion versendet ein <a href="index_j.html#ixb102036"><font color=#000080><tt>JTabbedPane</tt></font></a>
+ein <a name="ixa102753"><a href="index_c.html#ixb102006"><font color=#000080><tt>ChangeEvent</tt></font></a></a>
+an registrierte <a name="ixa102754"><a href="index_c.html#ixb102007"><font color=#000080><tt>ChangeListener</tt></font></a></a>.
+Auf diese Weise ist es m&ouml;glich, Programmcode zu schreiben, der
+beim Anw&auml;hlen oder Verlassen einzelner Registerkarten ausgef&uuml;hrt
+wird. 
+
+<p>
+Eine der Anwendungen hierf&uuml;r besteht darin, die Dialoge auf den
+Registerkarten erst dann zu erzeugen, wenn sie wirklich gebraucht
+werden. Dazu wird an alle Registerkarten zun&auml;chst ein leeres
+Panel &uuml;bergeben und erst in der Methode <a href="index_s.html#ixb102010"><font color=#000080><tt>stateChanged</tt></font></a>
+durch den eigentlichen Dialog ersetzt. Auf diese Weise spart das Programm
+beim Initialisieren des Registerdialogs Rechenzeit und Speicher, was
+sich vor allem bei komplexen Oberfl&auml;chen positiv bemerkbar machen
+k&ouml;nnte. 
+
+<p>
+Das folgende Programm zeigt ein einfaches Beispiel eines Registerdialogs.
+Es erstellt ein <a href="index_j.html#ixb102036"><font color=#000080><tt>JTabbedPane</tt></font></a>
+mit f&uuml;nf Registerkarten, die jeweils ein <a href="index_j.html#ixb101779"><font color=#000080><tt>JPanel</tt></font></a>
+mit einem Label und einem Button enthalten. Das Label zeigt den Namen
+der Karte an, der Button dient dazu, die jeweils n&auml;chste Karte
+auszuw&auml;hlen. Dessen Aktivit&auml;t ist in der Klasse <font color="#000077"><tt>NextTabActionListener</tt></font>
+gekapselt. Als Besonderheit wird nach jedem Seitenwechsel <a name="ixa102755"><a href="index_r.html#ixb102048"><font color=#000080><tt>requestDefaultFocus</tt></font></a></a>
+auf der neuen Seite aufgerufen, um automatisch dem ersten Dialogelement
+den Fokus zu geben. 
+<a name="listingid039003"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3903.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3903
+<font color="#555555">008 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">009 </font>{
+<font color="#555555">010 </font>  JTabbedPane tp;
+<font color="#555555">011 </font>
+<font color="#555555">012 </font>  <font color="#0000AA">public</font> Listing3903()
+<font color="#555555">013 </font>  {
+<font color="#555555">014 </font>    <font color="#006699">super</font>(<font color="#0000FF">"JTabbedPane"</font>);
+<font color="#555555">015 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">016 </font>    tp = <font color="#0000AA">new</font> JTabbedPane();
+<font color="#555555">017 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; 5; ++i) {
+<font color="#555555">018 </font>      JPanel panel = <font color="#0000AA">new</font> JPanel();
+<font color="#555555">019 </font>      panel.add(<font color="#0000AA">new</font> JLabel(<font color="#0000FF">"Karte "</font> + i));
+<font color="#555555">020 </font>      JButton next = <font color="#0000AA">new</font> JButton(<font color="#0000FF">"Weiter"</font>);
+<font color="#555555">021 </font>      next.addActionListener(<font color="#0000AA">new</font> NextTabActionListener());
+<font color="#555555">022 </font>      panel.add(next);
+<font color="#555555">023 </font>      tp.addTab(<font color="#0000FF">"Tab"</font> + i, panel);
+<font color="#555555">024 </font>    }
+<font color="#555555">025 </font>    getContentPane().add(tp, BorderLayout.CENTER);
+<font color="#555555">026 </font>  }
+<font color="#555555">027 </font>
+<font color="#555555">028 </font>  <font color="#0000AA">class</font> NextTabActionListener
+<font color="#555555">029 </font>  <font color="#0000AA">implements</font> ActionListener
+<font color="#555555">030 </font>  {
+<font color="#555555">031 </font>    <font color="#0000AA">public</font> <font color="#006699">void</font> actionPerformed(ActionEvent event)
+<font color="#555555">032 </font>    {
+<font color="#555555">033 </font>      <font color="#006699">int</font> tab = tp.getSelectedIndex();
+<font color="#555555">034 </font>      tab = (tab &gt;= tp.getTabCount() - 1 ? 0 : tab + 1);
+<font color="#555555">035 </font>      tp.setSelectedIndex(tab);
+<font color="#555555">036 </font>      ((JPanel)tp.getSelectedComponent()).requestDefaultFocus();
+<font color="#555555">037 </font>    }
+<font color="#555555">038 </font>  }
+<font color="#555555">039 </font>
+<font color="#555555">040 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">041 </font>  {
+<font color="#555555">042 </font>    Listing3903 frame = <font color="#0000AA">new</font> Listing3903();
+<font color="#555555">043 </font>    frame.setLocation(100, 100);
+<font color="#555555">044 </font>    frame.setSize(300, 200);
+<font color="#555555">045 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">046 </font>  }
+<font color="#555555">047 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3903.java"><font color="#000055" size=-1>Listing3903.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 39.3: Die Klasse JTabbedPane</i></p>
+
+<p>
+Die Ausgabe des Programms ist: 
+<p>
+<a name="imageid039004"></a>
+<img src="images/JTabbedPane1.gif">
+<p>
+
+<p><i>
+Abbildung 39.4: Die Klasse JTabbedPane</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100252.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100252.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100254.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100257.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

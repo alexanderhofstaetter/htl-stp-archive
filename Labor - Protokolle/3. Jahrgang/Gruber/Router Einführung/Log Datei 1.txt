@@ -1,0 +1,567 @@
+yes
+
+At any point you may enter a question mark '?' for help.
+Use ctrl-c to abort configuration dialog at any prompt.
+Default settings are in square brackets '[]'.
+
+Basic management setup configures only enough connectivity
+for management of the system, extended setup will ask you
+to configure each interface on the system
+
+Would you like to enter basic management setup? [yes/no]: yes
+Configuring global parameters:
+
+  Enter host name [Router]: r1
+
+  The enable secret is a password used to protect access to
+  privileged EXEC and configuration modes. This password, after
+  entered, becomes encrypted in the configuration.
+  Enter enable secret: cisco
+
+  The enable password is used when you do not specify an
+  enable secret password, with some older software versions, and
+  some boot images.
+
+  The virtual terminal password is used to protect
+  access to the router over a network interface.
+
+Current interface summary
+
+Any interface listed with OK? value "NO" does not have a valid configuration
+
+Interface              IP-Address      OK? Method Status                Protocol
+Ethernet0              unassigned      NO  unset  up                    down    
+Ethernet1              unassigned      NO  unset  up                    up      
+Serial0                unassigned      NO  unset  down                  down    
+Serial1                unassigned      NO  unset  down                  down    
+
+Configuration aborted, no changes made.
+
+
+
+Press RETURN to get started!
+
+
+e to down
+00:01:32: %LINEPROTO-5-UPDOWN: Line protocol on Interface Ethernet0, changed state to up
+00:10:23: %LINEPROTO-5-UPDOWN: Line protocol on Interface Ethernet0, changed state to down
+00:16:32: %LINEPROTO-5-UPDOWN: Line protocol on Interface Ethernet1, changed state to up
+00:25:31: %IP-5-WEBINST_KILL: Terminating DNS process
+00:25:31: %SYS-5-RESTART: System restarted --
+Cisco Internetwork Operating System Software 
+IOS (tm) 2500 Software (C2500-I-L), Version 12.0(4)T,  RELEASE SOFTWARE (fc1)
+Copyright (c) 1986-1999 by cisco Systems, Inc.
+Compiled Wed 28-Apr-99 14:56 by kpma
+00:25:33: %LINK-5-CHANGED: Interface Ethernet0, changed state to administratively down
+00:25:33: %LINK-5-CHANGED: Interface Ethernet1, changed state to administratively down
+00:25:33: %LINK-5-CHANGED: Interface Serial0, changed state to administratively down
+00:25:33: %LINK-5-CHANGED: Interface Serial1, changed state to administratively down
+00:25:34: %LINEPROTO-5-UPDOWN: Line protocol on Interface Ethernet1, changed state to down
+00:25:34: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0, changed state to down
+00:25:34: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial1, changed state to down
+Router>
+Router>aa  enable
+Router#c configure 
+Router#configure 
+Router#configure 
+Router#configure ?
+  memory             Configure from NV memory
+  network            Configure from a TFTP network host
+  overwrite-network  Overwrite NV memory from TFTP network host
+  terminal           Configure from the terminal
+  <cr>
+
+Router#configure 
+Router#configure co  termna  inal
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#show interfaces
+                ^
+% Invalid input detected at '^' marker.
+
+Router(config)#show interfaces           
+Router#sho
+00:30:03: %SYS-5-CONFIG_I: Configured from console by consolew 
+Router#bi  no ip dom
+Router#no ip dom?
+% Unrecognized command
+Router#no ip dom
+Router#no ip dom     domai lokup   okup
+          ^
+% Invalid input detected at '^' marker.
+
+Router#no ip domai lookup
+Router#no ip domai lookup                  show interafces
+                 ^
+% Invalid input detected at '^' marker.
+
+Router#show interafces     faces
+Ethernet0 is administratively down, line protocol is down 
+  Hardware is Lance, address is 0010.7b81.4336 (bia 0010.7b81.4336)
+  MTU 1500 bytes, BW 10000 Kbit, DLY 1000 usec, 
+     reliability 253/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive set (10 sec)
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input 00:24:21, output 00:05:29, output hang never
+  Last clearing of "show interface" counters never
+  Queueing strategy: fifo
+  Output queue 0/40, 0 drops; input queue 0/75, 0 drops
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     24 packets input, 8208 bytes, 0 no buffer
+     Received 24 broadcasts, 0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     0 input packets with dribble condition detected
+     325 packets output, 40086 bytes, 0 underruns
+     150 output errors, 0 collisions, 1 interface resets
+     0 babbles, 0 late collision, 0 deferred
+     150 lost carrier, 0 no carrier
+     0 output buffer failures, 0 output buffers swapped out
+ --More--         Ethernet1 is administratively down, line protocol is down 
+ --More--           Hardware is Lance, address is 0010.7b81.4337 (bia 0010.7b81.4337)
+ --More--           MTU 1500 bytes, BW 10000 Kbit, DLY 1000 usec, 
+ --More--              reliability 253/255, txload 1/255, rxload 1/255
+ --More--           Encapsulation ARPA, loopback not set
+ --More--           Keepalive set (10 sec)
+ --More--           ARP type: ARPA, ARP Timeout 04:00:00
+ --More--           Last input 00:05:48, output 00:05:52, output hang never
+ --More--           Last clearing of "show interface" counters never
+ --More--           Queueing strategy: fifo
+ --More--           Output queue 0/40, 0 drops; input queue 0/75, 0 drops
+ --More--           5 minute input rate 0 bits/sec, 0 packets/sec
+ --More--           5 minute output rate 0 bits/sec, 0 packets/sec
+ --More--              107 packets input, 25968 bytes, 0 no buffer
+ --More--              Received 107 broadcasts, 0 runts, 0 giants, 0 throttles
+ --More--              0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+ --More--              0 input packets with dribble condition detected
+ --More--              325 packets output, 40086 bytes, 0 underruns
+ --More--              165 output errors, 0 collisions, 1 interface resets
+ --More--              0 babbles, 0 late collision, 0 deferred
+ --More--              165 lost carrier, 0 no carrier
+ --More--              0 output buffer failures, 0 output buffers swapped out
+ --More--         Serial0 is administratively down, line protocol is down 
+ --More--           Hardware is HD64570
+ --More--           MTU 1500 bytes, BW 1544 Kbit, DLY 20000 usec, 
+ --More--              reliability 255/255, txload 1/255, rxload 1/255
+ --More--           Encapsulation HDLC, loopback not set
+ --More--           Keepalive set (10 sec)
+ --More--           Last input never, output never, output hang never
+ --More--           Last clearing of "show interface" counters 00:30:06
+ --More--           Queueing strategy: fifo
+ --More--           Output queue 0/40, 0 drops; input queue 0/75, 0 drops
+ --More--           5 minute input rate 0 bits/sec, 0 packets/sec
+ --More--           5 minute output rate 0 bits/sec, 0 packets/sec
+ --More--              0 packets input, 0 bytes, 0 no buffer
+ --More--              Received 0 broadcasts, 0 runts, 0 giants, 0 throttles
+ --More--              0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored, 0 abort
+ --More--              0 packets output, 0 bytes, 0 underruns
+ --More--              0 output errors, 0 collisions, 2 interface resets
+ --More--              0 output buffer failures, 0 output buffers swapped out
+ --More--              0 carrier transitions
+ --More--              DCD=up  DSR=up  DTR=down  RTS=down  CTS=up
+ --More--         Serial1 is administratively down, line protocol is down 
+ --More--           Hardware is HD64570
+ --More--           MTU 1500 bytes, BW 1544 Kbit, DLY 20000 usec, 
+ --More--              reliability 255/255, txload 1/255, rxload 1/255
+ --More--           Encapsulation HDLC, loopback not set
+ --More--           Keepalive set (10 sec)
+ --More--           Last input never, output never, output hang never
+ --More--           Last clearing of "show interface" counters never
+ --More--           Input queue: 0/75/0 (size/max/drops); Total output drops: 0
+ --More--           Queueing strategy: weighted fair
+ --More--           Output queue: 0/1000/64/0 (size/max total/threshold/drops) 
+ --More--              Conversations  0/0/256 (active/max active/max total)
+ --More--              Reserved Conversations 0/0 (allocated/max allocated)
+ --More--           5 minute input rate 0 bits/sec, 0 packets/sec
+ --More--           5 minute output rate 0 bits/sec, 0 packets/sec
+ --More--              0 packets input, 0 bytes, 0 no buffer
+ --More--              Received 0 broadcasts, 0 runts, 0 giants, 0 throttles
+ --More--              0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored, 0 abort
+ --More--              73 packets output, 24966 bytes, 0 underruns
+ --More--              0 output errors, 0 collisions, 1 interface resets
+ --More--              0 output buffer failures, 0 output buffers swapped out
+ --More--              0 carrier transitions
+ --More--              DCD=down  DSR=down  DTR=up  RTS=up  CTS=down
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#?
+Configure commands:
+  aaa                         Authentication, Authorization and Accounting.
+  access-list                 Add an access list entry
+  alias                       Create command alias
+  arp                         Set a static ARP entry
+  async-bootp                 Modify system bootp parameters
+  autonomous-system           Specify local AS number to which we belong
+  banner                      Define a login banner
+  boot                        Modify system boot parameters
+  bridge                      Bridge Group.
+  buffers                     Adjust system buffer pool parameters
+  busy-message                Display message when connection to host fails
+  call-history-mib            Define call history mib parameters
+  cdp                         Global CDP configuration subcommands
+  chat-script                 Define a modem chat script
+  clock                       Configure time-of-day clock
+  config-register             Define the configuration register
+  default                     Set a command to its defaults
+  default-value               Default character-bits values
+  dialer                      Dialer watch commands
+  dialer-list                 Create a dialer list entry
+  dnsix-dmdp                  Provide DMDP service for DNSIX
+ --More--           dnsix-nat                   Provide DNSIX service for audit trails
+ --More--           downward-compatible-config  Generate a configuration compatible with older
+ --More--                                       software
+ --More--           enable                      Modify enable password parameters
+ --More--           end                         Exit from configure mode
+ --More--           exception                   Exception handling
+ --More--           exit                        Exit from configure mode
+ --More--           file                        Adjust file system parameters
+ --More--           frame-relay                 global frame relay configuration commands
+ --More--           help                        Description of the interactive help system
+ --More--           hostname                    Set system's network name
+ --More--           interface                   Select an interface to configure
+ --More--           ip                          Global IP configuration subcommands
+ --More--           key                         Key management
+ --More--           line                        Configure a terminal line
+ --More--         
+Router(config)#interfa
+Router(config)#interface ?
+  Async              Async interface
+  BVI                Bridge-Group Virtual Interface
+  Dialer             Dialer interface
+  Ethernet           IEEE 802.3
+  Group-Async        Async Group interface
+  Lex                Lex interface
+  Loopback           Loopback interface
+  Multilink          Multilink-group interface
+  Null               Null interface
+  Port-channel       Ethernet Channel of interfaces
+  Serial             Serial
+  Tunnel             Tunnel interface
+  Virtual-Template   Virtual Template interface
+  Virtual-TokenRing  Virtual TokenRing
+
+Router(config)#interface Serial?
+Serial  
+
+Router(config)#interface Serial ?
+  <0-1>  Serial interface number
+
+Router(config)#interface Serial 0 ?
+  <cr>
+
+Router(config)#interface Serial 0 192.168.4.0 /  /24
+                                  ^
+% Invalid input detected at '^' marker.
+
+Router(config)#interface Serial 0 192.168.4.0/244.0/24    255.255.255.0
+                                  ^
+% Invalid input detected at '^' marker.
+
+Router(config)#interface Serial 0 192.168.4.0 255.255.255.0i192.168.4.0 255.255.255.0192.168.4.0 255.255.255.0 192.168.4.0 255.255.255.0 192.168.4.0 255.255.255.0 192.168.4.0 255.255.255.0 192.168.4.0 255.255.255.0 192.168.4.0 255.255.255.0 0 0 0 0 0 0 0 0 0 0 0 0  0 0 0 0 0 0 0 0 0 0 0 0 al 0
+Router(config-if)#ip adress 1921.168.      .168.4.0 255    255    255:255    : .255.255.0
+                       ^
+% Invalid input detected at '^' marker.
+
+Router(config-if)#ip adress 192.168.4.0 255.255.255.0rress 192.168.4.0 255.255.255.0
+                       ^
+% Invalid input detected at '^' marker.
+
+Router(config-if)#ip adrress 192.168.4.0 255.255.255.0 0ress 192.168.4.0 255.255.255.0 dress 192.168.4.0 255.255.255.0
+Bad mask /24 for address 192.168.4.0
+Router(config-if)#ip address 192.168.4.0 255.255.255.0.0 255.255.255.0 1 255.255.255.0 255.255.255.0 2 255.255.255.0
+Router(config-if)#nn o shutdowj n
+Router(config-if)#
+00:38:27: %LINK-3-UPDOWN: Interface Serial0, changed state to up
+00:38:28: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0, changed state to up
+Router(config-if)#ping 10 92.168.1.2 1
+                   ^
+% Invalid input detected at '^' marker.
+
+Router(config-if)#
+Router#
+Router#pi
+00:38:58: %SYS-5-CONFIG_I: Configured from console by consoleng 192
+Router#ping 192.168.1.1
+
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.1.1, timeout is 2 seconds:
+.....
+Success rate is 0 percent (0/5)
+Router#
+Router#ping 192.168.1.11.1 4.1
+
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.4.1, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 16/17/20 ms
+Router#
+Router#ping 192.168.4.11.1configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#ping 192.168.1.1                interface serial 1
+Router(config-if)#ip adress    dresss ses    192.168/ .1.1 1
+% Incomplete command.
+
+Router(config-if)#ip address 192.168.1.1 255.255.255.0
+Router(config-if)#clock rate
+% Incomplete command.
+
+Router(config-if)#clock rate 128 5000
+Router(config-if)#no shutdown
+Router(config-if)#
+00:42:10: %LINK-3-UPDOWN: Interface Serial1, changed state to up
+00:42:11: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial1, changed state to up
+Router#ping 
+00:42:29: %SYS-5-CONFIG_I: Configured from console by console192.168.1.2
+
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.1.2, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 16/16/16 ms
+Router#
+00:43:26: %LINK-3-UPDOWN: Interface Serial0, changed state to down
+00:43:27: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0, changed state to down
+Router#router rip
+        ^
+% Invalid input detected at '^' marker.
+
+Router#
+00:44:26: %LINK-3-UPDOWN: Interface Serial0, changed state to upenab
+00:44:27: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0, changed state to up
+Router#lo ogging syn
+Router#logging syn
+Router#logging syn   ?
+% Unrecognized command
+Router#logging 
+Router#con
+% Ambiguous command:  "con"
+Router#line
+Translating "line"...domain server (255.255.255.255)
+Translating "line"...domain server (255.255.255.255)
+% Unknown command or computer name, or unable to find computer address
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#
+Router#no ip    domain
+Router#no domain ?
+% Unrecognized command
+Router#no domain           ip doi main o lookup
+        ^
+% Invalid input detected at '^' marker.
+
+Router#ip domain lookup                nb  no ip domain lookup
+          ^
+% Invalid input detected at '^' marker.
+
+Router#
+Router#no ip domain lookup                   
+Router#
+Router#conf
+Router#configure i e
+Router#configure e
+Router#configure eTH  Et
+Router#configure eEt   Et
+Router#configure Et
+Router#configure Et
+Router#configure Et  ?
+  memory             Configure from NV memory
+  network            Configure from a TFTP network host
+  overwrite-network  Overwrite NV memory from TFTP network host
+  terminal           Configure from the terminal
+  <cr>
+
+Router#configure term
+Router#configure terminal 
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#int
+Router(config)#interface Et
+Router(config)#interface Ethernet 
+Router(config)#interface Ethernet 
+Router(config)#interface Ethernet 
+Router(config)#interface Ethernet ?
+  <0-1>  Ethernet interface number
+
+Router(config)#interface Ethernet 0
+Router(config-if)#ip adress 1 11.0.0.0 0 255.     /8   255.255   0.0.0. 
+                       ^
+% Invalid input detected at '^' marker.
+
+Router(config-if)#ip adress 11.0.0.0 255.0.0.0dress 11.0.0.0 255.0.0.0
+Bad mask /8 for address 11.0.0.0
+Router(config-if)#
+Router#configure terminal 
+00:48:56: %SYS-5-CONFIG_I: Configured from console by console
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#ip address 11.0.0.0 255.0.0.0ress 11.0.0.0 255.0.0.0 nterface Ethernet 0        
+Router(config-if)#interface Ethernet 0p address 11.0.0.0 255.0.0.0 255.0.0.0 1 255.0.0.0
+Router(config-if)#no shutdown
+Router(config-if)#
+00:49:32: %LINK-3-UPDOWN: Interface Ethernet0, changed state to up
+00:49:33: %LINEPROTO-5-UPDOWN: Line protocol on Interface Ethernet0, changed state to up
+Router#
+00:49:58: %SYS-5-CONFIG_I: Configured from console by console
+Router#route r  r rip
+        ^
+% Invalid input detected at '^' marker.
+
+Router#router rip          configzu  ure terminav l
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#no shutdown           router rip
+Router(config-router)#network
+Router(config-router)#network 192.168.1.0
+Router(config-router)#network 192.168.1.0   4.0
+Router(config-router)#network 192.168.4.0           11.0.0.0. 
+Router(config-router)#network 11.0.0.0        192.168.4.0
+Router#show 
+00:57:47: %SYS-5-CONFIG_I: Configured from console by consoleip route
+Codes: C - connected, S - static, I - IGRP, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, * - candidate default
+       U - per-user static route, o - ODR, P - periodic downloaded static route
+       T - traffic engineered route
+
+Gateway of last resort is not set
+
+C    192.168.4.0/24 is directly connected, Serial0
+R    130.0.0.0/16 [120/1] via 192.168.1.2, Serial1
+C    11.0.0.0/8 is directly connected, Ethernet0
+C    192.168.1.0/24 is directly connected, Serial1
+Router#
+Router#exit    ebu   
+00:58:25: %LINK-3-UPDOWN: Interface Serial0, changed state to down
+00:58:26: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0, changed state to downcp  
+Router#co opy running startup
+Destination filename [startup-config]? yes
+%Error opening nvram:yes (No such file or directory)
+Router#?
+Exec commands:
+  access-enable    Create a temporary Access-List entry
+  access-profile   Apply user-profile to interface
+  access-template  Create a temporary Access-List entry
+  archive          manage archive files
+  bfe              For manual emergency modes setting
+  cd               Change current directory
+  clear            Reset functions
+  clock            Manage the system clock
+  configure        Enter configuration mode
+  connect          Open a terminal connection
+  copy             Copy from one file to another
+  debug            Debugging functions (see also 'undebug')
+  delete           Delete a file
+  dir              List files on a filesystem
+  disable          Turn off privileged commands
+  disconnect       Disconnect an existing network connection
+  enable           Turn on privileged commands
+  erase            Erase a filesystem
+  exit             Exit from the EXEC
+  help             Description of the interactive help system
+  isdn             Make/disconnect an isdn data call on a BRI interface
+ --More--         
+Router#yescopy running startup
+00:59:21: %LINK-3-UPDOWN: Interface Serial0, changed state to up
+Destination filename [startup-config]? 
+00:59:22: %LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0, changed state to up?
+%Error opening nvram:? (No such file or directory)
+Router#?copy running startup
+Destination filename [startup-config]? 
+Building configuration...
+
+Router#show ip route
+Codes: C - connected, S - static, I - IGRP, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, * - candidate default
+       U - per-user static route, o - ODR, P - periodic downloaded static route
+       T - traffic engineered route
+
+Gateway of last resort is not set
+
+C    192.168.4.0/24 is directly connected, Serial0
+R    130.0.0.0/16 [120/1] via 192.168.1.2, Serial1
+C    11.0.0.0/8 is directly connected, Ethernet0
+C    192.168.1.0/24 is directly connected, Serial1
+Router#config line
+              ^
+% Invalid input detected at '^' marker.
+
+Router#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#line vt
+Router(config)#line vty 
+% Incomplete command.
+
+Router(config)#line vty  
+% Incomplete command.
+
+Router(config)#line vtyy 0 1
+Router(config-line)#password cisco
+Router(config-line)#login
+Router(config-line)#exit
+Router(config)#loggi
+Router(config)#logging syn
+Router(config)#logging syn
+Router(config)#logging syn?
+Hostname or A.B.C.D  
+
+Router(config)#logging synchron
+Router(config)#logging synchronus
+Translating "synchronus"...domain server (255.255.255.255)
+                        ^
+% Invalid input detected at '^' marker.
+
+Router(config)#exe

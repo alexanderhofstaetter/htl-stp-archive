@@ -1,0 +1,241 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100263.html;106,k100264.html;107,k100266.html;108,k100269.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100263.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100264.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100266.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100269.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 41 - Applets II
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id041002"></a>
+<h2>41.2 Kommunikation zwischen Applets </h2>
+<hr>
+<ul>
+<li><a href="k100265.html#sectlevel2id041002">41.2 Kommunikation zwischen Applets</a>
+</ul>
+<hr>
+
+<p>
+Wenn mehr als ein Applet auf einer Webseite platziert wurde, ist es
+mitunter w&uuml;nschenswert, dass die Applets miteinander kommunizieren.
+Da Applets gew&ouml;hnliche Java-Objekte sind, ist es prinzipiell
+nicht schwer, aus einem Applet heraus &ouml;ffentliche Methoden oder
+Membervariablen eines anderen Applets aufzurufen. Dazu ist es allerdings
+erforderlich, dass ein Applet in den Besitz einer Instanz eines anderen
+Applets gelangt. Der Applet-Kontext stellt dazu zwei Methoden zur
+Verf&uuml;gung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Applet getApplet(String name)
+
+public Enumeration getApplets()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/applet/AppletContext.html" onClick="this.href=getApiDoc('java.applet.AppletContext')"><font color="#660066" size=-1>java.applet.AppletContext</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa102973"><a href="index_g.html#ixb102212"><font color=#000080><tt>getApplets</tt></font></a></a>
+liefert eine <a href="index_e.html#ixb100697"><font color=#000080><tt>Enumeration</tt></font></a>
+mit allen Applets, die sich auf derselben Seite befinden. Sofern sie
+f&uuml;r den Aufrufer unterscheidbar sind, kann daraus das gew&uuml;nschte
+Applet ausgew&auml;hlt werden. <a name="ixa102974"><a href="index_g.html#ixb102213"><font color=#000080><tt>getApplet</tt></font></a></a>
+liefert dagegen genau das Applet mit dem als Parameter angegebenen
+Namen. Dieser muss dem <a href="index_n.html#ixb102177"><font color=#000080><tt>NAME</tt></font></a>-Parameter
+des gew&uuml;nschten Applets entsprechen (siehe <a href="k100259.html#applettagparameter">Abschnitt 40.2.2</a>).
+
+<p>
+Wir wollen uns ein einfaches Beispiel f&uuml;r die Kommunikation von
+drei Applets, die sich auf derselben Webseite befinden, ansehen. Dazu
+soll eine Klasse <font color="#000077"><tt>ChgNextApplet</tt></font>
+geschrieben werden, die den zur Verf&uuml;gung stehenden Platz in
+der aktuellen Hintergrundfarbe einf&auml;rbt. Nach einem Mausklick
+soll die Hintergrundfarbe eines anderen, mit dem NEXT-Parameter spezifizierten
+Applets ver&auml;ndert werden. 
+
+<p>
+Der Code f&uuml;r die Applet-Klasse kann wie folgt realisiert werden:
+<a name="listingid041003"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* ChgNextApplet.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> java.applet.*;
+<font color="#555555">006 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">007 </font>
+<font color="#555555">008 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> ChgNextApplet
+<font color="#555555">009 </font><font color="#0000AA">extends</font> Applet
+<font color="#555555">010 </font>{
+<font color="#555555">011 </font>  <font color="#0000AA">private</font> String next;
+<font color="#555555">012 </font>
+<font color="#555555">013 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> init()
+<font color="#555555">014 </font>  {
+<font color="#555555">015 </font>    next = getParameter(<font color="#0000FF">"next"</font>);
+<font color="#555555">016 </font>    setBackground(Color.red);
+<font color="#555555">017 </font>    addMouseListener(
+<font color="#555555">018 </font>      <font color="#0000AA">new</font> MouseAdapter()
+<font color="#555555">019 </font>      {
+<font color="#555555">020 </font>        <font color="#0000AA">public</font> <font color="#006699">void</font> mouseClicked(MouseEvent event)
+<font color="#555555">021 </font>        {
+<font color="#555555">022 </font>          <font color="#0000AA">if</font> (next != <font color="#006699">null</font>) {
+<font color="#555555">023 </font>            Applet applet = getAppletContext().getApplet(next);
+<font color="#555555">024 </font>            <font color="#0000AA">if</font> (applet != <font color="#006699">null</font>) {
+<font color="#555555">025 </font>              <font color="#006699">int</font> red   = (<font color="#006699">int</font>)(Math.random() * 256);
+<font color="#555555">026 </font>              <font color="#006699">int</font> green = (<font color="#006699">int</font>)(Math.random() * 256);
+<font color="#555555">027 </font>              <font color="#006699">int</font> blue  = (<font color="#006699">int</font>)(Math.random() * 256);
+<font color="#555555">028 </font>              applet.setBackground(<font color="#0000AA">new</font> Color(red, green, blue));
+<font color="#555555">029 </font>              applet.repaint();
+<font color="#555555">030 </font>            }
+<font color="#555555">031 </font>          }
+<font color="#555555">032 </font>        }
+<font color="#555555">033 </font>      }
+<font color="#555555">034 </font>    );
+<font color="#555555">035 </font>  }
+<font color="#555555">036 </font>
+<font color="#555555">037 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">038 </font>  {
+<font color="#555555">039 </font>    g.drawString(<font color="#0000FF">"Change "</font> + next, 5, 20);
+<font color="#555555">040 </font>  }
+<font color="#555555">041 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/ChgNextApplet.java"><font color="#000055" size=-1>ChgNextApplet.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 41.3: Die Klasse ChgNextApplet</i></p>
+
+<p>
+In <a href="index_i.html#ixb101826"><font color=#000080><tt>init</tt></font></a>
+wird der NEXT-Parameter ausgelesen und einer Membervariablen zugewiesen
+und die Hintergrundfarbe wird zun&auml;chst auf rot gesetzt. Anschlie&szlig;end
+wird ein <a href="index_m.html#ixb101355"><font color=#000080><tt>MouseListener</tt></font></a>
+registriert, der bei jedem Mausklick das NEXT-Applet beschafft, seinen
+Hintergrund in einer zuf&auml;llig ausgew&auml;hlten Farbe einf&auml;rbt
+und <a href="index_r.html#ixb101449"><font color=#000080><tt>repaint</tt></font></a>
+aufruft, um es neu darzustellen. 
+
+<p>
+Wir wollen nun eine HTML-Seite anlegen, die drei Instanzen von <font color="#000077"><tt>ChgNextApplet</tt></font>
+erzeugt. Sie sollen die Namen &#187;A1&#171;, &#187;A2&#171; und &#187;A3&#171;
+erhalten und sich gegenseitig als NEXT-Applet registrieren. Ein Mausklick
+auf &#187;A1&#171; &auml;ndert die Farbe von &#187;A2&#171;, ein Klick
+auf &#187;A2&#171; die von &#187;A3&#171; und ein Klick auf &#187;A3&#171;
+die von &#187;A1&#171;. Dazu kann folgende Datei <font color="#660099">ThreeApplets.html</font>
+verwendet werden: 
+<a name="listingid041004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">&lt;html&gt;</font>
+<font color="#555555">002 </font><font color="#0000AA">&lt;head&gt;</font>
+<font color="#555555">003 </font><font color="#0000AA">&lt;title&gt;</font>ThreeApplets<font color="#0000AA">&lt;/title&gt;</font>
+<font color="#555555">004 </font><font color="#0000AA">&lt;/head&gt;</font>
+<font color="#555555">005 </font><font color="#0000AA">&lt;body&gt;</font>
+<font color="#555555">006 </font>
+<font color="#555555">007 </font>A1:
+<font color="#555555">008 </font><font color="#0000AA">&lt;applet code=</font><font color="#0000FF">"ChgNextApplet.class"</font><font color="#0000AA"> width=90 height=30 name=</font><font color="#0000FF">"A1"</font><font color="#0000AA">&gt;</font>
+<font color="#555555">009 </font><font color="#0000AA">&lt;param name=</font><font color="#0000FF">"next"</font><font color="#0000AA"> value=</font><font color="#0000FF">"A2"</font><font color="#0000AA">&gt;</font>
+<font color="#555555">010 </font>Applet A1
+<font color="#555555">011 </font><font color="#0000AA">&lt;/applet&gt;</font>
+<font color="#555555">012 </font>
+<font color="#555555">013 </font><font color="#0000AA">&lt;p&gt;</font>
+<font color="#555555">014 </font>A2:
+<font color="#555555">015 </font><font color="#0000AA">&lt;applet code=</font><font color="#0000FF">"ChgNextApplet.class"</font><font color="#0000AA"> width=90 height=30 name=</font><font color="#0000FF">"A2"</font><font color="#0000AA">&gt;</font>
+<font color="#555555">016 </font><font color="#0000AA">&lt;param name=</font><font color="#0000FF">"next"</font><font color="#0000AA"> value=</font><font color="#0000FF">"A3"</font><font color="#0000AA">&gt;</font>
+<font color="#555555">017 </font>Applet A2
+<font color="#555555">018 </font><font color="#0000AA">&lt;/applet&gt;</font>
+<font color="#555555">019 </font>
+<font color="#555555">020 </font><font color="#0000AA">&lt;p&gt;</font>
+<font color="#555555">021 </font>A3:
+<font color="#555555">022 </font><font color="#0000AA">&lt;applet code=</font><font color="#0000FF">"ChgNextApplet.class"</font><font color="#0000AA"> width=90 height=30 name=</font><font color="#0000FF">"A3"</font><font color="#0000AA">&gt;</font>
+<font color="#555555">023 </font><font color="#0000AA">&lt;param name=</font><font color="#0000FF">"next"</font><font color="#0000AA"> value=</font><font color="#0000FF">"A1"</font><font color="#0000AA">&gt;</font>
+<font color="#555555">024 </font>Applet A3
+<font color="#555555">025 </font><font color="#0000AA">&lt;/applet&gt;</font>
+<font color="#555555">026 </font>
+<font color="#555555">027 </font><font color="#0000AA">&lt;/body&gt;</font>
+<font color="#555555">028 </font><font color="#0000AA">&lt;/html&gt;</font></pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/ThreeApplets.html"><font color="#000055" size=-1>ThreeApplets.html</font></a></td>
+</tr>
+</table>
+<i>
+Listing 41.4: Die HTML-Datei mit den drei kommunizierenden Applets</i></p>
+
+<p>
+Die HTML-Seite kann nun im Browser aufgerufen werden. Nach einigen
+Mausklicks k&ouml;nnte die Darstellung so aussehen: 
+<p>
+<a name="imageid041002"></a>
+<img src="images/ThreeApplets.gif">
+<p>
+
+<p><i>
+Abbildung 41.2: Die drei kommunizierenden Applets</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100263.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100264.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100266.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100269.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

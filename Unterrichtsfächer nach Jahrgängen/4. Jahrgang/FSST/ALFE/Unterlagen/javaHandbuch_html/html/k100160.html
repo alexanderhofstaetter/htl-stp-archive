@@ -1,0 +1,775 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100157.html;106,k100159.html;107,k100161.html;108,k100163.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100157.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100159.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100161.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100163.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 24 - Grafikausgabe
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id024003"></a>
+<h2>24.3 Elementare Grafikroutinen </h2>
+<hr>
+<ul>
+<li><a href="k100160.html#sectlevel2id024003">24.3 Elementare Grafikroutinen</a>
+<ul>
+<li><a href="k100160.html#sectlevel3id024003001">24.3.1 Linie</a>
+<li><a href="k100160.html#sectlevel3id024003002">24.3.2 Rechteck</a>
+<li><a href="k100160.html#sectlevel3id024003003">24.3.3 Polygon</a>
+<li><a href="k100160.html#sectlevel3id024003004">24.3.4 Kreis</a>
+<li><a href="k100160.html#sectlevel3id024003005">24.3.5 Kreisbogen</a>
+</ul>
+</ul>
+<hr>
+
+<p>
+Die Klasse <a href="index_g.html#ixb101156"><font color=#000080><tt>Graphics</tt></font></a>
+stellt neben vielen anderen Funktionen auch eine Sammlung von linienbasierten
+Zeichenoperationen zur Verf&uuml;gung. Diese sind zur Darstellung
+von einfachen Linien, Rechtecken oder Polygonen sowie von Kreisen,
+Ellipsen und Kreisabschnitten geeignet. Wir wollen im Folgenden jede
+dieser Funktionsgruppen vorstellen und ihre Anwendung an einem Beispiel
+zeigen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Um nicht jeweils eine komplette Klassendefinition angeben zu m&uuml;ssen,
+werden wir in den folgenden Beispielen jeweils nur die Implementierung
+der <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>-Methode
+zeigen. Diese k&ouml;nnte dann beispielsweise in das folgende Rahmenprogramm
+eingebettet werden (auf der DVD haben diese Dateien die Erweiterung
+<font color="#660099">.inc</font>):<a name="ixa101540"></a></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<a name="grafikrahmenprog"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* GrafikBeispiel.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> GrafikBeispiel
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    GrafikBeispiel wnd = <font color="#0000AA">new</font> GrafikBeispiel();
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>  <font color="#0000AA">public</font> GrafikBeispiel()
+<font color="#555555">015 </font>  {
+<font color="#555555">016 </font>    <font color="#006699">super</font>(<font color="#0000FF">"GrafikBeispiel"</font>);
+<font color="#555555">017 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">018 </font>    setBackground(Color.lightGray);
+<font color="#555555">019 </font>    setSize(300,200);
+<font color="#555555">020 </font>    setVisible(<font color="#006699">true</font>);
+<font color="#555555">021 </font>  }
+<font color="#555555">022 </font>
+<font color="#555555">023 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">024 </font>  {
+<font color="#555555">025 </font>    <font color="#00AA00">//wird in den folgenden Beispielen &uuml;berlagert</font>
+<font color="#555555">026 </font>  }
+<font color="#555555">027 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/GrafikBeispiel.java"><font color="#000055" size=-1>GrafikBeispiel.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 24.4: Rahmenprogramm f&uuml;r nachfolgende Beispiele</i></p>
+
+<p>
+Da die <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>-Methode
+in diesem Programm noch keine Ausgabeoperationen enth&auml;lt, erzeugt
+das Programm lediglich ein leeres Fenster mit dem Titel &#187;Grafikbeispiel&#171;:
+<p>
+<a name="imageid024002"></a>
+<img src="images/GrafikBeispiel.gif">
+<p>
+
+<p><i>
+Abbildung 24.2: Ein einfaches Fenster</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Das Beispielprogramm <font color="#000077"><tt>GrafikBeispiel</tt></font>
+ist so ungef&auml;hr der kleinstm&ouml;gliche Rahmen, den man f&uuml;r
+ein AWT-basiertes Java-Programm vorgeben kann, wenn es ein einzelnes
+Fenster enthalten und beim Schlie&szlig;en desselben automatisch beendet
+werden soll. Es besteht aus folgenden Komponenten:</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<ul>
+<li>Die Klasse <font color="#000077"><tt>GrafikBeispiel</tt></font>
+ist aus <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>
+abgeleitet, um ein Top-Level-Window darzustellen.
+<li>Sie enth&auml;lt eine statische Methode <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>,
+die als Eintrittspunkt f&uuml;r das Programm dient und das Fensterobjekt
+erzeugt.
+<li>Der Konstruktor der Klasse enth&auml;lt drei Methodenaufrufe,
+<a name="ixa101541"><a href="index_s.html#ixb101166"><font color=#000080><tt>setBackground</tt></font></a></a>,
+<a href="index_s.html#ixb101167"><font color=#000080><tt>setSize</tt></font></a>
+und <a href="index_s.html#ixb101154"><font color=#000080><tt>setVisible</tt></font></a>,
+um die Farbe des Fensterhintergrunds und seine Gr&ouml;&szlig;e einzustellen
+und das Fenster auf dem Bildschirm sichtbar zu machen.
+<li>Weiterhin enth&auml;lt der Konstruktor einen Aufruf von <a name="ixa101542"><a href="index_a.html#ixb101164"><font color=#000080><tt>addWindowListener</tt></font></a></a>,
+mit dem ein <a href="index_w.html#ixb100136"><font color=#000080><tt>WindowClosingAdapter</tt></font></a>
+zum Schlie&szlig;en des Fensters hinzugef&uuml;gt wird.
+<li>Schlie&szlig;lich gibt es eine Methode <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>,
+die hier noch leer ist, aber in den nachfolgenden Beispielen dieses
+Kapitels den Aufruf verschiedener Grafikroutinen zeigt.
+</ul>
+
+
+<!-- Section -->
+<a name="sectlevel3id024003001"></a>
+<h3>24.3.1 Linie<a name="ixa101543"></a> </h3>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void drawLine(int x1, int y1, int x2, int y2)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Graphics.html" onClick="this.href=getApiDoc('java.awt.Graphics')"><font color="#660066" size=-1>java.awt.Graphics</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa101544"></a> Zieht eine Linie von der Position <font color="#000077"><tt>(x1,y1)</tt></font>
+zur Position <font color="#000077"><tt>(x2,y2)</tt></font>. Beide
+Punkte d&uuml;rfen an beliebiger Stelle im Fenster liegen, das Einhalten
+einer bestimmten Reihenfolge ist nicht erforderlich. Teile der Ausgabe,
+die au&szlig;erhalb des darstellbaren Bereichs liegen, werden, wie
+in grafikorientierten Systemen &uuml;blich, unterdr&uuml;ckt. 
+
+<p>
+Das folgende Beispiel zeichnet eine Reihe von gleich hohen Linien,
+deren horizontaler Abstand durch einen Zufallszahlengenerator bestimmt
+wird. Das Ergebnis hat dadurch &Auml;hnlichkeit mit einem Barcode
+(ist aber keiner): 
+<a name="listingid024005"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Linien.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#006699">int</font> i;
+<font color="#555555">006 </font>  <font color="#006699">int</font> x = 80;
+<font color="#555555">007 </font>
+<font color="#555555">008 </font>  <font color="#0000AA">for</font> (i=0; i&lt;60; ++i) {
+<font color="#555555">009 </font>    g.drawLine(x,40,x,100);
+<font color="#555555">010 </font>    x += 1+3*Math.random();
+<font color="#555555">011 </font>  }
+<font color="#555555">012 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Linien.inc"><font color="#000055" size=-1>Linien.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 24.5: Ausgabe von Linien</i></p>
+<p>
+<a name="imageid024003"></a>
+<img src="images/Linien.gif">
+<p>
+
+<p><i>
+Abbildung 24.3: Ausgabe von Linien</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Methode <a href="index_d.html#ixb101169"><font color=#000080><tt>drawLine</tt></font></a>
+zeichnet Linien grunds&auml;tzlich mit einer Dicke von einem Pixel.
+Die hier angezeigten unterschiedlich breiten Linien kommen dadurch
+zustande, dass zwei oder mehr Linien direkt nebeneinander ausgegeben
+werden. Das ist die einfachste M&ouml;glichkeit, Linien darzustellen,
+die dicker als 1 Pixel sind. Leider gibt es keine einfache M&ouml;glichkeit,
+gestrichelte oder gepunktete Linien zu zeichnen oder ein selbst definiertes
+F&uuml;llmuster zu verwenden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id024003002"></a>
+<h3>24.3.2 Rechteck<a name="ixa101545"></a> </h3>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void drawRect(int x, int y, int width, int height)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Graphics.html" onClick="this.href=getApiDoc('java.awt.Graphics')"><font color="#660066" size=-1>java.awt.Graphics</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa101546"></a> Zeichnet ein Rechteck der Breite <font color="#000077"><tt>width</tt></font>
+und der H&ouml;he <font color="#000077"><tt>height</tt></font>, dessen
+linke obere Ecke an der Position <font color="#000077"><tt>(x,y)</tt></font>
+liegt. Eine gr&ouml;&szlig;ere Breite dehnt das Rechteck nach rechts
+aus, eine gr&ouml;&szlig;ere H&ouml;he nach unten. 
+
+<p>
+Eine Variante von <a href="index_d.html#ixb101171"><font color=#000080><tt>drawRect</tt></font></a>
+ist die Methode <a name="ixa101547"><a href="index_d.html#ixb101172"><font color=#000080><tt>drawRoundRect</tt></font></a></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void drawRoundRect(
+   int x, int y,
+   int width, int height,
+   int arcWidth, int arcHeight
+)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Graphics.html" onClick="this.href=getApiDoc('java.awt.Graphics')"><font color="#660066" size=-1>java.awt.Graphics</font></a></td>
+</tr>
+</table>
+
+<p>
+Gegen&uuml;ber <a href="index_d.html#ixb101171"><font color=#000080><tt>drawRect</tt></font></a>
+sind hier die Parameter <font color="#000077"><tt>arcWidth</tt></font>
+und <font color="#000077"><tt>arcHeight</tt></font> dazugekommen.
+Sie bestimmen den horizontalen und vertikalen Radius des Ellipsenabschnitts,
+der zur Darstellung der runden &#187;Ecke&#171; verwendet wird. 
+
+<p>
+Das folgende Beispiel zeichnet eine Kette von nebeneinanderliegenden
+Rechtecken, deren Gr&ouml;&szlig;e durch einen Zufallszahlengenerator
+bestimmt wird. Der Zufallszahlengenerator entscheidet auch, ob ein
+Rechteck an der Ober- oder Unterseite seines Vorg&auml;ngers festgemacht
+wird: 
+<a name="listingid024006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Rechtecke.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#006699">int</font> x = 10, y = 80;
+<font color="#555555">006 </font>  <font color="#006699">int</font> sizex, sizey = 0;
+<font color="#555555">007 </font>
+<font color="#555555">008 </font>  <font color="#0000AA">while</font> (x &lt; 280 &amp;&amp; y &lt; 180) {
+<font color="#555555">009 </font>    sizex = 4 + (<font color="#006699">int</font>) (Math.random() * 9);
+<font color="#555555">010 </font>    <font color="#0000AA">if</font> (Math.random() &gt; 0.5) {
+<font color="#555555">011 </font>      y += sizey;
+<font color="#555555">012 </font>      sizey = 4 + (<font color="#006699">int</font>) (Math.random() * 6);
+<font color="#555555">013 </font>    } <font color="#0000AA">else</font> {
+<font color="#555555">014 </font>      sizey = 4 + (<font color="#006699">int</font>) (Math.random() * 6);
+<font color="#555555">015 </font>      y -= sizey;
+<font color="#555555">016 </font>    }
+<font color="#555555">017 </font>    g.drawRect(x,y,sizex,sizey);
+<font color="#555555">018 </font>    x += sizex;
+<font color="#555555">019 </font>  }
+<font color="#555555">020 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Rechtecke.inc"><font color="#000055" size=-1>Rechtecke.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 24.6: Ausgabe von Rechtecken</i></p>
+<p>
+<a name="imageid024004"></a>
+<img src="images/Rechtecke.gif">
+<p>
+
+<p><i>
+Abbildung 24.4: Ausgabe von Rechtecken</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id024003003"></a>
+<h3>24.3.3 Polygon<a name="ixa101548"></a> </h3>
+
+<p>
+Mit Hilfe der Methode <a name="ixa101549"><a href="index_d.html#ixb101174"><font color=#000080><tt>drawPolygon</tt></font></a></a>
+ist es m&ouml;glich, Linienz&uuml;ge zu zeichnen, bei denen das Ende
+eines Elements mit dem Anfang des jeweils n&auml;chsten verbunden
+ist: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void drawPolygon(int[] arx, int[] ary, int cnt)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Graphics.html" onClick="this.href=getApiDoc('java.awt.Graphics')"><font color="#660066" size=-1>java.awt.Graphics</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_d.html#ixb101174"><font color=#000080><tt>drawPolygon</tt></font></a>
+erwartet drei Parameter. Der erste ist ein Array mit einer Liste der
+<i>x</i>-Koordinaten und der zweite ein Array mit einer Liste der
+<i>y</i>-Koordinaten. Beide Arrays m&uuml;ssen so synchronisiert sein,
+dass ein Paar von Werten an derselben Indexposition immer auch ein
+Koordinatenpaar ergibt. Die Anzahl der g&uuml;ltigen Koordinatenpaare
+wird durch den dritten Parameter festgelegt. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Im Gegensatz zum JDK 1.0 wird das Polygon nach Abschluss der Ausgabe
+automatisch geschlossen. Falls der erste und der letzte Punkt nicht
+identisch sind, werden diese durch eine zus&auml;tzliche Linie miteinander
+verbunden. Soll dagegen ein nichtgeschlossenes Polygon gezeichnet
+werden, so kann dazu die Methode <a name="ixa101550"><a href="index_d.html#ixb101175"><font color=#000080><tt>drawPolyline</tt></font></a></a>
+verwendet werden:</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void drawPolyline(int[] arx, int[] ary, int cnt)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Graphics.html" onClick="this.href=getApiDoc('java.awt.Graphics')"><font color="#660066" size=-1>java.awt.Graphics</font></a></td>
+</tr>
+</table>
+
+<p>
+Eine zweite Variante, Polygone zu zeichnen, besteht darin, zun&auml;chst
+ein Objekt der Klasse <a name="ixa101551"><a href="index_p.html#ixb101176"><font color=#000080><tt>Polygon</tt></font></a></a>
+zu konstruieren und dieses dann an <a href="index_d.html#ixb101174"><font color=#000080><tt>drawPolygon</tt></font></a>
+zu &uuml;bergeben. <a href="index_p.html#ixb101176"><font color=#000080><tt>Polygon</tt></font></a>
+besitzt zwei Konstruktoren, von denen einer parameterlos ist und der
+andere dieselben Parameter wie die oben beschriebene Methode <a href="index_d.html#ixb101174"><font color=#000080><tt>drawPolygon</tt></font></a>
+besitzt: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void Polygon()
+
+public void Polygon(int[] arx, int[] ary, int cnt)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Polygon.html" onClick="this.href=getApiDoc('java.awt.Polygon')"><font color="#660066" size=-1>java.awt.Polygon</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit Hilfe der Methode <a name="ixa101552"><a href="index_a.html#ixb101177"><font color=#000080><tt>addPoint</tt></font></a></a>
+kann ein Polygon um weitere Punkte erweitert werden. Schlie&szlig;lich
+kann das fertige Polygon an die Methode <a href="index_d.html#ixb101174"><font color=#000080><tt>drawPolygon</tt></font></a>
+&uuml;bergeben werden, die dann wie folgt aufzurufen ist: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void drawPolygon(Polygon p)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Graphics.html" onClick="this.href=getApiDoc('java.awt.Graphics')"><font color="#660066" size=-1>java.awt.Graphics</font></a></td>
+</tr>
+</table>
+
+<p>
+Das folgende Beispiel gibt den Buchstaben &#187;F&#171; mit Hilfe
+eines geschlossenen Polygons aus: 
+<a name="listingid024007"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Polygon.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#006699">int</font>[] arx = {50,50,120,120,80,80,100,100,80,80};
+<font color="#555555">006 </font>  <font color="#006699">int</font>[] ary = {170,40,40,70,70,100,100,130,130,170};
+<font color="#555555">007 </font>
+<font color="#555555">008 </font>  g.drawPolygon(arx,ary,arx.length);
+<font color="#555555">009 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Polygon.inc"><font color="#000055" size=-1>Polygon.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 24.7: Ausgabe eines Polygons</i></p>
+<p>
+<a name="imageid024005"></a>
+<img src="images/Polygon.gif">
+<p>
+
+<p><i>
+Abbildung 24.5: Ausgabe eines Polygons</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+An diesem Beispiel l&auml;sst sich ein potenzielles Problem bei der
+Angabe von <i>x</i>- und <i>y</i>-Koordinaten zur Bestimmung einzelner
+Punkte in einem Fenster erkennen. Obwohl das Fenster durch Aufruf
+der Methode <a href="index_s.html#ixb101167"><font color=#000080><tt>setSize</tt></font></a>
+eine Gr&ouml;&szlig;e von 300*200 Pixeln hat, ist die untere Kante
+des &#187;F&#171; bereits sehr viel n&auml;her am unteren Rand des
+Fensters, als dessen <i>y</i>-Wert von 170 vermuten l&auml;sst, insbesondere,
+wenn man bedenkt, dass der obere Rand des Buchstabens 50 Pixel vom
+Fensterrand entfernt ist. Der Grund daf&uuml;r ist, dass die Gr&ouml;&szlig;enangabe
+f&uuml;r <a href="index_s.html#ixb101167"><font color=#000080><tt>setSize</tt></font></a>
+die Gr&ouml;&szlig;e des kompletten Fensters festlegt und damit auch
+den erforderlichen Platz f&uuml;r die Titelleiste und gegebenenfalls
+das Men&uuml; einschlie&szlig;t. Der zur Ausgabe zur Verf&uuml;gung
+stehende Client-Bereich ist daher in aller Regel deutlich kleiner.
+Wir werden sp&auml;ter noch lernen, wie die <i>exakte</i> Gr&ouml;&szlig;e
+des Client-Bereichs bestimmt werden kann.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id024003004"></a>
+<h3>24.3.4 Kreis<a name="ixa101553"></a> </h3>
+
+<p>
+Die <a href="index_g.html#ixb101156"><font color=#000080><tt>Graphics</tt></font></a>-Klasse
+von Java erlaubt sowohl das Zeichnen von Kreisen als auch von Ellipsen
+und Kreisabschnitten. Ein Kreis wird dabei als Spezialisierung einer
+Ellipse angesehen und beide Objekte werden mit der Methode <a name="ixa101554"><a href="index_d.html#ixb101179"><font color=#000080><tt>drawOval</tt></font></a></a>
+gezeichnet: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void drawOval(int x, int y, int width, int height)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Graphics.html" onClick="this.href=getApiDoc('java.awt.Graphics')"><font color="#660066" size=-1>java.awt.Graphics</font></a></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Anders als in anderen Grafiksystemen werden bei dieser Methode nicht
+der Mittelpunkt und der Radius des Kreises angegeben, sondern die
+&uuml;bergebenen Parameter spezifizieren ein Rechteck der Gr&ouml;&szlig;e
+<font color="#000077"><tt>width</tt></font> und <font color="#000077"><tt>heigth</tt></font>,
+dessen linke obere Ecke an der Position <font color="#000077"><tt>(x,y)</tt></font>
+liegt. Gezeichnet wird dann der gr&ouml;&szlig;te Kreis, der vollst&auml;ndig
+in das Rechteck hineinpasst.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Dass diese Vorgehensweise zwar untypisch ist, aber durchaus ihre Vorteile
+haben kann, zeigt das folgende Beispiel: 
+<a name="listingid024008"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Kreise.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#006699">int</font> r = 8;
+<font color="#555555">006 </font>  <font color="#006699">int</font> i, j;
+<font color="#555555">007 </font>  <font color="#006699">int</font> x, y;
+<font color="#555555">008 </font>
+<font color="#555555">009 </font>  <font color="#0000AA">for</font> (i=1; i&lt;=10; ++i) {
+<font color="#555555">010 </font>    x = 150 - r * i;
+<font color="#555555">011 </font>    y = (<font color="#006699">int</font>) (40 + (i - 1) * 1.7321 * r);
+<font color="#555555">012 </font>    <font color="#0000AA">for</font> (j=1; j&lt;=i; ++j) {
+<font color="#555555">013 </font>      g.drawOval(x,y,2*r,2*r);
+<font color="#555555">014 </font>      x += 2 * r;
+<font color="#555555">015 </font>    }
+<font color="#555555">016 </font>  }
+<font color="#555555">017 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Kreise.inc"><font color="#000055" size=-1>Kreise.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 24.8: Ausgabe von Kreisen</i></p>
+
+<p>
+Das Programm gibt dabei eine Pyramide von Kreisen aus. Da die an <a href="index_d.html#ixb101179"><font color=#000080><tt>drawOval</tt></font></a>
+&uuml;bergebenen Parameter bereits das umgebende Rechteck bezeichnen,
+kann die Figur wie eine Pyramide aus Rechtecken dargestellt werden:
+<p>
+<a name="imageid024006"></a>
+<img src="images/Kreise.gif">
+<p>
+
+<p><i>
+Abbildung 24.6: Ausgabe von Kreisen</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id024003005"></a>
+<h3>24.3.5 Kreisbogen<a name="ixa101555"></a> </h3>
+
+<p>
+Ein Kreisbogen ist ein zusammenh&auml;ngender Abschnitt der Umfangslinie
+eines Kreises. Er kann mit der Methode <a name="ixa101556"><a href="index_d.html#ixb101181"><font color=#000080><tt>drawArc</tt></font></a></a>
+gezeichnet werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void drawArc(
+   int x, int y, int width, int height,
+   int startAngle, int arcAngle
+)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Graphics.html" onClick="this.href=getApiDoc('java.awt.Graphics')"><font color="#660066" size=-1>java.awt.Graphics</font></a></td>
+</tr>
+</table>
+
+<p>
+Die ersten vier Parameter bezeichnen dabei den Kreis bzw. die Ellipse
+so, wie dies auch bei <a href="index_d.html#ixb101179"><font color=#000080><tt>drawOval</tt></font></a>
+der Fall war. Mit <font color="#000077"><tt>startAngle</tt></font>
+wird der Winkel angegeben, an dem mit dem Kreisabschnitt begonnen
+werden soll, und <font color="#000077"><tt>arcAngle</tt></font> gibt
+den zu &uuml;berdeckenden Bereich an. Dabei bezeichnet ein Winkel
+von 0 Grad die 3-Uhr-Position und positive Winkel werden <i>entgegen</i>
+dem Uhrzeigersinn gemessen. Als Einheit wird <i>Grad</i> verwendet
+und nicht das sonst &uuml;bliche Bogenma&szlig;. 
+
+<p>
+Das folgende Beispiel zeichnet durch wiederholten Aufruf der Methode
+<a href="index_d.html#ixb101181"><font color=#000080><tt>drawArc</tt></font></a>
+eine Ellipse mit einer gestrichelten Umfangslinie. Ein Aufruf zeichnet
+dabei jeweils 4 Grad der Ellipse und l&auml;sst dann eine L&uuml;cke
+von 3 Grad, bevor das n&auml;chste St&uuml;ck gezeichnet wird: 
+<a name="listingid024009"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* KreisBoegen.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#006699">int</font> line = 4;
+<font color="#555555">006 </font>  <font color="#006699">int</font> gap = 3;
+<font color="#555555">007 </font>  <font color="#006699">int</font> angle = 0;
+<font color="#555555">008 </font>
+<font color="#555555">009 </font>  <font color="#0000AA">while</font> (angle &lt; 360) {
+<font color="#555555">010 </font>    g.drawArc(20,40,250,140,angle,line);
+<font color="#555555">011 </font>    angle += gap + line;
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/KreisBoegen.inc"><font color="#000055" size=-1>KreisBoegen.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 24.9: Ausgabe von Kreisb&ouml;gen</i></p>
+<p>
+<a name="imageid024007"></a>
+<img src="images/Kreisboegen.gif">
+<p>
+
+<p><i>
+Abbildung 24.7: Ausgabe von Kreisb&ouml;gen</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100157.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100159.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100161.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100163.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

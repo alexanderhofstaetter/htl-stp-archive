@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>
+      Google Visualization API Sample
+    </title>
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load('visualization', '1', {packages: ['corechart']});
+    </script>
+    <script type="text/javascript">
+      function drawVisualization() {
+        // Create and populate the data table.
+        var data = google.visualization.arrayToDataTable([
+		  /*$datenarray$*/
+        ]);
+      
+        // Create and draw the visualization.
+        new google.visualization.LineChart(document.getElementById('visualization')).
+            draw(data, {curveType: "function",
+                        width: 1500, height: 500,
+                        vAxis: {maxValue: 10}}
+                );
+      }
+
+      google.setOnLoadCallback(drawVisualization);
+    </script>
+  </head>
+  <body>
+  <style type="text/css" media="screen">
+  	body {
+	font-family:Verdana, Tahoma, sans-serif
+	}
+	
+	#header h1 {
+	text-align:center;
+	text-shadow:-1px -1px 0 #464646;
+	font-size:50pt;
+	margin-top:-10px;
+	margin-bottom:-10px
+	}
+	
+	#header {
+	background-color:#3670c8;
+	color:#FFF;
+	margin-left:-10px;
+	margin-right:-10px;
+	padding:4px 0
+	}
+	
+	#subheader {
+	margin-left:100px
+	}
+	
+	#subheader p {
+	font-size:11pt
+	}
+	
+	#subheader p i {
+	margin-left:40px
+	}
+	
+	#visualization {
+	margin-left:-120px
+	}
+	
+	#kanal1 {
+	margin-right:25px
+	}
+	
+	#footer {
+	font-size: 8pt;
+	float: right;
+	margin-right: 15px;
+	margin-bottom: 10px;
+	}
+	
+	/*Kanal1+2 CSS*/
+  	
+  	/*Kanal1 ONLY CSS*/
+  	
+  	/*CSS*/
+  	#kanal1 {
+	  	color: 
+  	}
+  	
+  	#kanal2 {
+	  	color: 
+  	}
+  </style>
+  	<div id="header">
+  		<h1>Messdatenanalyse</h1>
+  		<div id="subheader">
+	  		<p>
+	  			<i>Erstellt:</i>   <b><!--$datum--></b><br />
+	  			<i>Verzeichnis (Pfad):</i>   <b><!--$dateipfad--></b><br />
+	  			<i>Eingabedatei:</i>   <b><!--$dateiname--></b>
+	  		</p>
+  		</div>	
+  	</div>
+  	
+  	
+  	<h3 style="margin-bottom: -25px;">Analyse</h3> <br />
+  	<div id="kanal1">
+  		<h4>Kanal 1</h4>
+  		<p> 
+  			Minimum:  <b><!--$min1--></b><br />
+  			Maximum:  <b><!--$max1--></b><br />
+  			Mittelwert:  <b><!--$mittel1--></b><br />
+  			RMS-Wert:  <b><!--$rms1--></b><br />
+  		</p>
+  	</div>
+  	<div id="kanal2">
+  		<h4>Kanal 2</h4>
+  		<p> 
+  			Minimum:  <b><!--$min2--></b><br />
+  			Maximum:  <b><!--$max2--></b><br />
+  			Mittelwert:  <b><!--$mittel2--></b><br />
+  			RMS-Wert:  <b><!--$rms2--></b><br />
+  		</p>
+  	</div>
+  	Anzahl der Messwerte: <b><!--$anzahl--></b>
+    <div id="visualization" style="width: 1500px; height: 500px;"></div>
+    <p id="footer"> &copy; 2013 by Alex Hofst&auml;tter </p>
+  </body>
+</html>
+​

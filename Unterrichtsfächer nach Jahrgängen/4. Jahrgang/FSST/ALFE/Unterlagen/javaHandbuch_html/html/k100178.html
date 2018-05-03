@@ -1,0 +1,149 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100174.html;106,k100177.html;107,k100179.html;108,k100181.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100174.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100177.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100179.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100181.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 27 - Fenster
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id027004"></a>
+<h2>27.4 Anzeigezustand </h2>
+<hr>
+<ul>
+<li><a href="k100178.html#sectlevel2id027004">27.4 Anzeigezustand</a>
+</ul>
+<hr>
+
+<p>
+Seit dem JDK 1.2 kann auf den Anzeigezustand eines Fensters zugegriffen
+werden. Dazu gibt es in der Klasse <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>
+die Methoden <a name="ixa101692"><a href="index_s.html#ixb101305"><font color=#000080><tt>setState</tt></font></a></a>
+und <a name="ixa101693"><a href="index_g.html#ixb101306"><font color=#000080><tt>getState</tt></font></a></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public synchronized void setState(int state)
+
+public synchronized int getState()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Frame.html" onClick="this.href=getApiDoc('java.awt.Frame')"><font color="#660066" size=-1>java.awt.Frame</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a href="index_s.html#ixb101305"><font color=#000080><tt>setState</tt></font></a>
+kann der Anzeigezustand des Fensters zwischen &#187;normal&#171; und
+&#187;als Symbol&#171; <a name="ixa101694"></a> umgeschaltet werden.
+Wird die Konstante <a name="ixa101695"><a href="index_i.html#ixb101308"><font color=#000080><tt>ICONIFIED</tt></font></a></a>
+der Klasse <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>
+&uuml;bergeben, erfolgt die Darstellung als Symbol, wird <a name="ixa101696"><a href="index_n.html#ixb101309"><font color=#000080><tt>NORMAL</tt></font></a></a>
+&uuml;bergeben, erfolgt die normale Darstellung. Mit <a href="index_g.html#ixb101306"><font color=#000080><tt>getState</tt></font></a>
+kann der aktuelle Anzeigezustand abgefragt werden. 
+
+<p>
+Das folgende Programm &ouml;ffnet ein Fenster, stellt es nach zwei
+Sekunden als Symbol und nach weiteren zwei Sekunden wieder normal
+dar. Anschlie&szlig;end wird das Fenster geschlossen und das Programm
+beendet: 
+<a name="listingid027003"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2703.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2703
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    Frame frame = <font color="#0000AA">new</font> Frame(<font color="#0000FF">"Anzeigezustand"</font>);
+<font color="#555555">010 </font>    frame.setSize(300,200);
+<font color="#555555">011 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">012 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">013 </font>      Thread.sleep(2000);
+<font color="#555555">014 </font>    } <font color="#0000AA">catch</font> (InterruptedException e) {
+<font color="#555555">015 </font>      <font color="#00AA00">//nichts</font>
+<font color="#555555">016 </font>    }
+<font color="#555555">017 </font>    frame.setState(Frame.ICONIFIED);
+<font color="#555555">018 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">019 </font>      Thread.sleep(2000);
+<font color="#555555">020 </font>    } <font color="#0000AA">catch</font> (InterruptedException e) {
+<font color="#555555">021 </font>      <font color="#00AA00">//nichts</font>
+<font color="#555555">022 </font>    }
+<font color="#555555">023 </font>    frame.setState(Frame.NORMAL);
+<font color="#555555">024 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">025 </font>      Thread.sleep(2000);
+<font color="#555555">026 </font>    } <font color="#0000AA">catch</font> (InterruptedException e) {
+<font color="#555555">027 </font>      <font color="#00AA00">//nichts</font>
+<font color="#555555">028 </font>    }
+<font color="#555555">029 </font>    frame.setVisible(<font color="#006699">false</font>);
+<font color="#555555">030 </font>    frame.dispose();
+<font color="#555555">031 </font>    System.exit(0);
+<font color="#555555">032 </font>  }
+<font color="#555555">033 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2703.java"><font color="#000055" size=-1>Listing2703.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 27.3: Anzeigezustand eines Fensters umschalten</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100174.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100177.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100179.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100181.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

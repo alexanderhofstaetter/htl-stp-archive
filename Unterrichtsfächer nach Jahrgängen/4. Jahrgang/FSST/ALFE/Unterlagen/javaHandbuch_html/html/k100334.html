@@ -1,0 +1,244 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100332.html;106,k100333.html;107,k100335.html;108,index.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100332.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100333.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100335.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 53 - Hilfsprogramme des JDK
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="derjavainterpreter"></a>
+<h2>53.2 java - der <a name="ixa103870">Interpreter</a> </h2>
+<hr>
+<ul>
+<li><a href="k100334.html#derjavainterpreter">53.2 java - der Interpreter</a>
+<ul>
+<li><a href="k100334.html#sectlevel3id053002001">53.2.1 Aufruf</a>
+<li><a href="k100334.html#sectlevel3id053002002">53.2.2 Beschreibung</a>
+<li><a href="k100334.html#sectlevel3id053002003">53.2.3 Optionen</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id053002001"></a>
+<h3>53.2.1 Aufruf </h3>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+java [ options ] classname [ { args } ]
+
+java [ options ] -jar jarfile [ { args } ]
+
+javaw [ options ] classname [ { args } ]
+
+javaw [ options ] -jar jarfile [ { args } ]
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id053002002"></a>
+<h3>53.2.2 Beschreibung </h3>
+
+<p>
+Der Interpreter <a name="ixa103871"><a href="index_j.html#ixb100134"><font color=#000080><tt>java</tt></font></a></a>
+dient dazu, kompilierte Java-Programme auszuf&uuml;hren, die als Bytecode
+in <font color="#660099">.class</font>-Dateien vorliegen. <a name="ixa103872"><a href="index_j.html#ixb100157"><font color=#000080><tt>javaw</tt></font></a></a>
+erf&uuml;llt denselben Zweck, erzeugt aber kein Terminalfenster beim
+Start des Programms und erlaubt nicht die Verwendung der Standard-Streams
+<a name="ixa103873"><a href="index_i.html#ixb100860"><font color=#000080><tt>System.in</tt></font></a></a>,
+<a name="ixa103874"><a href="index_o.html#ixb100858"><font color=#000080><tt>System.out</tt></font></a></a>
+und <a name="ixa103875"><a href="index_e.html#ixb100859"><font color=#000080><tt>System.err</tt></font></a></a>
+und steht z.B. unter Linux nicht zur Verf&uuml;gung. Beim Aufruf beider
+Programme wird der Name einer Klassendatei erwartet (ohne die Erweiterung
+<font color="#660099">.class</font>). Damit sie ausgef&uuml;hrt werden
+kann, muss sie eine Klassenmethode <a name="ixa103876"><a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a></a>
+mit folgender Signatur enthalten: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static void main(String[] args)
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+Alternativ kann mit dem Parameter <a href="index_0.html#ixb100649"><font color=#000080><tt>-jar</tt></font></a>
+die im Manifest definierte <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>-Methode
+einer Klasse aus dem angegebenen jar-File gestartet werden (vgl. <a href="k100094.html#sectionclasspath">Abschnitt 14.4.1</a>).
+
+<p>
+Alle Argumente, die nach dem Namen der Klassendatei an <a href="index_j.html#ixb100134"><font color=#000080><tt>java</tt></font></a>
+&uuml;bergeben werden, stehen nach dem Aufruf von <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>
+in <font color="#000077"><tt>args</tt></font> zur Verf&uuml;gung.
+Der Java-Interpreter wird nach dem R&uuml;cksprung aus <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>
+beendet, wenn keine eigenen Threads erzeugt wurden. Falls weitere
+Threads erzeugt wurden, wird er verlassen, nachdem der letzte Vordergrund-Thread
+beendet wurde. 
+
+<p>
+Da w&auml;hrend der Ausf&uuml;hrung eines Java-Programms meist weitere
+Klassendateien ben&ouml;tigt werden, muss der Interpreter wissen,
+wo diese zu finden sind. Standardm&auml;&szlig;ig sucht er dabei im
+systemspezifischen Installationsverzeichnis und im aktuellen Verzeichnis.
+Die Suchstrategie kann durch Setzen der Umgebungsvariable <a href="index_c.html#ixb100137"><font color=#000080><tt>CLASSPATH</tt></font></a>
+oder mit Hilfe der Option <a href="index_0.html#ixb100162"><font color=#000080><tt>-classpath</tt></font></a>
+ver&auml;ndert werden. Sollen nur die Standardbibliotheken des JDK
+verwendet werden, sind weder <a href="index_c.html#ixb100137"><font color=#000080><tt>CLASSPATH</tt></font></a>
+noch <a href="index_0.html#ixb100162"><font color=#000080><tt>-classpath</tt></font></a>
+erforderlich. Weitere Informationen zu <a href="index_c.html#ixb100137"><font color=#000080><tt>CLASSPATH</tt></font></a>-Einstellungen
+finden Sie in <a href="k100092.html#bedeutungpaketnamen">Abschnitt 14.2.2</a>.
+
+
+<!-- Section -->
+<a name="sectlevel3id053002003"></a>
+<h3>53.2.3 Optionen </h3>
+<a name="tableid053002"></a>
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=33%><b>Option</b></td>
+<td valign=top align=left width=66%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103877"><a href="index_0.html#ixb100162"><font color=#000080><tt>-classpath path</tt></font></a></a></td>
+<td valign=top align=left>Gibt die Liste der Pfade zur Suche von Klassendateien
+an. Alternativ kann auch die Abk&uuml;rzung <a href="index_0.html#ixb100161"><font color=#000080><tt>-cp</tt></font></a>
+angegeben werden. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103878"><a href="index_0.html#ixb102922"><font color=#000080><tt>-Xprof</tt></font></a></a></td>
+<td valign=top align=left>Aktiviert den <font color="#000077"><tt>hprof</tt></font>-<a name="ixa103879"><i>Profiler</i></a>
+im Interpreter, der Informationen &uuml;ber das Laufzeitverhalten
+der Anwendung in die Datei <font color="#660099">java.prof</font>
+schreibt. Genaue Informationen zur Verwendung des Profilers sind in
+<a href="k100330.html#profilereinsatz">Abschnitt 52.3</a> zu finden.
+</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103880"><a href="index_0.html#ixb100126"><font color=#000080><tt>-version</tt></font></a></a></td>
+<td valign=top align=left>Ausgabe der Versionsnummer </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103881"><a href="index_0.html#ixb102923"><font color=#000080><tt>-showversion</tt></font></a></a></td>
+<td valign=top align=left>Ausgabe der Versionsnummer. Im Gegensatz
+zu <font color="#000077"><tt>-version</tt></font> wird der Interpreter
+fortgesetzt. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103882"><a href="index_0.html#ixb102924"><font color=#000080><tt>-help</tt></font></a></a></td>
+<td valign=top align=left>Ausgabe eines Hilfetextes mit Erkl&auml;rung
+der Parameter </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103883"><a href="index_0.html#ixb102914"><font color=#000080><tt>-verbose</tt></font></a></a></td>
+<td valign=top align=left>Gibt bei jedem Laden einer Klasse eine Meldung
+auf der Konsole aus. Wahlweise k&ouml;nnen die Schalter <font color="#000077"><tt>:class</tt></font>,
+<font color="#000077"><tt>gc</tt></font> oder <font color="#000077"><tt>jni</tt></font>
+angeh&auml;ngt werden. <font color="#000077"><tt>:class</tt></font>
+entspricht dabei der Voreinstellung, <font color="#000077"><tt>gc</tt></font>
+dokumentiert die Garbage-Collector-Aufrufe und <font color="#000077"><tt>jni</tt></font>
+zeigt die Verwendung von <i>Native Methods</i>. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103884"><a href="index_0.html#ixb102925"><font color=#000080><tt>-DpropName=value</tt></font></a></a></td>
+<td valign=top align=left>Weist dem Property <font color="#000077"><tt>propName</tt></font>
+den Wert <font color="#000077"><tt>value</tt></font> zu. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103885"><a href="index_0.html#ixb102898"><font color=#000080><tt>-Xms n</tt></font></a></a></td>
+<td valign=top align=left>Spezifiziert die Gr&ouml;&szlig;e des beim
+Start allozierten Speichers. <i>n</i> ist dabei eine Ganzzahl mit
+einer der Erweiterungen &#187;k&#171; oder &#187;m&#171;. Die Buchstaben
+stehen f&uuml;r die Gr&ouml;&szlig;enordnungen <i>kilo</i> und <i>mega</i>.
+Die Standardeinstellung ist versions- und betriebssystemabh&auml;ngig,
+typische Werte sind <i>1m</i> oder <i>2m</i>. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103886"><a href="index_0.html#ixb102926"><font color=#000080><tt>-Xmx n</tt></font></a></a></td>
+<td valign=top align=left>Spezifiziert die Gr&ouml;&szlig;e des maximal
+allozierbaren Speichers. <i>n</i> ist dabei eine Ganzzahl mit einer
+der Erweiterungen &#187;k&#171; oder &#187;m&#171;. Die Standardeinstellung
+ist versions- und betriebssystemabh&auml;ngig, typische Werte sind
+<i>16m</i> oder <i>64m</i>. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103887"><a href="index_0.html#ixb100372"><font color=#000080><tt>-enableassertions</tt></font></a></a></td>
+<td valign=top align=left>Schaltet Assertions an (Abk&uuml;rzung <a href="index_0.html#ixb100374"><font color=#000080><tt>-ea</tt></font></a>).
+Dieser Schalter wird ausf&uuml;hrlich in <a href="k100050.html#assertanweisung">Abschnitt 7.4.1</a>
+erkl&auml;rt. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103888"><a href="index_0.html#ixb100373"><font color=#000080><tt>-disableassertions</tt></font></a></a></td>
+<td valign=top align=left>Schaltet Assertions aus (Abk&uuml;rzung
+<a href="index_0.html#ixb100375"><font color=#000080><tt>-da</tt></font></a>).
+Dieser Schalter wird ausf&uuml;hrlich in <a href="k100050.html#assertanweisung">Abschnitt 7.4.1</a>
+erkl&auml;rt. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103889"><a href="index_0.html#ixb102903"><font color=#000080><tt>-Xint</tt></font></a></a></td>
+<td valign=top align=left>Weist den Interpreter an, keine Hotspot-Techniken
+einzusetzen und stattdesssen den Bytecode zu interpretieren. In der
+Praxis setzt man diesen Parameter h&ouml;chstens noch bei Performance-Messungen
+ein. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103890"><a href="index_0.html#ixb102927"><font color=#000080><tt>-server</tt></font></a></a></td>
+<td valign=top align=left>Aktiviert den Server-Hotspot. Der Interpreter
+f&uuml;hrt weitergehende (und kostspieligere) Optimierungen aus als
+der Client-Hotspot und ist vorwiegend f&uuml;r langlaufende Serveranwendungen
+gedacht. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103891"><a href="index_0.html#ixb102928"><font color=#000080><tt>-splash imagepath</tt></font></a></a></td>
+<td valign=top align=left>Zeigt w&auml;hrend der Initialisierung des
+Interpreters einen Splash-Screen mit dem angegebenen Bild. </td></tr>
+</table>
+<p><i>
+Tabelle 53.2: Optionen des Java-Interpreters </i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100332.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100333.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100335.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

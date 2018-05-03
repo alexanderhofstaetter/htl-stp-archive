@@ -1,0 +1,206 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100168.html;106,k100170.html;107,k100172.html;108,k100174.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100168.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100170.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100172.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100174.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 26 - Farben
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id026003"></a>
+<h2>26.3 Verwenden von Farben </h2>
+<hr>
+<ul>
+<li><a href="k100171.html#sectlevel2id026003">26.3 Verwenden von Farben</a>
+</ul>
+<hr>
+
+<p>
+Um Farben bei der Ausgabe von Grafik oder Schrift zu verwenden, muss
+ein geeignetes <a href="index_c.html#ixb101244"><font color=#000080><tt>Color</tt></font></a>-Objekt
+beschafft und dem <a href="index_g.html#ixb101156"><font color=#000080><tt>Graphics</tt></font></a>-Objekt
+mit Hilfe der Methode <a name="ixa101640"><a href="index_s.html#ixb101261"><font color=#000080><tt>setColor</tt></font></a></a>
+zugewiesen werden. Die Ausgaben erfolgen dann so lange in der neuen
+Farbe, bis durch Aufruf von <a href="index_s.html#ixb101261"><font color=#000080><tt>setColor</tt></font></a>
+eine andere Farbe festgelegt wird. Mit Hilfe der Methode <a name="ixa101641"><a href="index_g.html#ixb101262"><font color=#000080><tt>getColor</tt></font></a></a>
+kann die aktuelle Farbe ermittelt werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setColor(Color c)
+
+public Color getColor()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Graphics.html" onClick="this.href=getApiDoc('java.awt.Graphics')"><font color="#660066" size=-1>java.awt.Graphics</font></a></td>
+</tr>
+</table>
+
+<p>
+Das folgende Beispiel zeigt die Verwendung von Farben und ihre Zusammensetzung
+aus den drei Grundfarben Rot, Gr&uuml;n und Blau. Es stellt das Prinzip
+der additiven Farbmischung mit Hilfe dreier &uuml;berlappender Kreise
+dar: 
+<a name="listingid026001"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2601.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2601
+<font color="#555555">006 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    Listing2601 wnd = <font color="#0000AA">new</font> Listing2601();
+<font color="#555555">011 </font>  }
+<font color="#555555">012 </font>
+<font color="#555555">013 </font>  <font color="#0000AA">public</font> Listing2601()
+<font color="#555555">014 </font>  {
+<font color="#555555">015 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Der Farbenkreis"</font>);
+<font color="#555555">016 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">017 </font>    setSize(300,200);
+<font color="#555555">018 </font>    setVisible(<font color="#006699">true</font>);
+<font color="#555555">019 </font>  }
+<font color="#555555">020 </font>
+<font color="#555555">021 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">022 </font>  {
+<font color="#555555">023 </font>    <font color="#006699">int</font> top  = getInsets().top;
+<font color="#555555">024 </font>    <font color="#006699">int</font> left = getInsets().left;
+<font color="#555555">025 </font>    <font color="#006699">int</font> maxX = getSize().width-left-getInsets().right;
+<font color="#555555">026 </font>    <font color="#006699">int</font> maxY = getSize().height-top-getInsets().bottom;
+<font color="#555555">027 </font>    Color col;
+<font color="#555555">028 </font>    <font color="#006699">int</font>[] arx   = {130,160,190};
+<font color="#555555">029 </font>    <font color="#006699">int</font>[] ary   = {60,110,60};
+<font color="#555555">030 </font>    <font color="#006699">int</font>[] arr   = {50,50,50};
+<font color="#555555">031 </font>    <font color="#006699">int</font>[] arcol = {0,0,0};
+<font color="#555555">032 </font>    <font color="#006699">boolean</font> paintit;
+<font color="#555555">033 </font>    <font color="#006699">int</font> dx, dy;
+<font color="#555555">034 </font>
+<font color="#555555">035 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> y = 0; y &lt; maxY; ++y) {
+<font color="#555555">036 </font>      <font color="#0000AA">for</font> (<font color="#006699">int</font> x = 0; x &lt; maxX; ++x) {
+<font color="#555555">037 </font>        paintit = <font color="#006699">false</font>;
+<font color="#555555">038 </font>        <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; arcol.length; ++i) {
+<font color="#555555">039 </font>          dx = x - arx[i];
+<font color="#555555">040 </font>          dy = y - ary[i];
+<font color="#555555">041 </font>          arcol[i] = 0;
+<font color="#555555">042 </font>          <font color="#0000AA">if</font> ((dx*dx+dy*dy) &lt;= arr[i]*arr[i]) {
+<font color="#555555">043 </font>            arcol[i] = 255;
+<font color="#555555">044 </font>            paintit = <font color="#006699">true</font>;
+<font color="#555555">045 </font>          }
+<font color="#555555">046 </font>        }
+<font color="#555555">047 </font>        <font color="#0000AA">if</font> (paintit) {
+<font color="#555555">048 </font>          col = <font color="#0000AA">new</font> Color(arcol[0],arcol[1],arcol[2]);
+<font color="#555555">049 </font>          g.setColor(col);
+<font color="#555555">050 </font>          g.drawLine(x+left,y+top,x+left+1,y+top+1);
+<font color="#555555">051 </font>        }
+<font color="#555555">052 </font>      }
+<font color="#555555">053 </font>    }
+<font color="#555555">054 </font>  }
+<font color="#555555">055 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2601.java"><font color="#000055" size=-1>Listing2601.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 26.1: Darstellung des Farbenkreises</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Das Programm arbeitet in der Weise, dass f&uuml;r jeden einzelnen
+Punkt der Zeichenfl&auml;che berechnet wird, ob dieser in einem der
+drei Kreise liegt. Ist dies der Fall, so wird die zugeh&ouml;rige
+Farbkomponente auf 255 gesetzt, andernfalls auf 0. Die Bestimmung
+der Kreiszugeh&ouml;rigkeit erfolgt mit Hilfe des Satzes von Pythagoras,
+nach dem ein Punkt genau dann zu einem Kreis geh&ouml;rt, wenn die
+Summe der Quadrate der Abst&auml;nde vom <font color="#000077"><tt>x</tt></font>-
+und <font color="#000077"><tt>y</tt></font>-Wert zum Mittelpunkt kleiner
+gleich dem Quadrat des Radius ist. Die drei Mittelpunkte werden in
+unserem Beispiel in den Arrays <font color="#000077"><tt>arx</tt></font>
+und <font color="#000077"><tt>ary</tt></font>, die Radien der Kreise
+in <font color="#000077"><tt>arr</tt></font> gespeichert. Die boolesche
+Variable <font color="#000077"><tt>paintit</tt></font> zeigt an, ob
+der Punkt in wenigstens einem der drei Kreise liegt und daher &uuml;berhaupt
+eine Ausgabe erforderlich ist.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<p>
+<a name="imageid026001"></a>
+<img src="images/FarbenKreis.gif">
+<p>
+
+<p><i>
+Abbildung 26.1: Der Farbenkreis</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100168.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100170.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100172.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100174.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

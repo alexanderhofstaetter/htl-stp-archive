@@ -1,0 +1,330 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100104.html;106,k100108.html;107,k100110.html;108,k100114.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100104.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100108.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100110.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100114.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 16 - Collections II
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id016005"></a>
+<h2>16.5 Die Collection des Typs Map </h2>
+<hr>
+<ul>
+<li><a href="k100109.html#sectlevel2id016005">16.5 Die Collection des Typs Map</a>
+<ul>
+<li><a href="k100109.html#sectlevel3id016005001">16.5.1 Abstrakte Eigenschaften</a>
+<li><a href="k100109.html#sectlevel3id016005002">16.5.2 Implementierungen</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id016005001"></a>
+<h3>16.5.1 Abstrakte Eigenschaften </h3>
+
+<p>
+Eine Collection des Typs <a name="ixa100966"><a href="index_m.html#ixb100109"><font color=#000080><tt>Map</tt></font></a></a>
+realisiert einen assoziativen Speicher, der Schl&uuml;ssel auf Werte
+abbildet. Sowohl Schl&uuml;ssel als auch Werte sind Objekte eines
+beliebigen Typs. Je Schl&uuml;ssel gibt es entweder keinen oder genau
+einen Eintrag in der Collection. Soll ein Schl&uuml;ssel-Wert-Paar
+eingef&uuml;gt werden, dessen Schl&uuml;ssel bereits existiert, wird
+dieses nicht neu eingef&uuml;gt. Es wird lediglich dem vorhandenen
+Schl&uuml;ssel der neue Wert zugeordnet. Der Wert wird also praktisch
+<i>ausgetauscht</i>. 
+
+<p>
+Das Interface <a href="index_m.html#ixb100109"><font color=#000080><tt>Map</tt></font></a>
+ist nicht von <a href="index_c.html#ixb100730"><font color=#000080><tt>Collection</tt></font></a>
+abgeleitet, sondern eigenst&auml;ndig. Es definiert folgende Methoden:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+int size()
+boolean isEmpty()
+boolean containsKey(Object key)
+boolean containsValue(Object value)
+Object get(Object key)
+Object put(Object key, Object value)
+Object remove(Object key)
+void putAll(Map t)
+void clear()
+public Set keySet()
+public Collection values()
+public Set entrySet()
+boolean equals(Object o)
+int hashCode()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Map.html" onClick="this.href=getApiDoc('java.util.Map')"><font color="#660066" size=-1>java.util.Map</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Methoden <a name="ixa100967"><a href="index_s.html#ixb100691"><font color=#000080><tt>size</tt></font></a></a>,
+<a name="ixa100968"><a href="index_i.html#ixb100690"><font color=#000080><tt>isEmpty</tt></font></a></a>,
+<a name="ixa100969"><a href="index_r.html#ixb100739"><font color=#000080><tt>remove</tt></font></a></a>,
+<a name="ixa100970"><a href="index_c.html#ixb100722"><font color=#000080><tt>clear</tt></font></a></a>,
+<a href="index_e.html#ixb100230"><font color=#000080><tt>equals</tt></font></a>
+und <a href="index_h.html#ixb100427"><font color=#000080><tt>hashCode</tt></font></a>
+sind mit den gleichnamigen Methoden des <a href="index_c.html#ixb100730"><font color=#000080><tt>Collection</tt></font></a>-Interface
+identisch und brauchen daher nicht noch einmal erkl&auml;rt zu werden.
+
+<p>
+Mit Hilfe von <a name="ixa100971"><a href="index_p.html#ixb100712"><font color=#000080><tt>put</tt></font></a></a>
+wird ein neues Schl&uuml;ssel-Wert-Paar eingef&uuml;gt bzw. dem bereits
+vorhandenen Schl&uuml;ssel ein neuer Wert zugeordnet. Die Methode
+<a name="ixa100972"><a href="index_p.html#ixb100755"><font color=#000080><tt>putAll</tt></font></a></a>
+macht das f&uuml;r alle Paare der als Argument &uuml;bergebenen <a href="index_m.html#ixb100109"><font color=#000080><tt>Map</tt></font></a>.
+Auch hier gilt die Regel, dass ein Schl&uuml;ssel, der bereits vorhanden
+ist, nicht neu eingef&uuml;gt wird. Lediglich sein zugeordneter Wert
+wird ausgetauscht. Mit der Methode <a name="ixa100973"><a href="index_g.html#ixb100713"><font color=#000080><tt>get</tt></font></a></a>
+kann der Wert zu einem Schl&uuml;ssel beschafft werden. Da der R&uuml;ckgabewert
+vom Typ <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+ist, muss er auf den erwarteten Wert gecastet werden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Falls der angegebene Schl&uuml;ssel nicht in der <a href="index_m.html#ixb100109"><font color=#000080><tt>Map</tt></font></a>
+enthalten ist, wird <a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>
+zur&uuml;ckgegeben. Hier ist Vorsicht geboten, denn ein <a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>-Wert
+wird auch dann zur&uuml;ckgegeben, wenn die <a href="index_m.html#ixb100109"><font color=#000080><tt>Map</tt></font></a>
+das Einf&uuml;gen von <a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>-Werten
+erlaubt und ein solcher diesem Schl&uuml;ssel explizit zugeordnet
+wurde. Um diese beiden F&auml;lle zu unterscheiden, kann die Methode
+<a name="ixa100974"><a href="index_c.html#ixb100715"><font color=#000080><tt>containsKey</tt></font></a></a>
+verwendet werden. Sie gibt genau dann <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+zur&uuml;ck, wenn der gew&uuml;nschte Schl&uuml;ssel in der <a href="index_m.html#ixb100109"><font color=#000080><tt>Map</tt></font></a>
+enthalten ist. Andernfalls liefert sie <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>.
+Analog dazu kann mit <a name="ixa100975"><a href="index_c.html#ixb100756"><font color=#000080><tt>containsValue</tt></font></a></a>
+festgestellt werden, ob ein bestimmter Wert mindestens einmal in der
+<a href="index_m.html#ixb100109"><font color=#000080><tt>Map</tt></font></a>
+enthalten ist.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Im Vergleich zum <a href="index_c.html#ixb100730"><font color=#000080><tt>Collection</tt></font></a>-Interface
+f&auml;llt auf, dass eine <a href="index_m.html#ixb100109"><font color=#000080><tt>Map</tt></font></a>
+keine Methode <a href="index_i.html#ixb100742"><font color=#000080><tt>iterator</tt></font></a>
+besitzt. Stattdessen kann sie drei unterschiedliche Collections erzeugen,
+die dann nat&uuml;rlich ihrerseits dazu verwendet werden k&ouml;nnen,
+einen Iterator zu liefern. Diese Collections werden als <a name="ixa100976"><i>Views</i></a>,
+also als <i>Sichten</i> auf die Collection bezeichnet: 
+<ul>
+<li>Die Methode <a name="ixa100977"><a href="index_k.html#ixb100758"><font color=#000080><tt>keySet</tt></font></a></a>
+liefert die Menge der Schl&uuml;ssel. Da per Definition keine doppelten
+Schl&uuml;ssel in einer <a href="index_m.html#ixb100109"><font color=#000080><tt>Map</tt></font></a>
+auftauchen, ist diese Collection vom Typ <a href="index_s.html#ixb100728"><font color=#000080><tt>Set</tt></font></a>.
+<li>Die Methode <a name="ixa100978"><a href="index_v.html#ixb100493"><font color=#000080><tt>values</tt></font></a></a>
+liefert die Menge der Werte der <a href="index_m.html#ixb100109"><font color=#000080><tt>Map</tt></font></a>.
+Da Werte sehr wohl doppelt enthalten sein k&ouml;nnen, ist der R&uuml;ckgabewert
+lediglich vom Typ <a href="index_c.html#ixb100730"><font color=#000080><tt>Collection</tt></font></a>,
+wird also typischerweise eine Liste oder eine anonyme Klasse mit entsprechenden
+Eigenschaften sein.
+<li>Die Methode <a name="ixa100979"><a href="index_e.html#ixb100759"><font color=#000080><tt>entrySet</tt></font></a></a>
+liefert eine Menge von Schl&uuml;ssel-Wert-Paaren. Jedes Element dieser
+Menge ist vom Typ <a name="ixa100980"><a href="index_m.html#ixb100760"><font color=#000080><tt>Map.Entry</tt></font></a></a>,
+d.h., es implementiert das lokale Interface <a name="ixa100981"><a href="index_e.html#ixb100761"><font color=#000080><tt>Entry</tt></font></a></a>
+des Interface <a href="index_m.html#ixb100109"><font color=#000080><tt>Map</tt></font></a>.
+Dieses stellt u.a. die Methoden <a name="ixa100982"><a href="index_g.html#ixb100762"><font color=#000080><tt>getKey</tt></font></a></a>
+und <a name="ixa100983"><a href="index_g.html#ixb100763"><font color=#000080><tt>getValue</tt></font></a></a>
+zur Verf&uuml;gung, um auf die beiden Komponenten des Paares zuzugreifen.
+</ul>
+
+<p>
+Neben den im Interface definierten Methoden sollte eine konkrete <a href="index_m.html#ixb100109"><font color=#000080><tt>Map</tt></font></a>-Implementierung
+zwei Konstruktoren zur Verf&uuml;gung stellen. Ein leerer Konstruktor
+dient dazu, eine leere <a href="index_m.html#ixb100109"><font color=#000080><tt>Map</tt></font></a>
+zu erzeugen. Ein zweiter Konstruktor, der ein einzelnes <a href="index_m.html#ixb100109"><font color=#000080><tt>Map</tt></font></a>-Argument
+erwartet, erzeugt eine neue <a href="index_m.html#ixb100109"><font color=#000080><tt>Map</tt></font></a>
+mit denselben Schl&uuml;ssel-Wert-Paaren wie die als Argument &uuml;bergebene
+<a href="index_m.html#ixb100109"><font color=#000080><tt>Map</tt></font></a>.
+
+
+<!-- Section -->
+<a name="sectlevel3id016005002"></a>
+<h3>16.5.2 Implementierungen </h3>
+
+<p>
+Das JDK stellt verschiedene Implementierungen des <a href="index_m.html#ixb100109"><font color=#000080><tt>Map</tt></font></a>-Interface
+zur Verf&uuml;gung, beispielsweise: 
+<ul>
+<li>Mit <a name="ixa100984"><a href="index_a.html#ixb100764"><font color=#000080><tt>AbstractMap</tt></font></a></a>
+steht eine abstrakte Basisklasse f&uuml;r Ableitungen zur Verf&uuml;gung.
+<li>Die Klasse <a name="ixa100985"><a href="index_h.html#ixb100754"><font color=#000080><tt>HashMap</tt></font></a></a>
+implementiert das Interface auf der Basis einer <i>Hashtabelle</i>.
+Dabei wird ein Speicher fester Gr&ouml;&szlig;e angelegt und die Schl&uuml;ssel
+werden mit Hilfe der <a name="ixa100986"><i>Hash-Funktion</i></a>,
+die den Speicherort direkt aus dem Schl&uuml;ssel berechnet, m&ouml;glichst
+gleichm&auml;&szlig;ig auf die verf&uuml;gbaren Speicherpl&auml;tze
+abgebildet. Da die Anzahl der potenziellen Schl&uuml;ssel meist wesentlich
+gr&ouml;&szlig;er als die Anzahl der verf&uuml;gbaren Speicherpl&auml;tze
+ist, k&ouml;nnen beim Einf&uuml;gen Kollisionen auftreten, die mit
+geeigneten Mitteln behandelt werden m&uuml;ssen (bei der <a href="index_h.html#ixb100754"><font color=#000080><tt>HashMap</tt></font></a>
+werden alle kollidierenden Elemente in einer verketteten Liste gehalten).
+<li>Die altbekannte Klasse <a name="ixa100987"><a href="index_h.html#ixb100428"><font color=#000080><tt>Hashtable</tt></font></a></a>
+implementiert seit dem JDK 1.2 ebenfalls das <a href="index_m.html#ixb100109"><font color=#000080><tt>Map</tt></font></a>-Interface.
+Ihre Arbeitsweise entspricht im Prinzip der von <a href="index_h.html#ixb100754"><font color=#000080><tt>HashMap</tt></font></a>,
+allerdings mit dem Unterschied, dass ihre Methoden synchronisiert
+sind und dass es nicht erlaubt ist, <a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>-Werte
+einzuf&uuml;gen (die <a href="index_h.html#ixb100754"><font color=#000080><tt>HashMap</tt></font></a>
+l&auml;sst dies zu).
+</ul>
+
+<p>
+Weitere Details zur Klasse <a href="index_h.html#ixb100428"><font color=#000080><tt>Hashtable</tt></font></a>
+finden sich in <a href="k100101.html#klassehashtable">Abschnitt 15.4</a>.
+Dort gibt es auch ein kleines Anwendungsbeispiel, das wir hier in
+einer f&uuml;r die Klasse <a href="index_h.html#ixb100754"><font color=#000080><tt>HashMap</tt></font></a>
+angepassten Form zeigen wollen: 
+<a name="anwendunghashmap"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1604.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1604
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    HashMap h = <font color="#0000AA">new</font> HashMap();
+<font color="#555555">010 </font>
+<font color="#555555">011 </font>    <font color="#00AA00">//Pflege der Aliase</font>
+<font color="#555555">012 </font>    h.put(<font color="#0000FF">"Fritz"</font>,<font color="#0000FF">"f.mueller@test.de"</font>);
+<font color="#555555">013 </font>    h.put(<font color="#0000FF">"Franz"</font>,<font color="#0000FF">"fk@b-blabla.com"</font>);
+<font color="#555555">014 </font>    h.put(<font color="#0000FF">"Paula"</font>,<font color="#0000FF">"user0125@mail.uofm.edu"</font>);
+<font color="#555555">015 </font>    h.put(<font color="#0000FF">"Lissa"</font>,<font color="#0000FF">"lb3@gateway.fhdto.northsurf.dk"</font>);
+<font color="#555555">016 </font>
+<font color="#555555">017 </font>    <font color="#00AA00">//Ausgabe</font>
+<font color="#555555">018 </font>    Iterator it = h.entrySet().iterator(); <a name="anwendunghashmap.a"></a>
+<font color="#555555">019 </font>    <font color="#0000AA">while</font> (it.hasNext()) {
+<font color="#555555">020 </font>      Map.Entry entry = (Map.Entry)it.next();
+<font color="#555555">021 </font>      System.out.println(
+<font color="#555555">022 </font>        (String)entry.getKey() + <font color="#0000FF">" --&gt; "</font> +
+<font color="#555555">023 </font>        (String)entry.getValue()
+<font color="#555555">024 </font>      );
+<font color="#555555">025 </font>    } <a name="anwendunghashmap.b"></a>
+<font color="#555555">026 </font>  }
+<font color="#555555">027 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1604.java"><font color="#000055" size=-1>Listing1604.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 16.4: Anwendung der Klasse HashMap</i></p>
+
+<p>
+Der wichtigste Unterschied liegt in der Ausgabe der Ergebnisse. W&auml;hrend
+bei der <a href="index_h.html#ixb100428"><font color=#000080><tt>Hashtable</tt></font></a>
+eine <a href="index_e.html#ixb100697"><font color=#000080><tt>Enumeration</tt></font></a>
+verwendet wurde, m&uuml;ssen wir hier durch Aufruf von <a href="index_e.html#ixb100759"><font color=#000080><tt>entrySet</tt></font></a>
+zun&auml;chst eine Menge der Schl&uuml;ssel-Wert-Paare beschaffen.
+Diese liefert dann einen Iterator, der f&uuml;r jedes Element ein
+Objekt des Typs <a href="index_m.html#ixb100760"><font color=#000080><tt>Map.Entry</tt></font></a>
+zur&uuml;ckgibt. Dessen Methoden <a href="index_g.html#ixb100762"><font color=#000080><tt>getKey</tt></font></a>
+und <a href="index_g.html#ixb100763"><font color=#000080><tt>getValue</tt></font></a>
+liefern den Schl&uuml;ssel bzw. Wert des jeweiligen Eintrags. Alternativ
+h&auml;tten wir auch mit <a href="index_k.html#ixb100758"><font color=#000080><tt>keySet</tt></font></a>
+die Menge der Schl&uuml;ssel durchlaufen und mit <a href="index_g.html#ixb100713"><font color=#000080><tt>get</tt></font></a>
+auf den jeweils aktuellen Wert zugreifen k&ouml;nnen. Dazu m&uuml;ssten
+die Zeilen <a href="k100109.html#anwendunghashmap.a">018</a> bis <a href="k100109.html#anwendunghashmap.b">025</a>
+im vorigen Listing durch folgenden Code ersetzt werden: 
+<font color="#000077">
+<pre>
+Iterator it = h.keySet().iterator();
+while (it.hasNext()) {
+  String key = (String)it.next();
+  System.out.println(
+    key + " --&gt; " + (String)h.get(key)
+  );
+}
+</pre>
+</font>
+
+<p>
+Die Ausgabe des Programms unterscheidet sich nur in der Sortierung
+von der von <a href="k100101.html#hashtableiterator">Listing 15.3</a>:
+<font color="#333300">
+<pre>
+Franz --&gt; fk@b-blabla.com
+Fritz --&gt; f.mueller@test.de
+Paula --&gt; user0125@mail.uofm.edu
+Lissa --&gt; lb3@gateway.fhdto.northsurf.dk
+</pre>
+</font>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100104.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100108.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100110.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100114.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

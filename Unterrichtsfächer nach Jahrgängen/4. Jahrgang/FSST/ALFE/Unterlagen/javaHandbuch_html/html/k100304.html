@@ -1,0 +1,1107 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100300.html;106,k100303.html;107,k100305.html;108,k100307.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100300.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100303.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100305.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100307.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 47 - Objektorientierte Persistenz
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="jparelationships"></a>
+<h2>47.4 Verkn&uuml;pfen von Datens&auml;tzen </h2>
+<hr>
+<ul>
+<li><a href="k100304.html#jparelationships">47.4 Verkn&uuml;pfen von Datens&auml;tzen</a>
+<ul>
+<li><a href="k100304.html#subsectionjpaadvancedmodelling">47.4.1 Fortgeschrittenes Modellieren von Datenbanktabellen</a>
+<li><a href="k100304.html#sectlevel3id047004002">47.4.2 Modellieren von Relationen</a>
+</ul>
+</ul>
+<hr>
+
+<p>
+Die voranstehenden Abschnitte haben gezeigt, wie man einfache Tabellen
+der Datenbank mit Hilfe von Java Beans abbilden und Datens&auml;tze
+&uuml;ber den <font color="#000077"><tt>EntityManager</tt></font>
+anlegen, manipulieren und l&ouml;schen kann. Dabei wurde die Tabelle
+eins zu eins als Java-Objekt abgebildet, ohne auf die objektorientierte
+Struktur der verkn&uuml;pften Datens&auml;tze einzugehen. 
+
+<p>
+Das E/R-Diagramm unserer kleinen Datenbank aus <a href="k100281.html#dirdb">Abschnitt 44.3</a>
+zeigt allerdings nicht nur eine, sondern zwei Tabellen, die miteinander
+verkn&uuml;pft sind: 
+<p>
+<a name="erdiagramm2"></a>
+<img src="images/ERDirDB.gif">
+<p>
+
+<p><i>
+Abbildung 47.2: E/R-Diagramm f&uuml;r DirDB</i></p>
+
+<p>
+Ein Verzeichnis besitzt zun&auml;chst nur eine ID <font color="#000077"><tt>did</tt></font>
+und einen Namen <font color="#000077"><tt>dname</tt></font>. Der in
+<a href="k100302.html#directory">Listing 47.2</a> modellierte Schl&uuml;ssel
+<font color="#000077"><tt>fatherdid</tt></font> verweist dagegen auf
+einen &uuml;bergeordneten Datensatz, also ein Elternverzeichnis, und
+statt lediglich die Anzahl der Verzeichniseintr&auml;ge <font color="#000077"><tt>entries</tt></font>
+abzubilden, w&auml;re es sch&ouml;n, wenn wir gleich Zugriff auf die
+entsprechenden Objekte h&auml;tten. Wie dies mit der JPA realisiert
+werden kann, wollen wir uns im zweiten Teil dieses Kapitels ansehen.
+
+
+<!-- Section -->
+<a name="subsectionjpaadvancedmodelling"></a>
+<h3>47.4.1 Fortgeschrittenes Modellieren von Datenbanktabellen </h3>
+
+<p>
+Zun&auml;chst wollen wir uns dem Abbilden von Datenbanktabellen noch
+einmal von der objektorientierten Herangehensweise ann&auml;hern.
+Dabei besteht ein <font color="#000077"><tt>Verzeichnis</tt></font>-Objekt
+zun&auml;chst einmal aus einem Namen und einer ID. W&auml;hrend der
+Name vom Anwender selbst vergeben werden muss und damit ein Pflichtattribut
+darstellt, handelt es sich bei der ID um einen technischen Schl&uuml;ssel
+in der Datenbank, den der Anwender zwar auslesen, aber nicht einfach
+&auml;ndern kann. Das folgende Listing zeigt die Java Bean im Ausgangsstadium:
+<a name="persistenzbeandirectory2"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Verzeichnis.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> javax.persistence.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#00AA00">/**
+<font color="#555555">006 </font> * Diese Klasse repr&auml;sentiert die Tabelle 'dir' der 'DirDB'
+<font color="#555555">007 </font> * Jede Instanz der Klasse repr&auml;sentiert wiederum einen
+<font color="#555555">008 </font> * Datensatz
+<font color="#555555">009 </font> */</font>
+<font color="#555555">010 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Verzeichnis 
+<font color="#555555">011 </font>{
+<font color="#555555">012 </font>  <font color="#0000AA">private</font> Integer id;                        <a name="persistenzbeandirectory2.a"></a>
+<font color="#555555">013 </font>  <font color="#0000AA">private</font> String name;                       <a name="persistenzbeandirectory2.b"></a>
+<font color="#555555">014 </font>
+<font color="#555555">015 </font>  <font color="#00AA00">/**
+<font color="#555555">016 </font>   * Gesch&uuml;tzter Minimalkonstruktor zur Verwendung von Hibernate
+<font color="#555555">017 </font>   */</font>
+<font color="#555555">018 </font>  <font color="#0000AA">protected</font> Verzeichnis() {                    <a name="persistenzbeandirectory2.c"></a>
+<font color="#555555">019 </font>  }
+<font color="#555555">020 </font>
+<font color="#555555">021 </font>  <font color="#00AA00">/**
+<font color="#555555">022 </font>   * &Ouml;ffentlicher Konstruktor zur Verwendung durch den Entwickler.
+<font color="#555555">023 </font>   * Dieser Konstruktor definiert alle Pflichtfelder der JavaBean.
+<font color="#555555">024 </font>   * @param name - Name des Verzeichniseintrags
+<font color="#555555">025 </font>   */</font>
+<font color="#555555">026 </font>  <font color="#0000AA">public</font> Verzeichnis(String name)
+<font color="#555555">027 </font>  {
+<font color="#555555">028 </font>    <font color="#006699">this</font>.name = name;
+<font color="#555555">029 </font>  }
+<font color="#555555">030 </font>
+<font color="#555555">031 </font>  <font color="#0000AA">public</font> Integer getId()
+<font color="#555555">032 </font>  {
+<font color="#555555">033 </font>    <font color="#0000AA">return</font> id;
+<font color="#555555">034 </font>  }
+<font color="#555555">035 </font>
+<font color="#555555">036 </font>  <font color="#0000AA">protected</font> <font color="#006699">void</font> setId(Integer id)           <a name="persistenzbeandirectory2.d"></a>
+<font color="#555555">037 </font>  {
+<font color="#555555">038 </font>    <font color="#006699">this</font>.id = id;
+<font color="#555555">039 </font>  }
+<font color="#555555">040 </font>
+<font color="#555555">041 </font>  <font color="#0000AA">public</font> String getName()
+<font color="#555555">042 </font>  {
+<font color="#555555">043 </font>    <font color="#0000AA">return</font> name;
+<font color="#555555">044 </font>  }
+<font color="#555555">045 </font>
+<font color="#555555">046 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setName(String name)
+<font color="#555555">047 </font>  {
+<font color="#555555">048 </font>    <font color="#006699">this</font>.name = name;
+<font color="#555555">049 </font>  }
+<font color="#555555">050 </font>
+<font color="#555555">051 </font>  <font color="#0000AA">public</font> <font color="#006699">boolean</font> equals(Object o)
+<font color="#555555">052 </font>  {
+<font color="#555555">053 </font>    <font color="#0000AA">if</font> (<font color="#006699">this</font> == o) <font color="#0000AA">return</font> <font color="#006699">true</font>;
+<font color="#555555">054 </font>    <font color="#0000AA">if</font> (o == <font color="#006699">null</font> || getClass() != o.getClass()) <font color="#0000AA">return</font> <font color="#006699">false</font>;
+<font color="#555555">055 </font>
+<font color="#555555">056 </font>    Verzeichnis dir = (Verzeichnis) o;
+<font color="#555555">057 </font>    <font color="#0000AA">return</font> !(id != <font color="#006699">null</font> ? !id.equals(dir.id) : dir.id != <font color="#006699">null</font>);
+<font color="#555555">058 </font>  }
+<font color="#555555">059 </font>
+<font color="#555555">060 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> hashCode()
+<font color="#555555">061 </font>  {
+<font color="#555555">062 </font>    <font color="#0000AA">return</font> id != <font color="#006699">null</font> ? id.hashCode() : 0;
+<font color="#555555">063 </font>  }
+<font color="#555555">064 </font>
+<font color="#555555">065 </font>  <font color="#0000AA">public</font> String toString()
+<font color="#555555">066 </font>  {
+<font color="#555555">067 </font>    <font color="#0000AA">return</font> <font color="#0000FF">"Directory[id:"</font>+ id + <font color="#0000FF">", name:"</font> + name +  <font color="#0000FF">"]"</font>;
+<font color="#555555">068 </font>  }
+<font color="#555555">069 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 47.9: Zweite Java Bean zum Abbilden der Tabelle dir</i></p>
+
+<p>
+Die Klasse <font color="#000077"><tt>Verzeichnis</tt></font> bildet
+zun&auml;chst nur die beiden Attribute <font color="#000077"><tt>id</tt></font>
+in <a href="k100304.html#persistenzbeandirectory2.a">Zeile 012</a>
+und <font color="#000077"><tt>name</tt></font> in <a href="k100304.html#persistenzbeandirectory2.b">Zeile 013</a>
+ab. Die Namen der Attribute orientieren sich an den Java-Konventionen
+und wir achten darauf, dass der &ouml;ffentliche Konstruktor das Pflichtfeld
+<font color="#000077"><tt>name</tt></font> &uuml;bernimmt, so dass
+kein namenloses Verzeichnis erstellt werden kann. 
+
+<p>
+Der parameterlose Konstruktor in <a href="k100304.html#persistenzbeandirectory2.c">Zeile 018</a>
+ist dem Persistenz-Framework geschuldet, das zwingend einen Standardkonstruktor
+ben&ouml;tigt. Um dessen Aufruf zu erschweren, schr&auml;nken wir
+die Sichtbarkeit mit Hilfe des Modifiers <font color="#000077"><tt>protected</tt></font>
+ein. Da die ID des Datensatzes ausnahmslos von der Persistenzschicht
+verwaltet werden soll, ist in <a href="k100304.html#persistenzbeandirectory2.d">Zeile 036</a>
+auch der Zugriff auf dieses Attribut eingeschr&auml;nkt. 
+
+<p>
+Eine weitere Neuerung gegen&uuml;ber <a href="k100302.html#directory">Listing 47.2</a>
+findet sich schlie&szlig;lich in der Verwendung des Objekttyps <font color="#000077"><tt>Integer</tt></font>
+statt des Basistyps <font color="#000077"><tt>int</tt></font> f&uuml;r
+die ID des Datensatzes. Der Objekttyp hat gegen&uuml;ber den Basistypen
+den Vorteil, dass er den Wert <font color="#000077"><tt>null</tt></font>
+annehmen und damit einen nicht definierten Zustand abbilden kann.
+Das ist beispielsweise dann der Fall, wenn die Instanz zwar &uuml;ber
+einen Konstruktor erzeugt, aber noch nicht in der Datenbank gespeichert
+wurde. 
+
+<p>
+Abschlie&szlig;end wird die Klasse <font color="#000077"><tt>Verzeichnis</tt></font>
+um die Methoden <a href="index_e.html#ixb100230"><font color=#000080><tt>equals</tt></font></a>
+und <a href="index_h.html#ixb100427"><font color=#000080><tt>hashCode</tt></font></a>
+aus <a href="k100058.html#klasseobject">Abschnitt 9.1.2</a> erweitert,
+um die Identit&auml;t eines Datensatzes &uuml;berpr&uuml;fen zu k&ouml;nnen.
+Diese Methoden stellen sicher, dass Hibernate einen in der Datenbank
+eindeutig referenzierten Datensatz &uuml;ber dessen ID auch javaseitig
+identifizieren und so beispielsweise das doppelte Laden einer logisch
+identischen Instanz vermeiden kann. 
+
+<p>
+Als N&auml;chstes versehen wir die Java Bean mit den f&uuml;r die
+Persistenzschicht notwendigen Metainformationen und verkn&uuml;pfen
+sie so mit der im Hintergrund arbeitenden Datenbank. Als Alternative
+zu <a href="k100302.html#directory">Listing 47.2</a> werden wir die
+Annotationen diesmal direkt an den Attributen, statt an den zugeh&ouml;rigen
+Getter-Methoden anbringen: 
+<a name="persistenzbeandirectory3"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Verzeichnis.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> javax.persistence.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#00AA00">/**
+<font color="#555555">006 </font> * Diese Klasse repr&auml;sentiert die Tabelle 'dir' der 'DirDB'
+<font color="#555555">007 </font> * Jede Instanz der Klasse repr&auml;sentiert wiederum einen
+<font color="#555555">008 </font> * Datensatz
+<font color="#555555">009 </font> */</font>
+<font color="#555555">010 </font>@Entity
+<font color="#555555">011 </font>@Table( name = <font color="#0000FF">"dir"</font> )
+<font color="#555555">012 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Verzeichnis 
+<font color="#555555">013 </font>{
+<font color="#555555">014 </font>  @Id
+<font color="#555555">015 </font>  @GeneratedValue                            <a name="persistenzbeandirectory3.a"></a>
+<font color="#555555">016 </font>  @Column(name = <font color="#0000FF">"did"</font>)
+<font color="#555555">017 </font>  <font color="#0000AA">private</font> Integer id;
+<font color="#555555">018 </font>
+<font color="#555555">019 </font>  @Column(name = <font color="#0000FF">"dname"</font>)
+<font color="#555555">020 </font>  <font color="#0000AA">private</font> String name;
+<font color="#555555">021 </font>
+<font color="#555555">022 </font>  <font color="#00AA00">/**
+<font color="#555555">023 </font>   * Gesch&uuml;tzter Minimalkonstruktor zur Verwendung von Hibernate
+<font color="#555555">024 </font>   */</font>
+<font color="#555555">025 </font>  <font color="#0000AA">protected</font> Verzeichnis() {
+<font color="#555555">026 </font>  }
+<font color="#555555">027 </font>
+<font color="#555555">028 </font>  <font color="#00AA00">/**
+<font color="#555555">029 </font>   * &Ouml;ffentlicher Konstruktor zur Verwendung durch den Entwickler.
+<font color="#555555">030 </font>   * Dieser Konstruktor definiert alle Pflichtfelder der JavaBean.
+<font color="#555555">031 </font>   * @param name - Name des Verzeichniseintrags
+<font color="#555555">032 </font>   */</font>
+<font color="#555555">033 </font>  <font color="#0000AA">public</font> Verzeichnis(String name)
+<font color="#555555">034 </font>  {
+<font color="#555555">035 </font>    <font color="#006699">this</font>.name = name;
+<font color="#555555">036 </font>  }
+<font color="#555555">037 </font>
+<font color="#555555">038 </font>  <font color="#0000AA">public</font> Integer getId()
+<font color="#555555">039 </font>  {
+<font color="#555555">040 </font>    <font color="#0000AA">return</font> id;
+<font color="#555555">041 </font>  }
+<font color="#555555">042 </font>
+<font color="#555555">043 </font>  <font color="#0000AA">protected</font> <font color="#006699">void</font> setId(Integer id)
+<font color="#555555">044 </font>  {
+<font color="#555555">045 </font>    <font color="#006699">this</font>.id = id;
+<font color="#555555">046 </font>  }
+<font color="#555555">047 </font>
+<font color="#555555">048 </font>  <font color="#0000AA">public</font> String getName()
+<font color="#555555">049 </font>  {
+<font color="#555555">050 </font>    <font color="#0000AA">return</font> name;
+<font color="#555555">051 </font>  }
+<font color="#555555">052 </font>
+<font color="#555555">053 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setName(String name)
+<font color="#555555">054 </font>  {
+<font color="#555555">055 </font>    <font color="#006699">this</font>.name = name;
+<font color="#555555">056 </font>  }
+<font color="#555555">057 </font>
+<font color="#555555">058 </font>  <font color="#0000AA">public</font> <font color="#006699">boolean</font> equals(Object o)
+<font color="#555555">059 </font>  {
+<font color="#555555">060 </font>    <font color="#0000AA">if</font> (<font color="#006699">this</font> == o) <font color="#0000AA">return</font> <font color="#006699">true</font>;
+<font color="#555555">061 </font>    <font color="#0000AA">if</font> (o == <font color="#006699">null</font> || getClass() != o.getClass()) <font color="#0000AA">return</font> <font color="#006699">false</font>;
+<font color="#555555">062 </font>
+<font color="#555555">063 </font>    Verzeichnis dir = (Verzeichnis) o;
+<font color="#555555">064 </font>    <font color="#0000AA">return</font> !(id != <font color="#006699">null</font> ? !id.equals(dir.id) : dir.id != <font color="#006699">null</font>);
+<font color="#555555">065 </font>  }
+<font color="#555555">066 </font>
+<font color="#555555">067 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> hashCode()
+<font color="#555555">068 </font>  {
+<font color="#555555">069 </font>    <font color="#0000AA">return</font> id != <font color="#006699">null</font> ? id.hashCode() : 0;
+<font color="#555555">070 </font>  }
+<font color="#555555">071 </font>
+<font color="#555555">072 </font>  <font color="#0000AA">public</font> String toString()
+<font color="#555555">073 </font>  {
+<font color="#555555">074 </font>    <font color="#0000AA">return</font> <font color="#0000FF">"Directory[id:"</font>+ id + <font color="#0000FF">", name:"</font> + name +  <font color="#0000FF">"]"</font>;
+<font color="#555555">075 </font>  }
+<font color="#555555">076 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 47.10: Mit Annotationen angereicherte Java Bean</i></p>
+
+<p>
+Die Annotationen <a name="ixa103485"><a href="index_0.html#ixb102604"><font color=#000080><tt>@Entity</tt></font></a></a>,
+<a name="ixa103486"><a href="index_0.html#ixb102605"><font color=#000080><tt>@Table</tt></font></a></a>,
+<a name="ixa103487"><a href="index_0.html#ixb102606"><font color=#000080><tt>@Id</tt></font></a></a>
+und <a name="ixa103488"><a href="index_c.html#ixb102614"><font color=#000080><tt>Column</tt></font></a></a>
+wurden ja bereits mit <a href="k100302.html#directory">Listing 47.2</a>
+eingef&uuml;hrt. Neu hinzugekommen ist <a name="ixa103489"><a href="index_0.html#ixb102615"><font color=#000080><tt>@GeneratedValue</tt></font></a></a>
+in <a href="k100304.html#persistenzbeandirectory3.a">Zeile 015</a>,
+um der Persistenzschicht anzuzeigen, dass der Wert des Attributs automatisch
+erzeugt und nicht vom Benutzer gesetzt werden soll. 
+
+<p>
+Analog zur Klasse <font color="#000077"><tt>Verzeichnis</tt></font>
+k&ouml;nnen wir nun auch die Klasse <font color="#000077"><tt>Datei</tt></font>
+mit dem Pflichtattribut <font color="#000077"><tt>name</tt></font>
+definieren. Dabei bilden wir der Einfachheit halber das &Auml;nderungsdatum
+einer Datei &uuml;ber ein einzelnes Attribut mit Namen <font color="#000077"><tt>date</tt></font>
+ab: 
+<a name="persistenzbeanfile1"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Datei.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> javax.persistence.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.util.Date;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#00AA00">/**
+<font color="#555555">007 </font> * Diese Klasse repr&auml;sentiert die Tabelle 'file' der 'DirDB'
+<font color="#555555">008 </font> * Jede Instanz der Klasse repr&auml;sentiert wiederum einen
+<font color="#555555">009 </font> * Datensatz
+<font color="#555555">010 </font> */</font>
+<font color="#555555">011 </font>
+<font color="#555555">012 </font>@Entity
+<font color="#555555">013 </font>@Table( name = <font color="#0000FF">"file"</font> )
+<font color="#555555">014 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Datei 
+<font color="#555555">015 </font>{
+<font color="#555555">016 </font>  @Id
+<font color="#555555">017 </font>  @GeneratedValue
+<font color="#555555">018 </font>  @Column(name = <font color="#0000FF">"fid"</font>)
+<font color="#555555">019 </font>  <font color="#0000AA">private</font> Integer id;
+<font color="#555555">020 </font>
+<font color="#555555">021 </font>  @Column(name = <font color="#0000FF">"fname"</font>)                                 
+<font color="#555555">022 </font>  <font color="#0000AA">private</font> String name;
+<font color="#555555">023 </font>
+<font color="#555555">024 </font>  @Column(name = <font color="#0000FF">"dsize"</font>)
+<font color="#555555">025 </font>  <font color="#0000AA">private</font> Integer size;
+<font color="#555555">026 </font>
+<font color="#555555">027 </font>  @Column(name = <font color="#0000FF">"fdate"</font>)
+<font color="#555555">028 </font>  <font color="#0000AA">private</font> Date date;
+<font color="#555555">029 </font>
+<font color="#555555">030 </font>  <font color="#00AA00">/**
+<font color="#555555">031 </font>   * Gesch&uuml;tzter Minimalkonstruktor zur Verwendung durch 
+<font color="#555555">032 </font>   * die Persistenzschicht
+<font color="#555555">033 </font>   */</font>
+<font color="#555555">034 </font>  <font color="#0000AA">protected</font> Datei() {
+<font color="#555555">035 </font>  }
+<font color="#555555">036 </font>
+<font color="#555555">037 </font>  <font color="#00AA00">/**
+<font color="#555555">038 </font>   * &Ouml;ffentlicher Konstruktor zur Verwendung durch den Entwickler.
+<font color="#555555">039 </font>   * Dieser Konstruktor definiert alle Pflichtfelder der JavaBean.
+<font color="#555555">040 </font>   * @param name - Name der Datei
+<font color="#555555">041 </font>   */</font>
+<font color="#555555">042 </font>  <font color="#0000AA">public</font> Datei(String name)
+<font color="#555555">043 </font>  {
+<font color="#555555">044 </font>    <font color="#006699">this</font>.name = name;
+<font color="#555555">045 </font>  }
+<font color="#555555">046 </font>
+<font color="#555555">047 </font>  <font color="#0000AA">public</font> Integer getId()
+<font color="#555555">048 </font>  {
+<font color="#555555">049 </font>    <font color="#0000AA">return</font> id;
+<font color="#555555">050 </font>  }
+<font color="#555555">051 </font> 
+<font color="#555555">052 </font>  <font color="#0000AA">protected</font> <font color="#006699">void</font> setId(Integer id)
+<font color="#555555">053 </font>  {
+<font color="#555555">054 </font>    <font color="#006699">this</font>.id = id;
+<font color="#555555">055 </font>  }
+<font color="#555555">056 </font>
+<font color="#555555">057 </font>  <font color="#0000AA">public</font> String getName()
+<font color="#555555">058 </font>  {
+<font color="#555555">059 </font>    <font color="#0000AA">return</font> name;
+<font color="#555555">060 </font>  }
+<font color="#555555">061 </font> 
+<font color="#555555">062 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setName(String name)
+<font color="#555555">063 </font>  {
+<font color="#555555">064 </font>    <font color="#006699">this</font>.name = name;
+<font color="#555555">065 </font>  }
+<font color="#555555">066 </font>
+<font color="#555555">067 </font>  <font color="#0000AA">public</font> Integer getSize()
+<font color="#555555">068 </font>  {
+<font color="#555555">069 </font>    <font color="#0000AA">return</font> size;
+<font color="#555555">070 </font>  }
+<font color="#555555">071 </font> 
+<font color="#555555">072 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setSize(Integer size)
+<font color="#555555">073 </font>  {
+<font color="#555555">074 </font>    <font color="#006699">this</font>.size = size;
+<font color="#555555">075 </font>  }
+<font color="#555555">076 </font>
+<font color="#555555">077 </font>  <font color="#0000AA">public</font> Date getDate()
+<font color="#555555">078 </font>  {
+<font color="#555555">079 </font>    <font color="#0000AA">return</font> date;
+<font color="#555555">080 </font>  }
+<font color="#555555">081 </font> 
+<font color="#555555">082 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setDate(Date date)
+<font color="#555555">083 </font>  {
+<font color="#555555">084 </font>    <font color="#006699">this</font>.date = date;
+<font color="#555555">085 </font>  }
+<font color="#555555">086 </font>
+<font color="#555555">087 </font>  <font color="#0000AA">public</font> <font color="#006699">boolean</font> equals(Object o)
+<font color="#555555">088 </font>  {
+<font color="#555555">089 </font>    <font color="#0000AA">if</font> (<font color="#006699">this</font> == o) <font color="#0000AA">return</font> <font color="#006699">true</font>;
+<font color="#555555">090 </font>    <font color="#0000AA">if</font> (o == <font color="#006699">null</font> || getClass() != o.getClass()) <font color="#0000AA">return</font> <font color="#006699">false</font>;
+<font color="#555555">091 </font>
+<font color="#555555">092 </font>    Datei file = (File) o;
+<font color="#555555">093 </font>    <font color="#0000AA">return</font> !(id != <font color="#006699">null</font> ? !id.equals(file.id) : file.id != <font color="#006699">null</font>);
+<font color="#555555">094 </font>  }
+<font color="#555555">095 </font>
+<font color="#555555">096 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> hashCode()
+<font color="#555555">097 </font>  {
+<font color="#555555">098 </font>    <font color="#0000AA">return</font> id != <font color="#006699">null</font> ? id.hashCode() : 0;
+<font color="#555555">099 </font>  }
+<font color="#555555">100 </font>
+<font color="#555555">101 </font>  <font color="#0000AA">public</font> String toString() 
+<font color="#555555">102 </font>  {
+<font color="#555555">103 </font>    <font color="#0000AA">return</font> <font color="#0000FF">"File[id:"</font>+ id + <font color="#0000FF">", name:"</font> + name +  <font color="#0000FF">"]"</font>;
+<font color="#555555">104 </font>  }
+<font color="#555555">105 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 47.11: Java Bean zur Abbildung der Tabelle file</i></p>
+
+<p>
+Um auch das <font color="#000077"><tt>Datei</tt></font>-Objekt &uuml;ber
+den <font color="#000077"><tt>EntityManager</tt></font> der Persistenzschicht
+verwalten zu k&ouml;nnen, m&uuml;ssen wir die Klasse noch im Persistence
+Deskriptor (<font color="#660099">persistence.xml</font>) angeben.
+Hierf&uuml;r erweitern wir <a href="k100302.html#persistence">Listing 47.3</a>
+wie folgt (<a href="k100304.html#persistence2.a">Zeile 015</a>): 
+<a name="persistence2"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>&lt;?xml version=<font color="#0000FF">"1.0"</font> encoding=<font color="#0000FF">"ISO-8859-1"</font>?&gt;
+<font color="#555555">002 </font>
+<font color="#555555">003 </font>&lt;!-- Persistenz Descriptor zur Konfiguration --&gt;
+<font color="#555555">004 </font>&lt;persistence&gt;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font>  &lt;!-- Hinterlegen eines symbolischen Namens --&gt;
+<font color="#555555">007 </font>  &lt;persistence-unit name=<font color="#0000FF">"persistenceExample"</font> <a name="persistence2.z"></a>
+<font color="#555555">008 </font>                    transaction-type=<font color="#0000FF">"RESOURCE_LOCAL"</font>&gt; <a name="persistence2.t"></a>
+<font color="#555555">009 </font>
+<font color="#555555">010 </font>    &lt;!-- Zu verwendende Implementierung --&gt;
+<font color="#555555">011 </font>    &lt;provider&gt;org.hibernate.ejb.HibernatePersistence&lt;/provider&gt;
+<font color="#555555">012 </font>
+<font color="#555555">013 </font>    &lt;!-- Persistierbare Klassen --&gt;
+<font color="#555555">014 </font>    &lt;<font color="#0000AA">class</font>&gt;Verzeichnis&lt;/class&gt; 
+<font color="#555555">015 </font>    &lt;<font color="#0000AA">class</font>&gt;Datei&lt;/class&gt; <a name="persistence2.a"></a>
+<font color="#555555">016 </font>
+<font color="#555555">017 </font>    &lt;!-- Konfiguration der Hibernate Implementierung --&gt;
+<font color="#555555">018 </font>    &lt;properties&gt;
+<font color="#555555">019 </font>      &lt;!-- Name des intern verwendeten JDBC-Treibers --&gt;
+<font color="#555555">020 </font>      &lt;property name=<font color="#0000FF">"hibernate.connection.driver_class"</font>
+<font color="#555555">021 </font>                value=<font color="#0000FF">"org.hsqldb.jdbcDriver"</font>/&gt; <a name="persistence2.b"></a>
+<font color="#555555">022 </font>
+<font color="#555555">023 </font>      &lt;!-- URL der zu verwendenden Datenbank --&gt;
+<font color="#555555">024 </font>      &lt;property name=<font color="#0000FF">"hibernate.connection.url"</font>
+<font color="#555555">025 </font>                value=<font color="#0000FF">"jdbc:hsqldb:hsqldbtest"</font>/&gt; <a name="persistence2.c"></a>
+<font color="#555555">026 </font>
+<font color="#555555">027 </font>      &lt;!-- SQL-Dialect, den Hibernate verwenden soll --&gt;
+<font color="#555555">028 </font>      &lt;property name=<font color="#0000FF">"hibernate.dialect"</font>
+<font color="#555555">029 </font>                value=<font color="#0000FF">"org.hibernate.dialect.HSQLDialect"</font>/&gt;
+<font color="#555555">030 </font>
+<font color="#555555">031 </font>      &lt;!-- Benutzername und Passwort; Standardwerte der HSQLDB --&gt;
+<font color="#555555">032 </font>      &lt;property name=<font color="#0000FF">"hibernate.connection.username"</font> value=<font color="#0000FF">"SA"</font>/&gt; <a name="persistence2.d"></a>
+<font color="#555555">033 </font>      &lt;property name=<font color="#0000FF">"hibernate.connection.password"</font> value=<font color="#0000FF">""</font>/&gt; <a name="persistence2.e"></a>
+<font color="#555555">034 </font>
+<font color="#555555">035 </font>      &lt;!-- Flag, ob Tabellen automatisch erzeugt werden sollen --&gt;
+<font color="#555555">036 </font>      &lt;property name=<font color="#0000FF">"hibernate.hbm2ddl.auto"</font> value=<font color="#0000FF">"create"</font>/&gt; <a name="persistence2.f"></a>
+<font color="#555555">037 </font>
+<font color="#555555">038 </font>      &lt;!-- Flag, ob SQL-Statements ausgegeben werden sollen --&gt;
+<font color="#555555">039 </font>      &lt;property name=<font color="#0000FF">"hibernate.show_sql"</font> value=<font color="#0000FF">"true"</font>/&gt; <a name="persistence2.g"></a>
+<font color="#555555">040 </font>
+<font color="#555555">041 </font>      &lt;!-- Flag, ob SQL-Statements formatiert werden sollen --&gt;
+<font color="#555555">042 </font>      &lt;property name=<font color="#0000FF">"hibernate.format_sql"</font> value=<font color="#0000FF">"true"</font>/&gt; <a name="persistence2.h"></a>
+<font color="#555555">043 </font>    &lt;/properties&gt;
+<font color="#555555">044 </font>  &lt;/persistence-unit&gt;
+<font color="#555555">045 </font>&lt;/persistence&gt;</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/persistence.xml.ext"><font color="#000055" size=-1>persistence.xml.ext</font></a></td>
+</tr>
+</table>
+<i>
+Listing 47.12: Konfigurationsdatei f&uuml;r das Java Persistenz API</i></p>
+
+<p>
+Das Speichern, Manipulieren und L&ouml;schen der Persistenz Beans
+erfolgt ganz analog zum ersten Beispiel in <a href="k100303.html#persistenzanlegendir">Listing 47.6</a>.
+Der einzige Unterschied ist, dass wir die ID des Datensatzes nicht
+mehr selbst vorgeben, sondern von der Persistenzschicht generieren
+lassen. 
+<a name="persistenzanlegendir2"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4713.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> javax.persistence.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4713
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#00AA00">//Erzeugen einer EntityManagerFactory mit Hilfe des symbolischen</font>
+<font color="#555555">010 </font>    <font color="#00AA00">//Namens aus dem Persistenz Descriptor (persistence.xml)</font>
+<font color="#555555">011 </font>    EntityManagerFactory emf =
+<font color="#555555">012 </font>      Persistence.createEntityManagerFactory(<font color="#0000FF">"persistenceExample"</font>);
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>    <font color="#00AA00">//Erzeugen eines EntityManagers f&uuml;r den Zugriff auf</font>
+<font color="#555555">015 </font>    <font color="#00AA00">//die Datenbank</font>
+<font color="#555555">016 </font>    EntityManager manager = emf.createEntityManager();
+<font color="#555555">017 </font>
+<font color="#555555">018 </font>    <font color="#00AA00">//Beginn einer neuen Transanktion</font>
+<font color="#555555">019 </font>    EntityTransaction tx = manager.getTransaction();
+<font color="#555555">020 </font>    tx.begin();
+<font color="#555555">021 </font>
+<font color="#555555">022 </font>    <font color="#00AA00">//Erzeugen eines neuen Java-Objekts</font>
+<font color="#555555">023 </font>    Verzeichnis dir = <font color="#0000AA">new</font> Verzeichnis(<font color="#0000FF">"temp"</font>);    <a name="persistenzanlegendir2.a"></a>
+<font color="#555555">024 </font>
+<font color="#555555">025 </font>    <font color="#00AA00">//Speichern des Java-Objekts mit Hilfe des EntityManagers</font>
+<font color="#555555">026 </font>    manager.persist(dir);                     <a name="persistenzanlegendir2.b"></a>
+<font color="#555555">027 </font>
+<font color="#555555">028 </font>    <font color="#00AA00">//Abschluss der Transaktion mit einem Commit</font>
+<font color="#555555">029 </font>    tx.commit();
+<font color="#555555">030 </font>
+<font color="#555555">031 </font>    <font color="#00AA00">// Ausgabe der Id des Datensatzes</font>
+<font color="#555555">032 </font>    System.out.println(dir.toString());       <a name="persistenzanlegendir2.c"></a>
+<font color="#555555">033 </font>
+<font color="#555555">034 </font>    <font color="#00AA00">//Freigabe der Ressourcen des EntityManagers</font>
+<font color="#555555">035 </font>    manager.close();
+<font color="#555555">036 </font>
+<font color="#555555">037 </font>    <font color="#00AA00">//Schlie&szlig;en der EntityManagerFactory und Freigeben der</font>
+<font color="#555555">038 </font>    <font color="#00AA00">//belegten Ressourcen</font>
+<font color="#555555">039 </font>    emf.close();
+<font color="#555555">040 </font>  }
+<font color="#555555">041 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4713.java"><font color="#000055" size=-1>Listing4713.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 47.13: Anlegen eines Datensatzes</i></p>
+
+<p>
+Das <font color="#000077"><tt>Verzeichnis</tt></font>-Objekt wird
+in <a href="k100304.html#persistenzanlegendir2.a">Zeile 023</a> nur
+noch mit einem Namen initialisiert und erh&auml;lt seine ID erst mit
+dem Speichern in <a href="k100304.html#persistenzanlegendir2.b">Zeile 026</a>.
+Die Ausgabeanweisung in <a href="k100304.html#persistenzanlegendir2.c">Zeile 032</a>
+f&uuml;hrt zu folgendem Ergebnis: 
+<font color="#333300">
+<pre>
+Directory[id:1, name:temp]
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="sectlevel3id047004002"></a>
+<h3>47.4.2 Modellieren von Relationen </h3>
+
+<p>
+Relationale Datenbanken verkn&uuml;pfen Datens&auml;tze unterschiedlicher
+Tabellen mit Hilfe von Fremdschl&uuml;sseln. In diesem Abschnitt wollen
+wir uns ansehen, wie die <i>referentielle Integrit&auml;t</i>, also
+die fachliche Konsistenz der verschiedenen Fremdschl&uuml;sselbeziehungen
+der Datenbank, objektorientiert modelliert werden kann. 
+
+<p>
+Solche Referenzen k&ouml;nnen in unterschiedlichen Kardinalit&auml;ten
+vorliegen: <a name="jparelationshipcardinals"></a>
+
+<p>
+<table cols=3 border width=66%>
+
+<tr>
+<td valign=top align=left width=12%><b>Kurzform </b></td>
+<td valign=top align=left width=25%><b>Name </b></td>
+<td valign=top align=left width=62%><b>Bedeutung</b></td></tr>
+<tr>
+<td valign=top align=left>1:1 </td>
+<td valign=top align=left>Eins-zu-Eins </td>
+<td valign=top align=left>Jeder Datensatz einer Tabelle ist h&ouml;chstens
+einem Datensatz in der anderen Tabelle zugeordnet.</td></tr>
+<tr>
+<td valign=top align=left>1:N </td>
+<td valign=top align=left>Eins-zu-N </td>
+<td valign=top align=left>Dem Datensatz dieser Tabelle k&ouml;nnen
+mehrere Datens&auml;tze einer anderen Tabelle zugordnet sein.</td></tr>
+<tr>
+<td valign=top align=left>N:1 </td>
+<td valign=top align=left>N-zu-Eins </td>
+<td valign=top align=left>Mehrere Datens&auml;tze dieser Tabelle k&ouml;nnen
+auf ein und denselben Datensatz einer anderen Tabelle verweisen.</td></tr>
+<tr>
+<td valign=top align=left>M:N </td>
+<td valign=top align=left>M-zu-N </td>
+<td valign=top align=left>Der Datensatz kann von verschiedenen Datens&auml;tzen
+referenziert werden und gleichzeitig auf mehrere Datens&auml;tze verweisen.</td></tr>
+</table>
+<p><i>
+Tabelle 47.5: Kardinalit&auml;ten f&uuml;r Datenbankbeziehungen</i></p>
+
+<p>
+In unserem Beispiel speichert jeder <font color="#000077"><tt>file</tt></font>-Datensatz
+die ID des zugeh&ouml;rigen <font color="#000077"><tt>dir</tt></font>-Datensatzes,
+um eindeutig anzuzeigen, zu welchem Verzeichnis die jeweilige Datei
+geh&ouml;rt. Zwischen Datei und Verzeichnis besteht also eine N:1-Beziehung,
+da mehrere Dateien zu genau einem Verzeichniseintrag geh&ouml;ren
+k&ouml;nnen. Aus Sicht des <font color="#000077"><tt>Verzeichnis</tt></font>-Objekts
+w&uuml;rde es sich umgekehrt um eine 1:N-Beziehung handeln. 
+
+<p>
+Diese Referenzen lassen sich auch mit der Persistenzschicht abbilden,
+indem ein Objekt auf das oder die anderen Objekte verweist. Wir erweitern
+dazu das <font color="#000077"><tt>Verzeichnis</tt></font>-Objekt
+um eine Liste von <font color="#000077"><tt>Datei</tt></font>-Objekten,
+um die zum Verzeichnis geh&ouml;renden Dateien aufzunehmen: 
+<a name="persistenz1zunreferenz"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Verzeichnis.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> javax.persistence.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.util.List;
+<font color="#555555">005 </font><font color="#0000AA">import</font> java.util.LinkedList;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#00AA00">/**
+<font color="#555555">008 </font> * Diese Klasse repr&auml;sentiert die Tabelle 'dir' der 'DirDB'
+<font color="#555555">009 </font> * Jede Instanz der Klasse repr&auml;sentiert wiederum einen
+<font color="#555555">010 </font> * Datensatz
+<font color="#555555">011 </font> */</font>
+<font color="#555555">012 </font>@Entity
+<font color="#555555">013 </font>@Table( name = <font color="#0000FF">"dir"</font> )
+<font color="#555555">014 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Verzeichnis 
+<font color="#555555">015 </font>{
+<font color="#555555">016 </font>  @Id
+<font color="#555555">017 </font>  @GeneratedValue
+<font color="#555555">018 </font>  @Column(name = <font color="#0000FF">"did"</font>)
+<font color="#555555">019 </font>  <font color="#0000AA">private</font> Integer id;
+<font color="#555555">020 </font>
+<font color="#555555">021 </font>  @Column(name = <font color="#0000FF">"dname"</font>)
+<font color="#555555">022 </font>  <font color="#0000AA">private</font> String name;
+<font color="#555555">023 </font>
+<font color="#555555">024 </font>  @OneToMany(cascade = CascadeType.ALL)            <a name="persistenz1zunreferenz.a"></a>
+<font color="#555555">025 </font>  @OrderBy(value = <font color="#0000FF">"name"</font>)                         <a name="persistenz1zunreferenz.b"></a>
+<font color="#555555">026 </font>  <font color="#0000AA">private</font> List&lt;Datei&gt; files;
+<font color="#555555">027 </font>
+<font color="#555555">028 </font>  <font color="#00AA00">/**
+<font color="#555555">029 </font>   * Gesch&uuml;tzter Minimalkonstruktor zur Verwendung von Hibernate
+<font color="#555555">030 </font>   */</font>
+<font color="#555555">031 </font>  <font color="#0000AA">protected</font> Verzeichnis() {                          <a name="persistenz1zunreferenz.d"></a>
+<font color="#555555">032 </font>  }
+<font color="#555555">033 </font>
+<font color="#555555">034 </font>  <font color="#00AA00">/**
+<font color="#555555">035 </font>   * &Ouml;ffentlicher Konstruktor zur Verwendung durch den Entwickler.
+<font color="#555555">036 </font>   * Dieser Konstruktor definiert alle Pflichtfelder der JavaBean.
+<font color="#555555">037 </font>   * @param name - Name des Verzeichniseintrags
+<font color="#555555">038 </font>   */</font>
+<font color="#555555">039 </font>  <font color="#0000AA">public</font> Verzeichnis(String name)
+<font color="#555555">040 </font>  {
+<font color="#555555">041 </font>    <font color="#006699">this</font>.name = name;
+<font color="#555555">042 </font>    <font color="#006699">this</font>.files = <font color="#0000AA">new</font> LinkedList&lt;Datei&gt;();         <a name="persistenz1zunreferenz.c"></a>
+<font color="#555555">043 </font>  }
+<font color="#555555">044 </font>
+<font color="#555555">045 </font>  <font color="#0000AA">public</font> Integer getId()
+<font color="#555555">046 </font>  {
+<font color="#555555">047 </font>    <font color="#0000AA">return</font> id;
+<font color="#555555">048 </font>  }
+<font color="#555555">049 </font>
+<font color="#555555">050 </font>  <font color="#0000AA">protected</font> <font color="#006699">void</font> setId(Integer id)
+<font color="#555555">051 </font>  {
+<font color="#555555">052 </font>    <font color="#006699">this</font>.id = id;
+<font color="#555555">053 </font>  }
+<font color="#555555">054 </font>
+<font color="#555555">055 </font>  <font color="#0000AA">public</font> String getName()
+<font color="#555555">056 </font>  {
+<font color="#555555">057 </font>    <font color="#0000AA">return</font> name;
+<font color="#555555">058 </font>  }
+<font color="#555555">059 </font>
+<font color="#555555">060 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setName(String name)
+<font color="#555555">061 </font>  {
+<font color="#555555">062 </font>    <font color="#006699">this</font>.name = name;
+<font color="#555555">063 </font>  }
+<font color="#555555">064 </font>
+<font color="#555555">065 </font>  <font color="#0000AA">public</font> List&lt;Datei&gt; getFiles()
+<font color="#555555">066 </font>  {
+<font color="#555555">067 </font>    <font color="#0000AA">return</font> files;
+<font color="#555555">068 </font>  }
+<font color="#555555">069 </font>
+<font color="#555555">070 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setFiles(List&lt;Datei&gt; files)
+<font color="#555555">071 </font>  {
+<font color="#555555">072 </font>    <font color="#006699">this</font>.files = files;
+<font color="#555555">073 </font>  }
+<font color="#555555">074 </font>
+<font color="#555555">075 </font>  <font color="#0000AA">public</font> <font color="#006699">boolean</font> equals(Object o)
+<font color="#555555">076 </font>  {
+<font color="#555555">077 </font>    <font color="#0000AA">if</font> (<font color="#006699">this</font> == o) <font color="#0000AA">return</font> <font color="#006699">true</font>;
+<font color="#555555">078 </font>    <font color="#0000AA">if</font> (o == <font color="#006699">null</font> || getClass() != o.getClass()) <font color="#0000AA">return</font> <font color="#006699">false</font>;
+<font color="#555555">079 </font>
+<font color="#555555">080 </font>    Verzeichnis dir = (Verzeichnis) o;
+<font color="#555555">081 </font>    <font color="#0000AA">return</font> !(id != <font color="#006699">null</font> ? !id.equals(dir.id) : dir.id != <font color="#006699">null</font>);
+<font color="#555555">082 </font>  }
+<font color="#555555">083 </font>
+<font color="#555555">084 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> hashCode()
+<font color="#555555">085 </font>  {
+<font color="#555555">086 </font>    <font color="#0000AA">return</font> id != <font color="#006699">null</font> ? id.hashCode() : 0;
+<font color="#555555">087 </font>  }
+<font color="#555555">088 </font>
+<font color="#555555">089 </font>  <font color="#0000AA">public</font> String toString()
+<font color="#555555">090 </font>  {
+<font color="#555555">091 </font>    <font color="#0000AA">return</font> <font color="#0000FF">"Directory[id:"</font>+ id + <font color="#0000FF">", name:"</font> + name +  <font color="#0000FF">"]"</font>;
+<font color="#555555">092 </font>  }
+<font color="#555555">093 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 47.14: Modellieren von 1:N-Referenzen</i></p>
+
+<p>
+Genau wie die Basisattribute einer Tabelle werden auch die referenzierten
+Datens&auml;tze &uuml;ber Annotationen mit den notwendigen Metainformationen
+verkn&uuml;pft. F&uuml;r eine 1:N-Relation gen&uuml;gt dabei die Angabe
+von <a name="ixa103490"><a href="index_0.html#ixb102616"><font color=#000080><tt>@OneToMany</tt></font></a></a>
+in <a href="k100304.html#persistenz1zunreferenz.a">Zeile 024</a>.
+Mit dem Attribut <font color="#000077"><tt>cascade</tt></font> wird
+das Persistenz-Framework angewiesen, bestimmte Datenbankoperationen
+auch auf die referenzierten Datens&auml;tze anzuwenden. &Uuml;ber
+den Parameter <a name="ixa103491"><a href="index_c.html#ixb102617"><font color=#000080><tt>CascadeType.ALL</tt></font></a></a>
+in <a href="k100304.html#persistenz1zunreferenz">Listing 47.14</a>
+weisen wir das Framework beispielsweise an, alle Datenbankoperationen
+auf Verzeichnisebene auch auf die anh&auml;ngenden Dateien anzuwenden.
+
+<p>
+Da die Dateiobjekte zu einem Verzeichnis jedoch nicht als unsortiertes
+<font color="#000077"><tt>java.util.Set</tt></font>, sondern als nach
+Namen geordnete Liste ausgelesen werden sollen, f&uuml;gen wir in
+<a href="k100304.html#persistenz1zunreferenz.b">Zeile 025</a> noch
+eine zweite Annotation <a name="ixa103492"><a href="index_0.html#ixb102618"><font color=#000080><tt>@OrderBy</tt></font></a></a>
+hinzu. Sie bewirkt, dass die Datens&auml;tze nach dem Namen der referenzierten
+Java Bean sortiert werden. Die Bezeichnung der Datenbankspalte, unter
+der der Name einer Datei abgespeichert wird, spielt hier keine Rolle,
+es z&auml;hlt einzig der Name des Attributs in der Java Bean <font color="#000077"><tt>Datei</tt></font>.
+
+<p>
+Zu guter Letzt wollen wir verhindern, dass es bei einem Zugriff auf
+die <font color="#000077"><tt>Datei</tt></font>-Objekte eines <font color="#000077"><tt>Verzeichnis</tt></font>
+aufgrund einer nicht initialisierten Liste zu einer <font color="#000077"><tt>NullPointerException</tt></font>
+kommt. Deshalb erweitern wir den &ouml;ffentlichen Konstruktor und
+initialisieren die Liste in <a href="k100304.html#persistenz1zunreferenz.c">Zeile 042</a>.
+Bemerkenswert an dieser Stelle ist, dass wir den vom Persistenz-Framework
+verwendeten Minimalkonstruktor in <a href="k100304.html#persistenz1zunreferenz.d">Zeile 031</a>
+nicht entsprechend erweitern m&uuml;ssen: Auch wenn zu einem Verzeichnis
+keine Dateien existieren, wird das Persistenz-Framework refenzierende
+Collections stets leer initialisieren. <a name="persistencetabledbreferenz"></a>
+
+<p>
+<table cols=2 border width=66%>
+
+<tr>
+<td valign=top align=left width=33%><b>Annotation </b></td>
+<td valign=top align=left width=66%><b>Beschreibung</b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103490"><a href="index_0.html#ixb102616"><font color=#000080><tt>@OneToMany</tt></font></a></a>
+</td>
+<td valign=top align=left>Modelliert eine 1:N-Relation</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103493"><a href="index_0.html#ixb102619"><font color=#000080><tt>@ManyToOne</tt></font></a></a>
+</td>
+<td valign=top align=left>Modelliert eine N:1-Relation</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103494"><a href="index_0.html#ixb102620"><font color=#000080><tt>@OneToOne</tt></font></a></a>
+</td>
+<td valign=top align=left>Modelliert eine 1:1-Relation</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103495"><a href="index_0.html#ixb102621"><font color=#000080><tt>@ManyToMany</tt></font></a></a>
+</td>
+<td valign=top align=left>Modelliert eine M:N-Relation</td></tr>
+</table>
+<p><i>
+Tabelle 47.6: Annotationen zur Modellierung von Datenbankreferenzen</i></p>
+
+<p>
+Alle Annotationen aus <a href="k100304.html#persistencetabledbreferenz">Tabelle 47.6</a>
+k&ouml;nnen &uuml;ber eine Reihe von Attributen konfiguriert werden:
+<a name="persistencetabledbreferenzatts"></a>
+<p>
+<table cols=2 border width=66%>
+
+<tr>
+<td valign=top align=left width=25%><b>Attribut </b></td>
+<td valign=top align=left width=75%><b>Beschreibung</b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103496"><a href="index_c.html#ixb102622"><font color=#000080><tt>cascade</tt></font></a></a>
+</td>
+<td valign=top align=left>Welche Datenbankoperationen sollen auch
+auf das referenzierte Objekt angewendet werden? </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103497"><a href="index_f.html#ixb102623"><font color=#000080><tt>fetch</tt></font></a></a>
+</td>
+<td valign=top align=left>Wann sollen die referenzierten Datens&auml;tze
+geladen werden? <a name="ixa103498"><a href="index_f.html#ixb102624"><font color=#000080><tt>FetchType.EAGER</tt></font></a></a>
+l&auml;dt die Datens&auml;tze sofort, <a name="ixa103499"><a href="index_f.html#ixb102625"><font color=#000080><tt>FetchType.LAZY</tt></font></a></a>
+l&auml;dt die Datens&auml;tze nur bei Bedarf nach.</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103500"><a href="index_m.html#ixb102626"><font color=#000080><tt>mappedBy</tt></font></a></a>
+</td>
+<td valign=top align=left>Name des Attributs im referenzierten Datensatz,
+das die inverse Relation abbildet. Wird nur ben&ouml;tigt, wenn mehrere
+R&uuml;ckreferenzen in Frage kommen.</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103501"><a href="index_t.html#ixb102627"><font color=#000080><tt>targetEntity</tt></font></a></a>
+</td>
+<td valign=top align=left>Typ des referenzierten Datensatzes. Wird
+nur ben&ouml;tigt, wenn dies nicht aus der typisierten Liste hervorgeht.</td></tr>
+</table>
+<p><i>
+Tabelle 47.7: Attribute der Annotationen f&uuml;r Datenbankreferenzen</i></p>
+
+<p>
+Wir k&ouml;nnen auch die inverse Relation von einer Datei auf das
+zugeh&ouml;rige Verzeichnis abbilden, also eine <a name="ixa103493"><a href="index_0.html#ixb102619"><font color=#000080><tt>@ManyToOne</tt></font></a></a>-Beziehung:
+<a name="persistenznzu1referenz"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Datei.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> javax.persistence.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.util.Date;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#00AA00">/**
+<font color="#555555">007 </font> * Diese Klasse repr&auml;sentiert die Tabelle 'file' der 'DirDB'
+<font color="#555555">008 </font> * Jede Instanz der Klasse repr&auml;sentiert wiederum einen
+<font color="#555555">009 </font> * Datensatz
+<font color="#555555">010 </font> */</font>
+<font color="#555555">011 </font>
+<font color="#555555">012 </font>@Entity
+<font color="#555555">013 </font>@Table( name = <font color="#0000FF">"file"</font> )
+<font color="#555555">014 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Datei 
+<font color="#555555">015 </font>{
+<font color="#555555">016 </font>  @Id
+<font color="#555555">017 </font>  @GeneratedValue
+<font color="#555555">018 </font>  @Column(name = <font color="#0000FF">"fid"</font>)
+<font color="#555555">019 </font>  <font color="#0000AA">private</font> Integer id;
+<font color="#555555">020 </font>
+<font color="#555555">021 </font>  @Column(name = <font color="#0000FF">"fname"</font>)                                 
+<font color="#555555">022 </font>  <font color="#0000AA">private</font> String name;
+<font color="#555555">023 </font>
+<font color="#555555">024 </font>  @Column(name = <font color="#0000FF">"dsize"</font>)
+<font color="#555555">025 </font>  <font color="#0000AA">private</font> Integer size;
+<font color="#555555">026 </font>
+<font color="#555555">027 </font>  @Column(name = <font color="#0000FF">"fdate"</font>)
+<font color="#555555">028 </font>  <font color="#0000AA">private</font> Date date;
+<font color="#555555">029 </font>
+<font color="#555555">030 </font>  @ManyToOne
+<font color="#555555">031 </font>  @JoinColumn(name = <font color="#0000FF">"did"</font>)
+<font color="#555555">032 </font>  <font color="#0000AA">private</font> Verzeichnis directory;
+<font color="#555555">033 </font>
+<font color="#555555">034 </font>  <font color="#00AA00">/**
+<font color="#555555">035 </font>   * Gesch&uuml;tzter Minimalkonstruktor zur Verwendung von Hibernate
+<font color="#555555">036 </font>   */</font>
+<font color="#555555">037 </font>  <font color="#0000AA">protected</font> Datei() {
+<font color="#555555">038 </font>  }
+<font color="#555555">039 </font>
+<font color="#555555">040 </font>  <font color="#00AA00">/**
+<font color="#555555">041 </font>   * &Ouml;ffentlicher Konstruktor zur Verwendung durch den Entwickler.
+<font color="#555555">042 </font>   * Dieser Konstruktor definiert alle Pflichtfelder der JavaBean.
+<font color="#555555">043 </font>   * @param name - Name der Datei
+<font color="#555555">044 </font>   */</font>
+<font color="#555555">045 </font>  <font color="#0000AA">public</font> Datei(String name)
+<font color="#555555">046 </font>  {
+<font color="#555555">047 </font>    <font color="#006699">this</font>.name = name;
+<font color="#555555">048 </font>  }
+<font color="#555555">049 </font>
+<font color="#555555">050 </font>  <font color="#0000AA">public</font> Integer getId()
+<font color="#555555">051 </font>  {
+<font color="#555555">052 </font>    <font color="#0000AA">return</font> id;
+<font color="#555555">053 </font>  }
+<font color="#555555">054 </font>  
+<font color="#555555">055 </font>  <font color="#0000AA">protected</font> <font color="#006699">void</font> setId(Integer id)
+<font color="#555555">056 </font>  {
+<font color="#555555">057 </font>    <font color="#006699">this</font>.id = id;
+<font color="#555555">058 </font>  }
+<font color="#555555">059 </font>
+<font color="#555555">060 </font>  <font color="#0000AA">public</font> String getName()
+<font color="#555555">061 </font>  {
+<font color="#555555">062 </font>    <font color="#0000AA">return</font> name;
+<font color="#555555">063 </font>  }
+<font color="#555555">064 </font>  
+<font color="#555555">065 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setName(String name)
+<font color="#555555">066 </font>  {
+<font color="#555555">067 </font>    <font color="#006699">this</font>.name = name;
+<font color="#555555">068 </font>  }
+<font color="#555555">069 </font>
+<font color="#555555">070 </font>  <font color="#0000AA">public</font> Integer getSize()
+<font color="#555555">071 </font>  {
+<font color="#555555">072 </font>    <font color="#0000AA">return</font> size;
+<font color="#555555">073 </font>  }
+<font color="#555555">074 </font>  
+<font color="#555555">075 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setSize(Integer size)
+<font color="#555555">076 </font>  {
+<font color="#555555">077 </font>    <font color="#006699">this</font>.size = size;
+<font color="#555555">078 </font>  }
+<font color="#555555">079 </font>
+<font color="#555555">080 </font>  <font color="#0000AA">public</font> Date getDate()
+<font color="#555555">081 </font>  {
+<font color="#555555">082 </font>    <font color="#0000AA">return</font> date;
+<font color="#555555">083 </font>  }
+<font color="#555555">084 </font>  
+<font color="#555555">085 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setDate(Date date)
+<font color="#555555">086 </font>  {
+<font color="#555555">087 </font>    <font color="#006699">this</font>.date = date;
+<font color="#555555">088 </font>  }
+<font color="#555555">089 </font>
+<font color="#555555">090 </font>  <font color="#0000AA">public</font> Verzeichnis getDirectory() 
+<font color="#555555">091 </font>  {
+<font color="#555555">092 </font>    <font color="#0000AA">return</font> directory;
+<font color="#555555">093 </font>  }
+<font color="#555555">094 </font>  
+<font color="#555555">095 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setDirectory(Verzeichnis directory) 
+<font color="#555555">096 </font>  {
+<font color="#555555">097 </font>    <font color="#006699">this</font>.directory = directory;
+<font color="#555555">098 </font>  }
+<font color="#555555">099 </font>    
+<font color="#555555">100 </font>  <font color="#0000AA">public</font> <font color="#006699">boolean</font> equals(Object o)
+<font color="#555555">101 </font>  {
+<font color="#555555">102 </font>    <font color="#0000AA">if</font> (<font color="#006699">this</font> == o) <font color="#0000AA">return</font> <font color="#006699">true</font>;
+<font color="#555555">103 </font>    <font color="#0000AA">if</font> (o == <font color="#006699">null</font> || getClass() != o.getClass()) <font color="#0000AA">return</font> <font color="#006699">false</font>;
+<font color="#555555">104 </font>
+<font color="#555555">105 </font>    Datei file = (Datei) o;
+<font color="#555555">106 </font>    <font color="#0000AA">return</font> !(id != <font color="#006699">null</font> ? !id.equals(file.id) : file.id != <font color="#006699">null</font>);
+<font color="#555555">107 </font>  }
+<font color="#555555">108 </font>
+<font color="#555555">109 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> hashCode()
+<font color="#555555">110 </font>  {
+<font color="#555555">111 </font>    <font color="#0000AA">return</font> id != <font color="#006699">null</font> ? id.hashCode() : 0;
+<font color="#555555">112 </font>  }
+<font color="#555555">113 </font>
+<font color="#555555">114 </font>  <font color="#0000AA">public</font> String toString()
+<font color="#555555">115 </font>  {
+<font color="#555555">116 </font>    <font color="#0000AA">return</font> <font color="#0000FF">"File[id:"</font>+ id + <font color="#0000FF">", name:"</font> + name +  <font color="#0000FF">"]"</font>;
+<font color="#555555">117 </font>  }
+<font color="#555555">118 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Datei.java"><font color="#000055" size=-1>Datei.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 47.15: Modellieren von N:1-Referenzen</i></p>
+
+<p>
+Nun sind die beiden Persistenz Beans <font color="#000077"><tt>Verzeichnis</tt></font>
+und <font color="#000077"><tt>Datei</tt></font> miteinander verkn&uuml;pft
+und referenzieren sich in beide Richtungen. Aus Sicht der Java-Objekte
+k&ouml;nnen wir jetzt auf einfache Weise die Dateien eines Verzeichnisses
+ausgeben oder das Elternverzeichnis einer Datei ermitteln. Dank der
+Annotationen des Persistenz-Frameworks k&ouml;nnen wir uns dabei ganz
+auf die objektorientierte Sichtweise konzentrieren und die Realisierung
+mittels Fremdschl&uuml;sseln vollst&auml;ndig vergessen. 
+
+<p>
+Das folgende Listing zeigt, wie die miteinander verkn&uuml;pften Datens&auml;tze
+mit Hilfe des <font color="#000077"><tt>EntityManager</tt></font>
+gespeichert werden k&ouml;nnen. Hierbei machen wir uns das Attribut
+<font color="#000077"><tt>cascade</tt></font> aus <a href="k100304.html#persistenz1zunreferenz">Listing 47.14</a>
+zu nutze, das den Aufruf von <font color="#000077"><tt>persist</tt></font>
+auch auf die referenzierten <font color="#000077"><tt>Datei</tt></font>-Objekte
+anwendet. 
+<a name="persistenzanlegendir3"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4716.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> javax.persistence.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4716
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#00AA00">//Erzeugen einer EntityManagerFactory mit Hilfe des symbolischen</font>
+<font color="#555555">010 </font>    <font color="#00AA00">//Namens aus dem Persistenz Descriptor (persistence.xml)</font>
+<font color="#555555">011 </font>    EntityManagerFactory emf =
+<font color="#555555">012 </font>      Persistence.createEntityManagerFactory(<font color="#0000FF">"persistenceExample"</font>);
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>    <font color="#00AA00">//Erzeugen eines EntityManagers f&uuml;r den Zugriff auf</font>
+<font color="#555555">015 </font>    <font color="#00AA00">//die Datenbank</font>
+<font color="#555555">016 </font>    EntityManager manager = emf.createEntityManager();
+<font color="#555555">017 </font>
+<font color="#555555">018 </font>    <font color="#00AA00">//Beginn einer neuen Transanktion</font>
+<font color="#555555">019 </font>    EntityTransaction tx = manager.getTransaction();
+<font color="#555555">020 </font>    tx.begin();
+<font color="#555555">021 </font>
+<font color="#555555">022 </font>    <font color="#00AA00">//Erzeugen und Verkn&uuml;pfen der Java-Objekte</font>
+<font color="#555555">023 </font>    Verzeichnis dir = <font color="#0000AA">new</font> Verzeichnis(<font color="#0000FF">"temp"</font>);
+<font color="#555555">024 </font>
+<font color="#555555">025 </font>    Datei fileTest = <font color="#0000AA">new</font> Datei(<font color="#0000FF">"test.txt"</font>);
+<font color="#555555">026 </font>    dir.getFiles().add(fileTest);
+<font color="#555555">027 </font>    fileTest.setDirectory(dir);
+<font color="#555555">028 </font>
+<font color="#555555">029 </font>    Datei fileInfo = <font color="#0000AA">new</font> Datei(<font color="#0000FF">"info.txt"</font>);
+<font color="#555555">030 </font>    dir.getFiles().add(fileInfo);
+<font color="#555555">031 </font>    fileInfo.setDirectory(dir);
+<font color="#555555">032 </font>
+<font color="#555555">033 </font>    <font color="#00AA00">//Speichern des Verzeichnisses und der anh&auml;ngenden Objekte</font>
+<font color="#555555">034 </font>    manager.persist(dir);
+<font color="#555555">035 </font>
+<font color="#555555">036 </font>    <font color="#00AA00">//Abschluss der Transaktion mit einem Commit</font>
+<font color="#555555">037 </font>    tx.commit();
+<font color="#555555">038 </font>
+<font color="#555555">039 </font>    <font color="#00AA00">//Freigabe der Ressourcen des EntityManagers</font>
+<font color="#555555">040 </font>    manager.close();
+<font color="#555555">041 </font>
+<font color="#555555">042 </font>    <font color="#00AA00">//Schlie&szlig;en der EntityManagerFactory und Freigeben der</font>
+<font color="#555555">043 </font>    <font color="#00AA00">//belegten Ressourcen</font>
+<font color="#555555">044 </font>    emf.close();
+<font color="#555555">045 </font>  }
+<font color="#555555">046 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4716.java"><font color="#000055" size=-1>Listing4716.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 47.16: Anlegen mehrerer verkn&uuml;pfter Datens&auml;tze</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100300.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100303.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100305.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100307.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

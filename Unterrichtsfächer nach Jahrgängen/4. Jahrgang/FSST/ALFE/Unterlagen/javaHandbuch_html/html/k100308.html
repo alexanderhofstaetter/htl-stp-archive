@@ -1,0 +1,694 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100307.html;106,k100307.html;107,k100309.html;108,k100313.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100307.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100307.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100309.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100313.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 48 - Netzwerkprogrammierung
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id048001"></a>
+<h2>48.1 Grundlagen der Netzwerkprogrammierung </h2>
+<hr>
+<ul>
+<li><a href="k100308.html#sectlevel2id048001">48.1 Grundlagen der Netzwerkprogrammierung</a>
+<ul>
+<li><a href="k100308.html#sectlevel3id048001001">48.1.1 Was ist ein Netzwerk?</a>
+<li><a href="k100308.html#sectlevel3id048001002">48.1.2 Protokolle</a>
+<li><a href="k100308.html#sectlevel3id048001003">48.1.3 Adressierung von Daten</a>
+<ul>
+<li><a href="k100308.html#sectlevel4id048001003001">IP-Adressen</a>
+<li><a href="k100308.html#sectlevel4id048001003002">Domain-Namen</a>
+</ul>
+<li><a href="k100308.html#portsapplikationen">48.1.4 Ports und Applikationen</a>
+<li><a href="k100308.html#requestforcomments">48.1.5 Request for Comments</a>
+<li><a href="k100308.html#sectlevel3id048001006">48.1.6 Firewalls und Proxys</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id048001001"></a>
+<h3>48.1.1 Was ist ein Netzwerk? </h3>
+
+<p>
+Man k&ouml;nnte ganz plakativ sagen, dass ein Netzwerk die Verbindung
+zwischen zwei oder mehr Computern ist, um Daten miteinander auszutauschen.
+Das ist nat&uuml;rlich eine sehr vereinfachte Darstellung, die am
+besten in die Anfangszeit der Entstehung von Computernetzen passt.
+Heutzutage gibt es eine Vielzahl von Anwendungen, die auf dem Austausch
+von Daten &uuml;ber ein Netzwerk basieren. Zu ihnen z&auml;hlen beispielsweise:
+<ul>
+<li>Ein Anwender m&ouml;chte auf eine Datei zugreifen, die ein anderer
+Anwender erstellt hat.
+<li>Mehrere Arbeitspl&auml;tze sollen auf einen gemeinsamen Drucker
+oder ein zentrales Faxger&auml;t zugreifen.
+<li>Beim Booten sollen sich PC-Arbeitspl&auml;tze die aktuelle Uhrzeit
+von einem Server im Netz holen.
+<li>Das Intranet eines Unternehmens gibt den Angestellten Zugriff
+auf oft ben&ouml;tigte Informationen.
+<li>&Uuml;ber einen Internetzugang soll eine elektronische Mail an
+einen Bekannten oder Gesch&auml;ftspartner in einem anderen Teil der
+Welt verschickt werden.
+<li>Ein Wissenschaftler m&ouml;chte ein Experiment auf einem weit
+entfernten Hochleistungsrechner laufen lassen.
+<li>Ein Dutzend Rechner sollen zur Leistungssteigerung in einem Cluster
+verbunden werden.
+<li>Das lokale Netz eines Unternehmens wird zur &Uuml;bertragung von
+Sprach- und Bilddaten verwendet.
+<li>In einem Chatroom treffen sich Interessierte aus der ganzen Welt,
+um zeitgleich &uuml;ber ein gemeinsames Thema zu diskutieren.
+</ul>
+
+<p>
+So vielf&auml;ltig wie diese Anwendungen ist auch die daf&uuml;r erforderliche
+Hard- und Softwaretechnik. Das Thema &#187;Computernetze&#171; hat
+in den letzten Jahren stark an Dynamik und Umfang zugenommen. Es gibt
+heute eigene Studieng&auml;nge, deren Schwerpunkt auf der Vernetzung
+von Computersystemen liegt. Fast jedes gr&ouml;&szlig;ere Unternehmen
+besch&auml;ftigt Mitarbeiter, die sich ausschlie&szlig;lich um den
+Betrieb und die Erweiterung der unternehmenseigenen Netze und ihrer
+Anbindung an &ouml;ffentliche Netze k&uuml;mmern. 
+
+<!-- Section -->
+
+<a name="sectlevel3id048001002"></a>
+<h3>48.1.2 Protokolle </h3>
+
+<p>
+Um &uuml;berhaupt Daten zwischen zwei oder mehr Partnern austauschen
+zu k&ouml;nnen, m&uuml;ssen sich die Teilnehmer auf ein gemeinsames
+<a name="ixa103511"><i>Protokoll</i></a> geeinigt haben. Als <i>Protokoll</i>
+bezeichnet man die Menge aller Regeln, die notwendig sind, um einen
+kontrollierten und eindeutigen Verbindungsaufbau, Datenaustausch und
+Verbindungsabbau gew&auml;hrleisten zu k&ouml;nnen. Es gibt sehr viele
+Protokolle mit sehr unterschiedlichen Anspr&uuml;chen. Ein weitverbreitetes
+Architekturmodell, das <a name="ixa103512"><i>ISO/OSI-7-Schichten-Modell</i></a>,
+unterteilt sie in Abh&auml;ngigkeit von ihrem Abstraktionsgrad in
+sieben Schichten (siehe <a href="k100308.html#isoosimodell">Abbildung 48.1</a>).
+<p>
+<a name="isoosimodell"></a>
+<img src="images/IsoOsi7.gif">
+<p>
+
+<p><i>
+Abbildung 48.1: Das ISO/OSI-7-Schichten-Modell</i></p>
+
+<p>
+Die derzeit in Java verf&uuml;gbaren Netzwerkf&auml;higkeiten basieren
+alle auf den Internetprotokollen <a name="ixa103513"><i>TCP/IP</i></a>
+(bzw. <a name="ixa103514"><i>TCP/UDP</i></a>). Wir wollen uns in diesem
+Kapitel ausschlie&szlig;lich mit der TCP/IP-Familie von Protokollen
+besch&auml;ftigen. Hierf&uuml;r wird h&auml;ufig eine etwas vereinfachte
+Unterteilung in vier Ebenen vorgenommen (siehe <a href="k100308.html#vierebenenmodell">Abbildung 48.2</a>):
+<ul>
+<li>Die unterste Ebene repr&auml;sentiert die physikalischen Ger&auml;te.
+Sie wird durch die Netzwerkhardware und -leitungen und die unmittelbar
+darauf laufenden Protokolle wie beispielsweise <a name="ixa103515"><i>Ethernet</i></a>,
+<a name="ixa103516"><i>FDDI</i></a> oder <a name="ixa103517"><i>ATM</i></a>
+repr&auml;sentiert.
+<li>Die zweite Ebene repr&auml;sentiert die <a name="ixa103518"><i>Netzwerkschicht</i></a>.
+Sie wird in TCP/IP-Netzen durch das <a name="ixa103519"><i>IP-Protokoll</i></a>
+und dessen Kontrollprotokolle (z.B. <a name="ixa103520"><i>ICMP</i></a>)
+implementiert.
+<li>Die dritte Ebene stellt die <a name="ixa103521"><i>Transportschicht</i></a>
+dar. Sie wird durch die Protokolle TCP bzw. UDP repr&auml;sentiert.
+<li>Die oberste Ebene steht f&uuml;r die gro&szlig;e Klasse der <a name="ixa103522"><i>Anwendungsprotokolle</i></a>.
+Hierzu z&auml;hlen beispielsweise FTP zum Filetransfer, SMTP zum Mail-Versand
+und HTTP zur &Uuml;bertragung von Webseiten.
+</ul>
+<p>
+<a name="vierebenenmodell"></a>
+<img src="images/IsoOsi4.gif">
+<p>
+
+<p><i>
+Abbildung 48.2: Das vereinfachte 4-Ebenen-Modell</i></p>
+
+<p>
+Die TCP/IP-Protokollfamilie wird sowohl in lokalen Netzen als auch
+im Internet verwendet. Alle Eigenarten des Transportwegs werden auf
+der zweiten bzw. dritten Ebene ausgeglichen und die Anwendungsprotokolle
+merken <i>prinzipiell</i> keinen Unterschied zwischen lokalen und
+globalen Verbindungen. Wurde beispielsweise ein SMTP-Mailer f&uuml;r
+den Versand von elektronischer Post in einem auf TCP/IP basierenden
+Unternehmensnetz entwickelt, so kann dieser im Prinzip auch dazu verwendet
+werden, eine Mail ins Internet zu versenden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+TCP ist ein <i>verbindungsorientiertes</i> Protokoll, das auf der
+Basis von IP eine sichere und fehlerfreie Punkt-zu-Punkt-Verbindung
+realisiert. Daneben gibt es ein weiteres Protokoll oberhalb von IP,
+das als <a name="ixa103523"><i>UDP</i></a> (<a name="ixa103524"><i>User Datagram Protocol</i></a>)
+bezeichnet wird. Im Gegensatz zu TCP ist UDP ein <i>verbindungsloses</i>
+Protokoll, bei dem die Anwendung selbst daf&uuml;r sorgen muss, dass
+Pakete fehlerfrei und in der richtigen Reihenfolge beim Empf&auml;nger
+ankommen. Sein Vorteil ist die gr&ouml;&szlig;ere Geschwindigkeit
+gegen&uuml;ber TCP. In Java wird UDP durch die Klassen <a name="ixa103525"><a href="index_d.html#ixb102651"><font color=#000080><tt>DatagramPacket</tt></font></a></a>
+und <a name="ixa103526"><a href="index_d.html#ixb102652"><font color=#000080><tt>DatagramSocket</tt></font></a></a>
+abgebildet. Wir wollen uns in diesem Abschnitt allerdings ausschlie&szlig;lich
+mit den popul&auml;reren Protokollen auf der Basis von TCP/IP besch&auml;ftigen,
+TCP/UDP wird im Folgenden nicht weiter behandelt. </td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id048001003"></a>
+<h3>48.1.3 Adressierung von Daten </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id048001003001"></a>
+<h4>IP-Adressen </h4>
+
+<p>
+Um Daten &uuml;ber ein Netzwerk zu transportieren, ist eine <i>Adressierung</i>
+dieser Daten notwendig. Der Absender muss angeben k&ouml;nnen, an
+wen die Daten zu senden sind, und der Empf&auml;nger muss erkennen
+k&ouml;nnen, von wem sie stammen. Die Adressierung in TCP/IP-Netzen
+erfolgt auf der IP-Ebene mit Hilfe einer 32-Bit langen <a name="ixa103527"><i>IP-Adresse</i></a>.
+
+<p>
+Die IP-Adresse besteht aus einer <a name="ixa103528"><i>Netzwerk-ID</i></a>
+und einer <a name="ixa103529"><i>Host-ID</i></a>. Die Host-ID gibt
+die Bezeichnung des Rechners innerhalb seines eigenen Netzwerks an
+und die Netzwerk-ID liefert die Bezeichnung des Netzwerks. Alle innerhalb
+eines Verbunds von Netzwerken sichtbaren Adressen m&uuml;ssen eindeutig
+sein; es darf also nicht zweimal dieselbe Host-ID innerhalb eines
+Netzwerks geben. Sind mehrere Netzwerke miteinander verbunden (wie
+es beispielsweise im Internet der Fall ist), m&uuml;ssen auch die
+Netzwerk-IDs innerhalb des Verbunds eindeutig sein. 
+
+<p>
+Um diese Eindeutigkeit sicherzustellen, gibt es eine zentrale Institution
+zur Vergabe von Internetadressen und -namen, das <a name="ixa103530"><i>Network Information
+Center</i></a> (kurz <a name="ixa103531"><i>NIC</i></a>).
+Die zu vergebenden Adressen werden in drei Klassen A bis C eingeteilt
+(die zus&auml;tzlich existierenden Klasse-D- und Klasse-E-Adressen
+spielen hier keine Rolle): <a name="tableid048001"></a>
+
+<p>
+<table cols=4 border width=66%>
+
+<tr>
+<td valign=top align=left width=14%><b>Klasse</b></td>
+<td valign=top align=left width=14%><b>Netzwerk-ID</b></td>
+<td valign=top align=left width=14%><b>Host-ID</b></td>
+<td valign=top align=left width=57%><b>Beschreibung</b></td></tr>
+<tr>
+<td valign=top align=left>A </td>
+<td valign=top align=left>7 Bit </td>
+<td valign=top align=left>24 Bit </td>
+<td valign=top align=left>Ein Klasse-A-Netz ist f&uuml;r sehr gro&szlig;e
+Netzbetreiber vorgesehen. Das erste Byte der Adresse liegt im Bereich
+von 0 bis 127, sein h&ouml;chstwertiges Bit ist also immer 0. Ein
+Klasse-A-Netz bietet 2<sup>24</sup> verschiedene Host-IDs innerhalb
+des Netzes. Insgesamt gibt es aber nur 128 verschiedene Klasse-A-Netze
+weltweit (tats&auml;chlich werden seit einigen Jahren keine Klasse-A-Adressen
+mehr vom NIC vergeben).</td></tr>
+<tr>
+<td valign=top align=left>B </td>
+<td valign=top align=left>14 Bit </td>
+<td valign=top align=left>16 Bit </td>
+<td valign=top align=left>Ein Klasse-B-Netz erlaubt immerhin noch
+die eindeutige Adressierung von 2<sup>16</sup> unterschiedlichen Rechnern
+innerhalb des Netzwerks. Insgesamt gibt es maximal 16384 verschiedene
+Klasse-B-Netze weltweit. Das erste Byte der Adresse liegt im Bereich
+von 128 bis 191, seine h&ouml;chstwertigen Bits haben also immer den
+Bin&auml;rwert 10.</td></tr>
+<tr>
+<td valign=top align=left>C </td>
+<td valign=top align=left>21 Bit </td>
+<td valign=top align=left>8 Bit </td>
+<td valign=top align=left>Klasse-C-Netze sind f&uuml;r kleinere Unternehmen
+vorgesehen, die nicht mehr als 256 unterschiedliche Rechner adressieren
+m&uuml;ssen. Insgesamt gibt es maximal 2097152 verschiedene Klasse-C-Netze
+weltweit. Das erste Byte der Adresse liegt im Bereich von 192 bis
+223, seine h&ouml;chstwertigen Bits haben also immer den Bin&auml;rwert
+110. Die meisten an das Internet angebundenen kleineren Unternehmen
+betreiben heute ein Klasse-C-Netz.</td></tr>
+</table>
+<p><i>
+Tabelle 48.1: Klassen von IP-Adressen</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Obwohl damit theoretisch etwa 4 Milliarden unterschiedliche Rechner
+angesprochen werden k&ouml;nnen, reichen die Adressen in der Praxis
+nicht aus. Durch die starren Grenzen sind bereits viele mittlere Unternehmen
+gezwungen, ein Klasse-B-Netz zu betreiben, weil sie die 256-Rechner-Grenze
+knapp &uuml;berschreiten oder damit rechnen, sie demn&auml;chst zu
+&uuml;berschreiten. Dadurch wird ein fester Block von 65536 Adressen
+vergeben. Um diese Probleme in Zukunft zu umgehen, werden Internetadressen
+demn&auml;chst nach dem Standard <a name="ixa103532"><i>IPv6</i></a>
+definiert werden, der eine Adressl&auml;nge von 128 Bit vorsieht.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id048001003002"></a>
+<h4>Domain-Namen </h4>
+
+<p>
+W&auml;hrend IP-Adressen f&uuml;r Computer sehr leicht zu verarbeiten
+sind, gilt das nicht unbedingt f&uuml;r die Menschen, die damit arbeiten
+m&uuml;ssen. Wer kennt schon die Telefonnummern und Ortsnetzkennzahlen
+von allen Leuten, mit denen er Telefonate zu f&uuml;hren pflegt? Um
+die Handhabung der IP-Adressen zu vereinfachen, wurde daher das <a name="ixa103533"><i>Domain
+Name System</i></a> eingef&uuml;hrt (kurz <a name="ixa103534"><i>DNS</i></a>),
+das numerischen IP-Adressen sprechende Namen wie <i>www.gkrueger.com</i>
+oder <i>java.sun.com</i> zuordnet. 
+
+<p>
+Anstelle der IP-Adresse k&ouml;nnen bei den Anwendungsprotokollen
+nun wahlweise die symbolischen Namen verwendet werden. Sie werden
+mit Hilfe von <a name="ixa103535"><i>Name-Servern</i></a> in die zugeh&ouml;rige
+IP-Adresse &uuml;bersetzt, bevor die Verbindung aufgebaut wird. Zwar
+kann sich hinter ein und derselben IP-Adresse mehr als ein Name-Server-Eintrag
+befinden. In umgekehrter Richtung ist die Zuordnung aber eindeutig,
+d.h., zu jedem symbolischen Namen kann eindeutig die zugeh&ouml;rige
+IP-Adresse (und damit das Netz und der Host) bestimmt werden, zu der
+der Name geh&ouml;rt. 
+
+<!-- Section -->
+
+<a name="portsapplikationen"></a>
+<h3>48.1.4 Ports und Applikationen </h3>
+
+<p>
+Die Kommunikation zwischen zwei Rechnern l&auml;uft oft auf der Basis
+einer <a name="ixa103536"><i>Client-Server-Beziehung</i></a> ab. Dabei
+kommen den beteiligten Rechnern unterschiedliche Rollen zu: 
+<ul>
+<li>Der Server stellt einen Dienst zur Verf&uuml;gung, der von anderen
+Rechnern genutzt werden kann. Er l&auml;uft im Hintergrund und wartet
+darauf, dass ein anderer Rechner eine Verbindung zu ihm aufbaut. Der
+Server definiert das Protokoll, mit dessen Hilfe der Datenaustausch
+erfolgt.
+<li>Ein Client ist der Nutzer von Diensten eines oder mehrerer Server.
+Er kennt die verf&uuml;gbaren Server und ihre Adressen und baut bei
+Bedarf die Verbindung zu ihnen auf. Der Client h&auml;lt sich an das
+vom Server vorgegebene Protokoll, um die Daten auszutauschen.
+</ul>
+
+<p>
+Ein typisches Beispiel f&uuml;r eine Client-Server-Verbindung ist
+der Seitenabruf im World Wide Web. Der Browser fungiert als Client,
+der nach Aufforderung durch den Anwender eine Verbindung zum Webserver
+aufbaut und eine Seite anfordert. Diese wird vom Server von seiner
+Festplatte geladen oder dynamisch generiert und an den Browser &uuml;bertragen.
+Dieser analysiert die Seite und stellt sie auf dem Bildschirm dar.
+Enth&auml;lt die Seite Image-, Applet- oder Frame-Dateien, werden
+sie in gleicher Weise beim Server abgerufen und in die Seite integriert.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+In der Praxis ist die Kommunikationsbeziehung nicht immer so einfach
+wie hier dargestellt. Es gibt insbesondere auch symmetrische Kommunikationsbeziehungen,
+die nicht dem Client-Server-Modell entsprechen. Zudem kann ein Server
+auch Client eines anderen Servers sein. Auf diese Weise k&ouml;nnen
+mehrstufige Client-Server-Beziehungen entstehen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Auf einem Host laufen meist unterschiedliche Serveranwendungen, die
+noch dazu von mehreren Clients gleichzeitig benutzt werden k&ouml;nnen.
+Um die Server voneinander unterscheiden zu k&ouml;nnen, gibt es ein
+weiteres Adressmerkmal, die <a name="ixa103537"><i>Port-Nummer</i></a>.
+Sie wird oberhalb von IP auf der Ebene des Transportprotokolls definiert
+(also in TCP bzw. UDP) und gibt die Server-Anwendung an, mit der ein
+Client kommunizieren will. Port-Nummern sind positive Ganzzahlen im
+Bereich von 0 bis 65535. Port-Nummern im Bereich von 0 bis 1023 sind
+f&uuml;r Anwendungen mit Superuser-Rechten reserviert. Jeder Servertyp
+hat seine eigene Port-Nummer, viele davon sind zu Quasi-Standards
+geworden. So l&auml;uft beispielsweise ein SMTP-Server meist auf Port
+25, ein FTP-Server auf Port 21 und ein HTTP-Server auf Port 80. <a href="k100308.html#portnummern">Tabelle 48.2</a>
+gibt eine &Uuml;bersicht der auf den meisten UNIX-Systemen verf&uuml;gbaren
+Server und ihrer Port-Nummern. <a name="portnummern"></a>
+
+<p>
+<table cols=4 border width=100%>
+
+<tr>
+<td valign=top align=left width=14%><b>Name </b></td>
+<td valign=top align=left width=14%><b>Port</b></td>
+<td valign=top align=left width=14%><b>Transport</b></td>
+<td valign=top align=left width=57%><b>Beschreibung</b></td></tr>
+<tr>
+<td valign=top align=left>echo </td>
+<td valign=top align=left>7 </td>
+<td valign=top align=left>tcp/udp </td>
+<td valign=top align=left>Gibt jede Zeile zur&uuml;ck, die der Client
+sendet</td></tr>
+<tr>
+<td valign=top align=left>discard </td>
+<td valign=top align=left>9 </td>
+<td valign=top align=left>tcp/udp </td>
+<td valign=top align=left>Ignoriert jede Zeile, die der Client sendet</td></tr>
+<tr>
+<td valign=top align=left>daytime </td>
+<td valign=top align=left>13 </td>
+<td valign=top align=left>tcp/udp </td>
+<td valign=top align=left>Liefert ASCII-String mit Datum und Uhrzeit</td></tr>
+<tr>
+<td valign=top align=left>chargen </td>
+<td valign=top align=left>19 </td>
+<td valign=top align=left>tcp/udp </td>
+<td valign=top align=left>Generiert ununterbrochen Zeichen</td></tr>
+<tr>
+<td valign=top align=left>ftp </td>
+<td valign=top align=left>21 </td>
+<td valign=top align=left>tcp </td>
+<td valign=top align=left>Versenden und Empfangen von Dateien</td></tr>
+<tr>
+<td valign=top align=left>telnet </td>
+<td valign=top align=left>23 </td>
+<td valign=top align=left>tcp </td>
+<td valign=top align=left>Interaktive Session mit entferntem Host</td></tr>
+<tr>
+<td valign=top align=left>smtp </td>
+<td valign=top align=left>25 </td>
+<td valign=top align=left>tcp </td>
+<td valign=top align=left>Versenden von E-Mails</td></tr>
+<tr>
+<td valign=top align=left>time </td>
+<td valign=top align=left>37 </td>
+<td valign=top align=left>tcp/udp </td>
+<td valign=top align=left>Liefert die aktuelle Uhrzeit als Anzahl
+der Sekunden seit 1.1.1900</td></tr>
+<tr>
+<td valign=top align=left>whois </td>
+<td valign=top align=left>43 </td>
+<td valign=top align=left>tcp </td>
+<td valign=top align=left>Einfacher Namensservice</td></tr>
+<tr>
+<td valign=top align=left>tftp </td>
+<td valign=top align=left>69 </td>
+<td valign=top align=left>udp </td>
+<td valign=top align=left>Vereinfachte Variante von FTP auf UDP-Basis</td></tr>
+<tr>
+<td valign=top align=left>gopher </td>
+<td valign=top align=left>70 </td>
+<td valign=top align=left>tcp/udp </td>
+<td valign=top align=left>Quasi-Vorg&auml;nger von WWW</td></tr>
+<tr>
+<td valign=top align=left>finger </td>
+<td valign=top align=left>79 </td>
+<td valign=top align=left>tcp </td>
+<td valign=top align=left>Liefert Benutzerinformationen</td></tr>
+<tr>
+<td valign=top align=left>www </td>
+<td valign=top align=left>80 </td>
+<td valign=top align=left>tcp/udp </td>
+<td valign=top align=left>Der Webserver</td></tr>
+<tr>
+<td valign=top align=left>pop3 </td>
+<td valign=top align=left>110 </td>
+<td valign=top align=left>tcp/udp </td>
+<td valign=top align=left>&Uuml;bertragen von Mails</td></tr>
+<tr>
+<td valign=top align=left>nntp </td>
+<td valign=top align=left>119 </td>
+<td valign=top align=left>tcp </td>
+<td valign=top align=left>&Uuml;bertragen von Usenet-News</td></tr>
+<tr>
+<td valign=top align=left>snmp </td>
+<td valign=top align=left>161 </td>
+<td valign=top align=left>udp </td>
+<td valign=top align=left>Netzwerkmanagement</td></tr>
+<tr>
+<td valign=top align=left>rmi </td>
+<td valign=top align=left>1099</td>
+<td valign=top align=left>tcp </td>
+<td valign=top align=left>Remote Method Invocation</td></tr>
+</table>
+<p><i>
+Tabelle 48.2: Standard-Port-Nummern</i></p>
+
+
+<!-- Section -->
+<a name="requestforcomments"></a>
+<h3>48.1.5 Request for Comments </h3>
+
+<p>
+Die meisten der allgemein zug&auml;nglichen Protokolle sind in sogenannten
+<a name="ixa103538"><i>Request For Comments</i></a> (kurz <a name="ixa103539"><i>RFCs</i></a>)
+beschrieben. RFCs sind Dokumente des <a name="ixa103540"><i>Internet Activity Board</i></a>
+(<a name="ixa103541"><i>IAB</i></a>), in denen Entw&uuml;rfe, Empfehlungen
+und Standards zum Internet beschrieben sind. Auch Anmerkungen, Kommentare
+oder andere informelle Erg&auml;nzungen sind darin zu finden und auch
+Humor kommt in den RFCs nicht zu kurz, wie etwa das <i>Hypertext Coffee
+Pot Control Protocol (HTCPCP)</i> in RFC 2324 oder das 2004 ver&ouml;ffentlichte
+&#187;Allwissenheitsprotokoll&#171;, welches es der US-amerikanischen
+Regierung erm&ouml;glichen sollte, alle Arten von Computerkriminalit&auml;t
+zu entdecken und mit den Worten &#187;Good Luck&#171; endet. 
+
+<p>
+Insgesamt gibt es derzeit &uuml;ber 5000 RFCs, einige von ihnen wurden
+zu Internetstandards erhoben. Alle bekannten Protokolle, wie beispielsweise
+FTP, SMTP, NNTP, MIME, DNS, HMTL oder HTTP, sind in einschl&auml;gigen
+RFCs beschrieben. Sie sind nicht immer einfach zu lesen, aber oftmals
+die einzige verl&auml;ssliche Quelle f&uuml;r die Implementierung
+eines bestimmten Protokolls. Es gibt viele Server im Internet, die
+RFCs zur Verf&uuml;gung stellen. Zu den bekanntesten z&auml;hlt beispielsweise
+der RFC Editor unter <a href="http://www.rfc-editor.org/">http://www.rfc-editor.org/</a>.
+<a name="tableid048003"></a>
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=20%><b>Protokoll/Dokument </b></td>
+<td valign=top align=left width=80%><b>Zust&auml;ndige RFCs</b></td></tr>
+<tr>
+<td valign=top align=left>IP </td>
+<td valign=top align=left>RFC791, RFC1060</td></tr>
+<tr>
+<td valign=top align=left>ICMP </td>
+<td valign=top align=left>RFC792</td></tr>
+<tr>
+<td valign=top align=left>TCP </td>
+<td valign=top align=left>RFC793</td></tr>
+<tr>
+<td valign=top align=left>UDP </td>
+<td valign=top align=left>RFC768</td></tr>
+<tr>
+<td valign=top align=left>DNS </td>
+<td valign=top align=left>RFC1034, RFC1035, RFC2136, RFC974, RFC1101,
+RFC1812</td></tr>
+<tr>
+<td valign=top align=left>ARP / RARP </td>
+<td valign=top align=left>RFC826, RFC903</td></tr>
+<tr>
+<td valign=top align=left>SMTP </td>
+<td valign=top align=left>RFC821, RFC822</td></tr>
+<tr>
+<td valign=top align=left>MIME </td>
+<td valign=top align=left>RFC2045 - RFC2049</td></tr>
+<tr>
+<td valign=top align=left>Content Types </td>
+<td valign=top align=left>RFC1049</td></tr>
+<tr>
+<td valign=top align=left>POP3 </td>
+<td valign=top align=left>RFC1939</td></tr>
+<tr>
+<td valign=top align=left>NNTP </td>
+<td valign=top align=left>RFC977</td></tr>
+<tr>
+<td valign=top align=left>HTML 3.2 </td>
+<td valign=top align=left>Internal Draft</td></tr>
+<tr>
+<td valign=top align=left>HTML 2.0 </td>
+<td valign=top align=left>RFC1866</td></tr>
+<tr>
+<td valign=top align=left>HTTP 1.0 / 1.1 </td>
+<td valign=top align=left>RFC1945, RFC2068</td></tr>
+<tr>
+<td valign=top align=left>FTP </td>
+<td valign=top align=left>RFC959, RFC765</td></tr>
+<tr>
+<td valign=top align=left>TFTP </td>
+<td valign=top align=left>RFC1782, RFC1783, RFC1350</td></tr>
+<tr>
+<td valign=top align=left>TELNET </td>
+<td valign=top align=left>RFC854</td></tr>
+<tr>
+<td valign=top align=left>SNMP </td>
+<td valign=top align=left>RFC1157</td></tr>
+<tr>
+<td valign=top align=left>X11 </td>
+<td valign=top align=left>RFC1013</td></tr>
+<tr>
+<td valign=top align=left>NTP </td>
+<td valign=top align=left>RFC1305</td></tr>
+<tr>
+<td valign=top align=left>FINGER </td>
+<td valign=top align=left>RFC1288</td></tr>
+<tr>
+<td valign=top align=left>WHOIS </td>
+<td valign=top align=left>RFC954</td></tr>
+<tr>
+<td valign=top align=left>GOPHER </td>
+<td valign=top align=left>RFC1436</td></tr>
+<tr>
+<td valign=top align=left>ECHO </td>
+<td valign=top align=left>RFC862</td></tr>
+<tr>
+<td valign=top align=left>DISCARD </td>
+<td valign=top align=left>RFC863</td></tr>
+<tr>
+<td valign=top align=left>CHARGEN </td>
+<td valign=top align=left>RFC864</td></tr>
+<tr>
+<td valign=top align=left>DAYTIME </td>
+<td valign=top align=left>RFC867</td></tr>
+<tr>
+<td valign=top align=left>TIME </td>
+<td valign=top align=left>RFC868</td></tr>
+<tr>
+<td valign=top align=left>Assigned Numbers </td>
+<td valign=top align=left>RFC1700</td></tr>
+<tr>
+<td valign=top align=left>Internet Protocol Standards </td>
+<td valign=top align=left>RFC2400</td></tr>
+<tr>
+<td valign=top align=left>Hitchhikers Guide to the Internet</td>
+<td valign=top align=left>RFC1118</td></tr>
+</table>
+<p><i>
+Tabelle 48.3: Liste wichtiger RFCs</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id048001006"></a>
+<h3>48.1.6 Firewalls und Proxys </h3>
+
+<p>
+Nicht alle Server in einem Netzwerk sind f&uuml;r alle Clients sichtbar.
+Aufgrund von Sicherheitserw&auml;gungen wird insbesondere die Verbindung
+zwischen einem lokalen Unternehmensnetz und der Au&szlig;enwelt (z.B.
+dem Internet) besonders gesch&uuml;tzt. Dazu wird meist eine <a name="ixa103542"><i>Firewall</i></a>
+verwendet, also ein spezielles Gateway mit Filterfunktion, das Netzwerkverkehr
+nur in bestimmten Richtungen und in Abh&auml;ngigkeit von Port-Nummern,
+IP-Adressen und anderen Informationen zul&auml;sst. Mit einer Firewall
+kann beispielsweise daf&uuml;r gesorgt werden, dass nicht <i>von au&szlig;en</i>
+auf den Mail-Server (Port 25) des Unternehmens zugegriffen werden
+kann. Oder es kann verhindert werden, dass die firmeninternen Anwender
+bestimmte Webserver im Internet besuchen usw. 
+
+<p>
+Normalerweise ist es insbesondere nicht erlaubt, IP-Daten zwischen
+einem beliebigen Arbeitsplatzrechner und einem au&szlig;erhalb des
+Unternehmens liegenden Server hin- und herzusenden. Um dennoch beispielsweise
+das Anfordern von Webseiten von beliebigen Servern zu erm&ouml;glichen,
+kommuniziert der Web-Browser auf dem Arbeitsplatz mit einem <a name="ixa103543"><i>Proxy-Server</i></a>
+(kurz <i>Proxy</i>), der <i>innerhalb</i> der Firewall liegt. Anstatt
+die Seitenanfrage direkt an den Server zu schicken, wird sie an den
+Proxy &uuml;bergeben, der sie an den Server weiterleitet. Die Antwort
+des Servers wird nach Erhalt vom Proxy an den anfordernden Arbeitsplatz
+gesendet. Die Firewall muss also lediglich dem Proxy eine HTTP-Verbindung
+ins Internet gestatten, nicht allen Arbeitspl&auml;tzen. 
+
+<p>
+Ein Proxy ist also eine Art &#187;Handlungsbevollm&auml;chtigter&#171;
+(so lautet die w&ouml;rtliche &Uuml;bersetzung), der Aufgaben erledigt,
+die dem einzelnen Arbeitsplatz nicht erlaubt sind. Proxys gibt es
+auch f&uuml;r andere Zwecke, etwa zum Zugriff auf Datenbanken. Da
+beispielsweise ein Applet aus Sicherheitsgr&uuml;nden nur zu dem Server
+eine TCP/IP-Verbindung aufbauen darf, von dem es geladen wurde, kann
+es auf Daten aus einer Datenbank nur zugreifen, wenn die Datenbank
+auf demselben Host liegt wie der Webserver. Ist dies nicht der Fall,
+kann man sich mit einem Datenbankproxy auf dem Web-Host behelfen,
+der alle entsprechenden Anfragen an die Datenbank weiterleitet. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100307.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100307.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100309.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100313.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

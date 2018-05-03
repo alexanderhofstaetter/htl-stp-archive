@@ -1,0 +1,43 @@
+
+AINF 2   		C/C++ - Aufgabe 13
+__________________________________________________________________________
+
+
+C++ - Programm  "cstringdict.cpp"
+
+Mit Hilfe eines C- Stringarrays wird ein Wörterbuch erstellt.
+Das Stringarray "dict" ist über den eigenen Stringtyp "string80"
+für 20 Einträge zu definieren. 
+Die Einträge werden bei der Definition zugewiesen(initialisiert) 
+und erfolgen in der Form "deutsches Wort :  englische Übersetzung ".  
+Das Wörterbuch kann dann über einen Suchtext nach Vokabel durchsucht, 
+oder auch alphabetisch sortiert ausgegeben werden.   
+Weiters können Einträge geändert/hinzugefügt werden. 
+
+Dazu sollen folgende Funktionen definiert und verwendet werden : 
+
+      void dict_search(string80 dict[], int n, char *search, int a[])  
+	  //  sucht im Wörterbuch "dict" nach dem Suchbegriff "search" 
+	  //    string80 dict  ... Stringarray  
+      //    int n          ... Größe des Stringarrays
+      //  	char* search   ... Suchwort 
+	  //    int a[]        ... Array mit Schlüsselwerten der Fundstellen 
+
+      void dict_sort(string80 dict[], int n, int reverse ) 
+	  //  sortiert alphabetisch Wörterbuch "dict" 
+	  //    string80 dict  ... Stringarray  
+      //    int n          ... Größe des Stringarrays
+	  //    int reverse    ... ( bei 0  alphabetisch ansteigend / sonst alph. fallend )   
+
+
+      void dict_entry(string80 dict[], int n, string80 entry, int pos ) 
+	  //  Eintrag in Wörterbuch "dict" an der Stelle (Index) pos   
+	  //    string80 dict  ... Stringarray  
+      //    int n          ... Größe des Stringarrays
+      //    string80 entry ... Eintrag 
+      //    int pos        ... Position (Index) des Eintrags 
+
+
+
+
+

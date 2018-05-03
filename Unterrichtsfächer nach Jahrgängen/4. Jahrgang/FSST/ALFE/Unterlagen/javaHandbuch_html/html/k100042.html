@@ -1,0 +1,183 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100036.html;106,k100041.html;107,k100043.html;108,k100046.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100036.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100041.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100043.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100046.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 6 - Ausdr&uuml;cke
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id006006"></a>
+<h2>6.6 <a name="ixa100364">Zuweisungsoperatoren</a><a name="ixa100365"></a></h2>
+<hr>
+<ul>
+<li><a href="k100042.html#sectlevel2id006006">6.6 Zuweisungsoperatoren</a>
+</ul>
+<hr>
+
+<p>
+Auch die Zuweisungsoperatoren in Java entsprechen im Gro&szlig;en
+und Ganzen den Zuweisungsoperatoren von C und C++. Ebenso gilt die
+Zuweisung nicht als <i>Anweisung</i>, sondern als <i>Ausdruck</i>,
+der einen R&uuml;ckgabewert erzeugt. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Verwechslung der relationalen Operatoren <i>Zuweisung</i> und
+<i>Gleichheitstest</i> (<font color="#000077"><tt>=</tt></font> und
+<font color="#000077"><tt>==</tt></font>) war in C eines der Kardinalprobleme,
+in Java kann sie nicht mehr so leicht passieren. Sind beispielsweise
+<font color="#000077"><tt>a</tt></font> und <font color="#000077"><tt>b</tt></font>
+vom Typ <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>,
+so hat zwar der Ausdruck <font color="#000077"><tt>a = b</tt></font>
+einen definierten R&uuml;ckgabewert wie in C. Er darf jedoch nicht
+als Kontrollausdruck einer Schleife oder Verzweigung verwendet werden,
+da er nicht vom Typ <a href="index_b.html#ixb100071"><font color=#000080><tt>boolean</tt></font></a>
+ist. Anders als in C, wo boolesche Werte durch Ganzzahlen simuliert
+werden, schlie&szlig;t Java diese Art von Fehler also von vornherein
+aus. Nur wenn <font color="#000077"><tt>a</tt></font> und <font color="#000077"><tt>b</tt></font>
+vom Typ <a href="index_b.html#ixb100071"><font color=#000080><tt>boolean</tt></font></a>
+sind, wird das Verwechseln von Zuweisung und Gleichheitstest vom Compiler
+nicht bemerkt.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Ebenso wie in C k&ouml;nnen auch in Java numerische bzw. bitweise
+Operatoren mit der Zuweisung kombiniert werden. Der Ausdruck <font color="#000077"><tt>a+=b</tt></font>
+addiert <font color="#000077"><tt>b</tt></font> zu <font color="#000077"><tt>a</tt></font>,
+speichert das Ergebnis in <font color="#000077"><tt>a</tt></font>
+und liefert es ebenfalls als R&uuml;ckgabewert zur&uuml;ck. <a href="k100042.html#zuweisungsoperatoren">Tabelle 6.5</a>
+gibt eine &Uuml;bersicht der in Java verf&uuml;gbaren Zuweisungsoperatoren.
+<a name="zuweisungsoperatoren"></a>
+<p>
+<table cols=3 border width=100%>
+
+<tr>
+<td valign=top align=left width=33%><b>Operator</b></td>
+<td valign=top align=left width=33%><b>Bezeichnung</b></td>
+<td valign=top align=left width=33%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left>=</td>
+<td valign=top align=left>Einfache Zuweisung</td>
+<td valign=top align=left>a = b weist a den Wert von b zu und liefert
+b als R&uuml;ckgabewert. </td></tr>
+<tr>
+<td valign=top align=left>+=</td>
+<td valign=top align=left>Additionszuweisung</td>
+<td valign=top align=left>a += b weist a den Wert von a + b zu und
+liefert a + b als R&uuml;ckgabewert. </td></tr>
+<tr>
+<td valign=top align=left>-=</td>
+<td valign=top align=left>Subtraktionszuweisung</td>
+<td valign=top align=left>a -= b weist a den Wert von a - b zu und
+liefert a - b als R&uuml;ckgabewert. </td></tr>
+<tr>
+<td valign=top align=left>*=</td>
+<td valign=top align=left>Multiplikationszuweisung</td>
+<td valign=top align=left>a *= b weist a den Wert von a * b zu und
+liefert a * b als R&uuml;ckgabewert. </td></tr>
+<tr>
+<td valign=top align=left>/=</td>
+<td valign=top align=left>Divisionszuweisung</td>
+<td valign=top align=left>a /= b weist a den Wert von a / b zu und
+liefert a / b als R&uuml;ckgabewert. </td></tr>
+<tr>
+<td valign=top align=left>%=</td>
+<td valign=top align=left>Modulozuweisung</td>
+<td valign=top align=left>a %= b weist a den Wert von a % b zu und
+liefert a % b als R&uuml;ckgabewert. </td></tr>
+<tr>
+<td valign=top align=left>&amp;=</td>
+<td valign=top align=left>UND-Zuweisung</td>
+<td valign=top align=left>a &amp;= b weist a den Wert von a &amp;
+b zu und liefert a &amp; b als R&uuml;ckgabewert. </td></tr>
+<tr>
+<td valign=top align=left>|=</td>
+<td valign=top align=left>ODER-Zuweisung</td>
+<td valign=top align=left>a |= b weist a den Wert von a | b zu und
+liefert a | b als R&uuml;ckgabewert. </td></tr>
+<tr>
+<td valign=top align=left>^=</td>
+<td valign=top align=left>Exklusiv-ODER-Zuweisung</td>
+<td valign=top align=left>a ^= b weist a den Wert von a ^ b zu und
+liefert a ^ b als R&uuml;ckgabewert. </td></tr>
+<tr>
+<td valign=top align=left>&lt;&lt;=</td>
+<td valign=top align=left>Linksschiebezuweisung</td>
+<td valign=top align=left>a &lt;&lt;= b weist a den Wert von a &lt;&lt;
+b zu und liefert a &lt;&lt; b als R&uuml;ckgabewert. </td></tr>
+<tr>
+<td valign=top align=left>&gt;&gt;=</td>
+<td valign=top align=left>Rechtsschiebezuweisung</td>
+<td valign=top align=left>a &gt;&gt;= b weist a den Wert von a &gt;&gt;
+b zu und liefert a &gt;&gt; b als R&uuml;ckgabewert. </td></tr>
+<tr>
+<td valign=top align=left>&gt;&gt;&gt;=</td>
+<td valign=top align=left>Rechtsschiebezuweisung mit Nullexpansion</td>
+<td valign=top align=left>a &gt;&gt;&gt;= b weist a den Wert von a
+&gt;&gt;&gt; b zu und liefert a &gt;&gt;&gt; b als R&uuml;ckgabewert.
+</td></tr>
+</table>
+<p><i>
+Tabelle 6.5: Zuweisungsoperatoren </i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100036.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100041.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100043.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100046.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

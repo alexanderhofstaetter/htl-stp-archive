@@ -1,0 +1,536 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100114.html;106,k100117.html;107,k100119.html;108,k100121.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100114.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100117.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100119.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100121.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 17 - Utility-Klassen I
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id017004"></a>
+<h2>17.4 Die Klasse RunTime </h2>
+<hr>
+<ul>
+<li><a href="k100118.html#sectlevel2id017004">17.4 Die Klasse RunTime</a>
+<ul>
+<li><a href="k100118.html#sectlevel3id017004001">17.4.1 Grundlagen</a>
+<li><a href="k100118.html#sectlevel3id017004002">17.4.2 Interaktion mit dem externen Programm</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id017004001"></a>
+<h3>17.4.1 Grundlagen </h3>
+
+<p>
+Die Klasse <a name="ixa101122"><a href="index_r.html#ixb100871"><font color=#000080><tt>Runtime</tt></font></a></a>
+des Pakets <a href="index_j.html#ixb100196"><font color=#000080><tt>java.lang</tt></font></a>
+erm&ouml;glicht die Interaktion eines Java-Programms mit dem Bestandteil
+seiner Laufzeitumgebung, der daf&uuml;r verantwortlich ist, Programme
+zu starten und zu beenden. Dabei ist es insbesondere m&ouml;glich,
+mit seiner Hilfe externe Programme und Kommandos zu starten, mit ihnen
+zu kommunizieren und ihren Zustand zu &uuml;berwachen. 
+
+<p>
+Objekte der Klasse <a href="index_r.html#ixb100871"><font color=#000080><tt>Runtime</tt></font></a>
+d&uuml;rfen vom Programm nicht selbst instanziert werden, sondern
+werden &uuml;ber die statische Methode <a name="ixa101123"><a href="index_g.html#ixb100872"><font color=#000080><tt>getRuntime</tt></font></a></a>
+der Klasse <a href="index_r.html#ixb100871"><font color=#000080><tt>Runtime</tt></font></a>
+beschafft: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static Runtime getRuntime()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/Runtime.html" onClick="this.href=getApiDoc('java.lang.Runtime')"><font color="#660066" size=-1>java.lang.Runtime</font></a></td>
+</tr>
+</table>
+
+<p>
+Um ein externes Programm zu starten, gibt es vier Methoden mit dem
+Namen <a name="ixa101124"><a href="index_e.html#ixb100873"><font color=#000080><tt>exec</tt></font></a></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Process exec(String command)
+  throws IOException
+
+public Process exec(String command, String[] envp)
+  throws IOException
+
+public Process exec(String[] cmdarray)
+  throws IOException
+
+public Process exec(String[] cmdarray, String[] envp)
+  throws IOException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/Runtime.html" onClick="this.href=getApiDoc('java.lang.Runtime')"><font color="#660066" size=-1>java.lang.Runtime</font></a></td>
+</tr>
+</table>
+
+<p>
+Das auszuf&uuml;hrende Kommando kann wahlweise als Einzelstring angegeben
+werden (Kommandoname plus Argumente, getrennt durch Leerzeichen) oder
+die einzelnen Bestandteile k&ouml;nnen in einem Array &uuml;bergeben
+werden. Das optionale zweite Argument <font color="#000077"><tt>envp</tt></font>
+erm&ouml;glicht es, dem zu startenden Programm eine Liste von Umgebungsvariablen
+zu &uuml;bergeben. 
+
+<p>
+Das folgende Listing zeigt die einfachste Form der Anwendung von <a href="index_e.html#ixb100873"><font color=#000080><tt>exec</tt></font></a>.
+Das Programm startet exemplarisch den <i>notepad</i>-Editor unter
+Windows: 
+<a name="listingid017008"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1708.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1708
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">008 </font>      Runtime.getRuntime().exec(<font color="#0000FF">"notepad"</font>);
+<font color="#555555">009 </font>    } <font color="#0000AA">catch</font> (Exception e) {
+<font color="#555555">010 </font>      System.err.println(e.toString());
+<font color="#555555">011 </font>    }
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1708.java"><font color="#000055" size=-1>Listing1708.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 17.8: Starten von notepad.exe</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Leider macht die API-Dokumentation keine Angaben dar&uuml;ber, in
+welchen Verzeichnissen nach dem auszuf&uuml;hrenden Programm gesucht
+wird. In den aktuellen Implementierungen des JDK scheint es jedoch
+so zu sein, dass alle Verzeichnisse durchsucht werden, die in der
+<font color="#000077"><tt>PATH</tt></font>-Umgebungsvariablen angegeben
+sind. Unter Windows werden dabei aber offensichtlich nur Dateien mit
+den Erweiterungen <font color="#660099">.com</font> und <font color="#660099">.exe</font>
+automatisch ber&uuml;cksichtigt. Soll dagegen eine <font color="#660099">.bat</font>-Datei
+gestartet werden, muss die Erweiterung <font color="#660099">.bat</font>
+explizit angegeben werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id017004002"></a>
+<h3>17.4.2 Interaktion mit dem externen Programm </h3>
+
+<p>
+<a href="index_e.html#ixb100873"><font color=#000080><tt>exec</tt></font></a>
+gibt ein Objekt des Typs <a name="ixa101125"><a href="index_p.html#ixb100874"><font color=#000080><tt>Process</tt></font></a></a>
+zur&uuml;ck, das dazu verwendet werden kann, mit dem gestarteten Programm
+zu interagieren. Dazu definiert <a href="index_p.html#ixb100874"><font color=#000080><tt>Process</tt></font></a>
+folgende Methoden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public abstract int waitFor()
+  throws InterruptedException
+
+public abstract int exitValue()
+
+public abstract void destroy()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/Process.html" onClick="this.href=getApiDoc('java.lang.Process')"><font color="#660066" size=-1>java.lang.Process</font></a></td>
+</tr>
+</table>
+
+<p>
+Ein Aufruf von <a name="ixa101126"><a href="index_w.html#ixb100875"><font color=#000080><tt>waitFor</tt></font></a></a>
+terminiert erst, wenn der zugeh&ouml;rige Prozess beendet wurde. Diese
+Methode kann also dazu verwendet werden, auf das Ende des gestarteten
+Programms zu warten. Das ist beispielsweise sinnvoll, um den R&uuml;ckgabewert
+des Programms auszuwerten oder um mit von ihm erzeugten oder ver&auml;nderten
+Daten zu arbeiten. Wird <a href="index_w.html#ixb100875"><font color=#000080><tt>waitFor</tt></font></a>
+nicht aufgerufen, kann auf aktuellen Betriebssystemen wohl davon ausgegangen
+werden, dass das externe Programm parallel zum Java-Programm gestartet
+wird und asynchron weiterl&auml;uft. Diese Aussage ist allerdings
+mit Vorsicht zu genie&szlig;en, denn spezifiziert ist dieses Verhalten
+nicht. Im Zweifel hilft ausprobieren. 
+
+<p>
+Nach Ende des externen Programms kann mit <a name="ixa101127"><a href="index_e.html#ixb100876"><font color=#000080><tt>exitValue</tt></font></a></a>
+sein R&uuml;ckgabewert abgefragt werden. Dieser gibt bei vielen Programmen
+an, ob es fehlerfrei ausgef&uuml;hrt werden konnte oder nicht. Das
+ist aber nicht zwangsl&auml;ufig so. Unter Windows wird insbesondere
+beim Aufruf von Batch-Dateien und bei der expliziten Ausf&uuml;hrung
+eines Kommandos in einen eigenen Kommandointerpreter der R&uuml;ckgabewert
+nicht weitergegeben. In diesem Fall liefert <a href="index_e.html#ixb100876"><font color=#000080><tt>exitValue</tt></font></a>
+immer den Wert 0. Wird <a href="index_e.html#ixb100876"><font color=#000080><tt>exitValue</tt></font></a>
+aufgerufen, wenn der Prozess noch l&auml;uft, gibt es eine <a name="ixa101128"><a href="index_i.html#ixb100877"><font color=#000080><tt>IllegalThreadStateException</tt></font></a></a>.
+
+<p>
+Die Methode <a name="ixa101129"><a href="index_d.html#ixb100878"><font color=#000080><tt>destroy</tt></font></a></a>
+dient dazu, das externe Programm abzubrechen. Es handelt sich hierbei
+nicht um das normale Beenden eines Programms, sondern um einen harten
+Abbruch. Ungesicherte &Auml;nderungen gehen also verloren und es k&ouml;nnen
+Inkonsistenzen in manipulierten Daten entstehen. 
+
+<p>
+Das <a href="index_p.html#ixb100874"><font color=#000080><tt>Process</tt></font></a>-Objekt
+bietet zus&auml;tzlich die M&ouml;glichkeit, die Standardein- und
+-ausgabe des externen Kommandos umzuleiten und aus dem eigenen Programm
+heraus anzusprechen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public OutputStream getOutputStream()
+
+public abstract InputStream getInputStream()
+
+public abstract InputStream getErrorStream()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/Process.html" onClick="this.href=getApiDoc('java.lang.Process')"><font color="#660066" size=-1>java.lang.Process</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa101130"><a href="index_g.html#ixb100683"><font color=#000080><tt>getInputStream</tt></font></a></a>
+und <a name="ixa101131"><a href="index_g.html#ixb100879"><font color=#000080><tt>getErrorStream</tt></font></a></a>
+liefern einen <a href="index_i.html#ixb100587"><font color=#000080><tt>InputStream</tt></font></a>,
+mit dem die Ausgaben des Prozesses auf Standardausgabe und Standardfehler
+gelesen werden k&ouml;nnen (siehe auch <a href="k100132.html#kapitelbytestreams">Kapitel 20</a>).
+Von <a name="ixa101132"><a href="index_g.html#ixb100684"><font color=#000080><tt>getOutputStream</tt></font></a></a>
+wird ein <a href="index_o.html#ixb100588"><font color=#000080><tt>OutputStream</tt></font></a>
+zur Verf&uuml;gung gestellt, mit dem Daten in die Standardeingabe
+des Prozesses geschrieben werden k&ouml;nnen. Auf diese Weise lassen
+sich Programme, die &uuml;ber Standardein- und -ausgabe kommunizieren,
+fernsteuern bzw. fernabfragen. 
+
+<p>
+Das folgende Programm fasst die wichtigsten M&ouml;glichkeiten zusammen:
+<a name="runcommand"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* RunCommand.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> RunCommand
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  enum Mode
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    MODE_UNCONNECTED, 
+<font color="#555555">010 </font>    MODE_WAITFOR, 
+<font color="#555555">011 </font>    MODE_CATCHOUTPUT;
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>  <font color="#0000AA">private</font> <font color="#0000AA">static</font> <font color="#006699">void</font> runCommand(String cmd, Mode mode)
+<font color="#555555">015 </font>  <font color="#0000AA">throws</font> IOException
+<font color="#555555">016 </font>  {
+<font color="#555555">017 </font>    Runtime rt = Runtime.getRuntime();
+<font color="#555555">018 </font>    System.out.println(<font color="#0000FF">"Running "</font> + cmd);
+<font color="#555555">019 </font>    Process pr = rt.exec(cmd);
+<font color="#555555">020 </font>    <font color="#0000AA">if</font> (mode == Mode.MODE_WAITFOR) {
+<font color="#555555">021 </font>      System.out.println(<font color="#0000FF">"waiting for termination"</font>);
+<font color="#555555">022 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">023 </font>        pr.waitFor();
+<font color="#555555">024 </font>      } <font color="#0000AA">catch</font> (InterruptedException e) {
+<font color="#555555">025 </font>      }
+<font color="#555555">026 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (mode == Mode.MODE_CATCHOUTPUT) {
+<font color="#555555">027 </font>      System.out.println(<font color="#0000FF">"catching output"</font>);
+<font color="#555555">028 </font>      BufferedReader procout = <font color="#0000AA">new</font> BufferedReader(
+<font color="#555555">029 </font>        <font color="#0000AA">new</font> InputStreamReader(pr.getInputStream())
+<font color="#555555">030 </font>      );
+<font color="#555555">031 </font>      String line;
+<font color="#555555">032 </font>      <font color="#0000AA">while</font> ((line = procout.readLine()) != <font color="#006699">null</font>) {
+<font color="#555555">033 </font>        System.out.println(<font color="#0000FF">"  OUT&gt; "</font> + line);
+<font color="#555555">034 </font>      }
+<font color="#555555">035 </font>    }
+<font color="#555555">036 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">037 </font>      System.out.println(
+<font color="#555555">038 </font>        <font color="#0000FF">"done, return value is "</font> + pr.exitValue()
+<font color="#555555">039 </font>      );
+<font color="#555555">040 </font>    } <font color="#0000AA">catch</font> (IllegalThreadStateException e) {
+<font color="#555555">041 </font>      System.out.println(
+<font color="#555555">042 </font>        <font color="#0000FF">"ok, process is running asynchronously"</font>
+<font color="#555555">043 </font>      );
+<font color="#555555">044 </font>    }
+<font color="#555555">045 </font>  }
+<font color="#555555">046 </font>
+<font color="#555555">047 </font>  <font color="#0000AA">private</font> <font color="#0000AA">static</font> <font color="#006699">void</font> runShellCommand(String cmd, Mode mode) <a name="runcommand.a"></a>
+<font color="#555555">048 </font>  <font color="#0000AA">throws</font> IOException
+<font color="#555555">049 </font>  {
+<font color="#555555">050 </font>    String prefix = <font color="#0000FF">""</font>;
+<font color="#555555">051 </font>    String osName = System.getProperty(<font color="#0000FF">"os.name"</font>);
+<font color="#555555">052 </font>    osName = osName.toLowerCase();
+<font color="#555555">053 </font>    <font color="#0000AA">if</font> (osName.indexOf(<font color="#0000FF">"windows"</font>) != -1) {
+<font color="#555555">054 </font>      prefix = <font color="#0000FF">"command.com /c "</font>;
+<font color="#555555">055 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (osName.indexOf(<font color="#0000FF">"linux"</font>) != -1) {
+<font color="#555555">056 </font>      prefix = <font color="#0000FF">"sh -c "</font>;
+<font color="#555555">057 </font>    }
+<font color="#555555">058 </font>      
+<font color="#555555">059 </font>    <font color="#0000AA">if</font> (prefix.length() &lt;= 0) {
+<font color="#555555">060 </font>      System.out.println(
+<font color="#555555">061 </font>        <font color="#0000FF">"unknown OS: don\'t know how to invoke shell"</font>
+<font color="#555555">062 </font>      );
+<font color="#555555">063 </font>    } <font color="#0000AA">else</font> {
+<font color="#555555">064 </font>      runCommand(prefix + cmd, mode);
+<font color="#555555">065 </font>    }
+<font color="#555555">066 </font>  }
+<font color="#555555">067 </font>
+<font color="#555555">068 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">069 </font>  {
+<font color="#555555">070 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">071 </font>      <font color="#0000AA">if</font> (args.length &lt;= 0) {
+<font color="#555555">072 </font>        System.out.println(
+<font color="#555555">073 </font>          <font color="#0000FF">"Usage: java RunCommand [-shell] "</font> +
+<font color="#555555">074 </font>          <font color="#0000FF">"[-waitfor|-catchoutput] &lt;command&gt;"</font>
+<font color="#555555">075 </font>        );
+<font color="#555555">076 </font>        System.exit(1);
+<font color="#555555">077 </font>      }
+<font color="#555555">078 </font>      <font color="#006699">boolean</font> shell = <font color="#006699">false</font>;
+<font color="#555555">079 </font>      Mode mode = Mode.MODE_UNCONNECTED;
+<font color="#555555">080 </font>      String cmd = <font color="#0000FF">""</font>;
+<font color="#555555">081 </font>      <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; args.length; ++i) {
+<font color="#555555">082 </font>        <font color="#0000AA">if</font> (args[i].startsWith(<font color="#0000FF">"-"</font>)) {
+<font color="#555555">083 </font>          <font color="#0000AA">if</font> (args[i].equals(<font color="#0000FF">"-shell"</font>)) {
+<font color="#555555">084 </font>            shell = <font color="#006699">true</font>;
+<font color="#555555">085 </font>          } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (args[i].equals(<font color="#0000FF">"-waitfor"</font>)) {
+<font color="#555555">086 </font>            mode = Mode.MODE_WAITFOR;
+<font color="#555555">087 </font>          } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (args[i].equals(<font color="#0000FF">"-catchoutput"</font>)) {
+<font color="#555555">088 </font>            mode = Mode.MODE_CATCHOUTPUT;
+<font color="#555555">089 </font>          }
+<font color="#555555">090 </font>        } <font color="#0000AA">else</font> {
+<font color="#555555">091 </font>          cmd = args[i];
+<font color="#555555">092 </font>        }
+<font color="#555555">093 </font>      }
+<font color="#555555">094 </font>      <font color="#0000AA">if</font> (shell) {
+<font color="#555555">095 </font>        runShellCommand(cmd, mode);
+<font color="#555555">096 </font>      } <font color="#0000AA">else</font> {
+<font color="#555555">097 </font>        runCommand(cmd, mode);
+<font color="#555555">098 </font>      }
+<font color="#555555">099 </font>    } <font color="#0000AA">catch</font> (Exception e) {
+<font color="#555555">100 </font>      System.err.println(e.toString());
+<font color="#555555">101 </font>    }
+<font color="#555555">102 </font>  }
+<font color="#555555">103 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/RunCommand.java"><font color="#000055" size=-1>RunCommand.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 17.9: Starten externer Programme</i></p>
+
+<p>
+Das Hauptprogramm erwartet das zu startende Programm und seine Parameter
+als Argumente. Wird die Option &#187;-catchoutput&#171; angegeben,
+liest das Programm die Ausgaben des gestarteten Programms und gibt
+sie auf seiner eigenen Standardausgabe aus. Wird &#187;-waitfor&#171;
+angegeben, wartet das Programm auf das Ende des gestarteten Programms,
+ohne dessen Ausgaben anzuzeigen. In beiden F&auml;llen wird schlie&szlig;lich
+der R&uuml;ckgabewert des Programms ausgegeben. Durch Angabe der Option
+&#187;-shell&#171; kann das externe Programm mit einem separaten Kommandointerpreter
+gestartet werden. Das ist beispielsweise n&uuml;tzlich, um Shell-Kommandos
+auszuf&uuml;hren, die nicht als eigenst&auml;ndige Programmdateien
+existieren. 
+
+<p>
+Der folgende Aufruf unter Windows verwendet das Beispielprogramm,
+um das interne MS-DOS-Kommando &#187;set&#171; auszuf&uuml;hren (es
+gibt die Inhalte aller Umgebungsvariablen aus): 
+<font color="#333300">
+<pre>
+java RunCommand -shell -catchoutput set
+</pre>
+</font>
+
+<p>
+Seine Ausgabe k&ouml;nnte etwa so aussehen: 
+<font color="#333300">
+<pre>
+Running command.com /c set
+catching output
+  OUT&gt; winbootdir=C:\WINDOWS
+  OUT&gt; COMSPEC=C:\COMMAND.COM
+  OUT&gt; TEMP=C:\tmp
+  OUT&gt; TMP=c:\tmp
+  OUT&gt; USER=guido
+  OUT&gt; windir=C:\WINDOWS
+  OUT&gt; PATH=C:\JDK1.6\BIN;C:\WINDOWS;C:\WINDOWS\COMMAND;
+  OUT&gt; CLASSPATH=.;c:\arc\prog\java
+  OUT&gt; PROMPT=$p--$g
+done, return value is 0
+</pre>
+</font>
+
+<p>
+Analog kann der Aufruf unter Linux die Inhalte aller Umgebungsvariablen
+ausgeben: 
+<font color="#333300">
+<pre>
+...
+  OUT&gt; XDG_DATA_DIRS='/usr/share/gnome:/usr/local/share/:/usr/share/'
+  OUT&gt; XFILESEARCHPATH='/usr/dt/app-defaults/%L/Dt'
+  OUT&gt; _='/usr/bin/java'
+done, return value is 0
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die &Uuml;bergabe des Programms an einen separaten Kommandointerpreter
+erfolgt in der Methode <font color="#000077"><tt>runShellCommand</tt></font>
+ab <a href="k100118.html#runcommand.a">Zeile 047</a>. Wie ein derartiger
+Aufruf ausgef&uuml;hrt wird, ist nat&uuml;rlich betriebssystem- und
+konfigurationsabh&auml;ngig. Das Beispielprogramm versucht, einige
+brauchbare Varianten f&uuml;r g&auml;ngige Betriebssysteme vorzudefinieren.
+Weitere k&ouml;nnen leicht hinzugef&uuml;gt werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+W&auml;hrend des Tests von <font color="#000077"><tt>RunCommand</tt></font>
+gab es mitunter Schwierigkeiten beim Ausf&uuml;hren interner DOS-Programme
+unter Windows 7. W&auml;hrend sich beispielsweise das Kommando <font color="#000077"><tt>set</tt></font>
+problemlos aufrufen lie&szlig;, gab es beim Aufruf von <font color="#000077"><tt>dir</tt></font>
+H&auml;nger, nach denen die MS-DOS-Task hart abgebrochen werden musste.
+Die JDK Bug Database listet eine ganze Reihe von Problemen in Zusammenhang
+mit dem Aufruf von 16-Bit-Programmen unter Windows auf. Sie r&uuml;hren
+unter anderem daher, dass die Ein- und Ausgabepuffer der DOS-Programme
+so klein sind, dass die Programme mitunter schon blockieren, bevor
+die aufrufende Applikation die Chance hatte, eine Verbindung zu ihnen
+herzustellen. Echte Workarounds f&uuml;r diese Probleme scheinen nicht
+bekannt zu sein. Beim Aufruf von 32-Bit-Programmen treten die Probleme
+offenbar nicht auf.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100114.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100117.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100119.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100121.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

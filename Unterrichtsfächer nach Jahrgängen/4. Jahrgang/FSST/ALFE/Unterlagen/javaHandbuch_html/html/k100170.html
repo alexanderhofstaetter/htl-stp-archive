@@ -1,0 +1,155 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100168.html;106,k100169.html;107,k100171.html;108,k100174.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100168.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100169.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100171.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100174.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 26 - Farben
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id026002"></a>
+<h2>26.2 Erzeugen von Farben </h2>
+<hr>
+<ul>
+<li><a href="k100170.html#sectlevel2id026002">26.2 Erzeugen von Farben</a>
+</ul>
+<hr>
+
+<p>
+Farben werden in Java durch die Klasse <a name="ixa101623"><a href="index_c.html#ixb101244"><font color=#000080><tt>Color</tt></font></a></a>
+repr&auml;sentiert. Jedes <a href="index_c.html#ixb101244"><font color=#000080><tt>Color</tt></font></a>-Objekt
+repr&auml;sentiert dabei eine Farbe, die durch ihre RGB-Werte eindeutig
+bestimmt ist. Farben k&ouml;nnen durch Instanzieren eines <a href="index_c.html#ixb101244"><font color=#000080><tt>Color</tt></font></a>-Objekts
+und &Uuml;bergabe des gew&uuml;nschten RGB-Werts an den Konstruktor
+erzeugt werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Color(int r, int g, int b)
+
+public Color(float r, float g, float b)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Color.html" onClick="this.href=getApiDoc('java.awt.Color')"><font color="#660066" size=-1>java.awt.Color</font></a></td>
+</tr>
+</table>
+
+<p>
+Der Konstruktor mit den <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>-Parametern
+erwartet dabei die Farbwerte als Ganzzahlen im Bereich von 0 bis 255.
+Alternativ dazu k&ouml;nnen die Farbanteile auch als Flie&szlig;kommazahlen
+&uuml;bergeben werden. In diesem Fall muss jeder der Werte im Bereich
+von 0.0 bis 1.0 liegen. 0.0 entspricht dem v&ouml;lligen Fehlen dieses
+Farbanteils und 1.0 der maximalen Intensit&auml;t (entsprechend dem
+ganzzahligen Farbwert 255). 
+
+<p>
+Alternativ stellt die Klasse <a href="index_c.html#ixb101244"><font color=#000080><tt>Color</tt></font></a>
+eine Reihe von statischen <a href="index_c.html#ixb101244"><font color=#000080><tt>Color</tt></font></a>-Objekten
+zur Verf&uuml;gung, die direkt verwendet werden k&ouml;nnen (seit
+dem JDK 1.4 auch in Gro&szlig;buchstaben verf&uuml;gbar): <a name="ixa101624"></a>
+<a name="ixa101625"></a> <a name="ixa101626"></a> <a name="ixa101627"></a>
+<a name="ixa101628"></a> <a name="ixa101629"></a> <a name="ixa101630"></a>
+<a name="ixa101631"></a> <a name="ixa101632"></a> <a name="ixa101633"></a>
+<a name="ixa101634"></a> <a name="ixa101635"></a> <a name="ixa101636"></a>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static Color white
+public static Color lightGray
+public static Color gray
+public static Color darkGray
+public static Color black
+public static Color red
+public static Color blue
+public static Color green
+public static Color yellow
+public static Color magenta
+public static Color cyan
+public static Color orange
+public static Color pink
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Color.html" onClick="this.href=getApiDoc('java.awt.Color')"><font color="#660066" size=-1>java.awt.Color</font></a></td>
+</tr>
+</table>
+
+<p>
+Um von einem bestehenden Farbobjekt die RGB-Werte zu ermitteln, stellt
+die Klasse <a href="index_c.html#ixb101244"><font color=#000080><tt>Color</tt></font></a>
+die Methoden <a name="ixa101637"><a href="index_g.html#ixb101258"><font color=#000080><tt>getRed</tt></font></a></a>,
+<a name="ixa101638"><a href="index_g.html#ixb101259"><font color=#000080><tt>getGreen</tt></font></a></a>
+und <a name="ixa101639"><a href="index_g.html#ixb101260"><font color=#000080><tt>getBlue</tt></font></a></a>
+zur Verf&uuml;gung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int getRed()
+public int getGreen()
+public int getBlue()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Color.html" onClick="this.href=getApiDoc('java.awt.Color')"><font color="#660066" size=-1>java.awt.Color</font></a></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100168.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100169.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100171.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100174.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

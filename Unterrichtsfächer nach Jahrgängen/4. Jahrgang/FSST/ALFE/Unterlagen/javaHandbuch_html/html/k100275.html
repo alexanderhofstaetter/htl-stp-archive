@@ -1,0 +1,982 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100274.html;106,k100274.html;107,k100276.html;108,k100278.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100274.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100274.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100276.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100278.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 43 - XML-Verarbeitung
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id043001"></a>
+<h2>43.1 XML-Grundlagen </h2>
+<hr>
+<ul>
+<li><a href="k100275.html#sectlevel2id043001">43.1 XML-Grundlagen</a>
+<ul>
+<li><a href="k100275.html#xmlaufbau">43.1.1 Aufbau eines XML-Dokuments</a>
+<ul>
+<li><a href="k100275.html#xmlprolog">Prolog</a>
+<li><a href="k100275.html#sectlevel4id043001001002">Elemente</a>
+<li><a href="k100275.html#xmlabschnittattribute">Attribute</a>
+<li><a href="k100275.html#sectlevel4id043001001004">Kommentare</a>
+</ul>
+<li><a href="k100275.html#sectlevel3id043001002">43.1.2 Document Type Definition</a>
+<ul>
+<li><a href="k100275.html#sectlevel4id043001002001">Aufbau einer DTD</a>
+<li><a href="k100275.html#sectlevel4id043001002002">Elementdefinition</a>
+<li><a href="k100275.html#sectlevel4id043001002003">Attributdefinition</a>
+<li><a href="k100275.html#sectlevel4id043001002004">Einbinden einer DTD</a>
+</ul>
+<li><a href="k100275.html#xmlschemadefinition">43.1.3 XML Schema Definition</a>
+<ul>
+<li><a href="k100275.html#sectlevel4id043001003001">Elementdefinition</a>
+<li><a href="k100275.html#sectlevel4id043001003002">Attributdefinition</a>
+<li><a href="k100275.html#sectlevel4id043001003003">Kommentare</a>
+<li><a href="k100275.html#sectlevel4id043001003004">Einbinden einer XSD</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+<p>
+XML ist die Abk&uuml;rzung f&uuml;r &#187;eXtensible Markup Language&#171;.
+Dabei handelt es sich um ein universelles, textbasiertes Datenformat,
+das haupts&auml;chlich zur Speicherung und zum Transfer von Daten
+verwendet wird. XML-Dokumente sind selbst beschreibend und sowohl
+menschen- als auch maschinenlesbar. Au&szlig;erdem sind sie interoperabel,
+also unabh&auml;ngig von Betriebssystemen und Rechnerarchitekturen.
+XML ist m&auml;chtig und ausdrucksstark, gleichzeitig ist es relativ
+leicht zu erlernen, zu erzeugen und zu interpretieren und hat sich
+daher in der digitalen Welt rasant verbreitet. XML entstand durch
+die Weiterentwicklung des SGML-Standards<a name="ixa103030"></a> unter
+der F&uuml;hrung von John Bosac<a name="ixa103031"></a>. Es ist ein
+offener Standard des W3C-Konsortiums, dessen erste Version 1998 ver&ouml;ffentlicht
+wurde. 
+
+<p>
+Mittlerweile gibt es im Umfeld von XML eine ganze Reihe weiterer Standards
+und es hat sich eine regelrechte Industrie rund um die Sprache entwickelt.
+Einige der Standards im XML-Universum sind beispielsweise: 
+<ul>
+<li>SOAP<a name="ixa103032"></a> als ein auf XML basierendes Netzwerkprotokoll
+<li>SVG als Format f&uuml;r Vektorgrafiken 
+<li>XSL als Transformationssprache, etwa zum Erzeugen von HTML oder
+anderen Textformaten
+<li>XSD als Sprache zur Definition von XML-Grammatiken
+</ul>
+
+<p>
+Auch als Grundlage unternehmensspezifischer propriet&auml;rer Sprachen
+ist XML weit verbreitet und fast jedes Standardprogramm bietet mittlerweile
+Schnittstellen zum Lesen und Schreiben von XML-Daten. 
+
+<!-- Section -->
+
+<a name="xmlaufbau"></a>
+<h3>43.1.1 Aufbau eines XML-Dokuments </h3>
+
+<p>
+Wir wollen uns zun&auml;chst ansehen, wie XML-Dokumente aussehen und
+welchen Aufbau sie haben. Eine Datei, die dem XML-Standard folgt,
+wird &#187;XML-Dokument&#171; genannt; das folgende Listing zeigt
+ein einfaches Beispiel: 
+<a name="xmlhelloworld"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>&lt;?xml version=<font color="#0000FF">"1.0"</font> encoding=<font color="#0000FF">"iso-8859-15"</font>?&gt; 
+<font color="#555555">002 </font>&lt;gruss&gt; 
+<font color="#555555">003 </font>  Hallo, Welt!
+<font color="#555555">004 </font>&lt;/gruss&gt;</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 43.1: Ein einfaches XML-Dokument</i></p>
+
+<p>
+Offenbar besteht das Dokument aus zwei verschiedenen Bestandteilen.
+Einerseits erkennen wir mit <font color="#000077"><tt>Hallo, Welt!</tt></font>
+rein textuelle Teile, die &#187;einfach so&#171; aufgeschrieben werden,
+andererseits mit <font color="#000077"><tt>&lt;gruss&gt;</tt></font>
+oder <font color="#000077"><tt>&lt;/gruss&gt;</tt></font> befehlsartige
+Elemente, die in spitze Klammern gesetzt werden. 
+
+<p>
+Konkret l&auml;sst sich die Syntax eines XML-Dokuments vereinfacht
+wie folgt angeben: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+xml     : [ prolog ] element 
+element : &lt;tag&gt; [ ( inhalt | element+ ) ] &lt;/tag&gt;
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+Ein XML-Dokument beginnt optional mit einem Prolog, darauf folgt ein
+Element, das sogenannte Wurzelelement. Elemente k&ouml;nnen weitere
+Elemente oder Text enthalten und werden von einem &ouml;ffnenden und
+einem schlie&szlig;enden Tag eingeschlossen. Wir wollen uns die einzelnen
+Bestandteile eines XML-Dokuments in den n&auml;chsten Abschnitten
+genauer ansehen. 
+
+<!-- Section -->
+
+<a name="xmlprolog"></a>
+<h4>Prolog<a name="ixa103033"></a> </h4>
+
+<p>
+In der ersten Zeile von <a href="k100275.html#xmlhelloworld">Listing 43.1</a>
+sehen Sie den optionalen &#187;Prolog&#171;, mit dem die Datei als
+XML-Dokument gekennzeichnet wird. Der Prolog beginnt mit der Zeichenfolge
+<a name="ixa103034"><a href="index_0.html#ixb102241"><font color=#000080><tt>&lt;?xml</tt></font></a></a>
+und endet mit <a name="ixa103035"><a href="index_0.html#ixb102242"><font color=#000080><tt>?&gt;</tt></font></a></a>.
+Er bestimmt mindestens die XML-Version (<font color="#000077"><tt>version="1.0"</tt></font>)
+und besitzt optional weitere Attribute, wie beispielsweise das Encoding<a name="ixa103036"></a>
+des Dokuments (<font color="#000077"><tt>encoding="iso-8859-15"</tt></font>).
+Wird die Encoding-Angabe weggelassen, wird als Zeichensatz UTF-8<a name="ixa103037"></a>
+bzw. UTF-16 angenommen. 
+
+<p>
+Grunds&auml;tzlich sind alle Zeichens&auml;tze erlaubt, die von der
+IANA<a name="ixa103038"></a> (Internet Assigned Numbers Authority)
+definiert wurden (siehe <a href="http://www.iana.org/assignments/character-sets">http://www.iana.org/assignments/character-sets</a>).
+Zu den wichtigsten in unserem Sprachraum geh&ouml;ren <a name="ixa103039"><a href="index_w.html#ixb102246"><font color=#000080><tt>windows-1252</tt></font></a></a>
+und <a name="ixa103040"><a href="index_i.html#ixb102247"><font color=#000080><tt>iso-8859-15</tt></font></a></a>
+sowie <a name="ixa103041"><a href="index_u.html#ixb102248"><font color=#000080><tt>utf-8</tt></font></a></a>
+bzw. <a name="ixa103042"><a href="index_u.html#ixb102249"><font color=#000080><tt>utf-16</tt></font></a></a>.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die IANA-Encoding-Namen entsprechen <i>nicht</i> den Namen der Zeichens&auml;tze
+unter Java. Der Windows-Standardzeichensatz hei&szlig;t unter Java
+beispielsweise <a name="ixa103043"><a href="index_c.html#ixb102250"><font color=#000080><tt>cp1252</tt></font></a></a>,
+im IANA-Standard aber <a href="index_w.html#ixb102246"><font color=#000080><tt>windows-1252</tt></font></a>.
+Au&szlig;erdem arbeiten die Betriebssysteme und Editoren oftmals nicht
+mit dem XML-Standardzeichensatz UFT-8 oder UTF-16, sondern mit dem
+Standardzeichensatz des jeweiligen Betriebssystems. Daher empfiehlt
+es sich, das Encoding in jedem XML-Dokument explizit anzugeben. Andernfalls
+f&uuml;hrt z.B. die Verwendung von Umlauten in der Praxis schnell
+zu Problemen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id043001001002"></a>
+<h4>Elemente </h4>
+
+<p>
+Jedes XML-Dokument besitzt genau ein Wurzelelement, das wiederum kein,
+ein oder mehrere andere Elemente<a name="ixa103044"></a> enthalten
+kann. Jedes Element kann seinerseits Attribute haben und sowohl Text
+als auch weitere Unterlemente enthalten. Auf diese Weise lassen sich
+hierarchische, baumartige Datenstrukturen erzeugen. 
+
+<p>
+Ein Element besteht aus einem &ouml;ffnenden und einem schlie&szlig;enden
+&#187;Tag&#171;. Ein Tag<a name="ixa103045"></a> hat einen festen
+Namen und wird in spitze Klammern gesetzt. Das &ouml;ffnende Tag wird
+mit <a name="ixa103046"><a href="index_0.html#ixb102253"><font color=#000080><tt>&lt;</tt></font></a></a>
+und <a name="ixa103047"><a href="index_0.html#ixb102254"><font color=#000080><tt>&gt;</tt></font></a></a>
+umschlossen, das schlie&szlig;ende Tag mit <a name="ixa103048"><a href="index_0.html#ixb102255"><font color=#000080><tt>&lt;/</tt></font></a></a>
+und <a name="ixa103047"><a href="index_0.html#ixb102254"><font color=#000080><tt>&gt;</tt></font></a></a>.
+<a href="k100275.html#xmlhelloworld">Listing 43.1</a> enth&auml;lt
+beispielsweise genau ein Element mit dem Namen <font color="#000077"><tt>gruss</tt></font>,
+das in diesem Beispiel den Text <font color="#000077"><tt>Hallo, Welt!</tt></font>
+enth&auml;lt. 
+
+<p>
+Das folgende Beispiel zeigt ein zweistufig hierarchisches Dokument
+mit dem Wurzelelement <font color="#000077"><tt>gruesse</tt></font>.
+<a name="xmlmultilinggruss"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>&lt;?xml version=<font color="#0000FF">"1.0"</font> encoding=<font color="#0000FF">"iso-8859-15"</font>?&gt; 
+<font color="#555555">002 </font>&lt;gruesse&gt; 
+<font color="#555555">003 </font>  &lt;gruss bundesland=<font color="#0000FF">"schleswig-holstein"</font>&gt; 
+<font color="#555555">004 </font>    Moin, moin!
+<font color="#555555">005 </font>  &lt;/gruss&gt; 
+<font color="#555555">006 </font>  &lt;gruss bundesland=<font color="#0000FF">"bayern"</font>&gt; 
+<font color="#555555">007 </font>    Gr&uuml;&szlig; Gott!
+<font color="#555555">008 </font>  &lt;/gruss&gt; 
+<font color="#555555">009 </font>&lt;/gruesse&gt;</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 43.2: Ein zweistufiges, hierarchisches XML-Dokument</i></p>
+
+<p>
+Das <font color="#000077"><tt>gruesse</tt></font>-Element enth&auml;lt
+zwei <font color="#000077"><tt>gruss</tt></font>-Elemente und jedes
+<font color="#000077"><tt>gruss</tt></font>-Element besitzt ein <font color="#000077"><tt>bundesland</tt></font>-Attribut.
+Enth&auml;lt ein Element keinen Text und keine weiteren Elemente,
+kann es in Kurzschreibweise geschrieben werden. Der Tagname wird dann
+von <a href="index_0.html#ixb102253"><font color=#000080><tt>&lt;</tt></font></a>
+und <a name="ixa103049"><a href="index_0.html#ixb102256"><font color=#000080><tt>/&gt;</tt></font></a></a>
+umschlossen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+&lt;tag/&gt;
+</pre>
+</font>
+</td>
+</tr>
+</table>
+<a name="listingid043003"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>&lt;?xml version=<font color="#0000FF">"1.0"</font> encoding=<font color="#0000FF">"iso-8859-15"</font>?&gt; 
+<font color="#555555">002 </font>&lt;geschlecht&gt; 
+<font color="#555555">003 </font>  &lt;maennlich/&gt; 
+<font color="#555555">004 </font>&lt;/geschlecht&gt;</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 43.3: Beispiel f&uuml;r die Kurzschreibweise</i></p>
+
+
+<!-- Section -->
+<a name="xmlabschnittattribute"></a>
+<h4>Attribute </h4>
+
+<p>
+Elemente k&ouml;nnen eine beliebige Anzahl von Attributen<a name="ixa103050"></a>
+besitzen, mit deren Hilfe sie konfiguriert werden k&ouml;nnen. Das
+<font color="#000077"><tt>gruss</tt></font>-Element in <a href="k100275.html#xmlmultilinggruss">Listing 43.2</a>
+enth&auml;lt beispielsweise das Attribut <font color="#000077"><tt>bundesland</tt></font>,
+mit dem die regionale Variante der Gru&szlig;formel ausgew&auml;hlt
+wird. Attribute werden immer im &ouml;ffnenden Tag angegeben und bestehen
+aus einem Namen und einem Wert. Mit Attributen lassen sich spezifische
+Eigenschaften eines Elements genauer beschreiben. 
+
+<!-- Section -->
+
+<a name="sectlevel4id043001001004"></a>
+<h4>Kommentare </h4>
+
+<p>
+Kommentare sind fester Bestandteil der XML-Grammatik. Sie beginnen
+mit der Zeichenfolge <a name="ixa103051"><a href="index_0.html#ixb102257"><font color=#000080><tt>&lt;!--</tt></font></a></a>
+und enden mit <a name="ixa103052"><a href="index_0.html#ixb102258"><font color=#000080><tt>--&gt;</tt></font></a></a>.
+Kommentare sind nicht schachtelbar, aber sie d&uuml;rfen sich &uuml;ber
+mehrere Zeilen erstrecken. Die Zeichenfolge <font color="#000077"><tt>--</tt></font>
+ist in Kommentaren nicht erlaubt. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+&lt;!-- Kommentar --&gt;
+</pre>
+</font>
+</td>
+</tr>
+</table>
+<a name="listingid043004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>&lt;?xml version=<font color="#0000FF">"1.0"</font> encoding=<font color="#0000FF">"iso-8859-15"</font>?&gt; 
+<font color="#555555">002 </font>&lt;!-- Gruss an die Welt --&gt; 
+<font color="#555555">003 </font>&lt;gruss&gt; 
+<font color="#555555">004 </font>  Hallo, Welt!
+<font color="#555555">005 </font>&lt;/gruss&gt;</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 43.4: Ein einfaches XML-Dokument mit Kommentar</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id043001002"></a>
+<h3>43.1.2 Document Type Definition<a name="ixa103053"></a> </h3>
+
+<p>
+Fester Bestandteil des XML-Universums ist die M&ouml;glichkeit, mit
+Hilfe einer Grammatik den strukturellen Aufbau von XML-Dokumenten
+zu definieren. Grammatiken werden entweder mit einer <a name="ixa103054"><i>DTD</i></a>
+(Document Type Definition) oder mit einer <a name="ixa103055"><i>XSD</i></a>
+(XML Schema Definition)<a name="ixa103056"></a> beschrieben. XSD ist
+selbst ein umfangreicher XML-Dialekt und es lassen sich damit sehr
+pr&auml;zise Grammatiken entwerfen. DTDs sind der &auml;ltere Standard,
+sie stammen im Grundsatz noch aus der SGML-&Auml;ra. Sie sind weniger
+aufw&auml;ndig als XSDs, f&uuml;r viele praktische Anwendungsf&auml;lle
+aber ausreichend. Weil DTDs einfacher zu erlernen und zu entwerfen
+sind als XSDs, wollen wir uns zun&auml;chst den Umgang mit DTDs ansehen.
+
+<p>
+Zum Verst&auml;ndnis der folgenden Ausf&uuml;hrungen sind zwei Begriffe
+bedeutsam. Ein XML-Dokument hei&szlig;t &#187;wohlgeformt&#171;<a name="ixa103057"></a>
+(&#187;wellformed&#171;), wenn es lexikalisch korrekt ist, also den
+im vorigen Abschnitt beschriebenen Aufbau besitzt. Ein XML-Dokument
+hei&szlig;t &#187;g&uuml;ltig&#171;<a name="ixa103058"></a> (&#187;valid&#171;),
+wenn es wohlgeformt ist UND seiner Grammatik gen&uuml;gt. 
+
+<p>
+Damit ein XML-Dokument ordnungsgem&auml;&szlig; verarbeitet werden
+kann, muss es mindestens wohlgeformt sein, eine Grammatik dagegen
+ist nicht zwingend erforderlich. Diese empfiehlt sich aber immer dann,
+wenn das Dokument komplex ist oder als Schnittstelle zwischen verschiedenen
+Systemen oder Personen dient. Eine explizite Grammatik stellt nicht
+zuletzt auch ein wichtiges St&uuml;ck Dokumentation dar. 
+
+<!-- Section -->
+
+<a name="sectlevel4id043001002001"></a>
+<h4>Aufbau einer DTD </h4>
+
+<p>
+DTDs selbst sind keine XML-Dokumente, sehen auf den ersten Blick aber
+ein wenig so aus. Auch eine DTD beginnt beispielsweise zun&auml;chst
+mit einem optionalen XML-Prolog, hinter dem die Definition der Elemente
+und Attribute folgt. DTDs k&ouml;nnen auch Kommentare enthalten, sie
+haben genau den gleichen Aufbau wie Kommentare in einem XML-Dokument.
+
+<p>
+Als erstes Beispiel sehen wir uns eine DTD f&uuml;r <a href="k100275.html#xmlhelloworld">Listing 43.1</a>
+an: 
+<a name="dtd"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>&lt;?xml version=<font color="#0000FF">"1.0"</font> encoding=<font color="#0000FF">"iso-8859-15"</font>?&gt;
+<font color="#555555">002 </font>&lt;!ELEMENT gruss (#PCDATA)&gt;</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 43.5: DTD des XML-HelloWorld-Beispiels</i></p>
+
+<p>
+In der ersten Zeile sehen Sie den XML-Prolog, gefolgt von der Defintion
+des einzigen Elements <font color="#000077"><tt>gruss</tt></font>.
+Das <font color="#000077"><tt>gruss</tt></font>-Element kann Text
+enthalten, was durch die Formulierung <a name="ixa103059"><a href="index_0.html#ixb102265"><font color=#000080><tt>#PCDATA</tt></font></a></a>
+zum Ausdruck gebracht wird. 
+
+<!-- Section -->
+
+<a name="sectlevel4id043001002002"></a>
+<h4>Elementdefinition </h4>
+
+<p>
+In der Elementdefinition wird festgelegt, ob das Element Text aufnehmen
+oder andere Elemente enthalten soll. Zudem muss zu jedem Kindelement
+die H&auml;ufigkeit des Auftretens festgelegt werden. Die Elementdefintion
+beginnt mit <a name="ixa103060"><a href="index_0.html#ixb102266"><font color=#000080><tt>&lt;!ELEMENT</tt></font></a></a>,
+gefolgt von dem Namen des Elements. Nach dem Namen folgt der m&ouml;gliche
+Inhalt des Elements. <a href="index_0.html#ixb102265"><font color=#000080><tt>#PCDATA</tt></font></a>
+signalisiert, dass das Element Text enthalten kann. Enth&auml;lt das
+Element andere Elemente, werden diese in runden Klammern aufgez&auml;hlt.
+Die Reihenfolge der Elemente ist dabei von Bedeutung, d.h., die Elemente
+m&uuml;ssen sp&auml;ter in dem XML-Dokument in der festgelegten Reihenfolge
+auftreten. Die Defintion eines Elements endet mit <font color="#000077"><tt>&gt;</tt></font>.
+<a name="listingid043006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>&lt;!-- Ein oder mehrere gruss-Kinder --&gt;
+<font color="#555555">002 </font>&lt;!ELEMENT gruesse (gruss+)&gt;
+<font color="#555555">003 </font>
+<font color="#555555">004 </font>&lt;!-- Kein, ein oder mehrere gruss-Kinder --&gt;
+<font color="#555555">005 </font>&lt;!ELEMENT gruesse (gruss*)&gt;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font>&lt;!-- Ein gruss-Kind --&gt;
+<font color="#555555">008 </font>&lt;!ELEMENT gruesse (gruss)&gt;
+<font color="#555555">009 </font>
+<font color="#555555">010 </font>&lt;!-- gruss enth&auml;lt einen lang- und einen kurztext --&gt;
+<font color="#555555">011 </font>&lt;!ELEMENT gruss (langtext, kurztext)&gt;
+<font color="#555555">012 </font>
+<font color="#555555">013 </font>&lt;!-- Entweder maennlich oder weiblich --&gt;
+<font color="#555555">014 </font>&lt;!ELEMENT geschlecht (maennnlich | weiblich)&gt;
+<font color="#555555">015 </font>
+<font color="#555555">016 </font>&lt;!-- gruss enth&auml;lt Text --&gt;
+<font color="#555555">017 </font>&lt;!ELEMENT gruss (#PCDATA)&gt;</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 43.6: DTD-Elemente</i></p>
+
+<p>
+Die H&auml;ufigkeit des Auftretens jedes Elements wird durch die angeh&auml;ngten
+Symbole +, * usw. bestimmt. Ein + bedeutet, dass ein Element ein-
+oder mehrere Male auftreten darf, ein * steht f&uuml;r beliebig h&auml;ufiges
+Auftreten und ein ? bedeutet, dass das Element entweder gar nicht
+oder genau einmal auftreten kann. Werden mehrere Unterelemente mit
+Kommata getrennt, m&uuml;ssen sie auch im XML-Dokument in genau dieser
+Reihenfolge auftreten. Werden sie mit einem senkrechten Strich getrennt,
+muss genau eines der aufgelisteten Elemente an der entsprechenden
+Stelle auftauchen. 
+
+<!-- Section -->
+
+<a name="sectlevel4id043001002003"></a>
+<h4>Attributdefinition </h4>
+
+<p>
+Die Attributdefinition beginnt mit <a name="ixa103061"><a href="index_0.html#ixb102267"><font color=#000080><tt>&lt;!ATTLIST</tt></font></a></a>,
+gefolgt von dem Elementnamen, zu dem das Attribut geh&ouml;rt, gefolgt
+von dem Namen des Attributs selbst Das Schl&uuml;sselwort <a name="ixa103062"><a href="index_c.html#ixb102268"><font color=#000080><tt>CDATA</tt></font></a></a>
+signalisiert, dass das Attribut beliebigen Text enthalten kann. Das
+Attribut kann optional (<a name="ixa103063"><a href="index_0.html#ixb102269"><font color=#000080><tt>#IMPLIED</tt></font></a></a>)
+oder obligatorisch (<a name="ixa103064"><a href="index_0.html#ixb102270"><font color=#000080><tt>#REQUIRED</tt></font></a></a>)
+sein. Kann ein Attribut nur eines von wenigen zuvor festgelegten Werten
+annehmen, werden diese in runden Klammern aufgez&auml;hlt und mit
+<font color="#000077"><tt>|</tt></font> voneinander getrennt. Die
+Defintion des Attributs endet mit <font color="#000077"><tt>&gt;</tt></font>.
+
+<p>
+Das folgende Listing zeigt die DTD von <a href="k100275.html#xmlmultilinggruss">Listing 43.2</a>.
+<a name="dtdgruesse"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>&lt;?xml version=<font color="#0000FF">"1.0"</font> encoding=<font color="#0000FF">"iso-8859-15"</font>?&gt;
+<font color="#555555">002 </font>&lt;!ELEMENT gruesse (gruss+)&gt;
+<font color="#555555">003 </font>&lt;!ELEMENT gruss (#PCDATA)&gt;
+<font color="#555555">004 </font>&lt;!ATTLIST gruss bundesland CDATA #REQUIRED&gt;</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 43.7: DTD zum Dialekt-Beispiel</i></p>
+
+<p>
+Das folgende Listing zeigt weitere Attributdefinitionen: 
+<a name="listingid043008"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>&lt;!-- Attribut mit Defaultwert --&gt;
+<font color="#555555">002 </font>&lt;!ATTLIST auto anzahlreifen CDATA <font color="#0000FF">"4"</font>&gt;
+<font color="#555555">003 </font>
+<font color="#555555">004 </font>&lt;!-- Obligatorisches Attribut --&gt;
+<font color="#555555">005 </font>&lt;!ATTLIST gruss bundesland CDATA #REQUIRED &gt;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font>&lt;!-- Optionales Attribut --&gt;
+<font color="#555555">008 </font>&lt;!ATTLIST gruss bundesland CDATA #IMPLIED &gt;
+<font color="#555555">009 </font>
+<font color="#555555">010 </font>&lt;!-- Attribut mit Auswahlliste --&gt;
+<font color="#555555">011 </font>&lt;!ATTLIST person geschlecht (maennlich|weiblich) <font color="#0000FF">"maennlich"</font> &gt;</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 43.8: DTD-Attribute</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id043001002004"></a>
+<h4>Einbinden einer DTD </h4>
+
+<p>
+Soll ein XML-Dokument validiert werden k&ouml;nnen, muss es den Zusammenhang
+zur DTD selbst herstellen. Eine DTD kann entweder direkt in das XML-Dokument
+eingebettet sein oder als externe Datei referenziert werden. Da es
+in der Praxis meist &uuml;blich ist, die DTD extern zu definieren,
+wollen wir auf die internen DTDs an dieser Stelle nicht weiter eingehen.
+Das XML-Dokument verweist auf seine externe DTD im Anschluss an die
+Prologzeile: 
+<a name="xmlmitdtd"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>&lt;?xml version=<font color="#0000FF">"1.0"</font> encoding=<font color="#0000FF">"iso-8859-15"</font>?&gt; 
+<font color="#555555">002 </font>&lt;!DOCTYPE gruss SYSTEM <font color="#0000FF">"gruss.dtd"</font>&gt; 
+<font color="#555555">003 </font>&lt;gruss&gt; 
+<font color="#555555">004 </font>Hallo, Welt!
+<font color="#555555">005 </font>&lt;/gruss&gt;</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 43.9: HelloWorld mit externer DTD</i></p>
+
+<p>
+In der Doctype Definition wird das Wurzelelement, also das Element
+der h&ouml;chsten Ebene, angegeben (in unserem Fall <font color="#000077"><tt>gruss</tt></font>).
+Danach folgt das Schl&uuml;sselwort <a name="ixa103065"><a href="index_s.html#ixb102271"><font color=#000080><tt>SYSTEM</tt></font></a></a>
+und der Dateiname der DTD. Bevor wir uns nun der eigentlichen programmgesteuerten
+Verarbeitung der XML-Dokumente zuwenden, wollen wir noch kurz auf
+die zweite Form der XML-Grammatiken eingehen, die XML Schema Definitionen.
+
+
+<!-- Section -->
+<a name="xmlschemadefinition"></a>
+<h3>43.1.3 XML Schema Definition<a name="ixa103066"></a> </h3>
+
+<p>
+Die &#187;XML Schema Definition&#171;, kurz XSD, erm&ouml;glicht ebenfalls
+die Definition von XML-Grammatiken. Im Gegensatz zu DTDs sind XSD-Dateien
+selbst XML-Dokumente, die ihrerseits einer Grammatik folgen. Die XML
+Schema Definition bietet im Gegensatz zur DTD mehr Freiheitsgrade
+und unterscheidet diverse elementare Datentypen. Au&szlig;erdem erlaubt
+sie es, einfache und komplexe Datentypen selbst zu definieren. Die
+ausf&uuml;hrliche Beschreibung der XML Schema Definition ist f&uuml;r
+den Rahmen dieser Einf&uuml;hrung viel zu umfangreich, wir wollen
+uns daher im Folgenden lediglich einige Grundlagen dieses Standards
+ansehen. 
+
+<p>
+Eine XSD-Datei beginnt wie folgt: 
+<a name="listingid043010"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+&lt;?xml version=<font color="#0000FF">"1.0"</font> encoding=<font color="#0000FF">"iso-8859-15"</font>?&gt;
+&lt;xs:schema xmlns:xs=<font color="#0000FF">"http://www.w3.org/2001/XMLSchema"</font>&gt;
+...</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 43.10: Beginn einer XSD-Datei</i></p>
+
+<p>
+Den Prolog kennen wir aus <a href="k100275.html#xmlaufbau">Abschnitt 43.1.1</a>.
+Im <font color="#000077"><tt>schema</tt></font>-Wurzelelement verbinden
+wir den Pr&auml;fix <a name="ixa103067"><a href="index_x.html#ixb102272"><font color=#000080><tt>xs</tt></font></a></a>
+mit der Grammatik der XML Schema Definition. Der Name des Pr&auml;fixes
+ist frei w&auml;hlbar, meist wird <a href="index_x.html#ixb102272"><font color=#000080><tt>xs</tt></font></a>
+verwendet, gelegentlich auch <font color="#000077"><tt>xsd</tt></font>.
+Der Pr&auml;fix (Namensraum) wird u.a. den Elementnamen vorangestellt,
+gefolgt von einem <font color="#000077"><tt>:</tt></font>. In unserem
+Fall lautet der komplette Pr&auml;fix also <font color="#000077"><tt>xs:</tt></font>.
+
+
+<!-- Section -->
+<a name="sectlevel4id043001003001"></a>
+<h4>Elementdefinition </h4>
+
+<p>
+Elemente definiert man wie folgt: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+&lt;xs:element name="name"&gt;
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+Mit dem Attribut <font color="#000077"><tt>name</tt></font> wird der
+Name des zu definierenden Elements festgelegt. Ein weiteres wichtiges,
+aber optionales Attribut ist <a name="ixa103068"><a href="index_t.html#ixb102273"><font color=#000080><tt>type</tt></font></a></a>
+zur Definition des Datentyps des Elementinhalts. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+&lt;xs:element name="name" type="type"&gt;
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+Die XML Schema Definition bietet eine Reihe elementarer Datentypen
+an, von denen die wichtigsten in der folgenden Tabelle aufgef&uuml;hrt
+sind: <a name="tableid043001"></a>
+
+<p>
+<table cols=2 border width=66%>
+
+<tr>
+<td valign=top align=left width=25%><b>Name</b></td>
+<td valign=top align=left width=75%><b>Beschreibung</b></td></tr>
+<tr>
+<td valign=top align=left>boolean</td>
+<td valign=top align=left>Wahrheitswert, repr&auml;sentiert durch
+den Ausdruck <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>
+bzw. <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+oder durch die Zahlen 0 und 1 </td></tr>
+<tr>
+<td valign=top align=left>byte</td>
+<td valign=top align=left>Ein acht Bit langer Ganzzahltyp, entsprechend
+dem Wertebereich des Java-Datentyps <a href="index_b.html#ixb100249"><font color=#000080><tt>byte</tt></font></a></td></tr>
+<tr>
+<td valign=top align=left>date</td>
+<td valign=top align=left>Darstellung eines Datums, optional mit Zeitzone.
+Beispiel: <font color="#000077"><tt>1972-03-03</tt></font></td></tr>
+<tr>
+<td valign=top align=left>dateTime</td>
+<td valign=top align=left>Darstellung eines Datums inkl. Zeitangabe,
+optional mit Zeitzone. Beispiel: <font color="#000077"><tt>1969-07-20T03:40:00</tt></font></td></tr>
+<tr>
+<td valign=top align=left>double</td>
+<td valign=top align=left>Eine 64 Bit-Flie&szlig;kommazahl nach IEEE
+754, entprechend dem Wertebereich des Java-Datentyps <a href="index_d.html#ixb100254"><font color=#000080><tt>double</tt></font></a></td></tr>
+<tr>
+<td valign=top align=left>float</td>
+<td valign=top align=left>Eine 32 Bit-Flie&szlig;kommazahl nach IEEE
+754, entsprechend dem Wertebereich des gleichnamigen Java-Datentyps</td></tr>
+<tr>
+<td valign=top align=left>int</td>
+<td valign=top align=left>Eine 32 Bit-Ganzzahl, entsprechend dem Wertebereich
+des Java-Datentyps <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a></td></tr>
+<tr>
+<td valign=top align=left>short</td>
+<td valign=top align=left>Darstellung einer 16 Bit-Ganzzahl, entsprechend
+dem Wertebereich des gleichnamigen Java-Datentyps</td></tr>
+<tr>
+<td valign=top align=left>string</td>
+<td valign=top align=left>Darstellung einer beliebigen Zeichenkette,
+entsprechend dem Java-Datentyp <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a></td></tr>
+<tr>
+<td valign=top align=left>time</td>
+<td valign=top align=left>Darstellung einer Uhrzeitangabe. Beispiel:
+<font color="#000077"><tt>23:59:59</tt></font></td></tr>
+</table>
+<p><i>
+Tabelle 43.1: Wichtige elementare Datentypen des XSD-Standards</i></p>
+
+<p>
+Einige Beispiele dazu: 
+<a name="listingid043011"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>&lt;!-- Element mit ganzzahligem Inhalt --&gt;
+<font color="#555555">002 </font>&lt;element name=<font color="#0000FF">"anzahl"</font> type=<font color="#0000FF">"xs:int"</font>/&gt;
+<font color="#555555">003 </font>
+<font color="#555555">004 </font>&lt;!-- Element mit Uhrzeit-Inhalt --&gt;
+<font color="#555555">005 </font>&lt;element name=<font color="#0000FF">"abfahrt"</font> type=<font color="#0000FF">"xs:time"</font>/&gt;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font>&lt;!-- Element mit Zeichenketten-Inhalt --&gt;
+<font color="#555555">008 </font>&lt;element name=<font color="#0000FF">"vorname"</font> type=<font color="#0000FF">"xs:string"</font>/&gt;</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 43.11: Elementdefinitionen</i></p>
+
+<p>
+Elemente, die andere Elemente enthalten, hei&szlig;en <i>komplexe</i>
+Elemente und werden wie folgt definiert: 
+<a name="listingid043012"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>&lt;?xml version=<font color="#0000FF">"1.0"</font> encoding=<font color="#0000FF">"iso-8859-15"</font>?&gt;
+<font color="#555555">002 </font>&lt;xs:schema xmlns:xs=<font color="#0000FF">"http://www.w3.org/2001/XMLSchema"</font>&gt;
+<font color="#555555">003 </font>  &lt;xs:element name=<font color="#0000FF">"gruesse"</font>&gt;
+<font color="#555555">004 </font>    &lt;xs:complexType&gt;
+<font color="#555555">005 </font>      &lt;xs:sequence&gt;
+<font color="#555555">006 </font>        &lt;xs:element name=<font color="#0000FF">"gruss"</font> type=<font color="#0000FF">"xs:string"</font>/&gt;
+<font color="#555555">007 </font>     &lt;/xs:sequence&gt;
+<font color="#555555">008 </font>    &lt;/xs:complexType&gt;
+<font color="#555555">009 </font>  &lt;/xs:element&gt;
+<font color="#555555">010 </font>&lt;/xs:schema&gt;</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 43.12: XSD-Wurzelelement mit genau einem Kind</i></p>
+
+<p>
+In diesem Beispiel enth&auml;lt das <font color="#000077"><tt>gruesse</tt></font>-Element
+genau ein <font color="#000077"><tt>gruss</tt></font>-Kind; im folgenden
+Listing kann es kein, ein oder mehrere Kinder enthalten: 
+<a name="listingid043013"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>&lt;?xml version=<font color="#0000FF">"1.0"</font> encoding=<font color="#0000FF">"iso-8859-15"</font>?&gt;
+<font color="#555555">002 </font>&lt;xs:schema xmlns:xs=<font color="#0000FF">"http://www.w3.org/2001/XMLSchema"</font>&gt;
+<font color="#555555">003 </font>  &lt;xs:element name=<font color="#0000FF">"gruesse"</font>&gt;
+<font color="#555555">004 </font>    &lt;xs:complexType&gt;
+<font color="#555555">005 </font>      &lt;xs:sequence&gt;
+<font color="#555555">006 </font>        &lt;xs:element name=<font color="#0000FF">"gruss"</font> type=<font color="#0000FF">"xs:string"</font> 
+<font color="#555555">007 </font>           minOccurs=<font color="#0000FF">"0"</font> maxOccurs=<font color="#0000FF">"unbounded"</font>/&gt;
+<font color="#555555">008 </font>     &lt;/xs:sequence&gt;
+<font color="#555555">009 </font>    &lt;/xs:complexType&gt;
+<font color="#555555">010 </font>  &lt;/xs:element&gt;
+<font color="#555555">011 </font>&lt;/xs:schema&gt;</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 43.13: XSD-Wurzelelement mit beliebig vielen Kindern</i></p>
+
+<p>
+Die Attribute <a name="ixa103069"><a href="index_m.html#ixb102274"><font color=#000080><tt>maxOccurs</tt></font></a></a>
+und <a name="ixa103070"><a href="index_m.html#ixb102275"><font color=#000080><tt>minOccurs</tt></font></a></a>
+haben die Voreinstellung 1. Statt in einem <a name="ixa103071"><a href="index_s.html#ixb102276"><font color=#000080><tt>sequence</tt></font></a></a>-Element
+k&ouml;nnen Sie die Kindelemente auch mit einem <a name="ixa103072"><a href="index_a.html#ixb102277"><font color=#000080><tt>all</tt></font></a></a>-
+(beliebige Reihenfolge der Kindelemente) oder <a name="ixa103073"><a href="index_c.html#ixb102278"><font color=#000080><tt>choice</tt></font></a></a>-Element
+(nur ein Kindelement) umschlie&szlig;en. 
+
+<!-- Section -->
+
+<a name="sectlevel4id043001003002"></a>
+<h4>Attributdefinition </h4>
+
+<p>
+Elemente, die Attribute enthalten, hei&szlig;en ebenfalls komplexe
+Elemente und werden so definiert: 
+<a name="xsdattribute"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>&lt;?xml version=<font color="#0000FF">"1.0"</font> encoding=<font color="#0000FF">"iso-8859-15"</font>?&gt;
+<font color="#555555">002 </font>&lt;xs:schema xmlns:xs=<font color="#0000FF">"http://www.w3.org/2001/XMLSchema"</font>&gt;
+<font color="#555555">003 </font>  &lt;xs:element name=<font color="#0000FF">"gruesse"</font>&gt;
+<font color="#555555">004 </font>    &lt;xs:complexType&gt;
+<font color="#555555">005 </font>      &lt;xs:sequence&gt;
+<font color="#555555">006 </font>        &lt;xs:element name=<font color="#0000FF">"gruss"</font> maxOccurs=<font color="#0000FF">"unbounded"</font>&gt; <a name="xsdattribute.a"></a>
+<font color="#555555">007 </font>          &lt;xs:complexType&gt;
+<font color="#555555">008 </font>            &lt;xs:simpleContent&gt;
+<font color="#555555">009 </font>              &lt;xs:extension base=<font color="#0000FF">"xs:string"</font>&gt;
+<font color="#555555">010 </font>                &lt;xs:attribute name=<font color="#0000FF">"bundesland"</font> type=<font color="#0000FF">"xs:string"</font>/&gt;
+<font color="#555555">011 </font>              &lt;/xs:extension&gt;
+<font color="#555555">012 </font>            &lt;/xs:simpleContent&gt;
+<font color="#555555">013 </font>          &lt;/xs:complexType&gt;
+<font color="#555555">014 </font>        &lt;/xs:element&gt; <a name="xsdattribute.b"></a>
+<font color="#555555">015 </font>     &lt;/xs:sequence&gt;
+<font color="#555555">016 </font>    &lt;/xs:complexType&gt;
+<font color="#555555">017 </font>  &lt;/xs:element&gt;
+<font color="#555555">018 </font>&lt;/xs:schema&gt;</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 43.14: XSD-Attribute</i></p>
+
+<p>
+Das vorangegangene Beispiel zeigt eine g&uuml;ltige XSD f&uuml;r das
+XML-Dokument in <a href="k100275.html#xmlmultilinggruss">Listing 43.2</a>.
+In <a href="k100275.html#xsdattribute.a">Zeile 006</a> bis <a href="k100275.html#xsdattribute.b">Zeile 014</a>
+wird das <font color="#000077"><tt>gruss</tt></font>-Kindelement deklariert.
+Das Element soll Inhalte vom Typ String enthalten. Dies k&ouml;nnen
+wir aber an dieser Stelle nicht &uuml;ber das <a href="index_t.html#ixb102273"><font color=#000080><tt>type</tt></font></a>-Attribut
+am <font color="#000077"><tt>gruss</tt></font>-Element ausdr&uuml;cken,
+weil es ein <a name="ixa103074"><a href="index_c.html#ixb102279"><font color=#000080><tt>complexType</tt></font></a></a>-Element
+enth&auml;lt. Mit dem <a name="ixa103075"><a href="index_e.html#ixb102280"><font color=#000080><tt>extension</tt></font></a></a>-Element
+leiten wir es stattdessen von einem Element ab, das einen String aufnehmen
+kann. Au&szlig;erdem definieren wir ein <font color="#000077"><tt>bundesland</tt></font>-Attribut,
+das Inhalte vom Typ String aufnehmen kann. 
+
+<!-- Section -->
+
+<a name="sectlevel4id043001003003"></a>
+<h4>Kommentare </h4>
+
+<p>
+Da XML Schema Definitionen XML-Dokumente sind, kann man nat&uuml;rlich
+normale XML-Kommentare verwenden. In XSDs gibt es einen weiteren Weg,
+der es im Gegensatz zu den normalen XML-Kommentaren erm&ouml;glicht,
+Kommentare maschinell zu verarbeiten, denn es handelt sich um normale
+Elemente. Das ist beispielsweise praktisch, um aus einer XML Schema
+Definiton eine Dokumentation zu generieren: 
+<a name="listingid043015"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>&lt;?xml version=<font color="#0000FF">"1.0"</font> encoding=<font color="#0000FF">"iso-8859-15"</font>?&gt;
+<font color="#555555">002 </font>&lt;xs:schema xmlns:xs=<font color="#0000FF">"http://www.w3.org/2001/XMLSchema"</font>&gt;
+<font color="#555555">003 </font>  &lt;xs:element name=<font color="#0000FF">"gruesse"</font>&gt;
+<font color="#555555">004 </font>    &lt;xs:annotation&gt;
+<font color="#555555">005 </font>      &lt;xs:documentation xml:lang=<font color="#0000FF">"DE"</font>&gt;
+<font color="#555555">006 </font>      Gr&uuml;&szlig;e in verschiedenen Bundesl&auml;ndern
+<font color="#555555">007 </font>      &lt;/xs:documentation&gt;
+<font color="#555555">008 </font>    &lt;/xs:annotation&gt;
+<font color="#555555">009 </font>    ...
+<font color="#555555">010 </font>  &lt;/xs:element&gt;
+<font color="#555555">011 </font>&lt;/xs:schema&gt;</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 43.15: XSD-Kommentare </i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id043001003004"></a>
+<h4>Einbinden einer XSD </h4>
+
+<p>
+Wie bei einer DTD muss auch ein XSD-validierbares XML-Dokument den
+Zusammenhang zu seiner Grammatik selbst herstellen. Das XML-Dokument
+referenziert dazu seine XSD im Wurzelelement. Im folgenden Beispiel
+wird die XSD so eingebunden, dass man den Elementen keinen Namesraum-Pr&auml;fix
+voranstellen muss: 
+<a name="listingid043016"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>&lt;?xml version=<font color="#0000FF">"1.0"</font> encoding=<font color="#0000FF">"UTF-8"</font>?&gt;
+<font color="#555555">002 </font>&lt;gruesse xmlns:xsi=<font color="#0000FF">"http://www.w3.org/2001/XMLSchema-instance"</font> 
+<font color="#555555">003 </font>         xsi:noNamespaceSchemaLocation=<font color="#0000FF">"gruesse.xsd"</font>&gt;
+<font color="#555555">004 </font>...</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 43.16: Einbinden einer XSD</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100274.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100274.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100276.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100278.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

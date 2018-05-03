@@ -1,0 +1,536 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100263.html;106,k100263.html;107,k100265.html;108,k100269.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100263.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100263.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100265.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100269.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 41 - Applets II
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id041001"></a>
+<h2>41.1 <a name="ixa102950">Verweise auf andere Seiten</a></h2>
+<hr>
+<ul>
+<li><a href="k100264.html#sectlevel2id041001">41.1 Verweise auf andere Seiten</a>
+<ul>
+<li><a href="k100264.html#dieklasseurl">41.1.1 Die Klasse URL</a>
+<li><a href="k100264.html#sectlevel3id041001002">41.1.2 Der Applet-Kontext</a>
+<li><a href="k100264.html#methodeshowdocument">41.1.3 Die Methode showDocument</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="dieklasseurl"></a>
+<h3>41.1.1 Die Klasse URL </h3>
+
+<p>
+Das Konzept der <a name="ixa102951"><i>URLs</i></a> ist eines der
+wichtigsten im ganzen Web. Ein URL (<a name="ixa102952"><i>Uniform Resource Locator</i></a>)
+ist ein universelles Hilfsmittel zur Darstellung von Internetadressen.
+Hinter jedem Link, der sich auf einem HTML-Dokument verbirgt, steht
+ein URL, der beim Aufrufen des Links angesprungen wird. 
+
+<p>
+Der Aufbau von URLs ist in seiner Vielf&auml;ltigkeit recht komplex
+und erm&ouml;glicht es, sehr unterschiedliche Typen von Adressen zu
+verwalten. Ein URL-Link kann beispielsweise verwendet werden, um eine
+andere Webseite aufzurufen, eine Datei zu laden oder elektronische
+Post an einen anderen Anwender zu senden. Wir wollen hier nur auf
+die URLs eingehen, die man zur Darstellung von Webseiten-Adressen
+verwendet. Eine exakte Beschreibung des URL-Konzepts befindet sich
+in RFC 1630 (allgemeine Hinweise zu den RFCs finden sich in <a href="k100308.html#requestforcomments">Abschnitt 48.1.5</a>).
+
+<p>
+Ein Uniform Resource Locator besteht aus mehreren Teilen. Als Erstes
+wird ein <i>Dienst</i> (auch <i>Protokoll</i> genannt) angegeben,
+der beschreibt, auf welche Art von Service die Adresse verweist. Typische
+Dienste sind <i>html</i> f&uuml;r Webseiten, <i>ftp</i> f&uuml;r einen
+File-Download oder <i>mailto</i>, um eine Mail zu versenden. 
+
+<p>
+Bei einer <a name="ixa102953">HTML-Adresse</a> besteht der URL aus
+drei weiteren Teilen: 
+<ul>
+<li>Dem <a name="ixa102954"><i>Host-Namen</i></a> (z.B. <a href="java.sun.com">java.sun.com</a>),
+der vom Dienst durch die Zeichenkette "://" getrennt wird
+<li>Einer optionalen <a name="ixa102955"><i>Port-Nummer</i></a> (z.B.
+80 f&uuml;r einen <a name="ixa102956"><i>http</i></a>-D&auml;mon),
+die vom Host-Namen durch einen ":" abgetrennt wird
+<li>Einem Dateinamen (z.B. <font color="#660099">bugsandfeatures.html</font>),
+der vom Host-Namen bzw. der Port-Nummer durch &#187;/&#171; abgetrennt
+wird. Diesem Dateinamen kann auch die Rolle eines Kommandos oder Parameterstrings
+zukommen, beispielsweise, wenn ein <a name="ixa102957"><i>CGI-Script</i></a>
+aufgerufen wird.
+</ul>
+
+<p>
+G&uuml;ltige URLs sind also <a href="http://java.sun.com/javase/faqs.jsp">http://java.sun.com/javase/faqs.jsp</a>
+oder auch <a href="http://www.yahoo.com">http://www.yahoo.com</a>.
+Die meisten Browser und Server sind in der Lage, fehlende Bestandteile
+eines URL weitgehend zu erg&auml;nzen. Fehlt beispielsweise die Dateierweiterung,
+wird <font color="#660099">.html</font> angeh&auml;ngt. Bezeichnet
+der URL lediglich ein Verzeichnis, wird ein Standarddateiname wie
+beispielsweise <font color="#660099">index.html</font> oder <font color="#660099">default.htm</font>
+angeh&auml;ngt. 
+
+<p>
+Java implementiert das Konzept eines Uniform Resource Locator durch
+eine eigene Klasse <font color="#000077"><tt>URL</tt></font>, die
+sich im Paket <a href="index_j.html#ixb100202"><font color=#000080><tt>java.net</tt></font></a>
+befindet. Diese dient dazu, die Syntax von URLs zu kapseln und die
+einzelnen Bestandteile voneinander zu trennen. Die Klasse <font color="#000077"><tt>URL</tt></font>
+besitzt vier Konstruktoren, die es erm&ouml;glichen, eine Adresse
+auf verschiedene Art zusammenzubauen. Wir werden hier nur die Variante
+verwenden, die einen <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+als Argument akzeptiert: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public URL(String url)
+  throws MalformedURLException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/net/URL.html" onClick="this.href=getApiDoc('java.net.URL')"><font color="#660066" size=-1>java.net.URL</font></a></td>
+</tr>
+</table>
+
+<p>
+Bei der Anwendung dieses Konstruktors muss ein syntaktisch einwandfreier
+URL als <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+&uuml;bergeben werden. Enth&auml;lt der String einen Syntaxfehler,
+l&ouml;st der Konstruktor eine Ausnahme des Typs <a name="ixa102958"><a href="index_m.html#ixb102208"><font color=#000080><tt>MalformedURLException</tt></font></a></a>
+aus. 
+
+<p>
+An dieser Stelle wird nat&uuml;rlich noch nicht &uuml;berpr&uuml;ft,
+ob die angegebene Adresse <i>wirklich existiert</i>. Dazu w&auml;re
+eine funktionsf&auml;hige Netzwerkverbindung n&ouml;tig und es w&uuml;rde
+ein in der Regel nicht akzeptabler Aufwand bei der Konstruktion von
+URL-Objekten entstehen. Die im Konstruktor durchgef&uuml;hrten &Uuml;berpr&uuml;fungen
+sind lediglich <i>syntaktischer</i> Natur, um sicherzustellen, dass
+ein URL ein g&uuml;ltiges Adressenformat hat. Nachdem ein g&uuml;ltiges
+<font color="#000077"><tt>URL</tt></font>-Objekt erzeugt wurde, kann
+es zur Adressen&uuml;bergabe verwendet werden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Weitere Hinweise zur Anwendung der Klasse <a name="ixa102959"><a href="index_u.html#ixb102209"><font color=#000080><tt>URL</tt></font></a></a>
+finden sich in <a href="k100311.html#urldatenlesen">Abschnitt 48.4</a>.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id041001002"></a>
+<h3>41.1.2 Der <a name="ixa102960">Applet-Kontext</a> </h3>
+
+<p>
+Ein anderes Konzept, das bei der Programmierung von Links eine Rolle
+spielt, ist das des <i>Applet-Kontexts</i>. Hierunter versteht Java
+<i>das Programm</i>, das das aktuelle Applet ausf&uuml;hrt. Dies ist
+in der Regel der Browser, der das Applet geladen hat; w&auml;hrend
+der Entwicklung und Testphase des Programms kann es nat&uuml;rlich
+auch der <a name="ixa102961"><i>Appletviewer</i></a> sein. 
+
+<p>
+Mit Hilfe der Methode <a name="ixa102962"><a href="index_g.html#ixb102211"><font color=#000080><tt>getAppletContext</tt></font></a></a>
+kann ein Objekt des Typs <a name="ixa102963"><a href="index_a.html#ixb100666"><font color=#000080><tt>AppletContext</tt></font></a></a>
+beschafft werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public AppletContext getAppletContext()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/applet/Applet.html" onClick="this.href=getApiDoc('java.applet.Applet')"><font color="#660066" size=-1>java.applet.Applet</font></a></td>
+</tr>
+</table>
+
+<p>
+Das Interface <a href="index_a.html#ixb100666"><font color=#000080><tt>AppletContext</tt></font></a>
+stellt eine Reihe von Methoden zur Verf&uuml;gung, die dem Applet
+Funktionalit&auml;ten des Browsers zur Verf&uuml;gung stellen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Enumeration&lt;Applet&gt; getApplets()
+
+public Applet getApplet(String name)
+
+public void showDocument(URL url)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/applet/AppletContext.html" onClick="this.href=getApiDoc('java.applet.AppletContext')"><font color="#660066" size=-1>java.applet.AppletContext</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa102964"><a href="index_g.html#ixb102212"><font color=#000080><tt>getApplets</tt></font></a></a>
+liefert eine Liste aller laufenden Applets; <a name="ixa102965"><a href="index_g.html#ixb102213"><font color=#000080><tt>getApplet</tt></font></a></a>
+beschafft ein einzelnes Applet, wenn sein Name bekannt ist. <a name="ixa102966"><a href="index_s.html#ixb102214"><font color=#000080><tt>showDocument</tt></font></a></a>
+erlaubt das Laden eines anderen HTML-Dokuments. 
+
+<!-- Section -->
+
+<a name="methodeshowdocument"></a>
+<h3>41.1.3 Die Methode showDocument </h3>
+
+<p>
+Die Methode <a href="index_s.html#ixb102214"><font color=#000080><tt>showDocument</tt></font></a>
+kann dazu verwendet werden, eine andere Webseite zu laden. Dies f&uuml;hrt
+dazu, dass das aktive Applet angehalten wird und die Kontrolle &uuml;ber
+die Webseite verliert. Befindet sich auf der neuen Webseite ein anderes
+Applet, so wird dieses geladen bzw. - falls es bereits geladen war
+- reaktiviert. 
+
+<p>
+Die Methode <a href="index_s.html#ixb102214"><font color=#000080><tt>showDocument</tt></font></a>
+steht in zwei unterschiedlichen Varianten zur Verf&uuml;gung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void showDocument(URL url)
+
+public void showDocument(URL url, String name)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/applet/AppletContext.html" onClick="this.href=getApiDoc('java.applet.AppletContext')"><font color="#660066" size=-1>java.applet.AppletContext</font></a></td>
+</tr>
+</table>
+
+<p>
+In seiner einfachsten Form erwartet <a href="index_s.html#ixb102214"><font color=#000080><tt>showDocument</tt></font></a>
+lediglich einen einzigen Parameter, n&auml;mlich die Adresse der Zielseite.
+Hier muss ein g&uuml;ltiges <a href="index_u.html#ixb102209"><font color=#000080><tt>URL</tt></font></a>-Objekt
+angegeben werden, also eine komplette Adresse mit Dienst, Host-Name,
+Verzeichnis und Datei. In der zweiten Variante kann zus&auml;tzlich
+ein <i>target</i> angegeben werden, also das Sprungziel innerhalb
+der ausgew&auml;hlten Datei. Hier k&ouml;nnen die Standard-HTML-Targets
+<a name="ixa102967"><a href="index_0.html#ixb102215"><font color=#000080><tt>_self</tt></font></a></a>,
+<a name="ixa102968"><a href="index_0.html#ixb102216"><font color=#000080><tt>_parent</tt></font></a></a>,
+<a name="ixa102969"><a href="index_0.html#ixb102217"><font color=#000080><tt>_top</tt></font></a></a>
+und <a name="ixa102970"><a href="index_0.html#ixb102218"><font color=#000080><tt>_blank</tt></font></a></a>
+sowie alle benutzerdefinierten Sprungmarken verwendet werden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Soll statt einer absoluten eine relative Adresse angegeben werden<a name="ixa102971"></a>,
+also beispielsweise eine andere Webseite aus demselben Verzeichnis
+oder aus einem seiner Unterverzeichnisse, muss das <a href="index_u.html#ixb102209"><font color=#000080><tt>URL</tt></font></a>-Objekt
+mit einem erweiterten Konstruktor instanziiert werden. Zus&auml;tzlich
+zur Angabe des relativen URL-Strings ist als erstes Argument ein <a name="ixa102972"><i>Kontext-URL</i></a>
+anzugeben, der das Basisverzeichnis f&uuml;r das zweite Argument vorgibt.
+Mit Hilfe der Methoden <a href="index_g.html#ixb102194"><font color=#000080><tt>getCodeBase</tt></font></a>
+und <a href="index_g.html#ixb102195"><font color=#000080><tt>getDocumentBase</tt></font></a>
+der Klasse <a href="index_a.html#ixb100603"><font color=#000080><tt>Applet</tt></font></a>
+kann beispielsweise das Stammverzeichnis des Applets bzw. der HTML-Seite
+ermittelt werden. Als zweites Argument muss dann lediglich der Dateiname
+relativ zu diesem Verzeichnis angegeben werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Das folgende Applet demonstriert die Anwendung von <a href="index_s.html#ixb102214"><font color=#000080><tt>showDocument</tt></font></a>.
+Es erstellt eine Reihe von Buttons und zeigt sie auf dem Bildschirm
+an. Wird einer der Buttons gedr&uuml;ckt, verzweigt das Programm auf
+die durch den Button spezifizierte Seite. W&auml;hrend der Initialisierung
+sucht das Applet nach Parametern mit den Namen <font color="#000077"><tt>button1</tt></font>,
+<font color="#000077"><tt>button2</tt></font> usw. Jeder dieser Parameter
+sollte den Namen des Buttons und die Zieladresse enthalten. Die beiden
+Teile m&uuml;ssen durch ein Komma getrennt sein. Eine Besonderheit
+besteht darin, dass auch Adressen angegeben werden k&ouml;nnen, die
+mit <font color="#000077"><tt>=</tt></font> anfangen. In diesem Fall
+wird das <font color="#000077"><tt>=</tt></font> entfernt und der
+interne URL nicht absolut, sondern unter Verwendung des erweiterten
+Konstruktors relativ zur aktuellen Webseite angelegt. 
+
+<p>
+Um die Buttons sowohl auf dem Bildschirm anzeigen zu k&ouml;nnen als
+auch den zugeh&ouml;rigen URL zu speichern, wurde eine neue Klasse
+<font color="#000077"><tt>URLButton</tt></font> definiert. <font color="#000077"><tt>URLButton</tt></font>
+erweitert die Klasse <a href="index_b.html#ixb101410"><font color=#000080><tt>Button</tt></font></a>
+um die F&auml;higkeit, einen URL mitzuspeichern und bei Bedarf abzufragen.
+
+<p>
+Hier ist das Listing: 
+<a name="listingid041001"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* URLLaden.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.applet.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">006 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">007 </font><font color="#0000AA">import</font> java.net.*;
+<font color="#555555">008 </font>
+<font color="#555555">009 </font><font color="#0000AA">class</font> URLButton
+<font color="#555555">010 </font><font color="#0000AA">extends</font> Button
+<font color="#555555">011 </font>{
+<font color="#555555">012 </font>  <font color="#0000AA">private</font> URL url;
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>  <font color="#0000AA">public</font> URLButton(String label, URL url)
+<font color="#555555">015 </font>  {
+<font color="#555555">016 </font>    <font color="#006699">super</font>(label);
+<font color="#555555">017 </font>    <font color="#006699">this</font>.url = url;
+<font color="#555555">018 </font>  }
+<font color="#555555">019 </font>
+<font color="#555555">020 </font>  <font color="#0000AA">public</font> URL getURL()
+<font color="#555555">021 </font>  {
+<font color="#555555">022 </font>    <font color="#0000AA">return</font> url;
+<font color="#555555">023 </font>  }
+<font color="#555555">024 </font>}
+<font color="#555555">025 </font>
+<font color="#555555">026 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> URLLaden
+<font color="#555555">027 </font><font color="#0000AA">extends</font> Applet
+<font color="#555555">028 </font><font color="#0000AA">implements</font> ActionListener
+<font color="#555555">029 </font>{
+<font color="#555555">030 </font>  ArrayList&lt;URLButton&gt; buttons;
+<font color="#555555">031 </font>
+<font color="#555555">032 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> init()
+<font color="#555555">033 </font>  {
+<font color="#555555">034 </font>    <font color="#006699">super</font>.init();
+<font color="#555555">035 </font>    setLayout(<font color="#0000AA">new</font> FlowLayout());
+<font color="#555555">036 </font>    addNotify();
+<font color="#555555">037 </font>    buttons = <font color="#0000AA">new</font> ArrayList&lt;URLButton&gt;();
+<font color="#555555">038 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i=1; ; ++i) {
+<font color="#555555">039 </font>      String s = getParameter(<font color="#0000FF">"button"</font>+i);
+<font color="#555555">040 </font>      <font color="#0000AA">if</font> (s == <font color="#006699">null</font>) {
+<font color="#555555">041 </font>        <font color="#0000AA">break</font>;
+<font color="#555555">042 </font>      }
+<font color="#555555">043 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">044 </font>        StringTokenizer st = <font color="#0000AA">new</font> StringTokenizer(s,<font color="#0000FF">","</font>);
+<font color="#555555">045 </font>        String label = st.nextToken();
+<font color="#555555">046 </font>        String urlstring = st.nextToken();
+<font color="#555555">047 </font>        URL url;
+<font color="#555555">048 </font>        <font color="#0000AA">if</font> (urlstring.charAt(0) == <font color="#0000FF">'='</font>) {
+<font color="#555555">049 </font>          urlstring = urlstring.substring(1);
+<font color="#555555">050 </font>          url = <font color="#0000AA">new</font> URL(getDocumentBase(),urlstring);
+<font color="#555555">051 </font>        } <font color="#0000AA">else</font> {
+<font color="#555555">052 </font>          url = <font color="#0000AA">new</font> URL(urlstring);
+<font color="#555555">053 </font>        }
+<font color="#555555">054 </font>        URLButton button = <font color="#0000AA">new</font> URLButton(label,url);
+<font color="#555555">055 </font>        button.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">056 </font>        add(button);
+<font color="#555555">057 </font>        buttons.add(button);
+<font color="#555555">058 </font>      } <font color="#0000AA">catch</font> (NoSuchElementException e) {
+<font color="#555555">059 </font>        System.out.println(<font color="#0000FF">"Button"</font>+i+<font color="#0000FF">": "</font>+e.toString());
+<font color="#555555">060 </font>        <font color="#0000AA">break</font>;
+<font color="#555555">061 </font>      } <font color="#0000AA">catch</font> (MalformedURLException e) {
+<font color="#555555">062 </font>        System.out.println(<font color="#0000FF">"Button"</font>+i+<font color="#0000FF">": "</font>+e.toString());
+<font color="#555555">063 </font>        <font color="#0000AA">break</font>;
+<font color="#555555">064 </font>      }
+<font color="#555555">065 </font>    }
+<font color="#555555">066 </font>  }
+<font color="#555555">067 </font>
+<font color="#555555">068 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> actionPerformed(ActionEvent event)
+<font color="#555555">069 </font>  {
+<font color="#555555">070 </font>    URLButton source = (URLButton)event.getSource();
+<font color="#555555">071 </font>    Iterator&lt;URLButton&gt; it = buttons.iterator();
+<font color="#555555">072 </font>    <font color="#0000AA">while</font> (it.hasNext()) {
+<font color="#555555">073 </font>      URLButton button = it.next();
+<font color="#555555">074 </font>      <font color="#0000AA">if</font> (button == source) {
+<font color="#555555">075 </font>        System.out.println(
+<font color="#555555">076 </font>          <font color="#0000FF">"showDocument("</font>+button.getURL().toString()+<font color="#0000FF">")"</font>
+<font color="#555555">077 </font>        );
+<font color="#555555">078 </font>        getAppletContext().showDocument(button.getURL());
+<font color="#555555">079 </font>      }
+<font color="#555555">080 </font>    }
+<font color="#555555">081 </font>  }
+<font color="#555555">082 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/URLLaden.java"><font color="#000055" size=-1>URLLaden.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 41.1: Laden von Webseiten aus einem Applet</i></p>
+
+<p>
+Um die wichtigsten F&auml;lle zu demonstrieren, wurde das Applet mit
+der folgenden HTML-Datei gestartet: 
+<a name="listingid041002"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">&lt;html&gt;</font>
+<font color="#555555">002 </font><font color="#0000AA">&lt;head&gt;</font>
+<font color="#555555">003 </font><font color="#0000AA">&lt;title&gt;</font>URLLaden<font color="#0000AA">&lt;/title&gt;</font>
+<font color="#555555">004 </font><font color="#0000AA">&lt;/head&gt;</font>
+<font color="#555555">005 </font><font color="#0000AA">&lt;body&gt;</font>
+<font color="#555555">006 </font><font color="#0000AA">&lt;h1&gt;</font>URLLaden<font color="#0000AA">&lt;/h1&gt;</font>
+<font color="#555555">007 </font><font color="#0000AA">&lt;applet code=URLLaden.class width=400 height=200&gt;</font>
+<font color="#555555">008 </font><font color="#0000AA">&lt;param
+<font color="#555555">009 </font>   name=</font><font color="#0000FF">"button1"</font><font color="#0000AA">
+<font color="#555555">010 </font>   value=</font><font color="#0000FF">"JAVA-Home,http://java.sun.com/"</font><font color="#0000AA">&gt;</font>
+<font color="#555555">011 </font><font color="#0000AA">&lt;param
+<font color="#555555">012 </font>   name=</font><font color="#0000FF">"button2"</font><font color="#0000AA">
+<font color="#555555">013 </font>   value=</font><font color="#0000FF">"Guido-Home,http://www.gkrueger.com"</font><font color="#0000AA">&gt;</font>
+<font color="#555555">014 </font><font color="#0000AA">&lt;param
+<font color="#555555">015 </font>   name=</font><font color="#0000FF">"button3"</font><font color="#0000AA">
+<font color="#555555">016 </font>   value=</font><font color="#0000FF">"Schranke,=Schranke.html"</font><font color="#0000AA">&gt;</font>
+<font color="#555555">017 </font><font color="#0000AA">&lt;param
+<font color="#555555">018 </font>   name=</font><font color="#0000FF">"button4"</font><font color="#0000AA">
+<font color="#555555">019 </font>   value=</font><font color="#0000FF">"Jana30,=images/jana30.gif"</font><font color="#0000AA">&gt;</font>
+<font color="#555555">020 </font>Hier steht das Applet URLLaden.class
+<font color="#555555">021 </font><font color="#0000AA">&lt;/applet&gt;</font>
+<font color="#555555">022 </font><font color="#0000AA">&lt;/body&gt;</font>
+<font color="#555555">023 </font><font color="#0000AA">&lt;/html&gt;</font></pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/URLLaden.html"><font color="#000055" size=-1>URLLaden.html</font></a></td>
+</tr>
+</table>
+<i>
+Listing 41.2: Die HTML-Datei zum Laden der Webseiten</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Hier werden vier verschiedene Buttons definiert: 
+<ul>
+<li>Der Button <i>JAVA-Home</i> verzweigt auf die Java-Seite von SUN.
+<li>Der Button <i>Guido-Home</i> verzweigt auf die Homepage des Autors.
+<li>Der Button <i>Schranke</i> l&auml;dt das Beispiel <font color="#000077"><tt>Schranke</tt></font>,
+das sich in demselben Verzeichnis wie die aktuelle HTML-Seite befindet.
+<li>Der Button <i>Jana30</i> schlie&szlig;lich demonstriert zwei weitere
+Features. Erstens, dass es bei den meisten Browsern auch m&ouml;glich
+ist, Grafikdateien (beispielsweise im GIF-Format) zu laden. Zweitens,
+wie man mit Unterverzeichnissen umgeht (Pfadtrennzeichen in UNIX-Schreibweise).
+</ul>
+</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Die Ausgabe des Programms im Netscape Navigator sieht folgenderma&szlig;en
+aus: 
+<p>
+<a name="imageid041001"></a>
+<img src="images/URLLaden.gif">
+<p>
+
+<p><i>
+Abbildung 41.1: Darstellung von URLLaden im Netscape Navigator</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100263.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100263.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100265.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100269.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

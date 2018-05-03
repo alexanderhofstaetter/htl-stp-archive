@@ -1,0 +1,493 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100207.html;106,k100218.html;107,k100220.html;108,k100221.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100207.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100218.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100220.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100221.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 32 - AWT-Dialogelemente
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="abschnittscrollpane"></a>
+<h2>32.12 ScrollPane </h2>
+<hr>
+<ul>
+<li><a href="k100219.html#abschnittscrollpane">32.12 ScrollPane</a>
+</ul>
+<hr>
+
+<p>
+Ein sehr n&uuml;tzliches Dialogelement ist <a name="ixa102195"><a href="index_s.html#ixb101291"><font color=#000080><tt>ScrollPane</tt></font></a></a>,
+ein <a href="index_c.html#ixb101294"><font color=#000080><tt>Container</tt></font></a>
+f&uuml;r automatisches horizontales und vertikales Scrolling. Ein
+<a href="index_s.html#ixb101291"><font color=#000080><tt>ScrollPane</tt></font></a>
+ist von der Funktion her einem <a href="index_p.html#ixb101295"><font color=#000080><tt>Panel</tt></font></a>
+&auml;hnlich und kann wie jedes andere Dialogelement innerhalb eines
+Fensters verwendet werden. <a href="index_s.html#ixb101291"><font color=#000080><tt>ScrollPane</tt></font></a>
+unterscheidet sich allerdings durch zwei wichtige Eigenschaften von
+einem gew&ouml;hnlichen <a href="index_p.html#ixb101295"><font color=#000080><tt>Panel</tt></font></a>:
+<ul>
+<li>Es kann <i>genau ein</i> Dialogelement aufnehmen und ben&ouml;tigt
+keinen expliziten Layoutmanager.
+<li>Es ist in der Lage, eine <a name="ixa102196"><i>virtuelle Ausgabefl&auml;che</i></a>
+zu verwalten, die gr&ouml;&szlig;er ist als die auf dem Bildschirm
+zur Verf&uuml;gung stehende.
+</ul>
+
+<p>
+Die innerhalb von <a href="index_s.html#ixb101291"><font color=#000080><tt>ScrollPane</tt></font></a>
+angezeigte Komponente arbeitet dabei immer mit der virtuellen Ausgabefl&auml;che
+und merkt nichts von eventuellen Gr&ouml;&szlig;enbeschr&auml;nkungen
+auf dem Bildschirm. Falls die ben&ouml;tigte Ausgabefl&auml;che gr&ouml;&szlig;er
+ist als die anzeigbare, blendet <a href="index_s.html#ixb101291"><font color=#000080><tt>ScrollPane</tt></font></a>
+automatisch die erforderlichen Schieberegler ein, um das Dialogelement
+horizontal und vertikal verschieben zu k&ouml;nnen. 
+
+<p>
+Zur Instanzierung eines <a href="index_s.html#ixb101291"><font color=#000080><tt>ScrollPane</tt></font></a>
+stehen zwei Konstruktoren zur Verf&uuml;gung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public ScrollPane()
+
+public ScrollPane(int scrollbarDisplayPolicy)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/ScrollPane.html" onClick="this.href=getApiDoc('java.awt.ScrollPane')"><font color="#660066" size=-1>java.awt.ScrollPane</font></a></td>
+</tr>
+</table>
+
+<p>
+Der Parameter <font color="#000077"><tt>scrollbarDisplayPolicy</tt></font>
+definiert die Strategie zur Anzeige der Schieberegler entsprechend
+den in <a href="k100219.html#schiebeanzkonstanten">Tabelle 32.2</a>
+aufgelisteten Konstanten. <a name="schiebeanzkonstanten"></a>
+
+<p>
+<table cols=2 border width=100%>
+<tr>
+<td valign=top align=left width=40%><b>Konstante</b></td>
+<td valign=top align=left width=60%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102197"><a href="index_s.html#ixb101642"><font color=#000080><tt>ScrollPane.SCROLLBARS_AS_NEEDED</tt></font></a></a></td>
+<td valign=top align=left>Die Schieberegler werden genau dann angezeigt,
+wenn es erforderlich ist, wenn also mehr Platz ben&ouml;tigt wird,
+als zur Anzeige zur Verf&uuml;gung steht. </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102198"><a href="index_s.html#ixb101643"><font color=#000080><tt>ScrollPane.SCROLLBARS_ALWAYS</tt></font></a></a></td>
+<td valign=top align=left>Die Schieberegler werden immer angezeigt.
+</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102199"><a href="index_s.html#ixb101644"><font color=#000080><tt>ScrollPane.SCROLLBARS_NEVER</tt></font></a></a></td>
+<td valign=top align=left>Die Schieberegler werden nie angezeigt und
+der Bildschirmausschnitt kann nur vom Programm aus verschoben werden.
+</td></tr>
+</table>
+<p><i>
+Tabelle 32.2: Konstanten zur Anzeige der Schieberegler in ScrollPane
+</i></p>
+
+<p>
+Nach der Konstruktion des <a href="index_s.html#ixb101291"><font color=#000080><tt>ScrollPane</tt></font></a>
+wird die aus Container geerbte Methode <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+aufgerufen, um eine Komponente hinzuzuf&uuml;gen. Im Gegensatz zu
+anderen Containern sollte <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+hier lediglich einmal aufgerufen werden, denn <a href="index_s.html#ixb101291"><font color=#000080><tt>ScrollPane</tt></font></a>
+kann nur ein einziges Element aufnehmen. Soll ein komplexer Dialog
+mit vielen Elementen dargestellt werden, so m&uuml;ssen diese in ein
+<a href="index_p.html#ixb101295"><font color=#000080><tt>Panel</tt></font></a>
+verpackt und dann gemeinsam an <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+&uuml;bergeben werden. 
+
+<p>
+Nach dem Einf&uuml;gen einer Komponente kann die Methode <a name="ixa102200"><a href="index_s.html#ixb101167"><font color=#000080><tt>setSize</tt></font></a></a>
+aufgerufen werden, um die sichtbare Gr&ouml;&szlig;e des <a href="index_s.html#ixb101291"><font color=#000080><tt>ScrollPane</tt></font></a>
+festzulegen. Die sichtbare Gr&ouml;&szlig;e ist die Gr&ouml;&szlig;e,
+in der das <a href="index_s.html#ixb101291"><font color=#000080><tt>ScrollPane</tt></font></a>
+dem Fenster erscheint, in das es eingebettet wurde. Der dadurch definierte
+Ausschnitt aus dem virtuellen Ausgabebereich wird als <a name="ixa102201"><i>Viewport</i></a>
+bezeichnet. 
+
+<p>
+Die Gr&ouml;&szlig;e des virtuellen Ausgabebereichs wird dagegen durch
+das mit <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+eingef&uuml;gte Element selbst festgelegt. Es &uuml;berlagert dazu
+<a name="ixa102202"><a href="index_g.html#ixb101646"><font color=#000080><tt>getPreferredSize</tt></font></a></a>
+und gibt so die gew&uuml;nschten Abmessungen an den Aufrufer zur&uuml;ck.
+Die Methode <a href="index_g.html#ixb101646"><font color=#000080><tt>getPreferredSize</tt></font></a>
+spielt eine wichtige Rolle bei der automatischen Anordnung von Dialogelementen
+mit Hilfe eines Layoutmanagers. Sie wird aufgerufen, wenn ein <a href="index_c.html#ixb101294"><font color=#000080><tt>Container</tt></font></a>
+wissen will, wie viel Platz eine Komponente innerhalb eines Bildschirmlayouts
+belegt. Wir werden in <a href="k100221.html#kapitelcanvasundpanel">Kapitel 33</a>
+noch einmal auf <a href="index_g.html#ixb101646"><font color=#000080><tt>getPreferredSize</tt></font></a>
+zur&uuml;ckkommen. <a href="k100219.html#ausgabebereichscrollpane">Abbildung 32.11</a>
+fasst die bisherigen Ausf&uuml;hrungen zusammen. 
+<p>
+<a name="ausgabebereichscrollpane"></a>
+<img src="images/ScrollPane.gif">
+<p>
+
+<p><i>
+Abbildung 32.11: ViewPort und virtueller Ausgabebereich beim ScrollPane</i></p>
+
+<p>
+Die Klasse <a href="index_s.html#ixb101291"><font color=#000080><tt>ScrollPane</tt></font></a>
+stellt einige Methoden zur Verf&uuml;gung, mit denen die Darstellung
+und Reaktion der Schieberegler beeinflusst werden kann: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Adjustable getHAdjustable()
+public Adjustable getVAdjustable()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/ScrollPane.html" onClick="this.href=getApiDoc('java.awt.ScrollPane')"><font color="#660066" size=-1>java.awt.ScrollPane</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa102203"><a href="index_g.html#ixb101647"><font color=#000080><tt>getHAdjustable</tt></font></a></a>
+wird ein Objekt beschafft, das den Zugriff auf den horizontalen Schieberegler
+erm&ouml;glicht, und mit <a name="ixa102204"><a href="index_g.html#ixb101648"><font color=#000080><tt>getVAdjustable</tt></font></a></a>
+eines f&uuml;r den vertikalen Schieberegler. Das Interface <a name="ixa102205"><a href="index_a.html#ixb101625"><font color=#000080><tt>Adjustable</tt></font></a></a>
+wurde bereits beim <a href="index_s.html#ixb101417"><font color=#000080><tt>Scrollbar</tt></font></a>
+vorgestellt, es abstrahiert den Zugriff auf einen Schieberegler. Da
+die meisten Eigenschaften der Schieberegler bereits von <a href="index_s.html#ixb101291"><font color=#000080><tt>ScrollPane</tt></font></a>
+voreingestellt werden, sollte sich das eigene Programm darauf beschr&auml;nken,
+durch Aufruf von <a href="index_s.html#ixb101631"><font color=#000080><tt>setUnitIncrement</tt></font></a>
+die Schrittweite der Schieberegler einzustellen. 
+
+<p>
+Des Weiteren gibt es einige Methoden f&uuml;r den Zugriff auf den
+Viewport und seine Position innerhalb des virtuellen Ausgabebereichs:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Dimension getViewportSize()
+
+public void setScrollPosition(int x, int y)
+
+public Point getScrollPosition()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/ScrollPane.html" onClick="this.href=getApiDoc('java.awt.ScrollPane')"><font color="#660066" size=-1>java.awt.ScrollPane</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa102206"><a href="index_g.html#ixb101649"><font color=#000080><tt>getViewportSize</tt></font></a></a>
+liefert die aktuelle Gr&ouml;&szlig;e des Viewports. Mit <a name="ixa102207"><a href="index_g.html#ixb101650"><font color=#000080><tt>getScrollPosition</tt></font></a></a>
+kann die Position desjenigen Punkts der virtuellen Ausgabefl&auml;che
+ermittelt werden, der gerade in der linken oberen Ecke des Viewports
+angezeigt wird. Mit <a name="ixa102208"><a href="index_s.html#ixb101651"><font color=#000080><tt>setScrollPosition</tt></font></a></a>
+kann der Viewport vom Programm verschoben werden. Die &uuml;bergebenen
+Werte m&uuml;ssen dabei zwischen 0,0 und der jeweils maximalen Gr&ouml;&szlig;e
+des virtuellen Ausgabebereichs minus der Gr&ouml;&szlig;e des Viewports
+liegen. 
+
+<p>
+Wir wollen ein einfaches Beispiel konstruieren, das die Anwendung
+von <a href="index_s.html#ixb101291"><font color=#000080><tt>ScrollPane</tt></font></a>
+demonstriert. Dazu soll ein Programm geschrieben werden, das eine
+Liste aller Systemfarben mit ihrer Bezeichnung und einer Farbprobe
+auf dem Bildschirm ausgibt. Da es insgesamt 26 verschiedene Systemfarben
+gibt, soll das Programm jeweils nur einen kleinen Ausschnitt darstellen,
+der vom Anwender verschoben werden kann. 
+
+<p>
+Zur Erstellung des Programms gehen wir in drei Schritten vor: 
+<ul>
+<li>Wir definieren zun&auml;chst eine Hilfsklasse <font color="#000077"><tt>NamedSystemColors</tt></font>,
+die alle verf&uuml;gbaren Systemfarben sortiert und einen einfachen
+Zugriff auf ihre Namen und das zugeh&ouml;rige Farbobjekt erlaubt.
+<li>Anschlie&szlig;end definieren wir eine Klasse <font color="#000077"><tt>SystemColorViewer</tt></font>,
+die aus <a name="ixa102209"><a href="index_c.html#ixb101652"><font color=#000080><tt>Canvas</tt></font></a></a>
+abgeleitet wird und dazu dient, die Systemfarben nacheinander auf
+dem Bildschirm auszugeben. Wir &uuml;berlagern die Methode <a href="index_g.html#ixb101646"><font color=#000080><tt>getPreferredSize</tt></font></a>,
+um die zur Ausgabe aller Farben erforderliche Gr&ouml;&szlig;e der
+Komponente bekanntzumachen. Au&szlig;erdem &uuml;berlagern wir <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>,
+um die eigentliche Ausgabe zu realisieren. Dabei reserviert <a href="index_g.html#ixb101646"><font color=#000080><tt>getPreferredSize</tt></font></a>
+ausreichend Platz, um jede Farbe in einer eigenen Ausgabezeile darstellen
+zu k&ouml;nnen. Innerhalb von <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>
+wird lediglich jedes einzelne Farbobjekt aus <font color="#000077"><tt>NamedSystemColors</tt></font>
+beschafft und dazu die Farbbox und der zugeh&ouml;rige Text ausgegeben.
+In <a href="k100221.html#kapitelcanvasundpanel">Kapitel 33</a> werden
+wir noch einmal genauer auf die Verwendung von <a href="index_c.html#ixb101652"><font color=#000080><tt>Canvas</tt></font></a>
+zur Erzeugung eigener Komponenten zur&uuml;ckkommen.
+<li>Nach diesen Vorarbeiten ist die Verwendung von <a href="index_s.html#ixb101291"><font color=#000080><tt>ScrollPane</tt></font></a>
+ganz einfach. Wir legen dazu einen <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>
+an, der das Hauptfenster unserer Applikation wird, und instanzieren
+das <a href="index_s.html#ixb101291"><font color=#000080><tt>ScrollPane</tt></font></a>-Objekt.
+Mit <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+wird eine Instanz von <font color="#000077"><tt>SystemColorViewer</tt></font>
+&uuml;bergeben, anschlie&szlig;end die Schrittweite der Schieberegler
+angepasst und schlie&szlig;lich mit <a href="index_s.html#ixb101167"><font color=#000080><tt>setSize</tt></font></a>
+die Gr&ouml;&szlig;e des sichtbaren Ausschnitts festgelegt. Nachdem
+<a href="index_s.html#ixb101291"><font color=#000080><tt>ScrollPane</tt></font></a>
+an den <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>
+&uuml;bergeben wurde, ist das Programm einsatzbereit.
+</ul>
+
+<p>
+Der nachfolgende Quellcode enth&auml;lt alle drei Klassen und zeigt,
+wie sie zusammenarbeiten: 
+<a name="verwendungklassescrollpane"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3216.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">class</font> NamedSystemColors
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  String[]      names;
+<font color="#555555">009 </font>  SystemColor[] colors;
+<font color="#555555">010 </font>
+<font color="#555555">011 </font>  <font color="#0000AA">public</font> NamedSystemColors()
+<font color="#555555">012 </font>  {
+<font color="#555555">013 </font>    names  = <font color="#0000AA">new</font> String[SystemColor.NUM_COLORS];
+<font color="#555555">014 </font>    colors = <font color="#0000AA">new</font> SystemColor[SystemColor.NUM_COLORS];
+<font color="#555555">015 </font>    names [ 0] = <font color="#0000FF">"desktop"</font>;
+<font color="#555555">016 </font>    colors[ 0] = SystemColor.desktop;
+<font color="#555555">017 </font>    names [ 1]= <font color="#0000FF">"activeCaption"</font>;
+<font color="#555555">018 </font>    colors[ 1] = SystemColor.activeCaption;
+<font color="#555555">019 </font>    names [ 2] = <font color="#0000FF">"activeCaptionText"</font>;
+<font color="#555555">020 </font>    colors[ 2] = SystemColor.activeCaptionText;
+<font color="#555555">021 </font>    names [ 3] = <font color="#0000FF">"activeCaptionBorder"</font>;
+<font color="#555555">022 </font>    colors[ 3] = SystemColor.activeCaptionBorder;
+<font color="#555555">023 </font>    names [ 4] = <font color="#0000FF">"inactiveCaption"</font>;
+<font color="#555555">024 </font>    colors[ 4] = SystemColor.inactiveCaption;
+<font color="#555555">025 </font>    names [ 5] = <font color="#0000FF">"inactiveCaptionText"</font>;
+<font color="#555555">026 </font>    colors[ 5] = SystemColor.inactiveCaptionText;
+<font color="#555555">027 </font>    names [ 6] = <font color="#0000FF">"inactiveCaptionBorder"</font>;
+<font color="#555555">028 </font>    colors[ 6] = SystemColor.inactiveCaptionBorder;
+<font color="#555555">029 </font>    names [ 7] = <font color="#0000FF">"window"</font>;
+<font color="#555555">030 </font>    colors[ 7] = SystemColor.window;
+<font color="#555555">031 </font>    names [ 8] = <font color="#0000FF">"windowBorder"</font>;
+<font color="#555555">032 </font>    colors[ 8] = SystemColor.windowBorder;
+<font color="#555555">033 </font>    names [ 9] = <font color="#0000FF">"windowText"</font>;
+<font color="#555555">034 </font>    colors[ 9] = SystemColor.windowText;
+<font color="#555555">035 </font>    names [10] = <font color="#0000FF">"menu"</font>;
+<font color="#555555">036 </font>    colors[10] = SystemColor.menu;
+<font color="#555555">037 </font>    names [11] = <font color="#0000FF">"menuText"</font>;
+<font color="#555555">038 </font>    colors[11] = SystemColor.menuText;
+<font color="#555555">039 </font>    names [12] = <font color="#0000FF">"text"</font>;
+<font color="#555555">040 </font>    colors[12] = SystemColor.text;
+<font color="#555555">041 </font>    names [13] = <font color="#0000FF">"textText"</font>;
+<font color="#555555">042 </font>    colors[13] = SystemColor.textText;
+<font color="#555555">043 </font>    names [14] = <font color="#0000FF">"textHighlight"</font>;
+<font color="#555555">044 </font>    colors[14] = SystemColor.textHighlight;
+<font color="#555555">045 </font>    names [15] = <font color="#0000FF">"textHighlightText"</font>;
+<font color="#555555">046 </font>    colors[15] = SystemColor.textHighlightText;
+<font color="#555555">047 </font>    names [16] = <font color="#0000FF">"textInactiveText"</font>;
+<font color="#555555">048 </font>    colors[16] = SystemColor.textInactiveText;
+<font color="#555555">049 </font>    names [17] = <font color="#0000FF">"control"</font>;
+<font color="#555555">050 </font>    colors[17] = SystemColor.control;
+<font color="#555555">051 </font>    names [18] = <font color="#0000FF">"controlText"</font>;
+<font color="#555555">052 </font>    colors[18] = SystemColor.controlText;
+<font color="#555555">053 </font>    names [19] = <font color="#0000FF">"controlHighlight"</font>;
+<font color="#555555">054 </font>    colors[19] = SystemColor.controlHighlight;
+<font color="#555555">055 </font>    names [20] = <font color="#0000FF">"controlLtHighlight"</font>;
+<font color="#555555">056 </font>    colors[20] = SystemColor.controlLtHighlight;
+<font color="#555555">057 </font>    names [21] = <font color="#0000FF">"controlShadow"</font>;
+<font color="#555555">058 </font>    colors[21] = SystemColor.controlShadow;
+<font color="#555555">059 </font>    names [22] = <font color="#0000FF">"controlDkShadow"</font>;
+<font color="#555555">060 </font>    colors[22] = SystemColor.controlDkShadow;
+<font color="#555555">061 </font>    names [23] = <font color="#0000FF">"scrollbar"</font>;
+<font color="#555555">062 </font>    colors[23] = SystemColor.scrollbar;
+<font color="#555555">063 </font>    names [24] = <font color="#0000FF">"info"</font>;
+<font color="#555555">064 </font>    colors[24] = SystemColor.info;
+<font color="#555555">065 </font>    names [25] = <font color="#0000FF">"infoText"</font>;
+<font color="#555555">066 </font>    colors[25] = SystemColor.infoText;
+<font color="#555555">067 </font>  }
+<font color="#555555">068 </font>
+<font color="#555555">069 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> getSize()
+<font color="#555555">070 </font>  {
+<font color="#555555">071 </font>    <font color="#0000AA">return</font> SystemColor.NUM_COLORS;
+<font color="#555555">072 </font>  }
+<font color="#555555">073 </font>
+<font color="#555555">074 </font>  <font color="#0000AA">public</font> String getName(<font color="#006699">int</font> i)
+<font color="#555555">075 </font>  {
+<font color="#555555">076 </font>    <font color="#0000AA">return</font> names[i];
+<font color="#555555">077 </font>  }
+<font color="#555555">078 </font>
+<font color="#555555">079 </font>  <font color="#0000AA">public</font> SystemColor getColor(<font color="#006699">int</font> i)
+<font color="#555555">080 </font>  {
+<font color="#555555">081 </font>    <font color="#0000AA">return</font> colors[i];
+<font color="#555555">082 </font>  }
+<font color="#555555">083 </font>}
+<font color="#555555">084 </font>
+<font color="#555555">085 </font><font color="#0000AA">class</font> SystemColorViewer
+<font color="#555555">086 </font><font color="#0000AA">extends</font> Canvas
+<font color="#555555">087 </font>{
+<font color="#555555">088 </font>  NamedSystemColors colors;
+<font color="#555555">089 </font>
+<font color="#555555">090 </font>  <font color="#0000AA">public</font> SystemColorViewer()
+<font color="#555555">091 </font>  {
+<font color="#555555">092 </font>    colors = <font color="#0000AA">new</font> NamedSystemColors();
+<font color="#555555">093 </font>  }
+<font color="#555555">094 </font>
+<font color="#555555">095 </font>  <font color="#0000AA">public</font> Dimension getPreferredSize()
+<font color="#555555">096 </font>  {
+<font color="#555555">097 </font>    <font color="#0000AA">return</font> <font color="#0000AA">new</font> Dimension(150,16 + colors.getSize() * 20);
+<font color="#555555">098 </font>  }
+<font color="#555555">099 </font>
+<font color="#555555">100 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">101 </font>  {
+<font color="#555555">102 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; colors.getSize(); ++i) {
+<font color="#555555">103 </font>      <font color="#00AA00">//Rahmen f&uuml;r Farbbox</font>
+<font color="#555555">104 </font>      g.setColor(Color.black);
+<font color="#555555">105 </font>      g.drawRect(10,16+20*i,16,16);
+<font color="#555555">106 </font>      <font color="#00AA00">//Farbbox</font>
+<font color="#555555">107 </font>      g.setColor(colors.getColor(i));
+<font color="#555555">108 </font>      g.fillRect(11,17+20*i,15,15);
+<font color="#555555">109 </font>      <font color="#00AA00">//Bezeichnung</font>
+<font color="#555555">110 </font>      g.setColor(Color.black);
+<font color="#555555">111 </font>      g.drawString(colors.getName(i),30,30+20*i);
+<font color="#555555">112 </font>    }
+<font color="#555555">113 </font>  }
+<font color="#555555">114 </font>}
+<font color="#555555">115 </font>
+<font color="#555555">116 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3216
+<font color="#555555">117 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">118 </font>{
+<font color="#555555">119 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">120 </font>  {
+<font color="#555555">121 </font>    Listing3216 wnd = <font color="#0000AA">new</font> Listing3216();
+<font color="#555555">122 </font>    wnd.setLocation(200,100);
+<font color="#555555">123 </font>    wnd.setVisible(<font color="#006699">true</font>);
+<font color="#555555">124 </font>  }
+<font color="#555555">125 </font>
+<font color="#555555">126 </font>  <font color="#0000AA">public</font> Listing3216()
+<font color="#555555">127 </font>  {
+<font color="#555555">128 </font>    <font color="#006699">super</font>(<font color="#0000FF">"ScrollPane"</font>);
+<font color="#555555">129 </font>    setBackground(Color.lightGray);
+<font color="#555555">130 </font>    <font color="#00AA00">//ScrollPane</font>
+<font color="#555555">131 </font>    ScrollPane sc = <font color="#0000AA">new</font> ScrollPane(
+<font color="#555555">132 </font>       ScrollPane.SCROLLBARS_AS_NEEDED
+<font color="#555555">133 </font>    );
+<font color="#555555">134 </font>    sc.add(<font color="#0000AA">new</font> SystemColorViewer());
+<font color="#555555">135 </font>    sc.getVAdjustable().setUnitIncrement(1);
+<font color="#555555">136 </font>    sc.getHAdjustable().setUnitIncrement(1);
+<font color="#555555">137 </font>    sc.setSize(200,200);
+<font color="#555555">138 </font>    add(sc);
+<font color="#555555">139 </font>    <font color="#00AA00">//Window-Listener</font>
+<font color="#555555">140 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">141 </font>    <font color="#00AA00">//Dialogelement anordnen</font>
+<font color="#555555">142 </font>    pack();
+<font color="#555555">143 </font>  }
+<font color="#555555">144 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3216.java"><font color="#000055" size=-1>Listing3216.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 32.16: Verwendung der Klasse ScrollPane</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>-Methode
+von <font color="#000077"><tt>SystemColorViewer</tt></font> ist etwas
+ineffizient, denn sie gibt bei jedem Aufruf den gesamten Inhalt der
+virtuellen Ausgabefl&auml;che komplett aus. Eine bessere Implementierung
+w&uuml;rde zuvor die Position und Gr&ouml;&szlig;e der Clipping-Region
+abfragen und nur diesen Bereich aktualisieren. Die Clipping-Region
+enth&auml;lt dabei einen Bereich, dessen Gr&ouml;&szlig;e und Lage
+exakt dem aktuellen Viewport entspricht.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Ein Probelauf des Programms ergibt folgende Ausgabe: 
+<p>
+<a name="imageid032012"></a>
+<img src="images/ScrollPaneBsp.gif">
+<p>
+
+<p><i>
+Abbildung 32.12: Verwendung von ScrollPane</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100207.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100218.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100220.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100221.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

@@ -1,0 +1,993 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100240.html;106,k100241.html;107,k100243.html;108,k100245.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100240.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100241.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100243.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100245.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 37 - Swing: Container und Men&uuml;s
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="swingmenues"></a>
+<h2>37.2 Men&uuml;s </h2>
+<hr>
+<ul>
+<li><a href="k100242.html#swingmenues">37.2 Men&uuml;s</a>
+<ul>
+<li><a href="k100242.html#einfachemenues">37.2.1 Einfache Men&uuml;s</a>
+<li><a href="k100242.html#sectlevel3id037002002">37.2.2 Grundlagen von Swing-Men&uuml;s</a>
+<ul>
+<li><a href="k100242.html#sectlevel4id037002002001">JMenuBar</a>
+<li><a href="k100242.html#sectlevel4id037002002002">JMenu</a>
+<li><a href="k100242.html#sectlevel4id037002002003">JMenuItem</a>
+</ul>
+<li><a href="k100242.html#jmenusonstiges">37.2.3 Weitere M&ouml;glichkeiten</a>
+<ul>
+<li><a href="k100242.html#sectlevel4id037002003001">Untermen&uuml;s</a>
+<li><a href="k100242.html#sectlevel4id037002003002">Icons in Men&uuml;eintr&auml;gen</a>
+<li><a href="k100242.html#sectlevel4id037002003003">Checkboxes und Radiobuttons in Men&uuml;eintr&auml;gen</a>
+</ul>
+<li><a href="k100242.html#sectlevel3id037002004">37.2.4 Kontextmen&uuml;s </a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="einfachemenues"></a>
+<h3>37.2.1 Einfache Men&uuml;s </h3>
+
+
+<!-- Section -->
+<a name="sectlevel3id037002002"></a>
+<h3>37.2.2 Grundlagen von Swing-Men&uuml;s </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id037002002001"></a>
+<h4>JMenuBar </h4>
+
+<p>
+In Swing k&ouml;nnen alle Hauptfenster mit Ausnahme von <a href="index_j.html#ixb101774"><font color=#000080><tt>JWindow</tt></font></a>
+eine Men&uuml;leiste haben. Dabei handelt es sich um eine Instanz
+der Klasse <a href="index_j.html#ixb101804"><font color=#000080><tt>JMenuBar</tt></font></a>,
+die dem Hauptfenster durch Aufruf von <a name="ixa102452"><a href="index_s.html#ixb101840"><font color=#000080><tt>setJMenuBar</tt></font></a></a>
+hinzugef&uuml;gt wird. <a href="index_j.html#ixb101804"><font color=#000080><tt>JMenuBar</tt></font></a>
+besitzt eine Vielzahl von Methoden, meist werden aber lediglich der
+parameterlose Konstruktor und die Methode <a name="ixa102453"><a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a></a>
+ben&ouml;tigt. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public JMenuBar()
+
+public JMenu add(JMenu c)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JMenuBar.html" onClick="this.href=getApiDoc('javax.swing.JMenuBar')"><font color="#660066" size=-1>javax.swing.JMenuBar</font></a></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Swing-Men&uuml;s und ihre Bestandteile haben starke &Auml;hnlichkeit
+mit den korrespondierenden Konzepten im AWT. Viele der in <a href="k100193.html#kapitelmenues">Kapitel 30</a>
+erl&auml;uterten Eigenschaften gelten damit analog f&uuml;r Swing-Men&uuml;s.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id037002002002"></a>
+<h4>JMenu </h4>
+
+<p>
+Die einzelnen Men&uuml;s einer Men&uuml;leiste sind Instanzen der
+Klasse <a name="ixa102454"><a href="index_j.html#ixb101841"><font color=#000080><tt>JMenu</tt></font></a></a>,
+die aus <a href="index_j.html#ixb101842"><font color=#000080><tt>JMenuItem</tt></font></a>
+abgeleitet ist. Ihre wichtigsten Methoden sind: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public JMenu(String s)
+
+public JMenuItem add(String s)
+public JMenuItem add(JMenuItem menuItem)
+
+public void addSeparator()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JMenu.html" onClick="this.href=getApiDoc('javax.swing.JMenu')"><font color="#660066" size=-1>javax.swing.JMenu</font></a></td>
+</tr>
+</table>
+
+<p>
+Der Konstruktor erzeugt ein neues Men&uuml; mit dem angegebenen Namen.
+Mit <a name="ixa102455"><a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a></a>
+werden Men&uuml;eintr&auml;ge hinzugef&uuml;gt. Im allgemeinen Fall
+sind das Instanzen der Klasse <a href="index_j.html#ixb101842"><font color=#000080><tt>JMenuItem</tt></font></a>,
+die auf vielf&auml;ltige Weise konfiguriert werden k&ouml;nnen. Es
+ist aber auch m&ouml;glich, lediglich Strings an <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+zu &uuml;bergeben. Dadurch wird ein einfacher Men&uuml;eintrag dieses
+Namens angef&uuml;gt. Mit <a name="ixa102456"><a href="index_a.html#ixb101498"><font color=#000080><tt>addSeparator</tt></font></a></a>
+wird eine Trennlinie hinter dem letzten Men&uuml;punkt angef&uuml;gt.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+F&uuml;r OO-Neulinge ist es schwer zu verstehen, warum ein Men&uuml;
+die Ableitung eines Men&uuml;eintrags ist. Eine einfache Erkl&auml;rung
+ist, dass es m&ouml;glich sein soll, Men&uuml;s ineinander zu schachteln.
+Dass also ein Element eines Men&uuml;s, das ja per Definition ein
+Men&uuml;eintrag ist, wahlweise auch ein Men&uuml; enthalten soll.
+Das kann nur erreicht werden, wenn Men&uuml; und Men&uuml;eintrag
+zuweisungskompatibel, also voneinander abgeleitet, sind. Eine ausf&uuml;hrlichere
+Erkl&auml;rung findet sich bei der Besprechung des Composite-Patterns
+in <a href="k100074.html#compositepattern">Abschnitt 11.4.7</a>.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id037002002003"></a>
+<h4>JMenuItem </h4>
+
+<p>
+Die Klasse <a name="ixa102457"><a href="index_j.html#ixb101842"><font color=#000080><tt>JMenuItem</tt></font></a></a>
+repr&auml;sentiert Men&uuml;eintr&auml;ge, also Elemente, die sich
+in einem Men&uuml; befinden. Dabei handelt es sich um Texte, die wahlweise
+mit einem Icon oder einem H&auml;kchen versehen werden k&ouml;nnen.
+Da <a href="index_j.html#ixb101841"><font color=#000080><tt>JMenu</tt></font></a>
+aus <a href="index_j.html#ixb101842"><font color=#000080><tt>JMenuItem</tt></font></a>
+abgeleitet ist, kann ein Men&uuml; wiederum Men&uuml;s als Eintr&auml;ge
+enthalten. Auf diese Weise lassen sich Men&uuml;s schachteln. Die
+wichtigsten Eigenschaften von <a href="index_j.html#ixb101842"><font color=#000080><tt>JMenuItem</tt></font></a>
+sind: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public JMenuItem(String text)
+public JMenuItem(String text, Icon icon)
+public JMenuItem(String text, int mnemonic)
+
+public void setMnemonic(char mnemonic)
+public void setMnemonic(int mnemonic)
+public int getMnemonic()
+
+public void setAccelerator(KeyStroke keyStroke)
+public KeyStroke getAccelerator()
+
+public void setEnabled(boolean b)
+public boolean isEnabled()
+
+public void addActionListener(ActionListener l)
+public void removeActionListener(ActionListener l)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JMenuItem.html" onClick="this.href=getApiDoc('javax.swing.JMenuItem')"><font color="#660066" size=-1>javax.swing.JMenuItem</font></a></td>
+</tr>
+</table>
+
+<p>
+Der an den Konstruktor &uuml;bergebene String <font color="#000077"><tt>text</tt></font>
+legt den Men&uuml;text fest. Wahlweise kann zus&auml;tzlich ein Icon
+&uuml;bergeben werden, das neben dem Men&uuml;text angezeigt wird.
+Mit <a name="ixa102458"><a href="index_s.html#ixb101843"><font color=#000080><tt>setMnemonic</tt></font></a></a>
+wird das <i>mnemonische K&uuml;rzel</i> des Men&uuml;eintrags festgelegt.
+Das ist ein (unterstrichen dargestellter) Buchstabe innerhalb des
+Men&uuml;texts, der bei ge&ouml;ffnetem Men&uuml; gedr&uuml;ckt werden
+kann, um den Men&uuml;eintrag per Tastatur aufzurufen. Wahlweise kann
+das K&uuml;rzel auch schon an den Konstruktor &uuml;bergeben werden.
+Mit <a name="ixa102459"><a href="index_g.html#ixb101844"><font color=#000080><tt>getMnemonic</tt></font></a></a>
+kann es abgefragt werden. 
+
+<p>
+Neben den mnemonischen K&uuml;rzeln gibt es eine weitere M&ouml;glichkeit,
+Men&uuml;eintr&auml;ge &uuml;ber Tastenk&uuml;rzel aufzurufen. Diese
+als <a name="ixa102460"><i>Acceleratoren</i></a> oder <a name="ixa102461"><i>Beschleunigertasten</i></a>
+bezeichneten Tasten k&ouml;nnen auch dann verwendet werden, wenn das
+entsprechende Men&uuml; nicht ge&ouml;ffnet ist. Beschleuniger werden
+mit <a name="ixa102462"><a href="index_s.html#ixb101846"><font color=#000080><tt>setAccelerator</tt></font></a></a>
+zugewiesen. Sie bestehen aus einer Kombination von normalen Tasten
+und Umschalttasten, die durch ein <a name="ixa102463"><a href="index_k.html#ixb101847"><font color=#000080><tt>KeyStroke</tt></font></a></a>-Objekt
+beschrieben werden. 
+
+<p>
+Instanzen der Klasse <a href="index_k.html#ixb101847"><font color=#000080><tt>KeyStroke</tt></font></a>
+werden ausschlie&szlig;lich mit ihrer Factory-Methode <a name="ixa102464"><a href="index_g.html#ixb101848"><font color=#000080><tt>getKeyStroke</tt></font></a></a>
+erzeugt: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static KeyStroke getKeyStroke(char keyChar)
+public static KeyStroke getKeyStroke(int keyCode, int modifiers)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/KeyStroke.html" onClick="this.href=getApiDoc('javax.swing.KeyStroke')"><font color="#660066" size=-1>javax.swing.KeyStroke</font></a></td>
+</tr>
+</table>
+
+<p>
+In der einfachsten Form wird lediglich ein einzelnes Zeichen &uuml;bergeben.
+In diesem Fall repr&auml;sentiert der erzeugte <a href="index_k.html#ixb101847"><font color=#000080><tt>KeyStroke</tt></font></a>
+genau die entsprechende Taste. Soll diese zusammen mit Umschalttasten
+gedr&uuml;ckt werden, muss die gew&uuml;nschte Kombination an den
+Parameter <font color="#000077"><tt>modifiers</tt></font> &uuml;bergeben
+werden: <a name="tableid037002"></a>
+
+<p>
+<table cols=2 border width=66%>
+
+<tr>
+<td valign=top align=left width=50%><b>Konstante </b></td>
+<td valign=top align=left width=50%><b>Bedeutung</b></td></tr>
+<tr>
+<td valign=top align=left>SHIFT_MASK</td>
+<td valign=top align=left><font color="#007700"><tt>[UMSCHALT]</tt></font></td></tr>
+<tr>
+<td valign=top align=left>CTRL_MASK </td>
+<td valign=top align=left><font color="#007700"><tt>[STRG]</tt></font></td></tr>
+<tr>
+<td valign=top align=left>META_MASK </td>
+<td valign=top align=left><font color="#007700"><tt>[META]</tt></font>
+(gibt es auf den meisten Plattformen nicht)</td></tr>
+<tr>
+<td valign=top align=left>ALT_MASK </td>
+<td valign=top align=left><font color="#007700"><tt>[ALT]</tt></font></td></tr>
+</table>
+<p><i>
+Tabelle 37.2: Konstanten f&uuml;r Umschalttasten</i></p>
+
+<p>
+Diese Konstanten stammen aus der Klasse <a href="index_e.html#ixb101444"><font color=#000080><tt>java.awt.Event</tt></font></a>.
+Sie werden durch unterschiedliche Zweierpotenzen repr&auml;sentiert
+und k&ouml;nnen durch Addition beliebig kombiniert werden. Als erstes
+Argument <font color="#000077"><tt>keyCode</tt></font> ist einer der
+in <a href="index_k.html#ixb101351"><font color=#000080><tt>java.awt.event.KeyEvent</tt></font></a>
+definierten virtuellen Tastencodes zu &uuml;bergeben (siehe <a href="k100191.html#virtualkeycodes">Tabelle 29.4</a>).
+
+<p>
+Mit den Methoden <a name="ixa102465"><a href="index_s.html#ixb101301"><font color=#000080><tt>setEnabled</tt></font></a></a>
+und <a name="ixa102466"><a href="index_g.html#ixb101849"><font color=#000080><tt>getEnabled</tt></font></a></a>
+kann auf den Aktivierungszustand des Men&uuml;eintrags zugegriffen
+werden. Wird <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>
+an <a href="index_s.html#ixb101301"><font color=#000080><tt>setEnabled</tt></font></a>
+&uuml;bergeben, wird der Eintrag deaktiviert, andernfalls aktiviert.
+Ein deaktivierter Eintrag wird grau dargestellt und kann nicht ausgew&auml;hlt
+werden. 
+
+<p>
+Die beiden letzten Methoden <a name="ixa102467"><a href="index_a.html#ixb101409"><font color=#000080><tt>addActionListener</tt></font></a></a>
+und <a name="ixa102468"><a href="index_r.html#ixb101850"><font color=#000080><tt>removeActionListener</tt></font></a></a>
+dienen dazu, Objekte als Listener zu registrieren (bzw. zu deregistrieren).
+Solche Objekte m&uuml;ssen das Interface <a href="index_a.html#ixb101408"><font color=#000080><tt>ActionListener</tt></font></a>
+implementieren. Sie werden beim Ausw&auml;hlen des Men&uuml;punkts
+aktiviert, indem ihre Methode <a href="index_a.html#ixb101413"><font color=#000080><tt>actionPerformed</tt></font></a>
+aufgerufen wird. Details k&ouml;nnen in <a href="k100198.html#actionevents">Abschnitt 30.5</a>
+nachgelesen werden. 
+
+<p>
+Das folgende Programm zeigt eine Swing-Anwendung mit einem einfachen
+&#187;Datei&#171;-Men&uuml;, das die Eintr&auml;ge &#187;&Ouml;ffnen&#171;,
+&#187;Speichern&#171; und &#187;Beenden&#171; besitzt. Das Men&uuml;
+und seine Eintr&auml;ge besitzen mnemonische K&uuml;rzel und die Men&uuml;punkte
+&#187;&Ouml;ffnen&#171; und &#187;Speichern&#171; sind &uuml;ber die
+Beschleuniger <font color="#007700"><tt>[STRG]</tt></font>+<font color="#007700"><tt>[O]</tt></font>
+bzw. <font color="#007700"><tt>[STRG]</tt></font>+<font color="#007700"><tt>[S]</tt></font>
+zu erreichen. Das Applikationsobjekt registriert sich als <a href="index_a.html#ixb101408"><font color=#000080><tt>ActionListener</tt></font></a>
+bei allen Men&uuml;punkten und gibt die Benutzeraktionen auf der Console
+aus. Das Programm erzeugt zun&auml;chst eine neue Men&uuml;leiste
+und f&uuml;gt ihr in <a href="k100242.html#simpleswingmenu.a">Zeile 016</a>
+das in <font color="#000077"><tt>createFileMenu</tt></font> erzeugte
+Men&uuml; hinzu. Schlie&szlig;lich wird die Men&uuml;leiste mit <a name="ixa102469"><a href="index_s.html#ixb101840"><font color=#000080><tt>setJMenuBar</tt></font></a></a>
+an das Hauptfenster &uuml;bergeben. 
+<a name="simpleswingmenu"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3708.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3708
+<font color="#555555">008 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">009 </font><font color="#0000AA">implements</font> ActionListener
+<font color="#555555">010 </font>{
+<font color="#555555">011 </font>  <font color="#0000AA">public</font> Listing3708()
+<font color="#555555">012 </font>  {
+<font color="#555555">013 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Swing-Men&uuml;test"</font>);
+<font color="#555555">014 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">015 </font>    JMenuBar menubar = <font color="#0000AA">new</font> JMenuBar();
+<font color="#555555">016 </font>    menubar.add(createFileMenu()); <a name="simpleswingmenu.a"></a>
+<font color="#555555">017 </font>    setJMenuBar(menubar);
+<font color="#555555">018 </font>  }
+<font color="#555555">019 </font>
+<font color="#555555">020 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> actionPerformed(ActionEvent event)
+<font color="#555555">021 </font>  {
+<font color="#555555">022 </font>    System.out.println(event.getActionCommand());
+<font color="#555555">023 </font>  }
+<font color="#555555">024 </font>
+<font color="#555555">025 </font>  <font color="#00AA00">//---Private Methoden---------------</font>
+<font color="#555555">026 </font>  <font color="#0000AA">private</font> JMenu createFileMenu()
+<font color="#555555">027 </font>  {
+<font color="#555555">028 </font>    JMenu ret = <font color="#0000AA">new</font> JMenu(<font color="#0000FF">"Datei"</font>);
+<font color="#555555">029 </font>    ret.setMnemonic(<font color="#0000FF">'D'</font>);
+<font color="#555555">030 </font>    JMenuItem mi;
+<font color="#555555">031 </font>    <font color="#00AA00">//&Ouml;ffnen</font>
+<font color="#555555">032 </font>    mi = <font color="#0000AA">new</font> JMenuItem(<font color="#0000FF">"&Ouml;ffnen"</font>, <font color="#0000FF">'f'</font>);
+<font color="#555555">033 </font>    setCtrlAccelerator(mi, <font color="#0000FF">'O'</font>);
+<font color="#555555">034 </font>    mi.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">035 </font>    ret.add(mi);
+<font color="#555555">036 </font>    <font color="#00AA00">//Speichern</font>
+<font color="#555555">037 </font>    mi = <font color="#0000AA">new</font> JMenuItem(<font color="#0000FF">"Speichern"</font>, <font color="#0000FF">'p'</font>);
+<font color="#555555">038 </font>    setCtrlAccelerator(mi, <font color="#0000FF">'S'</font>);
+<font color="#555555">039 </font>    mi.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">040 </font>    ret.add(mi);
+<font color="#555555">041 </font>    <font color="#00AA00">//Separator</font>
+<font color="#555555">042 </font>    ret.addSeparator();
+<font color="#555555">043 </font>    <font color="#00AA00">//Beenden</font>
+<font color="#555555">044 </font>    mi = <font color="#0000AA">new</font> JMenuItem(<font color="#0000FF">"Beenden"</font>, <font color="#0000FF">'e'</font>);
+<font color="#555555">045 </font>    mi.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">046 </font>    ret.add(mi);
+<font color="#555555">047 </font>    <font color="#0000AA">return</font> ret;
+<font color="#555555">048 </font>  }
+<font color="#555555">049 </font>
+<font color="#555555">050 </font>  <font color="#0000AA">private</font> <font color="#006699">void</font> setCtrlAccelerator(JMenuItem mi, <font color="#006699">char</font> acc)
+<font color="#555555">051 </font>  {
+<font color="#555555">052 </font>    KeyStroke ks = KeyStroke.getKeyStroke(
+<font color="#555555">053 </font>      acc, Event.CTRL_MASK
+<font color="#555555">054 </font>    );
+<font color="#555555">055 </font>    mi.setAccelerator(ks);
+<font color="#555555">056 </font>  }
+<font color="#555555">057 </font>
+<font color="#555555">058 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">059 </font>  {
+<font color="#555555">060 </font>    Listing3708 frame = <font color="#0000AA">new</font> Listing3708();
+<font color="#555555">061 </font>    frame.setLocation(100, 100);
+<font color="#555555">062 </font>    frame.setSize(300, 200);
+<font color="#555555">063 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">064 </font>  }
+<font color="#555555">065 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3708.java"><font color="#000055" size=-1>Listing3708.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 37.8: Ein Swing-Programm mit einem einfachen Men&uuml;</i></p>
+
+<p>
+Das Programm sieht mit ge&ouml;ffnetem &#187;Datei&#171;-Men&uuml;
+so aus: 
+<p>
+<a name="imageid037009"></a>
+<img src="images/SwingMenu1.gif">
+<p>
+
+<p><i>
+Abbildung 37.9: Ein Swing-Programm mit einem einfachen Men&uuml;</i></p>
+
+
+<!-- Section -->
+<a name="jmenusonstiges"></a>
+<h3>37.2.3 Weitere M&ouml;glichkeiten </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id037002003001"></a>
+<h4>Untermen&uuml;s </h4>
+
+<p>
+Das Einbinden von Untermen&uuml;s ist einfach. Da <a href="index_m.html#ixb101494"><font color=#000080><tt>Menu</tt></font></a>
+aus <a href="index_m.html#ixb101411"><font color=#000080><tt>MenuItem</tt></font></a>
+abgeleitet ist, kann an die Methode <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+der Klasse <a href="index_m.html#ixb101494"><font color=#000080><tt>Menu</tt></font></a>
+auch eine Instanz der Klasse <a href="index_m.html#ixb101494"><font color=#000080><tt>Menu</tt></font></a>
+&uuml;bergeben werden. Der Name des Untermen&uuml;s erscheint dann
+an der Einf&uuml;gestelle und mit einem kleinen Pfeil wird angezeigt,
+dass es sich um ein Untermen&uuml; handelt. 
+
+<!-- Section -->
+
+<a name="sectlevel4id037002003002"></a>
+<h4>Icons in Men&uuml;eintr&auml;gen </h4>
+
+<p>
+Einem Men&uuml;eintrag kann auch ein Icon zugeordnet werden. Dazu
+kann ein <a name="ixa102470"><a href="index_i.html#ixb101851"><font color=#000080><tt>Icon</tt></font></a></a>-Objekt
+entweder direkt an den Konstruktor von <a href="index_m.html#ixb101411"><font color=#000080><tt>MenuItem</tt></font></a>
+&uuml;bergeben werden oder es kann sp&auml;ter durch Aufruf von <a name="ixa102471"><a href="index_s.html#ixb101852"><font color=#000080><tt>setIcon</tt></font></a></a>
+zugewiesen werden. <a href="index_i.html#ixb101851"><font color=#000080><tt>Icon</tt></font></a>
+ist ein Interface, das die abstrakten Eigenschaften eines Icons definiert.
+Es besitzt eine Implementierung <a name="ixa102472"><a href="index_i.html#ixb101853"><font color=#000080><tt>ImageIcon</tt></font></a></a>,
+mit der sehr einfach aus einer <font color="#660099">gif</font>- oder
+<font color="#660099">jpeg</font>-Datei ein <a href="index_i.html#ixb101851"><font color=#000080><tt>Icon</tt></font></a>
+erzeugt werden kann: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public ImageIcon(String filename)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/ImageIcon.html" onClick="this.href=getApiDoc('javax.swing.ImageIcon')"><font color="#660066" size=-1>javax.swing.ImageIcon</font></a></td>
+</tr>
+</table>
+
+<p>
+Standardm&auml;&szlig;ig wird das Icon eines Men&uuml;eintrags links
+von seiner Beschriftung platziert. Um es anders anzuordnen, kann auf
+dem Men&uuml;eintrag die Methode <a name="ixa102473"><a href="index_s.html#ixb101854"><font color=#000080><tt>setHorizontalTextPosition</tt></font></a></a>
+aufgerufen und eine der Konstanten <a href="index_r.html#ixb101556"><font color=#000080><tt>RIGHT</tt></font></a>,
+<a href="index_l.html#ixb101555"><font color=#000080><tt>LEFT</tt></font></a>,
+<a href="index_c.html#ixb101549"><font color=#000080><tt>CENTER</tt></font></a>,
+<a href="index_l.html#ixb101855"><font color=#000080><tt>LEADING</tt></font></a>
+oder <a href="index_t.html#ixb101856"><font color=#000080><tt>TRAILING</tt></font></a>
+aus dem Interface <a href="index_s.html#ixb101857"><font color=#000080><tt>SwingConstants</tt></font></a>
+&uuml;bergeben werden. 
+
+<p>
+<a name="ixa102474"><a href="index_s.html#ixb101857"><font color=#000080><tt>SwingConstants</tt></font></a></a>
+ist ein Interface im Paket <a href="index_j.html#ixb100200"><font color=#000080><tt>javax.swing</tt></font></a>,
+das eine Reihe von Konstanten definiert, mit denen die Position und
+Orientierung von Swing-Komponenten beschrieben werden kann. Wir werden
+die Konstanten n&auml;her beschreiben, wenn sie als Parameter einer
+Methode auftauchen. <a href="k100242.html#swingconstants">Tabelle 37.3</a>
+listet alle Elemente &uuml;berblicksartig auf: <a name="swingconstants"></a>
+
+<p>
+<table cols=2 border width=66%>
+
+<tr>
+<td valign=top align=left width=20%><b>Konstante</b></td>
+<td valign=top align=left width=80%><b>Bedeutung</b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102475"><a href="index_b.html#ixb101858"><font color=#000080><tt>BOTTOM</tt></font></a></a></td>
+<td valign=top align=left>Unten</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102476"><a href="index_c.html#ixb101549"><font color=#000080><tt>CENTER</tt></font></a></a></td>
+<td valign=top align=left>An zentraler Position</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102477"><a href="index_e.html#ixb101548"><font color=#000080><tt>EAST</tt></font></a></a></td>
+<td valign=top align=left>Im Osten (rechts)</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102478"><a href="index_h.html#ixb101565"><font color=#000080><tt>HORIZONTAL</tt></font></a></a></td>
+<td valign=top align=left>Horizontal ausgerichtet</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102479"><a href="index_l.html#ixb101855"><font color=#000080><tt>LEADING</tt></font></a></a></td>
+<td valign=top align=left>Am Anfang eines anderen Elements</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102480"><a href="index_l.html#ixb101555"><font color=#000080><tt>LEFT</tt></font></a></a></td>
+<td valign=top align=left>Links</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102481"><a href="index_n.html#ixb101546"><font color=#000080><tt>NORTH</tt></font></a></a></td>
+<td valign=top align=left>Im Norden (oben)</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102482"><a href="index_n.html#ixb101859"><font color=#000080><tt>NORTH_EAST</tt></font></a></a></td>
+<td valign=top align=left>Im Nordosten (oben rechts)</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102483"><a href="index_n.html#ixb101860"><font color=#000080><tt>NORTH_WEST</tt></font></a></a></td>
+<td valign=top align=left>Im Nordwesten (oben links)</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102484"><a href="index_r.html#ixb101556"><font color=#000080><tt>RIGHT</tt></font></a></a></td>
+<td valign=top align=left>Rechts</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102485"><a href="index_s.html#ixb101545"><font color=#000080><tt>SOUTH</tt></font></a></a></td>
+<td valign=top align=left>Im S&uuml;den (unten)</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102486"><a href="index_s.html#ixb101861"><font color=#000080><tt>SOUTH_EAST</tt></font></a></a></td>
+<td valign=top align=left>Im S&uuml;dosten (unten rechts)</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102487"><a href="index_s.html#ixb101862"><font color=#000080><tt>SOUTH_WEST</tt></font></a></a></td>
+<td valign=top align=left>Im S&uuml;dwesten (unten links)</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102488"><a href="index_t.html#ixb101863"><font color=#000080><tt>TOP</tt></font></a></a></td>
+<td valign=top align=left>Oben</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102489"><a href="index_t.html#ixb101856"><font color=#000080><tt>TRAILING</tt></font></a></a></td>
+<td valign=top align=left>Am Ende eines anderen Elements</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102490"><a href="index_v.html#ixb101566"><font color=#000080><tt>VERTICAL</tt></font></a></a></td>
+<td valign=top align=left>Vertikal ausgerichtet</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa102491"><a href="index_w.html#ixb101547"><font color=#000080><tt>WEST</tt></font></a></a></td>
+<td valign=top align=left>Im Westen (links)</td></tr>
+</table>
+<p><i>
+Tabelle 37.3: Die Konstanten der Klasse SwingConstants</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id037002003003"></a>
+<h4>Checkboxes und Radiobuttons in Men&uuml;eintr&auml;gen </h4>
+
+<p>
+Auch Checkboxen und Radiobuttons k&ouml;nnen in Men&uuml;eintr&auml;gen
+untergebracht werden. Das ist mit Hilfe der aus <a href="index_j.html#ixb101842"><font color=#000080><tt>JMenuItem</tt></font></a>
+abgeleiteten Klassen <a name="ixa102492"><a href="index_j.html#ixb101864"><font color=#000080><tt>JCheckBoxMenuItem</tt></font></a></a>
+und <a name="ixa102493"><a href="index_j.html#ixb101865"><font color=#000080><tt>JRadioButtonMenuItem</tt></font></a></a>
+ebenfalls recht einfach. 
+
+<p>
+<a name="ixa102492"><a href="index_j.html#ixb101864"><font color=#000080><tt>JCheckBoxMenuItem</tt></font></a></a>
+stellt &auml;hnliche Konstruktoren wie <a href="index_j.html#ixb101842"><font color=#000080><tt>JMenuItem</tt></font></a>
+zur Verf&uuml;gung und besitzt zus&auml;tzlich die Methoden <a name="ixa102494"><a href="index_g.html#ixb101306"><font color=#000080><tt>getState</tt></font></a></a>
+und <a name="ixa102495"><a href="index_s.html#ixb101305"><font color=#000080><tt>setState</tt></font></a></a>,
+mit denen auf seinen aktuellen Zustand zugegriffen werden kann. Wahlweise
+kann bereits an den Konstruktor der Anfangszustand der Checkbox &uuml;bergeben
+werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public JCheckBoxMenuItem(String text)
+public JCheckBoxMenuItem(String text, Icon icon)
+public JCheckBoxMenuItem(String text, boolean b)
+public JCheckBoxMenuItem(String text, Icon icon, boolean b)
+
+public boolean getState()
+public void setState(boolean b)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JCheckBoxMenuItem.html" onClick="this.href=getApiDoc('javax.swing.JCheckBoxMenuItem')"><font color="#660066" size=-1>javax.swing.JCheckBoxMenuItem</font></a></td>
+</tr>
+</table>
+
+<p>
+Im Gegensatz zu einem <a href="index_j.html#ixb101864"><font color=#000080><tt>JCheckBoxMenuItem</tt></font></a>
+wird ein <a href="index_j.html#ixb101865"><font color=#000080><tt>JRadioButtonMenuItem</tt></font></a>
+immer dann verwendet, wenn von mehreren Buttons nur einer zur Zeit
+aktiviert werden soll. Die wichtigsten Konstruktoren beider Klassen
+sind identisch: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public JRadioButtonMenuItem(String text)
+public JRadioButtonMenuItem(String text, Icon icon)
+public JRadioButtonMenuItem(String text, boolean b)
+public JRadioButtonMenuItem(String text, Icon icon, boolean b)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JRadioButtonMenuItem.html" onClick="this.href=getApiDoc('javax.swing.JRadioButtonMenuItem')"><font color="#660066" size=-1>javax.swing.JRadioButtonMenuItem</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Kontrolle des Zustands der Buttons erfolgt mit einem <a name="ixa102496"><a href="index_b.html#ixb101866"><font color=#000080><tt>ButtonGroup</tt></font></a></a>-Objekt.
+Es wird vor dem Erzeugen der Men&uuml;eintr&auml;ge angelegt und jeder
+<a href="index_j.html#ixb101865"><font color=#000080><tt>JRadioButtonMenuItem</tt></font></a>
+wird mit <a name="ixa102497"><a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a></a>
+hinzugef&uuml;gt: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void add(AbstractButton b)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/ButtonGroup.html" onClick="this.href=getApiDoc('javax.swing.ButtonGroup')"><font color="#660066" size=-1>javax.swing.ButtonGroup</font></a></td>
+</tr>
+</table>
+
+<p>
+Das <a href="index_b.html#ixb101866"><font color=#000080><tt>ButtonGroup</tt></font></a>-Objekt
+sorgt automatisch daf&uuml;r, dass zu jedem Zeitpunkt genau ein Eintrag
+selektiert ist. Auf den aktuellen Zustand jedes Men&uuml;eintrags
+kann mit Hilfe der Methoden <a name="ixa102498"><a href="index_i.html#ixb101867"><font color=#000080><tt>isSelected</tt></font></a></a>
+und <a name="ixa102499"><a href="index_s.html#ixb101868"><font color=#000080><tt>setSelected</tt></font></a></a>
+zugegriffen werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public boolean isSelected()
+public void setSelected(boolean b)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JRadioButtonMenuItem.html" onClick="this.href=getApiDoc('javax.swing.JRadioButtonMenuItem')"><font color="#660066" size=-1>javax.swing.JRadioButtonMenuItem</font></a></td>
+</tr>
+</table>
+
+<p>
+Das folgende Programm zeigt alle weiterf&uuml;hrenden M&ouml;glichkeiten
+im &Uuml;berblick. Es definiert ein Men&uuml; &#187;Extras&#171;,
+dessen oberster Eintrag &#187;Tools&#171; ein Untermen&uuml; mit sechs
+weiteren Eintr&auml;gen ist. Darunter befinden sich zwei Checkbox-
+und drei RadioButton-Men&uuml;eintr&auml;ge, die durch Anklicken aktiviert
+werden k&ouml;nnen. Der letzte Men&uuml;eintrag &#187;Sicherheit&#171;
+enth&auml;lt zus&auml;tzlich ein Icon, das ein ge&ouml;ffnetes Vorh&auml;ngeschloss
+zeigt. 
+<a name="listingid037009"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3709.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3709
+<font color="#555555">008 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">009 </font>{
+<font color="#555555">010 </font>  <font color="#0000AA">public</font> Listing3709()
+<font color="#555555">011 </font>  {
+<font color="#555555">012 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Swing-Men&uuml;test II"</font>);
+<font color="#555555">013 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">014 </font>    JMenuBar menubar = <font color="#0000AA">new</font> JMenuBar();
+<font color="#555555">015 </font>    menubar.add(createExtrasMenu());
+<font color="#555555">016 </font>    setJMenuBar(menubar);
+<font color="#555555">017 </font>  }
+<font color="#555555">018 </font>
+<font color="#555555">019 </font>  <font color="#00AA00">//---Private Methoden---------------</font>
+<font color="#555555">020 </font>  <font color="#0000AA">private</font> JMenu createExtrasMenu()
+<font color="#555555">021 </font>  {
+<font color="#555555">022 </font>    JMenu ret = <font color="#0000AA">new</font> JMenu(<font color="#0000FF">"Extras"</font>);
+<font color="#555555">023 </font>    ret.setMnemonic(<font color="#0000FF">'X'</font>);
+<font color="#555555">024 </font>    JMenuItem mi;
+<font color="#555555">025 </font>    <font color="#00AA00">//Tools-Untermen&uuml;</font>
+<font color="#555555">026 </font>    ret.add(createToolsSubMenu());
+<font color="#555555">027 </font>    <font color="#00AA00">//Separator</font>
+<font color="#555555">028 </font>    ret.addSeparator();
+<font color="#555555">029 </font>    <font color="#00AA00">//Statuszeile und Buttonleiste</font>
+<font color="#555555">030 </font>    mi = <font color="#0000AA">new</font> JCheckBoxMenuItem(<font color="#0000FF">"Statuszeile"</font>);
+<font color="#555555">031 </font>    mi.setMnemonic(<font color="#0000FF">'z'</font>);
+<font color="#555555">032 </font>    ((JCheckBoxMenuItem)mi).setState(<font color="#006699">true</font>);
+<font color="#555555">033 </font>    ret.add(mi);
+<font color="#555555">034 </font>    mi = <font color="#0000AA">new</font> JCheckBoxMenuItem(<font color="#0000FF">"Buttonleiste"</font>);
+<font color="#555555">035 </font>    mi.setMnemonic(<font color="#0000FF">'B'</font>);
+<font color="#555555">036 </font>    ret.add(mi);
+<font color="#555555">037 </font>    <font color="#00AA00">//Separator</font>
+<font color="#555555">038 </font>    ret.addSeparator();
+<font color="#555555">039 </font>    <font color="#00AA00">//Offline, Verbinden, Anmelden</font>
+<font color="#555555">040 </font>    ButtonGroup bg = <font color="#0000AA">new</font> ButtonGroup();
+<font color="#555555">041 </font>    mi = <font color="#0000AA">new</font> JRadioButtonMenuItem(<font color="#0000FF">"Offline"</font>, <font color="#006699">true</font>);
+<font color="#555555">042 </font>    mi.setMnemonic(<font color="#0000FF">'O'</font>);
+<font color="#555555">043 </font>    ret.add(mi);
+<font color="#555555">044 </font>    bg.add(mi);
+<font color="#555555">045 </font>    mi = <font color="#0000AA">new</font> JRadioButtonMenuItem(<font color="#0000FF">"Verbinden"</font>);
+<font color="#555555">046 </font>    mi.setMnemonic(<font color="#0000FF">'V'</font>);
+<font color="#555555">047 </font>    ret.add(mi);
+<font color="#555555">048 </font>    bg.add(mi);
+<font color="#555555">049 </font>    mi = <font color="#0000AA">new</font> JRadioButtonMenuItem(<font color="#0000FF">"Anmelden"</font>);
+<font color="#555555">050 </font>    mi.setMnemonic(<font color="#0000FF">'A'</font>);
+<font color="#555555">051 </font>    ret.add(mi);
+<font color="#555555">052 </font>    bg.add(mi);
+<font color="#555555">053 </font>    <font color="#00AA00">//Separator</font>
+<font color="#555555">054 </font>    ret.addSeparator();
+<font color="#555555">055 </font>    <font color="#00AA00">//Sicherheit</font>
+<font color="#555555">056 </font>    mi = <font color="#0000AA">new</font> JMenuItem(
+<font color="#555555">057 </font>      <font color="#0000FF">"Sicherheit"</font>,
+<font color="#555555">058 </font>      <font color="#0000AA">new</font> ImageIcon(<font color="#0000FF">"lock.gif"</font>)
+<font color="#555555">059 </font>    );
+<font color="#555555">060 </font>    mi.setMnemonic(<font color="#0000FF">'S'</font>);
+<font color="#555555">061 </font>    mi.setHorizontalTextPosition(JMenuItem.LEFT);
+<font color="#555555">062 </font>    ret.add(mi);
+<font color="#555555">063 </font>    <font color="#0000AA">return</font> ret;
+<font color="#555555">064 </font>  }
+<font color="#555555">065 </font>
+<font color="#555555">066 </font>  <font color="#0000AA">private</font> JMenu createToolsSubMenu()
+<font color="#555555">067 </font>  {
+<font color="#555555">068 </font>    JMenu ret = <font color="#0000AA">new</font> JMenu(<font color="#0000FF">"Tools"</font>);
+<font color="#555555">069 </font>    ret.setMnemonic(<font color="#0000FF">'T'</font>);
+<font color="#555555">070 </font>    ret.add(<font color="#0000AA">new</font> JMenuItem(<font color="#0000FF">"Rechner"</font>, <font color="#0000FF">'R'</font>));
+<font color="#555555">071 </font>    ret.add(<font color="#0000AA">new</font> JMenuItem(<font color="#0000FF">"Editor"</font>,  <font color="#0000FF">'E'</font>));
+<font color="#555555">072 </font>    ret.add(<font color="#0000AA">new</font> JMenuItem(<font color="#0000FF">"Browser"</font>, <font color="#0000FF">'B'</font>));
+<font color="#555555">073 </font>    ret.add(<font color="#0000AA">new</font> JMenuItem(<font color="#0000FF">"Zipper"</font>,  <font color="#0000FF">'Z'</font>));
+<font color="#555555">074 </font>    ret.add(<font color="#0000AA">new</font> JMenuItem(<font color="#0000FF">"Snapper"</font>, <font color="#0000FF">'S'</font>));
+<font color="#555555">075 </font>    ret.add(<font color="#0000AA">new</font> JMenuItem(<font color="#0000FF">"Viewer"</font>,  <font color="#0000FF">'V'</font>));
+<font color="#555555">076 </font>    <font color="#0000AA">return</font> ret;
+<font color="#555555">077 </font>  }
+<font color="#555555">078 </font>
+<font color="#555555">079 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">080 </font>  {
+<font color="#555555">081 </font>    Listing3709 frame = <font color="#0000AA">new</font> Listing3709();
+<font color="#555555">082 </font>    frame.setLocation(100, 100);
+<font color="#555555">083 </font>    frame.setSize(300, 200);
+<font color="#555555">084 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">085 </font>  }
+<font color="#555555">086 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3709.java"><font color="#000055" size=-1>Listing3709.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 37.9: Weitere M&ouml;glichkeiten von Swing-Men&uuml;s</i></p>
+
+<p>
+Mit ge&ouml;ffneten Men&uuml;s stellt sich das Programm so dar: 
+<p>
+<a name="imageid037010"></a>
+<img src="images/SwingMenu2.gif">
+<p>
+
+<p><i>
+Abbildung 37.10: Ein Swing-Programm mit einem umfangreichen Men&uuml;</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id037002004"></a>
+<h3>37.2.4 <a name="ixa102500">Kontextmen&uuml;s</a> <a name="ixa102501"></a>
+</h3>
+
+<p>
+Kontextmen&uuml;s f&uuml;r AWT-Programme wurden bereits in <a href="k100199.html#kontextmenues">Abschnitt 30.6</a>
+ausf&uuml;hrlich besprochen. In Swing-Programmen werden Kontextmen&uuml;s
+mit Hilfe der Klasse <a name="ixa102502"><a href="index_j.html#ixb101869"><font color=#000080><tt>JPopupMenu</tt></font></a></a>
+erzeugt. Sie kann parameterlos instanziert werden und stellt Methoden
+&auml;hnlich <a href="index_j.html#ixb101841"><font color=#000080><tt>JMenu</tt></font></a>
+zur Verf&uuml;gung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public JMenuItem add(JMenuItem menuItem)
+public JMenuItem add(String s)
+
+public void addSeparator()
+
+public void show(Component invoker, int x, int y)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JPopupMenu.html" onClick="this.href=getApiDoc('javax.swing.JPopupMenu')"><font color="#660066" size=-1>javax.swing.JPopupMenu</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa102503"><a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a></a>
+werden Men&uuml;eintr&auml;ge hinzugef&uuml;gt, mit <a name="ixa102504"><a href="index_a.html#ixb101498"><font color=#000080><tt>addSeparator</tt></font></a></a>
+eine Trennlinie. Kontextmen&uuml;s k&ouml;nnen prinzipiell ebenso
+komplex aufgebaut sein wie normale Men&uuml;s, also inbesondere Icons,
+Untermen&uuml;s, Checkboxen oder Radiobuttons enthalten. Um das Men&uuml;
+anzuzeigen, ist <a name="ixa102505"><a href="index_s.html#ixb101517"><font color=#000080><tt>show</tt></font></a></a>
+aufzurufen. Die dazu erforderlichen Koordinaten gewinnt man am besten
+aus der aktuellen Position des Mauszeigers, die im Mausereignis mitgeliefert
+wird. 
+
+<p>
+Die zum Aktivieren eines Kontextmen&uuml;s erforderliche Mausaktion
+kann von Plattform zu Plattform unterschiedlich sein. Die portabelste
+L&ouml;sung besteht darin, einen <a href="index_m.html#ixb101355"><font color=#000080><tt>MouseListener</tt></font></a>
+auf der Komponente zu registrieren, und bei jedem Mausereignis mit
+<a name="ixa102506"><a href="index_i.html#ixb101455"><font color=#000080><tt>isPopupTrigger</tt></font></a></a>
+abzufragen, ob es sich um eine Aktion zum Aufrufen eines Kontextmen&uuml;s
+handelte. 
+
+<p>
+Das folgende Programm zeigt ein Hauptfenster, auf dem ein Kontextmen&uuml;
+mit den Eintr&auml;gen &#187;Rueckgaengig&#171;, &#187;Ausschneiden&#171;,
+&#187;Kopieren&#171; und &#187;Einfuegen&#171; aufgerufen werden kann.
+Der Aufruf des Kontextmen&uuml;s erfolgt durch Abfrage der Mausereignisse.
+Beim Ausw&auml;hlen einer Men&uuml;aktion wird der Kommandoname auf
+der Konsole ausgegeben. 
+<a name="listingid037010"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3710.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">006 </font><font color="#0000AA">import</font> javax.swing.border.*;
+<font color="#555555">007 </font>
+<font color="#555555">008 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3710
+<font color="#555555">009 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">010 </font><font color="#0000AA">implements</font> MouseListener, ActionListener
+<font color="#555555">011 </font>{
+<font color="#555555">012 </font>  <font color="#0000AA">public</font> Listing3710()
+<font color="#555555">013 </font>  {
+<font color="#555555">014 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Kontextmen&uuml;s"</font>);
+<font color="#555555">015 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">016 </font>    addMouseListener(<font color="#006699">this</font>);
+<font color="#555555">017 </font>  }
+<font color="#555555">018 </font>
+<font color="#555555">019 </font>  <font color="#00AA00">//MouseListener</font>
+<font color="#555555">020 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> mouseClicked(MouseEvent event)
+<font color="#555555">021 </font>  {
+<font color="#555555">022 </font>    checkPopupMenu(event);
+<font color="#555555">023 </font>  }
+<font color="#555555">024 </font>
+<font color="#555555">025 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> mouseEntered(MouseEvent event)
+<font color="#555555">026 </font>  {
+<font color="#555555">027 </font>  }
+<font color="#555555">028 </font>
+<font color="#555555">029 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> mouseExited(MouseEvent event)
+<font color="#555555">030 </font>  {
+<font color="#555555">031 </font>  }
+<font color="#555555">032 </font>
+<font color="#555555">033 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> mousePressed(MouseEvent event)
+<font color="#555555">034 </font>  {
+<font color="#555555">035 </font>    checkPopupMenu(event);
+<font color="#555555">036 </font>  }
+<font color="#555555">037 </font>
+<font color="#555555">038 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> mouseReleased(MouseEvent event)
+<font color="#555555">039 </font>  {
+<font color="#555555">040 </font>    checkPopupMenu(event);
+<font color="#555555">041 </font>  }
+<font color="#555555">042 </font>
+<font color="#555555">043 </font>  <font color="#0000AA">private</font> <font color="#006699">void</font> checkPopupMenu(MouseEvent event)
+<font color="#555555">044 </font>  {
+<font color="#555555">045 </font>    <font color="#0000AA">if</font> (event.isPopupTrigger()) {
+<font color="#555555">046 </font>      JPopupMenu popup = <font color="#0000AA">new</font> JPopupMenu();
+<font color="#555555">047 </font>      <font color="#00AA00">//R&uuml;ckg&auml;ngig hinzuf&uuml;gen</font>
+<font color="#555555">048 </font>      JMenuItem mi = <font color="#0000AA">new</font> JMenuItem(<font color="#0000FF">"Rueckgaengig"</font>);
+<font color="#555555">049 </font>      mi.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">050 </font>      popup.add(mi);
+<font color="#555555">051 </font>      <font color="#00AA00">//Separator hinzuf&uuml;gen</font>
+<font color="#555555">052 </font>      popup.addSeparator();
+<font color="#555555">053 </font>      <font color="#00AA00">//Ausschneiden, Kopieren, Einf&uuml;gen hinzuf&uuml;gen</font>
+<font color="#555555">054 </font>      mi = <font color="#0000AA">new</font> JMenuItem(<font color="#0000FF">"Ausschneiden"</font>);
+<font color="#555555">055 </font>      mi.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">056 </font>      popup.add(mi);
+<font color="#555555">057 </font>      mi = <font color="#0000AA">new</font> JMenuItem(<font color="#0000FF">"Kopieren"</font>);
+<font color="#555555">058 </font>      mi.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">059 </font>      popup.add(mi);
+<font color="#555555">060 </font>      mi = <font color="#0000AA">new</font> JMenuItem(<font color="#0000FF">"Einfuegen"</font>);
+<font color="#555555">061 </font>      mi.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">062 </font>      popup.add(mi);
+<font color="#555555">063 </font>      <font color="#00AA00">//Men&uuml; anzeigen</font>
+<font color="#555555">064 </font>      popup.show(
+<font color="#555555">065 </font>        event.getComponent(),
+<font color="#555555">066 </font>        event.getX(),
+<font color="#555555">067 </font>        event.getY()
+<font color="#555555">068 </font>      );
+<font color="#555555">069 </font>    }
+<font color="#555555">070 </font>  }
+<font color="#555555">071 </font>
+<font color="#555555">072 </font>  <font color="#00AA00">//ActionListener</font>
+<font color="#555555">073 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> actionPerformed(ActionEvent event)
+<font color="#555555">074 </font>  {
+<font color="#555555">075 </font>    System.out.println(event.getActionCommand());
+<font color="#555555">076 </font>  }
+<font color="#555555">077 </font>
+<font color="#555555">078 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">079 </font>  {
+<font color="#555555">080 </font>    Listing3710 frame = <font color="#0000AA">new</font> Listing3710();
+<font color="#555555">081 </font>    frame.setLocation(100, 100);
+<font color="#555555">082 </font>    frame.setSize(300, 200);
+<font color="#555555">083 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">084 </font>  }
+<font color="#555555">085 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3710.java"><font color="#000055" size=-1>Listing3710.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 37.10: Anzeigen eines Kontextmen&uuml;s in Swing</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100240.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100241.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100243.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100245.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

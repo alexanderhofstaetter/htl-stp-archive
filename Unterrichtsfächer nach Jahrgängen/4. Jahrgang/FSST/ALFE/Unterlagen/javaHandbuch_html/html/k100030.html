@@ -1,0 +1,629 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100028.html;106,k100029.html;107,k100031.html;108,k100036.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100028.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100029.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100031.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100036.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 5 - Datentypen
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id005002"></a>
+<h2>5.2 <a name="ixa100238">Primitive Datentypen</a><a name="ixa100239"></a></h2>
+<hr>
+<ul>
+<li><a href="k100030.html#sectlevel2id005002">5.2 Primitive Datentypen</a>
+<ul>
+<li><a href="k100030.html#sectlevel3id005002001">5.2.1 Der logische Typ</a>
+<ul>
+<li><a href="k100030.html#sectlevel4id005002001001">Literale</a>
+</ul>
+<li><a href="k100030.html#derzeichentyp">5.2.2 Der Zeichentyp</a>
+<ul>
+<li><a href="k100030.html#sectlevel4id005002002001">Literale</a>
+</ul>
+<li><a href="k100030.html#sectlevel3id005002003">5.2.3 Die integralen Typen</a>
+<ul>
+<li><a href="k100030.html#sectlevel4id005002003001">Literale</a>
+</ul>
+<li><a href="k100030.html#fliesskommazahlen">5.2.4 Die Flie&szlig;kommazahlen</a>
+<ul>
+<li><a href="k100030.html#sectlevel4id005002004001">Literale</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+<p>
+Java kennt acht elementare Datentypen, die gem&auml;&szlig; Sprachspezifikation
+als <i>primitive Datentypen</i> bezeichnet werden. Daneben gibt es
+die M&ouml;glichkeit, Arrays zu definieren (die eingeschr&auml;nkte
+Objekttypen sind), und als objektorientierte Sprache erlaubt Java
+nat&uuml;rlich die Definition von Objekttypen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Im Gegensatz zu C und C++ gibt es die folgenden Elemente in Java jedoch
+nicht: 
+<ul>
+<li>explizite Zeiger
+<li>Typdefinitionen (typedef)
+<li>Recordtypen (struct und union)
+<li>Bitfelder
+</ul>
+</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Was auf den ersten Blick wie eine Designschw&auml;che aussieht, entpuppt
+sich bei n&auml;herem Hinsehen als St&auml;rke von Java. Der konsequente
+Verzicht auf zus&auml;tzliche Datentypen macht die Sprache leicht
+erlernbar und verst&auml;ndlich. Die Vergangenheit hat mehrfach gezeigt,
+dass Programmiersprachen mit einem &uuml;berladenen Typkonzept (zum
+Beispiel PL/I oder ADA) auf Dauer keine Akzeptanz finden. 
+
+<p>
+Tats&auml;chlich ist es ohne Weiteres m&ouml;glich, die unverzichtbaren
+Datentypen mit den in Java eingebauten Hilfsmitteln nachzubilden.
+So lassen sich beispielsweise Zeiger zur Konstruktion <a name="ixa100240">dynamischer
+Datenstrukturen</a> mit Hilfe von Referenzvariablen
+simulieren und Recordtypen sind nichts anderes als Klassen ohne Methoden.
+Der Verzicht auf Low-Level-Datenstrukturen, wie beispielsweise Zeiger
+zur Manipulation von Speicherstellen oder Bitfelder zur Repr&auml;sentation
+von Hardware-Elementen, ist dagegen gewollt. 
+
+<p>
+Alle primitiven Datentypen in Java haben - unabh&auml;ngig von der
+Plattform auf der Java ausgef&uuml;hrt wird - eine feste L&auml;nge,
+die von den Designern der Sprache ein f&uuml;r allemal verbindlich
+festgelegt wurde. Ein <font color="#000077"><tt>sizeof</tt></font>-Operator,
+wie er in C vorhanden ist, wird in Java daher nicht ben&ouml;tigt
+und ist auch nicht vorhanden. 
+
+<p>
+Ein weiterer Unterschied zu C und den meisten anderen Programmiersprachen
+besteht darin, dass Variablen in Java immer einen definierten Wert
+haben. Bei Membervariablen (also Variablen innerhalb von Klassen,
+siehe <a href="k100052.html#kapiteloop1">Kapitel 8</a>) bekommt eine
+Variable einen <a name="ixa100241">Standardwert</a> zugewiesen, wenn
+dieser nicht durch eine explizite Initialisierung ge&auml;ndert wird.
+Bei <i>lokalen</i> Variablen sorgt der Compiler durch eine <a name="ixa100242">Datenflussanalyse</a>
+daf&uuml;r, dass diese vor ihrer Verwendung explizit initialisiert
+werden. Eine Erl&auml;uterung dieses Konzepts, das unter dem Namen
+<a name="ixa100243"><i>Definite Assignment</i></a> in der Sprachdefinition
+beschrieben wird, ist Bestandteil von <a href="k100036.html#kapitelausdruecke">Kapitel 6</a>.
+<a href="k100030.html#primitivedatentypen">Tabelle 5.1</a> listet
+die in Java verf&uuml;gbaren Basistypen und ihre Standardwerte auf:
+<a name="primitivedatentypen"></a>
+<p>
+<table cols=4 border width=100%>
+
+<tr>
+<td valign=top align=left width=25%><b>Typname</b></td>
+<td valign=top align=left width=25%><b>L&auml;nge</b></td>
+<td valign=top align=left width=25%><b>Wertebereich</b></td>
+<td valign=top align=left width=25%><b>Standardwert </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100244"><a href="index_b.html#ixb100071"><font color=#000080><tt>boolean</tt></font></a></a></td>
+<td valign=top align=left>1</td>
+<td valign=top align=left><a name="ixa100245"><a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a></a>,
+<a name="ixa100246"><a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a></a></td>
+<td valign=top align=left><a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>
+</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100247"><a href="index_c.html#ixb100223"><font color=#000080><tt>char</tt></font></a></a></td>
+<td valign=top align=left>2</td>
+<td valign=top align=left>Alle Unicode-Zeichen</td>
+<td valign=top align=left>\u0000 </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100248"><a href="index_b.html#ixb100249"><font color=#000080><tt>byte</tt></font></a></a></td>
+<td valign=top align=left>1</td>
+<td valign=top align=left>-2<sup>7</sup>...2<sup>7</sup>-1</td>
+<td valign=top align=left>0 </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100249"><a href="index_s.html#ixb100250"><font color=#000080><tt>short</tt></font></a></a></td>
+<td valign=top align=left>2</td>
+<td valign=top align=left>-2<sup>15</sup>...2<sup>15</sup>-1</td>
+<td valign=top align=left>0 </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100250"><a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a></a></td>
+<td valign=top align=left>4</td>
+<td valign=top align=left>-2<sup>31</sup>...2<sup>31</sup>-1</td>
+<td valign=top align=left>0 </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100251"><a href="index_l.html#ixb100252"><font color=#000080><tt>long</tt></font></a></a></td>
+<td valign=top align=left>8</td>
+<td valign=top align=left>-2<sup>63</sup>...2<sup>63</sup>-1</td>
+<td valign=top align=left>0 </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100252"><a href="index_f.html#ixb100253"><font color=#000080><tt>float</tt></font></a></a></td>
+<td valign=top align=left>4</td>
+<td valign=top align=left>+/-3.40282347 * 10<sup>38</sup></td>
+<td valign=top align=left>0.0 </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100253"><a href="index_d.html#ixb100254"><font color=#000080><tt>double</tt></font></a></a></td>
+<td valign=top align=left>8</td>
+<td valign=top align=left>+/-1.79769313486231570 * 10<sup>308</sup></td>
+<td valign=top align=left>0.0</td></tr>
+</table>
+<p><i>
+Tabelle 5.1: Primitive Datentypen </i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id005002001"></a>
+<h3>5.2.1 Der logische Typ<a name="ixa100254"></a> </h3>
+
+<p>
+Mit <a name="ixa100255"><a href="index_b.html#ixb100071"><font color=#000080><tt>boolean</tt></font></a></a>
+besitzt Java einen eigenen logischen Datentyp und beseitigt damit
+eine oft diskutierte Schw&auml;che von C und C++. Der <a href="index_b.html#ixb100071"><font color=#000080><tt>boolean</tt></font></a>-Typ
+muss zwangsweise dort verwendet werden, wo ein logischer Operand erforderlich
+ist. Ganzzahlige Typen mit den Werten 0 oder 1 d&uuml;rfen nicht als
+Ersatz f&uuml;r einen logischen Typ verwendet werden. 
+
+<!-- Section -->
+
+<a name="sectlevel4id005002001001"></a>
+<h4><a name="ixa100256">Literale</a></h4>
+
+<p>
+Der Datentyp <a href="index_b.html#ixb100071"><font color=#000080><tt>boolean</tt></font></a>
+kennt zwei verschiedene Werte, n&auml;mlich <a name="ixa100257"><a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a></a>
+und <a name="ixa100258"><a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a></a>.
+Neben den vordefinierten Konstanten gibt es keine weiteren Literale
+f&uuml;r logische Datentypen. 
+
+<!-- Section -->
+
+<a name="derzeichentyp"></a>
+<h3>5.2.2 Der <a name="ixa100259">Zeichentyp</a> </h3>
+
+<p>
+Java wurde mit dem Anspruch entworfen, bekannte Schw&auml;chen bestehender
+Programmiersprachen zu vermeiden, und der Wunsch nach Portabilit&auml;t
+stand ganz oben auf der Liste der Designziele. Konsequenterweise wurde
+der Typ <a name="ixa100260"><a href="index_c.html#ixb100223"><font color=#000080><tt>char</tt></font></a></a>
+in Java daher bereits von Anfang an 2 Byte gro&szlig; gemacht und
+speichert seine Zeichen auf der Basis des <a name="ixa100261">Unicode</a>-Zeichensatzes.
+Als einziger integraler Datentyp ist <a href="index_c.html#ixb100223"><font color=#000080><tt>char</tt></font></a>
+nicht vorzeichenbehaftet. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Da das Sprachdesign und das Java-API so gestaltet wurden, dass die
+Verwendung des Unicode-Zeichensatzes weitgehend transparent bleibt,
+ergeben sich f&uuml;r die meisten Entwickler zun&auml;chst kaum Umstellungsprobleme.
+Ein <a href="index_c.html#ixb100223"><font color=#000080><tt>char</tt></font></a>
+oder <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+kann in Java genauso intuitiv benutzt werden wie in Sprachen, die
+auf dem ASCII-Zeichensatz aufbauen. Unterschiede werden vor allem
+dann deutlich, wenn Ber&uuml;hrungspunkte zwischen der internen Unicode-Darstellung
+und der Repr&auml;sentation auf Systemebene entstehen, beispielsweise
+beim Lesen oder Schreiben von Textdateien.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id005002002001"></a>
+<h4><a name="ixa100262">Literale</a></h4>
+
+<p>
+<a name="ixa100263"><a href="index_c.html#ixb100223"><font color=#000080><tt>char</tt></font></a></a>-Literale
+werden grunds&auml;tzlich in einfache Hochkommata gesetzt. Daneben
+gibt es <a name="ixa100264"><a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a></a>-Literale,
+die in doppelten Hochkommata stehen. &Auml;hnlich wie C stellt Java
+eine ganze Reihe von Standard-<a name="ixa100265">Escape-Sequenzen</a>
+zur Verf&uuml;gung, die zur Darstellung von Sonderzeichen verwendet
+werden k&ouml;nnen: <a name="tableid005002"></a>
+
+<p>
+<table cols=2 border width=66%>
+
+<tr>
+<td valign=top align=left width=33%><b>Zeichen</b></td>
+<td valign=top align=left width=66%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>\b</tt></font></td>
+<td valign=top align=left>R&uuml;ckschritt (Backspace) </td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>\t</tt></font></td>
+<td valign=top align=left>Horizontaler Tabulator </td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>\n</tt></font></td>
+<td valign=top align=left>Zeilenschaltung (Newline) </td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>\f</tt></font></td>
+<td valign=top align=left>Seitenumbruch (Formfeed) </td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>\r</tt></font></td>
+<td valign=top align=left>Wagenr&uuml;cklauf (Carriage return) </td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>\"</tt></font></td>
+<td valign=top align=left>Doppeltes Anf&uuml;hrungszeichen </td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>\'</tt></font></td>
+<td valign=top align=left>Einfaches Anf&uuml;hrungszeichen </td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>\\</tt></font></td>
+<td valign=top align=left>Backslash </td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>\nnn</tt></font></td>
+<td valign=top align=left>Oktalzahl nnn (kann auch k&uuml;rzer als
+drei Zeichen sein, darf nicht gr&ouml;&szlig;er als oktal 377 sein)
+</td></tr>
+</table>
+<p><i>
+Tabelle 5.2: Standard-Escape-Sequenzen </i></p>
+
+<p>
+Weiterhin k&ouml;nnen beliebige Unicode-Escape-Sequenzen<a name="ixa100266"></a>
+der Form <font color="#000077"><tt>\uxxxx</tt></font> angegeben werden,
+wobei <font color="#000077"><tt>xxxx</tt></font> eine Folge von bis
+zu vier hexadezimalen Ziffern ist. So steht beispielsweise <font color="#000077"><tt>\u000a</tt></font>
+f&uuml;r die Zeilenschaltung und <font color="#000077"><tt>\u0020</tt></font>
+f&uuml;r das Leerzeichen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Ein wichtiger Unterschied zu Standard-Escape-Sequenzen besteht darin,
+dass Unicode-Escape-Sequenzen an beliebiger Stelle im Programm auftauchen
+d&uuml;rfen, also auch au&szlig;erhalb von <a href="index_c.html#ixb100223"><font color=#000080><tt>char</tt></font></a>-
+oder <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Literalen.
+Wichtig ist au&szlig;erdem, dass diese bereits <i>vor</i> der eigentlichen
+Interpretation des Quelltextes ausgetauscht werden. Es ist also beispielsweise
+nicht m&ouml;glich, ein <a href="index_c.html#ixb100223"><font color=#000080><tt>char</tt></font></a>-Literal,
+das ein Anf&uuml;hrungszeichen darstellen soll, in der Form '\u0027'
+zu schreiben. Da die Unicode-Sequenzen bereits vor dem eigentlichen
+Compiler-Lauf ausgetauscht werden, w&uuml;rde der Compiler die Sequenz
+''' vorfinden und einen Fehler melden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id005002003"></a>
+<h3>5.2.3 Die integralen Typen<a name="ixa100267"></a> </h3>
+
+<p>
+Java stellt vier ganzzahlige Datentypen zur Verf&uuml;gung, und zwar
+<a name="ixa100268"><a href="index_b.html#ixb100249"><font color=#000080><tt>byte</tt></font></a></a>,
+<a name="ixa100269"><a href="index_s.html#ixb100250"><font color=#000080><tt>short</tt></font></a></a>,
+<a name="ixa100270"><a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a></a>
+und <a name="ixa100271"><a href="index_l.html#ixb100252"><font color=#000080><tt>long</tt></font></a></a>,
+mit jeweils 1, 2, 4 und 8 Byte L&auml;nge. Alle ganzzahligen Typen
+sind vorzeichenbehaftet und ihre L&auml;nge ist auf allen Plattformen
+gleich. 
+
+<p>
+Anders als in C sind die Schl&uuml;sselw&ouml;rter <a href="index_l.html#ixb100252"><font color=#000080><tt>long</tt></font></a>
+und <a href="index_s.html#ixb100250"><font color=#000080><tt>short</tt></font></a>
+bereits Typenbezeichner und nicht nur Modifier. Es ist daher nicht
+erlaubt, <font color="#000077"><tt>long int</tt></font> oder <font color="#000077"><tt>short
+int</tt></font> anstelle von <a href="index_l.html#ixb100252"><font color=#000080><tt>long</tt></font></a>
+bzw. <a href="index_s.html#ixb100250"><font color=#000080><tt>short</tt></font></a>
+zu schreiben. Auch den Modifier <font color="#000077"><tt>unsigned</tt></font>
+gibt es in Java nicht. 
+
+<!-- Section -->
+
+<a name="sectlevel4id005002003001"></a>
+<h4><a name="ixa100272">Literale</a></h4>
+
+<p>
+Ganzzahlige Literale k&ouml;nnen in Dezimal-, Oktal- oder Hexadezimalform
+geschrieben werden. Ein oktaler Wert beginnt mit dem Pr&auml;fix <font color="#000077"><tt>0</tt></font>,
+ein hexadezimaler Wert mit <font color="#000077"><tt>0x</tt></font>.
+Dezimale Literale d&uuml;rfen nur aus den Ziffern <font color="#000077"><tt>0</tt></font>
+bis <font color="#000077"><tt>9</tt></font>, oktale aus den Ziffern
+<font color="#000077"><tt>0</tt></font> bis <font color="#000077"><tt>7</tt></font>
+und hexadezimale aus den Ziffern <font color="#000077"><tt>0</tt></font>
+bis <font color="#000077"><tt>9</tt></font> und den Buchstaben <font color="#000077"><tt>a</tt></font>
+bis <font color="#000077"><tt>f</tt></font> und <font color="#000077"><tt>A</tt></font>
+bis <font color="#000077"><tt>F</tt></font> bestehen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#FF9900"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#FF9900"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Ab Java Version 7 k&ouml;nnen ganzzahlige Literale auch in Bin&auml;rschreibweise
+angegeben werden. Der Wert muss dazu mit dem Pr&auml;fix <a name="ixa100273"><a href="index_0.html#ixb100260"><font color=#000080><tt>0b</tt></font></a></a>
+beginnen, gefolgt von den Ziffern 0 und 1. Au&szlig;erdem k&ouml;nnen
+Ziffernfolgen nun auch Unterstriche enthalten, was die Lesbarkeit
+gro&szlig;er Zahlen erleichtern soll (z.B. <font color="#000077"><tt>1_048_576</tt></font>
+statt <font color="#000077"><tt>1048576</tt></font>).</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#FF9900">
+<tr>
+<td><font color="#FFFFFF">&nbsp;JDK6.0-7.0&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#FF9900"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Durch Voranstellen eines <font color="#000077"><tt>-</tt></font> k&ouml;nnen
+negative Zahlen dargestellt werden, positive k&ouml;nnen wahlweise
+durch ein <font color="#000077"><tt>+</tt></font> eingeleitet werden.
+Ganzzahlige Literale sind grunds&auml;tzlich vom Typ <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>,
+wenn nicht der Suffix <font color="#000077"><tt>L</tt></font> oder
+<font color="#000077"><tt>l</tt></font> hinten angeh&auml;ngt wird.
+In diesem Fall sind sie vom Typ <a href="index_l.html#ixb100252"><font color=#000080><tt>long</tt></font></a>.
+
+<p>
+<a href="k100030.html#ganzzahlliterale">Tabelle 5.3</a> gibt eine
+&Uuml;bersicht einiger vordefinierten Konstanten, die im Umgang mit
+integralen Typen hilfreich sein k&ouml;nnen. <a name="ganzzahlliterale"></a>
+
+<p>
+<table cols=3 border width=100%>
+
+<tr>
+<td valign=top align=left width=20%><b>Name</b></td>
+<td valign=top align=left width=40%><b>Verf&uuml;gbar f&uuml;r</b></td>
+<td valign=top align=left width=40%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100274"><a href="index_m.html#ixb100261"><font color=#000080><tt>MAX_VALUE</tt></font></a></a></td>
+<td valign=top align=left><a href="index_b.html#ixb100262"><font color=#000080><tt>Byte</tt></font></a>,
+<a href="index_s.html#ixb100263"><font color=#000080><tt>Short</tt></font></a>,
+<a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>,
+<a href="index_l.html#ixb100264"><font color=#000080><tt>Long</tt></font></a></td>
+<td valign=top align=left>Gr&ouml;&szlig;ter darstellbarer positiver
+Wert </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100275"><a href="index_m.html#ixb100265"><font color=#000080><tt>MIN_VALUE</tt></font></a></a></td>
+<td valign=top align=left><a href="index_b.html#ixb100262"><font color=#000080><tt>Byte</tt></font></a>,
+<a href="index_s.html#ixb100263"><font color=#000080><tt>Short</tt></font></a>,
+<a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>,
+<a href="index_l.html#ixb100264"><font color=#000080><tt>Long</tt></font></a></td>
+<td valign=top align=left>Kleinster darstellbarer negativer Wert </td></tr>
+</table>
+<p><i>
+Tabelle 5.3: Symbolische Ganzzahlliterale </i></p>
+
+
+<!-- Section -->
+<a name="fliesskommazahlen"></a>
+<h3>5.2.4 Die <a name="ixa100276">Flie&szlig;kommazahlen</a> </h3>
+
+<p>
+Java kennt die beiden IEEE-754-Flie&szlig;kommatypen <a name="ixa100277"><a href="index_f.html#ixb100253"><font color=#000080><tt>float</tt></font></a></a>
+(einfache Genauigkeit) und <a name="ixa100278"><a href="index_d.html#ixb100254"><font color=#000080><tt>double</tt></font></a></a>
+(doppelte Genauigkeit). Die L&auml;nge betr&auml;gt 4 Byte f&uuml;r
+<a href="index_f.html#ixb100253"><font color=#000080><tt>float</tt></font></a>
+und 8 Byte f&uuml;r <a href="index_d.html#ixb100254"><font color=#000080><tt>double</tt></font></a>.
+
+
+<!-- Section -->
+<a name="sectlevel4id005002004001"></a>
+<h4><a name="ixa100279">Literale</a></h4>
+
+<p>
+Flie&szlig;kommaliterale werden immer in Dezimalnotation aufgeschrieben.
+Sie bestehen aus einem Vorkommateil, einem Dezimalpunkt, einem Nachkommateil,
+einem Exponenten und einem Suffix. Um ein Flie&szlig;kommaliteral
+von einem integralen Literal unterscheiden zu k&ouml;nnen, muss mindestens
+der Dezimalpunkt, der Exponent oder der Suffix vorhanden sein. Entweder
+der Vorkomma- oder der Nachkommateil darf ausgelassen werden, aber
+nicht beide. Vorkommateil und Exponent k&ouml;nnen wahlweise durch
+das Vorzeichen <font color="#000077"><tt>+</tt></font> oder <font color="#000077"><tt>-</tt></font>
+eingeleitet werden. Weiterhin ist der Exponent, der durch ein <font color="#000077"><tt>e</tt></font>
+oder <font color="#000077"><tt>E</tt></font> eingeleitet wird, optional.
+Auch der Suffix kann weggelassen werden, wenn durch die anderen Merkmale
+klar ist, dass es sich um eine Flie&szlig;kommazahl handelt. Der Suffix
+kann entweder <font color="#000077"><tt>f</tt></font> oder <font color="#000077"><tt>F</tt></font>
+sein, um anzuzeigen, dass es sich um ein <a href="index_f.html#ixb100253"><font color=#000080><tt>float</tt></font></a>
+handelt, oder <font color="#000077"><tt>d</tt></font> oder <font color="#000077"><tt>D</tt></font>,
+um ein <a href="index_d.html#ixb100254"><font color=#000080><tt>double</tt></font></a>
+anzuzeigen. Fehlt er, so ist das Literal (unabh&auml;ngig von seiner
+Gr&ouml;&szlig;e) vom Typ <a href="index_d.html#ixb100254"><font color=#000080><tt>double</tt></font></a>.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#FF9900"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#FF9900"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Ab Version 7 k&ouml;nnen in Flie&szlig;kommaliteralen Unterstriche
+verwendet werden, was die Lesbarkeit gro&szlig;er Zahlen erleichtern
+soll. So kann man beispielsweise <font color="#000077"><tt>1_048_576.99</tt></font>
+statt <font color="#000077"><tt>1048576.99</tt></font> schreiben.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#FF9900">
+<tr>
+<td><font color="#FFFFFF">&nbsp;JDK6.0-7.0&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#FF9900"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+G&uuml;ltige Flie&szlig;kommazahlen sind: 
+<ul>
+<li>3.14
+<li>31_415.9 
+<li>2f
+<li>1e1
+<li>.5f
+<li>6.
+</ul>
+
+<p>
+Neben diesen numerischen Literalen gibt es noch einige symbolische
+in den Klassen <a name="ixa100280"><a href="index_f.html#ixb100267"><font color=#000080><tt>Float</tt></font></a></a>
+und <a name="ixa100281"><a href="index_d.html#ixb100268"><font color=#000080><tt>Double</tt></font></a></a>
+des Pakets <a href="index_j.html#ixb100196"><font color=#000080><tt>java.lang</tt></font></a>.
+<a href="k100030.html#fliesskommaliterale">Tabelle 5.4</a> gibt eine
+&Uuml;bersicht dieser vordefinierten Konstanten. <a name="ixa100282"><a href="index_n.html#ixb100269"><font color=#000080><tt>NaN</tt></font></a></a>
+entsteht beispielsweise bei der Division durch 0, <a name="ixa100283"><a href="index_p.html#ixb100270"><font color=#000080><tt>POSITIVE_INFINITY</tt></font></a></a>
+bzw. <a name="ixa100284"><a href="index_n.html#ixb100271"><font color=#000080><tt>NEGATIVE_INFINITY</tt></font></a></a>
+sind Zahlen, die gr&ouml;&szlig;er bzw. kleiner als der darstellbare
+Bereich sind. <a name="fliesskommaliterale"></a>
+
+<p>
+<table cols=3 border width=100%>
+
+<tr>
+<td valign=top align=left width=20%><b>Name</b></td>
+<td valign=top align=left width=40%><b>Verf&uuml;gbar f&uuml;r</b></td>
+<td valign=top align=left width=40%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100285"><a href="index_m.html#ixb100261"><font color=#000080><tt>MAX_VALUE</tt></font></a></a></td>
+<td valign=top align=left><a href="index_f.html#ixb100267"><font color=#000080><tt>Float</tt></font></a>,
+<a href="index_d.html#ixb100268"><font color=#000080><tt>Double</tt></font></a></td>
+<td valign=top align=left>Gr&ouml;&szlig;ter darstellbarer positiver
+Wert </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100286"><a href="index_m.html#ixb100265"><font color=#000080><tt>MIN_VALUE</tt></font></a></a></td>
+<td valign=top align=left><a href="index_f.html#ixb100267"><font color=#000080><tt>Float</tt></font></a>,
+<a href="index_d.html#ixb100268"><font color=#000080><tt>Double</tt></font></a></td>
+<td valign=top align=left>Kleinster darstellbarer positiver Wert </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100282"><a href="index_n.html#ixb100269"><font color=#000080><tt>NaN</tt></font></a></a></td>
+<td valign=top align=left><a href="index_f.html#ixb100267"><font color=#000080><tt>Float</tt></font></a>,
+<a href="index_d.html#ixb100268"><font color=#000080><tt>Double</tt></font></a></td>
+<td valign=top align=left>Not-A-Number </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100284"><a href="index_n.html#ixb100271"><font color=#000080><tt>NEGATIVE_INFINITY</tt></font></a></a></td>
+<td valign=top align=left><a href="index_f.html#ixb100267"><font color=#000080><tt>Float</tt></font></a>,
+<a href="index_d.html#ixb100268"><font color=#000080><tt>Double</tt></font></a></td>
+<td valign=top align=left>Negativ unendlich </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100283"><a href="index_p.html#ixb100270"><font color=#000080><tt>POSITIVE_INFINITY</tt></font></a></a></td>
+<td valign=top align=left><a href="index_f.html#ixb100267"><font color=#000080><tt>Float</tt></font></a>,
+<a href="index_d.html#ixb100268"><font color=#000080><tt>Double</tt></font></a></td>
+<td valign=top align=left>Positiv unendlich </td></tr>
+</table>
+<p><i>
+Tabelle 5.4: Symbolische Flie&szlig;kommaliterale </i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Der Name <font color="#000077"><tt>MIN_VALUE</tt></font> wird im JDK
+uneinheitlich verwendet. W&auml;hrend <font color="#000077"><tt>MIN_VALUE</tt></font>
+in den Ganzzahlklassen den kleinsten darstellbaren <i>negativen</i>
+Wert darstellt, repr&auml;sentiert der Wert der gleichnamigen Konstante
+in den Flie&szlig;kommazahlklassen den kleinsten darstellbaren <i>positiven</i>
+Wert (und liegt damit sehr nahe bei 0), vgl. <a href="k100030.html#ganzzahlliterale">Tabelle 5.3</a>
+und <a href="k100030.html#fliesskommaliterale">Tabelle 5.4</a>. </td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100028.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100029.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100031.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100036.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

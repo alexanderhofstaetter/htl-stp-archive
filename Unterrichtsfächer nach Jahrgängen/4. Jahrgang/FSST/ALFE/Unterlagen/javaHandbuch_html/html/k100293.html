@@ -1,0 +1,193 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100292.html;106,k100292.html;107,k100294.html;108,k100300.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100292.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100292.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100294.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100300.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 46 - Beans
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectionbeans"></a>
+<h2>46.1 Grundlagen und Begriffe </h2>
+<hr>
+<ul>
+<li><a href="k100293.html#sectionbeans">46.1 Grundlagen und Begriffe</a>
+</ul>
+<hr>
+
+<p>
+Als <a name="ixa103400"><i>Beans</i></a> werden in Java eigenst&auml;ndige,
+wiederverwendbare Softwarekomponenten zum Aufbau von Applets und Applikationen
+bezeichnet. Obwohl sie nicht zwangsl&auml;ufig eine f&uuml;r den Anwender
+sichtbare Oberfl&auml;che haben m&uuml;ssen, werden Beans doch typischerweise
+als grafische Komponenten zur Verf&uuml;gung gestellt und k&ouml;nnen
+mit Hilfe eines GUI-Editors (GUI = <a name="ixa103401"><i>Graphical User Interface</i></a>)
+interaktiv zu komplexen Anwendungen zusammengesetzt werden. 
+
+<p>
+Derartige GUI-Komponenten gibt es seit geraumer Zeit. Sie wurden auf
+dem PC mit Entwicklungsumgebungen wie Visual Basic oder Delphi popul&auml;r
+und haben - beinahe noch st&auml;rker als rein sprachengetragene Konzepte
+- dazu beigetragen, die komponentenbasierte Softwareentwicklung einer
+breiten Masse von Entwicklern nahezubringen. 
+
+<p>
+Beans gibt es seit der Version 1.1 des Java Development Kit. W&auml;hrend
+auch vorher schon wiederverwertbare Komponenten entwickelt werden
+konnten (wir haben das in <a href="k100221.html#kapitelcanvasundpanel">Kapitel 33</a>
+am Beispiel einer selbst entwickelten 7-Segment-Anzeige demonstriert),
+wurde mit Einf&uuml;hrung der Beans-Architektur eine Standardisierung
+vieler wichtiger Konzepte vorgenommen und so die Grundlage f&uuml;r
+die einheitliche Entwicklung von GUI-Komponenten gelegt. 
+
+<p>
+Im Gegensatz zu den betriebssystem- und teilweise herstellerspezifischen
+Komponentenmodellen vieler Entwicklungssysteme steht mit den Beans
+eine plattform&uuml;bergreifende Komponentenarchitektur zur Verf&uuml;gung.
+Eine Bean von Hersteller A, die auf Betriebssystem B entwickelt wurde,
+sollte (wenn sie nicht aus anderen Gr&uuml;nden plattformabh&auml;ngig
+ist) ohne Probleme in einer Entwicklungsumgebung des Herstellers C
+auf Betriebssystem D laufen und Bestandteil eines Java-Programms werden
+k&ouml;nnen, das schlie&szlig;lich auf Plattform E l&auml;uft. 
+
+<p>
+Bevor wir uns den wichtigsten Eigenschaften einer Bean zuwenden, wollen
+wir uns kurz mit einigen grundlegenden Begriffen vertraut machen.
+
+<p>
+Bei der Entwicklung einer Anwendung mit grafischen Komponenten wird
+zweckm&auml;&szlig;igerweise zwischen <a name="ixa103402"><i>Designzeitpunkt</i></a>
+und <a name="ixa103403"><i>Ausf&uuml;hrungszeitpunkt</i></a> unterschieden.
+Beide bezeichnen eigentlich Zeitr&auml;ume und stehen f&uuml;r die
+beiden unterschiedlichen Phasen der Entwicklung einer Anwendung und
+ihrer sp&auml;teren Ausf&uuml;hrung. Zum Designzeitpunkt werden die
+Komponenten in einem grafischen Editor des Entwicklungswerkzeugs ausgew&auml;hlt,
+in einem Formular platziert und an die Erfordernisse der Anwendung
+angepasst. Diesen Editor wollen wir fortan als <a name="ixa103404"><i>GUI-Designer</i></a>
+bezeichnen, synonym werden aber auch Begriffe wie <i>Grafik-Editor</i>,
+<i>GUI-Painter</i> usw. verwendet. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Ein gro&szlig;er Teil der bei den Beans realisierten Konzepte spielt
+nur f&uuml;r den Designzeitraum eine Rolle. Spielt dieser keine Rolle
+(beispielsweise weil die Komponenten nicht in einem GUI-Designer,
+sondern - wie in diesem Buch bisher stets gezeigt - per Source-Code-Anweisungen
+eingebunden und konfiguriert werden), verlieren Beans einiges von
+ihrer N&uuml;tzlichkeit und herk&ouml;mmliche Techniken der Wiederverwendung
+in objektorientierten Programmen k&ouml;nnen an ihre Stelle treten.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Wir wollen uns die wichtigsten Eigenschaften von Beans zun&auml;chst
+&uuml;berblicksartig ansehen: 
+<ol type=1>
+<li>Eine Bean wird im Programm durch ein Objekt (also eine instanzierte
+Klasse) repr&auml;sentiert. Das gilt sowohl f&uuml;r den Designzeitpunkt,
+zu dem es vom GUI-Designer instanziert wird, als auch f&uuml;r den
+Ausf&uuml;hrungszeitpunkt, zu dem die Anwendung daf&uuml;r verantwortlich
+ist, das Objekt zu konstruieren. Eine Bean ben&ouml;tigt dazu notwendigerweise
+einen parameterlosen Konstruktor.
+<li>Sie besitzt <i>konfigurierbare Eigenschaften</i>, die ihr Verhalten
+festlegen. Diese Eigenschaften werden ausschlie&szlig;lich &uuml;ber
+Methodenaufrufe modifiziert, deren Namen und Parameterstrukturen genau
+definierten Designkonventionen folgen. Damit k&ouml;nnen sie vom GUI-Designer
+automatisch erkannt und dem Entwickler in einem Editor zur Auswahl
+angeboten werden.
+<li>Eine Bean ist serialisierbar und deserialisierbar. So k&ouml;nnen
+die zum Designzeitpunkt vom Entwickler vorgenommenen Einstellungen
+gespeichert und zum Ausf&uuml;hrungszeitpunkt rekonstruiert werden.
+(Serialisierung wurde in <a href="k100269.html#kapitelserialisierung">Kapitel 42</a>
+behandelt.)
+<li>Eine Bean sendet Events, um registrierte Listener &uuml;ber &Auml;nderungen
+ihres internen Zustands oder &uuml;ber sonstige wichtige Ereignisse
+zu unterrichten.
+<li>Einer Bean kann optional ein Informationsobjekt zugeordnet werden,
+mit dessen Hilfe dem GUI-Designer weitere Informationen zur Konfiguration
+&uuml;bergeben und zus&auml;tzliche Hilfsmittel, wie spezialisierte
+Eigenschafteneditoren oder Konfigurationsassistenten, zur Verf&uuml;gung
+gestellt werden k&ouml;nnen.
+</ol>
+
+<p>
+Werden diese Konventionen eingehalten, kann der GUI-Designer die Bean
+zum Designzeitpunkt automatisch untersuchen (dieser Vorgang wird als
+<a name="ixa103405"><i>Introspection</i></a> bezeichnet) und dem Entwickler
+alle &ouml;ffentlichen Eigenschaften, Methoden und Ereignisse men&uuml;gesteuert
+anbieten. Die Eigenschaften werden dabei &uuml;blicherweise in einem
+<i>Property Sheet</i> (oder Eigenschaftenfenster) angeboten und erlauben
+es dem Entwickler, den Zustand der Bean interaktiv zu ver&auml;ndern.
+Da eine Bean serialisierbar ist, kann der GUI-Designer alle Designanpassungen
+speichern und dem Programm zum Ausf&uuml;hrungszeitpunkt zur Verf&uuml;gung
+stellen. 
+
+<p>
+Bei manchen GUI-Designern k&ouml;nnen Beans dar&uuml;ber hinaus grafisch
+miteinander verbunden werden, um zu symbolisieren, dass bei Auftreten
+eines vorgegebenen Ereignisses in Bean A eine bestimmte Methode in
+Bean B aufgerufen wird. Der GUI-Designer erzeugt dann eine geeignete
+Adapterklasse und generiert den Code zum Aufruf der Methode. Manche
+GUI-Designer erlauben es zus&auml;tzlich, den generierten Code zu
+modifizieren und so bereits wesentliche Teile der Programmlogik im
+Designer zu erstellen. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100292.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100292.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100294.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100300.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

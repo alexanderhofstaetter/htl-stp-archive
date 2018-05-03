@@ -1,0 +1,564 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100202.html;106,k100204.html;107,k100206.html;108,k100207.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100202.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100204.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100206.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100207.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 31 - GUI-Dialoge
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id031003"></a>
+<h2>31.3 <a name="ixa102069">Modale Dialoge</a><a name="ixa102070"></a></h2>
+<hr>
+<ul>
+<li><a href="k100205.html#sectlevel2id031003">31.3 Modale Dialoge</a>
+</ul>
+<hr>
+
+<p>
+Modale Dialoge sind solche, die alle Benutzereingaben des Programms
+beanspruchen und andere Fenster erst dann wieder zum Zuge kommen lassen,
+wenn das Dialogfenster geschlossen wird. Eine wichtige Eigenschaft
+modaler Dialoge ist es, dass im Programm der Aufruf zur Anzeige des
+Dialogs so lange blockiert, bis der Dialog beendet ist. Auf diese
+Weise kann an einer bestimmten Stelle im Programm auf eine Eingabe
+gewartet werden und erst dann mit der Bearbeitung fortgefahren werden,
+wenn die Eingabe erfolgt ist. 
+
+<p>
+Ein modaler Dialog muss immer aus der Klasse <a name="ixa102071"><a href="index_d.html#ixb101152"><font color=#000080><tt>Dialog</tt></font></a></a>
+abgeleitet werden. Nur sie bietet die M&ouml;glichkeit, an den Konstruktor
+einen booleschen Wert zu &uuml;bergeben, der festlegt, dass die &uuml;brigen
+Fenster der Anwendung w&auml;hrend der Anzeige des Dialogs suspendiert
+werden. <a href="index_d.html#ixb101152"><font color=#000080><tt>Dialog</tt></font></a>
+besitzt folgende Konstruktoren: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Dialog(Frame owner)
+
+public Dialog(Frame owner, boolean modal)
+
+public Dialog(Frame owner, String title)
+
+public Dialog(Frame owner, String title, boolean modal)
+
+public Dialog(Dialog owner)
+
+public Dialog(Dialog owner, String title)
+
+public Dialog(Dialog owner, String title, boolean modal)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Dialog.html" onClick="this.href=getApiDoc('java.awt.Dialog')"><font color="#660066" size=-1>java.awt.Dialog</font></a></td>
+</tr>
+</table>
+
+<p>
+Als erstes Argument muss in jedem Fall ein <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>-
+oder <a href="index_d.html#ixb101152"><font color=#000080><tt>Dialog</tt></font></a>-Objekt
+als Vaterfenster &uuml;bergeben werden. Mit <font color="#000077"><tt>title</tt></font>
+kann der Inhalt der Titelzeile vorgegeben werden und der Parameter
+<font color="#000077"><tt>modal</tt></font> entscheidet, ob der Dialog
+modal dargestellt wird oder nicht. 
+
+<p>
+<a href="index_d.html#ixb101152"><font color=#000080><tt>Dialog</tt></font></a>
+bietet die Methoden <a name="ixa102072"><a href="index_i.html#ixb101580"><font color=#000080><tt>isModal</tt></font></a></a>
+und <a name="ixa102073"><a href="index_s.html#ixb101581"><font color=#000080><tt>setModal</tt></font></a></a>,
+mit denen auf den Modalstatus des Dialogs zugegriffen werden kann:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public boolean isModal()
+
+public void setModal(boolean b)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Dialog.html" onClick="this.href=getApiDoc('java.awt.Dialog')"><font color="#660066" size=-1>java.awt.Dialog</font></a></td>
+</tr>
+</table>
+
+<p>
+Der R&uuml;ckgabewert von <a href="index_i.html#ixb101580"><font color=#000080><tt>isModal</tt></font></a>
+ist <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>,
+falls der Dialog modal ist. Andernfalls ist er <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>.
+
+<p>
+Ein zus&auml;tzliches Feature der Klasse <a href="index_d.html#ixb101152"><font color=#000080><tt>Dialog</tt></font></a>
+besteht darin, die Ver&auml;nderbarkeit der Gr&ouml;&szlig;e eines
+Fensters durch den Anwender zu unterbinden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setResizable(boolean resizable)
+
+public boolean isResizable()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Dialog.html" onClick="this.href=getApiDoc('java.awt.Dialog')"><font color="#660066" size=-1>java.awt.Dialog</font></a></td>
+</tr>
+</table>
+
+<p>
+Nach einem Aufruf von <a name="ixa102074"><a href="index_s.html#ixb101582"><font color=#000080><tt>setResizable</tt></font></a></a>
+mit <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>
+als Argument kann die Gr&ouml;&szlig;e des Fensters nicht mehr vom
+Anwender ver&auml;ndert werden. Nach einem Aufruf von <font color="#000077"><tt>setResizable(true)</tt></font>
+ist dies wieder m&ouml;glich. Mit <a name="ixa102075"><a href="index_i.html#ixb101583"><font color=#000080><tt>isResizable</tt></font></a></a>
+kann der aktuelle Zustand dieses Schalters abgefragt werden. 
+
+<p>
+Das folgende Beispiel demonstriert die Anwendung der Klasse <a href="index_d.html#ixb101152"><font color=#000080><tt>Dialog</tt></font></a>.
+Es zeigt einen <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>,
+aus dem per Buttonklick ein modaler Dialog aufgerufen werden kann.
+Der Dialog fragt den Anwender, ob die Anwendung beendet werden soll,
+und wartet, bis einer der Buttons &#187;Ja&#171; oder &#187;Nein&#171;
+gedr&uuml;ckt wurde. In diesem Fall wird ein boolescher R&uuml;ckgabewert
+generiert, der nach dem Schlie&szlig;en des Dialogs an das Vaterfenster
+zur&uuml;ckgegeben wird. Falls der R&uuml;ckgabewert <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+(entprechend dem Button &#187;Ja&#171;) ist, wird die Anwendung beendet,
+andernfalls l&auml;uft sie weiter: 
+<a name="listingid031010"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3110.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">class</font> YesNoDialog
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Dialog
+<font color="#555555">008 </font><font color="#0000AA">implements</font> ActionListener
+<font color="#555555">009 </font>{
+<font color="#555555">010 </font>  <font color="#006699">boolean</font> result;
+<font color="#555555">011 </font>
+<font color="#555555">012 </font>  <font color="#0000AA">public</font> YesNoDialog(Frame owner, String msg)
+<font color="#555555">013 </font>  {
+<font color="#555555">014 </font>    <font color="#006699">super</font>(owner, <font color="#0000FF">"Ja-/Nein-Auswahl"</font>, <font color="#006699">true</font>);
+<font color="#555555">015 </font>    <font color="#00AA00">//Fenster</font>
+<font color="#555555">016 </font>    setBackground(Color.lightGray);
+<font color="#555555">017 </font>    setLayout(<font color="#0000AA">new</font> BorderLayout());
+<font color="#555555">018 </font>    setResizable(<font color="#006699">false</font>); <font color="#00AA00">//Hinweis im Text beachten</font>
+<font color="#555555">019 </font>    Point parloc = owner.getLocation();
+<font color="#555555">020 </font>    setLocation(parloc.x + 30, parloc.y + 30);
+<font color="#555555">021 </font>    <font color="#00AA00">//Message</font>
+<font color="#555555">022 </font>    add(<font color="#0000AA">new</font> Label(msg), BorderLayout.CENTER);
+<font color="#555555">023 </font>    <font color="#00AA00">//Buttons</font>
+<font color="#555555">024 </font>    Panel panel = <font color="#0000AA">new</font> Panel();
+<font color="#555555">025 </font>    panel.setLayout(<font color="#0000AA">new</font> FlowLayout(FlowLayout.CENTER));
+<font color="#555555">026 </font>    Button button = <font color="#0000AA">new</font> Button(<font color="#0000FF">"Ja"</font>);
+<font color="#555555">027 </font>    button.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">028 </font>    panel.add(button);
+<font color="#555555">029 </font>    button = <font color="#0000AA">new</font> Button(<font color="#0000FF">"Nein"</font>);
+<font color="#555555">030 </font>    button.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">031 </font>    panel.add(button);
+<font color="#555555">032 </font>    add(panel, BorderLayout.SOUTH);
+<font color="#555555">033 </font>    pack();
+<font color="#555555">034 </font>  }
+<font color="#555555">035 </font>
+<font color="#555555">036 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> actionPerformed(ActionEvent event)
+<font color="#555555">037 </font>  {
+<font color="#555555">038 </font>    result = event.getActionCommand().equals(<font color="#0000FF">"Ja"</font>);
+<font color="#555555">039 </font>    setVisible(<font color="#006699">false</font>);
+<font color="#555555">040 </font>    dispose();
+<font color="#555555">041 </font>  }
+<font color="#555555">042 </font>
+<font color="#555555">043 </font>  <font color="#0000AA">public</font> <font color="#006699">boolean</font> getResult()
+<font color="#555555">044 </font>  {
+<font color="#555555">045 </font>    <font color="#0000AA">return</font> result;
+<font color="#555555">046 </font>  }
+<font color="#555555">047 </font>}
+<font color="#555555">048 </font>
+<font color="#555555">049 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3110
+<font color="#555555">050 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">051 </font><font color="#0000AA">implements</font> ActionListener
+<font color="#555555">052 </font>{
+<font color="#555555">053 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">054 </font>  {
+<font color="#555555">055 </font>    Listing3110 wnd = <font color="#0000AA">new</font> Listing3110();
+<font color="#555555">056 </font>    wnd.setVisible(<font color="#006699">true</font>);
+<font color="#555555">057 </font>  }
+<font color="#555555">058 </font>
+<font color="#555555">059 </font>  <font color="#0000AA">public</font> Listing3110()
+<font color="#555555">060 </font>  {
+<font color="#555555">061 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Modale Dialoge"</font>);
+<font color="#555555">062 </font>    setLayout(<font color="#0000AA">new</font> FlowLayout());
+<font color="#555555">063 </font>    setBackground(Color.lightGray);
+<font color="#555555">064 </font>    Button button = <font color="#0000AA">new</font> Button(<font color="#0000FF">"Ende"</font>);
+<font color="#555555">065 </font>    button.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">066 </font>    add(button);
+<font color="#555555">067 </font>    setLocation(100,100);
+<font color="#555555">068 </font>    setSize(300,200);
+<font color="#555555">069 </font>    setVisible(<font color="#006699">true</font>);
+<font color="#555555">070 </font>  }
+<font color="#555555">071 </font>
+<font color="#555555">072 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> actionPerformed(ActionEvent event)
+<font color="#555555">073 </font>  {
+<font color="#555555">074 </font>    String cmd = event.getActionCommand();
+<font color="#555555">075 </font>    <font color="#0000AA">if</font> (cmd.equals(<font color="#0000FF">"Ende"</font>)) {
+<font color="#555555">076 </font>      YesNoDialog dlg;
+<font color="#555555">077 </font>      dlg = <font color="#0000AA">new</font> YesNoDialog(
+<font color="#555555">078 </font>        <font color="#006699">this</font>,
+<font color="#555555">079 </font>        <font color="#0000FF">"Wollen Sie das Programm wirklich beenden?"</font>
+<font color="#555555">080 </font>      );
+<font color="#555555">081 </font>      dlg.setVisible(<font color="#006699">true</font>);
+<font color="#555555">082 </font>      <font color="#00AA00">//Auf das Schlie&szlig;en des Dialogs warten...</font>
+<font color="#555555">083 </font>      <font color="#0000AA">if</font> (dlg.getResult()) {
+<font color="#555555">084 </font>        setVisible(<font color="#006699">false</font>);
+<font color="#555555">085 </font>        dispose();
+<font color="#555555">086 </font>        System.exit(0);
+<font color="#555555">087 </font>      }
+<font color="#555555">088 </font>    }
+<font color="#555555">089 </font>  }
+<font color="#555555">090 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3110.java"><font color="#000055" size=-1>Listing3110.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 31.10: Konstruktion modaler Dialoge</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Um den Dialog relativ zur Position seines Vaterfensters anzuzeigen,
+wird dessen Position durch Aufruf von <a name="ixa102076"><a href="index_g.html#ixb101300"><font color=#000080><tt>getLocation</tt></font></a></a>
+ermittelt. Der Ursprung des Dialogfensters wird dann 30 Pixel weiter
+nach unten bzw. nach rechts gelegt.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Nach dem Start zeigt das Programm zun&auml;chst das in <a href="k100205.html#modalvater">Abbildung 31.14</a>
+dargestellte Fenster an: 
+<p>
+<a name="modalvater"></a>
+<img src="images/ModalDialog.gif">
+<p>
+
+<p><i>
+Abbildung 31.14: Das Vaterfenster f&uuml;r den modalen Dialog</i></p>
+
+<p>
+Nach dem Klick auf &#187;Ende&#171; wird <a href="index_a.html#ixb101413"><font color=#000080><tt>actionPerformed</tt></font></a>
+aufgerufen und l&auml;uft bis zum Aufruf des Dialogs (siehe <a href="k100205.html#janeindialog">Abbildung 31.15</a>).
+Die Anweisung <font color="#000077"><tt>dlg.setVisible(true);</tt></font>
+ruft den Dialog auf und blockiert dann. Sie terminiert erst, wenn
+der Dialog durch Dr&uuml;cken eines Buttons beendet wurde. In diesem
+Fall wird mit <font color="#000077"><tt>getResult</tt></font> der
+R&uuml;ckgabewert abgefragt und das Programm beendet, wenn dieser
+<a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+ist. Die Methode <font color="#000077"><tt>getResult</tt></font> liefert
+den Inhalt der privaten Instanzvariablen <font color="#000077"><tt>result</tt></font>,
+die beim Auftreten eines Action-Events durch einen der beiden Buttons
+gesetzt wird. Zwar ist das Dialogfenster beim Aufruf von <font color="#000077"><tt>getResult</tt></font>
+bereits zerst&ouml;rt, aber die Objektvariable <font color="#000077"><tt>dlg</tt></font>
+existiert noch und <font color="#000077"><tt>getResult</tt></font>
+kann aufgerufen werden. 
+<p>
+<a name="janeindialog"></a>
+<img src="images/JaNeinDialog.gif">
+<p>
+
+<p><i>
+Abbildung 31.15: Ein einfacher Ja-/Nein-Dialog</i></p>
+
+<p>
+Bevor wir das Kapitel beenden, wollen wir dieses Programm ein wenig
+erweitern und ein weiteres Beispiel f&uuml;r die Anwendung modaler
+Dialoge geben. Das folgende Programm implementiert eine Klasse <font color="#000077"><tt>ModalDialog</tt></font>,
+die aus <a href="index_d.html#ixb101152"><font color=#000080><tt>Dialog</tt></font></a>
+abgeleitet ist. Mit ihrer Hilfe k&ouml;nnen modale Dialoge der obigen
+Art konstruiert werden, bei denen die Ausstattung mit Buttons variabel
+ist und zum Zeitpunkt der Instanzierung festgelegt werden kann: 
+<font color="#000077">
+<pre>
+public ModalDialog(
+   Frame owner,
+   String title,
+   String msg,
+   String buttons
+);
+</pre>
+</font>
+
+<p>
+Der Konstruktor erwartet neben dem Vater-<a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>
+drei weitere Parameter, <font color="#000077"><tt>title</tt></font>,
+<font color="#000077"><tt>msg</tt></font> und <font color="#000077"><tt>buttons</tt></font>.
+In <font color="#000077"><tt>title</tt></font> wird der Inhalt der
+Titelzeile &uuml;bergeben und <font color="#000077"><tt>msg</tt></font>
+spezifiziert den Text innerhalb des Dialogs. Der Parameter <font color="#000077"><tt>buttons</tt></font>
+erwartet eine Liste von <a href="index_b.html#ixb101410"><font color=#000080><tt>Button</tt></font></a>-Bezeichnern,
+die zur Festlegung der Anzahl und Beschriftung der Buttons dienen.
+Die einzelnen Elemente sind durch Kommata zu trennen und werden innerhalb
+des Dialogs mit einem <a name="ixa102077"><a href="index_s.html#ixb100544"><font color=#000080><tt>StringTokenizer</tt></font></a></a>
+zerlegt. Der in <font color="#000077"><tt>getResult</tt></font> gelieferte
+R&uuml;ckgabewert des Dialogs ist - anders als im vorigen Beispiel
+- ein <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+und entspricht der Beschriftung des zum Schlie&szlig;en verwendeten
+Buttons. 
+
+<p>
+<font color="#000077"><tt>ModalDialog</tt></font> enth&auml;lt einige
+statische Methoden, mit denen Dialoge mit einer festen Buttonstruktur
+einfach erzeugt werden k&ouml;nnen. So erzeugt <font color="#000077"><tt>OKButton</tt></font>
+lediglich einen Button mit der Beschriftung &#187;OK&#171;, <font color="#000077"><tt>YesNoDialog</tt></font>
+zwei Buttons, &#187;Ja&#171; und &#187;Nein&#171;, und <font color="#000077"><tt>YesNoCancelDialog</tt></font>
+erzeugt einen Dialog mit drei Buttons, &#187;Ja&#171;, &#187;Nein&#171;
+und &#187;Abbruch&#171;. Das folgende Listing zeigt die Klasse <font color="#000077"><tt>ModalDialog</tt></font>
+und ein Rahmenprogramm zum Testen: 
+<a name="listingid031011"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3111.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">class</font> ModalDialog
+<font color="#555555">008 </font><font color="#0000AA">extends</font> Dialog
+<font color="#555555">009 </font><font color="#0000AA">implements</font> ActionListener
+<font color="#555555">010 </font>{
+<font color="#555555">011 </font>  String result;
+<font color="#555555">012 </font>
+<font color="#555555">013 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> String OKDialog(Frame owner, String msg)
+<font color="#555555">014 </font>  {
+<font color="#555555">015 </font>    ModalDialog dlg;
+<font color="#555555">016 </font>    dlg = <font color="#0000AA">new</font> ModalDialog(owner,<font color="#0000FF">"Nachricht"</font>,msg,<font color="#0000FF">"OK"</font>);
+<font color="#555555">017 </font>    dlg.setVisible(<font color="#006699">true</font>);
+<font color="#555555">018 </font>    <font color="#0000AA">return</font> dlg.getResult();
+<font color="#555555">019 </font>  }
+<font color="#555555">020 </font>
+<font color="#555555">021 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> String YesNoDialog(Frame owner, String msg)
+<font color="#555555">022 </font>  {
+<font color="#555555">023 </font>    ModalDialog dlg;
+<font color="#555555">024 </font>    dlg = <font color="#0000AA">new</font> ModalDialog(owner,<font color="#0000FF">"Frage"</font>,msg,<font color="#0000FF">"Ja,Nein"</font>);
+<font color="#555555">025 </font>    dlg.setVisible(<font color="#006699">true</font>);
+<font color="#555555">026 </font>    <font color="#0000AA">return</font> dlg.getResult();
+<font color="#555555">027 </font>  }
+<font color="#555555">028 </font>
+<font color="#555555">029 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> String YesNoCancelDialog(Frame owner,String msg)
+<font color="#555555">030 </font>  {
+<font color="#555555">031 </font>    ModalDialog dlg;
+<font color="#555555">032 </font>    dlg = <font color="#0000AA">new</font> ModalDialog(owner,<font color="#0000FF">"Frage"</font>,msg,<font color="#0000FF">"Ja,Nein,Abbruch"</font>);
+<font color="#555555">033 </font>    dlg.setVisible(<font color="#006699">true</font>);
+<font color="#555555">034 </font>    <font color="#0000AA">return</font> dlg.getResult();
+<font color="#555555">035 </font>  }
+<font color="#555555">036 </font>
+<font color="#555555">037 </font>  <font color="#0000AA">public</font> ModalDialog(
+<font color="#555555">038 </font>    Frame owner,
+<font color="#555555">039 </font>    String title,
+<font color="#555555">040 </font>    String msg,
+<font color="#555555">041 </font>    String buttons
+<font color="#555555">042 </font>  )
+<font color="#555555">043 </font>  {
+<font color="#555555">044 </font>    <font color="#006699">super</font>(owner, title, <font color="#006699">true</font>);
+<font color="#555555">045 </font>    <font color="#00AA00">//Fenster</font>
+<font color="#555555">046 </font>    setBackground(Color.lightGray);
+<font color="#555555">047 </font>    setLayout(<font color="#0000AA">new</font> BorderLayout());
+<font color="#555555">048 </font>    setResizable(<font color="#006699">false</font>);
+<font color="#555555">049 </font>    Point parloc = owner.getLocation();
+<font color="#555555">050 </font>    setLocation(parloc.x + 30, parloc.y + 30);
+<font color="#555555">051 </font>    <font color="#00AA00">//Message</font>
+<font color="#555555">052 </font>    add(<font color="#0000AA">new</font> Label(msg), BorderLayout.CENTER);
+<font color="#555555">053 </font>    <font color="#00AA00">//Buttons</font>
+<font color="#555555">054 </font>    Panel panel = <font color="#0000AA">new</font> Panel();
+<font color="#555555">055 </font>    panel.setLayout(<font color="#0000AA">new</font> FlowLayout(FlowLayout.CENTER));
+<font color="#555555">056 </font>    StringTokenizer strtok = <font color="#0000AA">new</font> StringTokenizer(buttons,<font color="#0000FF">","</font>);
+<font color="#555555">057 </font>    <font color="#0000AA">while</font> (strtok.hasMoreTokens()) {
+<font color="#555555">058 </font>      Button button = <font color="#0000AA">new</font> Button(strtok.nextToken());
+<font color="#555555">059 </font>      button.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">060 </font>      panel.add(button);
+<font color="#555555">061 </font>    }
+<font color="#555555">062 </font>    add(panel, BorderLayout.SOUTH);
+<font color="#555555">063 </font>    pack();
+<font color="#555555">064 </font>  }
+<font color="#555555">065 </font>
+<font color="#555555">066 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> actionPerformed(ActionEvent event)
+<font color="#555555">067 </font>  {
+<font color="#555555">068 </font>    result = event.getActionCommand();
+<font color="#555555">069 </font>    setVisible(<font color="#006699">false</font>);
+<font color="#555555">070 </font>    dispose();
+<font color="#555555">071 </font>  }
+<font color="#555555">072 </font>
+<font color="#555555">073 </font>  <font color="#0000AA">public</font> String getResult()
+<font color="#555555">074 </font>  {
+<font color="#555555">075 </font>    <font color="#0000AA">return</font> result;
+<font color="#555555">076 </font>  }
+<font color="#555555">077 </font>}
+<font color="#555555">078 </font>
+<font color="#555555">079 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3111
+<font color="#555555">080 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">081 </font><font color="#0000AA">implements</font> ActionListener
+<font color="#555555">082 </font>{
+<font color="#555555">083 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">084 </font>  {
+<font color="#555555">085 </font>    Listing3111 wnd = <font color="#0000AA">new</font> Listing3111();
+<font color="#555555">086 </font>    wnd.setVisible(<font color="#006699">true</font>);
+<font color="#555555">087 </font>  }
+<font color="#555555">088 </font>
+<font color="#555555">089 </font>  <font color="#0000AA">public</font> Listing3111()
+<font color="#555555">090 </font>  {
+<font color="#555555">091 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Drei modale Standarddialoge"</font>);
+<font color="#555555">092 </font>    setLayout(<font color="#0000AA">new</font> FlowLayout());
+<font color="#555555">093 </font>    setBackground(Color.lightGray);
+<font color="#555555">094 </font>    Button button = <font color="#0000AA">new</font> Button(<font color="#0000FF">"OKDialog"</font>);
+<font color="#555555">095 </font>    button.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">096 </font>    add(button);
+<font color="#555555">097 </font>    button = <font color="#0000AA">new</font> Button(<font color="#0000FF">"YesNoDialog"</font>);
+<font color="#555555">098 </font>    button.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">099 </font>    add(button);
+<font color="#555555">100 </font>    button = <font color="#0000AA">new</font> Button(<font color="#0000FF">"YesNoCancelDialog"</font>);
+<font color="#555555">101 </font>    button.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">102 </font>    add(button);
+<font color="#555555">103 </font>    setLocation(100,100);
+<font color="#555555">104 </font>    setSize(400,200);
+<font color="#555555">105 </font>    setVisible(<font color="#006699">true</font>);
+<font color="#555555">106 </font>  }
+<font color="#555555">107 </font>
+<font color="#555555">108 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> actionPerformed(ActionEvent event)
+<font color="#555555">109 </font>  {
+<font color="#555555">110 </font>    String cmd = event.getActionCommand();
+<font color="#555555">111 </font>    <font color="#0000AA">if</font> (cmd.equals(<font color="#0000FF">"OKDialog"</font>)) {
+<font color="#555555">112 </font>      ModalDialog.OKDialog(<font color="#006699">this</font>,<font color="#0000FF">"Dream, dream, dream, ..."</font>);
+<font color="#555555">113 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (cmd.equals(<font color="#0000FF">"YesNoDialog"</font>)) {
+<font color="#555555">114 </font>      String ret = ModalDialog.YesNoDialog(
+<font color="#555555">115 </font>        <font color="#006699">this</font>,
+<font color="#555555">116 </font>        <font color="#0000FF">"Programm beenden?"</font>
+<font color="#555555">117 </font>      );
+<font color="#555555">118 </font>      <font color="#0000AA">if</font> (ret.equals(<font color="#0000FF">"Ja"</font>)) {
+<font color="#555555">119 </font>        setVisible(<font color="#006699">false</font>);
+<font color="#555555">120 </font>        dispose();
+<font color="#555555">121 </font>        System.exit(0);
+<font color="#555555">122 </font>      }
+<font color="#555555">123 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (cmd.equals(<font color="#0000FF">"YesNoCancelDialog"</font>)) {
+<font color="#555555">124 </font>      String msg = <font color="#0000FF">"Verzeichnis erstellen?"</font>;
+<font color="#555555">125 </font>      String ret = ModalDialog.YesNoCancelDialog(<font color="#006699">this</font>,msg);
+<font color="#555555">126 </font>      ModalDialog.OKDialog(<font color="#006699">this</font>,<font color="#0000FF">"R&uuml;ckgabe: "</font> + ret);
+<font color="#555555">127 </font>    }
+<font color="#555555">128 </font>  }
+<font color="#555555">129 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3111.java"><font color="#000055" size=-1>Listing3111.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 31.11: Drei modale Standarddialoge</i></p>
+
+<p>
+Die drei Dialoge, die durch Aufrufe von <font color="#000077"><tt>OKDialog</tt></font>,
+<font color="#000077"><tt>YesNoDialog</tt></font> und <font color="#000077"><tt>YesNoCancelDialog</tt></font>
+generiert werden, sind in den folgenden Abbildungen <a href="k100205.html#aufrufokdialog">31.16</a>
+bis <a href="k100205.html#aufrufyesnocanceldialog">31.18</a> dargestellt:
+<p>
+<a name="aufrufokdialog"></a>
+<img src="images/OKDialog.gif">
+<p>
+
+<p><i>
+Abbildung 31.16: Ein Aufruf von OKDialog</i></p>
+<p>
+<a name="imageid031017"></a>
+<img src="images/YesNoDialog.gif">
+<p>
+
+<p><i>
+Abbildung 31.17: Ein Aufruf von YesNoDialog</i></p>
+<p>
+<a name="aufrufyesnocanceldialog"></a>
+<img src="images/YesNoCancelDialog.gif">
+<p>
+
+<p><i>
+Abbildung 31.18: Ein Aufruf von YesNoCancelDialog</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100202.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100204.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100206.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100207.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

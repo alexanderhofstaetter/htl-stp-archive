@@ -1,0 +1,123 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100150.html;106,k100150.html;107,k100152.html;108,k100157.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100150.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100150.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100152.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100157.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 23 - Multithreading
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectionthreads"></a>
+<h2>23.1 Grundlagen und Begriffe </h2>
+<hr>
+<ul>
+<li><a href="k100151.html#sectionthreads">23.1 Grundlagen und Begriffe</a>
+</ul>
+<hr>
+
+<p>
+Kaum eine wichtige Programmiersprache vor Java hat das Konzept der
+<a name="ixa101456"><i>Nebenl&auml;ufigkeit</i></a> direkt mit Mitteln
+der Sprache implementiert. Mit Nebenl&auml;ufigkeit bezeichnet man
+die F&auml;higkeit eines Systems, zwei oder mehr Vorg&auml;nge gleichzeitig
+oder quasi-gleichzeitig ausf&uuml;hren zu k&ouml;nnen. Lediglich ADA
+stellt sowohl parallele Prozesse als auch Mechanismen zur Kommunikation
+und Synchronisation zur Verf&uuml;gung, die direkt in die Sprache
+eingebettet sind. Durch Weiterentwicklungen im Bereich der Betriebssystemtechnologie
+wurde allerdings das Konzept der <a name="ixa101457"><i>Threads</i></a>
+immer popul&auml;rer und auf der Basis von Library-Routinen auch konventionellen
+Programmiersprachen zur Verf&uuml;gung gestellt. 
+
+<p>
+Java hat Threads direkt in die Sprache integriert und mit den erforderlichen
+Hilfsmitteln als Konstrukt zur Realisierung der Nebenl&auml;ufigkeit
+implementiert. Ein Thread ist ein eigenst&auml;ndiges Programmfragment,
+das parallel zu anderen Threads laufen kann. Ein Thread &auml;hnelt
+damit einem <i>Prozess</i>, arbeitet aber auf einer feineren Ebene.
+W&auml;hrend ein Prozess das Instrument zur Ausf&uuml;hrung eines
+kompletten Programms ist, k&ouml;nnen innerhalb dieses Prozesses mehrere
+Threads parallel laufen. Der Laufzeit-Overhead zur Erzeugung und Verwaltung
+eines Threads ist relativ gering und kann in den meisten Programmen
+vernachl&auml;ssigt werden. Ein wichtiger Unterschied zwischen Threads
+und Prozessen ist der, dass alle Threads eines Programms sich einen
+gemeinsamen Adressraum teilen, also auf dieselben Variablen zugreifen,
+w&auml;hrend die Adressr&auml;ume unterschiedlicher Prozesse streng
+voneinander getrennt sind. 
+
+<p>
+Die Implementierung von Threads war eine explizite Anforderung an
+das Design der Sprache. Threads sollen unter anderem die Implementierung
+grafischer Anwendungen erleichtern, die durch Simulationen komplexer
+Abl&auml;ufe oft inh&auml;rent nebenl&auml;ufig sind. Threads k&ouml;nnen
+auch dazu verwendet werden, die Bedienbarkeit von Dialoganwendungen
+zu verbessern, indem rechenintensive Anwendungen im Hintergrund ablaufen.
+
+<p>
+Threads werden in Java durch die Klasse <a name="ixa101458"><a href="index_t.html#ixb100606"><font color=#000080><tt>Thread</tt></font></a></a>
+und das Interface <a name="ixa101459"><a href="index_r.html#ixb101110"><font color=#000080><tt>Runnable</tt></font></a></a>
+implementiert. In beiden F&auml;llen wird der Thread-Body, also der
+parallel auszuf&uuml;hrende Code, in Form der &uuml;berlagerten Methode
+<a name="ixa101460"><a href="index_r.html#ixb101111"><font color=#000080><tt>run</tt></font></a></a>
+zur Verf&uuml;gung gestellt. Die Kommunikation kann dann durch Zugriff
+auf die Instanz- oder Klassenvariablen oder durch Aufruf beliebiger
+Methoden, die innerhalb von <a href="index_r.html#ixb101111"><font color=#000080><tt>run</tt></font></a>
+sichtbar sind, erfolgen. Zur Synchronisation stellt Java das aus der
+Betriebssystemtheorie bekannte Konzept des <a name="ixa101461"><i>Monitors</i></a>
+zur Verf&uuml;gung, das es erlaubt, kritische Abschnitte innerhalb
+korrekt geklammerter Programmfragmente und Methoden zu kapseln und
+so den Zugriff auf gemeinsam benutzte Datenstrukturen zu koordinieren.
+
+<p>
+Dar&uuml;ber hinaus bietet Java Funktionen zur Verwaltung von Threads.
+Diese erlauben es, Threads in Gruppen zusammenzufassen, zu priorisieren
+und Informationen &uuml;ber Eigenschaften von Threads zu gewinnen.
+Das Scheduling kann dabei wahlweise <i>unterbrechend</i> oder <i>nichtunterbrechend</i>
+implementiert sein. Die Sprachspezifikation legt dies nicht endg&uuml;ltig
+fest, aber in den meisten Java-Implementierungen wird dies von den
+M&ouml;glichkeiten des darunter liegenden Betriebssystems abh&auml;ngen.
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100150.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100150.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100152.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100157.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

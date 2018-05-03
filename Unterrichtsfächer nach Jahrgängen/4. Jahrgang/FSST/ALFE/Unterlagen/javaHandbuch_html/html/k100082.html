@@ -1,0 +1,392 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100076.html;106,k100081.html;107,k100083.html;108,k100084.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100076.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100081.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100083.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100084.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 12 - Strings
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="ausgabeformatierung"></a>
+<h2>12.6 <a name="ixa100706">Ausgabeformatierung</a><a name="ixa100707"></a></h2>
+<hr>
+<ul>
+<li><a href="k100082.html#ausgabeformatierung">12.6 Ausgabeformatierung</a>
+<ul>
+<li><a href="k100082.html#sectlevel3id012006001">12.6.1 Grundlagen</a>
+<li><a href="k100082.html#formatter">12.6.2 Die Formatangaben</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id012006001"></a>
+<h3>12.6.1 Grundlagen </h3>
+
+<p>
+C-Programmierer vermissen in Java schon l&auml;nger eine bequeme und
+flexible M&ouml;glichkeit, elementare Datentypen formatiert auszugeben.
+W&auml;hrend Methoden wie <a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a>
+oder <a href="index_p.html#ixb100181"><font color=#000080><tt>println</tt></font></a>
+zwar bequem in der Anwendung sind, bieten sie kaum M&ouml;glichkeiten,
+die Formatierung der Ausgabe gezielt zu beeinflussen. Und die seit
+dem JDK 1.2 vorhandenen Klassen im Paket <a name="ixa100708"><a href="index_j.html#ixb100557"><font color=#000080><tt>java.text</tt></font></a></a>
+sind zwar flexibel und m&auml;chtig, aber oft umst&auml;ndlich in
+der Anwendung und nicht ganz einfach zu verstehen. 
+
+<p>
+Seit der J2SE 5.0 gibt es die Klasse <a name="ixa100709"><a href="index_f.html#ixb100412"><font color=#000080><tt>java.util.Formatter</tt></font></a></a>,
+deren M&ouml;glichkeiten der <font color="#000077"><tt>printf</tt></font>-Funktion
+in C und C++ ebenb&uuml;rtig sind. Sie bietet die M&ouml;glichkeit,
+alle primitiven Datentypen und ihre Wrapper, sowie Datums-/Zeitwerte
+der Klassen <a href="index_c.html#ixb100558"><font color=#000080><tt>Calendar</tt></font></a>
+und <a href="index_d.html#ixb100559"><font color=#000080><tt>Date</tt></font></a>
+in vielf&auml;ltiger Weise (auch l&auml;nderspezifisch) formatiert
+auszugeben. Prinzipiell muss dazu ein <a name="ixa100709"><a href="index_f.html#ixb100412"><font color=#000080><tt>Formatter</tt></font></a></a>-Objekt
+instanziert und dessen Ausgabemethode <a name="ixa100710"><a href="index_f.html#ixb100560"><font color=#000080><tt>format</tt></font></a></a>
+aufgerufen werden. Einfacher wird es dadurch, dass <a href="index_f.html#ixb100560"><font color=#000080><tt>format</tt></font></a>
+mit all seinen M&ouml;glichkeiten auch in den Klassen <a name="ixa100711"><a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a></a>,
+<a href="index_p.html#ixb100561"><font color=#000080><tt>PrintWriter</tt></font></a>
+und <a href="index_p.html#ixb100562"><font color=#000080><tt>PrintStream</tt></font></a>
+zur Verf&uuml;gung steht. Letztere besitzt sogar eine Methode <a name="ixa100712"><a href="index_p.html#ixb100143"><font color=#000080><tt>printf</tt></font></a></a>,
+deren Funktionalit&auml;t weitgehend der gleichnamigen Funktion aus
+C/C++ entspricht (siehe <a href="k100129.html#printfbeispiel">Listing 19.4</a>).
+Wir wollen uns auf die Klassen <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+und das Objekt <a name="ixa100713"><a href="index_s.html#ixb100145"><font color=#000080><tt>System.out</tt></font></a></a>
+konzentrieren, die &uuml;brigen Stellen funktionieren in der gleichen
+Weise. 
+
+<p>
+Die Methode <font color="#000077"><tt>format</tt></font> gibt es in
+zwei Varianten: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+static String format(Locale l, String format, Object... args)
+
+static String format(String format, Object... args)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Formatter.html" onClick="this.href=getApiDoc('java.util.Formatter')"><font color="#660066" size=-1>java.util.Formatter</font></a></td>
+</tr>
+</table>
+
+<p>
+Bei der ersten Form kann explizit angegeben werden, welche Sprach-
+bzw. L&auml;ndereinstellung verwendet werden soll, bei der zweiten
+wird die Default-<a href="index_l.html#ixb100563"><font color=#000080><tt>Locale</tt></font></a>
+verwendet. Der Parameter <font color="#000077"><tt>format</tt></font>
+dient zur &Uuml;bergabe eines Formatstrings, die &uuml;brigen Parameter
+sind dessen Argumente. Der Formatstring besteht aus Formatangaben
+und festem Text. Die Formatangaben beginnen mit einem Prozentzeichen
+und enden mit einem Konvertierungszeichen. Dazwischen k&ouml;nnen
+weitere Optionen enthalten sein. Insgesamt sieht die Syntax so aus:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+  % [Argument-Index$][Flags][Width][.Precision]Conversion
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+Der Formatstring wird von links nach rechts ausgegeben. Zu jeder Formatangabe
+muss es einen Parameter geben, dessen Wert entsprechend formatiert
+ausgegeben wird. Alle &uuml;brigen Teile des Formatstrings werden
+als fester Text angesehen und unver&auml;ndert ausgegeben. Das folgende
+Listing zeigt ein einfaches Beispiel: 
+<a name="listingid012006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1206.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1206
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 5; i &lt; 199; i += 37) {
+<font color="#555555">008 </font>      System.out.format(<font color="#0000FF">"Aktueller Wert: %3d%n"</font>, i);
+<font color="#555555">009 </font>    }
+<font color="#555555">010 </font>  }
+<font color="#555555">011 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1206.java"><font color="#000055" size=-1>Listing1206.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 12.6: Formatierte Zahlenausgabe</i></p>
+
+<p>
+Die Ausgabe der Methode ist: 
+<font color="#333300">
+<pre>
+Aktueller Wert:   5
+Aktueller Wert:  42
+Aktueller Wert:  79
+Aktueller Wert: 116
+Aktueller Wert: 153
+Aktueller Wert: 190
+</pre>
+</font>
+
+<p>
+An <font color="#000077"><tt>format</tt></font> werden zwei Parameter
+&uuml;bergeben: der Formatstring <font color="#000077"><tt>"Aktueller
+Wert: %3d%n"</tt></font> und die Schleifenvariable <font color="#000077"><tt>i</tt></font>.
+Der Formatstring enth&auml;lt den konstanten Text <font color="#000077"><tt>"Aktueller
+Wert: "</tt></font>, der unver&auml;ndert ausgegeben wird, sowie die
+beiden Formatangaben <font color="#000077"><tt>"%3d"</tt></font> und
+<font color="#000077"><tt>"%n"</tt></font>. Die erste gibt an, dass
+das n&auml;chste Argument als Ganzzahl mit einer Feldbreite von drei
+Stellen ausgegeben werden soll. Die zweite steht als Platzhalter f&uuml;r
+eine Zeilenschaltung. 
+
+<!-- Section -->
+
+<a name="formatter"></a>
+<h3>12.6.2 Die Formatangaben </h3>
+
+<p>
+Auf diese Weise k&ouml;nnen auch sehr komplexe Ausgabeformatierungen
+erzeugt werden. Dazu wollen wir uns die Bestandteile einer Formatangabe
+etwas genauer ansehen. 
+<ul>
+<li><font color="#000077"><tt>Conversion</tt></font> gibt den Datentyp
+an. Die wichtigsten M&ouml;glichkeiten sind: 
+<ul>
+<li><font color="#000077"><tt>b</tt></font> - Boolescher Wert 
+<li><font color="#000077"><tt>c</tt></font> - Einzelnes Zeichen 
+<li><font color="#000077"><tt>d</tt></font> - Ganzzahl in Dezimaldarstellung
+<li><font color="#000077"><tt>o</tt></font> - Ganzzahl in Oktaldarstellung
+<li><font color="#000077"><tt>x</tt></font> - Ganzzahl in Hexadezimaldarstellung
+<li><font color="#000077"><tt>X</tt></font> - Dito, mit gro&szlig;en
+Buchstaben 
+<li><font color="#000077"><tt>f</tt></font> - Flie&szlig;kommazahl
+<li><font color="#000077"><tt>e</tt></font> - Flie&szlig;kommazahl
+mit Exponent 
+<li><font color="#000077"><tt>E</tt></font> - Dito, mit gro&szlig;em
+"E" 
+<li><font color="#000077"><tt>g</tt></font> - Flie&szlig;kommazahl
+in gemischter Schreibweise 
+<li><font color="#000077"><tt>G</tt></font> - Dito, ggfs. mit gro&szlig;em
+"E" 
+<li><font color="#000077"><tt>t</tt></font> - Prefix f&uuml;r Datums-/Zeitangaben
+<li><font color="#000077"><tt>s</tt></font> - Strings und andere Objekte
+</ul>
+
+<p>
+Anders als in C/C++ m&uuml;ssen die Argumente strikt typkonform &uuml;bergeben
+werden, was mitunter etwas l&auml;stig sein kann. Das Konvertierungszeichen
+<font color="#000077"><tt>f</tt></font> akzeptiert beispielsweise
+nur Flie&szlig;kommazahlen, nicht aber Ganzzahlen; bei <font color="#000077"><tt>d</tt></font>
+ist es genau umgekehrt. 
+
+<p>
+Einen Sonderstatus haben <font color="#000077"><tt>%</tt></font> und
+<font color="#000077"><tt>n</tt></font>, die f&uuml;r das Prozentzeichen
+bzw. die Zeilenschaltung stehen und kein zus&auml;tzliches Argument
+ben&ouml;tigen. 
+
+<p>
+Sollen mit Hilfe des Konvertierungsprefixes <font color="#000077"><tt>t</tt></font>
+Datums-/Zeitwerte ausgegeben werden, so muss mit einem zweiten Buchstaben
+direkt dahinter angegeben werden, welcher Teil des <a href="index_d.html#ixb100559"><font color=#000080><tt>Date</tt></font></a>-
+oder <a href="index_c.html#ixb100558"><font color=#000080><tt>Calendar</tt></font></a>-Objekts
+ausgegeben werden soll. Einige der vielen M&ouml;glichkeiten sind:
+<ul>
+<li><font color="#000077"><tt>H</tt></font> - Stunde, zweistellig,
+im 24-Stunden-Format 
+<li><font color="#000077"><tt>M</tt></font> - Minute, zweistellig
+<li><font color="#000077"><tt>S</tt></font> - Sekunde, zweistellig
+<li><font color="#000077"><tt>d</tt></font> - Tag, zweistellig 
+<li><font color="#000077"><tt>m</tt></font> - Monat, zweistellig,
+1..12 
+<li><font color="#000077"><tt>Y</tt></font> - Jahr, vierstellig 
+<li><font color="#000077"><tt>F</tt></font> - Datum, formatiert nach
+ISO 8601 (YYYY-MM-DD) 
+<li><font color="#000077"><tt>c</tt></font> - Kompletter Datums-/Zeitstring
+inkl. Zeitzone 
+</ul>
+
+<p>
+Mit dem Konvertierungszeichen <font color="#000077"><tt>s</tt></font>
+k&ouml;nnen Strings, aber auch andere Objekte ausgegeben werden. Falls
+das Objekt das Interface <a name="ixa100714"><a href="index_f.html#ixb100564"><font color=#000080><tt>java.util.Formattable</tt></font></a></a>
+implementiert, wird dessen Methode <a name="ixa100715"><a href="index_f.html#ixb100565"><font color=#000080><tt>formatTo</tt></font></a></a>
+aufgerufen, andernfalls die (stets vorhandene) Methode <a name="ixa100716"><a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a></a>.
+<li>Mit <font color="#000077"><tt>Argument-Index$</tt></font> kann
+angegeben werden, auf welchen Parameter sich die Formatangabe beziehen
+soll. <font color="#000077"><tt>1$</tt></font> steht dabei f&uuml;r
+das erste Argument nach dem Formatstring, <font color="#000077"><tt>2$</tt></font>
+f&uuml;r das zweite usw. Fehlt diese Angabe, werden die Argumente
+der Reihe nach zugeordnet, d.h., die erste Formatangabe im Formatstring
+bezieht sich auf das erste Argument, die zweite auf die zweite, usw.
+Zus&auml;tzlich kann hier ein <font color="#000077"><tt>&lt;</tt></font>
+angegeben werden, um anzuzeigen, dass dasselbe Argument verwendet
+werden soll wie bei der vorigen Formatangabe. In diesem Fall darf
+das Dollarzeichen allerdings nicht angeh&auml;ngt werden. 
+<li>Mit <font color="#000077"><tt>Width</tt></font> wird die Mindest-Feldbreite
+angegeben. Ben&ouml;tigt der auszugebende Wert weniger Zeichen, wird
+mit Leerzeichen aufgef&uuml;llt. 
+<li>Der Teil <font color="#000077"><tt>.Precision</tt></font> gibt
+bei Flie&szlig;kommazahlen die Anzahl der Stellen nach dem Komma an.
+<li>Mit den <font color="#000077"><tt>Flags</tt></font> k&ouml;nnen
+weitere Ausgabeoptionen abgerufen werden. Nicht alle Flags sind auf
+alle Datentypen anwendbar. Die wichtigsten von ihnen sind: 
+<ul>
+<li><font color="#000077"><tt>-</tt></font> - Linksb&uuml;ndige Ausgabe
+<li><font color="#000077"><tt>+</tt></font> - Vorzeichen immer ausgegeben
+<li><font color="#000077"><tt>0</tt></font> - Zahlen werden mit Nullen
+aufgef&uuml;llt 
+<li><font color="#000077"><tt>,</tt></font> - Zahlen werden mit Tausenderpunkten
+ausgegeben 
+<li><font color="#000077"><tt>(</tt></font> - Negative Zahlen werden
+in Klammern eingeschlossen 
+</ul>
+</ul>
+
+<p>
+Weitere Details, M&ouml;glichkeiten und Einschr&auml;nkungen werden
+in der sehr ausf&uuml;hrlichen API-Dokumentation der Klasse <a href="index_f.html#ixb100412"><font color=#000080><tt>java.util.Formatter</tt></font></a>
+beschrieben. Das folgende Listing zeigt noch einmal alle besprochenen
+M&ouml;glichkeiten im &Uuml;berblick: 
+<a name="listingid012007"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1207.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1207
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#00AA00">//Boolesche Werte</font>
+<font color="#555555">010 </font>    System.out.format(<font color="#0000FF">"%b %b %2$b %1$b%n"</font>, <font color="#006699">true</font>, <font color="#006699">false</font>);
+<font color="#555555">011 </font>    <font color="#00AA00">//Ganzzahlen</font>
+<font color="#555555">012 </font>    System.out.format(<font color="#0000FF">"[%d]%n"</font>, -2517);
+<font color="#555555">013 </font>    System.out.format(<font color="#0000FF">"[%7d]%n"</font>, -2517);
+<font color="#555555">014 </font>    System.out.format(<font color="#0000FF">"[%-7d]%n"</font>, -2517);
+<font color="#555555">015 </font>    System.out.format(<font color="#0000FF">"[%(7d]%n"</font>, -2517);
+<font color="#555555">016 </font>    System.out.format(<font color="#0000FF">"[%07d]%n"</font>, -2517);
+<font color="#555555">017 </font>    System.out.format(<font color="#0000FF">"[%,7d]%n"</font>, -2517);
+<font color="#555555">018 </font>    System.out.format(<font color="#0000FF">"%1$d %&lt;o %&lt;x %&lt;X%n"</font>, 127);
+<font color="#555555">019 </font>    <font color="#00AA00">//Flie&szlig;kommazahlen</font>
+<font color="#555555">020 </font>    System.out.format(<font color="#0000FF">"%f%n"</font>, 0.000314);
+<font color="#555555">021 </font>    System.out.format(<font color="#0000FF">"%1$6.2f %1$6.2e %1$6.2E %1$6.2G%n"</font>, 3.141592);
+<font color="#555555">022 </font>    System.out.format(<font color="#0000FF">"%,8.2f%n"</font>, 31415.92);
+<font color="#555555">023 </font>    System.out.format(Locale.ENGLISH, <font color="#0000FF">"%,8.2f%n"</font>, 31415.92);
+<font color="#555555">024 </font>    <font color="#00AA00">//Zeichen und Strings</font>
+<font color="#555555">025 </font>    System.out.format(<font color="#0000FF">"%c%c%c\n"</font>, 97, 64, 98);
+<font color="#555555">026 </font>    System.out.format(<font color="#0000FF">"%s nein\n"</font>, <font color="#0000FF">"ja"</font>);
+<font color="#555555">027 </font>    <font color="#00AA00">//Datum/Uhrzeit</font>
+<font color="#555555">028 </font>    Calendar now = Calendar.getInstance();
+<font color="#555555">029 </font>    System.out.format(
+<font color="#555555">030 </font>      <font color="#0000FF">"%1$td.%1$tm.%1$tY %1$tH:%1$tM:%1$tS%n"</font>,
+<font color="#555555">031 </font>      now
+<font color="#555555">032 </font>    );
+<font color="#555555">033 </font>    System.out.format(<font color="#0000FF">"%tF%n"</font>, now);
+<font color="#555555">034 </font>    System.out.format(<font color="#0000FF">"%tc%n"</font>, now);
+<font color="#555555">035 </font>  }
+<font color="#555555">036 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1207.java"><font color="#000055" size=-1>Listing1207.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 12.7: Formatierte Ausgabe</i></p>
+
+<p>
+Seine Ausgabe ist: 
+<font color="#333300">
+<pre>
+true false false true
+[-2517]
+[  -2517]
+[-2517  ]
+[ (2517)]
+[-002517]
+[ -2.517]
+127 177 7f 7F
+0,000314
+  3,14 3.14e+00 3.14E+00    3.1
+31.415,92
+31,415.92
+a@b
+ja nein
+02.10.2004 21:38:24
+2004-10-02
+Sa Okt 02 21:38:24 CEST 2004
+</pre>
+</font>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100076.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100081.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100083.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100084.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

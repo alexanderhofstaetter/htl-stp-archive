@@ -1,0 +1,44 @@
+
+AINF 2   		C/C++ - Aufgabe 13
+__________________________________________________________________________
+
+
+C++ - Programm  "cstring_phone.cpp"
+
+Mit Hilfe eines C- Stringarrays wird eine Telefonliste erstellt.
+Das Stringarray "phonebook" ist über den eigenen Stringtyp "string80"
+für 20 Einträge zu definieren. 
+Einige Einträge werden bei der Definition bereits zugewiesen(initialisiert) 
+und erfolgen in der Form "Name : Vorname : Telefonnummer : [Handynummer] ".  
+Die Telefonliste kann dann über einen Suchtext nach Namen durchsucht, 
+oder auch alphabetisch sortiert ausgegeben werden.   
+Weiters können Einträge geändert/hinzugefügt werden. 
+
+Dazu sollen folgende Funktionen definiert und verwendet werden : 
+
+      int phone_search(string80 book[], int i1, int i2, char *search) 
+	  //  sucht in der Telefonliste "book" nach dem Suchbegriff "search" 
+	  //  ab dem Index i1 bis zu i2 
+	  //    Import: string80 book  ... Stringarray  
+      //            int i1         ... Anfangsindex der Suche 
+      //            int i2         ... Endeindex der Suche 
+      //  	        char* search   ... Suchwort 
+	  //    Return: int            ... Index der Fundstelle
+	  
+
+      void phone_sort(string80 book[], int n ) 
+	  //  sortiert alphabetisch die Telefonliste "book" alphabetisch  
+	  //   Import/Export : string80 book  ... Stringarray  
+      //   Import :        int n          ... Größe des Stringarrays
+
+
+      void phone_entry(string80 book[], string80 entry, int pos ) 
+	  //  Eintrag in die Telefonliste "book" an der Stelle (Index) pos   
+	  //  Import :  string80 book  ... Stringarray  
+      //            string80 entry ... Eintrag 
+      //            int pos        ... Index des Eintrags 
+
+
+
+
+

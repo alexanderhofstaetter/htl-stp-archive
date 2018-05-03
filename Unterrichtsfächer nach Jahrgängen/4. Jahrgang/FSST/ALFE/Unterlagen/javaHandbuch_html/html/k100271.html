@@ -1,0 +1,580 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100269.html;106,k100270.html;107,k100272.html;108,k100274.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100269.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100270.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100272.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100274.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 42 - Serialisierung
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id042002"></a>
+<h2>42.2 Weitere Aspekte der Serialisierung </h2>
+<hr>
+<ul>
+<li><a href="k100271.html#sectlevel2id042002">42.2 Weitere Aspekte der Serialisierung</a>
+<ul>
+<li><a href="k100271.html#versionierung">42.2.1 Versionierung</a>
+<li><a href="k100271.html#sectlevel3id042002002">42.2.2 Nichtserialisierte Membervariablen</a>
+<li><a href="k100271.html#objektreferenzen">42.2.3 Objektreferenzen</a>
+<li><a href="k100271.html#sectlevel3id042002004">42.2.4 Serialisieren von Collections</a>
+</ul>
+</ul>
+<hr>
+
+<p>
+Mit den Grundlagen aus dem vorigen Abschnitt sind bereits die wichtigsten
+Prinzipien der Serialisierung in Java erkl&auml;rt. Beeindruckend
+ist dabei einerseits, wie das Konzept in die Klassenbibliothek eingebunden
+wurde. <a href="index_o.html#ixb101012"><font color=#000080><tt>ObjectOutputStream</tt></font></a>
+und <a href="index_o.html#ixb101041"><font color=#000080><tt>ObjectInputStream</tt></font></a>
+passen in nat&uuml;rlicher Weise in die Stream-Hierarchie und zeigen,
+wie man Streams konstruiert, die <i>strukturierte</i> Daten verarbeiten.
+Andererseits ist es eine gro&szlig;e Hilfe, dass Objekte ohne gr&ouml;&szlig;ere
+&Auml;nderungen serialisiert werden k&ouml;nnen. Es ist lediglich
+erforderlich, das <a href="index_s.html#ixb100461"><font color=#000080><tt>Serializable</tt></font></a>-Interface
+zu implementieren, um ein einfaches Objekt serialisieren zu k&ouml;nnen.
+
+<p>
+Dennoch ist das API leistungsf&auml;hig genug, auch komplexe Klassen
+serialisierbar zu machen. Wir wollen in diesem Abschnitt weiterf&uuml;hrende
+Aspekte betrachten, die im Rahmen dieser Einf&uuml;hrung noch verst&auml;ndlich
+sind. Daneben gibt es weitere M&ouml;glichkeiten, mit denen das Serialisieren
+und Deserialisieren von Klassen komplett an die speziellen Anforderungen
+einer Applikation angepasst werden k&ouml;nnen. Auf diese Details
+wollen wir hier aber nicht eingehen. Als vertiefende Lekt&uuml;re
+empfiehlt sich die &#187;Java Object Serialization Specification&#171;,
+die seit der Version 1.2 Bestandteil der Online-Dokumentation des
+JDK ist. 
+
+<!-- Section -->
+
+<a name="versionierung"></a>
+<h3>42.2.1 Versionierung </h3>
+
+<p>
+Applikationen, in denen Code und Daten getrennt gehalten werden, haben
+grunds&auml;tzlich mit dem Problem der Inkonsistenz beider Bestandteile
+zu k&auml;mpfen. Wie kann sichergestellt werden, dass die Struktur
+der zu verarbeitenden Daten tats&auml;chlich den vom Programm erwarteten
+Strukturen entspricht? Dieses Problem gibt es bei praktisch allen
+Datenbankanwendungen und es tritt immer dann verst&auml;rkt auf, wenn
+Code und Datenstruktur getrennt ge&auml;ndert werden. Auch durch das
+Serialisieren von Objekten haben wir das Problem, denn die Datei mit
+den serialisierten Objekten enth&auml;lt nur die <i>Daten</i>, der
+zugeh&ouml;rige <i>Code</i> kommt dagegen aus dem <font color="#660099">.class</font>-File.
+
+<p>
+Das Serialisierungs-API versucht diesem Problem mit einem <a name="ixa103014"><i>Versionierungsmechanismus</i></a>
+zu begegnen. Dazu enth&auml;lt das Interface <a href="index_s.html#ixb100461"><font color=#000080><tt>Serializable</tt></font></a>
+eine <a href="index_l.html#ixb100252"><font color=#000080><tt>long</tt></font></a>-Konstante
+<a name="ixa103015"><a href="index_s.html#ixb102231"><font color=#000080><tt>serialVersionUID</tt></font></a></a>,
+in der eine Versionskennung zur Klasse gespeichert wird. Sie wird
+beim Aufruf von <a href="index_w.html#ixb102227"><font color=#000080><tt>writeObject</tt></font></a>
+automatisch berechnet und stellt einen Hashcode &uuml;ber die wichtigsten
+Eigenschaften der Klasse dar. So gehen beispielsweise Name und Signatur
+der Klasse, implementierte Interfaces sowie Methoden und Konstruktoren
+in die Berechnung ein. Selbst triviale &Auml;nderungen wie das Umbenennen
+oder Hinzuf&uuml;gen einer &ouml;ffentlichen Methode ver&auml;ndern
+die <a href="index_s.html#ixb102231"><font color=#000080><tt>serialVersionUID</tt></font></a>.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die <a href="index_s.html#ixb102231"><font color=#000080><tt>serialVersionUID</tt></font></a>
+einer Klasse kann mit Hilfe des Hilfsprogramms <a name="ixa103016"><a href="index_s.html#ixb102232"><font color=#000080><tt>serialver</tt></font></a></a>
+ermittelt werden. Dieses einfache Programm wird zusammen mit dem Namen
+der Klasse in der Kommandozeile aufgerufen und liefert die Versionsnummer
+als Ausgabe. Alternativ kann es auch mit dem Argument <font color="#000077"><tt>-show</tt></font>
+aufgerufen werden. Es hat dann eine einfache Oberfl&auml;che, in der
+der Name der Klasse interaktiv eingegeben werden kann (siehe <a href="k100271.html#serialver">Abbildung 42.1</a>).</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<p>
+<a name="serialver"></a>
+<img src="images/SerialVer.gif">
+<p>
+
+<p><i>
+Abbildung 42.1: Das Programm serialver</i></p>
+
+<p>
+Beim Serialisieren eines Objekts wird auch die <a href="index_s.html#ixb102231"><font color=#000080><tt>serialVersionUID</tt></font></a>
+der zugeh&ouml;rigen Klasse mit in die Ausgabedatei geschrieben. Soll
+das Objekt sp&auml;ter deserialisiert werden, so wird die in der Datei
+gespeicherte <a href="index_s.html#ixb102231"><font color=#000080><tt>serialVersionUID</tt></font></a>
+mit der aktuellen <a href="index_s.html#ixb102231"><font color=#000080><tt>serialVersionUID</tt></font></a>
+des geladenen <font color="#660099">.class</font>-File verglichen.
+Stimmen beide nicht &uuml;berein, so gibt es eine Ausnahme des Typs
+<a name="ixa103017"><a href="index_i.html#ixb102233"><font color=#000080><tt>InvalidClassException</tt></font></a></a>
+und der Deserialisierungsvorgang bricht ab. 
+
+<p>
+Diese Art der Versionierung ist zwar recht sicher, aber auch sehr
+rigoros. Schon eine kleine &Auml;nderung an der Klasse macht die serialisierten
+Objekte unbrauchbar, weil sie sich nicht mehr deserialisieren lassen.
+Die in <a href="k100270.html#timelisting">Listing 42.1</a> vorgestellte
+Klasse <font color="#000077"><tt>Time</tt></font> hat die <a href="index_s.html#ixb102231"><font color=#000080><tt>serialVersionUID</tt></font></a>
+<font color="#000077"><tt>-8717671986526504937L</tt></font>. Wird
+beispielsweise eine neue Methode <font color="#000077"><tt>public
+void test()</tt></font> hinzugef&uuml;gt (die f&uuml;r das Deserialisieren
+eigentlich v&ouml;llig bedeutungslos ist), &auml;ndert sich die <a href="index_s.html#ixb102231"><font color=#000080><tt>serialVersionUID</tt></font></a>
+auf <font color="#000077"><tt>9202005869290334574L</tt></font> und
+weder die Datei <font color="#660099">test1.ser</font> noch <font color="#660099">test2.ser</font>
+lassen sich zuk&uuml;nftig deserialisieren. 
+
+<p>
+Anstatt die <a href="index_s.html#ixb102231"><font color=#000080><tt>serialVersionUID</tt></font></a>
+automatisch berechnen zu lassen, kann sie von der zu serialisierenden
+Klasse auch fest vorgegeben werden. Dazu wird einfach eine Konstante
+<font color="#000077"><tt>static final long serialVersionUID</tt></font>
+definiert und mit einem vorgegebenen Wert belegt (der zum Beispiel
+mit Hilfe von <a href="index_s.html#ixb102232"><font color=#000080><tt>serialver</tt></font></a>
+ermittelt wird). In diesem Fall wird die <a href="index_s.html#ixb102231"><font color=#000080><tt>serialVersionUID</tt></font></a>
+beim Aufruf von <a href="index_w.html#ixb102227"><font color=#000080><tt>writeObject</tt></font></a>
+nicht neu berechnet, sondern es wird der vorgegebene Wert verwendet.
+L&auml;sst man diese Konstante unver&auml;ndert, k&ouml;nnen beliebige
+&Auml;nderungen der Klasse durchgef&uuml;hrt werden, ohne dass <a href="index_r.html#ixb102229"><font color=#000080><tt>readObject</tt></font></a>
+beim Deserialisieren mit einer Ausnahme abbricht. Die <font color="#000077"><tt>Time</tt></font>-Klasse
+aus <a href="k100270.html#timelisting">Listing 42.1</a> h&auml;tte
+dann folgendes Aussehen: 
+<a name="listingid042006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Time
+<font color="#555555">004 </font><font color="#0000AA">implements</font> Serializable
+<font color="#555555">005 </font>{
+<font color="#555555">006 </font>  <font color="#0000AA">static</font> <font color="#0000AA">final</font> <font color="#006699">long</font> serialVersionUID = -8717671986526504937L;
+<font color="#555555">007 </font>
+<font color="#555555">008 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font> hour;
+<font color="#555555">009 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font> minute;
+<font color="#555555">010 </font>
+<font color="#555555">011 </font>  <font color="#0000AA">public</font> Time(<font color="#006699">int</font> hour, <font color="#006699">int</font> minute)
+<font color="#555555">012 </font>  {
+<font color="#555555">013 </font>    <font color="#006699">this</font>.hour = hour;
+<font color="#555555">014 </font>    <font color="#006699">this</font>.minute = minute;
+<font color="#555555">015 </font>  }
+<font color="#555555">016 </font>
+<font color="#555555">017 </font>  <font color="#0000AA">public</font> String toString()
+<font color="#555555">018 </font>  {
+<font color="#555555">019 </font>    <font color="#0000AA">return</font> hour + <font color="#0000FF">":"</font> + minute;
+<font color="#555555">020 </font>  }
+<font color="#555555">021 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 42.6: Die Uhrzeitklasse mit serialVersionUID</i></p>
+
+<p>
+Jetzt muss die Anwendung nat&uuml;rlich selbst darauf achten, dass
+die durchgef&uuml;hrten &Auml;nderungen kompatibel sind, dass also
+durch das Laden der Daten aus dem &auml;lteren Objekt keine Inkonsistenzen
+verursacht werden. Dabei m&ouml;gen folgende Regeln als Anhaltspunkte
+dienen: 
+<ul>
+<li>Das Hinzuf&uuml;gen oder Entfernen von Methoden ist meist unkritisch.
+<li>Das Entfernen von Membervariablen ist meist unkritisch.
+<li>Beim Hinzuf&uuml;gen neuer Membervariablen muss beachtet werden,
+dass diese nach dem Deserialisieren uninitialisiert sind.
+<li>Problematisch ist es meist, Membervariablen umzubenennen, sie
+auf <a href="index_t.html#ixb100438"><font color=#000080><tt>transient</tt></font></a>
+oder <a href="index_s.html#ixb100431"><font color=#000080><tt>static</tt></font></a>
+(oder umgekehrt) zu &auml;ndern, die Klasse von <a href="index_s.html#ixb100461"><font color=#000080><tt>Serializable</tt></font></a>
+auf <a name="ixa103018"><a href="index_e.html#ixb102234"><font color=#000080><tt>Externalizable</tt></font></a></a>
+(oder umgekehrt) zu &auml;ndern oder den Klassennamen zu &auml;ndern.
+</ul>
+
+<p>
+Solange die &Auml;nderungen kompatibel bleiben, ist also durch eine
+feste <a href="index_s.html#ixb102231"><font color=#000080><tt>serialVersionUID</tt></font></a>
+sichergestellt, dass serialisierte Objekte lesbar und deserialisierbar
+bleiben. Sind die &Auml;nderungen dagegen inkompatibel, sollte die
+Konstante entsprechend ge&auml;ndert werden und die serialisierten
+Daten d&uuml;rfen nicht mehr verwendet werden (bzw. m&uuml;ssen vor
+der weiteren Verwendung konvertiert werden). 
+
+<!-- Section -->
+
+<a name="sectlevel3id042002002"></a>
+<h3>42.2.2 Nichtserialisierte Membervariablen </h3>
+
+<p>
+Mitunter besitzt eine Klasse Membervariablen, die nicht serialisiert
+werden sollen. Typische Beispiele sind Variablen, deren Wert sich
+w&auml;hrend des Programmlaufs dynamisch ergibt, oder solche, die
+nur der tempor&auml;ren Kommunikation zwischen zwei oder mehr Methoden
+dienen. Auch Daten, die nur im Kontext der laufenden Anwendung Sinn
+machen, wie beispielsweise Filehandles, Sockets, GUI-Ressourcen oder
+JDBC-Verbindungen, sollten nicht serialisiert werden; sie &#187;verfallen&#171;
+mit dem Ende des Programms. 
+
+<p>
+Membervariablen, die nicht serialisiert werden sollen, k&ouml;nnen
+mit dem Attribut <a name="ixa103019"><a href="index_t.html#ixb100438"><font color=#000080><tt>transient</tt></font></a></a>
+versehen werden. Dadurch werden sie beim Schreiben des Objekts mit
+<a href="index_w.html#ixb102227"><font color=#000080><tt>writeObject</tt></font></a>
+ignoriert und gelangen nicht in die Ausgabedatei. Beim Deserialisieren
+werden die transienten Objekte lediglich mit dem typspezifischen Standardwert
+belegt. 
+
+<!-- Section -->
+
+<a name="objektreferenzen"></a>
+<h3>42.2.3 Objektreferenzen </h3>
+
+<p>
+Eine wichtige Eigenschaft des Serialisierungs-API im JDK ist, dass
+auch <i>Referenzen</i> automatisch gesichert und rekonstruiert werden.
+Besitzt ein Objekt selbst Strings, Arrays oder andere Objekte als
+Membervariablen, so werden diese ebenso wie die primitiven Typen serialisiert
+und deserialisiert. Da eine Objektvariable lediglich einen <i>Verweis</i>
+auf das im Hauptspeicher allozierte Objekt darstellt, ist es wichtig,
+dass diese Verweise auch nach dem Serialisieren/Deserialisieren erhalten
+bleiben. Insbesondere darf ein Objekt auch dann nur einmal angelegt
+werden, wenn darauf von mehr als einer Variable verwiesen wird. Auch
+nach dem Deserialisieren darf das Objekt nur einmal vorhanden sein
+und die verschiedenen Objektvariablen m&uuml;ssen auf dieses Objekt
+zeigen. 
+
+<p>
+Der <a href="index_o.html#ixb101012"><font color=#000080><tt>ObjectOutputStream</tt></font></a>
+h&auml;lt zu diesem Zweck eine Hashtabelle, in der alle bereits serialisierten
+Objekte verzeichnet werden. Bei jedem Aufruf von <a href="index_w.html#ixb102227"><font color=#000080><tt>writeObject</tt></font></a>
+wird zun&auml;chst in der Tabelle nachgesehen, ob das Objekt bereits
+serialisiert wurde. Ist das der Fall, wird in der Ausgabedatei lediglich
+ein Verweis auf das Objekt gespeichert. Andernfalls wird das Objekt
+serialisiert und in der Hashtabelle eingetragen. Beim Deserialisieren
+eines Verweises wird dieser durch einen Objektverweis auf das zuvor
+deserialisierte Objekt ersetzt. Auf diese Weise werden Objekte nur
+einmal gespeichert, die Objektreferenzen werden konserviert und das
+Problem von Endlosschleifen durch zyklische Referenzen ist ebenfalls
+gel&ouml;st. 
+
+<p>
+Das folgende Programm zeigt das Speichern von Verweisen am Beispiel
+eines Graphen, der Eltern-Kind-Beziehungen darstellt. Zun&auml;chst
+ben&ouml;tigen wir dazu eine Klasse <font color="#000077"><tt>Person</tt></font>,
+die den Namen und die Eltern einer Person speichern kann. Jeder Elternteil
+wird dabei durch einen Verweis auf eine weitere Person dargestellt:
+<a name="listingid042007"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Person
+<font color="#555555">004 </font><font color="#0000AA">implements</font> Serializable
+<font color="#555555">005 </font>{
+<font color="#555555">006 </font>  <font color="#0000AA">public</font> String name;
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> Person mother;
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> Person father;
+<font color="#555555">009 </font>
+<font color="#555555">010 </font>  <font color="#0000AA">public</font> Person(String name)
+<font color="#555555">011 </font>  {
+<font color="#555555">012 </font>    <font color="#006699">this</font>.name = name;
+<font color="#555555">013 </font>  }
+<font color="#555555">014 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Person.java"><font color="#000055" size=-1>Person.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 42.7: Die Klasse Person</i></p>
+
+<p>
+Der Einfachheit halber wurden alle Membervariablen als <a href="index_p.html#ixb100083"><font color=#000080><tt>public</tt></font></a>
+deklariert. Wir wollen nun ein Programm erstellen, das den folgenden
+Eltern-Kind-Graph aufbaut: 
+<p>
+<a name="elternkindgraph"></a>
+<img src="images/ElternKindSeri.gif">
+<p>
+
+<p><i>
+Abbildung 42.2: Eltern-Kind-Graph f&uuml;r Serialisierungsbeispiel</i></p>
+
+<p>
+Das Programm soll den Graph dann in eine Datei <font color="#660099">test3.ser</font>
+serialisieren und anschlie&szlig;end durch Deserialisieren wieder
+rekonstruieren. Wir wollen dann &uuml;berpr&uuml;fen, ob alle Verweise
+wiederhergestellt wurden und ob die Objekteindeutigkeit gewahrt wurde.
+<a name="seriref"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4208.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4208
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    <font color="#00AA00">//Erzeugen der Familie</font>
+<font color="#555555">011 </font>    Person opa = <font color="#0000AA">new</font> Person(<font color="#0000FF">"Eugen"</font>); <a name="seriref.a"></a>
+<font color="#555555">012 </font>    Person oma = <font color="#0000AA">new</font> Person(<font color="#0000FF">"Therese"</font>);
+<font color="#555555">013 </font>    Person vater = <font color="#0000AA">new</font> Person(<font color="#0000FF">"Barny"</font>);
+<font color="#555555">014 </font>    Person mutter = <font color="#0000AA">new</font> Person(<font color="#0000FF">"Wilma"</font>);
+<font color="#555555">015 </font>    Person kind1 = <font color="#0000AA">new</font> Person(<font color="#0000FF">"Fritzchen"</font>);
+<font color="#555555">016 </font>    Person kind2 = <font color="#0000AA">new</font> Person(<font color="#0000FF">"Kalli"</font>);
+<font color="#555555">017 </font>    vater.father = opa;
+<font color="#555555">018 </font>    vater.mother = oma;
+<font color="#555555">019 </font>    kind1.father = kind2.father = vater;
+<font color="#555555">020 </font>    kind1.mother = kind2.mother = mutter; <a name="seriref.b"></a>
+<font color="#555555">021 </font>
+<font color="#555555">022 </font>    <font color="#00AA00">//Serialisieren der Familie</font>
+<font color="#555555">023 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">024 </font>      FileOutputStream fs = <font color="#0000AA">new</font> FileOutputStream(<font color="#0000FF">"test3.ser"</font>);
+<font color="#555555">025 </font>      ObjectOutputStream os = <font color="#0000AA">new</font> ObjectOutputStream(fs);
+<font color="#555555">026 </font>      os.writeObject(kind1);
+<font color="#555555">027 </font>      os.writeObject(kind2);
+<font color="#555555">028 </font>      os.close();
+<font color="#555555">029 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">030 </font>      System.err.println(e.toString());
+<font color="#555555">031 </font>    }
+<font color="#555555">032 </font>
+<font color="#555555">033 </font>    <font color="#00AA00">//Rekonstruieren der Familie</font>
+<font color="#555555">034 </font>    kind1 = kind2 = <font color="#006699">null</font>; <a name="seriref.c"></a>
+<font color="#555555">035 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">036 </font>      FileInputStream fs = <font color="#0000AA">new</font> FileInputStream(<font color="#0000FF">"test3.ser"</font>);
+<font color="#555555">037 </font>      ObjectInputStream is = <font color="#0000AA">new</font> ObjectInputStream(fs);
+<font color="#555555">038 </font>      kind1 = (Person)is.readObject();
+<font color="#555555">039 </font>      kind2 = (Person)is.readObject();
+<font color="#555555">040 </font>      <font color="#00AA00">//&Uuml;berpr&uuml;fen der Objekte</font>
+<font color="#555555">041 </font>      System.out.println(kind1.name); <a name="seriref.d"></a>
+<font color="#555555">042 </font>      System.out.println(kind2.name);
+<font color="#555555">043 </font>      System.out.println(kind1.father.name);
+<font color="#555555">044 </font>      System.out.println(kind1.mother.name);
+<font color="#555555">045 </font>      System.out.println(kind2.father.name);
+<font color="#555555">046 </font>      System.out.println(kind2.mother.name);
+<font color="#555555">047 </font>      System.out.println(kind1.father.father.name);
+<font color="#555555">048 </font>      System.out.println(kind1.father.mother.name); <a name="seriref.e"></a>
+<font color="#555555">049 </font>      <font color="#00AA00">//Name des Vaters &auml;ndern</font>
+<font color="#555555">050 </font>      kind1.father.name = <font color="#0000FF">"Fred"</font>; <a name="seriref.f"></a>
+<font color="#555555">051 </font>      <font color="#00AA00">//Erneutes &Uuml;berpr&uuml;fen der Objekte</font>
+<font color="#555555">052 </font>      System.out.println(<font color="#0000FF">"---"</font>); <a name="seriref.g"></a>
+<font color="#555555">053 </font>      System.out.println(kind1.name);
+<font color="#555555">054 </font>      System.out.println(kind2.name);
+<font color="#555555">055 </font>      System.out.println(kind1.father.name);
+<font color="#555555">056 </font>      System.out.println(kind1.mother.name);
+<font color="#555555">057 </font>      System.out.println(kind2.father.name);
+<font color="#555555">058 </font>      System.out.println(kind2.mother.name);
+<font color="#555555">059 </font>      System.out.println(kind1.father.father.name);
+<font color="#555555">060 </font>      System.out.println(kind1.father.mother.name); <a name="seriref.h"></a>
+<font color="#555555">061 </font>      is.close();
+<font color="#555555">062 </font>    } <font color="#0000AA">catch</font> (ClassNotFoundException e) {
+<font color="#555555">063 </font>      System.err.println(e.toString());
+<font color="#555555">064 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">065 </font>      System.err.println(e.toString());
+<font color="#555555">066 </font>    }
+<font color="#555555">067 </font>  }
+<font color="#555555">068 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4208.java"><font color="#000055" size=-1>Listing4208.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 42.8: Serialisieren von Objekten und Referenzen</i></p>
+
+<p>
+Das Programm erzeugt in den Zeilen <a href="k100271.html#seriref.a">011</a>
+bis <a href="k100271.html#seriref.b">020</a> zun&auml;chst den in
+<a href="k100271.html#elternkindgraph">Abbildung 42.2</a> abgebildeten
+Verwandtschaftsgraphen und serialisiert ihn anschlie&szlig;end in
+die Datei <font color="#660099">test3.ser</font>. Bemerkenswert ist
+hier vor allem, dass wir lediglich die beiden Kinder <font color="#000077"><tt>kind1</tt></font>
+und <font color="#000077"><tt>kind2</tt></font> explizit serialisieren.
+Da alle anderen Objekte &uuml;ber Verweise von den Kindern aus zu
+erreichen sind, ist es nicht n&ouml;tig, diese separat mit <a href="index_w.html#ixb102227"><font color=#000080><tt>writeObject</tt></font></a>
+zu speichern. 
+
+<p>
+In <a href="k100271.html#seriref.c">Zeile 034</a> setzen wir die beiden
+Kindvariablen auf <a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>,
+um zu beweisen, dass sie ausschlie&szlig;lich durch das nachfolgende
+Deserialisieren korrekt gesetzt werden. Nun werden <font color="#000077"><tt>kind1</tt></font>
+und <font color="#000077"><tt>kind2</tt></font> deserialisiert und
+in den Zeilen <a href="k100271.html#seriref.d">041</a> bis <a href="k100271.html#seriref.e">048</a>
+wird der komplette Verwandtschaftsgraph ausgegeben. An der Ausgabe
+des Programms k&ouml;nnen wir erkennen, dass tats&auml;chlich alle
+Objekte rekonstruiert und die Verweise darauf korrekt gesetzt wurden:
+<font color="#333300">
+<pre>
+Fritzchen
+Kalli
+Barny
+Wilma
+Barny
+Wilma
+Eugen
+Therese
+---
+Fritzchen
+Kalli
+Fred
+Wilma
+Fred
+Wilma
+Eugen
+Therese
+</pre>
+</font>
+
+<p>
+Der zweite Block von Ausgabeanweisungen (in den Zeilen <a href="k100271.html#seriref.g">052</a>
+bis <a href="k100271.html#seriref.h">060</a>) zeigt, dass auch die
+Objekteindeutigkeit gewahrt wurde. Dazu haben wir n&auml;mlich in
+<a href="k100271.html#seriref.f">Zeile 050</a> den Namen des Vaterobjekts
+von <font color="#000077"><tt>kind1</tt></font> auf &#187;Fred&#171;
+ge&auml;ndert. Wie im zweiten Teil der Ausgabe des Programms zu erkennen
+ist, wurde damit auch der Name des Vaters des zweiten Kinds auf &#187;Fred&#171;
+ge&auml;ndert und wir k&ouml;nnen sicher sein, dass es sich um ein
+und dasselbe Objekt handelt. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Obwohl (oder gerade weil) das Serialisieren von Objektgraphen in aller
+Regel sehr bequem und vollautomatisch abl&auml;uft, seien an dieser
+Stelle einige Warnungen ausgesprochen: 
+<ul>
+<li>Einerseits kann es passieren, dass mehr Objekte als erwartet serialisiert
+werden. Insbesondere bei komplexen Objektbeziehungen kann es sein,
+dass an dem zu serialisierenden Objekt indirekt viele weitere Objekte
+h&auml;ngen und beim Serialisieren wesentlich mehr Objekte gespeichert
+werden, als erwartet wurde. Das kostet unn&ouml;tig Zeit und Speicher.
+<li>Durch das Zwischenspeichern der bereits serialisierten Objekte
+in <a href="index_o.html#ixb101012"><font color=#000080><tt>ObjectOutputStream</tt></font></a>
+werden viele Verweise auf Objekte gehalten, die sonst m&ouml;glicherweise
+f&uuml;r das Programm unerreichbar w&auml;ren. Da der Garbage Collector
+diese Objekte nicht freigibt, kann es beim Serialisieren einer gro&szlig;en
+Anzahl von Objekten zu Speicherproblemen kommen. Mit Hilfe der Methode
+<a name="ixa103020"><a href="index_r.html#ixb100984"><font color=#000080><tt>reset</tt></font></a></a>
+kann der <a href="index_o.html#ixb101012"><font color=#000080><tt>ObjectOutputStream</tt></font></a>
+in den Anfangszustand versetzt werden; alle bereits bekannten Objektreferenzen
+werden &#187;vergessen&#171;. Wird ein bereits serialisiertes Objekt
+danach noch einmal gespeichert, wird kein Verweis, sondern das Objekt
+selbst noch einmal geschrieben. 
+<li>Wenn ein bereits serialisiertes Objekt <i>ver&auml;ndert</i> und
+anschlie&szlig;end erneut serialisiert wird, bleibt die Ver&auml;nderung
+beim Deserialisieren unsichtbar, denn in der Ausgabedatei wird lediglich
+ein Verweis auf das Originalobjekt gespeichert.
+</ul>
+</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id042002004"></a>
+<h3>42.2.4 Serialisieren von Collections </h3>
+
+<p>
+Neben selbst geschriebenen Klassen sind auch viele der Standardklassen
+des JDK serialisierbar, insbesondere die meisten Collection-Klassen.
+Um beispielsweise alle Daten einer Liste oder einer Map persistent
+zu speichern, gen&uuml;gt ein einfaches Serialisieren nach obigem
+Muster. Voraussetzung ist allerdings, dass auch die Elemente der Collection
+serialisierbar sind, andernfalls gibt es eine <a name="ixa103021"><a href="index_n.html#ixb102228"><font color=#000080><tt>NotSerializableException</tt></font></a></a>.
+Auch die Wrapper-Klassen zu den Basistypen (siehe <a href="k100072.html#wrapperklassen">Abschnitt 11.2</a>)
+sind standardm&auml;&szlig;ig serialisierbar und k&ouml;nnen damit
+problemlos als Objekte in serialisierbaren Collections verwendet werden.
+Im n&auml;chsten Abschnitt stellen wir eine kleine Anwendung f&uuml;r
+das Serialisieren von Hashtabellen vor. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100269.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100270.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100272.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100274.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

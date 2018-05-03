@@ -1,0 +1,1022 @@
+
+ELRobot.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00800100  000005d6  0000066a  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         000005d6  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          0000000e  00800100  00800100  0000066a  2**0
+                  ALLOC
+  3 .stab         000006cc  00000000  00000000  0000066c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  4 .stabstr      00000097  00000000  00000000  00000d38  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .comment      0000002f  00000000  00000000  00000dcf  2**0
+                  CONTENTS, READONLY
+  6 .debug_aranges 000000b0  00000000  00000000  00000dfe  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_info   0000070a  00000000  00000000  00000eae  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_abbrev 0000022a  00000000  00000000  000015b8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_line   000003a5  00000000  00000000  000017e2  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_frame  000001b4  00000000  00000000  00001b88  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_str    0000031f  00000000  00000000  00001d3c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_loc    000003e6  00000000  00000000  0000205b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 13 .debug_ranges 000000a0  00000000  00000000  00002441  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 56 00 	jmp	0xac	; 0xac <__ctors_end>
+   4:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+   8:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+   c:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  10:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  14:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  18:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  1c:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  20:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  24:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  28:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  2c:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  30:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  34:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  38:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  3c:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  40:	0c 94 f3 01 	jmp	0x3e6	; 0x3e6 <__vector_16>
+  44:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  48:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  4c:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  50:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  54:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  58:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  5c:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  60:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  64:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  68:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  6c:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  70:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  74:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  78:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  7c:	0c 94 4e 02 	jmp	0x49c	; 0x49c <__vector_31>
+  80:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  84:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  88:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  8c:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  90:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  94:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  98:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  9c:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  a0:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  a4:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+  a8:	0c 94 68 00 	jmp	0xd0	; 0xd0 <__bad_interrupt>
+
+000000ac <__ctors_end>:
+  ac:	11 24       	eor	r1, r1
+  ae:	1f be       	out	0x3f, r1	; 63
+  b0:	cf ef       	ldi	r28, 0xFF	; 255
+  b2:	da e0       	ldi	r29, 0x0A	; 10
+  b4:	de bf       	out	0x3e, r29	; 62
+  b6:	cd bf       	out	0x3d, r28	; 61
+
+000000b8 <__do_clear_bss>:
+  b8:	21 e0       	ldi	r18, 0x01	; 1
+  ba:	a0 e0       	ldi	r26, 0x00	; 0
+  bc:	b1 e0       	ldi	r27, 0x01	; 1
+  be:	01 c0       	rjmp	.+2      	; 0xc2 <.do_clear_bss_start>
+
+000000c0 <.do_clear_bss_loop>:
+  c0:	1d 92       	st	X+, r1
+
+000000c2 <.do_clear_bss_start>:
+  c2:	ae 30       	cpi	r26, 0x0E	; 14
+  c4:	b2 07       	cpc	r27, r18
+  c6:	e1 f7       	brne	.-8      	; 0xc0 <.do_clear_bss_loop>
+  c8:	0e 94 a9 02 	call	0x552	; 0x552 <main>
+  cc:	0c 94 e9 02 	jmp	0x5d2	; 0x5d2 <_exit>
+
+000000d0 <__bad_interrupt>:
+  d0:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+000000d4 <set_fuses>:
+//  Funktionen
+//*************************************************************************************************
+
+void set_fuses(void)
+{
+	MCUCR |= (1<<JTD);
+  d4:	85 b7       	in	r24, 0x35	; 53
+  d6:	80 68       	ori	r24, 0x80	; 128
+  d8:	85 bf       	out	0x35, r24	; 53
+	MCUCR |= (1<<JTD);
+  da:	85 b7       	in	r24, 0x35	; 53
+  dc:	80 68       	ori	r24, 0x80	; 128
+  de:	85 bf       	out	0x35, r24	; 53
+	
+	CLKPR = 0b10000000;
+  e0:	e1 e6       	ldi	r30, 0x61	; 97
+  e2:	f0 e0       	ldi	r31, 0x00	; 0
+  e4:	80 e8       	ldi	r24, 0x80	; 128
+  e6:	80 83       	st	Z, r24
+	CLKPR = 1;
+  e8:	81 e0       	ldi	r24, 0x01	; 1
+  ea:	80 83       	st	Z, r24
+  ec:	08 95       	ret
+
+000000ee <pwm_timer_init>:
+
+void pwm_timer_init(void)
+{
+	// Timer 4
+	//MOTOR RECHTS
+	TCCR4A |= (1<<COM4B1) | (1<<PWM4B);		// OC4B aktiviert bei Compare Match, PWM4B aktiviert
+  ee:	e0 ec       	ldi	r30, 0xC0	; 192
+  f0:	f0 e0       	ldi	r31, 0x00	; 0
+  f2:	80 81       	ld	r24, Z
+  f4:	81 62       	ori	r24, 0x21	; 33
+  f6:	80 83       	st	Z, r24
+	//MOTOR LINKS
+	TCCR4C |= (1<<COM4D1) | (1<<PWM4D);		// OC4D aktiviert bei Compare Match, PWM4D aktiviert 
+  f8:	e2 ec       	ldi	r30, 0xC2	; 194
+  fa:	f0 e0       	ldi	r31, 0x00	; 0
+  fc:	80 81       	ld	r24, Z
+  fe:	89 60       	ori	r24, 0x09	; 9
+ 100:	80 83       	st	Z, r24
+ 102:	08 95       	ret
+
+00000104 <pwm_timer_start>:
+
+void pwm_timer_start(void)
+{
+	// Timer 4
+	//MOTOR RECHTS
+	TCCR4A |= (1<<COM4B1) | (1<<PWM4B);		// OC4B aktiviert bei Compare Match, PWM4B aktiviert
+ 104:	e0 ec       	ldi	r30, 0xC0	; 192
+ 106:	f0 e0       	ldi	r31, 0x00	; 0
+ 108:	80 81       	ld	r24, Z
+ 10a:	81 62       	ori	r24, 0x21	; 33
+ 10c:	80 83       	st	Z, r24
+	//MOTOR LINKS
+	TCCR4C |= (1<<COM4D1) | (1<<PWM4D);		// OC4D aktiviert bei Compare Match, PWM4D aktiviert
+ 10e:	e2 ec       	ldi	r30, 0xC2	; 194
+ 110:	f0 e0       	ldi	r31, 0x00	; 0
+ 112:	80 81       	ld	r24, Z
+ 114:	89 60       	ori	r24, 0x09	; 9
+ 116:	80 83       	st	Z, r24
+
+	TCCR4B = 0;
+ 118:	e1 ec       	ldi	r30, 0xC1	; 193
+ 11a:	f0 e0       	ldi	r31, 0x00	; 0
+ 11c:	10 82       	st	Z, r1
+	TCCR4D = 0;
+ 11e:	10 92 c3 00 	sts	0x00C3, r1
+	TCCR4E = 0;
+ 122:	10 92 c4 00 	sts	0x00C4, r1
+	
+	TCNT4 = 0;
+ 126:	10 92 bf 00 	sts	0x00BF, r1
+ 12a:	10 92 be 00 	sts	0x00BE, r1
+	DT4 = 0;								// Dead Time Generator aus
+ 12e:	10 92 d4 00 	sts	0x00D4, r1
+	
+	OCR4B = PWM_STOPP;						// PWM 0%
+ 132:	10 92 d0 00 	sts	0x00D0, r1
+	OCR4D = PWM_STOPP;						// PWM 0%
+ 136:	10 92 d2 00 	sts	0x00D2, r1
+	
+	TCCR4B |= (1<<CS40);					// ca. 64kHz
+ 13a:	80 81       	ld	r24, Z
+ 13c:	81 60       	ori	r24, 0x01	; 1
+ 13e:	80 83       	st	Z, r24
+	
+	status |= (1<<STATUS_PWM_TIMER);
+ 140:	80 91 0c 01 	lds	r24, 0x010C
+ 144:	90 91 0d 01 	lds	r25, 0x010D
+ 148:	80 64       	ori	r24, 0x40	; 64
+ 14a:	90 93 0d 01 	sts	0x010D, r25
+ 14e:	80 93 0c 01 	sts	0x010C, r24
+ 152:	08 95       	ret
+
+00000154 <pwm_timer_stop>:
+}
+
+void pwm_timer_stop(void)
+{
+	TCCR4B = 0;
+ 154:	10 92 c1 00 	sts	0x00C1, r1
+	TCCR4A = 0;
+ 158:	10 92 c0 00 	sts	0x00C0, r1
+	TCCR4C = 0;
+ 15c:	10 92 c2 00 	sts	0x00C2, r1
+	status &= ~(1<<STATUS_PWM_TIMER);
+ 160:	80 91 0c 01 	lds	r24, 0x010C
+ 164:	90 91 0d 01 	lds	r25, 0x010D
+ 168:	8f 7b       	andi	r24, 0xBF	; 191
+ 16a:	90 93 0d 01 	sts	0x010D, r25
+ 16e:	80 93 0c 01 	sts	0x010C, r24
+ 172:	08 95       	ret
+
+00000174 <odometer_timer_init>:
+}
+
+void odometer_timer_init(void)
+{
+	TCCR1A = 0;
+ 174:	10 92 80 00 	sts	0x0080, r1
+	TCCR1B = (1<<ICNC1);					// Input Capture Mode aktiviert
+ 178:	80 e8       	ldi	r24, 0x80	; 128
+ 17a:	80 93 81 00 	sts	0x0081, r24
+	TCCR1C = 0;
+ 17e:	10 92 82 00 	sts	0x0082, r1
+	TCCR3A = 0;
+ 182:	10 92 90 00 	sts	0x0090, r1
+	TCCR3B = (1<<ICNC3);					// Input Capture Mode aktiviert
+ 186:	80 93 91 00 	sts	0x0091, r24
+	TCCR3C = 0;
+ 18a:	10 92 92 00 	sts	0x0092, r1
+ 18e:	08 95       	ret
+
+00000190 <odometer_links_start>:
+}
+
+void odometer_links_start(void)
+{
+	motor_left_count = 0;
+ 190:	10 92 02 01 	sts	0x0102, r1
+	check_impuls_left = 0;
+ 194:	10 92 06 01 	sts	0x0106, r1
+	TIMSK3 |= (1<<ICIE3);
+ 198:	e1 e7       	ldi	r30, 0x71	; 113
+ 19a:	f0 e0       	ldi	r31, 0x00	; 0
+ 19c:	80 81       	ld	r24, Z
+ 19e:	80 62       	ori	r24, 0x20	; 32
+ 1a0:	80 83       	st	Z, r24
+	ICR3 = 0;
+ 1a2:	10 92 97 00 	sts	0x0097, r1
+ 1a6:	10 92 96 00 	sts	0x0096, r1
+	TCNT3 = 0;		
+ 1aa:	10 92 95 00 	sts	0x0095, r1
+ 1ae:	10 92 94 00 	sts	0x0094, r1
+	TCCR3B |= (1<<CS32);
+ 1b2:	e1 e9       	ldi	r30, 0x91	; 145
+ 1b4:	f0 e0       	ldi	r31, 0x00	; 0
+ 1b6:	80 81       	ld	r24, Z
+ 1b8:	84 60       	ori	r24, 0x04	; 4
+ 1ba:	80 83       	st	Z, r24
+	TIFR3 |= (1<<ICF3);
+ 1bc:	c5 9a       	sbi	0x18, 5	; 24
+ 1be:	08 95       	ret
+
+000001c0 <odometer_rechts_start>:
+}
+
+void odometer_rechts_start(void)
+{
+	motor_right_count = 0;
+ 1c0:	10 92 03 01 	sts	0x0103, r1
+	check_impuls_right = 0;
+ 1c4:	10 92 07 01 	sts	0x0107, r1
+	TIMSK1 |= (1<<ICIE1);
+ 1c8:	ef e6       	ldi	r30, 0x6F	; 111
+ 1ca:	f0 e0       	ldi	r31, 0x00	; 0
+ 1cc:	80 81       	ld	r24, Z
+ 1ce:	80 62       	ori	r24, 0x20	; 32
+ 1d0:	80 83       	st	Z, r24
+	ICR1 = 0;
+ 1d2:	10 92 87 00 	sts	0x0087, r1
+ 1d6:	10 92 86 00 	sts	0x0086, r1
+	TCNT1 = 0;
+ 1da:	10 92 85 00 	sts	0x0085, r1
+ 1de:	10 92 84 00 	sts	0x0084, r1
+	TCCR1B |= (1<<CS12);
+ 1e2:	e1 e8       	ldi	r30, 0x81	; 129
+ 1e4:	f0 e0       	ldi	r31, 0x00	; 0
+ 1e6:	80 81       	ld	r24, Z
+ 1e8:	84 60       	ori	r24, 0x04	; 4
+ 1ea:	80 83       	st	Z, r24
+	TIFR1 |= (1<<ICF1);
+ 1ec:	b5 9a       	sbi	0x16, 5	; 22
+ 1ee:	08 95       	ret
+
+000001f0 <timer_beeper_init>:
+}
+
+void timer_beeper_init(void)
+{
+	//Timer0
+	TCNT0 = 0;
+ 1f0:	16 bc       	out	0x26, r1	; 38
+	OCR0A = 0;
+ 1f2:	17 bc       	out	0x27, r1	; 39
+	
+	TCCR0A |= (1<<COM0A0) | (1<<WGM01) | (1<<WGM00);
+ 1f4:	84 b5       	in	r24, 0x24	; 36
+ 1f6:	83 64       	ori	r24, 0x43	; 67
+ 1f8:	84 bd       	out	0x24, r24	; 36
+	TCCR0B |= (1<<WGM02);
+ 1fa:	85 b5       	in	r24, 0x25	; 37
+ 1fc:	88 60       	ori	r24, 0x08	; 8
+ 1fe:	85 bd       	out	0x25, r24	; 37
+ 200:	08 95       	ret
+
+00000202 <init>:
+	CLKPR = 1;
+}
+
+void init(void)
+{
+	DDRB |= (1<<BEEPER) | (1<<MOTOR_R) | (1<<DEBUG_PIN) | (1<<LED_LH) | (1<<LED_LV) | (1<<LED_RH) | (1<<LED_RV);
+ 202:	84 b1       	in	r24, 0x04	; 4
+ 204:	8f 6d       	ori	r24, 0xDF	; 223
+ 206:	84 b9       	out	0x04, r24	; 4
+	PORTB |= (1<<DEBUG_PIN) | (1<<LED_LH) | (1<<LED_LV) | (1<<LED_RH) | (1<<LED_RV);
+ 208:	85 b1       	in	r24, 0x05	; 5
+ 20a:	8f 61       	ori	r24, 0x1F	; 31
+ 20c:	85 b9       	out	0x05, r24	; 5
+	
+	DDRF |= (1<<MOT_L_V) | (1<<MOT_L_B) | (1<<MOT_R_V);
+ 20e:	80 b3       	in	r24, 0x10	; 16
+ 210:	80 6e       	ori	r24, 0xE0	; 224
+ 212:	80 bb       	out	0x10, r24	; 16
+	PORTF = 0;
+ 214:	11 ba       	out	0x11, r1	; 17
+	
+	DDRD |= (1<<DEBUG_PIN2) | (1<<MOTOR_L) | (1<<IR_SENDER) | (1<<LED_GRUEN) | (1<<LED_ROT);
+ 216:	8a b1       	in	r24, 0x0a	; 10
+ 218:	8c 6e       	ori	r24, 0xEC	; 236
+ 21a:	8a b9       	out	0x0a, r24	; 10
+	PORTD |= (1<<DEBUG_PIN2);// | (1<<WHEEL_RIGHT);
+ 21c:	5d 9a       	sbi	0x0b, 5	; 11
+	
+	DDRC |= (1<<MOT_R_B);
+ 21e:	3e 9a       	sbi	0x07, 6	; 7
+//	PORTC |= (1<<WHEEL_LEFT);
+
+	pwm_timer_init();
+ 220:	0e 94 77 00 	call	0xee	; 0xee <pwm_timer_init>
+	odometer_timer_init();
+ 224:	0e 94 ba 00 	call	0x174	; 0x174 <odometer_timer_init>
+	timer_beeper_init();
+ 228:	0e 94 f8 00 	call	0x1f0	; 0x1f0 <timer_beeper_init>
+	sei();
+ 22c:	78 94       	sei
+ 22e:	08 95       	ret
+
+00000230 <timer_beep_tone>:
+	
+}
+
+void timer_beep_tone(unsigned int frequenz)
+{
+	OCR0A = frequenz;
+ 230:	87 bd       	out	0x27, r24	; 39
+	TCCR0B |= (1<<CS02);
+ 232:	85 b5       	in	r24, 0x25	; 37
+ 234:	84 60       	ori	r24, 0x04	; 4
+ 236:	85 bd       	out	0x25, r24	; 37
+ 238:	08 95       	ret
+
+0000023a <drive_Robot>:
+{
+	
+}
+
+void drive_Robot(unsigned char dir_motr, unsigned char pwm_rechts, unsigned char dir_motl, unsigned char pwm_links, unsigned int impulse_rechts, unsigned int impulse_links)
+{
+ 23a:	ef 92       	push	r14
+ 23c:	0f 93       	push	r16
+ 23e:	1f 93       	push	r17
+ 240:	cf 93       	push	r28
+ 242:	df 93       	push	r29
+ 244:	16 2f       	mov	r17, r22
+ 246:	d4 2f       	mov	r29, r20
+ 248:	c2 2f       	mov	r28, r18
+	
+	// MOTOR RECHTS	
+	if (dir_motr == 2)
+ 24a:	82 30       	cpi	r24, 0x02	; 2
+ 24c:	31 f4       	brne	.+12     	; 0x25a <drive_Robot+0x20>
+	{
+		pwm_timer_stop();
+ 24e:	0e 94 aa 00 	call	0x154	; 0x154 <pwm_timer_stop>
+		PORTB |= (1<<MOTOR_R);
+ 252:	2e 9a       	sbi	0x05, 6	; 5
+		PORTF &= ~(1<<MOT_R_V);
+ 254:	8f 98       	cbi	0x11, 7	; 17
+		PORTC &= ~(1<<MOT_R_B);
+ 256:	46 98       	cbi	0x08, 6	; 8
+ 258:	15 c0       	rjmp	.+42     	; 0x284 <drive_Robot+0x4a>
+	}
+	else if (dir_motr == 1)
+ 25a:	81 30       	cpi	r24, 0x01	; 1
+ 25c:	51 f4       	brne	.+20     	; 0x272 <drive_Robot+0x38>
+	{
+		if(!(status&(1<<STATUS_PWM_TIMER)))
+ 25e:	80 91 0c 01 	lds	r24, 0x010C
+ 262:	90 91 0d 01 	lds	r25, 0x010D
+ 266:	86 ff       	sbrs	r24, 6
+		{
+			pwm_timer_start();
+ 268:	0e 94 82 00 	call	0x104	; 0x104 <pwm_timer_start>
+		}
+		PORTF |= (1<<MOT_R_V);
+ 26c:	8f 9a       	sbi	0x11, 7	; 17
+		PORTC &= ~(1<<MOT_R_B);
+ 26e:	46 98       	cbi	0x08, 6	; 8
+ 270:	09 c0       	rjmp	.+18     	; 0x284 <drive_Robot+0x4a>
+	}
+	else
+	{
+		if(!(status&(1<<STATUS_PWM_TIMER)))
+ 272:	80 91 0c 01 	lds	r24, 0x010C
+ 276:	90 91 0d 01 	lds	r25, 0x010D
+ 27a:	86 ff       	sbrs	r24, 6
+		{
+			pwm_timer_start();
+ 27c:	0e 94 82 00 	call	0x104	; 0x104 <pwm_timer_start>
+		}
+		PORTF &= ~(1<<MOT_R_V);
+ 280:	8f 98       	cbi	0x11, 7	; 17
+		PORTC |= (1<<MOT_R_B);
+ 282:	46 9a       	sbi	0x08, 6	; 8
+	}
+	
+	// MOTOR LINKS
+	if (dir_motl == 2)
+ 284:	d2 30       	cpi	r29, 0x02	; 2
+ 286:	31 f4       	brne	.+12     	; 0x294 <drive_Robot+0x5a>
+	{
+		pwm_timer_stop();
+ 288:	0e 94 aa 00 	call	0x154	; 0x154 <pwm_timer_stop>
+		PORTD |= (1<<MOTOR_L);
+ 28c:	5f 9a       	sbi	0x0b, 7	; 11
+		PORTF &= ~(1<<MOT_L_V);
+ 28e:	8d 98       	cbi	0x11, 5	; 17
+		PORTF &= ~(1<<MOT_L_B);
+ 290:	8e 98       	cbi	0x11, 6	; 17
+ 292:	15 c0       	rjmp	.+42     	; 0x2be <drive_Robot+0x84>
+	}
+	else if (dir_motl == 1)
+ 294:	d1 30       	cpi	r29, 0x01	; 1
+ 296:	51 f4       	brne	.+20     	; 0x2ac <drive_Robot+0x72>
+	{
+		if(!(status&(1<<STATUS_PWM_TIMER)))
+ 298:	80 91 0c 01 	lds	r24, 0x010C
+ 29c:	90 91 0d 01 	lds	r25, 0x010D
+ 2a0:	86 ff       	sbrs	r24, 6
+		{
+			pwm_timer_start();
+ 2a2:	0e 94 82 00 	call	0x104	; 0x104 <pwm_timer_start>
+		}
+		PORTF |= (1<<MOT_L_V);
+ 2a6:	8d 9a       	sbi	0x11, 5	; 17
+		PORTF &= ~(1<<MOT_L_B);
+ 2a8:	8e 98       	cbi	0x11, 6	; 17
+ 2aa:	09 c0       	rjmp	.+18     	; 0x2be <drive_Robot+0x84>
+	}
+	else
+	{
+		if(!(status&(1<<STATUS_PWM_TIMER)))
+ 2ac:	80 91 0c 01 	lds	r24, 0x010C
+ 2b0:	90 91 0d 01 	lds	r25, 0x010D
+ 2b4:	86 ff       	sbrs	r24, 6
+		{
+			pwm_timer_start();
+ 2b6:	0e 94 82 00 	call	0x104	; 0x104 <pwm_timer_start>
+		}
+		PORTF &= ~(1<<MOT_L_V);
+ 2ba:	8d 98       	cbi	0x11, 5	; 17
+		PORTF |= (1<<MOT_L_B);
+ 2bc:	8e 9a       	sbi	0x11, 6	; 17
+	}
+	
+	if (status&(1<<STATUS_PWM_TIMER))
+ 2be:	80 91 0c 01 	lds	r24, 0x010C
+ 2c2:	90 91 0d 01 	lds	r25, 0x010D
+ 2c6:	86 ff       	sbrs	r24, 6
+ 2c8:	3f c0       	rjmp	.+126    	; 0x348 <drive_Robot+0x10e>
+	{
+		OCR4B = pwm_rechts;
+ 2ca:	10 93 d0 00 	sts	0x00D0, r17
+		OCR4D = pwm_links;
+ 2ce:	c0 93 d2 00 	sts	0x00D2, r28
+			
+		impuls_right_set = impulse_rechts;
+ 2d2:	00 93 05 01 	sts	0x0105, r16
+		impuls_left_set = impulse_links;
+ 2d6:	e0 92 04 01 	sts	0x0104, r14
+		
+		if (pwm_rechts != PWM_STOPP)
+ 2da:	11 23       	and	r17, r17
+ 2dc:	61 f0       	breq	.+24     	; 0x2f6 <drive_Robot+0xbc>
+		{
+			odometer_rechts_start();
+ 2de:	0e 94 e0 00 	call	0x1c0	; 0x1c0 <odometer_rechts_start>
+			status &= ~(1<<STATUS_MOT_R_READY);
+ 2e2:	80 91 0c 01 	lds	r24, 0x010C
+ 2e6:	90 91 0d 01 	lds	r25, 0x010D
+ 2ea:	8f 7e       	andi	r24, 0xEF	; 239
+ 2ec:	90 93 0d 01 	sts	0x010D, r25
+ 2f0:	80 93 0c 01 	sts	0x010C, r24
+ 2f4:	09 c0       	rjmp	.+18     	; 0x308 <drive_Robot+0xce>
+		}
+		else
+		{
+			status |= (1<<STATUS_MOT_R_READY);
+ 2f6:	80 91 0c 01 	lds	r24, 0x010C
+ 2fa:	90 91 0d 01 	lds	r25, 0x010D
+ 2fe:	80 61       	ori	r24, 0x10	; 16
+ 300:	90 93 0d 01 	sts	0x010D, r25
+ 304:	80 93 0c 01 	sts	0x010C, r24
+		}
+		
+		if (pwm_links != PWM_STOPP)
+ 308:	cc 23       	and	r28, r28
+ 30a:	61 f0       	breq	.+24     	; 0x324 <drive_Robot+0xea>
+		{
+			odometer_links_start();
+ 30c:	0e 94 c8 00 	call	0x190	; 0x190 <odometer_links_start>
+			status &= ~(1<<STATUS_MOT_L_READY);
+ 310:	80 91 0c 01 	lds	r24, 0x010C
+ 314:	90 91 0d 01 	lds	r25, 0x010D
+ 318:	8f 7d       	andi	r24, 0xDF	; 223
+ 31a:	90 93 0d 01 	sts	0x010D, r25
+ 31e:	80 93 0c 01 	sts	0x010C, r24
+ 322:	09 c0       	rjmp	.+18     	; 0x336 <drive_Robot+0xfc>
+		}
+		else
+		{
+			status |= (1<<STATUS_MOT_L_READY);
+ 324:	80 91 0c 01 	lds	r24, 0x010C
+ 328:	90 91 0d 01 	lds	r25, 0x010D
+ 32c:	80 62       	ori	r24, 0x20	; 32
+ 32e:	90 93 0d 01 	sts	0x010D, r25
+ 332:	80 93 0c 01 	sts	0x010C, r24
+		}
+		
+		status |= (1<<STATUS_BUSY);		
+ 336:	80 91 0c 01 	lds	r24, 0x010C
+ 33a:	90 91 0d 01 	lds	r25, 0x010D
+ 33e:	82 60       	ori	r24, 0x02	; 2
+ 340:	90 93 0d 01 	sts	0x010D, r25
+ 344:	80 93 0c 01 	sts	0x010C, r24
+	}
+}
+ 348:	df 91       	pop	r29
+ 34a:	cf 91       	pop	r28
+ 34c:	1f 91       	pop	r17
+ 34e:	0f 91       	pop	r16
+ 350:	ef 90       	pop	r14
+ 352:	08 95       	ret
+
+00000354 <check_impulse>:
+		//TCCR3B &= ~((1<<CS32) | (1<<CS31) | (1<<CS30));
+		//TIMSK3 = 0;
+		//OCR4D = PWM_STOPP;
+	//}
+
+	if (status&(1<<STATUS_MOT_R_READY) && status&(1<<STATUS_MOT_L_READY))
+ 354:	80 91 0c 01 	lds	r24, 0x010C
+ 358:	90 91 0d 01 	lds	r25, 0x010D
+ 35c:	84 ff       	sbrs	r24, 4
+ 35e:	11 c0       	rjmp	.+34     	; 0x382 <check_impulse+0x2e>
+ 360:	80 91 0c 01 	lds	r24, 0x010C
+ 364:	90 91 0d 01 	lds	r25, 0x010D
+ 368:	85 ff       	sbrs	r24, 5
+ 36a:	0d c0       	rjmp	.+26     	; 0x386 <check_impulse+0x32>
+	{
+		status &= ~(1<<STATUS_BUSY);
+ 36c:	80 91 0c 01 	lds	r24, 0x010C
+ 370:	90 91 0d 01 	lds	r25, 0x010D
+ 374:	8d 7f       	andi	r24, 0xFD	; 253
+ 376:	90 93 0d 01 	sts	0x010D, r25
+ 37a:	80 93 0c 01 	sts	0x010C, r24
+		return 1;
+ 37e:	81 e0       	ldi	r24, 0x01	; 1
+ 380:	08 95       	ret
+	} 
+	else
+	{
+		return 0;
+ 382:	80 e0       	ldi	r24, 0x00	; 0
+ 384:	08 95       	ret
+ 386:	80 e0       	ldi	r24, 0x00	; 0
+	}
+}
+ 388:	08 95       	ret
+
+0000038a <beep>:
+
+void beep(unsigned char times)
+{
+ 38a:	0f 93       	push	r16
+ 38c:	1f 93       	push	r17
+ 38e:	cf 93       	push	r28
+ 390:	df 93       	push	r29
+	for (int i=0; i < times ; i++)
+ 392:	08 2f       	mov	r16, r24
+ 394:	10 e0       	ldi	r17, 0x00	; 0
+ 396:	10 16       	cp	r1, r16
+ 398:	11 06       	cpc	r1, r17
+ 39a:	04 f5       	brge	.+64     	; 0x3dc <beep+0x52>
+ 39c:	c0 e0       	ldi	r28, 0x00	; 0
+ 39e:	d0 e0       	ldi	r29, 0x00	; 0
+	{
+		timer_beep_tone(BEEP);
+ 3a0:	88 e0       	ldi	r24, 0x08	; 8
+ 3a2:	90 e0       	ldi	r25, 0x00	; 0
+ 3a4:	0e 94 18 01 	call	0x230	; 0x230 <timer_beep_tone>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 3a8:	2f ef       	ldi	r18, 0xFF	; 255
+ 3aa:	80 e7       	ldi	r24, 0x70	; 112
+ 3ac:	92 e0       	ldi	r25, 0x02	; 2
+ 3ae:	21 50       	subi	r18, 0x01	; 1
+ 3b0:	80 40       	sbci	r24, 0x00	; 0
+ 3b2:	90 40       	sbci	r25, 0x00	; 0
+ 3b4:	e1 f7       	brne	.-8      	; 0x3ae <beep+0x24>
+ 3b6:	00 c0       	rjmp	.+0      	; 0x3b8 <beep+0x2e>
+ 3b8:	00 00       	nop
+		_delay_ms(100);
+		timer_beep_tone(NONE);
+ 3ba:	80 e0       	ldi	r24, 0x00	; 0
+ 3bc:	90 e0       	ldi	r25, 0x00	; 0
+ 3be:	0e 94 18 01 	call	0x230	; 0x230 <timer_beep_tone>
+ 3c2:	2f ef       	ldi	r18, 0xFF	; 255
+ 3c4:	80 e7       	ldi	r24, 0x70	; 112
+ 3c6:	92 e0       	ldi	r25, 0x02	; 2
+ 3c8:	21 50       	subi	r18, 0x01	; 1
+ 3ca:	80 40       	sbci	r24, 0x00	; 0
+ 3cc:	90 40       	sbci	r25, 0x00	; 0
+ 3ce:	e1 f7       	brne	.-8      	; 0x3c8 <beep+0x3e>
+ 3d0:	00 c0       	rjmp	.+0      	; 0x3d2 <beep+0x48>
+ 3d2:	00 00       	nop
+	}
+}
+
+void beep(unsigned char times)
+{
+	for (int i=0; i < times ; i++)
+ 3d4:	21 96       	adiw	r28, 0x01	; 1
+ 3d6:	c0 17       	cp	r28, r16
+ 3d8:	d1 07       	cpc	r29, r17
+ 3da:	14 f3       	brlt	.-60     	; 0x3a0 <beep+0x16>
+		timer_beep_tone(BEEP);
+		_delay_ms(100);
+		timer_beep_tone(NONE);
+		_delay_ms(100);
+	}
+}
+ 3dc:	df 91       	pop	r29
+ 3de:	cf 91       	pop	r28
+ 3e0:	1f 91       	pop	r17
+ 3e2:	0f 91       	pop	r16
+ 3e4:	08 95       	ret
+
+000003e6 <__vector_16>:
+
+
+// rechter Motorgeber
+
+ISR(TIMER1_CAPT_vect)
+{
+ 3e6:	1f 92       	push	r1
+ 3e8:	0f 92       	push	r0
+ 3ea:	0f b6       	in	r0, 0x3f	; 63
+ 3ec:	0f 92       	push	r0
+ 3ee:	11 24       	eor	r1, r1
+ 3f0:	8f 93       	push	r24
+ 3f2:	9f 93       	push	r25
+ 3f4:	ef 93       	push	r30
+ 3f6:	ff 93       	push	r31
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 3f8:	8a e1       	ldi	r24, 0x1A	; 26
+ 3fa:	8a 95       	dec	r24
+ 3fc:	f1 f7       	brne	.-4      	; 0x3fa <__vector_16+0x14>
+ 3fe:	00 c0       	rjmp	.+0      	; 0x400 <__vector_16+0x1a>
+	_delay_us(10);
+	if (status&(1<<STATUS_MOT_R_READY))
+ 400:	80 91 0c 01 	lds	r24, 0x010C
+ 404:	90 91 0d 01 	lds	r25, 0x010D
+ 408:	84 fd       	sbrc	r24, 4
+ 40a:	3e c0       	rjmp	.+124    	; 0x488 <__vector_16+0xa2>
+	{
+	}
+	else
+	{
+		if (!(PIND&(1<<WHEEL_RIGHT)))
+ 40c:	4c 99       	sbic	0x09, 4	; 9
+ 40e:	3c c0       	rjmp	.+120    	; 0x488 <__vector_16+0xa2>
+		{
+//			PORTB &=~(1<<DEBUG_PIN);
+			if (motor_right_count == 0)
+ 410:	80 91 03 01 	lds	r24, 0x0103
+ 414:	81 11       	cpse	r24, r1
+ 416:	0d c0       	rjmp	.+26     	; 0x432 <__vector_16+0x4c>
+			{
+				check_impuls_right++;
+ 418:	80 91 07 01 	lds	r24, 0x0107
+ 41c:	8f 5f       	subi	r24, 0xFF	; 255
+ 41e:	80 93 07 01 	sts	0x0107, r24
+				motor_right_count=1;
+ 422:	81 e0       	ldi	r24, 0x01	; 1
+ 424:	80 93 03 01 	sts	0x0103, r24
+				TCNT1 = 0;
+ 428:	10 92 85 00 	sts	0x0085, r1
+ 42c:	10 92 84 00 	sts	0x0084, r1
+ 430:	13 c0       	rjmp	.+38     	; 0x458 <__vector_16+0x72>
+			}
+			else
+			{
+				impulstime_right = ICR1;
+ 432:	80 91 86 00 	lds	r24, 0x0086
+ 436:	90 91 87 00 	lds	r25, 0x0087
+ 43a:	90 93 0b 01 	sts	0x010B, r25
+ 43e:	80 93 0a 01 	sts	0x010A, r24
+				check_impuls_right++;
+ 442:	80 91 07 01 	lds	r24, 0x0107
+ 446:	8f 5f       	subi	r24, 0xFF	; 255
+ 448:	80 93 07 01 	sts	0x0107, r24
+				motor_right_count = 0;
+ 44c:	10 92 03 01 	sts	0x0103, r1
+				TCNT1 = 0;
+ 450:	10 92 85 00 	sts	0x0085, r1
+ 454:	10 92 84 00 	sts	0x0084, r1
+			}
+	
+			if (check_impuls_right >= impuls_right_set)
+ 458:	90 91 07 01 	lds	r25, 0x0107
+ 45c:	80 91 05 01 	lds	r24, 0x0105
+ 460:	98 17       	cp	r25, r24
+ 462:	90 f0       	brcs	.+36     	; 0x488 <__vector_16+0xa2>
+			{
+				status |= (1<<STATUS_MOT_R_READY);
+ 464:	80 91 0c 01 	lds	r24, 0x010C
+ 468:	90 91 0d 01 	lds	r25, 0x010D
+ 46c:	80 61       	ori	r24, 0x10	; 16
+ 46e:	90 93 0d 01 	sts	0x010D, r25
+ 472:	80 93 0c 01 	sts	0x010C, r24
+				TCCR1B &= ~((1<<CS12) | (1<<CS11) | (1<<CS10));
+ 476:	e1 e8       	ldi	r30, 0x81	; 129
+ 478:	f0 e0       	ldi	r31, 0x00	; 0
+ 47a:	80 81       	ld	r24, Z
+ 47c:	88 7f       	andi	r24, 0xF8	; 248
+ 47e:	80 83       	st	Z, r24
+				TIMSK1 = 0;
+ 480:	10 92 6f 00 	sts	0x006F, r1
+				OCR4B = PWM_STOPP;
+ 484:	10 92 d0 00 	sts	0x00D0, r1
+			}
+//			_delay_ms(5);
+//			PORTB |= (1<<DEBUG_PIN);
+		}	
+	}
+	TIFR1 |= (1<<ICF1);
+ 488:	b5 9a       	sbi	0x16, 5	; 22
+}
+ 48a:	ff 91       	pop	r31
+ 48c:	ef 91       	pop	r30
+ 48e:	9f 91       	pop	r25
+ 490:	8f 91       	pop	r24
+ 492:	0f 90       	pop	r0
+ 494:	0f be       	out	0x3f, r0	; 63
+ 496:	0f 90       	pop	r0
+ 498:	1f 90       	pop	r1
+ 49a:	18 95       	reti
+
+0000049c <__vector_31>:
+
+
+// linker Motorgeber
+
+ISR(TIMER3_CAPT_vect)
+{
+ 49c:	1f 92       	push	r1
+ 49e:	0f 92       	push	r0
+ 4a0:	0f b6       	in	r0, 0x3f	; 63
+ 4a2:	0f 92       	push	r0
+ 4a4:	11 24       	eor	r1, r1
+ 4a6:	8f 93       	push	r24
+ 4a8:	9f 93       	push	r25
+ 4aa:	ef 93       	push	r30
+ 4ac:	ff 93       	push	r31
+ 4ae:	8a e1       	ldi	r24, 0x1A	; 26
+ 4b0:	8a 95       	dec	r24
+ 4b2:	f1 f7       	brne	.-4      	; 0x4b0 <__vector_31+0x14>
+ 4b4:	00 c0       	rjmp	.+0      	; 0x4b6 <__vector_31+0x1a>
+	unsigned int calc_pwm=0;
+	
+	_delay_us(10);
+	if (status&(1<<STATUS_MOT_L_READY))
+ 4b6:	80 91 0c 01 	lds	r24, 0x010C
+ 4ba:	90 91 0d 01 	lds	r25, 0x010D
+ 4be:	85 fd       	sbrc	r24, 5
+ 4c0:	3e c0       	rjmp	.+124    	; 0x53e <__vector_31+0xa2>
+	{
+	}
+	else
+	{
+		if (!(PINC&(1<<WHEEL_LEFT)))
+ 4c2:	37 99       	sbic	0x06, 7	; 6
+ 4c4:	3c c0       	rjmp	.+120    	; 0x53e <__vector_31+0xa2>
+		{
+//			PORTD &=~(1<<DEBUG_PIN2);
+			if (motor_left_count == 0)
+ 4c6:	80 91 02 01 	lds	r24, 0x0102
+ 4ca:	81 11       	cpse	r24, r1
+ 4cc:	0d c0       	rjmp	.+26     	; 0x4e8 <__vector_31+0x4c>
+			{
+				check_impuls_left++;
+ 4ce:	80 91 06 01 	lds	r24, 0x0106
+ 4d2:	8f 5f       	subi	r24, 0xFF	; 255
+ 4d4:	80 93 06 01 	sts	0x0106, r24
+				motor_left_count=1;
+ 4d8:	81 e0       	ldi	r24, 0x01	; 1
+ 4da:	80 93 02 01 	sts	0x0102, r24
+				TCNT3 = 0;
+ 4de:	10 92 95 00 	sts	0x0095, r1
+ 4e2:	10 92 94 00 	sts	0x0094, r1
+ 4e6:	13 c0       	rjmp	.+38     	; 0x50e <__vector_31+0x72>
+			}
+			else
+			{
+				impulstime_left = ICR3;
+ 4e8:	80 91 96 00 	lds	r24, 0x0096
+ 4ec:	90 91 97 00 	lds	r25, 0x0097
+ 4f0:	90 93 09 01 	sts	0x0109, r25
+ 4f4:	80 93 08 01 	sts	0x0108, r24
+				check_impuls_left++;
+ 4f8:	80 91 06 01 	lds	r24, 0x0106
+ 4fc:	8f 5f       	subi	r24, 0xFF	; 255
+ 4fe:	80 93 06 01 	sts	0x0106, r24
+				//} 
+				//else
+				//{
+					//// Motor zu langsam
+				//}
+				motor_left_count = 0;
+ 502:	10 92 02 01 	sts	0x0102, r1
+				TCNT3 = 0;
+ 506:	10 92 95 00 	sts	0x0095, r1
+ 50a:	10 92 94 00 	sts	0x0094, r1
+			}
+		
+			if (check_impuls_left >= impuls_left_set)
+ 50e:	90 91 06 01 	lds	r25, 0x0106
+ 512:	80 91 04 01 	lds	r24, 0x0104
+ 516:	98 17       	cp	r25, r24
+ 518:	90 f0       	brcs	.+36     	; 0x53e <__vector_31+0xa2>
+			{
+				status |= (1<<STATUS_MOT_L_READY);
+ 51a:	80 91 0c 01 	lds	r24, 0x010C
+ 51e:	90 91 0d 01 	lds	r25, 0x010D
+ 522:	80 62       	ori	r24, 0x20	; 32
+ 524:	90 93 0d 01 	sts	0x010D, r25
+ 528:	80 93 0c 01 	sts	0x010C, r24
+				TCCR3B &= ~((1<<CS32) | (1<<CS31) | (1<<CS30));
+ 52c:	e1 e9       	ldi	r30, 0x91	; 145
+ 52e:	f0 e0       	ldi	r31, 0x00	; 0
+ 530:	80 81       	ld	r24, Z
+ 532:	88 7f       	andi	r24, 0xF8	; 248
+ 534:	80 83       	st	Z, r24
+				TIMSK3 = 0;
+ 536:	10 92 71 00 	sts	0x0071, r1
+				OCR4D = PWM_STOPP;
+ 53a:	10 92 d2 00 	sts	0x00D2, r1
+			}
+//			_delay_ms(5);
+//			PORTD |= (1<<DEBUG_PIN2);
+		}
+	}	
+	TIFR3 |= (1<<ICF3);
+ 53e:	c5 9a       	sbi	0x18, 5	; 24
+}
+ 540:	ff 91       	pop	r31
+ 542:	ef 91       	pop	r30
+ 544:	9f 91       	pop	r25
+ 546:	8f 91       	pop	r24
+ 548:	0f 90       	pop	r0
+ 54a:	0f be       	out	0x3f, r0	; 63
+ 54c:	0f 90       	pop	r0
+ 54e:	1f 90       	pop	r1
+ 550:	18 95       	reti
+
+00000552 <main>:
+
+int main(void)
+{	
+	unsigned char programm_step = 1;
+	
+	set_fuses();
+ 552:	0e 94 6a 00 	call	0xd4	; 0xd4 <set_fuses>
+	init();
+ 556:	0e 94 01 01 	call	0x202	; 0x202 <init>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 55a:	2f ef       	ldi	r18, 0xFF	; 255
+ 55c:	89 e6       	ldi	r24, 0x69	; 105
+ 55e:	98 e1       	ldi	r25, 0x18	; 24
+ 560:	21 50       	subi	r18, 0x01	; 1
+ 562:	80 40       	sbci	r24, 0x00	; 0
+ 564:	90 40       	sbci	r25, 0x00	; 0
+ 566:	e1 f7       	brne	.-8      	; 0x560 <main+0xe>
+ 568:	00 c0       	rjmp	.+0      	; 0x56a <main+0x18>
+ 56a:	00 00       	nop
+
+	_delay_ms(1000);
+
+	beep(5);
+ 56c:	85 e0       	ldi	r24, 0x05	; 5
+ 56e:	0e 94 c5 01 	call	0x38a	; 0x38a <beep>
+ 572:	2f ef       	ldi	r18, 0xFF	; 255
+ 574:	83 ed       	ldi	r24, 0xD3	; 211
+ 576:	90 e3       	ldi	r25, 0x30	; 48
+ 578:	21 50       	subi	r18, 0x01	; 1
+ 57a:	80 40       	sbci	r24, 0x00	; 0
+ 57c:	90 40       	sbci	r25, 0x00	; 0
+ 57e:	e1 f7       	brne	.-8      	; 0x578 <main+0x26>
+ 580:	00 c0       	rjmp	.+0      	; 0x582 <main+0x30>
+ 582:	00 00       	nop
+			}
+			break;
+		}		
+	}
+*/
+	pwm_left = 250;
+ 584:	8a ef       	ldi	r24, 0xFA	; 250
+ 586:	80 93 01 01 	sts	0x0101, r24
+	pwm_right = 242;
+ 58a:	82 ef       	ldi	r24, 0xF2	; 242
+ 58c:	80 93 00 01 	sts	0x0100, r24
+	drive_Robot(MOT_FORWARD,pwm_right,MOT_FORWARD,pwm_left,20*ONE_TURN,20*ONE_TURN);
+ 590:	20 91 01 01 	lds	r18, 0x0101
+ 594:	60 91 00 01 	lds	r22, 0x0100
+ 598:	0f 2e       	mov	r0, r31
+ 59a:	f8 ec       	ldi	r31, 0xC8	; 200
+ 59c:	ef 2e       	mov	r14, r31
+ 59e:	f1 2c       	mov	r15, r1
+ 5a0:	f0 2d       	mov	r31, r0
+ 5a2:	08 ec       	ldi	r16, 0xC8	; 200
+ 5a4:	10 e0       	ldi	r17, 0x00	; 0
+ 5a6:	41 e0       	ldi	r20, 0x01	; 1
+ 5a8:	81 e0       	ldi	r24, 0x01	; 1
+ 5aa:	0e 94 1d 01 	call	0x23a	; 0x23a <drive_Robot>
+	while(1)
+	{
+		if(!check_impulse()) {}
+		else
+		{
+			PORTD ^= (1<<LED_GRUEN);
+ 5ae:	c8 e0       	ldi	r28, 0x08	; 8
+	pwm_right = pwm_left-(pwm_left/RATIO_Left_Right);
+	drive_Robot(MOT_FAST_STOPP,pwm_right,MOT_FAST_STOPP,pwm_left,ONE_TURN,ONE_TURN);
+*/
+	while(1)
+	{
+		if(!check_impulse()) {}
+ 5b0:	0e 94 aa 01 	call	0x354	; 0x354 <check_impulse>
+ 5b4:	88 23       	and	r24, r24
+ 5b6:	e1 f3       	breq	.-8      	; 0x5b0 <main+0x5e>
+		else
+		{
+			PORTD ^= (1<<LED_GRUEN);
+ 5b8:	8b b1       	in	r24, 0x0b	; 11
+ 5ba:	8c 27       	eor	r24, r28
+ 5bc:	8b b9       	out	0x0b, r24	; 11
+ 5be:	2f ef       	ldi	r18, 0xFF	; 255
+ 5c0:	81 ee       	ldi	r24, 0xE1	; 225
+ 5c2:	94 e0       	ldi	r25, 0x04	; 4
+ 5c4:	21 50       	subi	r18, 0x01	; 1
+ 5c6:	80 40       	sbci	r24, 0x00	; 0
+ 5c8:	90 40       	sbci	r25, 0x00	; 0
+ 5ca:	e1 f7       	brne	.-8      	; 0x5c4 <main+0x72>
+ 5cc:	00 c0       	rjmp	.+0      	; 0x5ce <main+0x7c>
+ 5ce:	00 00       	nop
+ 5d0:	ef cf       	rjmp	.-34     	; 0x5b0 <main+0x5e>
+
+000005d2 <_exit>:
+ 5d2:	f8 94       	cli
+
+000005d4 <__stop_program>:
+ 5d4:	ff cf       	rjmp	.-2      	; 0x5d4 <__stop_program>

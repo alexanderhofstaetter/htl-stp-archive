@@ -1,0 +1,194 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100317.html;106,k100318.html;107,k100320.html;108,k100322.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100317.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100318.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100320.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100322.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 50 - Sicherheit und Kryptografie
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id050002"></a>
+<h2>50.2 Sicherheitsmechanismen in Java </h2>
+<hr>
+<ul>
+<li><a href="k100319.html#sectlevel2id050002">50.2 Sicherheitsmechanismen in Java</a>
+<ul>
+<li><a href="k100319.html#sectlevel3id050002001">50.2.1 Sprachsicherheit</a>
+<li><a href="k100319.html#sectlevel3id050002002">50.2.2 Das Sandbox-Konzept</a>
+<li><a href="k100319.html#sectlevel3id050002003">50.2.3 Die Policy-Datei</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id050002001"></a>
+<h3>50.2.1 Sprachsicherheit </h3>
+
+<p>
+Java wurde von Anfang an mit h&ouml;heren Sicherheitsanspr&uuml;chen
+entworfen, als dies &uuml;blicherweise bei Programmiersprachen der
+Fall ist. Einer der Hauptgr&uuml;nde daf&uuml;r war der Wunsch, den
+Aufruf von Applets, die aus dem Internet geladen wurden, so sicher
+wie m&ouml;glich zu machen. Selbst b&ouml;sartige Applets sollten
+nicht in der Lage sein, ernsthafte Angriffe auf den Computer, das
+Betriebssystem oder die Ressourcen des Anwenders auszuf&uuml;hren.
+
+<p>
+Sicherheit beginnt in Java schon bei der Implementierung der Sprache.
+Anders als in C oder C++ gibt es beispielsweise keine direkten Zugriffe
+auf den Hauptspeicher und keine Pointer-Arithmetik. Das Memory-Management
+arbeitet vollautomatisch. Sicherheitsl&uuml;cken, die durch (provozierte)
+Speicher&uuml;berl&auml;ufe verursacht werden, sind damit nicht ohne
+Weiteres m&ouml;glich. 
+
+<p>
+Alle Typkonvertierungen werden zur Laufzeit gepr&uuml;ft und unerlaubte
+Umwandlungen werden von vornherein ausgeschlossen. Auch Zugriffe auf
+Array-Elemente und Strings werden grunds&auml;tzlich auf Einhaltung
+der Bereichsgrenzen gepr&uuml;ft. Zugriffe, die au&szlig;erhalb des
+erlaubten Bereichs liegen, f&uuml;hren nicht zu undefiniertem Verhalten,
+sondern werden definiert abgebrochen und l&ouml;sen eine Ausnahme
+aus. 
+
+<p>
+Beim Laden von Bytecode &uuml;ber das Netz wird dieser vor der Ausf&uuml;hrung
+von einem <a name="ixa103676"><i>Bytecode-Verifier</i></a> untersucht.
+Auf diese Weise wird beispielsweise sichergestellt, dass nur g&uuml;ltige
+Opcodes verwendet werden, dass alle Sprunganweisungen auf den Anfang
+einer Anweisung zeigen, dass alle Methoden mit korrekten Signaturen
+versehen sind und dass Ausdr&uuml;cke korrekt typisiert sind. Zudem
+implementiert der Klassenlader einen lokalen Namensraum, der verhindert,
+dass bestehende Klassen ver&auml;ndert oder ersetzt werden k&ouml;nnen.
+
+
+<!-- Section -->
+<a name="sectlevel3id050002002"></a>
+<h3>50.2.2 Das <a name="ixa103677">Sandbox-Konzept</a> </h3>
+
+<p>
+Traditionell wurde in Java zwischen lokalem Code und solchem, der
+aus dem Netz geladen wird, bez&uuml;glich seiner Sicherheitsanforderungen
+rigoros unterschieden. W&auml;hrend lokalem Code (also Applikationen
+und von der Festplatte geladenen Applets) der Zugriff auf alle verf&uuml;gbaren
+Ressourcen gestattet ist, d&uuml;rfen Applets, die aus dem Netz geladen
+wurden, nur einen kleinen Teil davon verwenden. Sie halten sich gewisserma&szlig;en
+in einem Sandkasten auf, in dem sie nur ungef&auml;hrliche Spielzeuge
+verwenden und keinen ernsthaften Schaden anrichten k&ouml;nnen (daher
+der Name &#187;Sandbox&#171;). 
+
+<p>
+Zu den &#187;gef&auml;hrlichen Spielzeugen&#171;, die nicht verwendet
+werden d&uuml;rfen, z&auml;hlen: 
+<ul>
+<li>der lesende und schreibende Zugriff auf Dateien des lokalen Computers,
+<li>das &Ouml;ffnen von TCP/IP-Verbindungen zu einem anderen als dem
+Host, von dem das Applet geladen wurde,
+<li>das Akzeptieren von TCP/IP-Verbindungen auf privilegierten Portnummern,
+<li>das Lesen benutzerbezogener System-Properties wie &#187;user.name&#171;,
+&#187;user.home&#171;, &#187;user.dir&#171; oder &#187;java.home&#171;,
+<li>das Erzeugen eines Top-Level-Fensters ohne Warnhinweis,
+<li>das Ausf&uuml;hren externer Programme,
+<li>das Laden von System-Libraries,
+<li>das Beenden der virtuellen Maschine.
+</ul>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Ben&ouml;tigte ein Applet Zugriff auf diese Ressourcen, gab es im
+JDK 1.0 die M&ouml;glichkeit, die zugeh&ouml;rigen Dateien auf der
+lokalen Festplatte abzulegen. Denn wenn das Applet zur Ausf&uuml;hrung
+nicht aus dem Netz, sondern aus den lokalen Dateien gestartet wurde,
+galt es automatisch als vertrauensw&uuml;rdig und hatte Zugriff auf
+alle ansonsten verbotenen Ressourcen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Mit dem JDK 1.1 wurde eine neue M&ouml;glichkeit eingef&uuml;hrt,
+Applets Zugriff auf gesch&uuml;tzte Ressourcen zu erm&ouml;glichen.
+Dazu m&uuml;ssen alle zum Applet geh&ouml;renden Dateien in eine jar-Datei
+verpackt und mit einer digitalen Unterschrift versehen werden. Wird
+der Unterzeichner auf dem ausf&uuml;hrenden Computer als vertrauensw&uuml;rdig
+angesehen (indem sein &ouml;ffentlicher Schl&uuml;ssel an geeigneter
+Stelle bekanntgemacht wurde), kann das Applet die Sandbox verlassen
+und hat Zugriff auf alle gesch&uuml;tzten Ressourcen. 
+
+<!-- Section -->
+
+<a name="sectlevel3id050002003"></a>
+<h3>50.2.3 Die Policy-Datei</h3>
+
+<p>
+Mit dem JDK 1.2 wurde dieses Konzept weiter verfeinert. W&auml;hrend
+es im JDK 1.1 schwierig war, die Zugriffsbeschr&auml;nkungen schrittweise
+zu lockern, ist das nun viel einfacher. Die Zugriffsbeschr&auml;nkungen
+sind konfigurierbar und k&ouml;nnen mit Hilfe einer <a name="ixa103678"><i>Policy-Datei</i></a>
+auch ohne Programm&auml;nderungen angepasst werden. Sie k&ouml;nnen
+wahlweise davon abh&auml;ngig gemacht werden, von wem die Signatur
+stammt, als auch davon, woher das Applet geladen wurde. Zudem wurde
+die prinzipielle Unterscheidung zwischen lokalem und netzwerkbasiertem
+Code aufgegeben. Obwohl die Sicherheitseinstellungen so konfiguriert
+werden k&ouml;nnten, dass lokalem Code voller Zugriff auf alle Ressourcen
+gew&auml;hrt wird, ist das standardm&auml;&szlig;ig nicht mehr der
+Fall. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100317.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100318.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100320.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100322.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

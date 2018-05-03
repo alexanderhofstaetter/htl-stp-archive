@@ -1,0 +1,304 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100084.html;106,k100086.html;107,k100088.html;108,k100090.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100084.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100086.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100088.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100090.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 13 - Exceptions
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id013003"></a>
+<h2>13.3 Weitergabe von Exceptions </h2>
+<hr>
+<ul>
+<li><a href="k100087.html#sectlevel2id013003">13.3 Weitergabe von Exceptions</a>
+<ul>
+<li><a href="k100087.html#sectlevel3id013003001">13.3.1 Die catch-or-throw-Regel</a>
+<li><a href="k100087.html#sectlevel3id013003002">13.3.2 Weitergabe einer Exception</a>
+<ul>
+<li><a href="k100087.html#sectlevel4id013003002001">Die Klasse RuntimeException</a>
+</ul>
+<li><a href="k100087.html#sectlevel3id013003003">13.3.3 Ausl&ouml;sen von Ausnahmen</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id013003001"></a>
+<h3>13.3.1 Die <a name="ixa100739">catch-or-throw-Regel</a> </h3>
+
+<p>
+Bei der Behandlung von Ausnahmen in Java gibt es die Grundregel <i>catch
+or throw</i>. Sie besagt, dass jede Ausnahme entweder <i>behandelt</i>
+oder <i>weitergegeben</i> werden muss. Wie man Ausnahmen behandelt,
+wurde anhand der <a href="index_t.html#ixb100571"><font color=#000080><tt>try</tt></font></a>-<a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a>-Anweisung
+in den vorherigen Abschnitten erkl&auml;rt. Soll eine Ausnahme nicht
+behandelt, sondern weitergegeben werden, so kann dies einfach dadurch
+geschehen, dass eine geeignete <a href="index_t.html#ixb100571"><font color=#000080><tt>try</tt></font></a>-<a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a>-Anweisung
+nicht verwendet wird. 
+
+<p>
+In der Regel gibt es dann jedoch zun&auml;chst einen Fehler beim &Uuml;bersetzen
+des Programms, denn der Compiler erwartet, dass jede m&ouml;gliche
+Ausnahme, die nicht behandelt, sondern weitergegeben wird, mit Hilfe
+der <a href="index_t.html#ixb100475"><font color=#000080><tt>throws</tt></font></a>-Klausel
+zu deklarieren ist. Dazu wird an das Ende des Methodenkopfs das Schl&uuml;sselwort
+<a href="index_t.html#ixb100475"><font color=#000080><tt>throws</tt></font></a>
+mit einer Liste aller Ausnahmen, die nicht behandelt werden sollen,
+angeh&auml;ngt: 
+<a name="listingid013010"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#006699">void</font> SqrtTable()
+<font color="#555555">002 </font><font color="#0000AA">throws</font> ArithmeticException
+<font color="#555555">003 </font>{
+<font color="#555555">004 </font>  <font color="#006699">double</font> x = -1.0;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font>  <font color="#0000AA">while</font> (x &lt;= 10.0) {
+<font color="#555555">007 </font>    System.out.println(<font color="#0000FF">"sqrt("</font>+x+<font color="#0000FF">")="</font>+Math.sqrt(x));
+<font color="#555555">008 </font>    x += 1.0;
+<font color="#555555">009 </font>  }
+<font color="#555555">010 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 13.10: Verwendung der throws-Klausel</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id013003002"></a>
+<h3>13.3.2 <a name="ixa100740">Weitergabe einer Exception</a></h3>
+
+<p>
+Tritt eine Ausnahme ein, sucht das Laufzeitsystem zun&auml;chst nach
+einer die Anweisung unmittelbar umgebenden <a href="index_t.html#ixb100571"><font color=#000080><tt>try</tt></font></a>-<a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a>-Anweisung,
+die diesen Fehler behandelt. Findet es eine solche nicht, wiederholt
+es die Suche sukzessive in allen umgebenden Bl&ouml;cken. Ist auch
+das erfolglos, wird der Fehler an den Aufrufer der Methode weitergegeben.
+Dort beginnt die Suche nach einem Fehler-Handler von neuem und der
+Fehler wird an die umgebenden Bl&ouml;cke und schlie&szlig;lich an
+den Aufrufer weitergereicht. Enth&auml;lt auch die Hauptmethode keinen
+Code, um den Fehler zu behandeln, bricht das Programm mit einer Fehlermeldung
+ab. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Da alle Fehler, die nicht innerhalb einer Methode behandelt werden,
+dem Compiler mit Hilfe der <a name="ixa100741"><a href="index_t.html#ixb100475"><font color=#000080><tt>throws</tt></font></a></a>-Klausel
+bekanntgemacht werden, kennt dieser zu jeder Methode die potenziellen
+Fehler, die von ihr verursacht werden k&ouml;nnen. Mit diesen Informationen
+kann der Compiler bei jedem Methodenaufruf sicherstellen, dass der
+Aufrufer seinerseits die <i>catch-or-throw</i>-Regel einh&auml;lt.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id013003002001"></a>
+<h4>Die Klasse RuntimeException </h4>
+
+<p>
+Um den Aufwand durch explizites Fehler-Handling bei der Entwicklung
+von Java-Programmen nicht zu gro&szlig; werden zu lassen, gibt es
+eine Ausnahme von der <i>catch-or-throw</i>-Regel. Direkt unterhalb
+der Klasse <a href="index_e.html#ixb100579"><font color=#000080><tt>Exception</tt></font></a>
+gibt es die Klasse <a name="ixa100742"><a href="index_r.html#ixb100382"><font color=#000080><tt>RuntimeException</tt></font></a></a>.
+Sie ist die Vaterklasse aller Laufzeitfehler, die zwar behandelt werden
+<i>k&ouml;nnen</i>, aber nicht <i>m&uuml;ssen</i>. Der Programmierer
+kann in diesem Fall selbst entscheiden, ob er den entsprechenden Fehler
+behandeln will oder nicht. 
+
+<!-- Section -->
+
+<a name="sectlevel3id013003003"></a>
+<h3>13.3.3 Ausl&ouml;sen von Ausnahmen<a name="ixa100743"></a> </h3>
+
+<p>
+Wie schon erw&auml;hnt, sind Ausnahmeobjekte unter Java Instanzen
+bestimmter Klassen und k&ouml;nnen somit behandelt werden wie andere
+Objekte auch. Es ist also insbesondere m&ouml;glich, ein Fehlerobjekt
+zu instanzieren oder eigene Fehlerklassen aus den vorhandenen abzuleiten.
+
+<p>
+Das Erzeugen eines Objekts aus einer Fehlerklasse gleicht dem Erzeugen
+eines Objekts aus einer beliebigen anderen Klasse. So legt die Anweisung
+<font color="#000077"><tt>new ArithmeticException</tt></font> ein
+neues Fehlerobjekt der Klasse <a name="ixa100744"><a href="index_a.html#ixb100584"><font color=#000080><tt>ArithmeticException</tt></font></a></a>
+an, das einer Variablen des entsprechenden Typs zugewiesen werden
+kann. 
+
+<p>
+Mit Hilfe der <a name="ixa100745"><a href="index_t.html#ixb100358"><font color=#000080><tt>throw</tt></font></a></a>-Anweisung
+kann ein solches Objekt dazu verwendet werden, eine Ausnahme zu erzeugen.
+Die Syntax der <a href="index_t.html#ixb100358"><font color=#000080><tt>throw</tt></font></a>-Anweisung
+ist: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+throw AusnahmeObjekt;
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+Die Behandlung dieser Fehler folgt den &uuml;blichen Regeln. Sie entspricht
+damit genau dem Fall, wenn anstelle der <a href="index_t.html#ixb100358"><font color=#000080><tt>throw</tt></font></a>-Anweisung
+eine aufgerufene Methode denselben Fehler ausgel&ouml;st h&auml;tte:
+Zun&auml;chst wird in den umgebenden Bl&ouml;cken nach einem Fehler-Handler
+gesucht. Falls das erfolglos ist, wird der Fehler an den Aufrufer
+weitergegeben. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die <a href="index_t.html#ixb100358"><font color=#000080><tt>throw</tt></font></a>-Anweisung
+kann nicht nur dazu verwendet werden, <i>neue</i> Fehler auszul&ouml;sen.
+Sie kann ebenfalls eingesetzt werden, um innerhalb der <a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a>-Klausel
+einer <a href="index_t.html#ixb100571"><font color=#000080><tt>try</tt></font></a>-<a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a>-Anweisung
+das &uuml;bergebene Fehlerobjekt erneut zu senden. In diesem Fall
+wird nicht noch einmal dieselbe <a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a>-Klausel
+ausgef&uuml;hrt, sondern der Fehler wird gem&auml;&szlig; den oben
+genannten Regeln an den umgebenden Block bzw. den Aufrufer weitergegeben.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Auch selbst definierte Ausnahmen m&uuml;ssen sich an die <i>catch-or-throw</i>-Regel
+halten. Wird die Ausnahme nicht innerhalb derselben Methode behandelt,
+ist sie mit Hilfe der <a name="ixa100746"><a href="index_t.html#ixb100475"><font color=#000080><tt>throws</tt></font></a></a>-Klausel
+im Methodenkopf zu deklarieren und weiter oben in der Aufrufkette
+zu behandeln. 
+
+<p>
+Das folgende Beispiel definiert eine Funktion <font color="#000077"><tt>isPrim</tt></font>,
+die ermittelt, ob der &uuml;bergebene Parameter eine Primzahl ist.
+Wird ein negativer Wert &uuml;bergeben, verursacht die Methode eine
+Ausnahme des Typs <a href="index_a.html#ixb100584"><font color=#000080><tt>ArithmeticException</tt></font></a>:
+<a name="listingid013011"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#006699">boolean</font> isPrim(<font color="#006699">int</font> n)
+<font color="#555555">002 </font><font color="#0000AA">throws</font> ArithmeticException
+<font color="#555555">003 </font>{
+<font color="#555555">004 </font>  <font color="#0000AA">if</font> (n &lt;= 0) {
+<font color="#555555">005 </font>    <font color="#0000AA">throw</font> <font color="#0000AA">new</font> ArithmeticException(<font color="#0000FF">"isPrim: Parameter &lt;= 0"</font>);
+<font color="#555555">006 </font>  }
+<font color="#555555">007 </font>  <font color="#0000AA">if</font> (n == 1) {
+<font color="#555555">008 </font>    <font color="#0000AA">return</font> <font color="#006699">false</font>;
+<font color="#555555">009 </font>  }
+<font color="#555555">010 </font>  <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 2; i &lt;= n/2; ++i) {
+<font color="#555555">011 </font>    <font color="#0000AA">if</font> (n % i == 0) {
+<font color="#555555">012 </font>      <font color="#0000AA">return</font> <font color="#006699">false</font>;
+<font color="#555555">013 </font>    }
+<font color="#555555">014 </font>  }
+<font color="#555555">015 </font>  <font color="#0000AA">return</font> <font color="#006699">true</font>;
+<font color="#555555">016 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 13.11: Ausl&ouml;sen einer Ausnahme</i></p>
+
+<p>
+Die <a href="index_t.html#ixb100358"><font color=#000080><tt>throw</tt></font></a>-Anweisung
+hat dabei den Charakter einer Sprunganweisung. Sie unterbricht das
+Programm an der aktuellen Stelle und verzweigt unmittelbar zu der
+umgebenden <a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a>-Klausel.
+Gibt es eine solche nicht, wird der Fehler an den Aufrufer weitergegeben.
+Tritt der Fehler innerhalb einer <a href="index_t.html#ixb100571"><font color=#000080><tt>try</tt></font></a>-<a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a>-Anweisung
+mit einer <a href="index_f.html#ixb100581"><font color=#000080><tt>finally</tt></font></a>-Klausel
+auf, wird diese noch vor der Weitergabe des Fehlers ausgef&uuml;hrt.
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100084.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100086.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100088.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100090.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

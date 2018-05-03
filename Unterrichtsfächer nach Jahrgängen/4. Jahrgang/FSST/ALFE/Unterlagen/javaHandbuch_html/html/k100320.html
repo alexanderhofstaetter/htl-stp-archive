@@ -1,0 +1,849 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100317.html;106,k100319.html;107,k100321.html;108,k100322.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100317.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100319.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100321.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100322.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 50 - Sicherheit und Kryptografie
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id050003"></a>
+<h2>50.3 Signierte Applets </h2>
+<hr>
+<ul>
+<li><a href="k100320.html#sectlevel2id050003">50.3 Signierte Applets</a>
+<ul>
+<li><a href="k100320.html#sectlevel3id050003001">50.3.1 Ein &#187;unerlaubtes&#171; Applet</a>
+<li><a href="k100320.html#appletssignieren">50.3.2 Signieren des Applets</a>
+<li><a href="k100320.html#sectlevel3id050003003">50.3.3 Ex- und Import von Zertifikaten</a>
+<li><a href="k100320.html#policydateien">50.3.4 Anpassen der Policy-Datei</a>
+<ul>
+<li><a href="k100320.html#sectlevel4id050003004001">Policy-Dateien</a>
+<li><a href="k100320.html#sectlevel4id050003004002">Das Format einer Policy-Datei</a>
+<li><a href="k100320.html#sectlevel4id050003004003">Erstellen der Policy-Datei</a>
+</ul>
+<li><a href="k100320.html#sectlevel3id050003005">50.3.5 Die Klasse SecurityManager</a>
+</ul>
+</ul>
+<hr>
+
+<p>
+In diesem Abschnitt wird beschrieben, wie einem Applet der Zugriff
+auf gesch&uuml;tzte Ressourcen gew&auml;hrt werden kann. Wir gehen
+dazu in folgenden Schritten vor: 
+<ol type=1>
+<li>Zun&auml;chst wird ein Applet entwickelt, das auf einige beschr&auml;nkte
+Ressourcen zugreift. Ohne weitere Vorkehrungen ist es nicht lauff&auml;hig,
+sondern wird mit einer <a name="ixa103679"><a href="index_s.html#ixb102781"><font color=#000080><tt>SecurityException</tt></font></a></a>
+abgebrochen.
+<li>Anschlie&szlig;end zeigen wir, wie das Applet mit Hilfe des in
+<a href="k100318.html#digitaleunterschriften">Abschnitt 50.1.6</a>
+erzeugten Schl&uuml;sselpaars signiert wird.
+<li>Danach demonstrieren wir die Weitergabe von Zertifikaten.
+<li>Schlie&szlig;lich zeigen wir, wie die Sicherheitseinstellungen
+so angepasst werden, dass das Applet Zugriff auf die gew&uuml;nschten
+Ressourcen erh&auml;lt.
+</ol>
+
+
+<!-- Section -->
+<a name="sectlevel3id050003001"></a>
+<h3>50.3.1 Ein &#187;unerlaubtes&#171; Applet </h3>
+
+<p>
+Wir wollen uns die Aufgabe stellen, ein Applet zu schreiben, das einige
+Sicherheitsverst&ouml;&szlig;e begeht. Zun&auml;chst soll es eine
+Datei auf dem lokalen Computer erzeugen und einen Zeitstempel hineinschreiben.
+Zus&auml;tzlich soll es auf einige gesch&uuml;tzte System-Properties
+zugreifen und deren Inhalt in die Datei schreiben. Das Applet hat
+folgenden Aufbau: 
+<a name="listingid050007"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* TrustedApplet.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.applet.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">006 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">007 </font>
+<font color="#555555">008 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> TrustedApplet
+<font color="#555555">009 </font><font color="#0000AA">extends</font> Applet
+<font color="#555555">010 </font>{
+<font color="#555555">011 </font>  <font color="#0000AA">static</font> <font color="#0000AA">final</font> String ALLOWED_DIR = <font color="#0000FF">"c:\\tmp\\applets\\"</font>;
+<font color="#555555">012 </font>  <font color="#0000AA">static</font> <font color="#0000AA">final</font> String FNAME       = <font color="#0000FF">"TrustedApplet.log"</font>;
+<font color="#555555">013 </font>  <font color="#0000AA">static</font> <font color="#0000AA">final</font> String LOGMSG      = <font color="#0000FF">"Erzeugt von Applet: "</font>;
+<font color="#555555">014 </font>  String msg;
+<font color="#555555">015 </font>
+<font color="#555555">016 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> init()
+<font color="#555555">017 </font>  {
+<font color="#555555">018 </font>    msg = <font color="#0000FF">"Uninitialisiert"</font>;
+<font color="#555555">019 </font>    FileWriter out = <font color="#006699">null</font>;
+<font color="#555555">020 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">021 </font>      <font color="#00AA00">//Ausgabedatei erzeugen</font>
+<font color="#555555">022 </font>      out = <font color="#0000AA">new</font> FileWriter(ALLOWED_DIR + FNAME);
+<font color="#555555">023 </font>      <font color="#00AA00">//Logmessage schreiben</font>
+<font color="#555555">024 </font>      out.write(LOGMSG);
+<font color="#555555">025 </font>      <font color="#00AA00">//Zeitstempel schreiben</font>
+<font color="#555555">026 </font>      GregorianCalendar cal = <font color="#0000AA">new</font> GregorianCalendar();
+<font color="#555555">027 </font>      out.write(cal.get(Calendar.DATE) + <font color="#0000FF">"."</font>);
+<font color="#555555">028 </font>      out.write((cal.get(Calendar.MONTH) + 1) + <font color="#0000FF">"."</font>);
+<font color="#555555">029 </font>      out.write(cal.get(Calendar.YEAR) + <font color="#0000FF">" "</font>);
+<font color="#555555">030 </font>      out.write(cal.get(Calendar.HOUR_OF_DAY) + <font color="#0000FF">":"</font>);
+<font color="#555555">031 </font>      out.write(cal.get(Calendar.MINUTE) + <font color="#0000FF">":"</font>);
+<font color="#555555">032 </font>      out.write(cal.get(Calendar.SECOND) + <font color="#0000FF">""</font>);
+<font color="#555555">033 </font>      out.write(System.getProperty(<font color="#0000FF">"line.separator"</font>));
+<font color="#555555">034 </font>      <font color="#00AA00">//System-Properties lesen und in Datei schreiben</font>
+<font color="#555555">035 </font>      out.write(getProp(<font color="#0000FF">"user.name"</font>));
+<font color="#555555">036 </font>      out.write(getProp(<font color="#0000FF">"user.home"</font>));
+<font color="#555555">037 </font>      out.write(getProp(<font color="#0000FF">"user.dir"</font>));
+<font color="#555555">038 </font>      <font color="#00AA00">//Datei schlie&szlig;en</font>
+<font color="#555555">039 </font>      msg = <font color="#0000FF">"Alle Sicherheitshuerden ueberwunden!"</font>;
+<font color="#555555">040 </font>    } <font color="#0000AA">catch</font> (Exception e) {
+<font color="#555555">041 </font>      msg = e.toString();
+<font color="#555555">042 </font>    } <font color="#0000AA">finally</font> {
+<font color="#555555">043 </font>      <font color="#0000AA">if</font> (out != <font color="#006699">null</font>) {
+<font color="#555555">044 </font>        <font color="#0000AA">try</font> {
+<font color="#555555">045 </font>          out.close();
+<font color="#555555">046 </font>        } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">047 </font>          <font color="#00AA00">//silently ignore</font>
+<font color="#555555">048 </font>        }
+<font color="#555555">049 </font>      }
+<font color="#555555">050 </font>    }
+<font color="#555555">051 </font>  }
+<font color="#555555">052 </font>
+<font color="#555555">053 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">054 </font>  {
+<font color="#555555">055 </font>    g.drawString(msg, 20, 20);
+<font color="#555555">056 </font>  }
+<font color="#555555">057 </font>
+<font color="#555555">058 </font>  <font color="#0000AA">private</font> String getProp(String prop)
+<font color="#555555">059 </font>  {
+<font color="#555555">060 </font>    <font color="#0000AA">return</font> prop + <font color="#0000FF">"="</font> +
+<font color="#555555">061 </font>           System.getProperty(prop) +
+<font color="#555555">062 </font>           System.getProperty(<font color="#0000FF">"line.separator"</font>);
+<font color="#555555">063 </font>  }
+<font color="#555555">064 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/TrustedApplet.java"><font color="#000055" size=-1>TrustedApplet.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 50.7: Ein &#187;unerlaubtes&#171; Applet</i></p>
+
+<p>
+Es versucht zun&auml;chst, eine Datei <font color="#660099">c:\tmp\applets\TrustedApplet.log</font>
+zu erzeugen. Wenn dies gelingt, instanziert es ein aktuelles <a href="index_g.html#ixb100806"><font color=#000080><tt>GregorianCalendar</tt></font></a>-Objekt
+und schreibt dessen Werte in die Datei. Schlie&szlig;lich versucht
+es, die System-Properties &#187;user.name&#171;, &#187;user.home&#171;
+und &#187;user.dir&#171; zu lesen und deren Werte ebenfalls in die
+Datei zu schreiben. Sind all diese Versuche erfolgreich, gibt das
+Applet die Meldung &#187;Alle Sicherheitshuerden ueberwunden!&#171;
+aus. Tritt eine Ausnahme auf, wird deren Text ausgegeben. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Um das Schreiben der Datei zu erm&ouml;glichen, ist ein Verzeichnis
+<font color="#660099">c:\tmp\applets</font> anzulegen. Andernfalls
+gibt es eine <a href="index_i.html#ixb100597"><font color=#000080><tt>IOException</tt></font></a>
+- selbst wenn alle Sicherheitsh&uuml;rden genommen sind.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Das Applet kann mit folgender HTML-Datei gestartet werden: 
+<a name="listingid050008"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">&lt;html&gt;</font>
+<font color="#555555">002 </font><font color="#0000AA">&lt;head&gt;</font>
+<font color="#555555">003 </font><font color="#0000AA">&lt;title&gt;</font>TrustedApplet Demo<font color="#0000AA">&lt;/title&gt;</font>
+<font color="#555555">004 </font><font color="#0000AA">&lt;/head&gt;</font>
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">&lt;body&gt;</font>
+<font color="#555555">007 </font><font color="#0000AA">&lt;h1&gt;</font>TrustedApplet Demo<font color="#0000AA">&lt;/h1&gt;</font>
+<font color="#555555">008 </font>
+<font color="#555555">009 </font><font color="#0000AA">&lt;applet
+<font color="#555555">010 </font>  code=</font><font color="#0000FF">"TrustedApplet.class"</font><font color="#0000AA">
+<font color="#555555">011 </font>  width=600
+<font color="#555555">012 </font>  height=200
+<font color="#555555">013 </font>&gt;</font>
+<font color="#555555">014 </font>TrustedApplet Demo
+<font color="#555555">015 </font><font color="#0000AA">&lt;/applet&gt;</font>
+<font color="#555555">016 </font>
+<font color="#555555">017 </font><font color="#0000AA">&lt;/body&gt;</font>
+<font color="#555555">018 </font><font color="#0000AA">&lt;/html&gt;</font></pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 50.8: Vorl&auml;ufige HTML-Datei zum Aufruf des unerlaubten
+Applets</i></p>
+
+<p>
+Das Applet kann nun beispielsweise mit dem <a href="index_a.html#ixb100135"><font color=#000080><tt>appletviewer</tt></font></a>
+gestartet werden: 
+<font color="#333300">
+<pre>
+appletviewer TrustedApplet.html
+</pre>
+</font>
+
+<p>
+Wird es ohne weitere Vorkehrungen gestartet, scheitert es bereits
+am Erzeugen der Ausgabedatei und gibt eine <a href="index_s.html#ixb102781"><font color=#000080><tt>SecurityException</tt></font></a>
+auf dem Bildschirm aus. 
+
+<!-- Section -->
+
+<a name="appletssignieren"></a>
+<h3>50.3.2 Signieren des Applets </h3>
+
+<p>
+Zum Signieren ist es zun&auml;chst erforderlich, alle f&uuml;r den
+Betrieb des Applets n&ouml;tigen Dateien in ein jar-File zu packen.
+Signiert wird also nicht eine einzelne <font color="#660099">.class</font>-Datei,
+sondern alle Dateien innerhalb des jar-Archivs. Dazu verwenden wir
+folgendes Kommando: 
+<font color="#333300">
+<pre>
+jar cvf trapp.jar TrustedApplet.class
+</pre>
+</font>
+
+<p>
+Jetzt wird ein jar-Archiv <font color="#660099">trapp.jar</font> erstellt,
+das die Klassendatei <font color="#660099">TrustedApplet.class</font>
+enth&auml;lt. Dieses Archiv muss nun signiert werden. Dazu steht im
+JDK das Hilfsprogramm <a name="ixa103680"><a href="index_j.html#ixb102782"><font color=#000080><tt>jarsigner</tt></font></a></a>
+zur Verf&uuml;gung. Es arbeitet kommandozeilenbasiert und wird folgenderma&szlig;en
+aufgerufen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+jarsigner -signedjar <i>outjar</i> <i>injar</i> <i>alias</i>
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+Die einzelnen Elemente haben folgende Bedeutung: 
+<ul>
+<li><i>injar</i> ist der Name des zu signierenden jar-Archivs.
+<li><i>outjar</i> ist der Name der Ausgabedatei, also des signierten
+Archivs.
+<li><i>alias</i> ist der Aliasname des Eintrags in der Schl&uuml;sseldatenbank,
+dessen privater Schl&uuml;ssel zum Signieren verwendet werden soll.
+</ul>
+
+<p>
+Nachdem wir in <a href="k100318.html#digitaleunterschriften">Abschnitt 50.1.6</a>
+bereits ein Schl&uuml;sselpaar mit dem Alias &#187;hjp3&#171; erzeugt
+und in der Schl&uuml;sseldatenbank abgelegt haben, muss der Aufruf
+von <a href="index_j.html#ixb102782"><font color=#000080><tt>jarsigner</tt></font></a>
+so erfolgen: 
+<font color="#333300">
+<pre>
+C:\---&gt;<b>jarsigner -signedjar strapp.jar trapp.jar hjp3</b>
+Enter Passphrase for keystore: <b>hjp3ks</b>
+Enter key password for hjp3: <b>hjp3key</b>
+</pre>
+</font>
+
+<p>
+Die beiden Passw&ouml;rter zum Zugriff auf die Schl&uuml;sseldatenbank
+und den Schl&uuml;ssel werden auf Nachfrage in der Kommandozeile angegeben.
+Nachdem das Programm einige Zeit gerechnet hat, erzeugt es das signierte
+Archiv mit dem Namen <font color="#660099">strapp.jar</font>. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+<a href="index_j.html#ixb102782"><font color=#000080><tt>jarsigner</tt></font></a>
+bietet neben den hier erw&auml;hnten noch weitere Optionen, auf die
+wir nicht weiter eingehen wollen. Das Programm wird zusammen mit den
+anderen Hilfsprogrammen in der Tool-Dokumentation des JDK ausf&uuml;hrlich
+beschrieben.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Bisher wurde das Applet direkt aus der <font color="#660099">.class</font>-Datei
+geladen. Um es aus einem jar-Archiv zu laden, muss das <font color="#000077"><tt>APPLET</tt></font>-Tag
+der HTML-Datei um das <a name="ixa103681"><a href="index_a.html#ixb102783"><font color=#000080><tt>archive</tt></font></a></a>-Argument
+erweitert werden: 
+<a name="listingid050009"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">&lt;-- TrustedApplet.html --&gt;</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">&lt;html&gt;</font>
+<font color="#555555">004 </font><font color="#0000AA">&lt;head&gt;</font>
+<font color="#555555">005 </font><font color="#0000AA">&lt;title&gt;</font>TrustedApplet Demo<font color="#0000AA">&lt;/title&gt;</font>
+<font color="#555555">006 </font><font color="#0000AA">&lt;/head&gt;</font>
+<font color="#555555">007 </font>
+<font color="#555555">008 </font><font color="#0000AA">&lt;body&gt;</font>
+<font color="#555555">009 </font><font color="#0000AA">&lt;h1&gt;</font>TrustedApplet Demo<font color="#0000AA">&lt;/h1&gt;</font>
+<font color="#555555">010 </font>
+<font color="#555555">011 </font><font color="#0000AA">&lt;applet
+<font color="#555555">012 </font>  archive=</font><font color="#0000FF">"strapp.jar"</font><font color="#0000AA">
+<font color="#555555">013 </font>  code=</font><font color="#0000FF">"TrustedApplet.class"</font><font color="#0000AA">
+<font color="#555555">014 </font>  width=600
+<font color="#555555">015 </font>  height=200
+<font color="#555555">016 </font>&gt;</font>
+<font color="#555555">017 </font>TrustedApplet Demo
+<font color="#555555">018 </font><font color="#0000AA">&lt;/applet&gt;</font>
+<font color="#555555">019 </font>
+<font color="#555555">020 </font><font color="#0000AA">&lt;/body&gt;</font>
+<font color="#555555">021 </font><font color="#0000AA">&lt;/html&gt;</font></pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/TrustedApplet.html"><font color="#000055" size=-1>TrustedApplet.html</font></a></td>
+</tr>
+</table>
+<i>
+Listing 50.9: Aufruf des signierten Applets</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Wir k&ouml;nnten das Applet jetzt wie zuvor starten, w&uuml;rden aber
+immer noch dieselbe <a href="index_s.html#ixb102781"><font color=#000080><tt>SecurityException</tt></font></a>
+erhalten. Es ist zwar signiert und das Zertifikat ist auf diesem Rechner
+bekannt (denn hier wurde es erstellt). Die Policy-Datei ist aber noch
+nicht angepasst und daher lehnt der <a href="index_s.html#ixb102714"><font color=#000080><tt>SecurityManager</tt></font></a>
+des JDK die Ausf&uuml;hrung der gef&auml;hrlichen Operationen nach
+wie vor ab.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id050003003"></a>
+<h3>50.3.3 Ex- und Import von Zertifikaten </h3>
+
+<p>
+Soll das signierte Applet auf anderen Arbeitspl&auml;tzen laufen,
+ist es erforderlich, das Zertifikat des Schl&uuml;ssels, mit dem es
+signiert wurde, dort zu installieren. Soll es dagegen nur auf dem
+Arbeitsplatz laufen, auf dem auch der Schl&uuml;ssel generiert wurde,
+ist das nicht erforderlich. Bei der Generierung des Schl&uuml;ssels
+wurde ja auch ein (selbst signiertes) Zertifikat erzeugt. 
+
+<p>
+Um das Zertifikat weitergeben zu k&ouml;nnen, muss es zun&auml;chst
+unter Verwendung der Option <font color="#000077"><tt>-export</tt></font>
+von <a name="ixa103682"><a href="index_k.html#ixb102757"><font color=#000080><tt>keytool</tt></font></a></a>
+aus der lokalen Schl&uuml;sseldatenbank exportiert werden: 
+<font color="#333300">
+<pre>
+keytool -export -alias hjp3 -file hjp3.cert
+</pre>
+</font>
+
+<p>
+Es liegt nun in der Datei <font color="#660099">hjp3.cert</font> und
+kann auf das Zielsystem kopiert werden. Mit der <font color="#000077"><tt>-import</tt></font>-Option
+von <a href="index_k.html#ixb102757"><font color=#000080><tt>keytool</tt></font></a>
+kann es dort in die Schl&uuml;sseldatenbank aufgenommen werden: 
+<font color="#333300">
+<pre>
+C:\---&gt;<b>keytool -import -alias hjp3 -file hjp3.cert</b>
+Enter keystore password:  <b>hjp3ks</b>
+Owner: CN=Guido Krueger, O=Computer Books, C=de
+Issuer: CN=Guido Krueger, O=Computer Books, C=de
+Serial number: 38663e2d
+Valid from: Sun Dec 26 17:11:25 GMT+01:00 1999 until: Sat Mar 25 17:11:25 GMT+01
+:00 2000
+Certificate fingerprints:
+         MD5:  D5:73:AB:06:25:16:7F:36:27:DF:CF:9D:C9:DE:AD:35
+         SHA1: E0:A4:39:65:60:06:48:61:82:5E:8C:47:8A:2B:04:A4:6D:43:56:05
+Trust this certificate? [no]:  <b>y</b>
+Certificate was added to keystore
+</pre>
+</font>
+
+<p>
+Nach dem Aufruf muss zun&auml;chst das Passwort der Schl&uuml;sseldatenbank
+angegeben werden. Dann zeigt das Programm die Eigenschaften des Zertifikats
+an und erwartet, dass die Informationen best&auml;tigt werden. Anschlie&szlig;end
+wird das Zertifikat in die Schl&uuml;sseldatenbank aufgenommen. 
+
+<!-- Section -->
+
+<a name="policydateien"></a>
+<h3>50.3.4 Anpassen der <a name="ixa103683">Policy-Datei</a> </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id050003004001"></a>
+<h4>Policy-Dateien </h4>
+
+<p>
+Der letzte Schritt besteht darin, die Sicherheitseinstellungen auf
+dem Zielsystem anzupassen. Applets, die mit dem Zertifikat verifiziert
+werden k&ouml;nnen, das unter dem Alias &#187;hjp3&#171; in der Schl&uuml;sseldatenbank
+abgelegt wurde, sollen Dateien im Verzeichnis <font color="#660099">c:\tmp\applets</font>
+lesen und schreiben und auf die System-Properties &#187;user.name&#171;,
+&#187;user.home&#171; und &#187;user.dir&#171; zugreifen k&ouml;nnen.
+
+<p>
+Die Sicherheitseinstellungen des JDK werden mit Hilfe von Policy-Dateien
+definiert. Es gibt zwei Stellen im Dateisystem, von denen das JDK
+sie standardm&auml;&szlig;ig einliest: 
+<ul>
+<li>Die System-Policies befinden sich in der Datei <font color="#660099">java.policy</font><a name="ixa103684"></a>
+im Unterverzeichnis <font color="#660099">jre\lib\security</font>
+des JDK-Installationsverzeichnisses. Diese Datei braucht normalerweise
+nicht ver&auml;ndert zu werden, sie enth&auml;lt die globalen Sicherheitseinstellungen.
+<li>Die benutzerbezogenen Sicherheitseinstellungen k&ouml;nnen in
+der Datei <font color="#660099">.java.policy</font><a name="ixa103685"></a>
+abgelegt werden. Sie liegt im Home-Verzeichnis des aktuellen Benutzers.
+Auf Windows-95/98-Einzelplatzsystemen liegt sie (wie die Schl&uuml;sseldatenbank)
+im Verzeichnis <font color="#660099">c:\windows</font>. Diese Datei
+ist standardm&auml;&szlig;ig nicht vorhanden, kann aber leicht selbst
+angelegt werden.
+</ul>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Policy-Dateien k&ouml;nnen auch an beliebigen anderen Stellen im Dateisystem
+liegen. In diesem Fall muss beim Aufruf des Java-Interpreters das
+System-Property &#187;java.security.policy&#171; mit dem Namen der
+zu verwendenen Policy-Datei angegeben werden. W&auml;re beispielsweise
+<font color="#660099">hjp3policy</font> die zu verwendende Policy-Datei,
+so m&uuml;sste der Appletviewer mit der Option &#187;-J-Djava.security.policy=hjp3policy&#171;
+aufgerufen werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id050003004002"></a>
+<h4>Das Format einer Policy-Datei </h4>
+
+<p>
+Policy-Dateien sind zeilenorientierte Textdateien, die mit einem gew&ouml;hnlichen
+Texteditor bearbeitet werden k&ouml;nnen. Alternativ stellt das JDK
+ein einfaches GUI-basiertes Hilfsprogramm mit dem Namen <a name="ixa103686"><a href="index_p.html#ixb102786"><font color=#000080><tt>policytool</tt></font></a></a>
+zur Verf&uuml;gung, mit dem Policy-Dateien erstellt und bearbeitet
+werden k&ouml;nnen. Auf seine Verwendung wollen wir aber nicht weiter
+eingehen. 
+
+<p>
+Eine Policy-Datei enth&auml;lt zwei Arten von Eintr&auml;gen. Beide
+sind optional: 
+<ul>
+<li>Einen &#187;keystore&#171;-Eintrag, der die Lage der Schl&uuml;sseldatenbank
+angibt
+<li>Beliebig viele &#187;grant&#171;-Eintr&auml;ge, mit denen Berechtigungen
+definiert werden
+</ul>
+
+<p>
+Alle Eintr&auml;ge werden mit einem Semikolon beendet. Kommentare
+k&ouml;nnen an beliebiger Stelle durch // oder /* ... */ angelegt
+werden. 
+
+<p>
+Der &#187;keystore&#171;-Eintrag erwartet als Argument einen URL,
+der auf die Schl&uuml;sseldatenbank verweist. Auf einem Windows-98-Einzelplatzsystem
+sieht er beispielsweise so aus: 
+<font color="#000077">
+<pre>
+keystore "file:/c:/windows/.keystore";
+</pre>
+</font>
+
+<p>
+Die &#187;grant&#171;-Eintr&auml;ge haben folgende Syntax: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+grant [SignedBy "<i>signer</i>"] [, CodeBase "<i>URL</i>"] {
+  permission permission_class [ "<i>target</i>" ] [, "<i>action</i>"]
+             [, SignedBy "<i>signers</i>"];
+  ...
+};
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+Eine Berechtigung kann wahlweise an einen Unterzeichner oder eine
+Ladeadresse (oder beide) vergeben werden. Die Option &#187;SignedBy&#171;
+f&uuml;hrt eine Liste von Aliasnamen auf, deren Zertifikate vorhanden
+sein m&uuml;ssen, damit die Berechtigung gew&auml;hrt wird. Die Option
+&#187;CodeBase&#171; spezifiziert die Adresse, von der ein Applet
+geladen werden darf, um die Berechtigung zu halten. Fehlt die CodeBase-Klausel,
+wird nur die Unterzeichnerliste verwendet; fehlt die SignedBy-Klausel,
+ist es nur die Ladeadresse. 
+
+<p>
+Nach einer &ouml;ffnenden geschweiften Klammer folgen beliebig viele
+Berechtigungen, die jeweils durch das Schl&uuml;sselwort &#187;permission&#171;
+eingeleitet werden. Anschlie&szlig;end wird der Eintrag mit einer
+schlie&szlig;enden geschweiften Klammer abgeschlossen. Der zuvor spezifizierte
+Berechtigte erh&auml;lt alle Berechtigungen, die zwischen den beiden
+Klammern angegeben sind. 
+
+<p>
+Jede Berechtigung muss als erstes Argument den Namen einer Berechtigungsklasse
+angeben. Daneben kann sie zwei weitere Argumente <i>target</i> und
+<i>action</i> haben, mit denen Details spezifiziert werden. <a href="k100320.html#policypermissions">Tabelle 50.1</a>
+listet die gebr&auml;uchlichsten Berechtigungen und ihre Argumente
+auf. Details k&ouml;nnen (und m&uuml;ssen) in dem Dokument &#187;Java
+Security Architecture&#171; nachgelesen werden, das Bestandteil der
+JDK-Dokumentation ist. <a name="policypermissions"></a>
+
+<p>
+<table cols=4 border width=100%>
+
+<tr>
+<td valign=top align=left width=25%><b>Klasse</b></td>
+<td valign=top align=left width=25%><b>Zugriff auf</b></td>
+<td valign=top align=left width=25%><b>Target</b></td>
+<td valign=top align=left width=25%><b>Action </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103687"><a href="index_f.html#ixb102787"><font color=#000080><tt>java.io.FilePermission</tt></font></a></a></td>
+<td valign=top align=left>Dateien und Verzeichnisse</td>
+<td valign=top align=left>Datei- oder Verzeichnisnamen. Wird als letztes
+Zeichen ein &#187;*&#171; angegeben, so gilt die Berechtigung f&uuml;r
+das komplette Verzeichnis. Steht dort ein &#187;-&#171;, so gilt sie
+zus&auml;tzlich f&uuml;r alle Unterverzeichnisse. Wird &#187;&lt;&lt;ALL
+FILES&gt;&gt;&#171; angegeben, gilt die Berechtigung f&uuml;r alle
+Dateien in allen Verzeichnissen!</td>
+<td valign=top align=left>read, write, delete, execute </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103688"><a href="index_s.html#ixb102788"><font color=#000080><tt>java.net.SocketPermission</tt></font></a></a></td>
+<td valign=top align=left>TCP/IP-Verbindungen</td>
+<td valign=top align=left>Hostname oder IP-Adresse, gefolgt vom Portnummern-Bereich</td>
+<td valign=top align=left>accept, connect, listen, resolve </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103689"><a href="index_p.html#ixb102789"><font color=#000080><tt>java.util.PropertyPermission</tt></font></a></a></td>
+<td valign=top align=left>System-Properties</td>
+<td valign=top align=left>Name des Property</td>
+<td valign=top align=left>read, write </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103690"><a href="index_r.html#ixb102790"><font color=#000080><tt>java.lang.RuntimePermission </tt></font></a></a></td>
+<td valign=top align=left>Die Klasse Runtime</td>
+<td valign=top align=left>exitVM, stopThread, loadLibrary, queuePrintJob,
+...</td>
+<td valign=top align=left>- </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103691"><a href="index_a.html#ixb102791"><font color=#000080><tt>java.awt.AWTPermission</tt></font></a></a></td>
+<td valign=top align=left>Window-Ressourcen</td>
+<td valign=top align=left>accessClipboard, showWindowWithoutWarningBanner,
+...</td>
+<td valign=top align=left>- </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103692"><a href="index_a.html#ixb102792"><font color=#000080><tt>java.security.AllPermission</tt></font></a></a></td>
+<td valign=top align=left>Alle Ressourcen</td>
+<td valign=top align=left>-</td>
+<td valign=top align=left>- </td></tr>
+</table>
+<p><i>
+Tabelle 50.1: Wichtige Permission-Klassen</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id050003004003"></a>
+<h4>Erstellen der Policy-Datei </h4>
+
+<p>
+Nach diesen Vorbemerkungen k&ouml;nnen wir die Policy-Datei <font color="#660099">\windows\.java.policy</font>
+erstellen. Sie hat folgenden Inhalt: 
+<font color="#000077">
+<pre>
+keystore "file:/c:/windows/.keystore";
+
+grant SignedBy "hjp3" {
+  permission java.io.FilePermission "c:\\tmp\\applets\\*", "read,write";
+
+  permission java.util.PropertyPermission "user.name", "read";
+  permission java.util.PropertyPermission "user.home", "read";
+  permission java.util.PropertyPermission "user.dir", "read";
+};
+</pre>
+</font>
+
+<p>
+Im ersten Eintrag geben wir die Position der Schl&uuml;sseldatenbank
+an, sie liegt im Verzeichnis <font color="#660099">c:\windows</font>.
+Anschlie&szlig;end definieren wir die Berechtigungen f&uuml;r alle
+Applets, die mit dem Zertifikat &#187;hjp3&#171; signiert wurden.
+Zun&auml;chst erhalten sie Schreib- und Leseberechtigung im Verzeichnis
+<font color="#660099">c:\tmp\applets</font>. Dort k&ouml;nnen sie
+ohne weitere Einschr&auml;nkungen Dateien anlegen, &uuml;berschreiben
+und lesen. Zus&auml;tzlich erlauben wir den so signierten Applets,
+die drei System-Properties &#187;user.name&#171;, &#187;user.home&#171;
+und &#187;user.dir&#171; zu lesen. 
+
+<p>
+Nun l&auml;sst sich unser signiertes Applet ohne <a href="index_s.html#ixb102781"><font color=#000080><tt>SecurityException</tt></font></a>
+aufrufen und gibt die erl&ouml;sende Meldung &#187;Alle Sicherheitshuerden
+ueberwunden&#171; aus. Im Verzeichnis <font color="#660099">c:\tmp\applets</font>
+sollte sich anschlie&szlig;end eine Datei <font color="#660099">TrustedApplet.log</font>
+befinden und etwa folgenden Inhalt haben: 
+<font color="#333300">
+<pre>
+Erzeugt von Applet: 30.12.1999 20:50:40
+user.name=Guido Kr&uuml;ger
+user.home=C:\WINDOWS
+user.dir=C:\arc\doku\hjp3\misc
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="sectlevel3id050003005"></a>
+<h3>50.3.5 Die Klasse SecurityManager </h3>
+
+<p>
+Die Pr&uuml;fung der Zugriffsberechtigungen wird mit Hilfe der Klasse
+<a name="ixa103693"><a href="index_s.html#ixb102714"><font color=#000080><tt>SecurityManager</tt></font></a></a>
+aus dem Paket <a href="index_j.html#ixb100196"><font color=#000080><tt>java.lang</tt></font></a>
+vorgenommen. Der <a href="index_s.html#ixb102714"><font color=#000080><tt>SecurityManager</tt></font></a>
+ist ein Objekt, das entweder gar nicht oder genau einmal im laufenden
+Java-Programm vorhanden ist. Nach der ersten Instanzierung kann es
+nicht mehr ge&auml;ndert oder entfernt werden. 
+
+<p>
+Zugriffe auf den <a href="index_s.html#ixb102714"><font color=#000080><tt>SecurityManager</tt></font></a>
+sind an den Stellen der Laufzeitbibliothek eingebaut, an denen auf
+gef&auml;hrliche Ressourcen zugegriffen wird. Ein Beispiel aus der
+Klasse <a href="index_f.html#ixb100595"><font color=#000080><tt>FileInputStream</tt></font></a>
+sieht etwa so aus: 
+<font color="#000077">
+<pre>
+...
+SecurityManager security = System.getSecurityManager();
+if (security != null) {
+  security.checkRead(name);
+}
+//Gef&auml;hrlicher Code
+...
+</pre>
+</font>
+
+<p>
+Zun&auml;chst wird gepr&uuml;ft, ob ein <a href="index_s.html#ixb102714"><font color=#000080><tt>SecurityManager</tt></font></a>
+installiert wurde. Ist das nicht der Fall, f&auml;hrt das Programm
+ohne Einschr&auml;nkung fort. Gibt es dagegen einen <a href="index_s.html#ixb102714"><font color=#000080><tt>SecurityManager</tt></font></a>,
+wird dessen <a name="ixa103694"><a href="index_c.html#ixb102793"><font color=#000080><tt>checkRead</tt></font></a></a>-Methode
+aufgerufen. Sie l&ouml;st eine <a href="index_s.html#ixb102781"><font color=#000080><tt>SecurityException</tt></font></a>
+aus, wenn die gew&uuml;nschte Berechtigung fehlt. Der Code hinter
+dem <a href="index_c.html#ixb102793"><font color=#000080><tt>checkRead</tt></font></a>
+wird in diesem Fall nicht mehr erreicht. Ist die Berechtigung dagegen
+vorhanden, wird <a href="index_c.html#ixb102793"><font color=#000080><tt>checkRead</tt></font></a>
+ohne weitere Aktionen beendet und der dahinter liegende Code ausgef&uuml;hrt.
+
+<p>
+Applets besitzen grunds&auml;tzlich einen <a href="index_s.html#ixb102714"><font color=#000080><tt>SecurityManager</tt></font></a>.
+Der AppletViewer bzw. Web-Browser sorgen w&auml;hrend der Initialisierung
+f&uuml;r dessen Instanzierung. Applikationen dagegen haben normalerweise
+keinen <a href="index_s.html#ixb102714"><font color=#000080><tt>SecurityManager</tt></font></a>
+(das ist der Grund, weshalb in Applikationen alle gef&auml;hrlichen
+Operationen erlaubt sind). Soll eine Applikation einen <a href="index_s.html#ixb102714"><font color=#000080><tt>SecurityManager</tt></font></a>
+erhalten, so kann sie entweder mit der Option &#187;-Djava.security.manager&#171;
+gestartet werden oder der <a href="index_s.html#ixb102714"><font color=#000080><tt>SecurityManager</tt></font></a>
+kann im Programm selbst installiert werden: 
+<font color="#000077">
+<pre>
+...
+System.setSecurityManager(new SecurityManager());
+...
+</pre>
+</font>
+
+<p>
+Das folgende Beispielprogramm gibt den Inhalt des System-Property
+&#187;user.name&#171; aus. Normalerweise kann es ohne Fehler ausgef&uuml;hrt
+werden: 
+<a name="syspropusername"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* SecuMgrTest.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> SecuMgrTest
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    System.out.println(
+<font color="#555555">008 </font>      <font color="#0000FF">"user.name is "</font> + System.getProperty(<font color="#0000FF">"user.name"</font>)
+<font color="#555555">009 </font>    );
+<font color="#555555">010 </font>  }
+<font color="#555555">011 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/SecuMgrTest.java"><font color="#000055" size=-1>SecuMgrTest.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 50.10: Ausgeben des System-Property &#187;user.name&#171;</i></p>
+
+<p>
+L&auml;uft es dagegen unter Kontrolle eines SecurityManagers, so f&uuml;hrt
+der Aufruf zu einer <a href="index_s.html#ixb102781"><font color=#000080><tt>SecurityException</tt></font></a>:
+<font color="#333300">
+<pre>
+C:\---&gt;<b>java -Djava.security.manager SecuMgrTest</b>
+Exception in thread "main"
+  java.security.AccessControlException: access denied
+  (java.util.PropertyPermission user.name read)
+        at java.security.AccessControlContext.checkPermission(
+          AccessControlContext.java:276)
+        at java.security.AccessController.checkPermission(
+          AccessController.java:403)
+        at java.lang.SecurityManager.checkPermission(
+          SecurityManager.java:549)
+        at java.lang.SecurityManager.checkPropertyAccess(
+          SecurityManager.java:1242)
+        at java.lang.System.getProperty(System.java:555)
+        at Test1.main(SecuMgrTest.java:7)
+</pre>
+</font>
+
+<p>
+Bei Bedarf kann man Applikationen auf diese Weise mit denselben Sicherheitsmechanismen
+ausstatten wie Applets. jar-Dateien, aus denen Applikationen geladen
+werden, lassen sich ebenso signieren wie solche, aus denen Applets
+geladen werden. Die in der Policy-Datei definierten Rechte gelten
+dann f&uuml;r die daraus gestartete Applikation. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100317.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100319.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100321.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100322.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

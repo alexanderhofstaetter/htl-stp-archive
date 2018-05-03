@@ -1,0 +1,1007 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100322.html;106,k100324.html;107,k100326.html;108,k100327.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100322.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100324.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100326.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100327.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 51 - Sound
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id051003"></a>
+<h2>51.3 <a name="ixa103758">Midi</a></h2>
+<hr>
+<ul>
+<li><a href="k100325.html#sectlevel2id051003">51.3 Midi</a>
+<ul>
+<li><a href="k100325.html#sectlevel3id051003001">51.3.1 Was ist Midi?</a>
+<li><a href="k100325.html#sectlevel3id051003002">51.3.2 Grundlegende Klassen des Midi-API</a>
+<li><a href="k100325.html#sectlevel3id051003003">51.3.3 Alle meine Entchen - erster Versuch</a>
+<li><a href="k100325.html#sectlevel3id051003004">51.3.4 Alle meine Entchen mit dem Sequenzer</a>
+<li><a href="k100325.html#mididateien">51.3.5 Zugriff auf Midi-Dateien</a>
+<ul>
+<li><a href="k100325.html#sectlevel4id051003005001">Lesen und Abspielen einer Midi-Datei</a>
+<li><a href="k100325.html#sectlevel4id051003005002">Abspeichern einer Sequenz in einer Midi-Datei</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id051003001"></a>
+<h3>51.3.1 Was ist Midi? </h3>
+
+<p>
+In den siebziger Jahren standen Musiker, die sich mit elektronischer
+Musik besch&auml;ftigten, vor einigen Herausforderungen. Zwar gab
+es gut klingende Synthesizer, die unz&auml;hlige Sounds und Erweiterungsm&ouml;glichkeiten
+boten. Doch schwierig wurde es, wenn zwei von ihnen miteinander verbunden
+werden sollten. Es gab n&auml;mlich keinen einheitlichen Standard
+zur &Uuml;bertragung der Daten zwischen den Systemen. Mit den ersten
+digitialen Synthesizern der 80er Jahre wurde dieses Problem durch
+die Schaffung des <i>Midi</i>-Standards behoben. Midi steht f&uuml;r
+<i>Musical Instrument Digital Interface</i> und bezeichnet einen Standard,
+der die &Uuml;bertragung von Daten zwischen zwei oder mehr elektronischen
+Musikinstrumenten beschreibt. Neben der Standardisierung der Hardware
+(Kabel und Stecker) wurde dabei insbesondere festgelegt, welche Daten
+&uuml;bertragen und wie sie kodiert werden sollten. 
+
+<p>
+Midi war urspr&uuml;nglich eine serielle Schnittstelle, auf der die
+Daten byteweise &uuml;bertragen werden. Dr&uuml;ckte der Musiker auf
+seinem Keyboard die Taste C, wurde diese Information in eine drei
+Byte lange Nachricht verpackt (Status-/Kanalinformation, Tonh&ouml;he,
+Lautst&auml;rke) und in Echtzeit an die angeschlossenen Synthesizer
+verschickt. Auch beim Loslassen der Taste wurde eine entsprechende
+Nachricht verschickt. Die angeschlossenen Synthesizer wurden also
+&uuml;ber die Midi-Schnittstelle <i>ferngesteuert</i>. Neben Notendaten
+k&ouml;nnen dabei auch Statusinformationen und Einstellungen von Reglern
+(Lautst&auml;rke, Effekte, Pitch-Bend etc.) &uuml;bertragen werden.
+Auch die &Uuml;bertragung propriet&auml;rer Daten ist vorgesehen,
+um die Kommunikation nichtstandardisierter, ger&auml;tespezifischer
+Informationen in kontrollierter Weise zu erm&ouml;glichen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Es ist wichtig zu verstehen, dass beim Midi-Protokoll nicht die Audiosignale
+an sich &uuml;bertragen werden, sondern lediglich die Ereignisse,
+die zur ihrer Entstehung f&uuml;hren. Midi-Daten k&ouml;nnen also
+in einem gewissen Sinne als die Partitur eines St&uuml;cks angesehen
+werden. Was dann tats&auml;chlich erklingt, wird durch die dadurch
+angesteuerten Synthesizer und ihre klanglichen Eigenschaften bestimmt.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Zun&auml;chst war Midi ein reines &#187;Wire&#171;-Protokoll, das
+die &Uuml;bertragung von Echtzeitdaten &uuml;ber eine elektrische
+Verbindung beschrieb. Sp&auml;ter wollte man Midi-Datenstr&ouml;me
+auch aufzeichnen und in Dateien speichern k&ouml;nnen und man entwickelte
+dazu die Midi-Dateiprotokolle. Darin werden die eigentlichen Midi-Nachrichten
+mit <i>Zeitstempeln</i> versehen, um sie sp&auml;ter mit Hilfe eines
+<a name="ixa103759"><i>Sequenzers</i></a> in ihrer exakten zeitlichen
+Abfolge wiedergeben zu k&ouml;nnen. Im Sound-API werden Midi-Daten
+ohne Zeitstempel als <a name="ixa103760"><i>Midi-Nachrichten</i></a>
+(<i>Midi-Messages</i>) und solche mit Zeitstempel als <a name="ixa103761"><i>Midi-Ereignisse</i></a>
+(<i>Midi-Events</i>) bezeichnet. Der Inhalt einer Midi-Datei wird
+&uuml;blicherweise als <a name="ixa103762"><i>Sequenz</i></a> bezeichnet.
+Eine Sequenz enth&auml;lt eine Reihe von <i>Spuren</i>, die ihrerseits
+die Midi-Events enthalten. Meist repr&auml;sentieren die Spuren die
+unterschiedlichen Instrumente eines St&uuml;cks, so dass etwa in Spur
+eins das Piano liegt, in Spur zwei der Bass usw. Die verschiedenen
+Spuren werden innerhalb der Midi-Events durch <i>Kan&auml;le</i> repr&auml;sentiert,
+von denen es maximal 16 pro Midi-Schnittstelle gibt. 
+
+<!-- Section -->
+
+<a name="sectlevel3id051003002"></a>
+<h3>51.3.2 Grundlegende Klassen des Midi-API </h3>
+
+<p>
+&Auml;hnlich wie im Sampling-API gibt es eine Reihe von Klassen und
+Interfaces, mit denen die zuvor beschriebenen Konzepte innerhalb des
+Midi-API umgesetzt werden. Sie befinden sich im zweiten gro&szlig;en
+Bestandteil des Java Sound-API, dem Paket <a name="ixa103763"><a href="index_j.html#ixb102853"><font color=#000080><tt>javax.sound.midi</tt></font></a></a>.
+Wir wollen die wichtigsten von ihnen kurz vorstellen: 
+<ul>
+<li>Analog zur Klasse <a href="index_a.html#ixb102806"><font color=#000080><tt>AudioSystem</tt></font></a>
+gibt es im Paket <a href="index_j.html#ixb102853"><font color=#000080><tt>javax.sound.midi</tt></font></a>
+eine Klasse <a name="ixa103764"><a href="index_m.html#ixb102854"><font color=#000080><tt>MidiSystem</tt></font></a></a>,
+mit der Midi-Ger&auml;te und Midi-Dateien beschafft und Informationen
+&uuml;ber sie abgefragt werden k&ouml;nnen.
+<li>Ein Midi-Ger&auml;t wird durch die Klasse <a name="ixa103765"><a href="index_m.html#ixb102855"><font color=#000080><tt>MidiDevice</tt></font></a></a>
+repr&auml;sentiert. Ein <a href="index_m.html#ixb102855"><font color=#000080><tt>MidiDevice</tt></font></a>
+kann entweder ge&ouml;ffnet oder geschlossen sein und besitzt eine
+Reihe von Ein- und Ausgabeelementen. Die Eingabeelemente werden durch
+das Interface <a name="ixa103766"><a href="index_r.html#ixb102856"><font color=#000080><tt>Receiver</tt></font></a></a>,
+die Ausgabeelemente durch das Interface <a name="ixa103767"><a href="index_t.html#ixb102857"><font color=#000080><tt>Transmitter</tt></font></a></a>
+dargestellt. Ein <a href="index_m.html#ixb102855"><font color=#000080><tt>MidiDevice</tt></font></a>
+kennt die Anzahl seiner <a href="index_r.html#ixb102856"><font color=#000080><tt>Receiver</tt></font></a>
+und <a href="index_t.html#ixb102857"><font color=#000080><tt>Transmitter</tt></font></a>
+und stellt diese auf Anfrage zur Verf&uuml;gung.
+<li>Die wichtigsten Unterklassen von <a href="index_m.html#ixb102855"><font color=#000080><tt>MidiDevice</tt></font></a>
+sind <a name="ixa103768"><a href="index_s.html#ixb102858"><font color=#000080><tt>Synthesizer</tt></font></a></a>
+und <a name="ixa103769"><a href="index_s.html#ixb102859"><font color=#000080><tt>Sequencer</tt></font></a></a>.
+Gegen&uuml;ber seiner Vaterklasse besitzt ein <a href="index_s.html#ixb102858"><font color=#000080><tt>Synthesizer</tt></font></a>
+zus&auml;tzlich Informationen &uuml;ber die verf&uuml;gbaren Instrumente
+und ihre Zuordnung auf die verschiedenen Kan&auml;le. Ein <a href="index_s.html#ixb102859"><font color=#000080><tt>Sequencer</tt></font></a>
+besitzt dagegen Methoden, um eine Sequenz abzuspielen oder anzuhalten
+und Parameter wie Tempo, Synchronisierung oder Positionierung zu beeinflussen.
+<li>Eine Midi-Nachricht wird durch die Klasse <a name="ixa103770"><a href="index_m.html#ixb102860"><font color=#000080><tt>MidiMessage</tt></font></a></a>
+und deren Unterklassen <a name="ixa103771"><a href="index_s.html#ixb102861"><font color=#000080><tt>ShortMessage</tt></font></a></a>,
+<a name="ixa103772"><a href="index_m.html#ixb102862"><font color=#000080><tt>MetaMessage</tt></font></a></a>
+und <a name="ixa103773"><a href="index_s.html#ixb102863"><font color=#000080><tt>SysexMessage</tt></font></a></a>
+repr&auml;sentiert. Ein Midi-Ereignis wird durch die Klasse <a name="ixa103774"><a href="index_m.html#ixb102864"><font color=#000080><tt>MidiEvent</tt></font></a></a>
+dargestellt, die zus&auml;tzlich zur <a href="index_m.html#ixb102860"><font color=#000080><tt>MidiMessage</tt></font></a>
+einen Zeitstempel enth&auml;lt. Eine Sequenz wird durch die Klasse
+<a name="ixa103775"><a href="index_s.html#ixb102865"><font color=#000080><tt>Sequence</tt></font></a></a>
+repr&auml;sentiert. Sie enth&auml;lt neben einigen globalen Informationen
+zum Timing der Daten eine Reihe von <a name="ixa103776"><a href="index_t.html#ixb102866"><font color=#000080><tt>Tracks</tt></font></a></a>,
+die ihrerseits die <a href="index_m.html#ixb102864"><font color=#000080><tt>MidiEvents</tt></font></a>
+enthalten.
+</ul>
+
+<p>
+Weitere Details zu den genannten Klassen werden in den folgenden Abschnitten
+vorgestellt. 
+
+<!-- Section -->
+
+<a name="sectlevel3id051003003"></a>
+<h3>51.3.3 Alle meine Entchen - erster Versuch </h3>
+
+<p>
+In diesem Abschnitt wollen wir uns die Aufgabe stellen, das allseits
+bekannte &#187;Alle meine Entchen&#171; mit Hilfe des Midi-API wiederzugeben.
+Zuerst wollen wir einen sehr einfachen Ansatz w&auml;hlen, bei dem
+die Midi-Nachrichten in Echtzeit an einen Synthesizer geschickt werden,
+wobei das Timing mit Hilfe von <font color="#000077"><tt>Thread.sleep</tt></font>-Aufrufen
+manuell gesteuert wird. 
+
+<p>
+Zun&auml;chst wird also ein Synthesizer ben&ouml;tigt, den wir von
+der Klasse <a href="index_m.html#ixb102854"><font color=#000080><tt>MidiSystem</tt></font></a>
+beziehen k&ouml;nnen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static Synthesizer getSynthesizer()
+  throws MidiUnavailableException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/sound/midi/MidiSystem.html" onClick="this.href=getApiDoc('javax.sound.midi.MidiSystem')"><font color="#660066" size=-1>javax.sound.midi.MidiSystem</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa103777"><a href="index_g.html#ixb102867"><font color=#000080><tt>getSynthesizer</tt></font></a></a>
+liefert den Default-Synthesizer der installierten Sound-Hardware,
+typischerweise den auf der Soundkarte eingebauten. Ist mehr als ein
+Synthesizer vorhanden, muss die Liste aller verf&uuml;gbaren Synthesizer
+durch Aufruf von <a name="ixa103778"><a href="index_g.html#ixb102868"><font color=#000080><tt>getMidiDeviceInfo</tt></font></a></a>
+durchsucht und mit <a name="ixa103779"><a href="index_g.html#ixb102869"><font color=#000080><tt>getMidiDevice</tt></font></a></a>
+der gew&uuml;nschte ausgew&auml;hlt werden. Wir wollen zun&auml;chst
+davon ausgehen, dass ein Default-Synthesizer vorhanden ist, der unseren
+Anspr&uuml;chen gen&uuml;gt. 
+
+<p>
+Nachdem der <a href="index_s.html#ixb102858"><font color=#000080><tt>Synthesizer</tt></font></a>
+verf&uuml;gbar ist, muss er ge&ouml;ffnet und zur &Uuml;bergabe von
+Midi-Nachrichten ein <a href="index_r.html#ixb102856"><font color=#000080><tt>Receiver</tt></font></a>
+beschafft werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void open()
+  throws MidiUnavailableException
+
+public void close()
+
+public boolean isOpen()
+
+public int getMaxReceivers()
+
+public Receiver getReceiver()
+  throws MidiUnavailableException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/sound/midi/Synthesizer.html" onClick="this.href=getApiDoc('javax.sound.midi.Synthesizer')"><font color="#660066" size=-1>javax.sound.midi.Synthesizer</font></a></td>
+</tr>
+</table>
+
+<p>
+Das &Ouml;ffnen und Schlie&szlig;en eines Midi-Ger&auml;ts wird mit
+<a name="ixa103780"><a href="index_o.html#ixb102843"><font color=#000080><tt>open</tt></font></a></a>
+und <a name="ixa103781"><a href="index_c.html#ixb100596"><font color=#000080><tt>close</tt></font></a></a>
+erledigt, und mit <a name="ixa103782"><a href="index_i.html#ixb102870"><font color=#000080><tt>isOpen</tt></font></a></a>
+kann sein aktueller Status herausgefunden werden. Ein <a href="index_r.html#ixb102856"><font color=#000080><tt>Receiver</tt></font></a>
+kann durch Aufruf von <a name="ixa103783"><a href="index_g.html#ixb102871"><font color=#000080><tt>getReceiver</tt></font></a></a>
+beschafft werden, die Gesamtzahl aller vorhandenen <a href="index_r.html#ixb102856"><font color=#000080><tt>Receiver</tt></font></a>
+kann mit <a name="ixa103784"><a href="index_g.html#ixb102872"><font color=#000080><tt>getMaxReceivers</tt></font></a></a>
+abgefragt werden. 
+
+<p>
+Um an ein Midi-Ger&auml;t Daten zu senden, werden diese einfach an
+einen seiner <a href="index_r.html#ixb102856"><font color=#000080><tt>Receiver</tt></font></a>
+geschickt. Dazu besitzt dieser eine Methode <a name="ixa103785"><a href="index_s.html#ixb102873"><font color=#000080><tt>send</tt></font></a></a>,
+an die beim Aufruf die gew&uuml;nschte <a href="index_m.html#ixb102860"><font color=#000080><tt>MidiMessage</tt></font></a>
+&uuml;bergeben wird: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void send(MidiMessage message, long timeStamp)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/sound/midi/Receiver.html" onClick="this.href=getApiDoc('javax.sound.midi.Receiver')"><font color="#660066" size=-1>javax.sound.midi.Receiver</font></a></td>
+</tr>
+</table>
+
+<p>
+Das zweite Argument <font color="#000077"><tt>timeStamp</tt></font>
+ist zur Feinsynchronisierung der Midi-Nachrichten vorgesehen. Damit
+soll ein <a href="index_s.html#ixb102858"><font color=#000080><tt>Synthesizer</tt></font></a>
+in der Lage sein, <i>leichte</i> Timing-Schwankungen beim Anliefern
+der Daten auszugleichen. Ob ein Ger&auml;t dieses Feature unterst&uuml;tzt,
+kann durch Aufruf von <a name="ixa103786"><a href="index_g.html#ixb102874"><font color=#000080><tt>getMicrosecondPosition</tt></font></a></a>
+bestimmt werden. Ist dessen R&uuml;ckgabewert -1, werden derartige
+Timestamps nicht unterst&uuml;tzt: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public long getMicrosecondPosition()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/sound/midi/MidiDevice.html" onClick="this.href=getApiDoc('javax.sound.midi.MidiDevice')"><font color="#660066" size=-1>javax.sound.midi.MidiDevice</font></a></td>
+</tr>
+</table>
+
+<p>
+Aber auch, wenn diese Timestamps unterst&uuml;tzt werden, sollte man
+keine Wunder von ihnen erwarten. Die Spezifikation weist ausdr&uuml;cklich
+darauf hin, dass damit nur <i>kleinere</i> Timing-Schwankungen ausgeglichen
+werden k&ouml;nnen. Liegt ein Zeitstempel dagegen weit in der Zukunft
+(oder gar in der Vergangenheit), ist das Midi-Ger&auml;t nicht verpflichtet,
+diesen korrekt zu behandeln. Wird -1 an das <font color="#000077"><tt>timeStamp</tt></font>-Argument
+von <a href="index_s.html#ixb102873"><font color=#000080><tt>send</tt></font></a>
+&uuml;bergeben, ignoriert das entsprechende Ger&auml;t den Zeitstempel
+und bearbeitet die Midi-Nachricht, so schnell es kann. 
+
+<p>
+Um eine <a href="index_m.html#ixb102860"><font color=#000080><tt>MidiMessage</tt></font></a>
+zu konstruieren, wird diese zun&auml;chst mit <a href="index_n.html#ixb100088"><font color=#000080><tt>new</tt></font></a>
+erzeugt und durch Aufruf von <a name="ixa103787"><a href="index_s.html#ixb102875"><font color=#000080><tt>setMessage</tt></font></a></a>
+mit Daten gef&uuml;llt. Da wir weder Meta- noch Sysex-Daten ben&ouml;tigen,
+wollen wir uns lediglich die Konstruktion einer <a name="ixa103788"><a href="index_s.html#ixb102861"><font color=#000080><tt>ShortMessage</tt></font></a></a>
+mit Hilfe der folgenden <a href="index_s.html#ixb102875"><font color=#000080><tt>setMessage</tt></font></a>-Methode
+ansehen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setMessage(
+  int command,
+  int channel,
+  int data1,
+  int data2
+)
+  throws InvalidMidiDataException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/sound/midi/ShortMessage.html" onClick="this.href=getApiDoc('javax.sound.midi.ShortMessage')"><font color="#660066" size=-1>javax.sound.midi.ShortMessage</font></a></td>
+</tr>
+</table>
+
+<p>
+Als erstes Argument muss das gew&uuml;nschte Midi-Kommando &uuml;bergeben
+werden. Die f&uuml;r uns relevanten Kommandos sind <a name="ixa103789"><a href="index_n.html#ixb102876"><font color=#000080><tt>NOTE_ON</tt></font></a></a>
+(Taste wird gedr&uuml;ckt), <a name="ixa103790"><a href="index_n.html#ixb102877"><font color=#000080><tt>NOTE_OFF</tt></font></a></a>
+(Taste wird losgelassen) und <a name="ixa103791"><a href="index_p.html#ixb102878"><font color=#000080><tt>PROGRAM_CHANGE</tt></font></a></a>
+(Instrumentenwechsel). Sie werden als Konstanten in der Klasse <a href="index_s.html#ixb102861"><font color=#000080><tt>ShortMessage</tt></font></a>
+definiert. Als zweites Argument wird der Kanal angegeben, auf den
+sich das Kommando auswirken soll. Anschlie&szlig;end folgen zwei Datenbytes,
+die kommandospezifisch sind. Das <a href="index_n.html#ixb102876"><font color=#000080><tt>NOTE_ON</tt></font></a>-Kommando
+erwartet darin beispielsweise die Tonh&ouml;he (die verf&uuml;gbaren
+Noten sind als Ganzzahlen durchnummeriert) und die relative Lautst&auml;rke
+(Anschlagsdynamik) der Note. <a href="index_n.html#ixb102877"><font color=#000080><tt>NOTE_OFF</tt></font></a>
+erwartet die Tonh&ouml;he als erstes Datenbyte und ignoriert das zweite.
+<a href="index_p.html#ixb102878"><font color=#000080><tt>PROGRAM_CHANGE</tt></font></a>
+erwartet die gew&uuml;nschte Programmnummer und ignoriert das zweite
+Datenbyte. 
+
+<p>
+Nach diesen Vorbemerkungen wollen wir uns nun ein Beispielprogramm
+ansehen: 
+<a name="ame1"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing5102.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> javax.sound.midi.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing5102
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">private</font> <font color="#0000AA">static</font> <font color="#006699">void</font> playAlleMeineEntchen()
+<font color="#555555">008 </font>  <font color="#0000AA">throws</font> Exception
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    <font color="#00AA00">//Partitur {{Tonhoehe, DauerInViertelNoten, AnzahlWdh},...}</font>
+<font color="#555555">011 </font>    <font color="#0000AA">final</font> <font color="#006699">int</font> DATA[][] = { <a name="ame1.a"></a>
+<font color="#555555">012 </font>      {60,  1, 1}, <font color="#00AA00">//C</font>
+<font color="#555555">013 </font>      {62,  1, 1}, <font color="#00AA00">//D</font>
+<font color="#555555">014 </font>      {64,  1, 1}, <font color="#00AA00">//E</font>
+<font color="#555555">015 </font>      {65,  1, 1}, <font color="#00AA00">//F</font>
+<font color="#555555">016 </font>      {67,  2, 2}, <font color="#00AA00">//G,G</font>
+<font color="#555555">017 </font>      {69,  1, 4}, <font color="#00AA00">//A,A,A,A</font>
+<font color="#555555">018 </font>      {67,  4, 1}, <font color="#00AA00">//G</font>
+<font color="#555555">019 </font>      {69,  1, 4}, <font color="#00AA00">//A,A,A,A</font>
+<font color="#555555">020 </font>      {67,  4, 1}, <font color="#00AA00">//G</font>
+<font color="#555555">021 </font>      {65,  1, 4}, <font color="#00AA00">//F,F,F,F</font>
+<font color="#555555">022 </font>      {64,  2, 2}, <font color="#00AA00">//E,E</font>
+<font color="#555555">023 </font>      {62,  1, 4}, <font color="#00AA00">//D,D,D,D</font>
+<font color="#555555">024 </font>      {60,  4, 1}  <font color="#00AA00">//C</font>
+<font color="#555555">025 </font>    };
+<font color="#555555">026 </font>    <font color="#00AA00">//Synthesizer &ouml;ffnen und Receiver holen</font>
+<font color="#555555">027 </font>    Synthesizer synth = MidiSystem.getSynthesizer(); <a name="ame1.b"></a>
+<font color="#555555">028 </font>    synth.open();
+<font color="#555555">029 </font>    Receiver rcvr = synth.getReceiver();
+<font color="#555555">030 </font>    <font color="#00AA00">//Melodie spielen</font>
+<font color="#555555">031 </font>    ShortMessage msg = <font color="#0000AA">new</font> ShortMessage();
+<font color="#555555">032 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; DATA.length; ++i) {
+<font color="#555555">033 </font>      <font color="#0000AA">for</font> (<font color="#006699">int</font> j = 0; j &lt; DATA[i][2]; ++j) { <font color="#00AA00">//Anzahl Wdh. je Note</font>
+<font color="#555555">034 </font>        <font color="#00AA00">//Note an</font>
+<font color="#555555">035 </font>        msg.setMessage(ShortMessage.NOTE_ON, 0, DATA[i][0], 64);
+<font color="#555555">036 </font>        rcvr.send(msg, -1);
+<font color="#555555">037 </font>        <font color="#00AA00">//Pause</font>
+<font color="#555555">038 </font>        <font color="#0000AA">try</font> {
+<font color="#555555">039 </font>          Thread.sleep(DATA[i][1] * 400); <a name="ame1.c"></a>
+<font color="#555555">040 </font>        } <font color="#0000AA">catch</font> (Exception e) {
+<font color="#555555">041 </font>          <font color="#00AA00">//nothing</font>
+<font color="#555555">042 </font>        }
+<font color="#555555">043 </font>        <font color="#00AA00">//Note aus</font>
+<font color="#555555">044 </font>        msg.setMessage(ShortMessage.NOTE_OFF, 0, DATA[i][0], 0);
+<font color="#555555">045 </font>        rcvr.send(msg, -1);
+<font color="#555555">046 </font>      }
+<font color="#555555">047 </font>    }
+<font color="#555555">048 </font>    <font color="#00AA00">//Synthesizer schlie&szlig;en</font>
+<font color="#555555">049 </font>    synth.close();
+<font color="#555555">050 </font>  }
+<font color="#555555">051 </font>
+<font color="#555555">052 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">053 </font>  {
+<font color="#555555">054 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">055 </font>      playAlleMeineEntchen();
+<font color="#555555">056 </font>    } <font color="#0000AA">catch</font> (Exception e) {
+<font color="#555555">057 </font>      e.printStackTrace();
+<font color="#555555">058 </font>      System.exit(1);
+<font color="#555555">059 </font>    }
+<font color="#555555">060 </font>    System.exit(0);
+<font color="#555555">061 </font>  }
+<font color="#555555">062 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing5102.java"><font color="#000055" size=-1>Listing5102.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 51.2: Alle meine Entchen - erster Versuch</i></p>
+
+<p>
+Ab <a href="k100325.html#ame1.b">Zeile 027</a> wird ein <a href="index_s.html#ixb102858"><font color=#000080><tt>Synthesizer</tt></font></a>
+aktiviert und zur &Uuml;bergabe von Midi-Nachrichten auf einen seiner
+<a href="index_r.html#ixb102856"><font color=#000080><tt>Receiver</tt></font></a>
+zugegriffen. Anschlie&szlig;end wird die Melodie durch wiederholten
+Aufruf seiner <a href="index_s.html#ixb102873"><font color=#000080><tt>send</tt></font></a>-Methode
+abgespielt. Die Melodie ist in dem Array <font color="#000077"><tt>DATA</tt></font>
+in <a href="k100325.html#ame1.a">Zeile 011</a> versteckt. F&uuml;r
+jede einzelne Note wird dort die Tonh&ouml;he, die Tondauer in Viertelnoten
+und die Anzahl der Wiederholungen angegeben. Die jeweilige Noteninformation
+wird mit <a href="index_s.html#ixb102875"><font color=#000080><tt>setMessage</tt></font></a>
+an die vorinstanzierte <a href="index_s.html#ixb102861"><font color=#000080><tt>ShortMessage</tt></font></a>
+&uuml;bergeben und als <font color="#000077"><tt>NOTE_ON</tt></font>-Nachricht
+an den Synthesizer geschickt. In <a href="k100325.html#ame1.c">Zeile 039</a>
+pausiert das Programm, um die Note entsprechend ihrer L&auml;nge erklingen
+zu lassen (in unserem Beispiel 400 ms. je Viertelnote). Anschlie&szlig;end
+wird die <font color="#000077"><tt>NOTE_OFF</tt></font>-Nachricht
+geschickt, um den Ton zu beenden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Wenn wir das Programm mit dem Java-Interpreter starten und eine passende
+Sound-Hardware vorhanden ist, h&ouml;ren wir tats&auml;chlich &#187;Alle
+meine Entchen&#171;. Bei unver&auml;nderter Standardinstrumentierung
+sollte die Melodie auf einem Klavier gespielt werden. Wenn wir genau
+hinh&ouml;ren, stellen wir allerdings ein Problem fest: Das Timing
+des St&uuml;cks ist nicht pr&auml;zise, sondern schwankt w&auml;hrend
+der Darbietung. Manche Noten werden etwas zu kurz, andere dagegen
+zu lang gespielt. Das liegt daran, dass die mit <font color="#000077"><tt>Thread.sleep</tt></font>
+erzeugten Notenl&auml;ngen bei weitem nicht pr&auml;zise genug sind.
+Die beim Aufruf erzeugten Schwankungen sind f&uuml;r das menschliche
+Ohr sehr gut h&ouml;rbar und f&uuml;hren dazu, dass das Musikst&uuml;ck
+ungenie&szlig;bar wird. Obwohl das Verfahren <i>prinzipiell</i> funktioniert,
+ben&ouml;tigen wir also ein pr&auml;ziseres Wiedergabewerkzeug. Und
+das ist das Thema des n&auml;chsten Abschnitts.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id051003004"></a>
+<h3>51.3.4 Alle meine Entchen mit dem Sequenzer </h3>
+
+<p>
+Neben dem <a href="index_s.html#ixb102858"><font color=#000080><tt>Synthesizer</tt></font></a>
+ist der <a href="index_s.html#ixb102859"><font color=#000080><tt>Sequencer</tt></font></a>
+das zweite wichtige <a href="index_m.html#ixb102855"><font color=#000080><tt>MidiDevice</tt></font></a>.
+Er dient dazu, Midi-Sequenzen entsprechend der darin enthaltenen Timing-Information
+<i>pr&auml;zise</i> wiederzugeben. Das h&ouml;rt sich zun&auml;chst
+einmal einfach an, ist es aber nicht. Einerseits ben&ouml;tigt ein
+Sequencer einen Zeitgeber, der genauer ist als die &uuml;blicherweise
+vom Betriebssystem zur Verf&uuml;gung gestellten Timer. Zweitens muss
+dieser m&ouml;glichst immun gegen Schwankungen der CPU-Last sein,
+d.h., der Sequencer sollte auch dann noch stabil arbeiten, wenn im
+Hintergrund CPU-intensive Operationen ablaufen. Drittens muss ein
+Sequenzer nicht nur, wie in unserem Beispiel, eine einzige Spur mit
+verh&auml;ltnism&auml;&szlig;ig langsamen Viertelnoten abspielen,
+sondern m&ouml;glicherweise ein Dutzend von ihnen, mit Achteln, Sechzehnteln
+oder noch k&uuml;rzeren Noten, wie sie beispielsweise bei Schlagzeugspuren
+auftreten. Zudem enthalten die Spuren oft immense Mengen an Controller-Daten
+(z.B. Pitch-Bend), die ebenfalls pr&auml;zise wiedergegeben werden
+m&uuml;ssen. Zu guter Letzt besitzt ein Sequenzer Zusatzfunktionen,
+wie das &Auml;ndern der Abspielgeschwindigkeit, das Ausblenden einzelner
+Spuren oder das Synchronisieren mit externen Taktgebern, und er besitzt
+in aller Regel einen Aufnahmemodus, mit dem Mididaten in Echtzeit
+aufgenommen werden k&ouml;nnen. 
+
+<p>
+Wir sehen also, dass die Implementierung eines guten Sequenzers gar
+nicht so einfach ist. Gl&uuml;cklicherweise stellt das <a href="index_m.html#ixb102854"><font color=#000080><tt>MidiSystem</tt></font></a>
+einen eigenen <a href="index_s.html#ixb102859"><font color=#000080><tt>Sequencer</tt></font></a>
+zur Verf&uuml;gung, dessen Standardimplementierung durch einen Aufruf
+von <a name="ixa103792"><a href="index_g.html#ixb102879"><font color=#000080><tt>getSequencer</tt></font></a></a>
+beschafft werden kann: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static Sequencer getSequencer()
+  throws MidiUnavailableException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/sound/midi/MidiSystem.html" onClick="this.href=getApiDoc('javax.sound.midi.MidiSystem')"><font color="#660066" size=-1>javax.sound.midi.MidiSystem</font></a></td>
+</tr>
+</table>
+
+<p>
+Beim Abspielen einer Melodie mit dem <a href="index_s.html#ixb102859"><font color=#000080><tt>Sequencer</tt></font></a>
+werden die Midi-Nachrichten nicht mehr direkt an den <a href="index_s.html#ixb102858"><font color=#000080><tt>Synthesizer</tt></font></a>
+geschickt, sondern zun&auml;chst in eine <a href="index_s.html#ixb102865"><font color=#000080><tt>Sequence</tt></font></a>
+verpackt. Diese kann wie folgt konstruiert werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Sequence(float divisionType, int resolution)
+  throws InvalidMidiDataException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/sound/midi/Sequence.html" onClick="this.href=getApiDoc('javax.sound.midi.Sequence')"><font color="#660066" size=-1>javax.sound.midi.Sequence</font></a></td>
+</tr>
+</table>
+
+<p>
+Das erste Argument gibt die Art und Weise an, wie das Timing erzeugt
+werden soll. Hier gibt es im Wesentlichen die M&ouml;glichkeiten,
+einen internen Timer zu verwenden, der auf Bruchteilen von Viertelnoten
+basiert, oder mit externer Synchronisation zu arbeiten, bei der die
+Timing-Informationen im <a name="ixa103793"><i>SMPTE-Format</i></a>
+zur Verf&uuml;gung gestellt werden. Wir wollen die erste Variante
+w&auml;hlen und &uuml;bergeben dazu die Konstante <a name="ixa103794"><a href="index_p.html#ixb102881"><font color=#000080><tt>Sequence.PPQ</tt></font></a></a>
+als erstes Argument. Das zweite Argument <font color="#000077"><tt>resoultion</tt></font>
+bezieht sich auf das erste und gibt die Aufl&ouml;sung des Timers
+an. In unserem Fall w&uuml;rde es also die Anzahl der Zeitimpulse
+je Viertelnote angeben. 
+
+<p>
+Um eine <a href="index_s.html#ixb102865"><font color=#000080><tt>Sequence</tt></font></a>
+mit Daten zu f&uuml;llen, wird mindestens ein <a name="ixa103795"><a href="index_t.html#ixb102866"><font color=#000080><tt>Track</tt></font></a></a>
+ben&ouml;tigt, der durch Aufruf von <a name="ixa103796"><a href="index_c.html#ixb102882"><font color=#000080><tt>createTrack</tt></font></a></a>
+erzeugt werden kann: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Track createTrack()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/sound/midi/Sequence.html" onClick="this.href=getApiDoc('javax.sound.midi.Sequence')"><font color="#660066" size=-1>javax.sound.midi.Sequence</font></a></td>
+</tr>
+</table>
+
+<p>
+Ein <a href="index_t.html#ixb102866"><font color=#000080><tt>Track</tt></font></a>-Objekt
+ist zun&auml;chst leer und wird durch wiederholte Aufrufe von <a name="ixa103797"><a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a></a>
+mit Midi-Ereignissen versehen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public boolean add(MidiEvent event)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/sound/midi/Track.html" onClick="this.href=getApiDoc('javax.sound.midi.Track')"><font color="#660066" size=-1>javax.sound.midi.Track</font></a></td>
+</tr>
+</table>
+
+<p>
+Nachdem die <a href="index_s.html#ixb102865"><font color=#000080><tt>Sequence</tt></font></a>
+fertiggestellt ist, kann sie durch Aufruf von <a name="ixa103798"><a href="index_s.html#ixb102883"><font color=#000080><tt>setSequence</tt></font></a></a>
+an den <a href="index_s.html#ixb102859"><font color=#000080><tt>Sequencer</tt></font></a>
+&uuml;bergeben werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setSequence(Sequence sequence)
+  throws InvalidMidiDataException
+
+public void setTempoInBPM(float bpm)
+
+public void start()
+public void stop()
+public boolean isRunning()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/sound/midi/Sequencer.html" onClick="this.href=getApiDoc('javax.sound.midi.Sequencer')"><font color="#660066" size=-1>javax.sound.midi.Sequencer</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa103799"><a href="index_s.html#ixb102884"><font color=#000080><tt>setTempoInBPM</tt></font></a></a>
+kann das Abspieltempo in &#187;Beats Per Minute&#171; (kurz <a name="ixa103800"><i>BPM</i></a>),
+also in Viertelnoten pro Minute, angegeben werden. <a name="ixa103801"><a href="index_s.html#ixb101113"><font color=#000080><tt>start</tt></font></a></a>
+startet das Abspielen der Sequenz, <a name="ixa103802"><a href="index_s.html#ixb101118"><font color=#000080><tt>stop</tt></font></a></a>
+beendet es. Mit <a name="ixa103803"><a href="index_i.html#ixb102844"><font color=#000080><tt>isRunning</tt></font></a></a>
+kann gepr&uuml;ft werden, ob der Sequencer gerade l&auml;uft. 
+
+<p>
+Bevor eine <a href="index_s.html#ixb102865"><font color=#000080><tt>Sequence</tt></font></a>
+abgespielt werden kann, m&uuml;ssen <a href="index_s.html#ixb102858"><font color=#000080><tt>Synthesizer</tt></font></a>
+und <a href="index_s.html#ixb102859"><font color=#000080><tt>Sequencer</tt></font></a>
+miteinander verbunden werden. Dies geschieht, indem ein <a href="index_t.html#ixb102857"><font color=#000080><tt>Transmitter</tt></font></a>
+des Sequenzers an einen <a href="index_r.html#ixb102856"><font color=#000080><tt>Receiver</tt></font></a>
+des Synthesizers angeschlossen wird. Der <a href="index_t.html#ixb102857"><font color=#000080><tt>Transmitter</tt></font></a>
+verf&uuml;gt dazu &uuml;ber eine Methode <a name="ixa103804"><a href="index_s.html#ixb102886"><font color=#000080><tt>setReceiver</tt></font></a></a>,
+an die der empfangende <a href="index_r.html#ixb102856"><font color=#000080><tt>Receiver</tt></font></a>
+&uuml;bergeben wird: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setReceiver(Receiver receiver)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/sound/midi/Transmitter.html" onClick="this.href=getApiDoc('javax.sound.midi.Transmitter')"><font color="#660066" size=-1>javax.sound.midi.Transmitter</font></a></td>
+</tr>
+</table>
+
+<p>
+Nach diesen Vorbemerkungen k&ouml;nnen wir uns nun ansehen, wie &#187;Alle
+meine Entchen&#171; mit Hilfe eines Sequenzers wiedergegeben werden
+kann. 
+<a name="ame2"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing5103.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> javax.sound.midi.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing5103
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">private</font> <font color="#0000AA">static</font> <font color="#006699">void</font> playAlleMeineEntchen()
+<font color="#555555">008 </font>  <font color="#0000AA">throws</font> Exception
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    <font color="#00AA00">//Partitur {{Tonhoehe, DauerInViertelNoten, AnzahlWdh},...}</font>
+<font color="#555555">011 </font>    <font color="#0000AA">final</font> <font color="#006699">int</font> DATA[][] = {
+<font color="#555555">012 </font>      {60,  1, 1}, <font color="#00AA00">//C</font>
+<font color="#555555">013 </font>      {62,  1, 1}, <font color="#00AA00">//D</font>
+<font color="#555555">014 </font>      {64,  1, 1}, <font color="#00AA00">//E</font>
+<font color="#555555">015 </font>      {65,  1, 1}, <font color="#00AA00">//F</font>
+<font color="#555555">016 </font>      {67,  2, 2}, <font color="#00AA00">//G,G</font>
+<font color="#555555">017 </font>      {69,  1, 4}, <font color="#00AA00">//A,A,A,A</font>
+<font color="#555555">018 </font>      {67,  4, 1}, <font color="#00AA00">//G</font>
+<font color="#555555">019 </font>      {69,  1, 4}, <font color="#00AA00">//A,A,A,A</font>
+<font color="#555555">020 </font>      {67,  4, 1}, <font color="#00AA00">//G</font>
+<font color="#555555">021 </font>      {65,  1, 4}, <font color="#00AA00">//F,F,F,F</font>
+<font color="#555555">022 </font>      {64,  2, 2}, <font color="#00AA00">//E,E</font>
+<font color="#555555">023 </font>      {62,  1, 4}, <font color="#00AA00">//D,D,D,D</font>
+<font color="#555555">024 </font>      {60,  4, 1}  <font color="#00AA00">//C</font>
+<font color="#555555">025 </font>    };
+<font color="#555555">026 </font>    <font color="#00AA00">//Sequence bauen</font>
+<font color="#555555">027 </font>    <font color="#0000AA">final</font> <font color="#006699">int</font> PPQS = 16; <a name="ame2.a"></a>
+<font color="#555555">028 </font>    <font color="#0000AA">final</font> <font color="#006699">int</font> STAKKATO = 4;
+<font color="#555555">029 </font>    Sequence seq = <font color="#0000AA">new</font> Sequence(Sequence.PPQ, PPQS);
+<font color="#555555">030 </font>    Track track = seq.createTrack();
+<font color="#555555">031 </font>    <font color="#006699">long</font> currentTick = 0;
+<font color="#555555">032 </font>    ShortMessage msg;
+<font color="#555555">033 </font>    <font color="#00AA00">//Kanal 0 auf "EnsembleStrings" umschalten</font>
+<font color="#555555">034 </font>    msg = <font color="#0000AA">new</font> ShortMessage(); <a name="ame2.e"></a>
+<font color="#555555">035 </font>    msg.setMessage(ShortMessage.PROGRAM_CHANGE, 0, 48, 0);
+<font color="#555555">036 </font>    track.add(<font color="#0000AA">new</font> MidiEvent(msg, currentTick));
+<font color="#555555">037 </font>    <font color="#00AA00">//Partiturdaten hinzuf&uuml;gen</font>
+<font color="#555555">038 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; DATA.length; ++i) { <a name="ame2.b"></a>
+<font color="#555555">039 </font>      <font color="#0000AA">for</font> (<font color="#006699">int</font> j = 0; j &lt; DATA[i][2]; ++j) { <font color="#00AA00">//Anzahl Wdh. je Note</font>
+<font color="#555555">040 </font>        msg = <font color="#0000AA">new</font> ShortMessage();
+<font color="#555555">041 </font>        msg.setMessage(ShortMessage.NOTE_ON, 0, DATA[i][0], 64);
+<font color="#555555">042 </font>        track.add(<font color="#0000AA">new</font> MidiEvent(msg, currentTick));
+<font color="#555555">043 </font>        currentTick += PPQS * DATA[i][1] - STAKKATO;
+<font color="#555555">044 </font>        msg = <font color="#0000AA">new</font> ShortMessage();
+<font color="#555555">045 </font>        msg.setMessage(ShortMessage.NOTE_OFF, 0, DATA[i][0], 0);
+<font color="#555555">046 </font>        track.add(<font color="#0000AA">new</font> MidiEvent(msg, currentTick));
+<font color="#555555">047 </font>        currentTick += STAKKATO; <a name="ame2.c"></a>
+<font color="#555555">048 </font>      }
+<font color="#555555">049 </font>    }
+<font color="#555555">050 </font>    <font color="#00AA00">//Sequencer und Synthesizer initialisieren</font>
+<font color="#555555">051 </font>    Sequencer sequencer = MidiSystem.getSequencer(); <a name="ame2.d"></a>
+<font color="#555555">052 </font>    Transmitter trans = sequencer.getTransmitter();
+<font color="#555555">053 </font>    Synthesizer synth = MidiSystem.getSynthesizer();
+<font color="#555555">054 </font>    Receiver rcvr = synth.getReceiver();
+<font color="#555555">055 </font>    <font color="#00AA00">//Beide &ouml;ffnen und verbinden</font>
+<font color="#555555">056 </font>    sequencer.open();
+<font color="#555555">057 </font>    synth.open();
+<font color="#555555">058 </font>    trans.setReceiver(rcvr);
+<font color="#555555">059 </font>    <font color="#00AA00">//Sequence abspielen</font>
+<font color="#555555">060 </font>    sequencer.setSequence(seq);
+<font color="#555555">061 </font>    sequencer.setTempoInBPM(145);
+<font color="#555555">062 </font>    sequencer.start();
+<font color="#555555">063 </font>    <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">064 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">065 </font>        Thread.sleep(100);
+<font color="#555555">066 </font>      } <font color="#0000AA">catch</font> (Exception e) {
+<font color="#555555">067 </font>        <font color="#00AA00">//nothing</font>
+<font color="#555555">068 </font>      }
+<font color="#555555">069 </font>      <font color="#0000AA">if</font> (!sequencer.isRunning()) {
+<font color="#555555">070 </font>        <font color="#0000AA">break</font>;
+<font color="#555555">071 </font>      }
+<font color="#555555">072 </font>    }
+<font color="#555555">073 </font>    <font color="#00AA00">//Sequencer anhalten und Ger&auml;te schlie&szlig;en</font>
+<font color="#555555">074 </font>    sequencer.stop();
+<font color="#555555">075 </font>    sequencer.close();
+<font color="#555555">076 </font>    synth.close();
+<font color="#555555">077 </font>  }
+<font color="#555555">078 </font>
+<font color="#555555">079 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">080 </font>  {
+<font color="#555555">081 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">082 </font>      playAlleMeineEntchen();
+<font color="#555555">083 </font>    } <font color="#0000AA">catch</font> (Exception e) {
+<font color="#555555">084 </font>      e.printStackTrace();
+<font color="#555555">085 </font>      System.exit(1);
+<font color="#555555">086 </font>    }
+<font color="#555555">087 </font>    System.exit(0);
+<font color="#555555">088 </font>  }
+<font color="#555555">089 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing5103.java"><font color="#000055" size=-1>Listing5103.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 51.3: Alle meine Entchen mit dem Sequenzer</i></p>
+
+<p>
+Die Partiturdaten stimmen mit denen des vorigen Beispiels &uuml;berein,
+werden allerdings anders verwendet. Zun&auml;chst wird ab <a href="k100325.html#ame2.a">Zeile 027</a>
+eine <a href="index_s.html#ixb102865"><font color=#000080><tt>Sequence</tt></font></a>
+mit einem einzelnen <a href="index_t.html#ixb102866"><font color=#000080><tt>Track</tt></font></a>
+angelegt, deren Aufl&ouml;sung 16 Ticks per Viertelnote betr&auml;gt.
+Ab <a href="k100325.html#ame2.b">Zeile 038</a> werden die Daten in
+<a href="index_s.html#ixb102861"><font color=#000080><tt>ShortMessage</tt></font></a>-Objekte
+&uuml;bertragen und dem <a href="index_t.html#ixb102866"><font color=#000080><tt>Track</tt></font></a>
+hinzugef&uuml;gt. Anders als im vorigen Beispiel lassen wir die Note
+allerdings nicht w&auml;hrend der kompletten Notenl&auml;nge an, sondern
+beenden sie <font color="#000077"><tt>STAKKATO</tt></font> Ticks fr&uuml;her
+als vorgesehen. Diese Zeit z&auml;hlen wir in <a href="k100325.html#ame2.c">Zeile 047</a>
+zu der anschlie&szlig;enden Pause hinzu. Durch diese Ma&szlig;nahme
+gehen die Noten nicht direkt ineinander &uuml;ber, sondern werden
+mit einem h&ouml;rbaren Abstand gespielt. In <a href="k100325.html#ame2.e">Zeile 034</a>
+wird eine <a href="index_s.html#ixb102861"><font color=#000080><tt>ShortMessage</tt></font></a>
+zur Programmumschaltung generiert, um Kanal 0 auf Instrument 48 umzuschalten.
+Dadurch erklingt die Sequenz nicht mit einem Piano-, sondern mit einem
+Streichersound. 
+
+<p>
+Ab <a href="k100325.html#ame2.d">Zeile 051</a> werden <a href="index_s.html#ixb102859"><font color=#000080><tt>Sequencer</tt></font></a>
+und <a href="index_s.html#ixb102858"><font color=#000080><tt>Synthesizer</tt></font></a>
+initialisiert und miteinander verbunden. Anschlie&szlig;end wird die
+<a href="index_s.html#ixb102865"><font color=#000080><tt>Sequence</tt></font></a>
+an den Sequenzer &uuml;bergeben, die Abspielgeschwindigkeit eingestellt
+und das St&uuml;ck gespielt. In der nachfolgenden Schleife wartet
+das Programm durch wiederholten Aufruf von <a href="index_i.html#ixb102844"><font color=#000080><tt>isRunning</tt></font></a>,
+bis die Sequenz vollst&auml;ndig abgespielt ist. Anschlie&szlig;end
+stoppt es den Sequenzer und schlie&szlig;t alle Ger&auml;te. 
+
+<!-- Section -->
+
+<a name="mididateien"></a>
+<h3>51.3.5 Zugriff auf Midi-Dateien </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id051003005001"></a>
+<h4>Lesen und Abspielen einer Midi-Datei </h4>
+
+<p>
+Als letztes Beispiel zum Thema Midi wollen wir uns ansehen, wie eine
+Midi-Datei gelesen und abgespielt werden kann. Dazu ben&ouml;tigen
+wir nur noch eine zus&auml;tzliche Methode, n&auml;mlich <a name="ixa103805"><a href="index_g.html#ixb102887"><font color=#000080><tt>getSequence</tt></font></a></a>
+aus der Klasse <a href="index_m.html#ixb102854"><font color=#000080><tt>MidiSystem</tt></font></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static Sequence getSequence(File file)
+  throws InvalidMidiDataException, IOException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/sound/midi/MidiSystem.html" onClick="this.href=getApiDoc('javax.sound.midi.MidiSystem')"><font color="#660066" size=-1>javax.sound.midi.MidiSystem</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_g.html#ixb102887"><font color=#000080><tt>getSequence</tt></font></a>
+erwartet ein <a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a>-Objekt
+als Argument, mit dem die abzuspielende Midi-Datei angegeben wird.
+Es liefert als R&uuml;ckgabewert eine <a href="index_s.html#ixb102865"><font color=#000080><tt>Sequence</tt></font></a>,
+die an den Sequenzer &uuml;bergeben und von diesem abgespielt werden
+kann. Ein Beispielprogramm zur Widergabe einer Midi-Datei ist nun
+sehr einfach zu konstruieren. Mit Ausnahme der expliziten Konstruktion
+der <a href="index_s.html#ixb102865"><font color=#000080><tt>Sequence</tt></font></a>
+entspricht es vollkommen dem Beispielprogramm des vorigen Abschnitts:
+<a name="ame3"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing5104.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> javax.sound.midi.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing5104
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">private</font> <font color="#0000AA">static</font> <font color="#006699">void</font> playMidiFile(String name)
+<font color="#555555">009 </font>  <font color="#0000AA">throws</font> Exception
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    <font color="#00AA00">//Sequencer und Synthesizer initialisieren</font>
+<font color="#555555">012 </font>    Sequencer sequencer = MidiSystem.getSequencer();
+<font color="#555555">013 </font>    Transmitter trans = sequencer.getTransmitter();
+<font color="#555555">014 </font>    Synthesizer synth = MidiSystem.getSynthesizer();
+<font color="#555555">015 </font>    Receiver rcvr = synth.getReceiver();
+<font color="#555555">016 </font>    <font color="#00AA00">//Beide &ouml;ffnen und verbinden</font>
+<font color="#555555">017 </font>    sequencer.open();
+<font color="#555555">018 </font>    synth.open();
+<font color="#555555">019 </font>    trans.setReceiver(rcvr);
+<font color="#555555">020 </font>    <font color="#00AA00">//Sequence lesen und abspielen</font>
+<font color="#555555">021 </font>    Sequence seq = MidiSystem.getSequence(<font color="#0000AA">new</font> File(name));
+<font color="#555555">022 </font>    sequencer.setSequence(seq);
+<font color="#555555">023 </font>    sequencer.setTempoInBPM(145);
+<font color="#555555">024 </font>    sequencer.start();
+<font color="#555555">025 </font>    <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">026 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">027 </font>        Thread.sleep(100);
+<font color="#555555">028 </font>      } <font color="#0000AA">catch</font> (Exception e) {
+<font color="#555555">029 </font>        <font color="#00AA00">//nothing</font>
+<font color="#555555">030 </font>      }
+<font color="#555555">031 </font>      <font color="#0000AA">if</font> (!sequencer.isRunning()) {
+<font color="#555555">032 </font>        <font color="#0000AA">break</font>;
+<font color="#555555">033 </font>      }
+<font color="#555555">034 </font>    }
+<font color="#555555">035 </font>    <font color="#00AA00">//Sequencer anhalten und Ger&auml;te schlie&szlig;en</font>
+<font color="#555555">036 </font>    sequencer.stop();
+<font color="#555555">037 </font>    sequencer.close();
+<font color="#555555">038 </font>    synth.close();
+<font color="#555555">039 </font>  }
+<font color="#555555">040 </font>
+<font color="#555555">041 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">042 </font>  {
+<font color="#555555">043 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">044 </font>      playMidiFile(args[0]);
+<font color="#555555">045 </font>    } <font color="#0000AA">catch</font> (Exception e) {
+<font color="#555555">046 </font>      e.printStackTrace();
+<font color="#555555">047 </font>      System.exit(1);
+<font color="#555555">048 </font>    }
+<font color="#555555">049 </font>    System.exit(0);
+<font color="#555555">050 </font>  }
+<font color="#555555">051 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing5104.java"><font color="#000055" size=-1>Listing5104.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 51.4: Abspielen einer Midi-Datei</i></p>
+
+<p>
+Das Programm erwartet in der Kommandozeile den Namen der abzuspielenden
+Midi-Datei. Wird es mit der (ebenfalls im Verzeichnis der Beispieldateien
+befindlichen) Datei <font color="#660099">ame.mid</font> als Argument
+aufgerufen, ert&ouml;nt das altbekannte &#187;Alle meine Entchen&#171;.
+
+
+<!-- Section -->
+<a name="sectlevel4id051003005002"></a>
+<h4>Abspeichern einer Sequenz in einer Midi-Datei </h4>
+
+<p>
+Das Abspeichern einer <a href="index_s.html#ixb102865"><font color=#000080><tt>Sequence</tt></font></a>
+in einer Midi-Datei ist fast so einfach wie ihr Abspielen. Die Klasse
+<a href="index_m.html#ixb102854"><font color=#000080><tt>MidiSystem</tt></font></a>
+besitzt dazu eine Methode <a href="index_w.html#ixb100967"><font color=#000080><tt>write</tt></font></a>,
+die drei Parameter erwartet: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static int write(Sequence in, int type, File out)
+  throws IOException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/sound/midi/MidiSystem.html" onClick="this.href=getApiDoc('javax.sound.midi.MidiSystem')"><font color="#660066" size=-1>javax.sound.midi.MidiSystem</font></a></td>
+</tr>
+</table>
+
+<p>
+Als erstes Argument wird die zu speichernde <a href="index_s.html#ixb102865"><font color=#000080><tt>Sequence</tt></font></a>
+&uuml;bergeben, als zweites der Midi-Dateityp und als letztes ein
+<a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a>-Objekt
+mit dem Namen der Ausgabedatei. F&uuml;r einfache Experimente kann
+als Midi-Dateityp einfach 0 &uuml;bergeben werden. Ein Array mit allen
+unterst&uuml;tzten Dateitypen kann durch Aufruf von <a name="ixa103806"><a href="index_g.html#ixb102888"><font color=#000080><tt>getMidiFileTypes</tt></font></a></a>
+beschafft werden. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100322.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100324.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100326.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100327.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

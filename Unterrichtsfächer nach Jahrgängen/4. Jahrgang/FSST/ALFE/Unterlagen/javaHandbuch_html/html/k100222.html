@@ -1,0 +1,135 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100221.html;106,k100221.html;107,k100223.html;108,k100226.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100221.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100221.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100223.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100226.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 33 - Eigene Dialogelemente
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id033001"></a>
+<h2>33.1 Die Klasse Canvas </h2>
+<hr>
+<ul>
+<li><a href="k100222.html#sectlevel2id033001">33.1 Die Klasse Canvas</a>
+</ul>
+<hr>
+
+<p>
+Bisher haben wir uns nur mit <i>vordefinierten</i> Dialogelementen
+besch&auml;ftigt. Java bietet aber auch die M&ouml;glichkeit, Dialogelemente
+selbst zu definieren und wie eine vordefinierte Komponente zu verwenden.
+In der <i>Java-Beans-Spezifikation</i> wurden die dazu erforderlichen
+Techniken beschrieben und die zugrunde liegenden Konzepte definiert.
+Wir wollen uns an dieser Stelle zun&auml;chst mit den Grundlagen der
+Entwicklung eigener Dialogelemente auf der Basis der Klasse <a name="ixa102210"><a href="index_c.html#ixb101652"><font color=#000080><tt>Canvas</tt></font></a></a>
+befassen, wie sie mit dem <font color="#000077"><tt>SystemColorViewer</tt></font>
+in <a href="k100219.html#abschnittscrollpane">Abschnitt 32.12</a>
+angedeutet werden. Eine ausf&uuml;hrliche Beschreibung von Java-Beans
+findet sich in <a href="k100292.html#kapitelbeans">Kapitel 46</a>.
+
+<p>
+Ein <a href="index_c.html#ixb101652"><font color=#000080><tt>Canvas</tt></font></a>
+ist ein frei definierbares Dialogelement, das in der Grundversion
+praktisch keinerlei Funktionalit&auml;t zur Verf&uuml;gung stellt.
+Damit ein <a href="index_c.html#ixb101652"><font color=#000080><tt>Canvas</tt></font></a>
+etwas Sinnvolles tun kann, muss daraus eine eigene Klasse abgeleitet
+werden und in dieser m&uuml;ssen die Methode <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>
+und die Methoden zur Reaktion auf Nachrichten &uuml;berlagert werden.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Canvas()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Canvas.html" onClick="this.href=getApiDoc('java.awt.Canvas')"><font color="#660066" size=-1>java.awt.Canvas</font></a></td>
+</tr>
+</table>
+
+<p>
+Durch &Uuml;berlagern der <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>-Methode
+sorgt eine <a href="index_c.html#ixb101652"><font color=#000080><tt>Canvas</tt></font></a>-Komponente
+f&uuml;r die Darstellung auf dem Bildschirm: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void paint(Graphics g)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Canvas.html" onClick="this.href=getApiDoc('java.awt.Canvas')"><font color="#660066" size=-1>java.awt.Canvas</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Standardversion von <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>
+zeichnet nur die Ausgabefl&auml;che in der aktuellen Hintergrundfarbe.
+Eine &uuml;berlagernde Version kann hier nat&uuml;rlich ein beliebig
+komplexes Darstellungsverhalten realisieren. Der Punkt (0,0) des &uuml;bergebenen
+<a href="index_g.html#ixb101156"><font color=#000080><tt>Graphics</tt></font></a>-Objekts
+entspricht dabei der linken oberen Ecke des Ausgabebereichs. 
+
+<p>
+Da die Klasse <a href="index_c.html#ixb101652"><font color=#000080><tt>Canvas</tt></font></a>
+aus <a href="index_c.html#ixb101293"><font color=#000080><tt>Component</tt></font></a>
+abgeleitet ist, bekommt ein <a href="index_c.html#ixb101652"><font color=#000080><tt>Canvas</tt></font></a>-Objekt
+alle Ereignisse zugestellt, die auch an eine Komponente gehen. Hierzu
+z&auml;hlen Tastatur-, Maus-, Mausbewegungs-, Fokus- und Komponentenereignisse.
+Die Implementierung der Ereignishandler erfolgt zweckm&auml;&szlig;igerweise
+so, wie es in <a href="k100183.html#eventhandlingpattern4">Abschnitt 28.2.4</a>
+erl&auml;utert wurde. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100221.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100221.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100223.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100226.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

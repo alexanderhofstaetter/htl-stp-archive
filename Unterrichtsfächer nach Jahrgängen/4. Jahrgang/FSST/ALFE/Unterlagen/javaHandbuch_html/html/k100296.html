@@ -1,0 +1,790 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100292.html;106,k100295.html;107,k100297.html;108,k100300.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100292.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100295.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100297.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100300.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 46 - Beans
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id046004"></a>
+<h2>46.4 Bean-Ereignisse </h2>
+<hr>
+<ul>
+<li><a href="k100296.html#sectlevel2id046004">46.4 Bean-Ereignisse</a>
+<ul>
+<li><a href="k100296.html#sectlevel3id046004001">46.4.1 Bound Properties</a>
+<li><a href="k100296.html#sectlevel3id046004002">46.4.2 Constrained Properties</a>
+<li><a href="k100296.html#sectlevel3id046004003">46.4.3 Anwendungsbeispiel</a>
+</ul>
+</ul>
+<hr>
+
+<p>
+Um die Kommunikation zwischen Beans zu vereinfachen und zu vereinheitlichen,
+sieht die Beans-Spezifikation einige Techniken vor, mit denen Beans
+untereinander kommunizieren k&ouml;nnen. Die wichtigste von ihnen
+ist die M&ouml;glichkeit, Nachrichten zu versenden, wenn sich eine
+bestimmte Eigenschaft der Bean ge&auml;ndert hat. Das dabei angewendete
+Schema entspricht genau dem Delegation Based Event Handling, das in
+<a href="k100181.html#kapiteleventhandling">Kapitel 28</a> erl&auml;utert
+wurde und das auch alle anderen Dialogelemente zur Kommunikation mit
+anderen Komponenten verwenden. 
+
+<!-- Section -->
+
+<a name="sectlevel3id046004001"></a>
+<h3>46.4.1 Bound Properties </h3>
+
+<p>
+Eigenschaften, bei deren Ver&auml;nderung Ereignisse ausgesandt werden,
+bezeichnet man auch als <i>gebundene Eigenschaften</i> <a name="ixa103419"></a>
+(<a name="ixa103420"><i>Bound Properties</i></a>). Nicht alle Eigenschaften
+m&uuml;ssen gebunden sein. Sie sollten es dann sein, wenn die Bean
+anderen Objekten die M&ouml;glichkeit geben will, auf &Auml;nderungen
+des Ereignisses direkt und in definierter (und f&uuml;r einen GUI-Designer
+erkennbaren) Weise zu reagieren. 
+
+<p>
+Zus&auml;tzlich zu den bereits bekannten Ereignistypen definiert die
+Bean-Architektur dazu eine neue Ereignisklasse <a name="ixa103421"><a href="index_p.html#ixb102559"><font color=#000080><tt>PropertyChangeEvent</tt></font></a></a>,
+die im Paket <a name="ixa103422"><a href="index_j.html#ixb100609"><font color=#000080><tt>java.beans</tt></font></a></a>
+untergebracht ist. Sie ist aus <a name="ixa103423"><a href="index_e.html#ixb101339"><font color=#000080><tt>EventObject</tt></font></a></a>
+abgeleitet und stellt unter anderem folgende Methoden zur Verf&uuml;gung:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public String getPropertyName()
+
+public Object getNewValue()
+public Object getOldValue()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/beans/PropertyChangeEvent.html" onClick="this.href=getApiDoc('java.beans.PropertyChangeEvent')"><font color="#660066" size=-1>java.beans.PropertyChangeEvent</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa103424"><a href="index_g.html#ixb102560"><font color=#000080><tt>getPropertyName</tt></font></a></a>
+kann der Name der ver&auml;nderten Eigenschaft ermittelt werden. <a name="ixa103425"><a href="index_g.html#ixb102561"><font color=#000080><tt>getNewValue</tt></font></a></a>
+liefert ihren neuen Wert und <a name="ixa103426"><a href="index_g.html#ixb102562"><font color=#000080><tt>getOldValue</tt></font></a></a>
+den Wert, den sie vor der &Auml;nderung hatte. Die Werte werden stets
+als Objekttyp zur&uuml;ckgegeben. Primitive Typen werden in ihre korrespondierenden
+Wrapper-Klassen verpackt (siehe <a href="k100072.html#wrapperklassen">Abschnitt 11.2</a>).
+
+<p>
+Eine Bean erzeugt immer dann ein <a href="index_p.html#ixb102559"><font color=#000080><tt>PropertyChangeEvent</tt></font></a>
+und versendet es an alle registrierten Listener, wenn sich der Zustand
+einer <i>gebundenen Eigenschaft</i> ver&auml;ndert hat. Ein Listener
+muss das Interface <a name="ixa103427"><a href="index_p.html#ixb102563"><font color=#000080><tt>PropertyChangeListener</tt></font></a></a>
+implementieren. Es enth&auml;lt nur eine Methode: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+void propertyChange(PropertyChangeEvent evt)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/beans/PropertyChangeListener.html" onClick="this.href=getApiDoc('java.beans.PropertyChangeListener')"><font color="#660066" size=-1>java.beans.PropertyChangeListener</font></a></td>
+</tr>
+</table>
+
+<p>
+Ver&auml;ndert sich die gebundene Eigenschaft, erzeugt die Bean ein
+<a href="index_p.html#ixb102559"><font color=#000080><tt>PropertyChangeEvent</tt></font></a>
+mit dem neuen und dem alten Wert und ruft bei allen registrierten
+Listenern <a name="ixa103428"><a href="index_p.html#ixb102564"><font color=#000080><tt>propertyChange</tt></font></a></a>
+auf. Die Registrierung bzw. Deregistrierung von Listenern erfolgt
+mit den Methoden <a name="ixa103429"><a href="index_a.html#ixb102565"><font color=#000080><tt>addPropertyChangeListener</tt></font></a></a>
+und <a name="ixa103430"><a href="index_r.html#ixb102566"><font color=#000080><tt>removePropertyChangeListener</tt></font></a></a>,
+die beide einen <a href="index_p.html#ixb102563"><font color=#000080><tt>PropertyChangeListener</tt></font></a>
+als Argument erwarten. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Damit ein GUI-Designer erkennen kann, dass eine Bean gebundene Eigenschaften
+besitzt, m&uuml;ssen die Methoden zum Registrieren und Deregistrieren
+exakt die hier gezeigten Namen- und Parameterkonventionen einhalten.
+Sie sind ebenso Bestandteil der Designkonventionen von Beans wie die
+in den vorigen Abschnitten erw&auml;hnten getter- und setter-Methoden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Um die Bean beim Umgang mit gebundenen Eigenschaften zu unterst&uuml;tzen,
+gibt es im Paket <a href="index_j.html#ixb100609"><font color=#000080><tt>java.beans</tt></font></a>
+eine Hilfsklasse <a name="ixa103431"><a href="index_p.html#ixb102567"><font color=#000080><tt>PropertyChangeSupport</tt></font></a></a>.
+Sie stellt einige n&uuml;tzliche Methoden zur Verf&uuml;gung, mit
+denen eine Bean die bei der Event-Registrierung und -verteilung anfallenden
+Aufgaben delegieren kann: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void addPropertyChangeListener(
+  PropertyChangeListener listener
+)
+public void removePropertyChangeListener(
+  PropertyChangeListener listener
+)
+
+public void firePropertyChange(PropertyChangeEvent evt)
+
+public void firePropertyChange(
+  String propertyName,
+  Object oldValue,
+  Object newValue
+)
+public void firePropertyChange(
+  String propertyName,
+  int oldValue,
+  int newValue
+)
+public void firePropertyChange(
+  String propertyName,
+  boolean oldValue,
+  boolean newValue
+)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/beans/PropertyChangeSupport.html" onClick="this.href=getApiDoc('java.beans.PropertyChangeSupport')"><font color="#660066" size=-1>java.beans.PropertyChangeSupport</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Bean instanziert bei Bedarf ein Objekt dieser Klasse und gibt
+Aufrufe der eigenen Methoden <a href="index_a.html#ixb102565"><font color=#000080><tt>addPropertyChangeListener</tt></font></a>
+und <a href="index_r.html#ixb102566"><font color=#000080><tt>removePropertyChangeListener</tt></font></a>
+einfach weiter. &Auml;ndert sich eine gebundene Eigenschaft, ruft
+die Bean eine der <a name="ixa103432"><a href="index_f.html#ixb102568"><font color=#000080><tt>firePropertyChange</tt></font></a></a>-Methoden
+auf und sendet dadurch ein <a href="index_p.html#ixb102559"><font color=#000080><tt>PropertyChangeEvent</tt></font></a>
+an alle registrierten Listener. Diese Methode steht einerseits vordefiniert
+f&uuml;r die Typen <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>,
+<a href="index_b.html#ixb100071"><font color=#000080><tt>boolean</tt></font></a>
+und <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+zur Verf&uuml;gung. Andererseits kann aber auch manuell ein <a href="index_p.html#ixb102559"><font color=#000080><tt>PropertyChangeEvent</tt></font></a>
+erzeugt und weitergegeben werden. 
+
+<p>
+Wir wollen uns als erstes Beispiel eine Bean ansehen, die einen beleuchteten
+Taster implementiert. Der Taster kann wahlweise an- oder ausgeschaltet
+sein. In angeschaltetem Zustand leuchtet er, in ausgeschaltetem Zustand
+ist seine Oberfl&auml;che dunkel. Jeder Tastendruck schaltet zwischen
+den beiden Zust&auml;nden um. Die wichtigste Eigenschaft des Tasters
+hei&szlig;t <font color="#000077"><tt>lightOn</tt></font>. Sie ist
+gebunden und zeigt an, ob der Taster an- oder ausgeschaltet ist: 
+<a name="lightedpushbutton"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* LightedPushButton.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">006 </font><font color="#0000AA">import</font> java.beans.*;
+<font color="#555555">007 </font>
+<font color="#555555">008 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> LightedPushButton
+<font color="#555555">009 </font><font color="#0000AA">extends</font> Canvas
+<font color="#555555">010 </font><font color="#0000AA">implements</font> Serializable
+<font color="#555555">011 </font>{
+<font color="#555555">012 </font>  <font color="#00AA00">//---Instanzvariablen----------------------------------------</font>
+<font color="#555555">013 </font>  <font color="#0000AA">protected</font> Color                 linecolor;
+<font color="#555555">014 </font>  <font color="#0000AA">protected</font> Color                 framecolor;
+<font color="#555555">015 </font>  <font color="#0000AA">protected</font> Color                 lightoncolor;
+<font color="#555555">016 </font>  <font color="#0000AA">protected</font> Color                 lightoffcolor;
+<font color="#555555">017 </font>  <font color="#0000AA">protected</font> <font color="#006699">boolean</font>               lighton;
+<font color="#555555">018 </font>  <font color="#0000AA">transient</font> <font color="#0000AA">protected</font> PropertyChangeSupport pchglisteners;
+<font color="#555555">019 </font>  <font color="#0000AA">transient</font> <font color="#0000AA">protected</font> VetoableChangeSupport vchglisteners;
+<font color="#555555">020 </font>
+<font color="#555555">021 </font>  <font color="#00AA00">//---Methoden------------------------------------------------</font>
+<font color="#555555">022 </font>  <font color="#0000AA">public</font> LightedPushButton()
+<font color="#555555">023 </font>  {
+<font color="#555555">024 </font>    linecolor     = Color.black;
+<font color="#555555">025 </font>    framecolor    = Color.darkGray;
+<font color="#555555">026 </font>    lightoncolor  = Color.red;
+<font color="#555555">027 </font>    lightoffcolor = <font color="#0000AA">new</font> Color(127, 0, 0); <font color="#00AA00">//dark red</font>
+<font color="#555555">028 </font>    lighton       = <font color="#006699">false</font>;
+<font color="#555555">029 </font>    initTransientState();
+<font color="#555555">030 </font>  }
+<font color="#555555">031 </font>
+<font color="#555555">032 </font>  <font color="#00AA00">//---Zustandsumschaltung Licht an/aus---</font>
+<font color="#555555">033 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setLightOn(<font color="#006699">boolean</font> on)
+<font color="#555555">034 </font>  <font color="#0000AA">throws</font> PropertyVetoException
+<font color="#555555">035 </font>  {
+<font color="#555555">036 </font>    <font color="#006699">boolean</font> oldvalue = <font color="#006699">this</font>.lighton;
+<font color="#555555">037 </font>    vchglisteners.fireVetoableChange(<font color="#0000FF">"lighton"</font>, oldvalue, on);
+<font color="#555555">038 </font>    <font color="#006699">this</font>.lighton = on;
+<font color="#555555">039 </font>    <font color="#0000AA">if</font> (oldvalue != on) {
+<font color="#555555">040 </font>      repaint();
+<font color="#555555">041 </font>    }
+<font color="#555555">042 </font>    pchglisteners.firePropertyChange(<font color="#0000FF">"lighton"</font>, oldvalue, on);
+<font color="#555555">043 </font>  }
+<font color="#555555">044 </font>
+<font color="#555555">045 </font>  <font color="#0000AA">public</font> <font color="#006699">boolean</font> getLightOn()
+<font color="#555555">046 </font>  {
+<font color="#555555">047 </font>    <font color="#0000AA">return</font> <font color="#006699">this</font>.lighton;
+<font color="#555555">048 </font>  }
+<font color="#555555">049 </font>
+<font color="#555555">050 </font>  <font color="#00AA00">//---Verwaltung der PropertyChangeListener---</font>
+<font color="#555555">051 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> addPropertyChangeListener(PropertyChangeListener l)
+<font color="#555555">052 </font>  {
+<font color="#555555">053 </font>    pchglisteners.addPropertyChangeListener(l);
+<font color="#555555">054 </font>  }
+<font color="#555555">055 </font>
+<font color="#555555">056 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> removePropertyChangeListener(PropertyChangeListener l)
+<font color="#555555">057 </font>  {
+<font color="#555555">058 </font>    pchglisteners.removePropertyChangeListener(l);
+<font color="#555555">059 </font>  }
+<font color="#555555">060 </font>
+<font color="#555555">061 </font>  <font color="#00AA00">//---Verwaltung der VetoableChangeListener---</font>
+<font color="#555555">062 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> addVetoableChangeListener(VetoableChangeListener l)
+<font color="#555555">063 </font>  {
+<font color="#555555">064 </font>    vchglisteners.addVetoableChangeListener(l);
+<font color="#555555">065 </font>  }
+<font color="#555555">066 </font>
+<font color="#555555">067 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> removeVetoableChangeListener(VetoableChangeListener l)
+<font color="#555555">068 </font>  {
+<font color="#555555">069 </font>    vchglisteners.removeVetoableChangeListener(l);
+<font color="#555555">070 </font>  }
+<font color="#555555">071 </font>
+<font color="#555555">072 </font>  <font color="#00AA00">//---Implementierung der Oberfl&auml;che---</font>
+<font color="#555555">073 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">074 </font>  {
+<font color="#555555">075 </font>    <font color="#006699">int</font> width = getSize().width;
+<font color="#555555">076 </font>    <font color="#006699">int</font> height = getSize().height;
+<font color="#555555">077 </font>    <font color="#00AA00">//Rahmen</font>
+<font color="#555555">078 </font>    g.setColor(framecolor);
+<font color="#555555">079 </font>    g.fillOval(0, 0, width, height);
+<font color="#555555">080 </font>    <font color="#00AA00">//Beleuchtung</font>
+<font color="#555555">081 </font>    g.setColor(lighton ? lightoncolor : lightoffcolor);
+<font color="#555555">082 </font>    g.fillOval(4, 4, width - 8, height - 8);
+<font color="#555555">083 </font>    <font color="#00AA00">//Konturlinien</font>
+<font color="#555555">084 </font>    g.setColor(linecolor);
+<font color="#555555">085 </font>    g.drawOval(0, 0, width - 1, height - 1);
+<font color="#555555">086 </font>    g.drawOval(3, 3, width - 7, height - 7);
+<font color="#555555">087 </font>  }
+<font color="#555555">088 </font>
+<font color="#555555">089 </font>  <font color="#0000AA">public</font> Dimension getPreferredSize()
+<font color="#555555">090 </font>  {
+<font color="#555555">091 </font>    <font color="#0000AA">return</font> <font color="#0000AA">new</font> Dimension(32, 32);
+<font color="#555555">092 </font>  }
+<font color="#555555">093 </font>
+<font color="#555555">094 </font>  <font color="#0000AA">public</font> Dimension getMinimumSize()
+<font color="#555555">095 </font>  {
+<font color="#555555">096 </font>    <font color="#0000AA">return</font> <font color="#0000AA">new</font> Dimension(16, 16);
+<font color="#555555">097 </font>  }
+<font color="#555555">098 </font>
+<font color="#555555">099 </font>  <font color="#00AA00">//---Private Klassen---------------------------------------</font>
+<font color="#555555">100 </font>  <font color="#00AA00">/**
+<font color="#555555">101 </font>   * Initialisierung der nichtpersistenten Instanzvariablen.
+<font color="#555555">102 </font>   */</font>
+<font color="#555555">103 </font>  <font color="#0000AA">private</font> <font color="#006699">void</font> initTransientState()
+<font color="#555555">104 </font>  {
+<font color="#555555">105 </font>    pchglisteners = <font color="#0000AA">new</font> PropertyChangeSupport(<font color="#006699">this</font>);
+<font color="#555555">106 </font>    vchglisteners = <font color="#0000AA">new</font> VetoableChangeSupport(<font color="#006699">this</font>);
+<font color="#555555">107 </font>    addMouseListener(<font color="#0000AA">new</font> MouseClickAdapter());
+<font color="#555555">108 </font>  }
+<font color="#555555">109 </font>
+<font color="#555555">110 </font>  <font color="#00AA00">/**
+<font color="#555555">111 </font>   * Wird &uuml;berlagert, um nach dem Deserialisieren den transienten
+<font color="#555555">112 </font>   * Zustand zu initialisieren.
+<font color="#555555">113 </font>   */</font>
+<font color="#555555">114 </font>  <font color="#0000AA">private</font> <font color="#006699">void</font> readObject(ObjectInputStream stream)
+<font color="#555555">115 </font>  <font color="#0000AA">throws</font> IOException, ClassNotFoundException
+<font color="#555555">116 </font>  {
+<font color="#555555">117 </font>    stream.defaultReadObject();
+<font color="#555555">118 </font>    initTransientState();
+<font color="#555555">119 </font>  }
+<font color="#555555">120 </font>
+<font color="#555555">121 </font>  <font color="#00AA00">//---Lokale Klassen----------------------------------------</font>
+<font color="#555555">122 </font>  <font color="#0000AA">class</font> MouseClickAdapter
+<font color="#555555">123 </font>  <font color="#0000AA">extends</font> MouseAdapter
+<font color="#555555">124 </font>  {
+<font color="#555555">125 </font>    <font color="#0000AA">public</font> <font color="#006699">void</font> mouseClicked(MouseEvent event)
+<font color="#555555">126 </font>    {
+<font color="#555555">127 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">128 </font>        setLightOn(!getLightOn());
+<font color="#555555">129 </font>      } <font color="#0000AA">catch</font> (PropertyVetoException e) {
+<font color="#555555">130 </font>        <font color="#00AA00">//no change if vetoed</font>
+<font color="#555555">131 </font>      }
+<font color="#555555">132 </font>    }
+<font color="#555555">133 </font>  }
+<font color="#555555">134 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/LightedPushButton.java"><font color="#000055" size=-1>LightedPushButton.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 46.6: Ein beleuchteter Taster</i></p>
+
+<p>
+Die Klasse verwendet ein <a href="index_p.html#ixb102567"><font color=#000080><tt>PropertyChangeSupport</tt></font></a>-Objekt,
+um die Listener zu verwalten und sie von &Auml;nderungen des Beleuchtungszustands
+zu unterrichten. Das hier ebenfalls verwendete <a href="index_v.html#ixb102569"><font color=#000080><tt>VetoableChangeSupport</tt></font></a>-Objekt
+und die mit seiner Hilfe implementierten Methoden werden im n&auml;chsten
+Abschnitt erl&auml;utert und k&ouml;nnen zun&auml;chst ignoriert werden.
+
+<p>
+Interessant ist die Implementierung der Methode <font color="#000077"><tt>setLightOn</tt></font>.
+Sie merkt sich zun&auml;chst den bisherigen Zustand und schaltet dann
+auf den neuen Zustand um. Anschlie&szlig;end werden alle registrierten
+Listener &uuml;ber die &Auml;nderung benachrichtigt. Der Name der
+gebundenen Eigenschaft ist &#187;lighton&#171; und entspricht damit
+dem Namen der betroffenen Eigenschaft. Eine eindeutige Benennung erlaubt
+es registrierten Listenern, zwischen Benachrichtigungen f&uuml;r unterschiedliche
+Eigenschaften zu unterscheiden. 
+
+<p>
+<a href="k100296.html#beanbox3">Abbildung 46.5</a> zeigt die Klasse
+<font color="#000077"><tt>LightedPushButton</tt></font> in ihren beiden
+m&ouml;glichen Zust&auml;nden in der Beanbox. 
+
+<!-- Section -->
+
+<a name="sectlevel3id046004002"></a>
+<h3>46.4.2 Constrained Properties </h3>
+
+<p>
+Eine Erweiterung der gebundenen Eigenschaften wurde im vorigen Abschnitt
+schon angedeutet. Mit dem Konzept der <a name="ixa103433"><i>Constrained Properties</i></a>
+( &#187;verbotene&#171; oder &#187;unterbundene&#171; Eigenschaften)
+kann eine Bean registrierten Listenern die M&ouml;glichkeit geben,
+Eigenschaften&auml;nderungen zu verhindern. 
+
+<p>
+Ein Listener, der das tun will, muss das Interface <a name="ixa103434"><a href="index_v.html#ixb102571"><font color=#000080><tt>VetoableChangeListener</tt></font></a></a>
+implementieren. Es stellt nur eine Methode zur Verf&uuml;gung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void vetoableChange(PropertyChangeEvent evt)
+  throws PropertyVetoException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/beans/VetoableChangeListener.html" onClick="this.href=getApiDoc('java.beans.VetoableChangeListener')"><font color="#660066" size=-1>java.beans.VetoableChangeListener</font></a></td>
+</tr>
+</table>
+
+<p>
+Immer wenn sich eine Constrained Property &auml;ndern soll, ruft die
+Bean <i>vor der &Auml;nderung</i> bei den registrierten Listenern
+die Methode <a name="ixa103435"><a href="index_v.html#ixb102572"><font color=#000080><tt>vetoableChange</tt></font></a></a>
+auf. Der Empf&auml;nger pr&uuml;ft daraufhin das &uuml;bergebene <a href="index_p.html#ixb102559"><font color=#000080><tt>PropertyChangeEvent</tt></font></a>
+und entscheidet, ob er dem &Auml;nderungswunsch zustimmen soll oder
+nicht. Ist das nicht der Fall, l&ouml;st er eine <a name="ixa103436"><a href="index_p.html#ixb102573"><font color=#000080><tt>PropertyVetoException</tt></font></a></a>
+aus, die beim Empf&auml;nger dazu f&uuml;hrt, dass der &Auml;nderungsvorgang
+abgebrochen wird. Stimmt er dagegen zu, ist gar nichts zu tun. Der
+Listener terminiert einfach und die Bean f&auml;hrt mit der Befragung
+beim n&auml;chsten Listener fort. Nur wenn alle Listener zugestimmt
+haben (also niemand eine <a href="index_p.html#ixb102573"><font color=#000080><tt>PropertyVetoException</tt></font></a>
+ausgel&ouml;st hat), wird die &Auml;nderung tats&auml;chlich durchgef&uuml;hrt.
+
+<p>
+Die Methode <font color="#000077"><tt>setLightOn</tt></font> in <a href="k100296.html#lightedpushbutton">Listing 46.6</a>
+macht &#187;lightOn&#171; also sowohl zu einer gebundenen als auch
+unterbindbaren Eigenschaft. Zun&auml;chst pr&uuml;ft sie, ob alle
+registrierten <a href="index_v.html#ixb102571"><font color=#000080><tt>VetoableChangeListener</tt></font></a>
+eine m&ouml;gliche Zustands&auml;nderung nicht ablehnen. Erst wenn
+das der Fall ist, wird die &Auml;nderung tats&auml;chlich durchgef&uuml;hrt
+und die registrierten <a href="index_p.html#ixb102563"><font color=#000080><tt>PropertyChangeListener</tt></font></a>
+werden dar&uuml;ber informiert. 
+
+<p>
+Das Registrieren und Deregistrieren erfolgt mit den Methoden <a name="ixa103437"><a href="index_a.html#ixb102574"><font color=#000080><tt>addVetoableChangeListener</tt></font></a></a>
+und <a name="ixa103438"><a href="index_r.html#ixb102575"><font color=#000080><tt>removeVetoableChangeListener</tt></font></a></a>.
+Ebenso wie die korrespondierenden Methoden zur Registrierung der <a href="index_p.html#ixb102563"><font color=#000080><tt>PropertyChangeListener</tt></font></a>
+m&uuml;ssen ihre Namen und Parameter genau der hier angegebenen Form
+entsprechen, damit sie vom GUI-Designer gefunden werden. 
+
+<p>
+Zur Unterst&uuml;tzung bei der Implementierung kann sich die Bean
+der Klasse <a name="ixa103439"><a href="index_v.html#ixb102569"><font color=#000080><tt>VetoableChangeSupport</tt></font></a></a>
+bedienen, die &auml;hnliche Methoden wie <a href="index_p.html#ixb102567"><font color=#000080><tt>PropertyChangeSupport</tt></font></a>
+zur Verf&uuml;gung stellt: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void addVetoableChangeListener(
+  VetoableChangeListener listener
+)
+public void removeVetoableChangeListener(
+  VetoableChangeListener listener
+)
+
+public void fireVetoableChange(PropertyChangeEvent evt)
+  throws PropertyVetoException
+
+public void fireVetoableChange(
+  String propertyName,
+  Object oldValue,
+  Object newValue
+)
+  throws PropertyVetoException
+
+public void fireVetoableChange(
+  String propertyName,
+  int oldValue,
+  int newValue
+)
+  throws PropertyVetoException
+
+public void fireVetoableChange(
+  String propertyName,
+  boolean oldValue,
+  boolean newValue
+)
+  throws PropertyVetoException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/beans/VetoableChangeSupport.html" onClick="this.href=getApiDoc('java.beans.VetoableChangeSupport')"><font color="#660066" size=-1>java.beans.VetoableChangeSupport</font></a></td>
+</tr>
+</table>
+
+<p>
+Um im n&auml;chsten Abschnitt ein Beispiel f&uuml;r die Anwendung
+von Constrained Properties geben zu k&ouml;nnen, wollen wir eine Klasse
+vorstellen, die das Interface <a href="index_v.html#ixb102571"><font color=#000080><tt>VetoableChangeListener</tt></font></a>
+implementiert. Sie wird durch eine Bean repr&auml;sentiert, die einen
+einfachen Umschalter darstellt, der durch Mausklick ge&ouml;ffnet
+oder geschlossen werden kann. Ist der Schalter geschlossen, sind Eigenschafts&auml;nderungen
+erlaubt. Ist er dagegen ge&ouml;ffnet, wird bei jedem Aufruf von <a href="index_v.html#ixb102572"><font color=#000080><tt>vetoableChange</tt></font></a>
+eine <a href="index_p.html#ixb102573"><font color=#000080><tt>PropertyVetoException</tt></font></a>
+ausgel&ouml;st. Auf diese Weise werden bei ge&ouml;ffnetem Schalter
+alle Eigenschafts&auml;nderungen verhindert: 
+<a name="vetoswitch"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* VetoSwitch.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">006 </font><font color="#0000AA">import</font> java.beans.*;
+<font color="#555555">007 </font>
+<font color="#555555">008 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> VetoSwitch
+<font color="#555555">009 </font><font color="#0000AA">extends</font> Canvas
+<font color="#555555">010 </font><font color="#0000AA">implements</font> Serializable, VetoableChangeListener
+<font color="#555555">011 </font>{
+<font color="#555555">012 </font>  <font color="#00AA00">//---Instanzvariablen----------------------------------------</font>
+<font color="#555555">013 </font>  <font color="#0000AA">protected</font> Color   linecolor;
+<font color="#555555">014 </font>  <font color="#0000AA">protected</font> <font color="#006699">boolean</font> vetoallchanges;
+<font color="#555555">015 </font>
+<font color="#555555">016 </font>  <font color="#00AA00">//---Methoden------------------------------------------------</font>
+<font color="#555555">017 </font>  <font color="#0000AA">public</font> VetoSwitch()
+<font color="#555555">018 </font>  {
+<font color="#555555">019 </font>    <font color="#006699">this</font>.linecolor = Color.black;
+<font color="#555555">020 </font>    <font color="#006699">this</font>.vetoallchanges = <font color="#006699">false</font>;
+<font color="#555555">021 </font>    initTransientState();
+<font color="#555555">022 </font>  }
+<font color="#555555">023 </font>
+<font color="#555555">024 </font>  <font color="#00AA00">//---Konturenfarbe---</font>
+<font color="#555555">025 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setLineColor(Color color)
+<font color="#555555">026 </font>  {
+<font color="#555555">027 </font>    <font color="#006699">this</font>.linecolor = color;
+<font color="#555555">028 </font>  }
+<font color="#555555">029 </font>
+<font color="#555555">030 </font>  <font color="#0000AA">public</font> Color getLineColor()
+<font color="#555555">031 </font>  {
+<font color="#555555">032 </font>    <font color="#0000AA">return</font> <font color="#006699">this</font>.linecolor;
+<font color="#555555">033 </font>  }
+<font color="#555555">034 </font>
+<font color="#555555">035 </font>  <font color="#00AA00">//---Zustandsumschaltung Licht an/aus---</font>
+<font color="#555555">036 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setVetoAllChanges(<font color="#006699">boolean</font> b)
+<font color="#555555">037 </font>  {
+<font color="#555555">038 </font>    <font color="#0000AA">if</font> (<font color="#006699">this</font>.vetoallchanges != b) {
+<font color="#555555">039 </font>      <font color="#006699">this</font>.vetoallchanges = b;
+<font color="#555555">040 </font>      repaint();
+<font color="#555555">041 </font>    }
+<font color="#555555">042 </font>  }
+<font color="#555555">043 </font>
+<font color="#555555">044 </font>  <font color="#0000AA">public</font> <font color="#006699">boolean</font> getVetoAllChanges()
+<font color="#555555">045 </font>  {
+<font color="#555555">046 </font>    <font color="#0000AA">return</font> <font color="#006699">this</font>.vetoallchanges;
+<font color="#555555">047 </font>  }
+<font color="#555555">048 </font>
+<font color="#555555">049 </font>  <font color="#00AA00">//---Veto---</font>
+<font color="#555555">050 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> vetoableChange(PropertyChangeEvent e)
+<font color="#555555">051 </font>  <font color="#0000AA">throws</font> PropertyVetoException
+<font color="#555555">052 </font>  {
+<font color="#555555">053 </font>    <font color="#0000AA">if</font> (<font color="#006699">this</font>.vetoallchanges) {
+<font color="#555555">054 </font>      <font color="#0000AA">throw</font> <font color="#0000AA">new</font> PropertyVetoException(<font color="#0000FF">"!!!VETO!!!"</font>, e);
+<font color="#555555">055 </font>    }
+<font color="#555555">056 </font>  }
+<font color="#555555">057 </font>
+<font color="#555555">058 </font>  <font color="#00AA00">//---Implementierung der Oberfl&auml;che---</font>
+<font color="#555555">059 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">060 </font>  {
+<font color="#555555">061 </font>    <font color="#006699">int</font> width = getSize().width;
+<font color="#555555">062 </font>    <font color="#006699">int</font> height = getSize().height;
+<font color="#555555">063 </font>    g.setColor(linecolor);
+<font color="#555555">064 </font>    g.drawRect(0, 0, width - 1, height - 1);
+<font color="#555555">065 </font>    g.drawLine(width * 1 / 8, height / 2, width * 3 / 8, height / 2);
+<font color="#555555">066 </font>    g.drawLine(width * 5 / 8, height / 2, width * 7 / 8, height / 2);
+<font color="#555555">067 </font>    g.fillRect(width * 3 / 8 - 1, height / 2 - 1, 3, 3);
+<font color="#555555">068 </font>    g.fillRect(width * 5 / 8 - 1, height / 2 - 1, 3, 3);
+<font color="#555555">069 </font>    <font color="#0000AA">if</font> (<font color="#006699">this</font>.vetoallchanges) {
+<font color="#555555">070 </font>      <font color="#00AA00">//draw open connection</font>
+<font color="#555555">071 </font>      g.drawLine(width * 3 / 8, height / 2, width * 5 / 8, height / 4);
+<font color="#555555">072 </font>    } <font color="#0000AA">else</font> {
+<font color="#555555">073 </font>      <font color="#00AA00">//draw short-cutted connection</font>
+<font color="#555555">074 </font>      g.drawLine(width * 3 / 8, height / 2, width * 5 / 8, height / 2);
+<font color="#555555">075 </font>    }
+<font color="#555555">076 </font>  }
+<font color="#555555">077 </font>
+<font color="#555555">078 </font>  <font color="#0000AA">public</font> Dimension getPreferredSize()
+<font color="#555555">079 </font>  {
+<font color="#555555">080 </font>    <font color="#0000AA">return</font> <font color="#0000AA">new</font> Dimension(60, 20);
+<font color="#555555">081 </font>  }
+<font color="#555555">082 </font>
+<font color="#555555">083 </font>  <font color="#0000AA">public</font> Dimension getMinimumSize()
+<font color="#555555">084 </font>  {
+<font color="#555555">085 </font>    <font color="#0000AA">return</font> <font color="#0000AA">new</font> Dimension(28, 10);
+<font color="#555555">086 </font>  }
+<font color="#555555">087 </font>
+<font color="#555555">088 </font>  <font color="#00AA00">//---Private Klassen----------------------------------------</font>
+<font color="#555555">089 </font>  <font color="#0000AA">private</font> <font color="#006699">void</font> initTransientState()
+<font color="#555555">090 </font>  {
+<font color="#555555">091 </font>    addMouseListener(<font color="#0000AA">new</font> MouseClickAdapter());
+<font color="#555555">092 </font>  }
+<font color="#555555">093 </font>
+<font color="#555555">094 </font>  <font color="#00AA00">/**
+<font color="#555555">095 </font>   * Wird &uuml;berlagert, um nach dem Deserialisieren den transienten
+<font color="#555555">096 </font>   * Zustand zu initialisieren.
+<font color="#555555">097 </font>   */</font>
+<font color="#555555">098 </font>  <font color="#0000AA">private</font> <font color="#006699">void</font> readObject(ObjectInputStream stream)
+<font color="#555555">099 </font>  <font color="#0000AA">throws</font> IOException, ClassNotFoundException
+<font color="#555555">100 </font>  {
+<font color="#555555">101 </font>    stream.defaultReadObject();
+<font color="#555555">102 </font>    initTransientState();
+<font color="#555555">103 </font>  }
+<font color="#555555">104 </font>
+<font color="#555555">105 </font>  <font color="#00AA00">//---Lokale Klassen----------------------------------------</font>
+<font color="#555555">106 </font>  <font color="#0000AA">class</font> MouseClickAdapter
+<font color="#555555">107 </font>  <font color="#0000AA">extends</font> MouseAdapter
+<font color="#555555">108 </font>  {
+<font color="#555555">109 </font>    <font color="#0000AA">public</font> <font color="#006699">void</font> mouseClicked(MouseEvent event)
+<font color="#555555">110 </font>    {
+<font color="#555555">111 </font>      setVetoAllChanges(!getVetoAllChanges());
+<font color="#555555">112 </font>    }
+<font color="#555555">113 </font>  }
+<font color="#555555">114 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/VetoSwitch.java"><font color="#000055" size=-1>VetoSwitch.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 46.7: Ein Veto-Schalter</i></p>
+
+<p>
+<a href="k100296.html#beanbox3">Abbildung 46.5</a> zeigt die Klasse
+<font color="#000077"><tt>VetoSwitch</tt></font> in ihren beiden m&ouml;glichen
+Zust&auml;nden in der Beanbox: 
+<p>
+<a name="beanbox3"></a>
+<img src="images/Beanbox3.gif">
+<p>
+
+<p><i>
+Abbildung 46.5: LightedPushButton und VetoSwitch in der Beanbox</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id046004003"></a>
+<h3>46.4.3 Anwendungsbeispiel </h3>
+
+<p>
+Das folgende Listing zeigt die drei bisher definierten Beans im Zusammenspiel.
+Zun&auml;chst werden alle drei Elemente instanziert und auf einem
+Frame platziert. Da der <font color="#000077"><tt>LightedPushButton</tt></font>
+bei jedem Tastendruck den Zustand der <font color="#000077"><tt>LightBulb</tt></font>
+umschalten soll, bekommt er einen <a href="index_p.html#ixb102563"><font color=#000080><tt>PropertyChangeListener</tt></font></a>
+zugeordnet, der bei Zustands&auml;nderungen der Eigenschaft &#187;lighton&#171;
+die Lampe umschaltet. 
+
+<p>
+Der <font color="#000077"><tt>VetoSwitch</tt></font> wird als <a href="index_v.html#ixb102571"><font color=#000080><tt>VetoableChangeListener</tt></font></a>
+ebenfalls beim <font color="#000077"><tt>LightedPushButton</tt></font>
+registriert. Da er in ge&ouml;ffnetem Zustand alle unterbindbaren
+Eigenschaften&auml;nderungen verhindert, dient er dazu, die Funktion
+des Buttons zu deaktivieren. Nur, wenn der <font color="#000077"><tt>VetoSwitch</tt></font>
+geschlossen ist, hat das Dr&uuml;cken des <font color="#000077"><tt>LightedPushButton</tt></font>
+eine &Auml;nderung des Lampenzustands zur Folge. 
+<a name="listingid046008"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4608.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> java.beans.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4608
+<font color="#555555">008 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">009 </font>{
+<font color="#555555">010 </font>  <font color="#0000AA">public</font> Listing4608()
+<font color="#555555">011 </font>  {
+<font color="#555555">012 </font>    <font color="#00AA00">//Initialisierung</font>
+<font color="#555555">013 </font>    <font color="#006699">super</font>(<font color="#0000FF">"BeanPropertiesTest"</font>);
+<font color="#555555">014 </font>    setLayout(<font color="#0000AA">new</font> FlowLayout());
+<font color="#555555">015 </font>    setBackground(Color.lightGray);
+<font color="#555555">016 </font>    addWindowListener(
+<font color="#555555">017 </font>      <font color="#0000AA">new</font> WindowAdapter() {
+<font color="#555555">018 </font>        <font color="#0000AA">public</font> <font color="#006699">void</font> windowClosing(WindowEvent event)
+<font color="#555555">019 </font>        {
+<font color="#555555">020 </font>          System.exit(0);
+<font color="#555555">021 </font>        }
+<font color="#555555">022 </font>      }
+<font color="#555555">023 </font>    );
+<font color="#555555">024 </font>    <font color="#00AA00">//Dialogelemente hinzuf&uuml;gen</font>
+<font color="#555555">025 </font>    LightedPushButton button1 = <font color="#0000AA">new</font> LightedPushButton();
+<font color="#555555">026 </font>    VetoSwitch veto1 = <font color="#0000AA">new</font> VetoSwitch();
+<font color="#555555">027 </font>    <font color="#0000AA">final</font> LightBulb bulb1 = <font color="#0000AA">new</font> LightBulb();
+<font color="#555555">028 </font>    add(button1);
+<font color="#555555">029 </font>    add(veto1);
+<font color="#555555">030 </font>    add(bulb1);
+<font color="#555555">031 </font>    button1.addPropertyChangeListener(
+<font color="#555555">032 </font>      <font color="#0000AA">new</font> PropertyChangeListener() {
+<font color="#555555">033 </font>        <font color="#0000AA">public</font> <font color="#006699">void</font> propertyChange(PropertyChangeEvent e)
+<font color="#555555">034 </font>        {
+<font color="#555555">035 </font>          <font color="#0000AA">if</font> (e.getPropertyName().equals(<font color="#0000FF">"lighton"</font>)) {
+<font color="#555555">036 </font>            Boolean on = (Boolean)e.getNewValue();
+<font color="#555555">037 </font>            bulb1.setLightOn(on.booleanValue());
+<font color="#555555">038 </font>          }
+<font color="#555555">039 </font>        }
+<font color="#555555">040 </font>      }
+<font color="#555555">041 </font>    );
+<font color="#555555">042 </font>    button1.addVetoableChangeListener(veto1);
+<font color="#555555">043 </font>  }
+<font color="#555555">044 </font>
+<font color="#555555">045 </font>  <font color="#00AA00">//---main-------------------------------------------------</font>
+<font color="#555555">046 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">047 </font>  {
+<font color="#555555">048 </font>    Listing4608 frm = <font color="#0000AA">new</font> Listing4608();
+<font color="#555555">049 </font>    frm.setLocation(100, 100);
+<font color="#555555">050 </font>    frm.pack();
+<font color="#555555">051 </font>    frm.setVisible(<font color="#006699">true</font>);
+<font color="#555555">052 </font>  }
+<font color="#555555">053 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4608.java"><font color="#000055" size=-1>Listing4608.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 46.8: Eigenschaften&auml;nderungen von Beans</i></p>
+
+<p>
+<a href="k100296.html#propertiestest">Abbildung 46.6</a> zeigt das
+Programm mit angeschalteter Lampe und anschlie&szlig;end ge&ouml;ffnetem
+Schalter. Das Dr&uuml;cken des Tasters bleibt nun so lange erfolglos,
+bis der Schalter wieder geschlossen wird. 
+<p>
+<a name="propertiestest"></a>
+<img src="images/Beanprops.gif">
+<p>
+
+<p><i>
+Abbildung 46.6: Testprogramm f&uuml;r Eigenschaften&auml;nderungen</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100292.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100295.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100297.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100300.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

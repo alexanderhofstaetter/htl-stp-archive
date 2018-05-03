@@ -1,0 +1,231 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100332.html;106,k100335.html;107,k100337.html;108,index.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100332.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100335.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100337.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 53 - Hilfsprogramme des JDK
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id053004"></a>
+<h2>53.4 jdb - der <a name="ixa103897">Debugger</a> </h2>
+<hr>
+<ul>
+<li><a href="k100336.html#sectlevel2id053004">53.4 jdb - der Debugger</a>
+<ul>
+<li><a href="k100336.html#sectlevel3id053004001">53.4.1 Aufruf</a>
+<li><a href="k100336.html#sectlevel3id053004002">53.4.2 Beschreibung</a>
+<li><a href="k100336.html#sectlevel3id053004003">53.4.3 Vorbereitungen</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id053004001"></a>
+<h3>53.4.1 Aufruf </h3>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+jdb [ classfile ]
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id053004002"></a>
+<h3>53.4.2 Beschreibung </h3>
+
+<p>
+<a name="ixa103898"><a href="index_j.html#ixb102907"><font color=#000080><tt>jdb</tt></font></a></a>
+ist der Debugger des JDK. Er bietet die M&ouml;glichkeit, Programme
+kontrolliert ablaufen zu lassen und dabei Breakpoints zu setzen, im
+Einzelschrittmodus den n&auml;chsten Befehl ausf&uuml;hren zu lassen
+oder den Inhalt von Variablen oder Objekten zu inspizieren. Man sollte
+allerdings nicht zu gro&szlig;e Erwartungen an <a href="index_j.html#ixb102907"><font color=#000080><tt>jdb</tt></font></a>
+stellen, denn das Programm ist ein Kommandozeilendebugger in sch&ouml;nster
+UNIX-Tradition. Mit den grafischen Debuggern der integrierten Java-Entwicklungsumgebungen
+hat er nur wenig gemeinsam. Leider ist er nicht nur umst&auml;ndlicher
+zu bedienen, sondern l&auml;sst auch einige wichtige Features moderner
+Debugger vermissen. 
+
+<!-- Section -->
+
+<a name="sectlevel3id053004003"></a>
+<h3>53.4.3 Vorbereitungen </h3>
+
+<p>
+Damit ein Programm debugt werden kann, sollte es mit der Option <a name="ixa103899"><a href="index_0.html#ixb102912"><font color=#000080><tt>-g</tt></font></a></a>
+&uuml;bersetzt werden. Dadurch werden symbolische Informationen in
+die Klassendatei geschrieben, die der Debugger zur Interpretation
+von lokalen Variablen ben&ouml;tigt. Beim Aufruf des Debuggers kann
+die zu untersuchende Klassendatei als Argument angegeben werden: 
+<font color="#000077">
+<pre>
+jdb classfile
+</pre>
+</font>
+
+<p>
+Nachdem der Debugger gestartet wurde, meldet er sich mit seiner Kommandozeile
+und ist bereit, Befehle entgegenzunehmen. Die wichtigsten von ihnen
+werden in <a href="k100336.html#jdbkommandos">Tabelle 53.4</a> vorgestellt
+und kurz erl&auml;utert. <a name="jdbkommandos"></a>
+
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=20%><b>Kommando</b></td>
+<td valign=top align=left width=80%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>?</tt></font></td>
+<td valign=top align=left>Liefert eine &Uuml;bersicht aller Kommandos.
+Alternativ kann auch das Kommando <font color="#000077"><tt>help</tt></font>
+verwendet werden. </td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>!!</tt></font></td>
+<td valign=top align=left>Wiederholt das letzte Kommando. </td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>run</tt></font></td>
+<td valign=top align=left>Startet das geladene Programm. Falls die
+Klassendatei mit <font color="#000077"><tt>load</tt></font> geladen
+wurde, m&uuml;ssen zus&auml;tzlich der Klassenname und ggfs. weitere
+Parameter des Programms &uuml;bergeben werden. Nach Ausf&uuml;hrung
+dieses Programms l&auml;uft das Programm bis zum n&auml;chsten Breakpoint
+oder bis es mit dem <font color="#000077"><tt>suspend</tt></font>-Kommando
+angehalten wird. </td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>quit</tt></font></td>
+<td valign=top align=left>Beendet den Debugger. Alternativ kann auch
+das Kommando <font color="#000077"><tt>exit</tt></font> verwendet
+werden. </td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>stop in</tt></font></td>
+<td valign=top align=left>Setzt einen Breakpoint auf den Anfang einer
+Methode. Das Kommando erwartet den Namen der Klasse, einen Punkt und
+den Namen der Methode als Argument. Beispiel: 
+<br>
+<font color="#000077"><tt>stop in JDBBeispiel.actionPerformed</tt></font>
+</td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>stop at</tt></font></td>
+<td valign=top align=left>Setzt einen Breakpoint auf eine vorgegebene
+Zeile. Dazu m&uuml;ssen der Name der Klasse, ein Doppelpunkt und die
+Zeilennummer innerhalb der Quelldatei angegeben werden. Beispiel:
+<br>
+<font color="#000077"><tt>stop at JDBBeispiel:48</tt></font> </td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>clear</tt></font></td>
+<td valign=top align=left>L&ouml;scht einen Breakpoint. Als Argument
+m&uuml;ssen der Klassenname, gefolgt von einem Doppelpunkt und der
+Zeilennummer, in der sich der Breakpoint befindet, angegeben werden.
+Es gibt keine M&ouml;glichkeit, eine Liste der aktuellen Breakpoints
+anzeigen zu lassen. </td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>list</tt></font></td>
+<td valign=top align=left>Zeigt den aktuellen Ausschnitt des Quelltextes
+an, an dem das Programm angehalten wurde. Die als N&auml;chstes auszuf&uuml;hrende
+Zeile wird durch einen Pfeil markiert. Alternativ kann auch der Name
+einer Methode oder eine Zeilennummer an das Kommando &uuml;bergeben
+werden. </td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>step</tt></font></td>
+<td valign=top align=left>Nachdem ein Programm angehalten wurde, kann
+es mit diesem Kommando im Einzelschrittmodus fortgef&uuml;hrt werden.
+Befindet sich an der Aufrufstelle ein Methodenaufruf, springt das
+Kommando in die Methode hinein und bleibt bei der ersten ausf&uuml;hrbaren
+Anweisung stehen. </td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>next</tt></font></td>
+<td valign=top align=left>Wie <font color="#000077"><tt>step</tt></font>,
+springt dabei aber nicht in einen Methodenaufruf hinein, sondern f&uuml;hrt
+die Methode als Ganzes aus und bleibt beim n&auml;chsten Kommando
+nach dem Methodenaufruf stehen. </td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>step up</tt></font></td>
+<td valign=top align=left>F&uuml;hrt die aktuelle Methode bis zum
+Ende aus. </td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>cont</tt></font></td>
+<td valign=top align=left>F&uuml;hrt das Programm nach einem Breakpoint
+fort. Es l&auml;uft dann bis zum n&auml;chsten Breakpoint oder bis
+es mit dem <font color="#000077"><tt>suspend</tt></font>-Kommando
+angehalten wird. </td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>print</tt></font></td>
+<td valign=top align=left>Zeigt den Inhalt der Variablen an, die als
+Argument &uuml;bergeben wurde. <font color="#000077"><tt>print</tt></font>
+verwendet dazu die Methode <a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a>,
+die in allen Objektvariablen implementiert ist. Damit eine Variable
+angezeigt werden kann, muss sie an der Aufrufstelle sichtbar sein.
+Es gibt leider keine M&ouml;glichkeit, den Inhalt einer Variablen
+aus dem Debugger heraus zu ver&auml;ndern. </td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>dump</tt></font></td>
+<td valign=top align=left>Zeigt den Inhalt der Objektvariable, die
+als Argument &uuml;bergeben wurde, inklusive aller Membervariablen
+an. Damit eine Variable angezeigt werden kann, muss sie an der Aufrufstelle
+sichtbar sein. </td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>locals</tt></font></td>
+<td valign=top align=left>Gibt eine Liste aller lokalen Variablen
+und ihrer aktuellen Inhalte aus. </td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>where</tt></font></td>
+<td valign=top align=left>Zeigt einen Stacktrace an.</td></tr>
+</table>
+<p><i>
+Tabelle 53.4: Kommandos von jdb </i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100332.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100335.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100337.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

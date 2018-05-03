@@ -1,0 +1,83 @@
+
+AINF 2   		C/C++ - Aufgabe 09d
+__________________________________________________________________________
+
+
+C++ - Programm  "signale.cpp"
+
+Definiere folgende Funktionen für die Signalerzeugung :  
+
+
+void  array_dc ( float a[], int n, float am )
+/////////////////////////////////////////////////////////////////////////////
+//   Gleichwerte dem Feld a[] zuweisen  
+//   mit Amplitude (Gleichwert) am 
+
+
+void  array_sinus ( float a[], int n, float am, float fn )
+/////////////////////////////////////////////////////////////////////////////
+//   Sinussamples dem Feld a[] zuweisen  
+//   nach der Formel  a[i] = am*sin(2*M_PI*i*fn/n) 
+//   mit Amplitude am und Frequenzvielfaches fn        
+
+
+void  array_rect ( float a[], int n, float am, float fn )
+/////////////////////////////////////////////////////////////////////////////
+//   Rechtecksamples dem Feld a[] zuweisen  
+//   mit Amplitude am und Frequenzvielfaches fn        
+
+void array_rand( float a[], int n, float am)
+/////////////////////////////////////////////////////////////////////////////
+//   dem Array a n-Zufallszahlen im Bereich von -am bis +am zuweisen  
+//   a[i] = 2*am*(float)rand()/RAND_MAX - am  
+
+  ...
+
+
+die Funktion für die Tabellenausgabe der Signalwerte :  
+
+void array_out( float a[], int n)	  
+/////////////////////////////////////////////////////////////////////////////
+//   Ausgabe von n-Feldelementen des Arrays a[] auf die Konsole 
+
+
+
+die Funktionen für die Signalanalyse :  
+
+float  array_mittel ( float a[], int n1, int n2 )
+/////////////////////////////////////////////////////////////////////////////
+//   Mittelwert der Feldelemente des Arrays a berechnen 
+//   von Index n1 bis Index n2 
+
+
+float array_max ( float a[], int n1 , int n2 )
+/////////////////////////////////////////////////////////////////////////////
+//   Maximum (Spitzenwert) der Feldelemente des Arrays a berechnen   
+//   von Index n1 bis Index n2 
+
+
+float array_min ( float a[], int n1 , int n2 )
+/////////////////////////////////////////////////////////////////////////////
+//   Minimum der Feldelemente des Arrays a berechnen   
+//   von Index n1 bis Index n2 
+
+
+
+und ein Hauptprogramm mit einer Menüauswahl für die Signalerzeugung,
+Ausgabe der Signalsamples und Durchführung und Ausgabe der Signalanalyse 
+
+
+
+-----------------------------------------------------------------------------
+Zusatzaufgabe : 
+
+
+float  array_rms ( float a[], int n )
+/////////////////////////////////////////////////////////////////////////////
+//   RMS-Wert ( echter Effektivwert ) der Feldwerte berechnen 
+//   RMS  =  Wurzel aus dem Mittelwert der Quadrate der Signalwerte (Feldelemente) 
+
+
+
+
+

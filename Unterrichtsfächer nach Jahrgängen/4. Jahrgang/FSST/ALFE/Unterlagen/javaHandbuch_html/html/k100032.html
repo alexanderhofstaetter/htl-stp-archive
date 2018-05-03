@@ -1,0 +1,478 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100028.html;106,k100031.html;107,k100033.html;108,k100036.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100028.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100031.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100033.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100036.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 5 - Datentypen
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="arrays"></a>
+<h2>5.4 Arrays<a name="ixa100301"></a> </h2>
+<hr>
+<ul>
+<li><a href="k100032.html#arrays">5.4 Arrays</a>
+<ul>
+<li><a href="k100032.html#sectlevel3id005004001">5.4.1 Deklaration und Initialisierung</a>
+<li><a href="k100032.html#sectlevel3id005004002">5.4.2 Zugriff auf Array-Elemente</a>
+<li><a href="k100032.html#mehrdimarrays">5.4.3 Mehrdimensionale Arrays</a>
+</ul>
+</ul>
+<hr>
+
+<p>
+Arrays in Java unterscheiden sich dadurch von Arrays in anderen Programmiersprachen,
+dass sie <i>Objekte</i> sind. Obwohl dieser Umstand in vielen F&auml;llen
+vernachl&auml;ssigt werden kann, bedeutet er dennoch: 
+<ul>
+<li>dass Array-Variablen <i>Referenzen</i> sind,
+<li>dass Arrays Methoden und Instanz-Variablen besitzen,
+<li>dass Arrays zur Laufzeit erzeugt werden.
+</ul>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Dennoch bleibt ein Array immer eine (m&ouml;glicherweise mehrdimensionale)
+Reihung von Elementen eines festen Grundtyps. Arrays in Java sind
+<i>semi-dynamisch</i>, d.h., ihre Gr&ouml;&szlig;e kann zur Laufzeit
+festgelegt, sp&auml;ter aber nicht mehr ver&auml;ndert werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id005004001"></a>
+<h3>5.4.1 Deklaration und Initialisierung </h3>
+
+<p>
+Die Deklaration eines Arrays in Java erfolgt in zwei Schritten: 
+<ul>
+<li>Deklaration einer Array-Variablen
+<li>Erzeugen eines Arrays und Zuweisung an die Array-Variable
+</ul>
+
+<p>
+Die Deklaration eines Arrays entspricht syntaktisch der einer einfachen
+Variablen, mit dem Unterschied, dass an den Typnamen eckige Klammern
+angeh&auml;ngt werden: 
+<a name="listingid005004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#006699">int</font>[] a;
+<font color="#555555">002 </font><font color="#006699">double</font>[] b;
+<font color="#555555">003 </font><font color="#006699">boolean</font>[] c;</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 5.4: Deklaration von Arrays</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Wahlweise k&ouml;nnen die eckigen Klammern auch hinter den Variablennamen
+geschrieben werden, aber das ist ein Tribut an die Kompatibilit&auml;t
+zu C/C++ und sollte in neuen Java-Programmen vermieden werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Zum Zeitpunkt der Deklaration wird noch nicht festgelegt, wie viele
+Elemente das Array haben soll. Dies geschieht erst sp&auml;ter bei
+seiner Initialisierung, die mit Hilfe des <a name="ixa100302"><a href="index_n.html#ixb100088"><font color=#000080><tt>new</tt></font></a></a>-Operators
+oder durch Zuweisung eines Array-Literals erfolgt. Sollen also beispielsweise
+die oben deklarierten Arrays 5, 10 und 15 Elemente haben, w&uuml;rden
+wir das Beispiel wie folgt erweitern: 
+<a name="listingid005005"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>a = <font color="#0000AA">new</font> <font color="#006699">int</font>[5];
+<font color="#555555">002 </font>b = <font color="#0000AA">new</font> <font color="#006699">double</font>[10];
+<font color="#555555">003 </font>c = <font color="#0000AA">new</font> <font color="#006699">boolean</font>[15];</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 5.5: Erzeugen von Arrays</i></p>
+
+<p>
+Ist bereits zum Deklarationszeitpunkt klar, wie viele Elemente das
+Array haben soll, k&ouml;nnen Deklaration und Initialisierung zusammen
+geschrieben werden: 
+<a name="listingid005006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#006699">int</font>[] a = <font color="#0000AA">new</font> <font color="#006699">int</font>[5];
+<font color="#555555">002 </font><font color="#006699">double</font>[] b = <font color="#0000AA">new</font> <font color="#006699">double</font>[10];
+<font color="#555555">003 </font><font color="#006699">boolean</font>[] c = <font color="#0000AA">new</font> <font color="#006699">boolean</font>[15];</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 5.6: Deklaration und Initialisierung von Arrays</i></p>
+
+<p>
+Alternativ zur Verwendung des <a href="index_n.html#ixb100088"><font color=#000080><tt>new</tt></font></a>-Operators
+kann ein Array auch <i>literal</i> initialisiert werden<a name="ixa100303"></a>.
+Dazu werden die Elemente des Arrays in geschweifte Klammern gesetzt
+und nach einem Zuweisungsoperator zur Initialisierung verwendet. Die
+Gr&ouml;&szlig;e des Arrays ergibt sich aus der Anzahl der zugewiesenen
+Elemente: 
+<a name="listingid005007"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#006699">int</font>[] x = {1,2,3,4,5};
+<font color="#555555">002 </font><font color="#006699">boolean</font>[] y = {<font color="#006699">true</font>, <font color="#006699">true</font>};</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 5.7: Initialisierung mit literalen Arrays</i></p>
+
+<p>
+Das Beispiel generiert ein <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>-Array
+<font color="#000077"><tt>x</tt></font> mit f&uuml;nf Elementen und
+ein <a href="index_b.html#ixb100071"><font color=#000080><tt>boolean</tt></font></a>-Array
+<font color="#000077"><tt>y</tt></font> mit zwei Elementen. Anders
+als bei der expliziten Initialisierung mit <a href="index_n.html#ixb100088"><font color=#000080><tt>new</tt></font></a>
+muss die Initialisierung in diesem Fall unmittelbar bei der Deklaration
+erfolgen. 
+
+<!-- Section -->
+
+<a name="sectlevel3id005004002"></a>
+<h3>5.4.2 Zugriff auf Array-Elemente </h3>
+
+<p>
+Bei der Initialisierung eines Arrays von <font color="#000077"><tt>n</tt></font>
+Elementen werden die einzelnen Elemente von <font color="#000077"><tt>0</tt></font>
+bis <font color="#000077"><tt>n-1</tt></font> durchnummeriert. Der
+Zugriff auf jedes einzelne Element erfolgt &uuml;ber seinen numerischen
+Index, der nach dem Array-Namen in eckigen Klammern geschrieben wird.
+Das nachfolgende Beispiel deklariert zwei Arrays mit Elementen des
+Typs <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>
+bzw. <a href="index_b.html#ixb100071"><font color=#000080><tt>boolean</tt></font></a>,
+die dann ausgegeben werden: 
+<a name="listingid005008"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing0508.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing0508
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#006699">int</font>[] prim = <font color="#0000AA">new</font> <font color="#006699">int</font>[5];
+<font color="#555555">008 </font>    <font color="#006699">boolean</font>[] b = {<font color="#006699">true</font>,<font color="#006699">false</font>};
+<font color="#555555">009 </font>    prim[0] = 2;
+<font color="#555555">010 </font>    prim[1] = 3;
+<font color="#555555">011 </font>    prim[2] = 5;
+<font color="#555555">012 </font>    prim[3] = 7;
+<font color="#555555">013 </font>    prim[4] = 11;
+<font color="#555555">014 </font>
+<font color="#555555">015 </font>    System.out.println(<font color="#0000FF">"prim hat "</font>+prim.length+<font color="#0000FF">" Elemente"</font>);
+<font color="#555555">016 </font>    System.out.println(<font color="#0000FF">"b hat "</font>+b.length+<font color="#0000FF">" Elemente"</font>);
+<font color="#555555">017 </font>    System.out.println(prim[0]);
+<font color="#555555">018 </font>    System.out.println(prim[1]);
+<font color="#555555">019 </font>    System.out.println(prim[2]);
+<font color="#555555">020 </font>    System.out.println(prim[3]);
+<font color="#555555">021 </font>    System.out.println(prim[4]);
+<font color="#555555">022 </font>    System.out.println(b[0]);
+<font color="#555555">023 </font>    System.out.println(b[1]);
+<font color="#555555">024 </font>  }
+<font color="#555555">025 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing0508.java"><font color="#000055" size=-1>Listing0508.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 5.8: Deklaration und Zugriff auf Arrays</i></p>
+
+<p>
+Die Ausgabe des Programms ist: 
+<font color="#333300">
+<pre>
+prim hat 5 Elemente
+b hat 2 Elemente
+2
+3
+5
+7
+11
+true
+false
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Der Array-Index muss vom Typ <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>
+sein. Aufgrund der vom Compiler automatisch vorgenommenen Typkonvertierungen
+sind auch <a href="index_s.html#ixb100250"><font color=#000080><tt>short</tt></font></a>,
+<a href="index_b.html#ixb100249"><font color=#000080><tt>byte</tt></font></a>
+und <a href="index_c.html#ixb100223"><font color=#000080><tt>char</tt></font></a>
+zul&auml;ssig. Jedes Array hat eine Instanzvariable <a name="ixa100304"><a href="index_l.html#ixb100286"><font color=#000080><tt>length</tt></font></a></a>,
+die die Anzahl seiner Elemente angibt. Indexausdr&uuml;cke werden
+vom Laufzeitsystem auf Einhaltung der Array-Grenzen gepr&uuml;ft.
+Sie m&uuml;ssen gr&ouml;&szlig;er gleich 0 und kleiner als <a href="index_l.html#ixb100286"><font color=#000080><tt>length</tt></font></a>
+sein.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="mehrdimarrays"></a>
+<h3>5.4.3 <a name="ixa100305">Mehrdimensionale Arrays</a><a name="ixa100306"></a></h3>
+
+<p>
+Mehrdimensionale Arrays werden erzeugt, indem zwei oder mehr Paare
+eckiger Klammern bei der Deklaration angegeben werden. Mehrdimensionale
+Arrays werden als Arrays von Arrays angelegt. Die Initialisierung
+erfolgt analog zu eindimensionalen Arrays durch Angabe der Anzahl
+der Elemente je Dimension. 
+
+<p>
+Der Zugriff auf mehrdimensionale Arrays geschieht durch Angabe aller
+erforderlichen Indizes, jeweils in eigenen eckigen Klammern. Auch
+bei mehrdimensionalen Arrays kann eine literale Initialisierung durch
+Schachtelung der Initialisierungssequenzen erreicht werden. Das folgende
+Beispiel erzeugt ein Array der Gr&ouml;&szlig;e 2 * 3 und gibt dessen
+Elemente aus: 
+<a name="listingid005009"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing0509.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing0509
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#006699">int</font>[][] a = <font color="#0000AA">new</font> <font color="#006699">int</font>[2][3];
+<font color="#555555">008 </font>
+<font color="#555555">009 </font>    a[0][0] = 1;
+<font color="#555555">010 </font>    a[0][1] = 2;
+<font color="#555555">011 </font>    a[0][2] = 3;
+<font color="#555555">012 </font>    a[1][0] = 4;
+<font color="#555555">013 </font>    a[1][1] = 5;
+<font color="#555555">014 </font>    a[1][2] = 6;
+<font color="#555555">015 </font>    System.out.println(<font color="#0000FF">""</font>+a[0][0]+a[0][1]+a[0][2]);
+<font color="#555555">016 </font>    System.out.println(<font color="#0000FF">""</font>+a[1][0]+a[1][1]+a[1][2]);
+<font color="#555555">017 </font>  }
+<font color="#555555">018 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing0509.java"><font color="#000055" size=-1>Listing0509.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 5.9: Zugriff auf mehrdimensionale Arrays</i></p>
+
+<p>
+Die Ausgabe des Programms ist: 
+<font color="#333300">
+<pre>
+123
+456
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Da mehrdimensionale Arrays als geschachtelte Arrays gespeichert werden,
+ist es auch m&ouml;glich, <i>nichtrechteckige</i> Arrays zu erzeugen.
+Das folgende Beispiel deklariert und initialisiert ein zweidimensionales
+dreieckiges Array und gibt es auf dem Bildschirm aus. Gleichzeitig
+zeigt es die Verwendung der <a href="index_l.html#ixb100286"><font color=#000080><tt>length</tt></font></a>-Variable,
+um die Gr&ouml;&szlig;e des Arrays oder Sub-Arrays herauszufinden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<a name="listingid005010"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing0510.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing0510
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#006699">int</font>[][] a = { {0},
+<font color="#555555">008 </font>                  {1,2},
+<font color="#555555">009 </font>                  {3,4,5},
+<font color="#555555">010 </font>                  {6,7,8,9}
+<font color="#555555">011 </font>                 };
+<font color="#555555">012 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i=0; i&lt;a.length; ++i) {
+<font color="#555555">013 </font>      <font color="#0000AA">for</font> (<font color="#006699">int</font> j=0; j&lt;a[i].length; ++j) {
+<font color="#555555">014 </font>        System.out.print(a[i][j]);
+<font color="#555555">015 </font>      }
+<font color="#555555">016 </font>      System.out.println();
+<font color="#555555">017 </font>    }
+<font color="#555555">018 </font>  }
+<font color="#555555">019 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing0510.java"><font color="#000055" size=-1>Listing0510.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 5.10: Ein nichtrechteckiges Array</i></p>
+
+<p>
+Die Arbeitsweise des Programms ist trotz der erst in <a href="k100046.html#kapitelanweisungen">Kapitel 7</a>
+vorzustellenden <a href="index_f.html#ixb100077"><font color=#000080><tt>for</tt></font></a>-Schleife
+unmittelbar verst&auml;ndlich. Die Ausgabe des Programms lautet: 
+<font color="#333300">
+<pre>
+0
+12
+345
+6789
+</pre>
+</font>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100028.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100031.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100033.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100036.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

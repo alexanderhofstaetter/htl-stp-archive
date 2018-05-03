@@ -1,0 +1,184 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100137.html;106,k100138.html;107,k100140.html;108,k100143.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100137.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100138.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100140.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100143.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 21 - Random-Access-I/O
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id021002"></a>
+<h2>21.2 Navigation in der Datei </h2>
+<hr>
+<ul>
+<li><a href="k100139.html#sectlevel2id021002">21.2 Navigation in der Datei</a>
+<ul>
+<li><a href="k100139.html#sectlevel3id021002001">21.2.1 Positionierung des Dateizeigers</a>
+<li><a href="k100139.html#sectlevel3id021002002">21.2.2 Die L&auml;nge der Datei</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id021002001"></a>
+<h3>21.2.1 <a name="ixa101392">Positionierung des Dateizeigers</a></h3>
+
+<p>
+Der Hauptunterschied zwischen dem sequenziellen und dem wahlfreien
+Zugriff auf eine Datei besteht darin, dass beim wahlfreien Zugriff
+mit einem <i>expliziten</i> Satzzeiger gearbeitet wird. Jeder Schreib-
+und Lesezugriff erfolgt an der Position, die durch den aktuellen Inhalt
+des Satzzeigers bestimmt wird, und positioniert den Zeiger um die
+Anzahl gelesener bzw. geschriebener Bytes weiter. Die Klasse <a href="index_r.html#ixb101021"><font color=#000080><tt>RandomAccessFile</tt></font></a>
+stellt verschiedene Methoden zum Zugriff auf den Satzzeiger zur Verf&uuml;gung:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public long getFilePointer()
+
+public void seek(long pos)
+
+public void skipBytes(int n)
+
+public long length()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/RandomAccessFile.html" onClick="this.href=getApiDoc('java.io.RandomAccessFile')"><font color="#660066" size=-1>java.io.RandomAccessFile</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa101393"><a href="index_g.html#ixb101058"><font color=#000080><tt>getFilePointer</tt></font></a></a>
+liefert die aktuelle Position des Satzzeigers; das erste Byte einer
+Datei steht dabei an Position 0. Da der R&uuml;ckgabewert vom Typ
+<a href="index_l.html#ixb100252"><font color=#000080><tt>long</tt></font></a>
+ist, unterst&uuml;tzt Java den Zugriff auf Dateien, die gr&ouml;&szlig;er
+als 2 GByte sind, sofern es das Betriebssystem zul&auml;sst. 
+
+<p>
+Das Positionieren des Satzzeigers erfolgt mit der Methode <a name="ixa101394"><a href="index_s.html#ixb101059"><font color=#000080><tt>seek</tt></font></a></a>
+an der durch <font color="#000077"><tt>pos</tt></font> angegebenen
+Stelle. Anders als in C bezieht sich der Wert von <font color="#000077"><tt>pos</tt></font>
+dabei immer auf den Anfang der Datei. Das Positionieren relativ zur
+aktuellen Position kann mit der Methode <a name="ixa101395"><a href="index_s.html#ixb101060"><font color=#000080><tt>skipBytes</tt></font></a></a>
+erledigt werden. Die neue Position wird dabei aus der aktuellen Position
+plus dem Inhalt des Parameters <font color="#000077"><tt>n</tt></font>
+berechnet. Auch negative Werte f&uuml;r <font color="#000077"><tt>n</tt></font>
+sind dabei erlaubt und bewirken eine R&uuml;ckw&auml;rtsverschiebung
+des Satzzeigers. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Es ist erlaubt, den Satzzeiger hinter das derzeitige Ende der Datei
+zu verschieben. Allerdings wird dadurch ihre tats&auml;chliche L&auml;nge
+nicht ver&auml;ndert. Dies geschieht erst, wenn an der angesprungenen
+Position tats&auml;chlich Zeichen geschrieben werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id021002002"></a>
+<h3>21.2.2 Die L&auml;nge der Datei </h3>
+
+<p>
+Die Klasse <a href="index_r.html#ixb101021"><font color=#000080><tt>RandomAccessFile</tt></font></a>
+besitzt zwei Methoden zum Zugriff auf die L&auml;nge der Datei: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public long length()
+  throws IOException
+
+public void setLength(long length)
+  throws IOException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/RandomAccessFile.html" onClick="this.href=getApiDoc('java.io.RandomAccessFile')"><font color="#660066" size=-1>java.io.RandomAccessFile</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa101396"><a href="index_l.html#ixb100286"><font color=#000080><tt>length</tt></font></a></a>
+kann die derzeitige L&auml;nge der Datei bestimmt werden. Nach dem
+&Ouml;ffnen einer bestehenden Datei liefert diese Methode deren initiale
+L&auml;nge. Schreibzugriffe am Ende der Datei erh&ouml;hen diesen
+Wert. Mit <a name="ixa101397"><a href="index_s.html#ixb101061"><font color=#000080><tt>setLength</tt></font></a></a>
+kann die L&auml;nge der Datei ver&auml;ndert werden. Ist der als Argument
+&uuml;bergebene Wert kleiner als die bisherige L&auml;nge, wird die
+Datei verk&uuml;rzt. Ein eventuell dahinter stehender Dateizeiger
+wird auf das neue Ende der Datei gesetzt. Ist das Argument gr&ouml;&szlig;er
+als die bisherige L&auml;nge, wird die Datei vergr&ouml;&szlig;ert.
+Der Wert der neu eingef&uuml;gten Bytes bleibt allerdings undefiniert,
+bis sie explizit beschrieben werden. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100137.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100138.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100140.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100143.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

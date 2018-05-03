@@ -1,0 +1,900 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100245.html;106,k100245.html;107,k100247.html;108,k100252.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100245.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100245.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100247.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100252.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 38 - Swing: Komponenten I
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id038001"></a>
+<h2>38.1 Label und Textfelder </h2>
+<hr>
+<ul>
+<li><a href="k100246.html#sectlevel2id038001">38.1 Label und Textfelder</a>
+<ul>
+<li><a href="k100246.html#jlabel">38.1.1 JLabel</a>
+<li><a href="k100246.html#jtextfield">38.1.2 JTextField</a>
+<li><a href="k100246.html#sectlevel3id038001003">38.1.3 JFormattedTextField</a>
+<li><a href="k100246.html#sectlevel3id038001004">38.1.4 JPasswordField</a>
+<li><a href="k100246.html#sectlevel3id038001005">38.1.5 JTextArea</a>
+<li><a href="k100246.html#sectlevel3id038001006">38.1.6 JSpinner</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="jlabel"></a>
+<h3>38.1.1 JLabel </h3>
+
+<p>
+Ein <a name="ixa102564"><a href="index_j.html#ixb101781"><font color=#000080><tt>JLabel</tt></font></a></a>
+ist ein Dialogelement zur Anzeige einer Beschriftung innerhalb eines
+GUI-Containers. Es besitzt einen Text und ein Icon, die in beliebiger
+Anordnung dargestellt werden k&ouml;nnen. Beide Elemente sind optional,
+ein <a href="index_j.html#ixb101781"><font color=#000080><tt>JLabel</tt></font></a>
+kann also auch <i>nur</i> ein Icon enthalten. Auf Benutzereingaben
+reagiert ein <a href="index_j.html#ixb101781"><font color=#000080><tt>JLabel</tt></font></a>
+nicht. Seine wichtigsten Konstruktoren sind: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public JLabel(String text)
+public JLabel(Icon image)
+public JLabel(
+  String text, 
+  Icon icon, 
+  int horizontalAlignment
+)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JLabel.html" onClick="this.href=getApiDoc('javax.swing.JLabel')"><font color="#660066" size=-1>javax.swing.JLabel</font></a></td>
+</tr>
+</table>
+
+<p>
+Wird ein <a href="index_i.html#ixb101851"><font color=#000080><tt>Icon</tt></font></a>
+&uuml;bergeben, steht es links neben dem Text. Wie es erzeugt werden
+kann, wurde in <a href="k100242.html#jmenusonstiges">Abschnitt 37.2.3</a>
+gezeigt. Der Parameter <font color="#000077"><tt>horizontalAlignment</tt></font>
+gibt an, wie das Label horizontal platziert werden soll, falls links
+und rechts mehr Platz als erforderlich zur Verf&uuml;gung steht. Hier
+kann eine der Konstanten <a href="index_l.html#ixb101555"><font color=#000080><tt>LEFT</tt></font></a>,
+<a href="index_c.html#ixb101549"><font color=#000080><tt>CENTER</tt></font></a>
+oder <a href="index_r.html#ixb101556"><font color=#000080><tt>RIGHT</tt></font></a>
+aus dem Interface <a href="index_s.html#ixb101857"><font color=#000080><tt>SwingConstants</tt></font></a>
+angegeben werden. 
+
+<p>
+Auf die relative Anordnung von Text und Icon kann mit den Methoden
+<a name="ixa102565"><a href="index_s.html#ixb101854"><font color=#000080><tt>setHorizontalTextPosition</tt></font></a></a>
+und <a name="ixa102566"><a href="index_g.html#ixb101917"><font color=#000080><tt>getHorizontalTextPosition</tt></font></a></a>
+zugegriffen werden (standardm&auml;&szlig;ig steht der Text rechts
+neben dem Icon). M&ouml;gliche Werte sind <a href="index_l.html#ixb101555"><font color=#000080><tt>LEFT</tt></font></a>
+und <a href="index_r.html#ixb101556"><font color=#000080><tt>RIGHT</tt></font></a>.
+: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setHorizontalTextPosition(
+  int textPosition
+)
+public int getHorizontalTextPosition()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JLabel.html" onClick="this.href=getApiDoc('javax.swing.JLabel')"><font color="#660066" size=-1>javax.swing.JLabel</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_j.html#ixb101781"><font color=#000080><tt>JLabel</tt></font></a>
+stellt noch einige Methoden zur Verf&uuml;gung, mit denen die Anordnung
+seines Inhalts beeinflusst werden kann: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setHorizontalAlignment(int alignment)
+public int getHorizontalAlignment()
+
+public void setVerticalAlignment(int alignment)
+public int getVerticalAlignment()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JLabel.html" onClick="this.href=getApiDoc('javax.swing.JLabel')"><font color="#660066" size=-1>javax.swing.JLabel</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa102567"><a href="index_s.html#ixb101918"><font color=#000080><tt>setHorizontalAlignment</tt></font></a></a>
+wird die horizontale Ausrichtung festgelegt, m&ouml;gliche Parameter
+sind <a href="index_l.html#ixb101555"><font color=#000080><tt>LEFT</tt></font></a>,
+<a href="index_c.html#ixb101549"><font color=#000080><tt>CENTER</tt></font></a>
+oder <a href="index_r.html#ixb101556"><font color=#000080><tt>RIGHT</tt></font></a>.
+Mit <a name="ixa102568"><a href="index_s.html#ixb101919"><font color=#000080><tt>setVerticalAlignment</tt></font></a></a>
+wird die vertikale Ausrichtung festgelegt, hier kann eine der Konstanten
+<a href="index_t.html#ixb101863"><font color=#000080><tt>TOP</tt></font></a>,
+<a href="index_c.html#ixb101549"><font color=#000080><tt>CENTER</tt></font></a>
+oder <a href="index_b.html#ixb101858"><font color=#000080><tt>BOTTOM</tt></font></a>
+aus dem Interface <a href="index_s.html#ixb101857"><font color=#000080><tt>SwingConstants</tt></font></a>
+&uuml;bergeben werden. Mit <a name="ixa102569"><a href="index_g.html#ixb101920"><font color=#000080><tt>getHorizontalAlignment</tt></font></a></a>
+und <a name="ixa102570"><a href="index_g.html#ixb101921"><font color=#000080><tt>getVerticalAlignment</tt></font></a></a>
+k&ouml;nnen beide Einstellungen auch abgefragt werden. 
+
+<p>
+Das folgende Programm erzeugt einige Labels mit unterschiedlichen
+Eigenschaften: 
+<a name="listingid038001"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3801.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3801
+<font color="#555555">007 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> Listing3801()
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    <font color="#006699">super</font>(<font color="#0000FF">"JLabel"</font>);
+<font color="#555555">012 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">013 </font>    Container cp = getContentPane();
+<font color="#555555">014 </font>    cp.setLayout(<font color="#0000AA">new</font> GridLayout(5, 1));
+<font color="#555555">015 </font>    JLabel label;
+<font color="#555555">016 </font>    <font color="#00AA00">//Standardlabel</font>
+<font color="#555555">017 </font>    label = <font color="#0000AA">new</font> JLabel(<font color="#0000FF">"Standard-Label"</font>);
+<font color="#555555">018 </font>    cp.add(label);
+<font color="#555555">019 </font>    <font color="#00AA00">//Label mit Icon</font>
+<font color="#555555">020 </font>    label = <font color="#0000AA">new</font> JLabel(
+<font color="#555555">021 </font>      <font color="#0000FF">"Label mit Icon"</font>,
+<font color="#555555">022 </font>      <font color="#0000AA">new</font> ImageIcon(<font color="#0000FF">"lock.gif"</font>),
+<font color="#555555">023 </font>      JLabel.CENTER
+<font color="#555555">024 </font>    );
+<font color="#555555">025 </font>    cp.add(label);
+<font color="#555555">026 </font>    <font color="#00AA00">//Nur-Icon</font>
+<font color="#555555">027 </font>    label = <font color="#0000AA">new</font> JLabel(<font color="#0000AA">new</font> ImageIcon(<font color="#0000FF">"lock.gif"</font>));
+<font color="#555555">028 </font>    cp.add(label);
+<font color="#555555">029 </font>    <font color="#00AA00">//Icon auf der rechten Seite</font>
+<font color="#555555">030 </font>    label = <font color="#0000AA">new</font> JLabel(
+<font color="#555555">031 </font>      <font color="#0000FF">"Label mit Icon rechts"</font>,
+<font color="#555555">032 </font>      <font color="#0000AA">new</font> ImageIcon(<font color="#0000FF">"lock.gif"</font>),
+<font color="#555555">033 </font>      JLabel.CENTER
+<font color="#555555">034 </font>    );
+<font color="#555555">035 </font>    label.setHorizontalTextPosition(JLabel.LEFT);
+<font color="#555555">036 </font>    cp.add(label);
+<font color="#555555">037 </font>    <font color="#00AA00">//Label rechts unten</font>
+<font color="#555555">038 </font>    label = <font color="#0000AA">new</font> JLabel(<font color="#0000FF">"Label rechts unten"</font>);
+<font color="#555555">039 </font>    label.setHorizontalAlignment(JLabel.RIGHT);
+<font color="#555555">040 </font>    label.setVerticalAlignment(JLabel.BOTTOM);
+<font color="#555555">041 </font>    cp.add(label);
+<font color="#555555">042 </font>  }
+<font color="#555555">043 </font>
+<font color="#555555">044 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">045 </font>  {
+<font color="#555555">046 </font>    Listing3801 frame = <font color="#0000AA">new</font> Listing3801();
+<font color="#555555">047 </font>    frame.setLocation(100, 100);
+<font color="#555555">048 </font>    frame.setSize(300, 200);
+<font color="#555555">049 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">050 </font>  }
+<font color="#555555">051 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3801.java"><font color="#000055" size=-1>Listing3801.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 38.1: Die Klasse JLabel</i></p>
+
+<p>
+Die Ausgabe des Programms ist: 
+<p>
+<a name="imageid038001"></a>
+<img src="images/JLabel1.gif">
+<p>
+
+<p><i>
+Abbildung 38.1: Die Klasse JLabel</i></p>
+
+
+<!-- Section -->
+<a name="jtextfield"></a>
+<h3>38.1.2 JTextField </h3>
+
+<p>
+Die Klasse <a name="ixa102571"><a href="index_j.html#ixb101782"><font color=#000080><tt>JTextField</tt></font></a></a>
+ist das Swing-Pendant zur AWT-Klasse <a href="index_t.html#ixb101412"><font color=#000080><tt>TextField</tt></font></a>
+(siehe <a href="k100214.html#textfield">Abschnitt 32.7</a>) und stellt
+ein einzeiliges Textfeld zur Eingabe von Daten dar. In ihren grundlegenden
+M&ouml;glichkeiten ist die Programmierschnittstelle beider Klassen
+&auml;hnlich, <a href="index_j.html#ixb101782"><font color=#000080><tt>JTextField</tt></font></a>
+bietet aber zus&auml;tzliche M&ouml;glichkeiten, die in <a href="index_t.html#ixb101412"><font color=#000080><tt>TextField</tt></font></a>
+nicht zu finden sind. Ein Gro&szlig;teil der F&auml;higkeiten von
+<a href="index_j.html#ixb101782"><font color=#000080><tt>JTextField</tt></font></a>
+ist in der Basisklasse <a name="ixa102572"><a href="index_j.html#ixb101922"><font color=#000080><tt>JTextComponent</tt></font></a></a>
+des Pakets <a name="ixa102573"><a href="index_j.html#ixb101923"><font color=#000080><tt>javax.swing.text</tt></font></a></a>
+implementiert. 
+
+<p>
+Die wichtigsten Konstruktoren von <a href="index_j.html#ixb101782"><font color=#000080><tt>JTextField</tt></font></a>
+sind: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public JTextField(int columns)
+public JTextField(String text)
+public JTextField(String text, int columns)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTextField.html" onClick="this.href=getApiDoc('javax.swing.JTextField')"><font color="#660066" size=-1>javax.swing.JTextField</font></a></td>
+</tr>
+</table>
+
+<p>
+Der erste von ihnen erzeugt ein leeres Textfeld mit der angegebenen
+Anzahl Spalten, der zweite ein Textfeld mit dem angegebenen Text.
+Beim dritten Konstruktor k&ouml;nnen sowohl Spaltenzahl als auch Text
+vorgegeben werden. Die Spaltenzahl wird zur Berechnung der Breite
+des Textfelds verwendet (Anzahl Spalten mal Breite eines &#187;m&#171;),
+sie dient nicht dazu, die Anzahl der Eingabezeichen zu begrenzen.
+Ist die Spaltenzahl 0 wie im zweiten Konstruktor, wird die initiale
+Textl&auml;nge zur Berechnung der Spaltenbreite verwendet. 
+
+<p>
+<a href="index_j.html#ixb101782"><font color=#000080><tt>JTextField</tt></font></a>
+bietet &auml;hnliche Methoden wie <a href="index_t.html#ixb101412"><font color=#000080><tt>TextField</tt></font></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public String getText()
+public void setText(String t)
+
+public String getText(int offs, int len)
+
+public String getSelectedText()
+public int getSelectionStart()
+public int getSelectionEnd()
+
+public void setSelectionStart(int selectionStart)
+public void setSelectionEnd(int selectionEnd)
+
+public int getCaretPosition()
+public void setCaretPosition(int pos)
+public void moveCaretPosition(int pos)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTextField.html" onClick="this.href=getApiDoc('javax.swing.JTextField')"><font color="#660066" size=-1>javax.swing.JTextField</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit den parameterlosen Versionen von <a name="ixa102574"><a href="index_g.html#ixb101586"><font color=#000080><tt>getText</tt></font></a></a>
+und <a name="ixa102575"><a href="index_s.html#ixb101585"><font color=#000080><tt>setText</tt></font></a></a>
+kann auf den kompletten Inhalt des Textfelds zugegriffen werden. Die
+parametrisierte Variante von <a href="index_g.html#ixb101586"><font color=#000080><tt>getText</tt></font></a>
+liefert den Textausschnitt der angegebenen L&auml;nge und Position.
+<a name="ixa102576"><a href="index_g.html#ixb101601"><font color=#000080><tt>getSelectedText</tt></font></a></a>
+liefert dagegen den selektierten Text (bzw. <a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>,
+wenn kein Text selektiert ist) und mit <a name="ixa102577"><a href="index_g.html#ixb101599"><font color=#000080><tt>getSelectionStart</tt></font></a></a>
+und <a name="ixa102578"><a href="index_g.html#ixb101600"><font color=#000080><tt>getSelectionEnd</tt></font></a></a>
+k&ouml;nnen Anfang und Ende des selektierten Bereichs ermittelt werden.
+Mit <a name="ixa102579"><a href="index_s.html#ixb101924"><font color=#000080><tt>setSelectionStart</tt></font></a></a>
+und <a name="ixa102580"><a href="index_s.html#ixb101925"><font color=#000080><tt>setSelectionEnd</tt></font></a></a>
+kann dieser sogar ver&auml;ndert werden. <a name="ixa102581"><a href="index_g.html#ixb101602"><font color=#000080><tt>getCaretPosition</tt></font></a></a>
+liefert die Position der Eingabemarke und mit <a name="ixa102582"><a href="index_s.html#ixb101603"><font color=#000080><tt>setCaretPosition</tt></font></a></a>
+kann sie ver&auml;ndert werden. <a name="ixa102583"><a href="index_m.html#ixb101926"><font color=#000080><tt>moveCaretPosition</tt></font></a></a>
+ver&auml;ndert die Position der Einf&uuml;gemarke und markiert dabei
+den Bereich zwischen alter und neuer Position. F&uuml;r alle Positionsangaben
+gilt, dass der Platz vor dem ersten Zeichen die Position 0 und der
+nach dem letzten Textzeichen die Position <i>L&auml;nge des Textes</i>
+hat. 
+
+<p>
+Die wichtigsten registrierbaren Listener sind <a href="index_a.html#ixb101408"><font color=#000080><tt>ActionListener</tt></font></a>
+und <a name="ixa102584"><a href="index_c.html#ixb101927"><font color=#000080><tt>CaretListener</tt></font></a></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void addActionListener(ActionListener l)
+public void addCaretListener(CaretListener listener)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTextField.html" onClick="this.href=getApiDoc('javax.swing.JTextField')"><font color="#660066" size=-1>javax.swing.JTextField</font></a></td>
+</tr>
+</table>
+
+<p>
+Ein <a href="index_a.html#ixb101408"><font color=#000080><tt>ActionListener</tt></font></a>
+wird immer dann aufgerufen, wenn im Eingabefeld <font color="#007700"><tt>[ENTER]</tt></font>
+gedr&uuml;ckt wird, ein <a href="index_c.html#ixb101927"><font color=#000080><tt>CaretListener</tt></font></a>,
+wenn sich die Position der Einf&uuml;gemarke ge&auml;ndert hat. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Einen <a href="index_t.html#ixb101426"><font color=#000080><tt>TextListener</tt></font></a>
+wie bei der Klasse <a href="index_t.html#ixb101412"><font color=#000080><tt>TextField</tt></font></a>
+gibt es bei den aus <a href="index_j.html#ixb101922"><font color=#000080><tt>JTextComponent</tt></font></a>
+abgeleiteten Klassen nicht. Will die Anwendung &uuml;ber jede &Auml;nderung
+in einem Textfeld unterrichtet werden, muss sie einen <a name="ixa102585"><a href="index_d.html#ixb101928"><font color=#000080><tt>DocumentListener</tt></font></a></a>
+auf dessen Modell registrieren. Das Modell eines Textfelds ist eine
+Instanz der Klasse <a name="ixa102586"><a href="index_d.html#ixb101929"><font color=#000080><tt>Document</tt></font></a></a>
+und kann durch Aufruf von <a name="ixa102587"><a href="index_g.html#ixb101930"><font color=#000080><tt>getDocument</tt></font></a></a>
+beschafft werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Das folgende Beispiel zeigt ein Programm mit drei Textfeldern. Auf
+dem untersten sind ein <a href="index_a.html#ixb101408"><font color=#000080><tt>ActionListener</tt></font></a>
+und ein <a href="index_c.html#ixb101927"><font color=#000080><tt>CaretListener</tt></font></a>
+registriert, die bei jedem Aufruf einige Parameter auf der Konsole
+ausgeben: 
+<a name="listingid038002"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3802.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">006 </font><font color="#0000AA">import</font> javax.swing.event.*;
+<font color="#555555">007 </font>
+<font color="#555555">008 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3802
+<font color="#555555">009 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">010 </font><font color="#0000AA">implements</font> ActionListener, CaretListener
+<font color="#555555">011 </font>{
+<font color="#555555">012 </font>  <font color="#0000AA">public</font> Listing3802()
+<font color="#555555">013 </font>  {
+<font color="#555555">014 </font>    <font color="#006699">super</font>(<font color="#0000FF">"JTextField"</font>);
+<font color="#555555">015 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">016 </font>    Container cp = getContentPane();
+<font color="#555555">017 </font>    cp.setLayout(<font color="#0000AA">new</font> FlowLayout());
+<font color="#555555">018 </font>    JTextField tf;
+<font color="#555555">019 </font>    <font color="#00AA00">//Linksb&uuml;ndiges Textfeld mit "Hello, world"</font>
+<font color="#555555">020 </font>    tf = <font color="#0000AA">new</font> JTextField(<font color="#0000FF">"Hello, world"</font>);
+<font color="#555555">021 </font>    cp.add(tf);
+<font color="#555555">022 </font>    <font color="#00AA00">//Leeres Textfeld mit 20 Spalten</font>
+<font color="#555555">023 </font>    tf = <font color="#0000AA">new</font> JTextField(20);
+<font color="#555555">024 </font>    cp.add(tf);
+<font color="#555555">025 </font>    <font color="#00AA00">//Textfeld mit "Hello, world" und 20 Spalten</font>
+<font color="#555555">026 </font>    tf = <font color="#0000AA">new</font> JTextField(<font color="#0000FF">"Hello, world"</font>, 20);
+<font color="#555555">027 </font>    tf.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">028 </font>    tf.addCaretListener(<font color="#006699">this</font>);
+<font color="#555555">029 </font>    cp.add(tf);
+<font color="#555555">030 </font>  }
+<font color="#555555">031 </font>
+<font color="#555555">032 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> actionPerformed(ActionEvent event)
+<font color="#555555">033 </font>  {
+<font color="#555555">034 </font>    JTextField tf = (JTextField)event.getSource();
+<font color="#555555">035 </font>    System.out.println(<font color="#0000FF">"---ActionEvent---"</font>);
+<font color="#555555">036 </font>    System.out.println(tf.getText());
+<font color="#555555">037 </font>    System.out.println(tf.getSelectedText());
+<font color="#555555">038 </font>    System.out.println(tf.getSelectionStart());
+<font color="#555555">039 </font>    System.out.println(tf.getSelectionEnd());
+<font color="#555555">040 </font>    System.out.println(tf.getCaretPosition());
+<font color="#555555">041 </font>  }
+<font color="#555555">042 </font>
+<font color="#555555">043 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> caretUpdate(CaretEvent event)
+<font color="#555555">044 </font>  {
+<font color="#555555">045 </font>    System.out.println(<font color="#0000FF">"---CaretEvent---"</font>);
+<font color="#555555">046 </font>    System.out.println(event.getDot());
+<font color="#555555">047 </font>    System.out.println(event.getMark());
+<font color="#555555">048 </font>  }
+<font color="#555555">049 </font>
+<font color="#555555">050 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">051 </font>  {
+<font color="#555555">052 </font>    Listing3802 frame = <font color="#0000AA">new</font> Listing3802();
+<font color="#555555">053 </font>    frame.setLocation(100, 100);
+<font color="#555555">054 </font>    frame.setSize(300, 150);
+<font color="#555555">055 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">056 </font>  }
+<font color="#555555">057 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3802.java"><font color="#000055" size=-1>Listing3802.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 38.2: Die Klasse JTextField</i></p>
+
+<p>
+Die Ausgabe des Programms ist: 
+<p>
+<a name="imageid038002"></a>
+<img src="images/JTextField1.gif">
+<p>
+
+<p><i>
+Abbildung 38.2: Die Klasse JTextField</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id038001003"></a>
+<h3>38.1.3 JFormattedTextField </h3>
+
+<p>
+Neben <a href="index_j.html#ixb101782"><font color=#000080><tt>JTextField</tt></font></a>
+gibt es eine abgeleitete Klasse <a name="ixa102588"><a href="index_j.html#ixb100001"><font color=#000080><tt>JFormattedTextField</tt></font></a></a>
+zum Erfassen <i>formatierter</i> Strings. Sie kann dazu verwendet
+werden, Zahlen, Datumswerte oder andere formatierte Strings einzugeben,
+sie w&auml;hrend der Eingabe zu validieren und sp&auml;ter korrekt
+formatiert anzuzeigen. Eine interessante Eigenschaft dieser Klasse
+ist, dass sich einstellen l&auml;sst, wie sie auf einen Fokusverlust
+(also das Verlassen des Textfelds durch den Anwender) reagieren soll.
+Es ist beispielsweise m&ouml;glich, korrekte Eingaben automatisch
+zu akzeptieren, bei fehlerhaften aber auf den alten Wert zur&uuml;ckzugehen.
+So lassen sich mit relativ wenig Aufwand einfache Validierungsmechanismen
+f&uuml;r Textfelder erzeugen. 
+
+<!-- Section -->
+
+<a name="sectlevel3id038001004"></a>
+<h3>38.1.4 JPasswordField </h3>
+
+<p>
+<a name="ixa102589"><a href="index_j.html#ixb101783"><font color=#000080><tt>JPasswordField</tt></font></a></a>
+ist eine Spezialisierung von <a href="index_j.html#ixb101782"><font color=#000080><tt>JTextField</tt></font></a>
+zur Eingabe von Passw&ouml;rtern. Der Hauptunterschied zu <a href="index_j.html#ixb101782"><font color=#000080><tt>JTextField</tt></font></a>
+besteht darin, dass der eingegebene Text nicht angezeigt, sondern
+stattdessen f&uuml;r jedes Zeichen ein Sternchen ausgegeben wird.
+Durch Aufruf von <a name="ixa102590"><a href="index_s.html#ixb101931"><font color=#000080><tt>setEchoChar</tt></font></a></a>
+kann auch ein anderes Ausgabezeichen ausgew&auml;hlt werden. Des Weiteren
+sind die beiden Zwischenablagefunktionen <i>Kopieren</i> und <i>Ausschneiden</i>
+deaktiviert, um zu verhindern, dass der Text aus einem Passwortfeld
+in ein anderes Feld kopiert oder an ein anderes Programm &uuml;bergeben
+werden kann. 
+
+<!-- Section -->
+
+<a name="sectlevel3id038001005"></a>
+<h3>38.1.5 JTextArea </h3>
+
+<p>
+<a name="ixa102591"><a href="index_j.html#ixb101932"><font color=#000080><tt>JTextArea</tt></font></a></a>
+ist eine Komponente zur Anzeige und Eingabe von mehrzeiligen Texten.
+Wie die AWT-Klasse <a href="index_t.html#ixb101428"><font color=#000080><tt>TextArea</tt></font></a>
+dient sie dazu, <i>unformatierte</i> Texte zu bearbeiten. Diese k&ouml;nnen
+zwar Zeilenumbr&uuml;che und Tabulatoren, nicht aber unterschiedliche
+Schriften, Farben oder grafische Elemente enthalten (f&uuml;r diesen
+Zweck gibt es die Klassen <a name="ixa102592"><a href="index_j.html#ixb101933"><font color=#000080><tt>JEditorPane</tt></font></a></a>
+und <a name="ixa102593"><a href="index_j.html#ixb101934"><font color=#000080><tt>JTextPane</tt></font></a></a>,
+die hier nicht behandelt werden sollen). Die wichtigsten Konstruktoren
+von <a href="index_j.html#ixb101932"><font color=#000080><tt>JTextArea</tt></font></a>
+sind: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public JTextArea(String text)
+public JTextArea(int rows, int columns)
+public JTextArea(String text, int rows, int columns)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTextArea.html" onClick="this.href=getApiDoc('javax.swing.JTextArea')"><font color="#660066" size=-1>javax.swing.JTextArea</font></a></td>
+</tr>
+</table>
+
+<p>
+Sie entsprechen im Prinzip denen von <a href="index_j.html#ixb101782"><font color=#000080><tt>JTextField</tt></font></a>,
+zus&auml;tzlich kann jedoch die Anzahl der Zeilen angegeben werden.
+Neben den in <a href="k100246.html#jtextfield">Abschnitt 38.1.2</a>
+vorgestellten Methoden der Klasse <a href="index_j.html#ixb101782"><font color=#000080><tt>JTextField</tt></font></a>
+stehen zus&auml;tzliche Methoden zum zeilenweisen Zugriff auf den
+dargestellten Text zur Verf&uuml;gung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int getLineCount()
+
+public int getLineStartOffset(int line)
+public int getLineEndOffset(int line)
+
+public int getLineOfOffset(int offset)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTextArea.html" onClick="this.href=getApiDoc('javax.swing.JTextArea')"><font color="#660066" size=-1>javax.swing.JTextArea</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa102594"><a href="index_g.html#ixb101935"><font color=#000080><tt>getLineCount</tt></font></a></a>
+liefert die Gesamtzahl der Zeilen. Mit <a name="ixa102595"><a href="index_g.html#ixb101936"><font color=#000080><tt>getLineStartOffset</tt></font></a></a>
+und <a name="ixa102596"><a href="index_g.html#ixb101937"><font color=#000080><tt>getLineEndOffset</tt></font></a></a>
+kann zu einer beliebigen Zeile ihr Anfangs- und Endeoffset bestimmt
+werden. Mit diesen Informationen kann beispielsweise <a href="index_g.html#ixb101586"><font color=#000080><tt>getText</tt></font></a>
+aufgerufen werden, um den Inhalt einer bestimmten Zeile zu lesen.
+Die Methode <a name="ixa102597"><a href="index_g.html#ixb101938"><font color=#000080><tt>getLineOfOffset</tt></font></a></a>
+dient dazu, die Nummer einer Zeile zu ermitteln, wenn der Offset eines
+darin enthaltenen Zeichens bekannt ist. 
+
+<p>
+<a href="index_j.html#ixb101932"><font color=#000080><tt>JTextArea</tt></font></a>
+stellt einige Methoden zur Verf&uuml;gung, mit denen die Formatierung
+des Textes beeinflusst werden kann: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setTabSize(int size)
+public int getTabSize()
+
+public void setLineWrap(boolean wrap)
+public boolean getLineWrap()
+
+public void setWrapStyleWord(boolean word)
+public boolean getWrapStyleWord()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JTextArea.html" onClick="this.href=getApiDoc('javax.swing.JTextArea')"><font color="#660066" size=-1>javax.swing.JTextArea</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa102598"><a href="index_s.html#ixb101939"><font color=#000080><tt>setTabSize</tt></font></a></a>
+und <a name="ixa102599"><a href="index_g.html#ixb101940"><font color=#000080><tt>getTabSize</tt></font></a></a>
+kann auf die Tabulatorweite zugegriffen werden. Sie hat standardm&auml;&szlig;ig
+den Wert 8 (zur Umrechnung in Bildschirmpixel wird er mit der Breite
+des breitesten Buchstabens im aktuellen Font multipliziert). Mit <a name="ixa102600"><a href="index_s.html#ixb101941"><font color=#000080><tt>setLineWrap</tt></font></a></a>
+kann festgelegt werden, ob zu breite Spalten automatisch umbrochen
+werden sollen. <a name="ixa102601"><a href="index_s.html#ixb101942"><font color=#000080><tt>setWrapStyleWord</tt></font></a></a>
+definiert, ob dies an Wortgrenzen oder mitten im Wort geschehen soll.
+Mit <a name="ixa102602"><a href="index_g.html#ixb101943"><font color=#000080><tt>getLineWrap</tt></font></a></a>
+und <a name="ixa102603"><a href="index_g.html#ixb101944"><font color=#000080><tt>getWrapStyleWord</tt></font></a></a>
+k&ouml;nnen die beiden Eigenschaften auch abgefragt werden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Anders als <a href="index_t.html#ixb101428"><font color=#000080><tt>TextArea</tt></font></a>
+ist <a href="index_j.html#ixb101932"><font color=#000080><tt>JTextArea</tt></font></a>
+nicht in der Lage, Text automatisch zu scrollen, wenn er zu lang oder
+zu breit f&uuml;r den verf&uuml;gbaren Bildschirmausschnitt ist. Wird
+das gew&uuml;nscht, muss das Textfeld in eine Komponente des Typs
+<a name="ixa102604"><a href="index_j.html#ixb101791"><font color=#000080><tt>JScrollPane</tt></font></a></a>
+eingebettet werden. An Stelle der <a href="index_j.html#ixb101932"><font color=#000080><tt>JTextArea</tt></font></a>
+ist dem Dialog dann die <a href="index_j.html#ixb101791"><font color=#000080><tt>JScrollPane</tt></font></a>
+hinzuzuf&uuml;gen. Weitere Informationen zu <a href="index_j.html#ixb101791"><font color=#000080><tt>JScrollPane</tt></font></a>
+finden sich in <a href="k100253.html#jscrollpane">Abschnitt 39.1.1</a>.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Das folgende Programm enth&auml;lt eine <a href="index_j.html#ixb101932"><font color=#000080><tt>JTextArea</tt></font></a>
+mit 30 Spalten und 20 Zeilen. Ihre Tabulatorweite wurde auf 4 reduziert,
+zu lange Zeilen werden automatisch an Wortgrenzen umbrochen. Die <a href="index_j.html#ixb101932"><font color=#000080><tt>JTextArea</tt></font></a>
+wurde in eine <a href="index_j.html#ixb101791"><font color=#000080><tt>JScrollPane</tt></font></a>
+eingebettet und erh&auml;lt - wenn n&ouml;tig - automatisch einen
+vertikalen Schieber. Ein horizontaler Schieber wird nicht verwendet,
+da die Zeilen wegen des automatischen Umbruchs nicht zu lang werden
+k&ouml;nnen. 
+<a name="listingid038003"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3803.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3803
+<font color="#555555">007 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> Listing3803()
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    <font color="#006699">super</font>(<font color="#0000FF">"JTextArea"</font>);
+<font color="#555555">012 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">013 </font>    Container cp = getContentPane();
+<font color="#555555">014 </font>    JTextArea ta = <font color="#0000AA">new</font> JTextArea(<font color="#0000FF">"Hello, world"</font>, 20, 30);
+<font color="#555555">015 </font>    ta.setTabSize(4);
+<font color="#555555">016 </font>    ta.setLineWrap(<font color="#006699">true</font>);
+<font color="#555555">017 </font>    ta.setWrapStyleWord(<font color="#006699">true</font>);
+<font color="#555555">018 </font>    cp.add(<font color="#0000AA">new</font> JScrollPane(ta));
+<font color="#555555">019 </font>  }
+<font color="#555555">020 </font>
+<font color="#555555">021 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">022 </font>  {
+<font color="#555555">023 </font>    Listing3803 frame = <font color="#0000AA">new</font> Listing3803();
+<font color="#555555">024 </font>    frame.setLocation(100, 100);
+<font color="#555555">025 </font>    frame.setSize(300, 200);
+<font color="#555555">026 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">027 </font>  }
+<font color="#555555">028 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3803.java"><font color="#000055" size=-1>Listing3803.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 38.3: Die Klasse JTextArea</i></p>
+
+<p>
+Die Ausgabe des Programms ist: 
+<p>
+<a name="imageid038003"></a>
+<img src="images/JTextArea1.gif">
+<p>
+
+<p><i>
+Abbildung 38.3: Die Klasse JTextArea</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id038001006"></a>
+<h3>38.1.6 JSpinner </h3>
+
+<p>
+Seit dem JDK 1.4 gibt es die Klasse <a name="ixa102605"><a href="index_j.html#ixb100002"><font color=#000080><tt>JSpinner</tt></font></a></a>,
+mit der Textfelder erzeugt werden k&ouml;nnen, deren Inhalt einer
+vordefinierten, geordneten Liste von Werten entstammt. Diese Werte
+k&ouml;nnen vom Anwender nicht nur manuell eingegeben werden, sondern
+auch auf- oder absteigend durchlaufen werden. Dazu besitzt der <a href="index_j.html#ixb100002"><font color=#000080><tt>JSpinner</tt></font></a>
+zwei kleine Buttons, mit denen die Wertefolge abgerufen werden kann.
+Alternativ k&ouml;nnen meist auch die Tasten <font color="#007700"><tt>[CURSORHOCH]</tt></font>
+oder <font color="#007700"><tt>[CURSORRUNTER]</tt></font> verwendet
+werden, wenn der <a href="index_j.html#ixb100002"><font color=#000080><tt>JSpinner</tt></font></a>
+den Fokus hat. 
+
+<p>
+Konzeptionell kann ein Spinner als Mischung aus Textfeldern und den
+in <a href="k100248.html#listenundcomboboxen">Abschnitt 38.3</a> vorgestellten
+Listen oder Comboboxen angesehen werden. Im Gegensatz zu Listen und
+Comboboxen muss der Wertevorrat eines Spinners allerdings nicht notwendigerweise
+<i>endlich</i> sein. Soll beispielsweise ein Datum eingegeben werden,
+kann es sinnvoll sein, den Wertebereich nach unten oder oben offen
+zu lassen, um beliebige Datumswerte eingeben zu k&ouml;nnen. Gegen&uuml;ber
+einer Combobox hat ein Spinner zudem den Vorteil, dass er bei der
+Darstellung auf dem Bildschirm keine darunterliegenden Dialogelemente
+verdecken kann. Nachteilig ist allerdings, dass es keine M&ouml;glichkeit
+der Vorschau auf die Menge der insgesamt verf&uuml;gbaren Elemente
+gibt. 
+
+<p>
+Die Klasse <a href="index_j.html#ixb100002"><font color=#000080><tt>JSpinner</tt></font></a>
+besitzt zwei Konstruktoren: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public JSpinner()
+
+public JSpinner(SpinnerModel model)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/swing/JSpinner.html" onClick="this.href=getApiDoc('javax.swing.JSpinner')"><font color="#660066" size=-1>javax.swing.JSpinner</font></a></td>
+</tr>
+</table>
+
+<p>
+Der erste erzeugt einen <a href="index_j.html#ixb100002"><font color=#000080><tt>JSpinner</tt></font></a>
+f&uuml;r Ganzzahlen, die in Einerschritten beliebig weit in jede Richtung
+durchlaufen werden k&ouml;nnen. Der zweite Konstruktor erwartet ein
+<a name="ixa102606"><a href="index_s.html#ixb101945"><font color=#000080><tt>SpinnerModel</tt></font></a></a>,
+mit dem der Typ der darzustellenden Daten festgelegt wird. <a href="index_s.html#ixb101945"><font color=#000080><tt>SpinnerModel</tt></font></a>
+ist ein Interface im Paket <a href="index_j.html#ixb100200"><font color=#000080><tt>javax.swing</tt></font></a>,
+das die Wertemenge eines Spinners &uuml;ber dessen aktuelles Element
+sowie den jeweiligen Vorg&auml;nger und Nachfolger dieses Elements
+definiert. Zu diesem Interface gibt es eine abstrakte Implementierung
+<a name="ixa102607"><a href="index_a.html#ixb101946"><font color=#000080><tt>AbstractSpinnerModel</tt></font></a></a>
+und drei Konkretisierungen <a name="ixa102608"><a href="index_s.html#ixb101947"><font color=#000080><tt>SpinnerDateModel</tt></font></a></a>,
+<a name="ixa102609"><a href="index_s.html#ixb101948"><font color=#000080><tt>SpinnerNumberModel</tt></font></a></a>
+und <a name="ixa102610"><a href="index_s.html#ixb101949"><font color=#000080><tt>SpinnerListModel</tt></font></a></a>.
+Sie repr&auml;sentieren Folgen von Datumswerten, Ganz- oder Flie&szlig;kommazahlen
+oder fest vorgegebene Listen von Strings. 
+
+<p>
+Um einen <a href="index_j.html#ixb100002"><font color=#000080><tt>JSpinner</tt></font></a>
+zu erzeugen, wird das gew&uuml;nschte Modell instanziert und an den
+Konstruktor der Klasse &uuml;bergeben. Das folgende Beispiel zeigt
+ein einfaches Fenster mit vier Spinnern. Der erste Spinner repr&auml;sentiert
+eine nach oben und unten offene Liste von Ganzzahlen der Schrittweite
+1. Beim zweiten ist ihr Wertebereich begrenzt und die Folge hat die
+Schrittweite 7. Der dritte Spinner erlaubt die Auswahl von Datumswerten
+und der vierte die von Wochentagen. 
+<a name="listingid038004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3804.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> javax.swing.*;
+<font color="#555555">006 </font><font color="#0000AA">import</font> javax.swing.event.*;
+<font color="#555555">007 </font>
+<font color="#555555">008 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3804
+<font color="#555555">009 </font><font color="#0000AA">extends</font> JFrame
+<font color="#555555">010 </font>{
+<font color="#555555">011 </font>  <font color="#0000AA">private</font> <font color="#0000AA">static</font> <font color="#0000AA">final</font> String[] WDAYS = {
+<font color="#555555">012 </font>    <font color="#0000FF">"Montag"</font>,  <font color="#0000FF">"Dienstag"</font>, <font color="#0000FF">"Mittwoch"</font>, <font color="#0000FF">"Donnerstag"</font>,
+<font color="#555555">013 </font>    <font color="#0000FF">"Freitag"</font>, <font color="#0000FF">"Samstag"</font>,  <font color="#0000FF">"Sonntag"</font>
+<font color="#555555">014 </font>  };
+<font color="#555555">015 </font>
+<font color="#555555">016 </font>  <font color="#0000AA">public</font> Listing3804()
+<font color="#555555">017 </font>  {
+<font color="#555555">018 </font>    <font color="#006699">super</font>(<font color="#0000FF">"JSpinner"</font>);
+<font color="#555555">019 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">020 </font>    Container cp = getContentPane();
+<font color="#555555">021 </font>    cp.setLayout(<font color="#0000AA">new</font> FlowLayout());
+<font color="#555555">022 </font>    <font color="#00AA00">//Default-Spinner f&uuml;r Ganzzahlen</font>
+<font color="#555555">023 </font>    JSpinner spinner = <font color="#0000AA">new</font> JSpinner();
+<font color="#555555">024 </font>    cp.add(spinner);
+<font color="#555555">025 </font>    <font color="#00AA00">//Spinner f&uuml;r einige Vielfache von 7</font>
+<font color="#555555">026 </font>    spinner = <font color="#0000AA">new</font> JSpinner(<font color="#0000AA">new</font> SpinnerNumberModel(91, 49, 126, 7));
+<font color="#555555">027 </font>    cp.add(spinner);
+<font color="#555555">028 </font>    <font color="#00AA00">//Spinner f&uuml;r Datum/Uhrzeit</font>
+<font color="#555555">029 </font>    spinner = <font color="#0000AA">new</font> JSpinner(<font color="#0000AA">new</font> SpinnerDateModel());
+<font color="#555555">030 </font>    cp.add(spinner);
+<font color="#555555">031 </font>    <font color="#00AA00">//Spinner f&uuml;r Wochentage</font>
+<font color="#555555">032 </font>    spinner = <font color="#0000AA">new</font> JSpinner(<font color="#0000AA">new</font> SpinnerListModel(WDAYS));
+<font color="#555555">033 </font>    cp.add(spinner);
+<font color="#555555">034 </font>  }
+<font color="#555555">035 </font>
+<font color="#555555">036 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">037 </font>  {
+<font color="#555555">038 </font>    Listing3804 frame = <font color="#0000AA">new</font> Listing3804();
+<font color="#555555">039 </font>    frame.setLocation(100, 100);
+<font color="#555555">040 </font>    frame.setSize(300, 150);
+<font color="#555555">041 </font>    frame.setVisible(<font color="#006699">true</font>);
+<font color="#555555">042 </font>  }
+<font color="#555555">043 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3804.java"><font color="#000055" size=-1>Listing3804.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 38.4: Die Klasse JSpinner</i></p>
+
+<p>
+Die Ausgabe des Programms ist: 
+<p>
+<a name="imageid038004"></a>
+<img src="images/JSpinner1.gif">
+<p>
+
+<p><i>
+Abbildung 38.4: Die Klasse JSpinner</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100245.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100245.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100247.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100252.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

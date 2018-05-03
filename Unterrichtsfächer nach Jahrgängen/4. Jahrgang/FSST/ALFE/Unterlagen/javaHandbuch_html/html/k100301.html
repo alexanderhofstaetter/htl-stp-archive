@@ -1,0 +1,177 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100300.html;106,k100300.html;107,k100302.html;108,k100307.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100300.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100300.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100302.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100307.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 47 - Objektorientierte Persistenz
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id047001"></a>
+<h2>47.1 Einleitung </h2>
+<hr>
+<ul>
+<li><a href="k100301.html#sectlevel2id047001">47.1 Einleitung</a>
+<ul>
+<li><a href="k100301.html#sectlevel3id047001001">47.1.1 Bezug und Installation</a>
+</ul>
+</ul>
+<hr>
+
+<p>
+In <a href="k100278.html#kapiteljdbc">Kapitel 44</a> haben wir gesehen,
+wie man mit Hilfe von Datenbanktreibern und der Abfragesprache SQL
+relationale Datenbanken mit Java-Programmen verkn&uuml;pfen und Daten
+ein- bzw. auslesen kann. Die serielle Art und Weise des Zugriffs auf
+relationale Datenbanken harmoniert dabei nicht immer mit der objektorientierten
+Programmierung. 
+
+<p>
+&Uuml;ber die Jahre hinweg entwickelte sich deshalb eine weitere Technik,
+die eine objektorientierte Verkn&uuml;pfung von Datenbanken und Programmiersprachen
+gestattet und unter dem Namen <a name="ixa103470"><i>Object Relational Mapping</i></a>
+(<a name="ixa103471"><i>ORM</i></a>) bekannt wurde. Dabei basiert
+der Zugriff auf die im Hintergrund arbeitende Datenbank weiterhin
+auf JDBC und SQL, zus&auml;tzlich kommt jedoch eine objektorientierte
+Zugriffsschicht hinzu, mit der die Datenbankergebnisse in Java-Objekte
+&uuml;berf&uuml;hrt werden, bevor sie dem Entwickler zur Verf&uuml;gung
+gestellt werden. 
+<p>
+<a name="persistenceimg"></a>
+<img src="images/Persistence.gif">
+<p>
+
+<p><i>
+Abbildung 47.1: Datenbankzugriff mit JDBC und ORM</i></p>
+
+<p>
+Statt langwieriger SQL-Zugriffe und manueller Transformation eines
+<font color="#000077"><tt>ResultSet</tt></font> in Java-Objekte kann
+der Entwickler diese nun einfach direkt laden bzw. mit einem Konstruktor
+erzeugen und die Flie&szlig;bandarbeit dem Persistenz API &uuml;berlassen.
+
+<p>
+Das in diesem Kapitel vorgestellte Java Persistenz API (JPA) ist seit
+dem JDK 5 Bestandteil von Java und vereinigt die Frameworks der <a name="ixa103472"><i>Java
+Data Objects</i></a> (JDO) und der <a name="ixa103473"><i>Entity Beans</i></a>
+(EJB). W&auml;hrend JDOs auf die Java Standard Edition zugeschnitten
+sind, k&ouml;nnen die leistungsf&auml;higeren EJBs nur in einem Java
+EE Application Server zur Ausf&uuml;hrung gebracht werden. Die neue
+Technologie vereint die Vorteile beider Welten und l&auml;sst sich
+sowohl mit der Standard als auch mit der Enterprise Edition verwenden.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Da das Java Persistenz API gleich zwei weit entwickelte Technologien
+vereint, deren Anwendungsgebiet vor allem in gro&szlig;en und komplexen
+Java-EE-Anwendungen liegt, gehen die M&ouml;glichkeiten des Frameworks
+weit &uuml;ber die Java Standard Edition hinaus. In einigen Aspekten
+unterscheidet sich das Java Persistenz API bei Verwendung der Java
+Standard Edition sogar vom Einsatz in einem Java EE Application Server.
+Wir stellen an dieser Stelle die JPA aus Sicht der Java Standard Edition
+vor und verweisen wo n&ouml;tig auf Unterschiede zur Java Enterprise
+Edition.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id047001001"></a>
+<h3>47.1.1 Bezug und Installation </h3>
+
+<p>
+Das Persistenz API ist noch kein fester Bestandteil der Java Standard
+Edition, sondern kann als eigenst&auml;ndige Technologie von der Homepage
+<a href="http://jcp.org/en/jsr/detail?id=317">http://jcp.org/en/jsr/detail?id=317</a>
+heruntergeladen werden. &Auml;hnlich wie mit JDBC liefert Oracle mit
+dem Java Persistenz API zun&auml;chst nur einen Satz standardisierter
+Schnittstellen, die anschlie&szlig;end von einer Implementierung ausgef&uuml;llt
+werden m&uuml;ssen. 
+
+<p>
+Zum Gl&uuml;ck gibt es eine Reihe freier OpenSource-Implementierungen,
+wie etwa das in diesem Buch verwendete Hibernate-Framework. Es besteht
+aus einer Reihe von JAR-Archiven, die Sie von der Homepage <a href="http://www.hibernate.org">http://www.hibernate.org</a>
+herunterladen k&ouml;nnen. 
+
+<p>
+Um die in diesem Kapitel vorgestellten Beispiele ausf&uuml;hren zu
+k&ouml;nnen, gen&uuml;gt es, die Bibliotheken f&uuml;r die Hibernate-Implementierung
+und die HSQLDB von der Homepage herunterzuladen und in den Classpath
+zu integrieren. Sie ben&ouml;tigen die Pakete <i>Core</i> und <i>Annotations</i>.
+Die Verwendung des Classpath wird unter anderem in <a href="k100094.html#sectionclasspath">Abschnitt 14.4.1</a>
+vorgestellt. 
+
+<p>
+Als Datenbank soll auch in diesem Kapitel die bereits bekannte HSQLDB
+mit den Tabellen der <i>DirDB</i> dienen, die in <a href="k100281.html#dirdb">Abschnitt 44.3</a>
+beschrieben wird. Doch anstatt die Eintr&auml;ge der Verzeichnisse
+und Dateien mit SQL auszulesen, werden wir uns in diesem Kapitel entsprechender
+Java-Objekte bedienen. 
+
+<p>
+Der erste Teil dieses Kapitels f&uuml;hrt grunds&auml;tzlich in die
+Verwendung des Java Persistenz API ein und zeigt, wie man einfache
+Datenbanktabellen mit Java Beans modellieren kann. Der zweite Teil
+widmet sich den relationalen Verkn&uuml;pfungen von Datens&auml;tzen
+und zeigt, wie man diese mit Java-Strukturen abbilden kann. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100300.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100300.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100302.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100307.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100207.html;106,k100210.html;107,k100212.html;108,k100221.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100207.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100210.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100212.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100221.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 32 - AWT-Dialogelemente
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id032004"></a>
+<h2>32.4 Button </h2>
+<hr>
+<ul>
+<li><a href="k100211.html#sectlevel2id032004">32.4 Button</a>
+</ul>
+<hr>
+
+<p>
+Ein <a name="ixa102085"><a href="index_b.html#ixb101410"><font color=#000080><tt>Button</tt></font></a></a>
+ist eine beschriftete Schaltfl&auml;che, die dazu verwendet wird,
+auf Knopfdruck des Anwenders Aktionen in der Fensterklasse auszul&ouml;sen.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Button()
+
+public Button(String label)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Button.html" onClick="this.href=getApiDoc('java.awt.Button')"><font color="#660066" size=-1>java.awt.Button</font></a></td>
+</tr>
+</table>
+
+<p>
+Der parameterlose Konstruktor erzeugt einen <a href="index_b.html#ixb101410"><font color=#000080><tt>Button</tt></font></a>
+ohne Text. &Uuml;blicherweise wird ein <a href="index_b.html#ixb101410"><font color=#000080><tt>Button</tt></font></a>
+gleich bei der Konstruktion beschriftet, was durch &Uuml;bergabe eines
+<a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Objekts
+erreicht werden kann. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setLabel(String label)
+
+public String getLabel()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Button.html" onClick="this.href=getApiDoc('java.awt.Button')"><font color="#660066" size=-1>java.awt.Button</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa102086"><a href="index_s.html#ixb101505"><font color=#000080><tt>setLabel</tt></font></a></a>
+und <a name="ixa102087"><a href="index_g.html#ixb101504"><font color=#000080><tt>getLabel</tt></font></a></a>
+erlauben den Zugriff auf die Beschriftung des Buttons. 
+
+<p>
+Wird ein <a href="index_b.html#ixb101410"><font color=#000080><tt>Button</tt></font></a>
+gedr&uuml;ckt, so sendet er ein Action-Event an seine Ereignisempf&auml;nger.
+Diese m&uuml;ssen das Interface <a name="ixa102088"><a href="index_a.html#ixb101408"><font color=#000080><tt>ActionListener</tt></font></a></a>
+implementieren und sich durch Aufruf von <a name="ixa102089"><a href="index_a.html#ixb101409"><font color=#000080><tt>addActionListener</tt></font></a></a>
+registrieren: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void addActionListener(ActionListener l)
+
+public void removeActionListener(ActionListener l)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Button.html" onClick="this.href=getApiDoc('java.awt.Button')"><font color="#660066" size=-1>java.awt.Button</font></a></td>
+</tr>
+</table>
+
+<p>
+Das Action-Event f&uuml;hrt im Ereignisempf&auml;nger zum Aufruf der
+Methode <a name="ixa102090"><a href="index_a.html#ixb101413"><font color=#000080><tt>actionPerformed</tt></font></a></a>,
+die ein <a name="ixa102091"><a href="index_a.html#ixb101343"><font color=#000080><tt>ActionEvent</tt></font></a></a>
+&uuml;bergeben bekommt. Dieses besitzt die Methode <a name="ixa102092"><a href="index_g.html#ixb101512"><font color=#000080><tt>getActionCommand</tt></font></a></a>,
+mit der die Beschriftung des Buttons abgefragt werden kann. Soll das
+Action-Kommando nicht mit der Beschriftung identisch sein, kann es
+in der Buttonklasse durch Aufruf von <a name="ixa102093"><a href="index_s.html#ixb101513"><font color=#000080><tt>setActionCommand</tt></font></a></a>
+ge&auml;ndert werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setActionCommand(String command)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Button.html" onClick="this.href=getApiDoc('java.awt.Button')"><font color="#660066" size=-1>java.awt.Button</font></a></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+In <a href="k100202.html#kapitelguidialoge">Kapitel 31</a> finden
+sich eine ganze Reihe von Beispielen f&uuml;r die Anwendung von Buttons.
+Wir wollen daher an dieser Stelle auf ein weiteres Beispiel verzichten.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100207.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100210.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100212.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100221.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

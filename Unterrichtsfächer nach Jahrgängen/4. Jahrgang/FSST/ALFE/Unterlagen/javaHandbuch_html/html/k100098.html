@@ -1,0 +1,113 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100097.html;106,k100097.html;107,k100099.html;108,k100104.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100097.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100097.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100099.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100104.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 15 - Collections I
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id015001"></a>
+<h2>15.1 Grundlagen und Konzepte </h2>
+<hr>
+<ul>
+<li><a href="k100098.html#sectlevel2id015001">15.1 Grundlagen und Konzepte</a>
+</ul>
+<hr>
+
+<p>
+Als <i>Collections</i> bezeichnet man Datenstrukturen, die dazu dienen,
+<i>Mengen von Daten</i> aufzunehmen und zu verarbeiten. Die Daten
+werden gekapselt abgelegt, und der Zugriff ist nur mit Hilfe vorgegebener
+Methoden m&ouml;glich. Typische Collections sind Stacks, Queues, Deques,
+Priority Queues, Listen und Trees. Collections gibt es in gro&szlig;er
+Anzahl und diversen Implementierungsvarianten; jeder angehende Informatiker
+kann ein Lied davon singen. 
+
+<p>
+Man k&ouml;nnte sagen, dass Collections f&uuml;r Datenstrukturen so
+etwas sind wie Schleifenkonstrukte f&uuml;r Anweisungen. So wie Schleifen
+die Wiederholbarkeit und Wiederverwendbarkeit von Code erm&ouml;glichen,
+erlauben Collections die Zusammenfassung und repetitive Bearbeitung
+von einzelnen Datenelementen. Tats&auml;chlich werden Collections
+sehr oft in Zusammenhang mit Schleifen verwendet, insbesondere, wenn
+das Programm von seiner Grundstruktur her nicht Einzel-, sondern Mengendaten
+verarbeitet. 
+
+<p>
+Ihre Hauptrolle besteht dann darin, Elementardaten zu speichern und
+einen der Bearbeitung angemessenen Zugriff darauf zu erm&ouml;glichen.
+Dar&uuml;ber hinaus k&ouml;nnen sie ganz neue Sichten auf die Daten
+definieren. Eine Hashtable beispielsweise stellt Daten paarweise zusammen
+und erm&ouml;glicht so die Definition einer Referenzbeziehung, die
+ohne ihre Hilfe nur schwer herzustellen w&auml;re. 
+
+<p>
+Einfache Programmiersprachen bieten Collections meist nur in Form
+von Arrays. In Java und anderen objektorientierten Sprachen gibt es
+dagegen eine ganze Reihe unterschiedlicher Collections mit einem viel
+breiter gef&auml;cherten Aufgabenspektrum. 
+
+<p>
+Java kennt zwei unterschiedliche Collection-APIs. W&auml;hrend deren
+Funktionalit&auml;t sich betr&auml;chtlich &uuml;berschneidet, weisen
+ihre Schnittstellen teilweise recht gro&szlig;e Unterschiede auf.
+Einerseits gibt es seit dem JDK 1.0 die &#187;traditionellen&#171;
+Collections mit den Klassen <a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>,
+<a href="index_s.html#ixb100686"><font color=#000080><tt>Stack</tt></font></a>,
+<a href="index_d.html#ixb100687"><font color=#000080><tt>Dictionary</tt></font></a>,
+<a href="index_h.html#ixb100428"><font color=#000080><tt>Hashtable</tt></font></a>
+und <a href="index_b.html#ixb100688"><font color=#000080><tt>BitSet</tt></font></a>.
+Andererseits wurde mit dem JDK 1.2 ein neues Collection-API eingef&uuml;hrt
+und parallel zu den vorhandenen Klassen platziert. Wir werden uns
+in diesem Kapitel mit den traditionellen Klassen besch&auml;ftigen
+und in <a href="k100104.html#kapitelcollections2">Kapitel 16</a> auf
+die Neuerungen des JDK 1.2 eingehen. Dann werden wir auch einige der
+Beweggr&uuml;nde beleuchten, die zur Einf&uuml;hrung der neuen Klassen
+gef&uuml;hrt haben. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100097.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100097.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100099.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100104.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

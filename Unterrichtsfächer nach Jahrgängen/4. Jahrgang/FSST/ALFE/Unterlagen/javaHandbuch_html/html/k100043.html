@@ -1,0 +1,617 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100036.html;106,k100042.html;107,k100044.html;108,k100046.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100036.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100042.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100044.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100046.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 6 - Ausdr&uuml;cke
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id006007"></a>
+<h2>6.7 <a name="ixa100366">Sonstige Operatoren</a><a name="ixa100367"></a></h2>
+<hr>
+<ul>
+<li><a href="k100043.html#sectlevel2id006007">6.7 Sonstige Operatoren</a>
+<ul>
+<li><a href="k100043.html#sectlevel3id006007001">6.7.1 Weitere Operatoren f&uuml;r primitive Typen</a>
+<ul>
+<li><a href="k100043.html#sectlevel4id006007001001">Fragezeichenoperator</a>
+<li><a href="k100043.html#sectlevel4id006007001002">Type-Cast-Operator</a>
+</ul>
+<li><a href="k100043.html#objektoperatoren">6.7.2 Operatoren f&uuml;r Objekte</a>
+<ul>
+<li><a href="k100043.html#sectlevel4id006007002001">String-Verkettung</a>
+<li><a href="k100043.html#sectlevel4id006007002002">Referenzgleichheit und -ungleichheit</a>
+<li><a href="k100043.html#sectlevel4id006007002003">Der instanceof-Operator</a>
+<li><a href="k100043.html#sectlevel4id006007002004">Der new-Operator</a>
+<li><a href="k100043.html#sectlevel4id006007002005">Member-Zugriff</a>
+<li><a href="k100043.html#sectlevel4id006007002006">Methodenaufruf</a>
+<li><a href="k100043.html#sectlevel4id006007002007">Zugriff auf Array-Elemente</a>
+</ul>
+<li><a href="k100043.html#sectlevel3id006007003">6.7.3 Welche Operatoren es nicht gibt</a>
+</ul>
+</ul>
+<hr>
+
+<p>
+Neben den bisher vorgestellten Operatoren stellt Java noch eine Reihe
+weiterer Operatoren zur Verf&uuml;gung, die in diesem Abschnitt erl&auml;utert
+werden sollen. 
+
+<!-- Section -->
+
+<a name="sectlevel3id006007001"></a>
+<h3>6.7.1 Weitere Operatoren f&uuml;r primitive Typen </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id006007001001"></a>
+<h4><a name="ixa100368">Fragezeichenoperator</a></h4>
+
+<p>
+Der Fragezeichenoperator <font color="#000077"><tt>?:</tt></font>
+ist der einzige dreiwertige Operator in Java. Er erwartet einen logischen
+Ausdruck und zwei weitere Ausdr&uuml;cke, die beide entweder numerisch,
+von einem Referenztyp oder vom Typ <a href="index_b.html#ixb100071"><font color=#000080><tt>boolean</tt></font></a>
+sind. 
+
+<p>
+Bei der Auswertung wird zun&auml;chst der Wert des logischen Operators
+ermittelt. Ist dieser wahr, so wird der erste der beiden anderen Operanden
+ausgewertet, sonst der zweite. Das Ergebnis des Ausdrucks <font color="#000077"><tt>a
+? b : c</tt></font> ist also <font color="#000077"><tt>b</tt></font>,
+falls <font color="#000077"><tt>a</tt></font> wahr ist, und <font color="#000077"><tt>c</tt></font>,
+falls <font color="#000077"><tt>a</tt></font> falsch ist. Der Typ
+des R&uuml;ckgabewerts entspricht dem Typ des gr&ouml;&szlig;eren
+der beiden Ausdr&uuml;cke <font color="#000077"><tt>b</tt></font>
+und <font color="#000077"><tt>c</tt></font>. 
+
+<!-- Section -->
+
+<a name="sectlevel4id006007001002"></a>
+<h4><a name="ixa100369">Type-Cast-Operator</a></h4>
+
+<p>
+Ebenso wie in C gibt es auch in Java einen Type-Cast-Operator, mit
+dessen Hilfe explizite Typumwandlungen vorgenommen werden k&ouml;nnen.
+Der Ausdruck <font color="#000077"><tt>(type) a</tt></font> wandelt
+den Ausdruck <font color="#000077"><tt>a</tt></font> in einen Ausdruck
+vom Typ <font color="#000077"><tt>type</tt></font> um. Auch wenn <font color="#000077"><tt>a</tt></font>
+eine Variable ist, ist das Ergebnis von <font color="#000077"><tt>(type)
+a</tt></font> ein Ausdruck, der nicht mehr auf der linken, sondern
+nur noch auf der rechten Seite eines Zuweisungsoperators stehen darf.
+
+<p>
+Wie in <a href="k100028.html#kapiteldatentypen">Kapitel 5</a> erkl&auml;rt,
+gibt es verschiedene Arten von Typkonvertierungen in Java. Mit Hilfe
+des Type-Cast-Operators d&uuml;rfen alle legalen Typkonvertierungen
+vorgenommen werden. Der Type-Cast-Operator wird vor allem dann angewendet,
+wenn der Compiler keine impliziten Konvertierungen vornimmt; beispielsweise
+bei der Zuweisung von gr&ouml;&szlig;eren an kleinere numerische Typen
+oder bei der Umwandlung von Objekttypen. 
+
+<!-- Section -->
+
+<a name="objektoperatoren"></a>
+<h3>6.7.2 Operatoren f&uuml;r Objekte<a name="ixa100370"></a> </h3>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Es gibt in Java einige Ausdr&uuml;cke und Operatoren, die mit Objekten
+arbeiten oder Objekte produzieren. Die meisten von ihnen k&ouml;nnen
+erst dann erl&auml;utert werden, wenn die entsprechenden Konzepte
+in sp&auml;teren Kapiteln eingef&uuml;hrt wurden. Der Vollst&auml;ndigkeit
+halber sollen sie dennoch an dieser Stelle erw&auml;hnt werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id006007002001"></a>
+<h4><a name="ixa100371">String-Verkettung</a><a name="ixa100372"></a></h4>
+
+<p>
+Der <font color="#000077"><tt>+</tt></font>-Operator kann nicht nur
+mit numerischen Operanden verwendet werden, sondern auch zur Verkettung
+von Strings. Ist wenigstens einer der beiden Operatoren in <font color="#000077"><tt>a
++ b</tt></font> ein String, so wird der gesamte Ausdruck als String-Verkettung
+ausgef&uuml;hrt. Hierzu wird gegebenenfalls zun&auml;chst der Nicht-String-Operand
+in einen String umgewandelt und anschlie&szlig;end mit dem anderen
+Operanden verkettet. Das Ergebnis der Operation ist wieder ein String,
+in dem beide Operanden hintereinander stehen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+In Java ist die Konvertierung in einen String f&uuml;r nahezu jeden
+Typ definiert. Bei primitiven Typen wird die Umwandlung vom Compiler
+und bei Referenztypen durch die Methode <a name="ixa100373"><a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a></a>
+ausgef&uuml;hrt. Die String-Verkettung ist daher sehr universell zu
+verwenden und erm&ouml;glicht (beispielsweise zu Ausgabezwecken) eine
+sehr bequeme Zusammenfassung von Ausdr&uuml;cken unterschiedlichen
+Typs. Ein typisches Beispiel f&uuml;r die Verwendung der String-Verkettung
+ist die Ausgabe von numerischen Ergebnissen auf dem Bildschirm:</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<a name="listingid006003"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing0603.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing0603
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#006699">int</font> a = 5;
+<font color="#555555">008 </font>    <font color="#006699">double</font> x = 3.14;
+<font color="#555555">009 </font>
+<font color="#555555">010 </font>    System.out.println(<font color="#0000FF">"a = "</font> + a);
+<font color="#555555">011 </font>    System.out.println(<font color="#0000FF">"x = "</font> + x);
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing0603.java"><font color="#000055" size=-1>Listing0603.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 6.3: String-Verkettung</i></p>
+
+<p>
+Die Ausgabe des Programms lautet: 
+<font color="#333300">
+<pre>
+a = 5
+x = 3.14
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Etwas Vorsicht ist geboten, wenn sowohl String-Verkettung als auch
+Addition in einem Ausdruck verwendet werden sollen, da die in diesem
+Fall geltenden Vorrang- und Assoziativit&auml;tsregeln zu unerwarteten
+Ergebnissen f&uuml;hren k&ouml;nnen. Das folgende Programm gibt daher
+nicht <font color="#000077"><tt>3 + 4 = 7</tt></font>, sondern <font color="#000077"><tt>3
++ 4 = 34</tt></font> aus.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<a name="listingid006004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing0604.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing0604
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#00AA00">// Die +-Operatoren werden von innen nach au&szlig;en und von</font>
+<font color="#555555">008 </font>    <font color="#00AA00">// links nach rechts ausgewertet     </font>
+<font color="#555555">009 </font>    System.out.println(<font color="#0000FF">"3 + 4 = "</font> + 3 + 4);
+<font color="#555555">010 </font>  }
+<font color="#555555">011 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing0604.java"><font color="#000055" size=-1>Listing0604.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 6.4: Vorsicht bei der String-Verkettung!</i></p>
+
+<p>
+Um das gew&uuml;nschte Ergebnis zu erzielen, m&uuml;sste der Teilausdruck
+<font color="#000077"><tt>3 + 4</tt></font> geklammert werden: 
+<a name="listingid006005"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing0605.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing0605
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#00AA00">// Die +-Operatoren werden von innen nach au&szlig;en und von</font>
+<font color="#555555">008 </font>    <font color="#00AA00">// links nach rechts ausgewertet     </font>
+<font color="#555555">009 </font>    System.out.println(<font color="#0000FF">"3 + 4 = "</font> + (3 + 4));
+<font color="#555555">010 </font>  }
+<font color="#555555">011 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing0605.java"><font color="#000055" size=-1>Listing0605.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 6.5: Korrekte String-Verkettung bei gemischten Ausdr&uuml;cken</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id006007002002"></a>
+<h4><a name="ixa100374">Referenzgleichheit und -ungleichheit</a></h4>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Operatoren <font color="#000077"><tt>==</tt></font> und <font color="#000077"><tt>!=</tt></font>
+k&ouml;nnen auch auf Objekte, also auf Referenztypen, angewendet werden.
+In diesem Fall ist zu beachten, dass dabei lediglich die Gleichheit
+oder Ungleichheit der Referenz getestet wird. Es wird also &uuml;berpr&uuml;ft,
+ob die Objektzeiger auf ein und dasselbe Objekt zeigen, und nicht,
+ob die Objekte <i>inhaltlich</i> &uuml;bereinstimmen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Ein einfaches Beispiel ist der Vergleich zweier Strings <font color="#000077"><tt>a</tt></font>
+und <font color="#000077"><tt>b</tt></font>, die beide den Inhalt
+&#187;hallo&#171; haben: 
+<a name="listingid006006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing0606.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing0606
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    String a = <font color="#0000AA">new</font> String(<font color="#0000FF">"hallo"</font>);
+<font color="#555555">008 </font>    String b = <font color="#0000AA">new</font> String(<font color="#0000FF">"hallo"</font>);
+<font color="#555555">009 </font>    System.out.println(<font color="#0000FF">"a == b liefert "</font> + (a == b));
+<font color="#555555">010 </font>    System.out.println(<font color="#0000FF">"a != b liefert "</font> + (a != b));
+<font color="#555555">011 </font>  }
+<font color="#555555">012 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing0606.java"><font color="#000055" size=-1>Listing0606.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 6.6: Vergleichen von Referenzen</i></p>
+
+<p>
+Werden sie zur Laufzeit angelegt (wie in diesem Beispiel), liefert
+das Programm das erwartete Ergebnis, denn <font color="#000077"><tt>a</tt></font>
+und <font color="#000077"><tt>b</tt></font> sind Referenzen auf unterschiedliche
+Objekte, also Zeiger auf unterschiedliche Instanzen derselben Klasse.
+<font color="#333300">
+<pre>
+a == b liefert false
+a != b liefert true
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Das ist das erwartete Verhalten f&uuml;r fast alle Objektreferenzen.
+Werden die Strings als Literale dagegen zur Compile-Zeit angelegt
+und damit vom Compiler als <i>konstant</i> erkannt, sind sie genau
+dann Instanzen derselben Klasse, wenn sie tats&auml;chlich inhaltlich
+gleich sind. Dies liegt daran, dass String-Literale mit Hilfe der
+Methode <a name="ixa100375"><a href="index_i.html#ixb100340"><font color=#000080><tt>String.intern</tt></font></a></a>
+angelegt werden, die einen Puffer von <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Objekten
+verwaltet, in dem jede Zeichenkette nur einmal vorkommt. Wird ein
+bereits existierender String noch einmal angelegt, so findet die Methode
+den Doppelg&auml;nger und liefert einen Zeiger darauf zur&uuml;ck.
+Dieses Verhalten ist so nur bei Strings zu finden, andere Objekte
+besitzen keine konstanten Werte und keine literalen Darstellungen.
+Die korrekte Methode, Strings auf inhaltliche &Uuml;bereinstimmung
+zu testen, besteht darin, die Methode <a name="ixa100376"><a href="index_e.html#ixb100230"><font color=#000080><tt>equals</tt></font></a></a>
+der Klasse <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+aufzurufen (siehe <a href="k100043.html#stringequals">Listing 6.7</a>).</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<a name="stringequals"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing0607.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing0607
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    String a = <font color="#0000AA">new</font> String(<font color="#0000FF">"hallo"</font>);
+<font color="#555555">008 </font>    String b = <font color="#0000AA">new</font> String(<font color="#0000FF">"hallo"</font>);
+<font color="#555555">009 </font>    System.out.println(<font color="#0000FF">"a.equals(b) liefert "</font> + a.equals(b));
+<font color="#555555">010 </font>  }
+<font color="#555555">011 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing0607.java"><font color="#000055" size=-1>Listing0607.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 6.7: Vergleichen von Strings mit equals</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id006007002003"></a>
+<h4>Der instanceof-Operator </h4>
+
+<p>
+Der <a name="ixa100377"><a href="index_i.html#ixb100341"><font color=#000080><tt>instanceof</tt></font></a></a>-Operator
+kann verwendet werden, um herauszufinden, zu welcher Klasse ein bestimmtes
+Objekt geh&ouml;rt. Der Ausdruck <font color="#000077"><tt>a instanceof
+b</tt></font> liefert genau dann <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>,
+wenn <font color="#000077"><tt>a</tt></font> und <font color="#000077"><tt>b</tt></font>
+Referenztypen sind und <font color="#000077"><tt>a</tt></font> eine
+Instanz der Klasse <font color="#000077"><tt>b</tt></font> oder einer
+ihrer Unterklassen ist. Falls das Ergebnis des <a href="index_i.html#ixb100341"><font color=#000080><tt>instanceof</tt></font></a>-Operators
+nicht bereits zur Compile-Zeit ermittelt werden kann, generiert der
+Java-Compiler Code, um den entsprechenden Check zur Laufzeit durchf&uuml;hren
+zu k&ouml;nnen. 
+
+<!-- Section -->
+
+<a name="sectlevel4id006007002004"></a>
+<h4>Der new-Operator </h4>
+
+<p>
+In Java werden Objekte und Arrays mit Hilfe des <a name="ixa100378"><a href="index_n.html#ixb100088"><font color=#000080><tt>new</tt></font></a></a>-Operators
+erzeugt. Sowohl das Erzeugen eines Arrays als auch das Erzeugen eines
+Objekts sind Ausdr&uuml;cke, deren R&uuml;ckgabewert das gerade erzeugte
+Objekt bzw. Array ist. 
+
+<!-- Section -->
+
+<a name="sectlevel4id006007002005"></a>
+<h4><a name="ixa100379">Member-Zugriff</a></h4>
+
+<p>
+Der Zugriff auf Klassen- oder Instanzvariablen wird mit Hilfe des
+<i>Punkt</i>-Operators ausgef&uuml;hrt und hat die Form <font color="#000077"><tt>a.b</tt></font>.
+Dabei ist <font color="#000077"><tt>a</tt></font> der Name einer Klasse
+bzw. der Instanz einer Klasse und <font color="#000077"><tt>b</tt></font>
+ist der Name einer Klassen- oder Instanzvariable. Der Typ des Ausdrucks
+entspricht dem Typ der Variable und zur&uuml;ckgegeben wird der Inhalt
+dieser Variable. 
+
+<!-- Section -->
+
+<a name="sectlevel4id006007002006"></a>
+<h4>Methodenaufruf<a name="ixa100380"></a> </h4>
+
+<p>
+In Java gibt es keine Funktionen, sondern nur <i>Methoden</i>. Der
+Unterschied zwischen beiden besteht darin, dass Methoden immer an
+eine Klasse oder die Instanz einer Klasse gebunden sind und nur in
+diesem Kontext aufgerufen werden k&ouml;nnen. Die Syntax des Methodenaufrufs
+gleicht der anderer Programmiersprachen und erfolgt in der (etwas
+vereinfachten) Form <font color="#000077"><tt>f()</tt></font> bzw.
+<font color="#000077"><tt>f(parameterliste)</tt></font>. Der Typ des
+Ausdrucks entspricht dem vereinbarten R&uuml;ckgabetyp der Methode.
+Der Wert des Ausdrucks ist der von der Methode mit Hilfe der <a name="ixa100381"><a href="index_r.html#ixb100344"><font color=#000080><tt>return</tt></font></a></a>-Anweisung
+zur&uuml;ckgegebene Wert. 
+
+<p>
+Methoden k&ouml;nnen selbstverst&auml;ndlich Nebeneffekte haben und
+werden in vielen F&auml;llen ausschlie&szlig;lich zu diesem Zweck
+geschrieben. Ist dies der Fall, so sollte eine Methode als <a name="ixa100382"><a href="index_v.html#ixb100345"><font color=#000080><tt>void</tt></font></a></a>
+deklariert werden und damit anzeigen, dass sie keinen R&uuml;ckgabewert
+produziert. Die einzig sinnvolle Verwendung einer solchen Methode
+besteht darin, sie innerhalb einer <i>Ausdrucksanweisung</i> (siehe
+<a href="k100046.html#kapitelanweisungen">Kapitel 7</a>) aufzurufen.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Da die Realisierung der Methodenaufrufe in Java recht kompliziert
+ist (die Sprachspezifikation widmet diesem Thema mehr als zehn Seiten),
+werden wir in <a href="k100052.html#kapiteloop1">Kapitel 8</a> noch
+einmal ausf&uuml;hrlich darauf eingehen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id006007002007"></a>
+<h4>Zugriff auf Array-Elemente </h4>
+
+<p>
+Wie in anderen Programmiersprachen erfolgt auch in Java der Zugriff
+auf Array-Elemente mit Hilfe eckiger Klammern in der Form <font color="#000077"><tt>a[b]</tt></font>
+(bzw. <font color="#000077"><tt>a[b][c]</tt></font>, <font color="#000077"><tt>a[b][c][d]</tt></font>
+usw. bei mehrdimensionalen Arrays). Dabei ist <font color="#000077"><tt>a</tt></font>
+der Name eines Arrays oder ein Ausdruck, der zu einem Array ausgewertet
+wird, und <font color="#000077"><tt>b</tt></font> ein Ausdruck, der
+zu einem <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>
+evaluiert werden kann. Der Typ des Ausdrucks entspricht dem Basistyp
+des Arrays, zur&uuml;ckgegeben wird der Inhalt des Array-Elements,
+das sich an Position <font color="#000077"><tt>b</tt></font> befindet.
+Wie in C und C++ beginnt die Z&auml;hlung mit dem ersten Element bei
+Position 0. 
+
+<!-- Section -->
+
+<a name="sectlevel3id006007003"></a>
+<h3>6.7.3 Welche Operatoren es nicht gibt </h3>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Da es in Java keine expliziten Pointer gibt, fehlen auch die aus C
+bekannten Operatoren <font color="#000077"><tt>*</tt></font> zur Dereferenzierung
+eines Zeigers und <font color="#000077"><tt>&amp;</tt></font> zur
+Bestimmung der Adresse einer Variablen. Des Weiteren fehlt ein <font color="#000077"><tt>sizeof</tt></font>-Operator,
+denn da alle Typen eine genau spezifizierte L&auml;nge haben, ist
+dieser &uuml;berfl&uuml;ssig. Der Kommaoperator von C ist ebenfalls
+nicht vorhanden, er taucht aber als syntaktischer Bestandteil der
+<a href="index_f.html#ixb100077"><font color=#000080><tt>for</tt></font></a>-Schleife
+wieder auf und erlaubt es, im Initialisierungsteil der Schleife mehr
+als eine Zuweisung vorzunehmen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100036.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100042.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100044.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100046.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

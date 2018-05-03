@@ -1,0 +1,318 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100185.html;106,k100189.html;107,k100191.html;108,k100193.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100185.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100189.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100191.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100193.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 29 - Low-Level-Events
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id029005"></a>
+<h2>29.5 <a name="ixa101894">Focus-Events</a></h2>
+<hr>
+<ul>
+<li><a href="k100190.html#sectlevel2id029005">29.5 Focus-Events</a>
+</ul>
+<hr>
+
+<p>
+Der <i>Fokus</i> zeigt an, welches Fenster die Tastatureingaben erh&auml;lt.
+Sind mehrere Fenster gleichzeitig ge&ouml;ffnet, so kann immer nur
+eines von ihnen den Fokus beanspruchen. Sind auf einem aktiven Fenster
+mehrere Dialogelemente aktiv, so kann ebenfalls nur eines davon den
+Fokus erhalten, denn jedes Dialogelement wird ebenfalls durch ein
+(meist unsichtbares) Fenster dargestellt. 
+
+<p>
+Ein Empf&auml;nger f&uuml;r Focus-Events muss das Interface <a href="index_f.html#ixb101371"><font color=#000080><tt>FocusListener</tt></font></a>
+implementieren und bekommt Events des Typs <a href="index_f.html#ixb101370"><font color=#000080><tt>FocusEvent</tt></font></a>
+&uuml;bergeben. <a href="index_f.html#ixb101370"><font color=#000080><tt>FocusEvent</tt></font></a>
+erweitert die Klasse <a href="index_c.html#ixb101342"><font color=#000080><tt>ComponentEvent</tt></font></a>
+und stellt neben <a href="index_g.html#ixb101348"><font color=#000080><tt>getID</tt></font></a>
+und <a href="index_g.html#ixb101340"><font color=#000080><tt>getSource</tt></font></a>
+die Methode <a name="ixa101895"><a href="index_i.html#ixb101462"><font color=#000080><tt>isTemporary</tt></font></a></a>
+zur Verf&uuml;gung, die anzeigt, ob der Fokuswechsel tempor&auml;r
+oder permanent ist: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public boolean isTemporary()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/event/FocusEvent.html" onClick="this.href=getApiDoc('java.awt.event.FocusEvent')"><font color="#660066" size=-1>java.awt.event.FocusEvent</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Registrierung von Focus-Events erfolgt mit der Methode <a name="ixa101896"><a href="index_a.html#ixb101372"><font color=#000080><tt>addFocusListener</tt></font></a></a>,
+die auf allen Objekten des Typs <a href="index_c.html#ixb101293"><font color=#000080><tt>Component</tt></font></a>
+oder daraus abgeleiteten Objekten zur Verf&uuml;gung steht: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void addFocusListener(FocusListener l)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Component.html" onClick="this.href=getApiDoc('java.awt.Component')"><font color="#660066" size=-1>java.awt.Component</font></a></td>
+</tr>
+</table>
+
+<p>
+Das Interface <a href="index_f.html#ixb101371"><font color=#000080><tt>FocusListener</tt></font></a>
+enth&auml;lt lediglich zwei unterschiedliche Methoden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public abstract void focusGained(FocusEvent e)
+
+public abstract void focusLost(FocusEvent e)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/event/FocusListener.html" onClick="this.href=getApiDoc('java.awt.event.FocusListener')"><font color="#660066" size=-1>java.awt.event.FocusListener</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa101897"><a href="index_f.html#ixb101373"><font color=#000080><tt>focusGained</tt></font></a></a>
+wird aufgerufen, wenn die Komponente den Fokus erh&auml;lt, und <a name="ixa101898"><a href="index_f.html#ixb101374"><font color=#000080><tt>focusLost</tt></font></a></a>,
+wenn sie ihn wieder abgibt. Eine Komponente erh&auml;lt den Fokus
+beispielsweise, wenn sie mit der Maus angeklickt oder (unter Windows)
+mit Hilfe der Tasten <font color="#007700"><tt>[TAB]</tt></font> oder
+<font color="#007700"><tt>[UMSCHALT]</tt></font>+<font color="#007700"><tt>[TAB]</tt></font>
+oder &uuml;ber einen Beschleuniger angesprungen wurde. Au&szlig;erdem
+gibt es die M&ouml;glichkeit, den Fokus programmgesteuert zu ver&auml;ndern.
+Dazu gibt es die Methode <a name="ixa101899"><a href="index_r.html#ixb101463"><font color=#000080><tt>requestFocusInWindow</tt></font></a></a>
+der Klasse <a href="index_c.html#ixb101293"><font color=#000080><tt>Component</tt></font></a>,
+mit der eine Komponente den Fokus f&uuml;r sich selbst beanspruchen
+bzw. ihn einer anderen Komponente zuweisen kann: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void requestFocus()
+
+public void requestFocusInWindow()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Component.html" onClick="this.href=getApiDoc('java.awt.Component')"><font color="#660066" size=-1>java.awt.Component</font></a></td>
+</tr>
+</table>
+
+<p>
+Die &auml;ltere Methode <a name="ixa101900"><a href="index_r.html#ixb101464"><font color=#000080><tt>requestFocus</tt></font></a></a>
+sollte gem&auml;&szlig; API-Dokumentation m&ouml;glichst nicht mehr
+verwendet werden, weil sie plattformabh&auml;ngig implementiert ist.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Der explizite Umgang mit Focus-Events ist etwa bei Dialogelementen
+sinnvoll. Dadurch kann ein Edit-Control beispielsweise feststellen,
+dass das n&auml;chste Dialogelement angesprungen werden soll und ein
+eventuell ge&auml;nderter Text zuvor gespeichert werden muss. Focus-Events
+sind oft schwierig zu debuggen, denn durch den Wechsel zwischen Debug-Window
+und Anwendung werden meist zus&auml;tzliche Fokuswechsel ausgel&ouml;st,
+die den Fehler verschleiern oder die Fehlerstelle unerreichbar machen.
+Wird innerhalb von Fokus-Handlern die Methode <a href="index_r.html#ixb101463"><font color=#000080><tt>requestFocusInWindow</tt></font></a>
+aufgerufen, kann es zudem leicht zu Endlosschleifen kommen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Das folgende Programm zeigt die Anwendung eines <a href="index_f.html#ixb101371"><font color=#000080><tt>FocusListener</tt></font></a>-Interface
+zur Implementierung der Methoden <a href="index_f.html#ixb101373"><font color=#000080><tt>focusGained</tt></font></a>
+und <a href="index_f.html#ixb101374"><font color=#000080><tt>focusLost</tt></font></a>
+auf einem <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>-Objekt.
+Wenn das Fenster den Eingabefokus erh&auml;lt, wird der Hintergrund
+gelb und gibt die Meldung &#187;Fokus erhalten&#171; aus. Verliert
+das Fenster den Fokus, so wird der Hintergrund grau und die Meldung
+&#187;Kein Fokus&#171; wird angezeigt. Die Registrierung des Fokusempf&auml;nger-Objekts
+erfolgt durch Aufruf von <a href="index_a.html#ixb101372"><font color=#000080><tt>addFocusListener(this)</tt></font></a>,
+bei dem das Fensterobjekt sich selbst als Empf&auml;nger registriert:
+<a name="fokusereignisse"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2905.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2905
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">008 </font><font color="#0000AA">implements</font> FocusListener
+<font color="#555555">009 </font>{
+<font color="#555555">010 </font>  <font color="#006699">boolean</font> havefocus = <font color="#006699">false</font>;
+<font color="#555555">011 </font>
+<font color="#555555">012 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">013 </font>  {
+<font color="#555555">014 </font>    Listing2905 wnd = <font color="#0000AA">new</font> Listing2905();
+<font color="#555555">015 </font>  }
+<font color="#555555">016 </font>
+<font color="#555555">017 </font>  <font color="#0000AA">public</font> Listing2905()
+<font color="#555555">018 </font>  {
+<font color="#555555">019 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Focus-Listener"</font>);
+<font color="#555555">020 </font>    addFocusListener(<font color="#006699">this</font>);
+<font color="#555555">021 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">022 </font>    setBackground(Color.lightGray);
+<font color="#555555">023 </font>    setSize(300,200);
+<font color="#555555">024 </font>    setLocation(200,100);
+<font color="#555555">025 </font>    setVisible(<font color="#006699">true</font>);
+<font color="#555555">026 </font>  }
+<font color="#555555">027 </font>
+<font color="#555555">028 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">029 </font>  {
+<font color="#555555">030 </font>    <font color="#0000AA">if</font> (havefocus) {
+<font color="#555555">031 </font>      g.setColor(Color.black);
+<font color="#555555">032 </font>      g.drawString(<font color="#0000FF">"Fokus erhalten"</font>,10,50);
+<font color="#555555">033 </font>    } <font color="#0000AA">else</font> {
+<font color="#555555">034 </font>      g.setColor(Color.darkGray);
+<font color="#555555">035 </font>      g.drawString(<font color="#0000FF">"Kein Fokus"</font>,10,50);
+<font color="#555555">036 </font>    }
+<font color="#555555">037 </font>  }
+<font color="#555555">038 </font>
+<font color="#555555">039 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> focusGained(FocusEvent event)
+<font color="#555555">040 </font>  {
+<font color="#555555">041 </font>    havefocus = <font color="#006699">true</font>;
+<font color="#555555">042 </font>    setBackground(Color.yellow);
+<font color="#555555">043 </font>    repaint();
+<font color="#555555">044 </font>  }
+<font color="#555555">045 </font>
+<font color="#555555">046 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> focusLost(FocusEvent event)
+<font color="#555555">047 </font>  {
+<font color="#555555">048 </font>    havefocus = <font color="#006699">false</font>;
+<font color="#555555">049 </font>    setBackground(Color.lightGray);
+<font color="#555555">050 </font>    repaint();
+<font color="#555555">051 </font>  }
+<font color="#555555">052 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2905.java"><font color="#000055" size=-1>Listing2905.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 29.5: Behandlung von Fokus-Ereignissen</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Das Programm verwendet zwei unterschiedliche Techniken, um Ereignisempf&auml;nger
+zu registrieren. F&uuml;r die Focus-Events implementiert es das <a href="index_f.html#ixb101371"><font color=#000080><tt>FocusListener</tt></font></a>-Interface
+und registriert sich bei sich selbst. Dies ist eine vern&uuml;nftige
+Vorgehensweise, da s&auml;mtliche Methoden des Interface ben&ouml;tigt
+werden. Das <a href="index_w.html#ixb101163"><font color=#000080><tt>windowClosing</tt></font></a>-Event
+wird dagegen von der in <a href="k100159.html#fensterschliessen">Abschnitt 24.2.4</a>
+vorgestellten <a href="index_w.html#ixb100136"><font color=#000080><tt>WindowClosingAdapter</tt></font></a>
+zur Verf&uuml;gung gestellt, die sich aus <a href="index_w.html#ixb101368"><font color=#000080><tt>WindowAdapter</tt></font></a>
+ableitet und die Methode <a href="index_w.html#ixb101163"><font color=#000080><tt>windowClosing</tt></font></a>
+mit der Funktionalit&auml;t zum Schlie&szlig;en des Fensters und zum
+Beenden des Programms belegt. Dieses Beispiel zeigt, dass beide Techniken
+auch gemischt angewendet werden k&ouml;nnen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Die Ausgabe des Programms (nachdem es den Fokus erhalten hat) ist:
+<p>
+<a name="imageid029004"></a>
+<img src="images/Fokus.gif">
+<p>
+
+<p><i>
+Abbildung 29.4: Programm nach Erhalt des Eingabefokus</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100185.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100189.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100191.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100193.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

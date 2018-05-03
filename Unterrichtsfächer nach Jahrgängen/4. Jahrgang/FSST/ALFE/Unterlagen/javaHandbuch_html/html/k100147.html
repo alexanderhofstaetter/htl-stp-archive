@@ -1,0 +1,490 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100143.html;106,k100146.html;107,k100148.html;108,k100150.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100143.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100146.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100148.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100150.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 22 - Datei- und Verzeichnis-Handling
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id022004"></a>
+<h2>22.4 Zugriff auf Verzeichniseintr&auml;ge<a name="ixa101441"></a>
+</h2>
+<hr>
+<ul>
+<li><a href="k100147.html#sectlevel2id022004">22.4 Zugriff auf Verzeichniseintr&auml;ge</a>
+<ul>
+<li><a href="k100147.html#verzeichnisselesen">22.4.1 Lesen von Verzeichniseintr&auml;gen</a>
+<li><a href="k100147.html#sectlevel3id022004002">22.4.2 &Auml;ndern von Verzeichniseintr&auml;gen</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="verzeichnisselesen"></a>
+<h3>22.4.1 Lesen von Verzeichniseintr&auml;gen </h3>
+
+<p>
+Wurde ein <a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a>-Objekt
+f&uuml;r ein Verzeichnis konstruiert, so stehen weitere Methoden zur
+Verf&uuml;gung, um auf die zus&auml;tzlichen Funktionen eines Verzeichnisses
+zuzugreifen. Mit Hilfe der Methode <a name="ixa101442"><a href="index_l.html#ixb101095"><font color=#000080><tt>list</tt></font></a></a>
+ist es beispielsweise m&ouml;glich, den Inhalt des Verzeichnisses
+auszulesen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public String[] list()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/File.html" onClick="this.href=getApiDoc('java.io.File')"><font color="#660066" size=-1>java.io.File</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_l.html#ixb101095"><font color=#000080><tt>list</tt></font></a>
+liefert ein Array von Strings, das f&uuml;r jeden gefundenen Verzeichniseintrag
+ein Element enth&auml;lt. Die Liste enth&auml;lt die Namen aller Dateien
+und Unterverzeichnisse mit Ausnahme von <font color="#660099">.</font>
+und <font color="#660099">..</font>. <a href="index_l.html#ixb101095"><font color=#000080><tt>list</tt></font></a>
+gibt es noch in einer zweiten Variante, bei der die Auswahl der Verzeichniseintr&auml;ge
+eingeschr&auml;nkt werden kann. Dabei muss ein Objekt &uuml;bergeben
+werden, das das Interface <a name="ixa101443"><a href="index_f.html#ixb101096"><font color=#000080><tt>FilenameFilter</tt></font></a></a>
+implementiert. Dieses besitzt eine Methode <a name="ixa101444"><a href="index_a.html#ixb101097"><font color=#000080><tt>accept</tt></font></a></a>,
+die f&uuml;r jede gefundene Datei aufgerufen wird und entscheidet,
+ob sie in die Liste aufgenommen werden soll oder nicht. 
+
+<p>
+Zus&auml;tzlich gibt es die statische Methode <a name="ixa101445"><a href="index_l.html#ixb101098"><font color=#000080><tt>listRoots</tt></font></a></a>,
+mit der eine Liste aller &#187;Wurzeln&#171; der verf&uuml;gbaren
+Dateisysteme beschafft werden kann. Unter UNIX gibt es lediglich die
+Wurzel &#187;/&#171;, unter Windows dagegen eine f&uuml;r jeden Laufwerksbuchstaben.
+
+<p>
+Eine h&auml;ufig ben&ouml;tigte Funktion besteht darin, ein Verzeichnis
+samt seiner Unterverzeichnisse rekursiv zu durchlaufen und bei jedem
+gefundenen Eintrag eine bestimmte Aufgabe zu erledigen. Wir wollen
+zeigen, wie mit Hilfe des Visitor-Pattern (siehe <a href="k100074.html#visitorpattern">Abschnitt 11.4.8</a>)
+eine universell verwendbare L&ouml;sung geschaffen werden kann. Zun&auml;chst
+definieren wir dazu ein Interface <font color="#000077"><tt>DirectoryVisitor</tt></font>:
+<a name="listingid022002"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* DirectoryVisitor.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">interface</font> DirectoryVisitor
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> enterDirectory(File dir);
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> leaveDirectory(File dir);
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> visitFile(File file);
+<font color="#555555">010 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/DirectoryVisitor.java"><font color="#000055" size=-1>DirectoryVisitor.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 22.2: Das Interface DirectoryVisitor</i></p>
+
+<p>
+Beim Betreten eines Verzeichnisses wird <font color="#000077"><tt>enterDirectory</tt></font>
+aufgerufen, beim Verlassen <font color="#000077"><tt>leaveDirectory</tt></font>.
+Zu jedem darin enthaltenen Dateieintrag wird <font color="#000077"><tt>visitFile</tt></font>
+aufgerufen. Um es der konkreten Visitor-Implementierung so einfach
+wie m&ouml;glich zu machen, werden sowohl Verzeichnisse als auch Dateien
+als fertige <a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a>-Objekte
+&uuml;bergeben. 
+
+<p>
+Ein konkreter Visitor, der eine Verzeichnisstruktur mit den darin
+enthaltenen Dateien und Unterverzeichnissen korrekt einger&uuml;ckt
+auf dem Bildschirm ausgibt, entsteht durch Implementieren von <font color="#000077"><tt>DirectoryVisitor</tt></font>
+wie folgt: 
+<a name="listingid022003"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* DirectoryPrintVisitor.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> DirectoryPrintVisitor
+<font color="#555555">006 </font><font color="#0000AA">implements</font> DirectoryVisitor
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  String indent = <font color="#0000FF">""</font>;
+<font color="#555555">009 </font>
+<font color="#555555">010 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> enterDirectory(File dir)
+<font color="#555555">011 </font>  {
+<font color="#555555">012 </font>    System.out.println(indent + <font color="#0000FF">"["</font> + dir.getName() + <font color="#0000FF">"]"</font>);
+<font color="#555555">013 </font>    indent += <font color="#0000FF">"  "</font>;
+<font color="#555555">014 </font>  }
+<font color="#555555">015 </font>
+<font color="#555555">016 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> leaveDirectory(File dir)
+<font color="#555555">017 </font>  {
+<font color="#555555">018 </font>    indent = indent.substring(2);
+<font color="#555555">019 </font>  }
+<font color="#555555">020 </font>
+<font color="#555555">021 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> visitFile(File file)
+<font color="#555555">022 </font>  {
+<font color="#555555">023 </font>    System.out.println(indent + file.getName());
+<font color="#555555">024 </font>  }
+<font color="#555555">025 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/DirectoryPrintVisitor.java"><font color="#000055" size=-1>DirectoryPrintVisitor.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 22.3: Ein DirectoryVisitor zum Ausdrucken eines Verzeichnisses</i></p>
+
+<p>
+In &auml;hnlicher Weise kann ein <font color="#000077"><tt>DirectoryVisitor</tt></font>
+geschrieben werden, der die Anzahl der Dateien und Verzeichnisse z&auml;hlt
+und die kumulierte Gr&ouml;&szlig;e der darin enthaltenen Dateien
+ermittelt: 
+<a name="listingid022004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* DirectorySizeVisitor.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> DirectorySizeVisitor
+<font color="#555555">006 </font><font color="#0000AA">implements</font> DirectoryVisitor
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#006699">int</font>  files = 0;
+<font color="#555555">009 </font>  <font color="#006699">int</font>  dirs  = 0;
+<font color="#555555">010 </font>  <font color="#006699">long</font> size  = 0;
+<font color="#555555">011 </font>
+<font color="#555555">012 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> enterDirectory(File dir)
+<font color="#555555">013 </font>  {
+<font color="#555555">014 </font>    ++dirs;
+<font color="#555555">015 </font>  }
+<font color="#555555">016 </font>
+<font color="#555555">017 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> leaveDirectory(File dir)
+<font color="#555555">018 </font>  {
+<font color="#555555">019 </font>  }
+<font color="#555555">020 </font>
+<font color="#555555">021 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> visitFile(File file)
+<font color="#555555">022 </font>  {
+<font color="#555555">023 </font>    ++files;
+<font color="#555555">024 </font>    size += file.length();
+<font color="#555555">025 </font>  }
+<font color="#555555">026 </font>
+<font color="#555555">027 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> getDirs()
+<font color="#555555">028 </font>  {
+<font color="#555555">029 </font>    <font color="#0000AA">return</font> dirs;
+<font color="#555555">030 </font>  }
+<font color="#555555">031 </font>
+<font color="#555555">032 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> getFiles()
+<font color="#555555">033 </font>  {
+<font color="#555555">034 </font>    <font color="#0000AA">return</font> files;
+<font color="#555555">035 </font>  }
+<font color="#555555">036 </font>
+<font color="#555555">037 </font>  <font color="#0000AA">public</font> <font color="#006699">long</font> getSize()
+<font color="#555555">038 </font>  {
+<font color="#555555">039 </font>    <font color="#0000AA">return</font> size;
+<font color="#555555">040 </font>  }
+<font color="#555555">041 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/DirectorySizeVisitor.java"><font color="#000055" size=-1>DirectorySizeVisitor.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 22.4: Die Klasse DirectorySizeVisitor</i></p>
+
+<p>
+Nun fehlen nur noch die generische Methode f&uuml;r den rekursiven
+Verzeichnisdurchlauf und ein Beispielprogramm, das die Anwendung der
+Klassen im Zusammenspiel zeigt: 
+<a name="listingid022005"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2205.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2205
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">static</font> <font color="#006699">void</font> traverse(File dir, DirectoryVisitor visitor)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#0000AA">if</font> (!dir.isDirectory()) {
+<font color="#555555">010 </font>      <font color="#0000AA">throw</font> <font color="#0000AA">new</font> IllegalArgumentException(
+<font color="#555555">011 </font>        <font color="#0000FF">"not a directory: "</font> + dir.getName()
+<font color="#555555">012 </font>      );
+<font color="#555555">013 </font>    }
+<font color="#555555">014 </font>    visitor.enterDirectory(dir);
+<font color="#555555">015 </font>    File[] entries = dir.listFiles(
+<font color="#555555">016 </font>      <font color="#0000AA">new</font> FileFilter()
+<font color="#555555">017 </font>      {
+<font color="#555555">018 </font>        <font color="#0000AA">public</font> <font color="#006699">boolean</font> accept(File pathname)
+<font color="#555555">019 </font>        {
+<font color="#555555">020 </font>          <font color="#0000AA">return</font> <font color="#006699">true</font>;
+<font color="#555555">021 </font>        }
+<font color="#555555">022 </font>      }
+<font color="#555555">023 </font>    );
+<font color="#555555">024 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; entries.length; ++i) {
+<font color="#555555">025 </font>      <font color="#0000AA">if</font> (entries[i].isDirectory()) {
+<font color="#555555">026 </font>        traverse(entries[i], visitor);
+<font color="#555555">027 </font>      } <font color="#0000AA">else</font> {
+<font color="#555555">028 </font>        visitor.visitFile(entries[i]);
+<font color="#555555">029 </font>      }
+<font color="#555555">030 </font>    }
+<font color="#555555">031 </font>    visitor.leaveDirectory(dir);
+<font color="#555555">032 </font>  }
+<font color="#555555">033 </font>
+<font color="#555555">034 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">035 </font>  {
+<font color="#555555">036 </font>    File file = <font color="#0000AA">new</font> File(args[0]);
+<font color="#555555">037 </font>    <font color="#00AA00">//Bildschirmausgabe der Struktur</font>
+<font color="#555555">038 </font>    traverse(file, <font color="#0000AA">new</font> DirectoryPrintVisitor());
+<font color="#555555">039 </font>    <font color="#00AA00">//Gr&ouml;&szlig;en ermitteln</font>
+<font color="#555555">040 </font>    DirectorySizeVisitor visitor = <font color="#0000AA">new</font> DirectorySizeVisitor();
+<font color="#555555">041 </font>    traverse(file, visitor);
+<font color="#555555">042 </font>    System.out.println(<font color="#0000FF">"directories: "</font> + visitor.getDirs());
+<font color="#555555">043 </font>    System.out.println(<font color="#0000FF">"files: "</font>       + visitor.getFiles());
+<font color="#555555">044 </font>    System.out.println(<font color="#0000FF">"size: "</font>        + visitor.getSize());
+<font color="#555555">045 </font>  }
+<font color="#555555">046 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2205.java"><font color="#000055" size=-1>Listing2205.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 22.5: Rekursiver Durchlauf von Verzeichnissen</i></p>
+
+<p>
+Die eigentliche Arbeit wird von <font color="#000077"><tt>traverse</tt></font>
+erledigt. Sie stellt zun&auml;chst sicher, dass das &uuml;bergebene
+<a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a>-Objekt
+auch tats&auml;chlich ein Verzeichnis darstellt, und nicht etwa eine
+Datei. Ist das der Fall, wird auf dem &uuml;bergebenen Visitor <font color="#000077"><tt>enterDirectory</tt></font>
+aufgerufen und mit <a name="ixa101446"><a href="index_l.html#ixb101099"><font color=#000080><tt>listFiles</tt></font></a></a>
+eine Liste aller im Verzeichnis enthaltenen Dateien und Unterverzeichnisse
+beschafft. Zu jedem Unterverzeichnis erfolgt ein rekursiver Aufruf
+von <font color="#000077"><tt>traverse</tt></font>, zu jeder Datei
+wird <font color="#000077"><tt>visitFile</tt></font> aufgerufen. Nachdem
+alle Eintr&auml;ge abgearbeitet sind, wird das dem Visitor durch Aufruf
+von <font color="#000077"><tt>leaveDirectory</tt></font> mitgeteilt.
+
+
+<!-- Section -->
+<a name="sectlevel3id022004002"></a>
+<h3>22.4.2 &Auml;ndern von Verzeichniseintr&auml;gen </h3>
+
+<p>
+Neben dem Zugriff auf die Verzeichniseintr&auml;ge gibt es in der
+Klasse <a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a>
+auch Methoden, um Dateien oder Verzeichnisse zu l&ouml;schen oder
+umzubenennen und um Verzeichnisse neu anzulegen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public boolean mkdir()
+public boolean mkdirs()
+
+public boolean renameTo(File dest)
+
+public boolean delete()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/File.html" onClick="this.href=getApiDoc('java.io.File')"><font color="#660066" size=-1>java.io.File</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Methode <a name="ixa101447"><a href="index_d.html#ixb100551"><font color=#000080><tt>delete</tt></font></a></a>
+l&ouml;scht die durch das <a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a>-Objekt
+bezeichnete Datei. Mit <a name="ixa101448"><a href="index_r.html#ixb101100"><font color=#000080><tt>renameTo</tt></font></a></a>
+wird das <a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a>-Objekt
+in das als Parameter &uuml;bergebene Objekt umbenannt. Durch Aufruf
+von <a name="ixa101449"><a href="index_m.html#ixb101101"><font color=#000080><tt>mkdir</tt></font></a></a>
+wird das durch das <a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a>-Objekt
+spezifizierte Verzeichnis angelegt. Mit <a name="ixa101450"><a href="index_m.html#ixb101102"><font color=#000080><tt>mkdirs</tt></font></a></a>
+werden sogar alle Vaterverzeichnisse automatisch angelegt, wenn sie
+noch nicht existieren. Alle Methoden geben <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+zur&uuml;ck, wenn sie ihre Aufgabe erfolgreich ausf&uuml;hren konnten.
+Andernfalls geben sie <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>
+zur&uuml;ck. 
+
+<p>
+Das folgende Listing zeigt die Verwendung der Klasse <a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a>
+und den Aufruf verschiedener Methoden: 
+<a name="listingid022006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* TestFile.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> TestFile
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    File fil = <font color="#0000AA">new</font> File(<font color="#0000FF">"TestFile.java"</font>);
+<font color="#555555">011 </font>    TestFile.printFileInfo(fil);
+<font color="#555555">012 </font>    fil = <font color="#0000AA">new</font> File(<font color="#0000FF">".."</font>);
+<font color="#555555">013 </font>    TestFile.printFileInfo(fil);
+<font color="#555555">014 </font>  }
+<font color="#555555">015 </font>
+<font color="#555555">016 </font>  <font color="#0000AA">static</font> <font color="#006699">void</font> printFileInfo(File fil)
+<font color="#555555">017 </font>  {
+<font color="#555555">018 </font>    System.out.println(<font color="#0000FF">"Name= "</font>+fil.getName());
+<font color="#555555">019 </font>    System.out.println(<font color="#0000FF">"Path= "</font>+fil.getPath());
+<font color="#555555">020 </font>    System.out.println(<font color="#0000FF">"AbsolutePath= "</font>+fil.getAbsolutePath());
+<font color="#555555">021 </font>    System.out.println(<font color="#0000FF">"Parent= "</font>+fil.getParent());
+<font color="#555555">022 </font>    System.out.println(<font color="#0000FF">"exists= "</font>+fil.exists());
+<font color="#555555">023 </font>    System.out.println(<font color="#0000FF">"canWrite= "</font>+fil.canWrite());
+<font color="#555555">024 </font>    System.out.println(<font color="#0000FF">"canRead= "</font>+fil.canRead());
+<font color="#555555">025 </font>    System.out.println(<font color="#0000FF">"isFile= "</font>+fil.isFile());
+<font color="#555555">026 </font>    System.out.println(<font color="#0000FF">"isDirectory= "</font>+fil.isDirectory());
+<font color="#555555">027 </font>    <font color="#0000AA">if</font> (fil.isDirectory()) {
+<font color="#555555">028 </font>      String[] fils = fil.list();
+<font color="#555555">029 </font>      <font color="#0000AA">for</font> (<font color="#006699">int</font> i=0; i&lt;fils.length; ++i) {
+<font color="#555555">030 </font>        System.out.println(<font color="#0000FF">"  "</font>+fils[i]);
+<font color="#555555">031 </font>      }
+<font color="#555555">032 </font>    }
+<font color="#555555">033 </font>    System.out.println(<font color="#0000FF">"isAbsolute= "</font>+fil.isAbsolute());
+<font color="#555555">034 </font>    System.out.println(
+<font color="#555555">035 </font>      <font color="#0000FF">"lastModified= "</font>+(<font color="#0000AA">new</font> Date(fil.lastModified()))
+<font color="#555555">036 </font>    );
+<font color="#555555">037 </font>    System.out.println(<font color="#0000FF">"length= "</font>+fil.length());
+<font color="#555555">038 </font>    System.out.println(<font color="#0000FF">""</font>);
+<font color="#555555">039 </font>  }
+<font color="#555555">040 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/TestFile.java"><font color="#000055" size=-1>TestFile.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 22.6: Verwendung der Klasse File</i></p>
+
+<p>
+Ein Aufruf des Programms liefert folgende Ausgabe: 
+<font color="#333300">
+<pre>
+Name= TestFile.java
+Path= TestFile.java
+AbsolutePath= C:\ARC\DOKU\java\examples\TestFile.java
+Parent= null
+exists= true
+canWrite= true
+canRead= true
+isFile= true
+isDirectory= false
+isAbsolute= false
+lastModified= Sun Jan 05 17:15:56  1997
+length= 1242
+
+Name= ..
+Path= ..
+AbsolutePath= C:\ARC\DOKU\java\examples\..
+Parent= null
+exists= true
+canWrite= true
+canRead= true
+isFile= false
+isDirectory= true
+  makefile
+  html.cfg
+  ...
+  jdbc.sgml
+  tuning.sgml
+  reflection.sgml
+isAbsolute= false
+lastModified= Wed Jul 22 16:55:32 GMT+02:00 1998
+length= 0
+</pre>
+</font>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100143.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100146.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100148.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100150.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

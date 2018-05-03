@@ -1,0 +1,376 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100163.html;106,k100164.html;107,k100166.html;108,k100168.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100163.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100164.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100166.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100168.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 25 - Textausgabe
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id025002"></a>
+<h2>25.2 Unterschiedliche <a name="ixa101581">Schriftarten</a> </h2>
+<hr>
+<ul>
+<li><a href="k100165.html#sectlevel2id025002">25.2 Unterschiedliche Schriftarten</a>
+<ul>
+<li><a href="k100165.html#sectlevel3id025002001">25.2.1 Font-Objekte</a>
+<li><a href="k100165.html#standardschriftarten">25.2.2 Standardschriftarten</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id025002001"></a>
+<h3>25.2.1 Font-Objekte </h3>
+
+<p>
+F&uuml;hrt man die Schriftausgabe wie bisher besprochen durch, werden
+die Texte in einem systemabh&auml;ngigen Standard-Font ausgegeben.
+Soll ein anderer Font zur Textausgabe verwendet werden, so muss zun&auml;chst
+ein passendes Objekt der Klasse <a name="ixa101582"><a href="index_f.html#ixb101206"><font color=#000080><tt>Font</tt></font></a></a>
+erzeugt und dem verwendeten <a href="index_g.html#ixb101156"><font color=#000080><tt>Graphics</tt></font></a>-Objekt
+zugewiesen werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setFont(Font font)
+
+public Font getFont()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Graphics.html" onClick="this.href=getApiDoc('java.awt.Graphics')"><font color="#660066" size=-1>java.awt.Graphics</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Methode <a name="ixa101583"><a href="index_s.html#ixb101207"><font color=#000080><tt>setFont</tt></font></a></a>
+wird dazu verwendet, das <a href="index_f.html#ixb101206"><font color=#000080><tt>Font</tt></font></a>-Objekt
+<font color="#000077"><tt>font</tt></font> in den Grafikkontext einzutragen,
+und mit <a name="ixa101584"><a href="index_g.html#ixb101208"><font color=#000080><tt>getFont</tt></font></a></a>
+kann der aktuelle Font abgefragt werden. 
+
+<p>
+Das Erzeugen neuer <a href="index_f.html#ixb101206"><font color=#000080><tt>Font</tt></font></a>-Objekte
+wird &uuml;ber die drei Parameter <font color="#000077"><tt>name</tt></font>,
+<font color="#000077"><tt>style</tt></font> und <font color="#000077"><tt>size</tt></font>
+des Konstruktors der Klasse <a href="index_f.html#ixb101206"><font color=#000080><tt>Font</tt></font></a>
+gesteuert: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Font(String name, int style, int size)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Font.html" onClick="this.href=getApiDoc('java.awt.Font')"><font color="#660066" size=-1>java.awt.Font</font></a></td>
+</tr>
+</table>
+
+<p>
+Der Parameter <font color="#000077"><tt>name</tt></font> gibt den
+Namen des gew&uuml;nschten Fonts an. In allen Java-Systemen sollten
+die Namen <a name="ixa101585"><a href="index_s.html#ixb101209"><font color=#000080><tt>SansSerif</tt></font></a></a>
+(fr&uuml;her <a name="ixa101586"><a href="index_h.html#ixb101210"><font color=#000080><tt>Helvetica</tt></font></a></a>),
+<a name="ixa101587"><a href="index_s.html#ixb101211"><font color=#000080><tt>Serif</tt></font></a></a>
+(fr&uuml;her <a name="ixa101588"><a href="index_t.html#ixb101212"><font color=#000080><tt>TimesRoman</tt></font></a></a>)
+und <a name="ixa101589"><a href="index_m.html#ixb101213"><font color=#000080><tt>Monospaced</tt></font></a></a>
+(fr&uuml;her <a name="ixa101590"><a href="index_c.html#ixb101214"><font color=#000080><tt>Courier</tt></font></a></a>)
+unterst&uuml;tzt werden. Sie stehen f&uuml;r die systemspezifischen
+Proportionalzeichens&auml;tze der Familien <a href="index_h.html#ixb101210"><font color=#000080><tt>Helvetica</tt></font></a>
+und <a href="index_t.html#ixb101212"><font color=#000080><tt>TimesRoman</tt></font></a>
+bzw. f&uuml;r die nichtproportionale Familie <a href="index_c.html#ixb101214"><font color=#000080><tt>Courier</tt></font></a>.
+Unter Windows werden diese Standardnamen auf die True-Type-Fonts <a name="ixa101591"><a href="index_a.html#ixb101215"><font color=#000080><tt>Arial</tt></font></a></a>,
+<a name="ixa101592"><a href="index_t.html#ixb101216"><font color=#000080><tt>Times New Roman</tt></font></a></a>
+und <a name="ixa101593"><a href="index_c.html#ixb101217"><font color=#000080><tt>Courier New</tt></font></a></a>
+abgebildet. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Der zweite und dritte Parameter des Konstruktors ist jeweils vom Typ
+<a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>.
+Ein beliebter Fehler besteht darin, beide zu verwechseln und so die
+Angaben f&uuml;r die Gr&ouml;&szlig;e und die Textattribute zu vertauschen.
+Leider kann der Fehler vom Compiler nicht gefunden werden, sondern
+wird fr&uuml;hestens zur Laufzeit entdeckt. Selbst dann wird er leicht
+mit dem Fall verwechselt, dass die gew&uuml;nschten Schriftarten bzw.
+Attribute auf dem Zielsystem nicht installiert sind. Beim Erzeugen
+von <a href="index_f.html#ixb101206"><font color=#000080><tt>Font</tt></font></a>-Objekten
+ist also einige Vorsicht geboten.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Schriften sind generell recht unportabel, deshalb ist bei ihrer Verwendung
+Vorsicht angebracht. Insbesondere bei der Verwendung von systemspezifischen
+Schriftarten kann es sein, dass der Font-Mapper eines anderen Systems
+eine v&ouml;llig verkehrte Schrift ausw&auml;hlt und die Ausgabe des
+Programms dann unbrauchbar wird. Werden nur die genannten Standardschriften
+verwendet, so sollte die Schriftausgabe auf allen unterst&uuml;tzten
+Java-Systemen zumindest lesbar bleiben. Die alten Schriftnamen <a href="index_h.html#ixb101210"><font color=#000080><tt>Helvetica</tt></font></a>,
+<a href="index_t.html#ixb101212"><font color=#000080><tt>TimesRoman</tt></font></a>
+und <a href="index_c.html#ixb101214"><font color=#000080><tt>Courier</tt></font></a>
+aus dem JDK 1.0 werden zwar noch unterst&uuml;tzt, sind aber als <a name="ixa101594"><a href="index_d.html#ixb100139"><font color=#000080><tt>deprecated</tt></font></a></a>
+gekennzeichnet und sollten daher nicht mehr verwendet werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Der Parameter <font color="#000077"><tt>style</tt></font> wird verwendet,
+um auszuw&auml;hlen, ob ein Font in seiner Standardauspr&auml;gung,
+fett oder kursiv angezeigt werden soll. Java stellt daf&uuml;r die
+in <a href="k100165.html#styleparameter">Tabelle 25.1</a> aufgef&uuml;hrten
+numerischen Konstanten zur Verf&uuml;gung. Die Werte BOLD und ITALIC
+k&ouml;nnen auch gemeinsam verwendet werden, indem beide Konstanten
+addiert werden. <a name="styleparameter"></a>
+
+<p>
+<table cols=3 border width=100%>
+
+<tr>
+<td valign=top align=left width=33%><b>Name</b></td>
+<td valign=top align=left width=33%><b>Wert</b></td>
+<td valign=top align=left width=33%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101595"><a href="index_p.html#ixb101218"><font color=#000080><tt>Font.PLAIN</tt></font></a></a></td>
+<td valign=top align=left>0</td>
+<td valign=top align=left>Standard-Font </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101596"><a href="index_b.html#ixb101219"><font color=#000080><tt>Font.BOLD</tt></font></a></a></td>
+<td valign=top align=left>1</td>
+<td valign=top align=left>Fett </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101597"><a href="index_i.html#ixb101220"><font color=#000080><tt>Font.ITALIC</tt></font></a></a></td>
+<td valign=top align=left>2</td>
+<td valign=top align=left>Kursiv </td></tr>
+</table>
+<p><i>
+Tabelle 25.1: Style-Parameter </i></p>
+
+<p>
+Der dritte Parameter des Konstruktors gibt die Gr&ouml;&szlig;e der
+gew&uuml;nschten Schriftart in Punkt an. &Uuml;bliche Punktgr&ouml;&szlig;en
+f&uuml;r die Ausgabe von Text sind 10 oder 12 Punkt. 
+
+<p>
+Das folgende Beispiel gibt die drei Standardschriften in 36 Punkt
+aus: 
+<a name="listingid025002"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Schriften.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  Font font;
+<font color="#555555">006 </font>  String[] arfonts = {<font color="#0000FF">"Serif"</font>,<font color="#0000FF">"SansSerif"</font>,<font color="#0000FF">"Monospaced"</font>};
+<font color="#555555">007 </font>
+<font color="#555555">008 </font>  <font color="#0000AA">for</font> (<font color="#006699">int</font> i=0; i&lt;arfonts.length; ++i) {
+<font color="#555555">009 </font>    font = <font color="#0000AA">new</font> Font(arfonts[i],Font.PLAIN,36);
+<font color="#555555">010 </font>    g.setFont(font);
+<font color="#555555">011 </font>    g.drawString(arfonts[i],10,30 + (i+1)*(36+5));
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Schriften.inc"><font color="#000055" size=-1>Schriften.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 25.2: Ausgabe verschiedener Schriften</i></p>
+<p>
+<a name="imageid025003"></a>
+<img src="images/FontBeispiel.gif">
+<p>
+
+<p><i>
+Abbildung 25.3: Ausgabe verschiedener Fonts</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Abbildung von Schriftnamen im JDK auf die dazu passenden Schriften
+des Betriebssystems wird durch die Datei <font color="#660099">font.properties</font><a name="ixa101598"></a>
+im <font color="#660099">lib</font>-Verzeichnis des JDK gesteuert,
+die zur Laufzeit vom AWT interpretiert wird. Werden hier Anpassungen
+vorgenommen, so &auml;ndert sich die Darstellung der Standardschriften.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="standardschriftarten"></a>
+<h3>25.2.2 <a name="ixa101599">Standardschriftarten</a></h3>
+
+<p>
+Es gibt im AWT eine Klasse <a name="ixa101600"><a href="index_g.html#ixb101223"><font color=#000080><tt>GraphicsEnvironment</tt></font></a></a>,
+mit der wir uns die auf dem konkreten System verf&uuml;gbaren Font-Familien
+abholen k&ouml;nnen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+static GraphicsEnvironment getLocalGraphicsEnvironment()
+
+String[] getAvailableFontFamilyNames()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/GraphicsEnvironment.html" onClick="this.href=getApiDoc('java.awt.GraphicsEnvironment')"><font color="#660066" size=-1>java.awt.GraphicsEnvironment</font></a></td>
+</tr>
+</table>
+
+<p>
+Das folgende Beispiel zeigt die verf&uuml;gbaren Schriftarten an:
+<a name="listingid025003"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Standardschriften.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  Font font;
+<font color="#555555">006 </font>  GraphicsEnvironment ge =
+<font color="#555555">007 </font>    GraphicsEnvironment.getLocalGraphicsEnvironment();
+<font color="#555555">008 </font>  String[] arfonts = ge.getAvailableFontFamilyNames();
+<font color="#555555">009 </font>
+<font color="#555555">010 </font>  <font color="#0000AA">for</font> (<font color="#006699">int</font> i=0; i&lt;arfonts.length; ++i) {
+<font color="#555555">011 </font>    font = <font color="#0000AA">new</font> Font(arfonts[i],Font.PLAIN,36);
+<font color="#555555">012 </font>    g.setFont(font);
+<font color="#555555">013 </font>    g.drawString(arfonts[i],10,(i+1)*(36+5));
+<font color="#555555">014 </font>  }
+<font color="#555555">015 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Standardschriften.inc"><font color="#000055" size=-1>Standardschriften.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 25.3: Auflistung der Standardschriften</i></p>
+
+<p>
+Die Ausgabe des Programms ist (man muss das Fenster etwas gr&ouml;&szlig;er
+ziehen, damit alle Schriften angezeigt werden): 
+<p>
+<a name="imageid025004"></a>
+<img src="images/FontListe.gif">
+<p>
+
+<p><i>
+Abbildung 25.4: Liste der Standardschriften</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100163.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100164.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100166.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100168.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

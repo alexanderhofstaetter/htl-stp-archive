@@ -1,0 +1,214 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100207.html;106,k100214.html;107,k100216.html;108,k100221.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100207.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100214.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100216.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100221.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 32 - AWT-Dialogelemente
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id032008"></a>
+<h2>32.8 TextArea </h2>
+<hr>
+<ul>
+<li><a href="k100215.html#sectlevel2id032008">32.8 TextArea</a>
+</ul>
+<hr>
+
+<p>
+Im Gegensatz zur Klasse <a href="index_t.html#ixb101412"><font color=#000080><tt>TextField</tt></font></a>,
+bei der der Text auf eine einzige Zeile beschr&auml;nkt ist, k&ouml;nnen
+mit der Klasse <a name="ixa102133"><a href="index_t.html#ixb101428"><font color=#000080><tt>TextArea</tt></font></a></a>
+mehrzeilige Textfelder erzeugt werden. Zus&auml;tzlich kann der Text
+in alle Richtungen scrollen, so dass auch gr&ouml;&szlig;ere Texte
+bearbeitet werden k&ouml;nnen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public TextArea()
+
+public TextArea(int rows, int cols)
+
+public TextArea(String text)
+
+public TextArea(String text, int rows, int cols)
+
+public TextArea(String text, int rows, int cols, int scroll)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/TextArea.html" onClick="this.href=getApiDoc('java.awt.TextArea')"><font color="#660066" size=-1>java.awt.TextArea</font></a></td>
+</tr>
+</table>
+
+<p>
+Der parameterlose Konstruktor erzeugt ein leeres <a href="index_t.html#ixb101428"><font color=#000080><tt>TextArea</tt></font></a>-Objekt
+in einer vom System vorgegebenen Gr&ouml;&szlig;e. Werden die Parameter
+<font color="#000077"><tt>rows</tt></font> und <font color="#000077"><tt>cols</tt></font>
+vorgegeben, legen sie die Anzahl der sichtbaren Zeilen und Spalten
+fest. Mit dem Parameter <font color="#000077"><tt>text</tt></font>
+kann die zu editierende Zeichenkette &uuml;bergeben werden. Mit Hilfe
+des zus&auml;tzlichen Parameters <font color="#000077"><tt>scroll</tt></font>
+kann die Ausstattung der <a href="index_t.html#ixb101428"><font color=#000080><tt>TextArea</tt></font></a>
+mit Schiebereglern festgelegt werden. Dazu stellt <a href="index_t.html#ixb101428"><font color=#000080><tt>TextArea</tt></font></a>
+die Konstanten <a name="ixa102134"><a href="index_s.html#ixb101607"><font color=#000080><tt>SCROLLBARS_BOTH</tt></font></a></a>,
+<a name="ixa102135"><a href="index_s.html#ixb101608"><font color=#000080><tt>SCROLLBARS_VERTICAL_ONLY</tt></font></a></a>,
+<a name="ixa102136"><a href="index_s.html#ixb101609"><font color=#000080><tt>SCROLLBARS_HORIZONTAL_ONLY</tt></font></a></a>
+und <a name="ixa102137"><a href="index_s.html#ixb101610"><font color=#000080><tt>SCROLLBARS_NONE</tt></font></a></a>
+zur Verf&uuml;gung, die als Argument &uuml;bergeben werden k&ouml;nnen.
+
+<p>
+Ebenso wie <a href="index_t.html#ixb101412"><font color=#000080><tt>TextField</tt></font></a>
+ist auch <a href="index_t.html#ixb101428"><font color=#000080><tt>TextArea</tt></font></a>
+aus der Klasse <a href="index_t.html#ixb101594"><font color=#000080><tt>TextComponent</tt></font></a>
+abgeleitet und besitzt mit Ausnahme von <a href="index_s.html#ixb101606"><font color=#000080><tt>setEchoCharacter</tt></font></a>
+und <a name="ixa102138"><a href="index_g.html#ixb101611"><font color=#000080><tt>getEchoCharacter</tt></font></a></a>
+alle Methoden, die bereits bei <a href="index_t.html#ixb101412"><font color=#000080><tt>TextField</tt></font></a>
+vorgestellt wurden. Zus&auml;tzlich gibt es einige Methoden, mit denen
+Teile des Textes ver&auml;ndert werden k&ouml;nnen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void insert(String str, int pos)
+
+public void append(String str)
+
+public void replaceRange(String text, int start, int end)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/TextArea.html" onClick="this.href=getApiDoc('java.awt.TextArea')"><font color="#660066" size=-1>java.awt.TextArea</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa102139"><a href="index_i.html#ixb100549"><font color=#000080><tt>insert</tt></font></a></a>
+wird die Zeichenkette <font color="#000077"><tt>str</tt></font> an
+der Position <font color="#000077"><tt>pos</tt></font> eingef&uuml;gt
+und der dahinter stehende Text wird entsprechend nach hinten geschoben.
+<a name="ixa102140"><a href="index_a.html#ixb100188"><font color=#000080><tt>append</tt></font></a></a>
+h&auml;ngt den als Argument &uuml;bergebenen Text hinten an den bestehenden
+Text an und <a name="ixa102141"><a href="index_r.html#ixb101612"><font color=#000080><tt>replaceRange</tt></font></a></a>
+ersetzt den Text zwischen <font color="#000077"><tt>start</tt></font>
+und <font color="#000077"><tt>end</tt></font> durch die &uuml;bergebene
+Zeichenkette <font color="#000077"><tt>text</tt></font>. 
+
+<p>
+Ein Objekt der Klasse <a href="index_t.html#ixb101428"><font color=#000080><tt>TextArea</tt></font></a>
+sendet Text-Events, so wie es bei <a href="index_t.html#ixb101412"><font color=#000080><tt>TextField</tt></font></a>
+beschrieben wurde. Action-Events werden dagegen nicht gesendet, denn
+die ENTER-Taste erzeugt eine Zeilenschaltung. Ein zum folgenden Beispiel
+passender Event-Handler k&ouml;nnte so realisiert werden: 
+<a name="listingid032009"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* TextArea2.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#006699">void</font> textValueChanged(TextEvent event)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  TextArea tf = (TextArea)event.getSource();
+<font color="#555555">006 </font>  System.out.println(<font color="#0000FF">"textValueChanged: "</font>+tf.getText());
+<font color="#555555">007 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/TextArea2.inc"><font color="#000055" size=-1>TextArea2.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 32.9: Behandlung von Text-Events bei der Komponente TextArea</i></p>
+
+<p>
+Das Beispielprogramm zum Testen der <a href="index_t.html#ixb101428"><font color=#000080><tt>TextArea</tt></font></a>-Komponente
+sieht so aus: 
+<a name="listingid032010"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* TextArea1.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">private</font> <font color="#006699">void</font> customizeLayout(Panel panel)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  panel.setLayout(<font color="#0000AA">new</font> FlowLayout(FlowLayout.LEFT));
+<font color="#555555">006 </font>  TextArea ta = <font color="#0000AA">new</font> TextArea(10,40);
+<font color="#555555">007 </font>  ta.addTextListener(<font color="#006699">this</font>);
+<font color="#555555">008 </font>  panel.add(ta);
+<font color="#555555">009 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/TextArea1.inc"><font color="#000055" size=-1>TextArea1.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 32.10: Verwendung einer TextArea-Komponente</i></p>
+<p>
+<a name="imageid032007"></a>
+<img src="images/TextArea.gif">
+<p>
+
+<p><i>
+Abbildung 32.7: Ein Dialog mit einem TextArea-Objekt</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100207.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100214.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100216.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100221.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

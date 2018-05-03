@@ -1,0 +1,390 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100202.html;106,k100202.html;107,k100204.html;108,k100207.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100202.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100202.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100204.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100207.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 31 - GUI-Dialoge
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="dialogerstellen"></a>
+<h2>31.1 Erstellen eines Dialogs </h2>
+<hr>
+<ul>
+<li><a href="k100203.html#dialogerstellen">31.1 Erstellen eines Dialogs</a>
+<ul>
+<li><a href="k100203.html#sectlevel3id031001001">31.1.1 Anlegen eines Dialogfensters</a>
+<li><a href="k100203.html#sectlevel3id031001002">31.1.2 Zuordnen eines Layoutmanagers</a>
+<li><a href="k100203.html#sectlevel3id031001003">31.1.3 Einf&uuml;gen von Dialogelementen</a>
+<li><a href="k100203.html#sectlevel3id031001004">31.1.4 Anzeigen des Dialogfensters</a>
+</ul>
+</ul>
+<hr>
+
+<p>
+In diesem Kapitel soll das Erzeugen von Fenstern mit eingebetteten
+Dialogelementen vorgestellt werden. Derartige Fenster werden in der
+Praxis sehr viel h&auml;ufiger ben&ouml;tigt als Fenster, deren Ausgabe
+mit primitiven Grafikoperationen erzeugt wurde, wie sie in den Kapiteln
+<a href="k100157.html#kapitelgrafikausgabe">24</a>, <a href="k100163.html#kapiteltextausgabe">25</a>
+und <a href="k100168.html#kapitelfarben">26</a> vorgestellt wurden.
+Der Einfachheit halber wollen wir derartige Fenster in diesem Kapitel
+als <i>Dialoge</i> bezeichnen. Sie dienen dazu, Programmdaten anzuzeigen,
+und geben dem Anwender die M&ouml;glichkeit, diese zu &auml;ndern.
+
+<p>
+Das Erstellen eines Dialogs erfolgt in vier Schritten: 
+<ul>
+<li>Anlegen eines Fensters
+<li>Zuordnen eines Layoutmanagers
+<li>Einf&uuml;gen von Dialogelementen
+<li>Anzeigen des Fensters
+</ul>
+
+
+<!-- Section -->
+<a name="sectlevel3id031001001"></a>
+<h3>31.1.1 Anlegen eines Dialogfensters </h3>
+
+<p>
+Das Anlegen eines Fensters zur Aufnahme von Dialogelementen erfolgt
+genauso wie das Anlegen eines normalen Fensters. &Uuml;blicherweise
+wird dazu eine eigene Fensterklasse abgeleitet, um die Steuerung des
+Dialogs zu kapseln. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Da Java prinzipiell keinen Unterschied zwischen Fenstern zur Ausgabe
+eines Dialogs und solchen zur Anzeige von Grafiken macht, ist es m&ouml;glich,
+ein Dialogfenster wahlweise aus <a name="ixa102008"><a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a></a>
+oder <a name="ixa102009"><a href="index_d.html#ixb101152"><font color=#000080><tt>Dialog</tt></font></a></a>
+abzuleiten. Die Klasse <a href="index_d.html#ixb101152"><font color=#000080><tt>Dialog</tt></font></a>
+erlaubt es, das Ver&auml;ndern der Fenstergr&ouml;&szlig;e durch den
+Anwender zu unterbinden, und bietet die M&ouml;glichkeit, den Dialog
+<i>modal</i> zu machen. Dadurch wird die Interaktion des Anwenders
+mit <i>anderen</i> Fenstern der Anwendung bis zum Schlie&szlig;en
+des Dialogfensters blockiert. Im Gegensatz zu <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>
+fehlt jedoch die M&ouml;glichkeit, eine Men&uuml;leiste zu erzeugen
+oder dem Fenster ein Icon zuzuordnen. Wir werden in den nachfolgenden
+Beispielen meist die Klasse <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>
+verwenden, um Dialoge zu erzeugen. Die Klasse <a href="index_d.html#ixb101152"><font color=#000080><tt>Dialog</tt></font></a>
+stellen wir am Ende dieses Kapitels vor. Dabei werden wir insbesondere
+das Erzeugen modaler Dialoge und die R&uuml;ckgabe von Ergebniswerten
+aufzeigen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id031001002"></a>
+<h3>31.1.2 Zuordnen eines Layoutmanagers </h3>
+
+<p>
+Wie bereits erw&auml;hnt, sind die Layoutmanager in Java f&uuml;r
+die Anordnung der Dialogelemente im Fenster verantwortlich. Jeder
+Layoutmanager verfolgt dabei eine eigene Strategie, Elemente zu platzieren
+und in der Gr&ouml;&szlig;e so anzupassen, dass sie aus seiner Sicht
+optimal pr&auml;sentiert werden. 
+
+<p>
+Die Zuordnung eines Layoutmanagers zu einem Fenster wird in der Klasse
+<a name="ixa102010"><a href="index_c.html#ixb101294"><font color=#000080><tt>Container</tt></font></a></a>
+realisiert. <a href="index_c.html#ixb101294"><font color=#000080><tt>Container</tt></font></a>
+ist direkt aus <a href="index_c.html#ixb101293"><font color=#000080><tt>Component</tt></font></a>
+abgeleitet und beide zusammen bilden das Ger&uuml;st f&uuml;r alle
+anderen Fensterklassen. Die Klasse <a href="index_c.html#ixb101294"><font color=#000080><tt>Container</tt></font></a>
+stellt eine Methode <a name="ixa102011"><a href="index_s.html#ixb101538"><font color=#000080><tt>setLayout</tt></font></a></a>
+zur Verf&uuml;gung, mit der der gew&uuml;nschte Layoutmanager dem
+Fenster zugeordnet werden kann: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setLayout(LayoutManager mgr)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Container.html" onClick="this.href=getApiDoc('java.awt.Container')"><font color="#660066" size=-1>java.awt.Container</font></a></td>
+</tr>
+</table>
+
+<p>
+Java stellt standardm&auml;&szlig;ig die f&uuml;nf Layoutmanager <a href="index_f.html#ixb101539"><font color=#000080><tt>FlowLayout</tt></font></a>,
+<a href="index_g.html#ixb101540"><font color=#000080><tt>GridLayout</tt></font></a>,
+<a href="index_b.html#ixb101541"><font color=#000080><tt>BorderLayout</tt></font></a>,
+<a name="ixa102012"><a href="index_c.html#ixb101542"><font color=#000080><tt>CardLayout</tt></font></a></a>
+und <a href="index_g.html#ixb101543"><font color=#000080><tt>GridBagLayout</tt></font></a>
+zur Verf&uuml;gung. Der einfachste Layoutmanager ist <a href="index_f.html#ixb101539"><font color=#000080><tt>FlowLayout</tt></font></a>,
+er positioniert die Dialogelemente zeilenweise hintereinander. Passt
+ein Element nicht mehr in die aktuelle Zeile, so wird es in der n&auml;chsten
+platziert usw. Die genaue Funktionsweise der Layoutmanager wird sp&auml;ter
+in diesem Kapitel vorgestellt. 
+
+<!-- Section -->
+
+<a name="sectlevel3id031001003"></a>
+<h3>31.1.3 Einf&uuml;gen von Dialogelementen </h3>
+
+<p>
+Das Einf&uuml;gen von Dialogelementen in das Fenster erfolgt mit der
+Methode <a name="ixa102013"><a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a></a>
+der Klasse <a href="index_c.html#ixb101294"><font color=#000080><tt>Container</tt></font></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Component add(Component comp)
+public Component add(Component comp, int pos)
+public void add(Component comp, Object constraints)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Container.html" onClick="this.href=getApiDoc('java.awt.Container')"><font color="#660066" size=-1>java.awt.Container</font></a></td>
+</tr>
+</table>
+
+<p>
+Bei der ersten Variante wird lediglich die einzuf&uuml;gende Komponente
+&uuml;bergeben und vom Layoutmanager an der daf&uuml;r vorgesehenen
+Position untergebracht. Die zweite Variante erlaubt das Einf&uuml;gen
+der aktuellen Komponente an beliebiger Stelle in der Liste der Komponenten.
+
+<p>
+Die dritte Variante erwartet zus&auml;tzlich ein <a name="ixa102014"><i>Constraints-Objekt</i></a>,
+das bei bestimmten Layoutmanagern weitere Informationen zur Positionierung
+der Komponente angibt. Wird beispielsweise die Klasse <a href="index_b.html#ixb101541"><font color=#000080><tt>BorderLayout</tt></font></a>
+zur Anordnung der Dialogelemente verwendet, kann hier eine der Konstanten
+<a name="ixa102015"><a href="index_s.html#ixb101545"><font color=#000080><tt>SOUTH</tt></font></a></a>,
+<a name="ixa102016"><a href="index_n.html#ixb101546"><font color=#000080><tt>NORTH</tt></font></a></a>,
+<a name="ixa102017"><a href="index_w.html#ixb101547"><font color=#000080><tt>WEST</tt></font></a></a>,
+<a name="ixa102018"><a href="index_e.html#ixb101548"><font color=#000080><tt>EAST</tt></font></a></a>
+oder <a name="ixa102019"><a href="index_c.html#ixb101549"><font color=#000080><tt>CENTER</tt></font></a></a>
+&uuml;bergeben werden, um anzuzeigen, an welcher Stelle des Fensters
+das Element platziert werden soll. 
+
+<p>
+Sollen Komponenten, die bereits an das Fenster &uuml;bergeben wurden,
+wieder daraus entfernt werden, so kann dazu die Methode <a name="ixa102020"><a href="index_r.html#ixb100739"><font color=#000080><tt>remove</tt></font></a></a>
+verwendet werden. Als Parameter ist dabei das zu l&ouml;schende Objekt
+zu &uuml;bergeben: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void remove(Component comp)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Container.html" onClick="this.href=getApiDoc('java.awt.Container')"><font color="#660066" size=-1>java.awt.Container</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_c.html#ixb101294"><font color=#000080><tt>Container</tt></font></a>
+stellt auch Methoden zur Verf&uuml;gung, um auf die bereits eingef&uuml;gten
+Dialogelemente zuzugreifen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int getComponentCount()
+public Component getComponent(int n)
+public Component[] getComponents()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Container.html" onClick="this.href=getApiDoc('java.awt.Container')"><font color="#660066" size=-1>java.awt.Container</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa102021"><a href="index_g.html#ixb101550"><font color=#000080><tt>getComponentCount</tt></font></a></a>
+kann die Anzahl aller eingef&uuml;gten Komponenten ermittelt werden.
+<a name="ixa102022"><a href="index_g.html#ixb101448"><font color=#000080><tt>getComponent</tt></font></a></a>
+liefert die Komponente mit dem angegebenen Index und <a name="ixa102023"><a href="index_g.html#ixb101551"><font color=#000080><tt>getComponents</tt></font></a></a>
+gibt ein Array mit allen eingef&uuml;gten Komponenten zur&uuml;ck.
+
+
+<!-- Section -->
+<a name="sectlevel3id031001004"></a>
+<h3>31.1.4 Anzeigen des Dialogfensters </h3>
+
+<p>
+Wurden alle Komponenten an den Container &uuml;bergeben, kann der
+Dialog formatiert und durch einen Aufruf von <a name="ixa102024"><a href="index_s.html#ixb101154"><font color=#000080><tt>setVisible</tt></font></a></a>
+angezeigt werden. Zweckm&auml;&szlig;igerweise sollte vorher die Methode
+<a name="ixa102025"><a href="index_p.html#ixb101552"><font color=#000080><tt>pack</tt></font></a></a>
+der Klasse <a href="index_w.html#ixb101153"><font color=#000080><tt>Window</tt></font></a>
+aufgerufen werden, um die Gr&ouml;&szlig;e des Fensters an den zur
+Darstellung der Dialogelemente erforderlichen Platz anzupassen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void pack()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Window.html" onClick="this.href=getApiDoc('java.awt.Window')"><font color="#660066" size=-1>java.awt.Window</font></a></td>
+</tr>
+</table>
+
+<p>
+Wir wollen uns ein einfaches Beispiel ansehen, das diese vier Schritte
+demonstriert: 
+<a name="listingid031001"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3101.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3101
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    Listing3101 wnd = <font color="#0000AA">new</font> Listing3101();
+<font color="#555555">012 </font>    wnd.setVisible(<font color="#006699">true</font>);
+<font color="#555555">013 </font>  }
+<font color="#555555">014 </font>
+<font color="#555555">015 </font>  <font color="#0000AA">public</font> Listing3101()
+<font color="#555555">016 </font>  {
+<font color="#555555">017 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Dialogtest"</font>);
+<font color="#555555">018 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">019 </font>    setLayout(<font color="#0000AA">new</font> FlowLayout());
+<font color="#555555">020 </font>    add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Abbruch"</font>));
+<font color="#555555">021 </font>    add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"OK"</font>));
+<font color="#555555">022 </font>    pack();
+<font color="#555555">023 </font>  }
+<font color="#555555">024 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3101.java"><font color="#000055" size=-1>Listing3101.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 31.1: Ein Dialog mit zwei Buttons</i></p>
+
+<p>
+Das Programm erzeugt ein kleines Fenster, das nur die beiden Buttons
+enth&auml;lt. Da wir f&uuml;r das Fenster keine Gr&ouml;&szlig;e angegeben
+haben, sondern diese durch Aufruf von <a href="index_p.html#ixb101552"><font color=#000080><tt>pack</tt></font></a>
+automatisch berechnen lassen, ist das Fenster gerade so gro&szlig;,
+dass beide Buttons darin Platz finden: 
+<p>
+<a name="imageid031001"></a>
+<img src="images/ZweiButtons.gif">
+<p>
+
+<p><i>
+Abbildung 31.1: Ein Dialog mit zwei Buttons</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+In vielen Beispielen in diesem Buch wird der Einfachheit halber die
+in <a href="k100159.html#fensterschliessen">Abschnitt 24.2.4</a> vorgestellte
+Klasse <a href="index_w.html#ixb100136"><font color=#000080><tt>WindowClosingAdapter</tt></font></a>
+verwendet, um einen Listener zum Schlie&szlig;en des Fensters zu registrieren.
+Damit ein solches Beispiel sich kompilieren l&auml;sst, muss die Datei
+<font color="#660099">WindowClosingAdapter.java</font> im aktuellen
+Verzeichnis vorhanden sein. Sie befindet sich auf der DVD zum Buch
+oder in <a href="k100159.html#windowclosingadapter">Listing 24.2</a>.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100202.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100202.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100204.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100207.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

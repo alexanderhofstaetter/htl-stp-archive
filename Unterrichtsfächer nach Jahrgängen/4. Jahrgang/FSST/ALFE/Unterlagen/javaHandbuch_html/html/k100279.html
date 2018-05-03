@@ -1,0 +1,290 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100278.html;106,k100278.html;107,k100280.html;108,k100284.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100278.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100278.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100280.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100284.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 44 - Datenbankzugriffe mit JDBC
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id044001"></a>
+<h2>44.1 Einleitung </h2>
+<hr>
+<ul>
+<li><a href="k100279.html#sectlevel2id044001">44.1 Einleitung</a>
+<ul>
+<li><a href="k100279.html#sectlevel3id044001001">44.1.1 Grunds&auml;tzliche Arbeitsweise</a>
+<li><a href="k100279.html#sectlevel3id044001002">44.1.2 Die Architektur von JDBC</a>
+<ul>
+<li><a href="k100279.html#sectlevel4id044001002001">Treibertypen</a>
+<li><a href="k100279.html#sectlevel4id044001002002">Mehrstufige Client-Server-Architekturen</a>
+<li><a href="k100279.html#sectlevel4id044001002003">SQL-2 Entry Level</a>
+<li><a href="k100279.html#sectlevel4id044001002004">JDBC-Versionen</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+<p>
+Wir wollen uns in diesem Abschnitt zun&auml;chst mit der grunds&auml;tzlichen
+Architektur von JDBC und datenbankbasierten Java-Anwendungen vertraut
+machen. Anschlie&szlig;end werden die wichtigsten Bestandteile der
+JDBC-Schnittstelle vorgestellt und ihre jeweilige Funktionsweise kurz
+erl&auml;utert. Der n&auml;chste Abschnitt illustriert und verfeinert
+die Konzepte dann an einem praktischen Beispiel, bei dem eine Datenbank
+zur Speicherung von Verzeichnissen und Dateien entworfen, mit Daten
+gef&uuml;llt und abgefragt wird. Zum Abschluss werden wir einige spezielle
+Probleme besprechen und auf die Besonderheiten gebr&auml;uchlicher
+JDBC-Treiber eingehen. 
+
+<p>
+Dieses Kapitel ist typisch f&uuml;r die <i>weiterf&uuml;hrenden</i>
+Themen in diesem Buch. JDBC ist ein sehr umfassendes Gebiet, das auf
+den zur Verf&uuml;gung stehenden Seiten nicht vollst&auml;ndig behandelt
+werden kann. Wir verfolgen stattdessen einen pragmatischen Ansatz,
+bei dem wichtige Grundlagen erl&auml;utert werden. Mit Hilfe von Beispielen
+wird ihre praktische Anwendbarkeit demonstriert. Insgesamt m&uuml;ssen
+aber viele Fragen offen bleiben, die durch die Lekt&uuml;re weiterer
+Dokumentationen geschlossen werden k&ouml;nnen. Dazu z&auml;hlen beispielsweise
+<a name="ixa103157"><i>Trigger</i></a>, <a name="ixa103158"><i>Blobs</i></a>
+und <a name="ixa103159"><i>Stored Procedures</i></a> oder die Entwicklung
+eigener JDBC-Treiber. 
+
+<!-- Section -->
+
+<a name="sectlevel3id044001001"></a>
+<h3>44.1.1 Grunds&auml;tzliche Arbeitsweise </h3>
+
+<p>
+Kurz nachdem die Version 1.0 des Java Development Kit vorlag, begann
+die Entwicklung einer einheitlichen Datenbankschnittstelle f&uuml;r
+Java-Programme. Anstelle des von vielen Entwicklern erwarteten objektorientierten
+Ansatzes verfolgten die Designer dabei das prim&auml;re Ziel, die
+gro&szlig;e Zahl vorhandener SQL-Datenbanken problemlos anzubinden.
+In konzeptioneller Anlehnung an die weitverbreitete ODBC-Schnittstelle
+wurde daraufhin mit <a name="ixa103160"><i>JDBC</i></a> (<a name="ixa103161"><i>Java Database
+Connectivity</i></a>) ein standardisiertes
+Java-Datenbank-Interface entwickelt, das mit der Version 1.1 fester
+Bestandteil des JDK wurde. 
+
+<p>
+JDBC stellt ein <a name="ixa103162"><i>Call-Level-Interface</i></a>
+zur SQL-Datenbank dar. Bei einer solchen Schnittstelle werden die
+SQL-Anweisungen im Programm als Zeichenketten bearbeitet und zur Ausf&uuml;hrung
+an parametrisierbare Methoden &uuml;bergeben. R&uuml;ckgabewerte und
+Ergebnismengen werden durch Methodenaufrufe ermittelt und nach einer
+geeigneten Typkonvertierung im Programm weiterverarbeitet. 
+
+<p>
+Dem gegen&uuml;ber steht ein zweites Verfahren, das als <a name="ixa103163"><i>Embedded SQL</i></a>
+(<a name="ixa103164"><i>ESQL</i></a>) bezeichnet wird. Hierbei werden
+die SQL-Anweisungen mit besonderen Schl&uuml;sselw&ouml;rtern direkt
+in den Java-Quelltext eingebettet und die Kommunikation mit dem Java-Programm
+erfolgt durch speziell deklarierte <a name="ixa103165"><i>Host-Variablen</i></a>.
+Damit der Java-Compiler durch die eingebetteten SQL-Anweisungen nicht
+durcheinandergebracht wird, m&uuml;ssen sie zun&auml;chst von einem
+Pr&auml;prozessor in geeigneten Java-Code &uuml;bersetzt werden. W&auml;hrend
+Embedded-SQL insbesondere bei Datenbankanwendungen, die in C oder
+C++ geschrieben sind, sehr verbreitet ist, spielt es in Java praktisch
+keine Rolle und konnte sich gegen&uuml;ber JDBC nicht durchsetzen.
+
+
+<!-- Section -->
+<a name="sectlevel3id044001002"></a>
+<h3>44.1.2 Die Architektur von JDBC </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id044001002001"></a>
+<h4>Treibertypen </h4>
+
+<p>
+JDBC ist keine eigene Datenbank, sondern eine Schnittstelle zwischen
+einer SQL-Datenbank und der Applikation, die sie benutzen will. Bez&uuml;glich
+der Architektur der zugeh&ouml;rigen Verbindungs-, Anweisungs- und
+Ergebnisklassen unterscheidet man vier Typen von JDBC-Treibern: 
+<ul>
+<li>Steht bereits ein <a name="ixa103166"><i>ODBC-Treiber</i></a>
+zur Verf&uuml;gung, so kann er mit Hilfe der im Lieferumfang enthaltenen
+<a name="ixa103167"><i>JDBC-ODBC-Bridge</i></a> in Java-Programmen
+verwendet werden. Diese Konstruktion bezeichnet man als <i>Typ-1-Treiber</i>.
+Mit seiner Hilfe k&ouml;nnen alle Datenquellen, f&uuml;r die ein ODBC-Treiber
+existiert, in Java-Programmen genutzt werden.
+<li>Zu vielen Datenbanken gibt es neben ODBC-Treibern auch <i>spezielle</i>
+Treiber des jeweiligen Datenbankherstellers. Setzt ein JDBC-Treiber
+auf einem solchen propriet&auml;ren Treiber auf, bezeichnet man ihn
+als <i>Typ-2-Treiber</i>.
+<li>Wenn ein JDBC-Treiber komplett in Java geschrieben und auf dem
+Client keine spezielle Installation erforderlich ist, der Treiber
+zur Kommunikation mit einer Datenbank aber auf eine funktionierende
+<a name="ixa103168"><i>Middleware</i></a> angewiesen ist, handelt
+es sich um einen <i>Typ-3-Treiber</i>.
+<li>Falls ein JDBC-Treiber komplett in Java geschrieben ist und die
+JDBC-Calls direkt in das erforderliche Protokoll der jeweiligen Datenbank
+umsetzt, handelt es sich um einen <i>Typ-4-Treiber</i>.
+</ul>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die JDBC-Treibertypen sind im &Uuml;brigen nicht zu verwechseln mit
+der der vom jeweiligen JDK unterst&uuml;tzten <i>JDBC-Version</i>.
+Diese wird etwas sp&auml;ter in diesem Absatz vorgestellt.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id044001002002"></a>
+<h4><a name="ixa103169">Mehrstufige Client-Server-Architekturen</a></h4>
+
+<p>
+W&auml;hrend die Typ-1- und Typ-2-Treiber lokal installierte und konfigurierte
+Software erfordern (die jeweiligen ODBC- bzw. herstellerspezifischen
+Treiber), ist dies bei Typ-3- und Typ-4-Treibern normalerweise nicht
+der Fall. Hier k&ouml;nnen die zur Anbindung an die Datenbank erforderlichen
+Klassendateien zusammen mit der Applikation oder dem Applet aus dem
+Netz geladen und ggfs. automatisch aktualisiert werden. Nach der Ver&ouml;ffentlichung
+von JDBC gab es zun&auml;chst gar keine Typ-3- oder Typ-4-Treiber.
+Mittlerweile haben sich aber alle namhaften Datenbankhersteller zu
+Java bekannt und stellen auch Typ-3- oder Typ-4-Treiber zur Verf&uuml;gung.
+Daneben gibt es eine ganze Reihe von Fremdherstellern, die JDBC-Treiber
+zur Anbindung bekannter Datenbanksysteme zur Verf&uuml;gung stellen.
+
+<p>
+Mit JDBC k&ouml;nnen sowohl zwei- als auch drei- oder h&ouml;herstufige
+Client-Server-Systeme aufgebaut werden (<a name="ixa103170"><i>Multi-Tier-Architekturen</i></a>).
+W&auml;hrend bei den zweistufigen Systemen eine Aufteilung der Applikation
+in Datenbank (Server) und Arbeitsplatz (Client) vorgenommen wird,
+gibt es bei den dreistufigen Systemen noch eine weitere Schicht, die
+zwischen beiden Komponenten liegt. Sie wird gemeinhin als <a name="ixa103171"><i>Applikations-Server</i></a>
+bezeichnet und dient dazu, komplexe Operationen vom Arbeitsplatz weg
+zu verlagern. Der Applikations-Server ist dazu mit dem Datenbank-Server
+verbunden und kommuniziert mit diesem &uuml;ber ein standardisiertes
+Protokoll (z.B. JDBC). Den Arbeitspl&auml;tzen stellt er dagegen h&ouml;herwertige
+Dienste (z.B. komplette Business-Transaktionen) zur Verf&uuml;gung
+und kommuniziert mit ihnen &uuml;ber ein spezielles Anwendungsprotokoll
+(z.B. HTTP, RMI, CORBA oder andere). 
+
+<!-- Section -->
+
+<a name="sectlevel4id044001002003"></a>
+<h4>SQL-2 Entry Level </h4>
+
+<p>
+JDBC &uuml;bernimmt die Aufgabe eines &#187;Transportprotokolls&#171;
+zwischen Datenbank und Anwendung und definiert damit zun&auml;chst
+noch nicht, welche SQL-Kommandos &uuml;bertragen werden d&uuml;rfen
+und welche nicht. Tats&auml;chlich verwendet heute jede relationale
+Datenbank ihren eigenen SQL-Dialekt, und eine Portierung auf eine
+andere Datenbank ist nicht selten aufw&auml;ndiger als ein Wechsel
+des Compilers. 
+
+<p>
+Um einen minimalen Anspruch an Standardisierung zu gew&auml;hrleisten,
+fordert Oracle von den JDBC-Treiberherstellern, mindestens den <a name="ixa103172"><i>SQL-2
+Entry-Level-Standard</i></a> von 1992 zu erf&uuml;llen.
+Mit Hilfe einer von Oracle erh&auml;ltlichen Testsuite k&ouml;nnen
+die Hersteller ihre JDBC-Treiber auf Konformit&auml;t testen. Da praktisch
+alle gro&szlig;en Datenbanken in ihrer Funktionalit&auml;t weit &uuml;ber
+besagten Standard hinausgehen, ist bei Verwendung dieser Features
+m&ouml;glicherweise mit erheblichem Portierungsaufwand zu rechnen.
+
+
+<!-- Section -->
+<a name="sectlevel4id044001002004"></a>
+<h4><a name="ixa103173">JDBC-Versionen</a></h4>
+
+<p>
+Genauso, wie sich der Umfang der einzelnen JDKs immer weiter gesteigert
+hat, ist auch die Leistungsf&auml;higkeit der JDBC-Schnittstelle kontinuierlich
+gestiegen. Um dies zu verdeutlichen, tr&auml;gt die jeweils unterst&uuml;tzte
+JDBC-Version eine eigene Versionsnummer: 
+<ul>
+<li>Erstmals wurde die JDBC 1997 mit der Version 1.0 in das JDK 1.1
+integriert. Diese JDBC-Version basiert auf dem SQL-Standard SQL-92.
+<li>Die Version 2.0 der JDBC-API wurde mit dem JDK 1.2 eingef&uuml;hrt
+und ber&uuml;cksichtigt bereits die Erweiterungen von SQL-99. Um den
+Herstellern die Implementierung von Treibern zu erleichtern, wurde
+die API mit dieser Version in zwei Pakete aufgeteilt. Das als JDBC
+1.0 Core API bezeichnete Paket findet sich im Namensraum <font color="#000077"><tt>java.sql</tt></font>
+und ist fester Bestandteil des JDK, w&auml;hrend sich die Klassen
+des sogenannten JDBC 2.0 Optional Package im Namensraum <font color="#000077"><tt>javax.sql</tt></font>
+befinden. 
+<li>Seit dem JDK 1.4 tr&auml;gt die JDBC-API die Versionsnummer 3.0.
+Diese wurde abermals um weitere Datentypen wie <font color="#000077"><tt>Boolean</tt></font>
+und <a name="ixa103174"><a href="index_d.html#ixb102368"><font color=#000080><tt>DataLink</tt></font></a></a>
+erweitert und unterst&uuml;tzt zum Beispiel vorbereitete Statements
+(<font color="#000077"><tt>PreparedStatement</tt></font>) und Sicherungspunkte
+(SavePoints) in einer laufenden Transaktion. 
+<li>Das JDK 6 integriert nun die JDBC-Version 4.0, welche neue SQL-2003
+Datentypen f&uuml;r XML unterst&uuml;tzt und die Verwendung von Annotationen
+gestattet. 
+<li>Mit dem JDK 7 wurde die JDBC-Versionsnummer auf 4.1 hochgez&auml;hlt.
+Eine der Neuerungen ist das automatische Schlie&szlig;en von <a href="index_c.html#ixb100590"><font color=#000080><tt>Connection</tt></font></a>-
+, <a href="index_s.html#ixb100591"><font color=#000080><tt>Statement</tt></font></a>
+und <a href="index_r.html#ixb100592"><font color=#000080><tt>ResultSet</tt></font></a>-Objekten
+(wie in <a href="k100088.html#trywithresources">Abschnitt 13.4</a>
+beschrieben). 
+</ul>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100278.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100278.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100280.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100284.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

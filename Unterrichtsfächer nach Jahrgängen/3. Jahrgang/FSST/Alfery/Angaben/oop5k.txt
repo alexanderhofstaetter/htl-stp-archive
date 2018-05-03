@@ -1,0 +1,52 @@
+/*
+
+ OOP  ANGABEN 5k (Kurzübung)
+_____________________________________________________________________________
+
+Allgemein :   Überladene Operatoren
+-----------------------------------------------------------------------------
+
+Definiere die Klasse "komplex" mit geeigneten Methoden und friend Funktionen
+für überladene Operatoren zur Umsetzung von komplexen Rechenregeln
+( wie 	+= , -=  , + , - ,  ==  )
+und verwende diese Operatoren im Hauptprogramm.
+
+
+class komplex
+{ public:
+	float re,im;                                // Datenelemente
+  public:
+	komplex(float re, float im );               // Konstruktoren
+	komplex();
+
+	float real();                               // Realteil
+	float imag();                               // Imaginärteil
+	float betrag();                             // Betrag
+	float phase();                              // Phase
+
+	komplex operator+=(komplex &);              // überladene Operatoren
+	komplex operator-=(komplex &);
+
+	friend komplex operator+(komplex &, komplex &);  // überladene Operatoren
+	friend komplex operator-(komplex &, komplex &);  // mit zwei Parametern
+
+	friend int     operator==(komplex &, komplex &);
+
+};
+
+
+Hinweis : 
+
+        komplexe Addition / Subtraktion : 
+
+        z = z1 + z2   ->   z.re = z1.re + z2.re 
+                           z.im = z1.im + z2.im   
+
+        z = z1 - z2   ->   z.re = z1.re - z2.re  
+                           z.im = z1.im - z2.im   
+
+        Vergleich zweier komplexer Zahlen :
+        z1.re==z2.re && z1.im==z2.im  -> true 
+                             		
+
+*/

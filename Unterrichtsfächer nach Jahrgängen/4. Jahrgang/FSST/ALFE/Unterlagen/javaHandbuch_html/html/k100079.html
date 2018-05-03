@@ -1,0 +1,260 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100076.html;106,k100078.html;107,k100080.html;108,k100084.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100076.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100078.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100080.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100084.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 12 - Strings
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id012003"></a>
+<h2>12.3 Weitere Eigenschaften </h2>
+<hr>
+<ul>
+<li><a href="k100079.html#sectlevel2id012003">12.3 Weitere Eigenschaften</a>
+<ul>
+<li><a href="k100079.html#sectlevel3id012003001">12.3.1 Die Klasse String ist final</a>
+<li><a href="k100079.html#stringfuercompiler">12.3.2 Was ist ein String f&uuml;r den Compiler?</a>
+<ul>
+<li><a href="k100079.html#sectlevel4id012003002001">String-Literale</a>
+<li><a href="k100079.html#sectlevel4id012003002002">String-Verkettung und -Zuweisung</a>
+</ul>
+<li><a href="k100079.html#sectlevel3id012003003">12.3.3 String-Objekte sind nicht dynamisch</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id012003001"></a>
+<h3>12.3.1 Die Klasse String ist final </h3>
+
+<p>
+Beim Studium der Klassenbibliotheken erkennt man, dass die Klasse
+<a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+mit dem Attribut <a href="index_f.html#ixb100410"><font color=#000080><tt>final</tt></font></a>
+belegt ist. Einer der Gr&uuml;nde f&uuml;r diese Ma&szlig;nahme ist
+die dadurch gesteigerte Effizienz beim Aufruf der Methoden von <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Objekten.
+Anstelle der dynamischen Methodensuche, die normalerweise erforderlich
+ist, kann der Compiler <a href="index_f.html#ixb100410"><font color=#000080><tt>final</tt></font></a>-Methoden
+statisch kompilieren und dadurch schneller aufrufen. Daneben spielten
+aber auch Sicherheits&uuml;berlegungen und Aspekte des Multithreadings
+eine Rolle. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Leider hat dies den gro&szlig;en Nachteil, dass aus der <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Klasse
+keine neuen Klassen abgeleitet werden k&ouml;nnen. Es gibt also keine
+M&ouml;glichkeit, die vorhandenen Methoden auf <i>nat&uuml;rliche</i>
+Art und Weise zu erg&auml;nzen oder zu modifizieren. Soll beispielsweise
+eine neue Methode <a href="index_r.html#ixb100540"><font color=#000080><tt>replace</tt></font></a>
+geschrieben werden, die in der Lage ist, Strings (und nicht nur einzelne
+Zeichen) gegeneinander auszutauschen, so bleibt nur der Umweg &uuml;ber
+eine Methode einer anderen Klasse, die den zu modifizierenden String
+als Parameter &uuml;bergeben bekommt. Alternativ k&ouml;nnte man nat&uuml;rlich
+auch die komplette <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Klasse
+neu schreiben. Leider sind beide Varianten unsch&ouml;n und konterkarieren
+die Vorteile der objektorientierten Implementierung von Zeichenketten
+in Java.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="stringfuercompiler"></a>
+<h3>12.3.2 Was ist ein String f&uuml;r den Compiler? </h3>
+
+<p>
+In Java gibt es an vielen Stellen Verbindungen zwischen dem Compiler
+und der Laufzeitbibliothek, und zwar insofern, als der Compiler Kenntnis
+&uuml;ber interne Eigenschaften bestimmter Klassen hat und die F&auml;higkeit
+besitzt, Instanzen dieser Klassen zu erzeugen und zu manipulieren.
+So ist er beispielsweise in der Lage, Code zu generieren, um <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Objekte
+zu erzeugen, einander zuzuweisen oder mit Hilfe des +-Operators zu
+verketten. 
+
+<!-- Section -->
+
+<a name="sectlevel4id012003002001"></a>
+<h4><a name="ixa100691">String-Literale</a></h4>
+
+<p>
+Jedes <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Literal
+ist eine Referenz auf ein Objekt der Klasse <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>.
+Wenn der Compiler beim &Uuml;bersetzen des Quelltextes ein <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Literal
+findet, erzeugt er ein neues <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Objekt
+und verwendet es anstelle des Literals. 
+
+<!-- Section -->
+
+<a name="sectlevel4id012003002002"></a>
+<h4>String-Verkettung und -Zuweisung </h4>
+
+<p>
+In Java ist der Operator + auch auf Strings definiert. Auf zwei <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Objekte
+angewendet, liefert er die Verkettung beider Objekte, d.h. ihre Hintereinanderschreibung.
+Eine M&ouml;glichkeit, die <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Verkettung
+zu &uuml;bersetzen, k&ouml;nnte darin bestehen, ein tempor&auml;res
+<a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>-Objekt
+zu konstruieren und die Operanden mit Hilfe der <a href="index_a.html#ixb100188"><font color=#000080><tt>append</tt></font></a>-Methode
+anzuh&auml;ngen. Das resultierende Objekt k&ouml;nnte dann mit der
+<a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a>-Methode
+effizient in einen <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+konvertiert werden. Die Klasse <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>
+dient dazu, <i>ver&auml;nderliche</i> Strings zu implementieren. Sie
+wird im n&auml;chsten Abschnitt vorgestellt. 
+
+<p>
+Diese Vorgehensweise soll an dem folgenden Beispiel erl&auml;utert
+werden. Das Programm gibt zweimal hintereinander &#187;Hallo, Welt&#171;
+aus. Beim ersten Mal wird der +-Operator verwendet, beim zweiten Mal
+die Variante mit dem tempor&auml;ren <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>-Objekt:
+<a name="listingid012004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1204.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1204
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    String a, b, c;
+<font color="#555555">008 </font>
+<font color="#555555">009 </font>    <font color="#00AA00">//Konventionelle Verkettung</font>
+<font color="#555555">010 </font>    a = <font color="#0000FF">"Hallo"</font>;
+<font color="#555555">011 </font>    b = <font color="#0000FF">"Welt"</font>;
+<font color="#555555">012 </font>    c = a + <font color="#0000FF">", "</font> + b;
+<font color="#555555">013 </font>    System.out.println(c);
+<font color="#555555">014 </font>
+<font color="#555555">015 </font>    <font color="#00AA00">//So k&ouml;nnte es der Compiler &uuml;bersetzen</font>
+<font color="#555555">016 </font>    a = <font color="#0000FF">"Hallo"</font>;
+<font color="#555555">017 </font>    b = <font color="#0000FF">"Welt"</font>;
+<font color="#555555">018 </font>    c =(<font color="#0000AA">new</font> StringBuilder(a)).append(<font color="#0000FF">", "</font>).append(b).toString();
+<font color="#555555">019 </font>    System.out.println(c);
+<font color="#555555">020 </font>  }
+<font color="#555555">021 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1204.java"><font color="#000055" size=-1>Listing1204.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 12.4: Implementierung der String-Verkettung</i></p>
+
+<p>
+Allerdings ist ein Java-Compiler nicht gezwungen, genau so vorzugehen.
+Die Sprachspezifikation gibt lediglich die Empfehlung, dass es aus
+Effizienzgr&uuml;nden sinnvoll sein kann, eine solche oder &auml;hnliche
+Implementierung zu w&auml;hlen. 
+
+<!-- Section -->
+
+<a name="sectlevel3id012003003"></a>
+<h3>12.3.3 String-Objekte sind nicht dynamisch </h3>
+
+<p>
+Interessanterweise werden durch die Klasse <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+keine <i>dynamischen</i> Zeichenketten implementiert. Nach der Initialisierung
+eines <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+bleiben dessen L&auml;nge und Inhalt konstant. Wie ist dann aber die
+genaue Arbeitsweise von Funktionen wie <a name="ixa100692"><a href="index_s.html#ixb100526"><font color=#000080><tt>substring</tt></font></a></a>
+oder <a name="ixa100693"><a href="index_r.html#ixb100540"><font color=#000080><tt>replace</tt></font></a></a>
+zu erkl&auml;ren und was genau passiert bei einer Anweisung wie der
+folgenden: 
+<font color="#000077">
+<pre>
+String s = "hello, world";
+s = s.substring(0,5);
+</pre>
+</font>
+
+<p>
+Die Antwort darauf ist ganz einfach. Die <a href="index_s.html#ixb100526"><font color=#000080><tt>substring</tt></font></a>-Methode
+nimmt die Ver&auml;nderungen nicht auf dem Original-String vor, sondern
+erzeugt eine Kopie, die mit dem gew&uuml;nschten Inhalt gef&uuml;llt
+wird. Diese gibt sie dann an den Aufrufer zur&uuml;ck, der das Ergebnis
+erneut an <font color="#000077"><tt>s</tt></font> zuweist und damit
+die Originalinstanz f&uuml;r den Garbage Collector freigibt. Durch
+den Referenzcharakter von Objekten und das automatische Speichermanagement
+entsteht also der Eindruck, als w&auml;ren <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Objekte
+ver&auml;nderlich. 
+
+<p>
+Als Entwickler braucht man sich hier&uuml;ber normalerweise keine
+Gedanken zu machen. Dennoch ist es manchmal n&uuml;tzlich, Zeichenketten
+zur Verf&uuml;gung zu haben, die sich dynamisch ver&auml;ndern k&ouml;nnen
+(beispielsweise ben&ouml;tigt sie der Compiler selbst zur Implementierung
+der String-Verkettung). In Java gibt es zu diesem Zweck die Klasse
+<a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>.
+Sie arbeitet &auml;hnlich wie <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>,
+implementiert aber Zeichenketten, die ihre L&auml;nge zur Laufzeit
+&auml;ndern k&ouml;nnen. <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>
+besitzt nicht so viele Methoden zur Auswertung der Zeichenkette, sondern
+legt den Schwerpunkt auf Operationen zur Ver&auml;nderung ihres Inhalts.
+Die wichtigsten Methoden sollen im Folgenden vorgestellt werden. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100076.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100078.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100080.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100084.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

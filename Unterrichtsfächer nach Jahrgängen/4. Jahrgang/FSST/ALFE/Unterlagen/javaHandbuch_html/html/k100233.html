@@ -1,0 +1,378 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100230.html;106,k100232.html;107,k100234.html;108,k100236.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100230.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100232.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100234.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100236.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 35 - Drucken
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id035003"></a>
+<h2>35.3 Drucken mit dem Java Print Service API<a name="ixa102315"></a>
+</h2>
+<hr>
+<ul>
+<li><a href="k100233.html#sectlevel2id035003">35.3 Drucken mit dem Java Print Service API</a>
+<ul>
+<li><a href="k100233.html#sectlevel3id035003001">35.3.1 &Uuml;berblick</a>
+<ul>
+<li><a href="k100233.html#sectlevel4id035003001001">Die Klasse DocFlavor</a>
+<li><a href="k100233.html#sectlevel4id035003001002">Die Interfaces Attribute und AttributeSet</a>
+<li><a href="k100233.html#sectlevel4id035003001003">Das Interface Doc</a>
+<li><a href="k100233.html#sectlevel4id035003001004">Das Interface PrintService und die Klasse PrintServiceLookup</a>
+</ul>
+<li><a href="k100233.html#sectlevel3id035003002">35.3.2 Ausdrucken einer Textdatei</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id035003001"></a>
+<h3>35.3.1 &Uuml;berblick </h3>
+
+<p>
+Im Folgenden geben wir einen kurzen Einblick in das Java Print Service
+API, so dass wir am Ende dieses Abschnitts eine einfache Textdatei
+ausdrucken k&ouml;nnen. Das Java Print Service API basiert auf dem
+im vorigen Abschnitt vorgestellten Java 2D Printing API und stellt
+unter anderem High-Level-Schnittstellen zum Drucken von bekannten
+Formaten wie Text, Postscript und PDF bereit. 
+
+<p>
+Die zugeh&ouml;rigen Klassen und Interfaces befinden sich in den Paketen
+<a name="ixa102316"><a href="index_j.html#ixb100623"><font color=#000080><tt>javax.print</tt></font></a></a>,
+<a name="ixa102317"><a href="index_j.html#ixb101730"><font color=#000080><tt>javax.print.attribute</tt></font></a></a>,
+<a name="ixa102318"><a href="index_j.html#ixb101731"><font color=#000080><tt>javax.print.attribute.standard</tt></font></a></a>
+und <a name="ixa102319"><a href="index_j.html#ixb101732"><font color=#000080><tt>javax.print.event</tt></font></a></a>.
+
+
+<!-- Section -->
+<a name="sectlevel4id035003001001"></a>
+<h4>Die Klasse DocFlavor </h4>
+
+<p>
+Die Klasse <a name="ixa102320"><a href="index_d.html#ixb101733"><font color=#000080><tt>DocFlavor</tt></font></a></a>
+repr&auml;sentiert ein Dateiformat, etwa ein GIF-Image oder eine PDF-Datei.
+Im JDK gibt es bereits eine ganze Reihe vordefinierter <a href="index_d.html#ixb101733"><font color=#000080><tt>DocFlavor</tt></font></a>-Objekte
+f&uuml;r die wichtigsten Formate, zum Beispiel: 
+<ul>
+<li><a name="ixa102321"><a href="index_d.html#ixb101734"><font color=#000080><tt>DocFlavor.INPUT_STREAM.GIF</tt></font></a></a>
+<li><a name="ixa102322"><a href="index_d.html#ixb101735"><font color=#000080><tt>DocFlavor.INPUT_STREAM.TEXT_PLAIN_UTF_8</tt></font></a></a>
+<li><a name="ixa102323"><a href="index_d.html#ixb101736"><font color=#000080><tt>DocFlavor.INPUT_STREAM.POSTSCRIPT</tt></font></a></a>
+<li><a name="ixa102324"><a href="index_d.html#ixb101737"><font color=#000080><tt>DocFlavor.READER.TEXT_PLAIN</tt></font></a></a>
+<li><a name="ixa102325"><a href="index_d.html#ixb101738"><font color=#000080><tt>DocFlavor.BYTE_ARRAY.PDF</tt></font></a></a>
+</ul>
+
+<p>
+Falls das Dateiformat nicht bekannt ist, kann seine Bestimmung an
+das darunter liegende Drucksystem delegiert werden. Zu diesem Zweck
+werden wir in <a href="k100233.html#javaprintservice">Listing 35.3</a>
+das <a name="ixa102326"><a href="index_d.html#ixb101739"><font color=#000080><tt>DocFlavor.INPUT_STREAM.AUTOSENSE</tt></font></a></a>
+einsetzen. 
+
+<!-- Section -->
+
+<a name="sectlevel4id035003001002"></a>
+<h4>Die Interfaces Attribute und AttributeSet </h4>
+
+<p>
+Die Interfaces <a name="ixa102327"><a href="index_a.html#ixb101740"><font color=#000080><tt>Attribute</tt></font></a></a>
+und <a name="ixa102328"><a href="index_a.html#ixb101741"><font color=#000080><tt>AttributeSet</tt></font></a></a>
+liegen im Paket <a name="ixa102329"><a href="index_j.html#ixb101730"><font color=#000080><tt>javax.print.attribute</tt></font></a></a>
+und beschreiben druckspezifische Eigenschaften. Die implementierende
+Klasse <a name="ixa102330"><a href="index_c.html#ixb101742"><font color=#000080><tt>Copies</tt></font></a></a>
+aus dem Paket <a name="ixa102331"><a href="index_j.html#ixb101731"><font color=#000080><tt>javax.print.attribute.standard</tt></font></a></a>
+repr&auml;sentiert beispielsweise die Anzahl der anzufertigenden Kopien,
+die Klasse <a name="ixa102332"><a href="index_j.html#ixb101743"><font color=#000080><tt>JobName</tt></font></a></a>
+aus dem gleichen Paket den Namen des Druckjobs. 
+
+<p>
+Weitere wichtige Klassen, die <a href="index_a.html#ixb101740"><font color=#000080><tt>Attribute</tt></font></a>
+implementieren, sind: 
+<ul>
+<li><a name="ixa102333"><a href="index_m.html#ixb101744"><font color=#000080><tt>MediaSizeName</tt></font></a></a>
+beschreibt die zu verwendende Papiergr&ouml;&szlig;e (f&uuml;r uns
+ist <a name="ixa102334"><a href="index_m.html#ixb101745"><font color=#000080><tt>MediaSizeName.ISO_A4</tt></font></a></a>
+ein g&auml;ngiges Format).
+<li><a name="ixa102335"><a href="index_m.html#ixb101746"><font color=#000080><tt>MediaTray</tt></font></a></a>
+repr&auml;sentiert das Druckerfach, aus dem das Papier gezogen werden
+soll.
+<li><a name="ixa102336"><a href="index_p.html#ixb101747"><font color=#000080><tt>PrinterName</tt></font></a></a>
+ist der Name des Druckers.
+<li><a name="ixa102337"><a href="index_p.html#ixb101748"><font color=#000080><tt>PrinterResolution</tt></font></a></a>
+steht f&uuml;r die Aufl&ouml;sung des Druckers.
+</ul>
+
+<p>
+Wie der Name vermuten l&auml;sst, stellt ein <a href="index_a.html#ixb101741"><font color=#000080><tt>AttributeSet</tt></font></a>
+eine Menge von Attributen dar. Konkrete Implementierungen sind beispielsweise
+<a name="ixa102338"><a href="index_h.html#ixb101749"><font color=#000080><tt>HashAttributeSet</tt></font></a></a>,
+<a name="ixa102339"><a href="index_h.html#ixb101750"><font color=#000080><tt>HashPrintRequestAttributeSet</tt></font></a></a>
+oder <a name="ixa102340"><a href="index_h.html#ixb101751"><font color=#000080><tt>HashDocAttributeSet</tt></font></a></a>.
+
+
+<!-- Section -->
+<a name="sectlevel4id035003001003"></a>
+<h4>Das Interface Doc </h4>
+
+<p>
+Das Interface <a name="ixa102341"><a href="index_d.html#ixb101752"><font color=#000080><tt>Doc</tt></font></a></a>
+im Paket <a href="index_j.html#ixb100623"><font color=#000080><tt>javax.print</tt></font></a>
+repr&auml;sentiert das zu druckende Dokument. Eine Implementierung
+ist beispielsweise die Klasse <a name="ixa102342"><a href="index_s.html#ixb101753"><font color=#000080><tt>SimpleDoc</tt></font></a></a>,
+die f&uuml;r einfache Druckjobs verwendet werden kann und alle oben
+beschriebenen vordefinierten Dateitypen ausdruckt: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public SimpleDoc(
+  Object printData,
+  DocFlavor flavor, 
+  DocAttributeSet attributes
+)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/print/Doc.html" onClick="this.href=getApiDoc('javax.print.Doc')"><font color="#660066" size=-1>javax.print.Doc</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit den Parametern <font color="#000077"><tt>Flavor</tt></font> und
+<font color="#000077"><tt>attributes</tt></font> l&auml;sst sich der
+Ausdruck wie zuvor beschrieben konfigurieren. Mit dem Parameter <font color="#000077"><tt>printData</tt></font>
+wird der zum <a href="index_d.html#ixb101733"><font color=#000080><tt>DocFlavor</tt></font></a>
+passende Datenstrom &uuml;bergeben. Bei <a href="index_d.html#ixb101737"><font color=#000080><tt>DocFlavor.READER.TEXT_PLAIN</tt></font></a>
+wird beispielsweise ein Objekt vom Typ <a href="index_r.html#ixb100593"><font color=#000080><tt>Reader</tt></font></a>
+erwartet. 
+
+<!-- Section -->
+
+<a name="sectlevel4id035003001004"></a>
+<h4>Das Interface PrintService und die Klasse PrintServiceLookup </h4>
+
+<p>
+Objekte vom Typ <a name="ixa102343"><a href="index_p.html#ixb100671"><font color=#000080><tt>PrintService</tt></font></a></a>
+stellen die Schnittstelle zum Drucker dar. Die im System verf&uuml;gbaren
+<a href="index_p.html#ixb100671"><font color=#000080><tt>PrintService</tt></font></a>-Objekte
+erh&auml;lt man mit Hilfe von Factory-Methoden des <a name="ixa102344"><a href="index_p.html#ixb101754"><font color=#000080><tt>PrintServiceLookup</tt></font></a></a>-Dienstes.
+Mit <a name="ixa102345"><a href="index_l.html#ixb101755"><font color=#000080><tt>lookupDefaultPrintService</tt></font></a></a>
+bekommt man Zugriff auf den Standarddrucker des Systems; mit <a name="ixa102346"><a href="index_l.html#ixb101756"><font color=#000080><tt>lookupPrintServices</tt></font></a></a>
+erh&auml;lt man eine Liste aller Druckger&auml;te, die den als Parameter
+angegebenen Eigenschaften gen&uuml;gen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static PrintService lookupDefaultPrintService()
+
+static PrintService[] lookupPrintServices(
+  DocFlavor flavor, 
+  AttributeSet attributes
+)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/print/PrintServiceLookup.html" onClick="this.href=getApiDoc('javax.print.PrintServiceLookup')"><font color="#660066" size=-1>javax.print.PrintServiceLookup</font></a></td>
+</tr>
+</table>
+
+<p>
+Das Interface <a href="index_p.html#ixb100671"><font color=#000080><tt>PrintService</tt></font></a>
+stellt folgende Methoden zur Verf&uuml;gung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public DocPrintJob createPrintJob()
+
+public String getName() 
+
+public boolean isAttributeValueSupported(
+  Attribute attrval, 
+  DocFlavor flavor, 
+  AttributeSet attributes
+) 
+
+public boolean isDocFlavorSupported(
+  DocFlavor flavor
+) 
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/print/PrintService.html" onClick="this.href=getApiDoc('javax.print.PrintService')"><font color="#660066" size=-1>javax.print.PrintService</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa102347"><a href="index_c.html#ixb101757"><font color=#000080><tt>createPrintJob</tt></font></a></a>
+erzeugen wir einen Druckauftrag vom Typ <a name="ixa102348"><a href="index_d.html#ixb101758"><font color=#000080><tt>DocPrintJob</tt></font></a></a>,
+mit dem wir ein <a href="index_d.html#ixb101752"><font color=#000080><tt>Doc</tt></font></a>-Objekt
+an den Drucker senden k&ouml;nnen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+void print(Doc doc, PrintRequestAttributeSet attributes)
+  throws PrintException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/javax/print/DocPrintJob.html" onClick="this.href=getApiDoc('javax.print.DocPrintJob')"><font color="#660066" size=-1>javax.print.DocPrintJob</font></a></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id035003002"></a>
+<h3>35.3.2 Ausdrucken einer Textdatei </h3>
+
+<p>
+Nach den Ausf&uuml;hrungen in den bisherigen Abschnitten wollen wir
+nun eine Textdatei mit dem Java Print Service API ausdrucken. Im Gegensatz
+zum Java 2D Printing API haben wir nur wenig Einfluss auf die Gestaltung
+des Ausdrucks, daf&uuml;r ist der Programmcode zum Ausdrucken der
+Textdatei relativ einfach. Wir verzichten in dem folgenden Programm
+darauf, den Ausdruck von au&szlig;en zu konfigurieren, den Namen der
+zu druckenden Datei wollen wir &uuml;ber die Kommandozeile &uuml;bergeben:
+<a name="javaprintservice"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3503.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">import</font> javax.print.*;
+<font color="#555555">006 </font><font color="#0000AA">import</font> javax.print.attribute.*;
+<font color="#555555">007 </font><font color="#0000AA">import</font> javax.print.attribute.standard.*;
+<font color="#555555">008 </font>
+<font color="#555555">009 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3503
+<font color="#555555">010 </font>{
+<font color="#555555">011 </font>  <font color="#0000AA">final</font> <font color="#0000AA">static</font> DocFlavor FLAVOR = DocFlavor.INPUT_STREAM.AUTOSENSE;
+<font color="#555555">012 </font>  
+<font color="#555555">013 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args) <font color="#0000AA">throws</font> IOException, PrintException
+<font color="#555555">014 </font>  {
+<font color="#555555">015 </font>    System.out.println(<font color="#0000FF">"Gedruckt wird: "</font> + args[0]);
+<font color="#555555">016 </font>
+<font color="#555555">017 </font>    File file = <font color="#0000AA">new</font> File(args[0]);
+<font color="#555555">018 </font>    <font color="#0000AA">if</font> (!file.exists()) {
+<font color="#555555">019 </font>      <font color="#0000AA">throw</font> <font color="#0000AA">new</font> IllegalArgumentException(args[0] + <font color="#0000FF">" existiert nicht"</font>); 
+<font color="#555555">020 </font>    }
+<font color="#555555">021 </font>    InputStream stream = <font color="#0000AA">new</font> FileInputStream(file);
+<font color="#555555">022 </font>    Doc document = <font color="#0000AA">new</font> SimpleDoc(stream, FLAVOR, <font color="#006699">null</font>);
+<font color="#555555">023 </font>    
+<font color="#555555">024 </font>    PrintService service = PrintServiceLookup.lookupDefaultPrintService();
+<font color="#555555">025 </font>    System.out.println(<font color="#0000FF">"Standarddrucker ist: "</font> + service.getName());
+<font color="#555555">026 </font>    
+<font color="#555555">027 </font>    <font color="#0000AA">if</font> (!service.isDocFlavorSupported(FLAVOR)) {
+<font color="#555555">028 </font>      <font color="#0000AA">throw</font> <font color="#0000AA">new</font> IllegalStateException(
+<font color="#555555">029 </font>        service.getName() + 
+<font color="#555555">030 </font>        <font color="#0000FF">" unterst&uuml;tzt "</font> + FLAVOR + <font color="#0000FF">" nicht"</font>
+<font color="#555555">031 </font>      );
+<font color="#555555">032 </font>    }
+<font color="#555555">033 </font>    System.out.println(service.getName() + <font color="#0000FF">" unterst&uuml;tzt "</font> + FLAVOR);
+<font color="#555555">034 </font>    DocPrintJob job = service.createPrintJob();
+<font color="#555555">035 </font>    
+<font color="#555555">036 </font>    PrintRequestAttributeSet params = <font color="#0000AA">new</font> HashPrintRequestAttributeSet();
+<font color="#555555">037 </font>    params.add(<font color="#0000AA">new</font> Copies(1)); 
+<font color="#555555">038 </font>    
+<font color="#555555">039 </font>    job.print(document, params);
+<font color="#555555">040 </font>    stream.close();
+<font color="#555555">041 </font>  }
+<font color="#555555">042 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3503.java"><font color="#000055" size=-1>Listing3503.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 35.3: Drucken einer Textdatei mit dem Java Print Service API</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Tatsache, dass das obige Programm unter Linux gar nicht funktionierte
+und unter Windows Vista mehrere Minuten ben&ouml;tigte, um eine einzeilige
+Textdatei auszudrucken, mag ein Hinweis darauf sein, dass das Drucken
+unter Java auch im aktuellen JDK noch seine T&uuml;cken hat.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100230.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100232.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100234.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100236.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

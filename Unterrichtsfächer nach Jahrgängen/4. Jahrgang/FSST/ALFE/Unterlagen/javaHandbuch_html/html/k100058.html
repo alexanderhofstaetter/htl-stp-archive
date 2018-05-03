@@ -1,0 +1,604 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100057.html;106,k100057.html;107,k100059.html;108,k100063.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100057.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100057.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100059.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100063.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 9 - OOP II: Vererbung, Polymorphismus und statische Elemente
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id009001"></a>
+<h2>9.1 <a name="ixa100493">Vererbung</a></h2>
+<hr>
+<ul>
+<li><a href="k100058.html#sectlevel2id009001">9.1 Vererbung</a>
+<ul>
+<li><a href="k100058.html#sectlevel3id009001001">9.1.1 Ableiten einer Klasse</a>
+<li><a href="k100058.html#klasseobject">9.1.2 Die Klasse Object</a>
+<li><a href="k100058.html#sectlevel3id009001003">9.1.3 &Uuml;berlagern von Methoden</a>
+<ul>
+<li><a href="k100058.html#sectlevel4id009001003001">Dynamische Methodensuche</a>
+<li><a href="k100058.html#sectlevel4id009001003002">Aufrufen einer verdeckten Methode</a>
+</ul>
+<li><a href="k100058.html#vererbungvonkonstruktoren">9.1.4 Vererbung von Konstruktoren</a>
+<ul>
+<li><a href="k100058.html#sectlevel4id009001004001">Konstruktorenverkettung</a>
+<li><a href="k100058.html#sectlevel4id009001004002">Der Default-Konstruktor</a>
+<li><a href="k100058.html#sectlevel4id009001004003">&Uuml;berlagerte Konstruktoren</a>
+<li><a href="k100058.html#sectlevel4id009001004004">Destruktorenverkettung</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+<p>
+Eines der wesentlichen Designmerkmale objektorientierter Sprachen
+ist die M&ouml;glichkeit, Variablen und Methoden zu Klassen zusammenzufassen.
+Ein weiteres wichtiges Merkmal ist das der <i>Vererbung</i>, also
+der M&ouml;glichkeit, Eigenschaften vorhandener Klassen auf neue Klassen
+zu &uuml;bertragen. Fehlt diese F&auml;higkeit, bezeichnet man die
+Sprache auch als lediglich <i>objektbasiert</i>. 
+
+<p>
+Man unterscheidet dabei zwischen <a name="ixa100494"><i>einfacher Vererbung</i></a>,
+bei der eine Klasse von maximal einer anderen Klasse abgeleitet werden
+kann, und <a name="ixa100495"><i>Mehrfachvererbung</i></a>, bei der
+eine Klasse von mehr als einer anderen Klasse abgeleitet werden kann.
+In Java gibt es lediglich Einfachvererbung, um den Problemen aus dem
+Weg zu gehen, die durch Mehrfachvererbung entstehen k&ouml;nnen. Um
+die Einschr&auml;nkungen in den Designm&ouml;glichkeiten, die bei
+Einfachvererbung entstehen, zu vermeiden, wurde mit Hilfe der <a name="ixa100496"><i>Interfaces</i></a>
+eine neue, restriktive Art der Mehrfachvererbung eingef&uuml;hrt.
+Wir werden sp&auml;ter darauf zur&uuml;ckkommen. 
+
+<!-- Section -->
+
+<a name="sectlevel3id009001001"></a>
+<h3>9.1.1 <a name="ixa100497">Ableiten einer Klasse</a></h3>
+
+<p>
+Um eine neue Klasse aus einer bestehenden abzuleiten, ist im Kopf
+der Klasse mit Hilfe des Schl&uuml;sselworts <a name="ixa100498"><a href="index_e.html#ixb100425"><font color=#000080><tt>extends</tt></font></a></a>
+ein Verweis auf die Basisklasse anzugeben. Hierdurch erbt die abgeleitete
+Klasse alle Eigenschaften der Basisklasse, d.h. alle Variablen und
+alle Methoden. Durch Hinzuf&uuml;gen neuer Elemente oder &Uuml;berladen
+der vorhandenen kann die Funktionalit&auml;t der abgeleiteten Klasse
+erweitert werden. 
+
+<p>
+Als Beispiel wollen wir eine neue Klasse <font color="#000077"><tt>Cabrio</tt></font>
+definieren, die sich von <font color="#000077"><tt>Auto</tt></font>
+nur dadurch unterscheidet, dass sie zus&auml;tzlich die Zeit, die
+zum &Ouml;ffnen des Verdecks ben&ouml;tigt wird, speichern soll: 
+<a name="listingid009001"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">class</font> Cabrio
+<font color="#555555">002 </font><font color="#0000AA">extends</font> Auto
+<font color="#555555">003 </font>{
+<font color="#555555">004 </font>  <font color="#006699">int</font> vdauer;
+<font color="#555555">005 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 9.1: Ein einfaches Beispiel f&uuml;r Vererbung</i></p>
+
+<p>
+Wir k&ouml;nnen nun nicht nur auf die neue Variable <font color="#000077"><tt>vdauer</tt></font>,
+sondern auch auf alle Elemente der Basisklasse <font color="#000077"><tt>Auto</tt></font>
+zugreifen: 
+<a name="listingid009002"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>Cabrio kfz1 = <font color="#0000AA">new</font> Cabrio();
+<font color="#555555">002 </font>kfz1.name = <font color="#0000FF">"MX5"</font>;
+<font color="#555555">003 </font>kfz1.erstzulassung = 1994;
+<font color="#555555">004 </font>kfz1.leistung = 115;
+<font color="#555555">005 </font>kfz1.vdauer = 120;
+<font color="#555555">006 </font>System.out.println(<font color="#0000FF">"Alter = "</font>+kfz1.alter());</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 9.2: Zugriff auf geerbte Membervariablen</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Vererbung von Klassen kann beliebig tief geschachtelt werden.
+Eine abgeleitete Klasse erbt dabei jeweils die Eigenschaften der unmittelbaren
+Vaterklasse, die ihrerseits die Eigenschaften ihrer unmittelbaren
+Vaterklasse erbt usw. Wir k&ouml;nnen also beispielsweise die Klasse
+<font color="#000077"><tt>Cabrio</tt></font> verwenden, um daraus
+eine neue Klasse <font color="#000077"><tt>ZweisitzerCabrio</tt></font>
+abzuleiten:</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<a name="listingid009003"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">class</font> ZweisitzerCabrio
+<font color="#555555">002 </font><font color="#0000AA">extends</font> Cabrio
+<font color="#555555">003 </font>{
+<font color="#555555">004 </font>  <font color="#006699">boolean</font> notsitze;
+<font color="#555555">005 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 9.3: Ableitung einer abgeleiteten Klasse</i></p>
+
+<p>
+Diese k&ouml;nnte nun verwendet werden, um ein Objekt zu instanzieren,
+das die Eigenschaften der Klassen <font color="#000077"><tt>Auto</tt></font>,
+<font color="#000077"><tt>Cabrio</tt></font> und <font color="#000077"><tt>ZweisitzerCabrio</tt></font>
+hat: 
+<a name="listingid009004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>ZweisitzerCabrio kfz1 = <font color="#0000AA">new</font> ZweisitzerCabrio();
+<font color="#555555">002 </font>kfz1.name = <font color="#0000FF">"911-T"</font>;
+<font color="#555555">003 </font>kfz1.erstzulassung = 1982;
+<font color="#555555">004 </font>kfz1.leistung = 94;
+<font color="#555555">005 </font>kfz1.vdauer = 50;
+<font color="#555555">006 </font>kfz1.notsitze = <font color="#006699">true</font>;
+<font color="#555555">007 </font>System.out.println(<font color="#0000FF">"Alter = "</font>+kfz1.alter());</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 9.4: Zugriff auf mehrfach vererbte Membervariablen</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Nicht jede Klasse darf zur Ableitung neuer Klassen verwendet werden.
+Besitzt eine Klasse das Attribut <a name="ixa100499"><a href="index_f.html#ixb100410"><font color=#000080><tt>final</tt></font></a></a>,
+ist es nicht erlaubt, eine neue Klasse aus ihr abzuleiten. Die m&ouml;glichen
+Attribute einer Klasse werden im n&auml;chsten Abschnitt erl&auml;utert.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="klasseobject"></a>
+<h3>9.1.2 Die Klasse <a name="ixa100500">Object</a> </h3>
+
+<p>
+Enth&auml;lt eine Klasse keine <a href="index_e.html#ixb100425"><font color=#000080><tt>extends</tt></font></a>-Klausel,
+so besitzt sie die implizite Vaterklasse <a name="ixa100501"><a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a></a>.
+Jede Klasse, die keine <a href="index_e.html#ixb100425"><font color=#000080><tt>extends</tt></font></a>-Klausel
+besitzt, wird direkt aus <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+abgeleitet. Jede explizit abgeleitete Klasse stammt am oberen Ende
+ihrer Vererbungslinie von einer Klasse ohne explizite Vaterklasse
+ab und ist damit ebenfalls aus <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+abgeleitet. <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+ist also die Superklasse aller anderen Klassen. 
+
+<p>
+Die Klasse <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+definiert einige elementare Methoden, die f&uuml;r alle Arten von
+Objekten n&uuml;tzlich sind: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+boolean equals(Object obj)
+
+protected Object clone()
+
+String toString()
+
+int hashCode()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/Object.html" onClick="this.href=getApiDoc('java.lang.Object')"><font color="#660066" size=-1>java.lang.Object</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Methode <a name="ixa100502"><a href="index_e.html#ixb100230"><font color=#000080><tt>equals</tt></font></a></a>
+testet, ob zwei Objekte denselben Inhalt haben, <a name="ixa100503"><a href="index_c.html#ixb100290"><font color=#000080><tt>clone</tt></font></a></a>
+kopiert ein Objekt, <a name="ixa100504"><a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a></a>
+erzeugt eine <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Repr&auml;sentation
+des Objekts und <a name="ixa100505"><a href="index_h.html#ixb100427"><font color=#000080><tt>hashCode</tt></font></a></a>
+berechnet einen numerischen Wert, der als Schl&uuml;ssel zur Speicherung
+eines Objekts in einer <a href="index_h.html#ixb100428"><font color=#000080><tt>Hashtable</tt></font></a>
+verwendet werden kann. Damit diese Methoden in abgeleiteten Klassen
+vern&uuml;nftig funktionieren, m&uuml;ssen sie bei Bedarf &uuml;berlagert
+werden. F&uuml;r <a href="index_e.html#ixb100230"><font color=#000080><tt>equals</tt></font></a>
+und <a href="index_c.html#ixb100290"><font color=#000080><tt>clone</tt></font></a>
+gilt das insbesondere, wenn das Objekt Referenzen enth&auml;lt. 
+
+<!-- Section -->
+
+<a name="sectlevel3id009001003"></a>
+<h3>9.1.3 <a name="ixa100506">&Uuml;berlagern von Methoden</a><a name="ixa100507"></a></h3>
+
+<p>
+Neben den Membervariablen erbt eine abgeleitete Klasse auch die Methoden
+ihrer Vaterklasse (wenn dies nicht durch spezielle Attribute verhindert
+wird). Daneben d&uuml;rfen auch neue Methoden definiert werden. Die
+Klasse besitzt dann alle Methoden, die aus der Vaterklasse geerbt
+wurden, und zus&auml;tzlich die, die sie selbst neu definiert hat.
+
+<p>
+Daneben d&uuml;rfen auch bereits von der Vaterklasse geerbte Methoden
+neu definiert werden. In diesem Fall spricht man von <i>&Uuml;berlagerung</i>
+der Methode. Wurde eine Methode &uuml;berlagert, wird beim Aufruf
+der Methode auf Objekten dieses Typs immer die &uuml;berlagernde Version
+verwendet. 
+
+<p>
+Das folgende Beispiel erweitert die Klasse <font color="#000077"><tt>ZweisitzerCabrio</tt></font>
+um die Methode <font color="#000077"><tt>alter</tt></font>, das nun
+in Monaten ausgegeben werden soll: 
+<a name="listingid009005"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">class</font> ZweisitzerCabrio
+<font color="#555555">002 </font><font color="#0000AA">extends</font> Cabrio
+<font color="#555555">003 </font>{
+<font color="#555555">004 </font>  <font color="#006699">boolean</font> notsitze;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> alter()
+<font color="#555555">007 </font>  {
+<font color="#555555">008 </font>    <font color="#0000AA">return</font> 12 * (2011 - erstzulassung);
+<font color="#555555">009 </font>  }
+<font color="#555555">010 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 9.5: &Uuml;berlagern einer Methode in einer abgeleiteten Klasse</i></p>
+
+<p>
+Da die Methode <font color="#000077"><tt>alter</tt></font> bereits
+aus der Klasse <font color="#000077"><tt>Cabrio</tt></font> geerbt
+wurde, die sie ihrerseits von <font color="#000077"><tt>Auto</tt></font>
+geerbt hat, handelt es sich um eine <i>&Uuml;berlagerung</i>. Zuk&uuml;nftig
+w&uuml;rde dadurch in allen Objekten vom Typ <font color="#000077"><tt>ZweisitzerCabrio</tt></font>
+bei Aufruf von <font color="#000077"><tt>alter</tt></font> die &uuml;berlagernde
+Version, bei allen Objekten des Typs <font color="#000077"><tt>Auto</tt></font>
+oder <font color="#000077"><tt>Cabrio</tt></font> aber die urspr&uuml;ngliche
+Version verwendet werden. Es wird immer die Variante aufgerufen, die
+dem aktuellen Objekt beim Zur&uuml;ckverfolgen der Vererbungslinie
+am n&auml;chsten liegt. 
+
+<!-- Section -->
+
+<a name="sectlevel4id009001003001"></a>
+<h4><a name="ixa100508">Dynamische Methodensuche</a></h4>
+
+<p>
+Nicht immer kann bereits der Compiler entscheiden, welche Variante
+einer &uuml;berlagerten Methode er aufrufen soll. In <a href="k100034.html#abschnitttypkonvertierungen">Abschnitt 5.6</a>
+und <a href="k100053.html#polymorphismus">Abschnitt 8.1.6</a> wurde
+bereits erw&auml;hnt, dass das Objekt einer abgeleiteten Klasse zuweisungskompatibel
+zu der Variablen einer &uuml;bergeordneten Klasse ist. Wir d&uuml;rfen
+also beispielsweise ein <font color="#000077"><tt>Cabrio</tt></font>-Objekt
+ohne Weiteres einer Variablen vom Typ <font color="#000077"><tt>Auto</tt></font>
+zuweisen. 
+
+<p>
+Die Variable vom Typ <font color="#000077"><tt>Auto</tt></font> kann
+w&auml;hrend ihrer Lebensdauer also Objekte verschiedenen Typs enthalten
+(insbesondere solche vom Typ <font color="#000077"><tt>Auto</tt></font>,
+<font color="#000077"><tt>Cabrio</tt></font> und <font color="#000077"><tt>ZweisitzerCabrio</tt></font>).
+Damit kann nat&uuml;rlich nicht schon zur Compile-Zeit entschieden
+werden, welche Version einer &uuml;berlagerten Methode aufgerufen
+werden soll. Erst w&auml;hrend das Programm l&auml;uft, ergibt sich,
+welcher Typ von Objekt zu einem bestimmten Zeitpunkt in der Variable
+gespeichert wird. Der Compiler muss also Code generieren, um dies
+zur Laufzeit zu entscheiden. Man bezeichnet dies auch als <a name="ixa100509"><i>dynamisches
+Binden</i></a>. 
+
+<p>
+In C++ wird dieses Verhalten durch virtuelle Funktionen realisiert
+und es muss mit Hilfe des Schl&uuml;sselworts <font color="#000077"><tt>virtual</tt></font>
+explizit angeordnet werden. In Java ist eine explizite Deklaration
+nicht n&ouml;tig, denn Methodenaufrufe werden immer dynamisch interpretiert.
+Der dadurch verursachte Overhead ist allerdings nicht zu vernachl&auml;ssigen
+und liegt deutlich &uuml;ber den Kosten eines statischen Methodenaufrufs.
+Um das Problem zu umgehen, gibt es mehrere M&ouml;glichkeiten, daf&uuml;r
+zu sorgen, dass eine Methode nicht dynamisch interpretiert wird. Dabei
+wird mit Hilfe zus&auml;tzlicher Attribute daf&uuml;r gesorgt, dass
+die betreffende Methode nicht &uuml;berlagert werden kann: 
+<ul>
+<li>Methoden vom Typ <a name="ixa100510"><a href="index_p.html#ixb100084"><font color=#000080><tt>private</tt></font></a></a>
+sind in abgeleiteten Klassen nicht sichtbar und k&ouml;nnen daher
+nicht &uuml;berlagert werden.
+<li>Bei Methoden vom Typ <a name="ixa100511"><a href="index_f.html#ixb100410"><font color=#000080><tt>final</tt></font></a></a>
+deklariert der Anwender explizit, dass sie nicht &uuml;berlagert werden
+sollen.
+<li>Auch bei <a name="ixa100512"><a href="index_s.html#ixb100431"><font color=#000080><tt>static</tt></font></a></a>-Methoden,
+die ja unabh&auml;ngig von einer Instanz existieren, besteht das Problem
+nicht.
+</ul>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+In <a href="k100061.html#abstraktpolymorph">Abschnitt 9.4</a> werden
+wir das Thema <i>Polymorphismus</i> noch einmal aufgreifen und ein
+ausf&uuml;hrliches Beispiel f&uuml;r dynamische Methodensuche geben.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id009001003002"></a>
+<h4>Aufrufen einer verdeckten Methode </h4>
+
+<p>
+Wird eine Methode <font color="#000077"><tt>x</tt></font> in einer
+abgeleiteten Klasse &uuml;berlagert, wird die urspr&uuml;ngliche Methode
+<font color="#000077"><tt>x</tt></font> verdeckt. Aufrufe von <font color="#000077"><tt>x</tt></font>
+beziehen sich immer auf die &uuml;berlagernde Variante. Oftmals ist
+es allerdings n&uuml;tzlich, die verdeckte Superklassenmethode aufrufen
+zu k&ouml;nnen, beispielsweise, wenn deren Funktionalit&auml;t nur
+leicht ver&auml;ndert werden soll. In diesem Fall kann mit Hilfe des
+Ausdrucks <font color="#000077"><tt>super.x()</tt></font><a name="ixa100513"></a>
+die Methode der Vaterklasse aufgerufen werden. Der kaskadierte Aufruf
+von Superklassenmethoden (wie in <font color="#000077"><tt>super.super.x()</tt></font>)
+ist nicht erlaubt. 
+
+<!-- Section -->
+
+<a name="vererbungvonkonstruktoren"></a>
+<h3>9.1.4 Vererbung von Konstruktoren </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id009001004001"></a>
+<h4><a name="ixa100514">Konstruktorenverkettung</a></h4>
+
+<p>
+Wenn eine Klasse instanziert wird, garantiert Java, dass ein zur Parametrisierung
+des <a href="index_n.html#ixb100088"><font color=#000080><tt>new</tt></font></a>-Operators
+passender Konstruktor aufgerufen wird. Daneben garantiert der Compiler,
+dass auch der Konstruktor der Vaterklasse aufgerufen wird. Dieser
+Aufruf kann entweder explizit oder implizit geschehen. 
+
+<p>
+Falls als erste Anweisung innerhalb eines Konstruktors ein Aufruf
+der Methode <a name="ixa100515"><a href="index_s.html#ixb100433"><font color=#000080><tt>super</tt></font></a></a>
+steht, wird dies als Aufruf des <a name="ixa100516">Superklassenkonstruktors</a>
+interpretiert. <a href="index_s.html#ixb100433"><font color=#000080><tt>super</tt></font></a>
+wird wie eine normale Methode verwendet und kann mit oder ohne Parameter
+aufgerufen werden. Der Aufruf muss nat&uuml;rlich zu einem in der
+Superklasse definierten Konstruktor passen. 
+
+<p>
+Falls als erste Anweisung im Konstruktor kein Aufruf von <a href="index_s.html#ixb100433"><font color=#000080><tt>super</tt></font></a>
+steht, setzt der Compiler an dieser Stelle einen impliziten Aufruf
+<font color="#000077"><tt>super();</tt></font> ein und ruft damit
+den parameterlosen Konstruktor der Vaterklasse auf. Falls ein solcher
+Konstruktor in der Vaterklasse nicht definiert wurde, gibt es einen
+Compiler-Fehler. Das ist genau dann der Fall, wenn in der Superklassendeklaration
+lediglich <i>parametrisierte</i> Konstruktoren angegeben wurden und
+daher ein parameterloser <i>default</i>-Konstruktor nicht automatisch
+erzeugt wurde. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Alternativ zu diesen beiden Varianten, einen Superklassenkonstruktor
+aufzurufen, ist es auch erlaubt, mit Hilfe der <a name="ixa100517"><a href="index_t.html#ixb100284"><font color=#000080><tt>this</tt></font></a></a>-Methode
+einen anderen Konstruktor der eigenen Klasse aufzurufen. Um die oben
+erw&auml;hnten Zusagen einzuhalten, muss dieser allerdings selbst
+direkt oder indirekt schlie&szlig;lich einen Superklassenkonstruktor
+aufrufen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id009001004002"></a>
+<h4>Der <a name="ixa100518">Default-Konstruktor</a> </h4>
+
+<p>
+Das Anlegen von Konstruktoren in einer Klasse ist optional. Falls
+in einer Klasse &uuml;berhaupt kein Konstruktor definiert wurde, erzeugt
+der Compiler beim &Uuml;bersetzen der Klasse automatisch einen parameterlosen
+<i>default</i>-Konstruktor. Dieser enth&auml;lt lediglich einen Aufruf
+des parameterlosen Superklassenkonstruktors. 
+
+<!-- Section -->
+
+<a name="sectlevel4id009001004003"></a>
+<h4>&Uuml;berlagerte Konstruktoren </h4>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Konstruktoren werden nicht vererbt. Alle Konstruktoren, die in einer
+abgeleiteten Klasse ben&ouml;tigt werden, m&uuml;ssen neu definiert
+werden, selbst wenn sie nur aus einem Aufruf des Superklassenkonstruktors
+bestehen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Durch diese Regel wird bei jedem Neuanlegen eines Objekts eine ganze
+Kette von Konstruktoren aufgerufen. Da nach den obigen Regeln jeder
+Konstruktor zuerst den Superklassenkonstruktor aufruft, wird die Initialisierung
+von oben nach unten in der Vererbungshierarchie durchgef&uuml;hrt:
+Zuerst wird der Konstruktor der Klasse <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+ausgef&uuml;hrt, dann der der ersten Unterklasse usw., bis zuletzt
+der Konstruktor der zu instanzierenden Klasse ausgef&uuml;hrt wird.
+
+
+<!-- Section -->
+<a name="sectlevel4id009001004004"></a>
+<h4>Destruktorenverkettung </h4>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Im Gegensatz zu den Konstruktoren werden die Destruktoren eines Ableitungszweigs
+nicht automatisch verkettet. Falls eine Destruktorenverkettung erforderlich
+ist, kann sie durch explizite Aufrufe des Superklassendestruktors
+mit Hilfe der Anweisung <font color="#000077"><tt>super.finalize()</tt></font>
+durchgef&uuml;hrt werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100057.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100057.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100059.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100063.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100114.html;106,k100118.html;107,k100120.html;108,k100121.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100114.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100118.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100120.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100121.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 17 - Utility-Klassen I
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id017005"></a>
+<h2>17.5 Die Klasse Arrays </h2>
+<hr>
+<ul>
+<li><a href="k100119.html#sectlevel2id017005">17.5 Die Klasse Arrays</a>
+</ul>
+<hr>
+
+<p>
+Seit dem JDK 1.2 gibt es die Klasse <a name="ixa101133"><a href="index_a.html#ixb100880"><font color=#000080><tt>Arrays</tt></font></a></a>
+im Paket <a href="index_j.html#ixb100149"><font color=#000080><tt>java.util</tt></font></a>,
+die einige n&uuml;tzliche Methoden zum Zugriff auf Arrays zur Verf&uuml;gung
+stellt. Sie kann beispielsweise ein Array mit vorgegebenen Werten
+f&uuml;llen, eine bin&auml;re Suche durchf&uuml;hren, das Array sortieren
+oder zwei Arrays miteinander vergleichen. 
+
+<p>
+Die wichtigsten Methoden sind <a name="ixa101134"><a href="index_f.html#ixb100881"><font color=#000080><tt>fill</tt></font></a></a>,
+<a name="ixa101135"><a href="index_b.html#ixb100779"><font color=#000080><tt>binarySearch</tt></font></a></a>,
+<a name="ixa101136"><a href="index_s.html#ixb100777"><font color=#000080><tt>sort</tt></font></a></a>
+und <a href="index_e.html#ixb100230"><font color=#000080><tt>equals</tt></font></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static void fill(int[] a, int val)
+
+public static int binarySearch(int[] a, int key)
+
+public static void sort(int[] a)
+
+public static boolean equals(int[] a, int[] a2)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Arrays.html" onClick="this.href=getApiDoc('java.util.Arrays')"><font color="#660066" size=-1>java.util.Arrays</font></a></td>
+</tr>
+</table>
+
+<p>
+Alle Methoden stehen auch in vergleichbaren Versionen f&uuml;r die
+anderen primitiven Typen zur Verf&uuml;gung. Wir wollen uns die Verwendung
+der Klasse <a href="index_a.html#ixb100880"><font color=#000080><tt>Arrays</tt></font></a>
+am Beispiel eines einfachen Programms ansehen, das ein Array von Ganzzahlen
+sortiert: 
+<a name="listingid017010"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1710.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1710
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#0000AA">final</font> <font color="#006699">int</font> SIZE = 20;
+<font color="#555555">010 </font>    <font color="#006699">int</font>[] values = <font color="#0000AA">new</font> <font color="#006699">int</font>[SIZE];
+<font color="#555555">011 </font>    Random rand = <font color="#0000AA">new</font> Random();
+<font color="#555555">012 </font>    <font color="#00AA00">//Erzeugen und Ausgeben des unsortierten Arrays</font>
+<font color="#555555">013 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; SIZE; ++i) {
+<font color="#555555">014 </font>      values[i] = rand.nextInt(10 * SIZE);
+<font color="#555555">015 </font>    }
+<font color="#555555">016 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; SIZE; ++i) {
+<font color="#555555">017 </font>      System.out.println(values[i]);
+<font color="#555555">018 </font>    }
+<font color="#555555">019 </font>    <font color="#00AA00">//Sortieren des Arrays</font>
+<font color="#555555">020 </font>    Arrays.sort(values);
+<font color="#555555">021 </font>    <font color="#00AA00">//Ausgeben der Daten</font>
+<font color="#555555">022 </font>    System.out.println(<font color="#0000FF">"---"</font>);
+<font color="#555555">023 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; SIZE; ++i) {
+<font color="#555555">024 </font>      System.out.println(values[i]);
+<font color="#555555">025 </font>    }
+<font color="#555555">026 </font>  }
+<font color="#555555">027 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1710.java"><font color="#000055" size=-1>Listing1710.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 17.10: Sortieren eines Arrays</i></p>
+
+<p>
+Die Ausgabe k&ouml;nnte so aussehen: 
+<font color="#333300">
+<pre>
+22
+139
+22
+152
+61
+...
+180
+122
+7
+189
+109
+136
+---
+7
+22
+22
+30
+37
+39
+42
+...
+169
+180
+189
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Sortiermethoden der Klasse <a href="index_a.html#ixb100880"><font color=#000080><tt>Arrays</tt></font></a>
+k&ouml;nnen Arrays mit primitiven Datentypen nur in <i>aufsteigender</i>
+Reihenfolge sortieren. Zus&auml;tzlich gibt es eine Variante, die
+ein Array von Elementen des Typs <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+sortiert und dazu als zweites Argument ein <a name="ixa101137"><a href="index_c.html#ixb100767"><font color=#000080><tt>Comparator</tt></font></a></a>-Objekt
+erwartet. Die Bedeutung und Anwendung dieser Klasse und ihre Verwendung
+im Rahmen der Collection-Klassen wurden in <a href="k100110.html#sortiertecollections">Abschnitt 16.6</a>
+besprochen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100114.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100118.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100120.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100121.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

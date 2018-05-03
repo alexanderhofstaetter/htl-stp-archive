@@ -1,0 +1,1007 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100230.html;106,k100231.html;107,k100233.html;108,k100236.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100230.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100231.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100233.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100236.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 35 - Drucken
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id035002"></a>
+<h2>35.2 Drucken mit dem Java 2D Printing API </h2>
+<hr>
+<ul>
+<li><a href="k100232.html#sectlevel2id035002">35.2 Drucken mit dem Java 2D Printing API</a>
+<ul>
+<li><a href="k100232.html#sectlevel3id035002001">35.2.1 &Uuml;berblick</a>
+<li><a href="k100232.html#sectlevel3id035002002">35.2.2 Zusammenspiel der Klassen</a>
+<ul>
+<li><a href="k100232.html#sectlevel4id035002002001">Die Klasse PrinterJob</a>
+<li><a href="k100232.html#sectlevel4id035002002002">Die Klassen Paper und PageFormat</a>
+<li><a href="k100232.html#sectlevel4id035002002003">Die Konfigurationsdialoge</a>
+<li><a href="k100232.html#sectlevel4id035002002004">Das Interface Printable</a>
+<li><a href="k100232.html#sectlevel4id035002002005">Das Interface Pageable und die Klasse Book</a>
+</ul>
+<li><a href="k100232.html#sectlevel3id035002003">35.2.3 Ausdrucken einer Textdatei</a>
+<ul>
+<li><a href="k100232.html#sectlevel4id035002003001">Die Hilfsklasse FilePrintHelper</a>
+<li><a href="k100232.html#sectlevel4id035002003002">Die Klasse SimpleFilePrinter</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id035002001"></a>
+<h3>35.2.1 &Uuml;berblick </h3>
+
+<p>
+Die Klassen und Interfaces des Java 2D Printing API befinden sich
+in dem Paket <a name="ixa102271"><a href="index_j.html#ixb101693"><font color=#000080><tt>java.awt.print</tt></font></a></a>.
+Es stellt zwei unterschiedliche Arten von Funktionen zur Verf&uuml;gung:
+<ul>
+<li>Die Klasse <a name="ixa102272"><a href="index_p.html#ixb101694"><font color=#000080><tt>PrinterJob</tt></font></a></a>
+ist f&uuml;r die <i>Kontrolle des Druckauftrags</i> verantwortlich.
+Sie dient zum Aufrufen der plattformspezifischen Konfigurationsdialoge,
+registriert die Objekte zur Seitenausgabe und startet den eigentlichen
+Druckvorgang.
+<li>Der <i>eigentliche Ausdruck</i> wird von Objekten des Typs <a name="ixa102273"><a href="index_p.html#ixb101695"><font color=#000080><tt>Printable</tt></font></a></a>
+oder <a name="ixa102274"><a href="index_p.html#ixb101696"><font color=#000080><tt>Pageable</tt></font></a></a>
+erledigt. Sie werden beim <a href="index_p.html#ixb101694"><font color=#000080><tt>PrinterJob</tt></font></a>
+registriert und zu geeigneter Zeit von diesem mit der Ausgabe der
+Druckdaten beauftragt.
+</ul>
+
+<p>
+Es stehen <i>zwei</i> unterschiedliche Konfigurationsdialoge zur Verf&uuml;gung.
+Mit dem einen k&ouml;nnen Job-Parameter wie <i>Anzahl der Kopien</i>,
+<i>auszudruckende Seiten</i> oder der <i>Druckertyp</i> eingestellt
+werden. Der andere dient zur Einstellung von Seitenparametern, mit
+denen etwa das Papierformat, die Seitengr&ouml;&szlig;e oder die Randeinstellungen
+konfiguriert werden k&ouml;nnen. Beide Dialoge sind optional und k&ouml;nnen
+auch unterdr&uuml;ckt werden. Alle mit ihrer Hilfe konfigurierbaren
+Parameter k&ouml;nnen auch programmgesteuert ver&auml;ndert werden.
+
+
+<!-- Section -->
+<a name="sectlevel3id035002002"></a>
+<h3>35.2.2 Zusammenspiel der Klassen </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id035002002001"></a>
+<h4>Die Klasse PrinterJob </h4>
+
+<p>
+Die abstrakte Klasse <a name="ixa102275"><a href="index_p.html#ixb101694"><font color=#000080><tt>PrinterJob</tt></font></a></a>
+aus dem Paket <a href="index_j.html#ixb101693"><font color=#000080><tt>java.awt.print</tt></font></a>
+repr&auml;sentiert einen Druckauftrag und ist Ausgangspunkt f&uuml;r
+alle Druckaktivit&auml;ten. Sie besitzt eine statische Methode <a name="ixa102276"><a href="index_g.html#ixb101697"><font color=#000080><tt>getPrinterJob</tt></font></a></a>,
+mit der Instanzen erzeugt werden k&ouml;nnen. Zudem besitzt <a href="index_p.html#ixb101694"><font color=#000080><tt>PrinterJob</tt></font></a>
+einige Methoden, mit denen globale Eigenschaften des Druckauftrags
+kontrolliert werden k&ouml;nnen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static PrinterJob getPrinterJob()
+
+public String getUserName()
+
+public int getCopies()
+public void setCopies(int copies)
+
+public void setJobName(String jobName)
+public String getJobName()
+
+public void cancel()
+public boolean isCancelled()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/print/PrinterJob.html" onClick="this.href=getApiDoc('java.awt.print.PrinterJob')"><font color="#660066" size=-1>java.awt.print.PrinterJob</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa102277"><a href="index_g.html#ixb101698"><font color=#000080><tt>getUserName</tt></font></a></a>
+liefert den Namen des Benutzers, der den Job gestartet hat. <a name="ixa102278"><a href="index_g.html#ixb101699"><font color=#000080><tt>getCopies</tt></font></a></a>
+und <a name="ixa102279"><a href="index_s.html#ixb101700"><font color=#000080><tt>setCopies</tt></font></a></a>
+erlauben den Zugriff auf die Anzahl der Kopien, die ausgedruckt werden
+sollen. Mit <a name="ixa102280"><a href="index_g.html#ixb101701"><font color=#000080><tt>getJobName</tt></font></a></a>
+und <a name="ixa102281"><a href="index_s.html#ixb101702"><font color=#000080><tt>setJobName</tt></font></a></a>
+kann der Name des Druckjobs abgefragt bzw. eingestellt werden. Durch
+Aufruf von <a name="ixa102282"><a href="index_c.html#ixb101703"><font color=#000080><tt>cancel</tt></font></a></a>
+kann ein laufender Druckjob abgebrochen werden und schlie&szlig;lich
+liefert <a name="ixa102283"><a href="index_i.html#ixb101704"><font color=#000080><tt>isCancelled</tt></font></a></a>
+den R&uuml;ckgabewert <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>,
+falls w&auml;hrend eines laufenden Druckjobs <a href="index_c.html#ixb101703"><font color=#000080><tt>cancel</tt></font></a>
+aufgerufen wurde und der Job bei der n&auml;chstm&ouml;glichen Gelegenheit
+beendet wird. 
+
+<!-- Section -->
+
+<a name="sectlevel4id035002002002"></a>
+<h4>Die Klassen Paper und PageFormat </h4>
+
+<p>
+Neben den eigentlichen Druckdaten besitzt eine auszudruckende Seite
+parametrisierende Eigenschaften wie Papiergr&ouml;&szlig;e und Randeinstellungen.
+Diese werden durch die Klassen <a name="ixa102284"><a href="index_p.html#ixb101705"><font color=#000080><tt>PageFormat</tt></font></a></a>
+und <a name="ixa102285"><a href="index_p.html#ixb101706"><font color=#000080><tt>Paper</tt></font></a></a>
+gekapselt. <a href="index_p.html#ixb101706"><font color=#000080><tt>Paper</tt></font></a>
+repr&auml;sentiert ein Blatt Papier mit festgelegten Abmessungen f&uuml;r
+Breite, H&ouml;he und bedruckbaren Bereich: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public double getHeight()
+public double getWidth()
+
+public double getImageableX()
+public double getImageableY()
+
+public double getImageableWidth()
+public double getImageableHeight()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/print/Paper.html" onClick="this.href=getApiDoc('java.awt.print.Paper')"><font color="#660066" size=-1>java.awt.print.Paper</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa102286"><a href="index_g.html#ixb101242"><font color=#000080><tt>getHeight</tt></font></a></a>
+und <a name="ixa102287"><a href="index_g.html#ixb101682"><font color=#000080><tt>getWidth</tt></font></a></a>
+liefern die H&ouml;he bzw. Breite des Papierblatts. <a name="ixa102288"><a href="index_g.html#ixb101707"><font color=#000080><tt>getImageableX</tt></font></a></a>
+und <a name="ixa102289"><a href="index_g.html#ixb101708"><font color=#000080><tt>getImageableY</tt></font></a></a>
+geben den Abstand des bedruckbaren Bereichs vom oberen bzw. linken
+Blattrand an. <a name="ixa102290"><a href="index_g.html#ixb101709"><font color=#000080><tt>getImageableWidth</tt></font></a></a>
+und <a name="ixa102291"><a href="index_g.html#ixb101710"><font color=#000080><tt>getImageableHeight</tt></font></a></a>
+geben die Breite bzw. H&ouml;he des bedruckbaren Bereichs an. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+<a href="index_p.html#ixb101706"><font color=#000080><tt>Paper</tt></font></a>
+speichert und liefert alle Parameter in einer Einheit von 1/72 Zoll.
+Das entspricht etwa der typografischen Ma&szlig;einheit &#187;Punkt&#171;,
+die etwas l&auml;nger als ein Drittel Millimeter ist. Ein derartiges
+Raster repr&auml;sentiert die Aufl&ouml;sung eines durchschnittlichen
+Monitors und ist f&uuml;r Druckausgaben viel zu grob. Gl&uuml;cklicherweise
+werden die Werte als Flie&szlig;kommazahlen gespeichert und lassen
+sich zur Erh&ouml;hung der Genauigkeit skalieren. Wir werden weiter
+unten auf die dazu n&ouml;tigen Techniken zur&uuml;ckkommen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Die Klasse <a href="index_p.html#ixb101705"><font color=#000080><tt>PageFormat</tt></font></a>
+kapselt ein <a href="index_p.html#ixb101706"><font color=#000080><tt>Paper</tt></font></a>-Objekt
+und dessen Orientierung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static final int PORTRAIT
+public static final int LANDSCAPE
+public static final int REVERSE_LANDSCAPE
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/print/PageFormat.html" onClick="this.href=getApiDoc('java.awt.print.PageFormat')"><font color="#660066" size=-1>java.awt.print.PageFormat</font></a></td>
+</tr>
+</table>
+
+<p>
+Ist die Orientierung <a name="ixa102292"><a href="index_p.html#ixb101711"><font color=#000080><tt>PORTRAIT</tt></font></a></a>,
+wird das Blatt in seiner Standardausrichtung verwendet. Es ist also
+h&ouml;her als breit und der Koordinatenursprung befindet sich links
+oben. Beim Drucken im <a name="ixa102293"><a href="index_l.html#ixb101712"><font color=#000080><tt>LANDSCAPE</tt></font></a></a>-Modus
+wird das Papier quer verwendet und der rechte Rand des Ausdrucks liegt
+am oberen Blattrand. <a name="ixa102294"><a href="index_r.html#ixb101713"><font color=#000080><tt>REVERSE_LANDSCAPE</tt></font></a></a>
+druckt ebenfalls quer, aber mit umgekehrter Druckrichtung. 
+
+<p>
+<a href="index_p.html#ixb101705"><font color=#000080><tt>PageFormat</tt></font></a>
+stellt Methoden zum Zugriff auf das Papier, seine Orientierung und
+die aus <a href="index_p.html#ixb101706"><font color=#000080><tt>Paper</tt></font></a>
+bekannten Methoden zum Zugriff auf die Seitenabmessungen zur Verf&uuml;gung:
+<a name="ixa102295"></a> <a name="ixa102296"></a> 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Paper getPaper()
+
+public int getOrientation()
+
+public double getHeight()
+public double getWidth()
+
+public double getImageableX()
+public double getImageableY()
+
+public double getImageableWidth()
+public double getImageableHeight()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/print/Paper.html" onClick="this.href=getApiDoc('java.awt.print.Paper')"><font color="#660066" size=-1>java.awt.print.Paper</font></a></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Im Gegensatz zu <a href="index_p.html#ixb101706"><font color=#000080><tt>Paper</tt></font></a>
+sind die R&uuml;ckgabewerte nun aber an die Orientierung angepasst.
+Wird also beispielsweise im <a href="index_l.html#ixb101712"><font color=#000080><tt>LANDSCAPE</tt></font></a>-Modus
+ausgedruckt, liefert <a href="index_g.html#ixb101242"><font color=#000080><tt>getHeight</tt></font></a>
+die Breite des Blatts und <a href="index_g.html#ixb101682"><font color=#000080><tt>getWidth</tt></font></a>
+dessen H&ouml;he. Die anderen Methoden verhalten sich analog.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Ein <a href="index_p.html#ixb101705"><font color=#000080><tt>PageFormat</tt></font></a>-Objekt
+wird gew&ouml;hnlich mit der Methode <a name="ixa102297"><a href="index_d.html#ixb101716"><font color=#000080><tt>defaultPage</tt></font></a></a>
+der Klasse <a href="index_p.html#ixb101694"><font color=#000080><tt>PrinterJob</tt></font></a>
+beschafft: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public PageFormat defaultPage()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/print/PrinterJob.html" onClick="this.href=getApiDoc('java.awt.print.PrinterJob')"><font color="#660066" size=-1>java.awt.print.PrinterJob</font></a></td>
+</tr>
+</table>
+
+<p>
+Es kann dann entweder programmgesteuert oder durch Aufruf des Seitendialogs
+konfiguriert werden. 
+
+<!-- Section -->
+
+<a name="sectlevel4id035002002003"></a>
+<h4>Die Konfigurationsdialoge </h4>
+
+<p>
+Die Klasse <a href="index_p.html#ixb101694"><font color=#000080><tt>PrinterJob</tt></font></a>
+besitzt zwei Konfigurationsdialoge. Der erste dient zur Konfiguration
+eines <a href="index_p.html#ixb101705"><font color=#000080><tt>PageFormat</tt></font></a>-Objekts
+und wird mit <a name="ixa102298"><a href="index_p.html#ixb101717"><font color=#000080><tt>pageDialog</tt></font></a></a>
+aufgerufen. Der zweite dient zur Konfiguration der globalen Job-Parameter
+und wird mit <a name="ixa102299"><a href="index_p.html#ixb101718"><font color=#000080><tt>printDialog</tt></font></a></a>
+aufgerufen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public PageFormat pageDialog(PageFormat page)
+
+public abstract boolean printDialog()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/print/PrinterJob.html" onClick="this.href=getApiDoc('java.awt.print.PrinterJob')"><font color="#660066" size=-1>java.awt.print.PrinterJob</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_p.html#ixb101717"><font color=#000080><tt>pageDialog</tt></font></a>
+erwartet ein <a href="index_p.html#ixb101705"><font color=#000080><tt>PageFormat</tt></font></a>-Objekt
+(das typischerweise durch <a href="index_d.html#ixb101716"><font color=#000080><tt>defaultPage</tt></font></a>
+erzeugt wird) und bietet dem Anwender die M&ouml;glichkeit, dessen
+Eigenschaften zu ver&auml;ndern. Die daf&uuml;r verwendeten Dialoge
+sind plattformabh&auml;ngig, die Windows-Variante ist in <a href="k100232.html#druckseitendialog">Abbildung 35.1</a>
+zu sehen. 
+
+<p>
+Der R&uuml;ckgabewert von <a href="index_p.html#ixb101717"><font color=#000080><tt>pageDialog</tt></font></a>
+ist das konfigurierte <a href="index_p.html#ixb101705"><font color=#000080><tt>PageFormat</tt></font></a>-Objekt.
+Hat der Anwender den Dialog mit &#187;OK&#171; beendet, wird eine
+Kopie des als Parameter &uuml;bergebenen Objekts erzeugt, mit den
+Einstellungen des Anwenders versehen und an den Aufrufer zur&uuml;ckgegeben.
+Hat der Anwender den Dialog dagegen abgebrochen, wird das unver&auml;nderte
+Originalobjekt zur&uuml;ckgegeben. Durch Vergleichen der beiden Objektreferenzen
+kann also unterschieden werden, ob der Druckvorgang fortgesetzt oder
+abgebrochen werden soll. 
+<p>
+<a name="druckseitendialog"></a>
+<img src="images/SeiteEinrichten.gif">
+<p>
+
+<p><i>
+Abbildung 35.1: Der Dialog zur Druckseitenkonfiguration unter Windows</i></p>
+
+<p>
+Durch Aufruf von <a name="ixa102299"><a href="index_p.html#ixb101718"><font color=#000080><tt>printDialog</tt></font></a></a>
+wird der plattformspezifische Dialog zur Jobkonfiguration aufgerufen
+(siehe <a href="k100232.html#druckjobdialog">Abbildung 35.2</a>).
+Er konfiguriert das <a href="index_p.html#ixb101694"><font color=#000080><tt>PrinterJob</tt></font></a>-Objekt
+und die &Auml;nderungen k&ouml;nnen mit den oben beschriebenen Methoden
+abgefragt werden. Der boolesche R&uuml;ckgabewert zeigt an, ob der
+Dialog mit &#187;OK&#171; beendet oder abgebrochen wurde. 
+<p>
+<a name="druckjobdialog"></a>
+<img src="images/DruckerKonfig.gif">
+<p>
+
+<p><i>
+Abbildung 35.2: Der Dialog zur Druckjobkonfiguration unter Windows</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id035002002004"></a>
+<h4>Das Interface Printable </h4>
+
+<p>
+Nachdem wir die Konfiguration der Job- und Seiteneinstellungen besprochen
+haben, wollen wir uns nun der Frage zuwenden, wie die eigentliche
+Druckausgabe erzeugt wird. Dazu gibt es im Paket <a href="index_j.html#ixb101693"><font color=#000080><tt>java.awt.print</tt></font></a>
+ein Interface <a name="ixa102300"><a href="index_p.html#ixb101695"><font color=#000080><tt>Printable</tt></font></a></a>,
+das nur eine Methode enth&auml;lt: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int print(Graphics g, PageFormat pf, int page)
+  throws PrinterException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/print/Printable.html" onClick="this.href=getApiDoc('java.awt.print.Printable')"><font color="#660066" size=-1>java.awt.print.Printable</font></a></td>
+</tr>
+</table>
+
+<p>
+Ein Programm, das Druckausgaben erzeugen will, muss ein Objekt zur
+Verf&uuml;gung stellen, das dieses Interface implementiert. Es muss
+mit der Methode <a name="ixa102301"><a href="index_s.html#ixb101719"><font color=#000080><tt>setPrintable</tt></font></a></a>
+an den <a href="index_p.html#ixb101694"><font color=#000080><tt>PrinterJob</tt></font></a>
+&uuml;bergeben werden und wird von <a href="index_p.html#ixb101694"><font color=#000080><tt>PrinterJob</tt></font></a>
+automatisch aufgerufen, nachdem der Druckvorgang mit <a name="ixa102302"><a href="index_p.html#ixb100934"><font color=#000080><tt>print</tt></font></a></a>
+gestartet wurde: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setPrintable(Printable painter)
+public void setPrintable(Printable painter, PageFormat format)
+
+public void print()
+  throws PrinterException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/print/PrinterJob.html" onClick="this.href=getApiDoc('java.awt.print.PrinterJob')"><font color="#660066" size=-1>java.awt.print.PrinterJob</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_p.html#ixb101695"><font color=#000080><tt>Printable</tt></font></a>
+sorgt dabei f&uuml;r die Druckausgabe, &auml;hnlich wie es <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>
+f&uuml;r die Bildschirmausgabe bei GUI-Komponenten tut. Jeder (von
+<a href="index_p.html#ixb101694"><font color=#000080><tt>PrinterJob</tt></font></a>
+initiierte) Aufruf von <a href="index_p.html#ixb100934"><font color=#000080><tt>print</tt></font></a>
+fordert das <a href="index_p.html#ixb101695"><font color=#000080><tt>Printable</tt></font></a>-Objekt
+auf, eine bestimmte Seite auszudrucken. Der Seitenindex wird dabei
+in dem Parameter <font color="#000077"><tt>page</tt></font> &uuml;bergeben,
+dessen Z&auml;hlung bei 0 beginnt. 
+
+<p>
+Zur Erzeugung von Druckausgaben wird das &uuml;bergebene <a href="index_g.html#ixb101156"><font color=#000080><tt>Graphics</tt></font></a>-Objekt
+verwendet, das wie bei der Erzeugung von Bildschirmausgaben verwendet
+werden kann. Das &uuml;bergebene Objekt kann dabei in ein <a name="ixa102303"><a href="index_g.html#ixb101720"><font color=#000080><tt>Graphics2D</tt></font></a></a>-Objekt
+konvertiert werden und stellt so die erweiterten Funktionen des 2D-API
+zur Verf&uuml;gung. 
+
+<p>
+Weiterhin wird das konfigurierte <a href="index_p.html#ixb101705"><font color=#000080><tt>PageFormat</tt></font></a>
+als Argument an <a href="index_p.html#ixb100934"><font color=#000080><tt>print</tt></font></a>
+&uuml;bergeben. Innerhalb von <a href="index_p.html#ixb100934"><font color=#000080><tt>print</tt></font></a>
+wird es dazu benutzt, die Gr&ouml;&szlig;e des Papiers und dessen
+bedruckbaren Bereich zu ermitteln. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Es ist sehr wichtig, zu wissen, dass <a href="index_p.html#ixb100934"><font color=#000080><tt>print</tt></font></a>
+f&uuml;r ein und dieselbe Seite mehrfach aufgerufen werden kann (und
+normalerweise auch wird). Da die JDK-Dokumentation keine Aussagen
+dar&uuml;ber macht, wie oft und in welcher Reihenfolge die Seiten
+abgefordert werden, muss das <a href="index_p.html#ixb101695"><font color=#000080><tt>Printable</tt></font></a>-Objekt
+selbst f&uuml;r eine geeignete Verwaltung der ben&ouml;tigten Statusinformationen
+sorgen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Der R&uuml;ckgabewert von <a href="index_p.html#ixb100934"><font color=#000080><tt>print</tt></font></a>
+gibt an, ob die Seitenzahl g&uuml;ltig war und die Druckausgabe erzeugt
+werden konnte, oder ob eine ung&uuml;ltige Seitenzahl &uuml;bergeben
+wurde. Im ersten Fall gibt <a href="index_p.html#ixb100934"><font color=#000080><tt>print</tt></font></a>
+die in <a href="index_p.html#ixb101695"><font color=#000080><tt>Printable</tt></font></a>
+definierte Konstante <a name="ixa102304"><a href="index_p.html#ixb101721"><font color=#000080><tt>PAGE_EXISTS</tt></font></a></a>
+zur&uuml;ck, im zweiten Fall <a name="ixa102305"><a href="index_n.html#ixb101722"><font color=#000080><tt>NO_SUCH_PAGE</tt></font></a></a>.
+Da der <a href="index_p.html#ixb101694"><font color=#000080><tt>PrinterJob</tt></font></a>
+nicht von Anfang an wei&szlig;, wie viele Seiten insgesamt ausgedruckt
+werden sollen, muss er beim Aufruf von <a href="index_p.html#ixb100934"><font color=#000080><tt>print</tt></font></a>
+schrittweise den Seitenz&auml;hler erh&ouml;hen und darauf warten,
+dass <a href="index_n.html#ixb101722"><font color=#000080><tt>NO_SUCH_PAGE</tt></font></a>
+zur&uuml;ckgegeben wird. Danach erfolgen keine weiteren Aufrufe von
+<a href="index_p.html#ixb100934"><font color=#000080><tt>print</tt></font></a>.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Will das <a href="index_p.html#ixb101695"><font color=#000080><tt>Printable</tt></font></a>-Objekt
+den kompletten Job w&auml;hrend der Ausgabe abbrechen, braucht es
+dazu lediglich w&auml;hrend des Aufrufs von <a href="index_p.html#ixb100934"><font color=#000080><tt>print</tt></font></a>
+eine <a name="ixa102306"><a href="index_p.html#ixb101723"><font color=#000080><tt>PrinterException</tt></font></a></a>
+auszul&ouml;sen. Diese wird vom <a href="index_p.html#ixb101694"><font color=#000080><tt>PrinterJob</tt></font></a>
+abgefangen und f&uuml;hrt zum Abbruch des Druckjobs.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id035002002005"></a>
+<h4>Das Interface Pageable und die Klasse Book </h4>
+
+<p>
+Das Paket <a href="index_j.html#ixb101693"><font color=#000080><tt>java.awt.print</tt></font></a>
+stellt auch eine Abstraktion f&uuml;r <i>mehrseitige</i> Dokumente
+zur Verf&uuml;gung. Das Interface <a name="ixa102307"><a href="index_p.html#ixb101696"><font color=#000080><tt>Pageable</tt></font></a></a>
+definiert deren Eigenschaften: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int getNumberOfPages()
+
+public PageFormat getPageFormat(int pageIndex)
+  throws IndexOutOfBoundsException
+
+public Printable getPrintable(int pageIndex)
+  throws IndexOutOfBoundsException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/print/Pageable.html" onClick="this.href=getApiDoc('java.awt.print.Pageable')"><font color="#660066" size=-1>java.awt.print.Pageable</font></a></td>
+</tr>
+</table>
+
+<p>
+Ein <a href="index_p.html#ixb101696"><font color=#000080><tt>Pageable</tt></font></a>-Objekt
+kennt (normalerweise) die Anzahl der auszudruckenden Seiten und stellt
+diese auf Anfrage als R&uuml;ckgabewert von <a name="ixa102308"><a href="index_g.html#ixb101724"><font color=#000080><tt>getNumberOfPages</tt></font></a></a>
+zur Verf&uuml;gung. Wahlweise kann aber auch die Konstante <a name="ixa102309"><a href="index_u.html#ixb101725"><font color=#000080><tt>UNKNOWN_NUMBER_OF_PAGES</tt></font></a></a>
+zur&uuml;ckgegeben werden, wenn die Seitenzahl nicht von vorneherein
+bekannt ist. Im Unterschied zu einem <a href="index_p.html#ixb101695"><font color=#000080><tt>Printable</tt></font></a>-Objekt
+(das ja auch mehrere Seiten ausdrucken kann), kann ein <a href="index_p.html#ixb101696"><font color=#000080><tt>Pageable</tt></font></a>
+zu den einzelnen Seiten unterschiedliche <a href="index_p.html#ixb101705"><font color=#000080><tt>PageFormat</tt></font></a>-
+und <a href="index_p.html#ixb101695"><font color=#000080><tt>Printable</tt></font></a>-Objekte
+zur Verf&uuml;gung stellen. Sie werden w&auml;hrend des Druckvorgangs
+mit den Methoden <a name="ixa102310"><a href="index_g.html#ixb101726"><font color=#000080><tt>getPageFormat</tt></font></a></a>
+und <a name="ixa102311"><a href="index_g.html#ixb101727"><font color=#000080><tt>getPrintable</tt></font></a></a>
+abgefragt. 
+
+<p>
+Mit der Klasse <a name="ixa102312"><a href="index_b.html#ixb101728"><font color=#000080><tt>Book</tt></font></a></a>
+stellt <a href="index_j.html#ixb101693"><font color=#000080><tt>java.awt.print</tt></font></a>
+eine konkrete Implementierung von <a href="index_p.html#ixb101696"><font color=#000080><tt>Pageable</tt></font></a>
+zur Verf&uuml;gung. Ein <a href="index_b.html#ixb101728"><font color=#000080><tt>Book</tt></font></a>
+ist dabei nichts anderes als eine nach Seitenzahlen indizierte Liste
+von (<a href="index_p.html#ixb101705"><font color=#000080><tt>PageFormat</tt></font></a>/<a href="index_p.html#ixb101695"><font color=#000080><tt>Printable</tt></font></a>)-Paaren,
+die mit einigen einfachen Methoden gepflegt werden kann: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void append(Printable painter, PageFormat pf)
+public void append(Printable painter, PageFormat pf, int numPages)
+
+public void setPage(int page, Printable painter, PageFormat pf)
+  throws IndexOutOfBoundsException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/print/Book.html" onClick="this.href=getApiDoc('java.awt.print.Book')"><font color="#660066" size=-1>java.awt.print.Book</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa102313"><a href="index_a.html#ixb100188"><font color=#000080><tt>append</tt></font></a></a>
+werden eine oder mehrere Seiten mit den angegebenen <a href="index_p.html#ixb101695"><font color=#000080><tt>Printable</tt></font></a>-
+und <a href="index_p.html#ixb101705"><font color=#000080><tt>PageFormat</tt></font></a>-Objekten
+an das Ende des Buchs angeh&auml;ngt. Mit <a name="ixa102314"><a href="index_s.html#ixb101729"><font color=#000080><tt>setPage</tt></font></a></a>
+kann gezielt eine bereits bestehende Seite ver&auml;ndert werden.
+
+
+<!-- Section -->
+<a name="sectlevel3id035002003"></a>
+<h3>35.2.3 Ausdrucken einer Textdatei </h3>
+
+<p>
+Nach diesen Vorbemerkungen wollen wir uns ein Anwendungsbeispiel f&uuml;r
+das Druck-API des JDK 1.2 ansehen. Dazu soll ein Programm geschrieben
+werden, das beliebige Textdateien auf einem Drucker ausgeben kann.
+Der Anwender soll sowohl Job- als auch Seitenparameter im Dialog ver&auml;ndern
+k&ouml;nnen. Jede Seite soll mit einer Kopfzeile versehen werden,
+die den Namen der Datei und die Seitenzahl enth&auml;lt. Die Kopfzeile
+soll fett gedruckt und unterstrichen werden. Der Textteil soll dunkelblau
+gedruckt werden, sofern Farben unterst&uuml;tzt werden. 
+
+<!-- Section -->
+
+<a name="sectlevel4id035002003001"></a>
+<h4>Die Hilfsklasse FilePrintHelper </h4>
+
+<p>
+Wir hatten oben erw&auml;hnt, dass die Methode <a href="index_p.html#ixb100934"><font color=#000080><tt>print</tt></font></a>
+des <a href="index_p.html#ixb101695"><font color=#000080><tt>Printable</tt></font></a>-Objekts
+mehrfach f&uuml;r eine einzelne Seite aufgerufen werden kann. Soll
+eine Datei ausgedruckt werden, muss das Programm bei wiederholten
+Besuchen derselben Seite in der Lage sein, an der Textstelle aufzusetzen,
+die den Anfang der Seite markiert. Wir f&uuml;hren dazu eine Hilfsklasse
+<font color="#000077"><tt>FilePrintHelper</tt></font> ein, die sich
+zu jeder besuchten Seite deren Dateioffset merkt und auf Anfrage wieder
+zur Verf&uuml;gung stellt. Sie kann auch Auskunft dar&uuml;ber geben,
+ob eine Seite &uuml;berhaupt schon besucht wurde. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Auf den ersten Blick scheint es &uuml;bertrieben, f&uuml;r das Speichern
+eines einzigen Attributs eine eigene Klasse zu bem&uuml;hen. Bei komplizierten
+Druckaufgaben kann diese Konstruktion aber sehr hilfreich werden.
+Denn neben dem Fileoffset werden oft noch weitere Informationen je
+Seite ben&ouml;tigt, etwa eine Titelzeile, numerische &Uuml;bertr&auml;ge,
+Fu&szlig;noteninformationen oder &Auml;hnliches. In diesem Fall ist
+das hier gew&auml;hlte Design ebenfalls tragf&auml;hig und die Hilfsklasse
+muss nur um die ben&ouml;tigten Attribute und Methoden erweitert werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Die Implementierung der Klasse <font color="#000077"><tt>FilePrintHelper</tt></font>
+sieht so aus: 
+<a name="listingid035001"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* FilePrintHelper.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> FilePrintHelper
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#00AA00">//---Membervariablen----------------------------------</font>
+<font color="#555555">008 </font>  List&lt;Entry&gt; pageinfo;
+<font color="#555555">009 </font>
+<font color="#555555">010 </font>  <font color="#00AA00">//---Konstruktor--------------------------------------</font>
+<font color="#555555">011 </font>  <font color="#0000AA">public</font> FilePrintHelper()
+<font color="#555555">012 </font>  {
+<font color="#555555">013 </font>    pageinfo = <font color="#0000AA">new</font> ArrayList&lt;Entry&gt;();
+<font color="#555555">014 </font>  }
+<font color="#555555">015 </font>
+<font color="#555555">016 </font>  <font color="#00AA00">//---Seitendefinition und -abfrage--------------------</font>
+<font color="#555555">017 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> createPage(<font color="#006699">int</font> page)
+<font color="#555555">018 </font>  {
+<font color="#555555">019 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = pageinfo.size(); i &lt;= page; ++i) {
+<font color="#555555">020 </font>      pageinfo.add(<font color="#0000AA">new</font> Entry());
+<font color="#555555">021 </font>    }
+<font color="#555555">022 </font>  }
+<font color="#555555">023 </font>
+<font color="#555555">024 </font>  <font color="#0000AA">public</font> <font color="#006699">boolean</font> knownPage(<font color="#006699">int</font> page)
+<font color="#555555">025 </font>  {
+<font color="#555555">026 </font>    <font color="#0000AA">return</font> page &lt; pageinfo.size();
+<font color="#555555">027 </font>  }
+<font color="#555555">028 </font>
+<font color="#555555">029 </font>  <font color="#00AA00">//---Verwaltung der Offsets---------------------------</font>
+<font color="#555555">030 </font>  <font color="#0000AA">public</font> <font color="#006699">long</font> getFileOffset(<font color="#006699">int</font> page)
+<font color="#555555">031 </font>  {
+<font color="#555555">032 </font>    Entry entry = pageinfo.get(page);
+<font color="#555555">033 </font>    <font color="#0000AA">return</font> entry.fileoffset;
+<font color="#555555">034 </font>  }
+<font color="#555555">035 </font>
+<font color="#555555">036 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setFileOffset(<font color="#006699">int</font> page, <font color="#006699">long</font> fileoffset)
+<font color="#555555">037 </font>  {
+<font color="#555555">038 </font>    Entry entry = pageinfo.get(page);
+<font color="#555555">039 </font>    entry.fileoffset = fileoffset;
+<font color="#555555">040 </font>  }
+<font color="#555555">041 </font>
+<font color="#555555">042 </font>  <font color="#00AA00">//---Lokale Klasse Entry------------------------------</font>
+<font color="#555555">043 </font>  <font color="#0000AA">static</font> <font color="#0000AA">class</font> Entry
+<font color="#555555">044 </font>  {
+<font color="#555555">045 </font>    <font color="#0000AA">public</font> <font color="#006699">long</font> fileoffset;
+<font color="#555555">046 </font>
+<font color="#555555">047 </font>    <font color="#0000AA">public</font> Entry()
+<font color="#555555">048 </font>    {
+<font color="#555555">049 </font>      <font color="#006699">this</font>.fileoffset = -1;
+<font color="#555555">050 </font>    }
+<font color="#555555">051 </font>  }
+<font color="#555555">052 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/FilePrintHelper.java"><font color="#000055" size=-1>FilePrintHelper.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 35.1: Die Klasse FilePrintHelper</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id035002003002"></a>
+<h4>Die Klasse SimpleFilePrinter </h4>
+
+<p>
+Das Ausdrucken der Datei wird von der Klasse <font color="#000077"><tt>SimpleFilePrinter</tt></font>
+erledigt. Ihre <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>-Methode
+gliedert die zu erledigende Arbeit in folgende Teilaufgaben: 
+<ul>
+<li>Zun&auml;chst wird ein <font color="#000077"><tt>SimpleFilePrinter</tt></font>
+instanziert. Er erzeugt durch Aufruf von <a href="index_g.html#ixb101697"><font color=#000080><tt>getPrinterJob</tt></font></a>
+eine Instanz der Klasse <a href="index_p.html#ixb101694"><font color=#000080><tt>PrinterJob</tt></font></a>.
+<li>In <font color="#000077"><tt>setupPageFormat</tt></font> wird
+durch Aufruf von <a href="index_d.html#ixb101716"><font color=#000080><tt>defaultPage</tt></font></a>
+ein <a href="index_p.html#ixb101705"><font color=#000080><tt>PageFormat</tt></font></a>
+beschafft und zur Bearbeitung an den Seitendialog &uuml;bergeben.
+Die Methode pr&uuml;ft anschlie&szlig;end, ob der Dialog mit &#187;OK&#171;
+oder &#187;Abbrechen&#171; verlassen wurde, und gibt entweder <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+oder <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>
+zur&uuml;ck (Letzteres f&uuml;hrt in <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>
+zum Abbruch des Druckvorgangs).
+<li>In <font color="#000077"><tt>setupJobOptions</tt></font> wird
+der Dialog zur Konfiguration der Job-Parameter aufgerufen. Auch hier
+f&uuml;hrt ein Abbruch des Anwenders zum Ende des gesamten Druckvorgangs.
+<li>Schlie&szlig;lich wird in <font color="#000077"><tt>printFile</tt></font>
+der eigentliche Druckvorgang angesto&szlig;en. Dazu wird zun&auml;chst
+ein <a href="index_r.html#ixb101021"><font color=#000080><tt>RandomAccessFile</tt></font></a>
+f&uuml;r die auszudruckende Datei angelegt und ein <font color="#000077"><tt>FilePrintHelper</tt></font>
+instanziert. Anschlie&szlig;end wird die Druckausgabe durch Aufruf
+von <a href="index_p.html#ixb100934"><font color=#000080><tt>print</tt></font></a>
+gestartet.
+</ul>
+
+<p>
+Nachfolgend zeigen wir die Implementierung von <font color="#000077"><tt>SimpleFilePrinter</tt></font>.
+Der eigentlich komplizierte Code steckt nat&uuml;rlich in der Methode
+<a href="index_p.html#ixb100934"><font color=#000080><tt>print</tt></font></a>,
+die wir im Anschluss an das Listing erl&auml;utern wollen. 
+<a name="simplefileprinter"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* SimpleFilePrinter.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.print.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> SimpleFilePrinter
+<font color="#555555">008 </font><font color="#0000AA">implements</font> Printable
+<font color="#555555">009 </font>{
+<font color="#555555">010 </font>  <font color="#00AA00">//---Konstanten--------------------------------------</font>
+<font color="#555555">011 </font>  <font color="#0000AA">private</font> <font color="#0000AA">static</font> <font color="#0000AA">final</font> <font color="#006699">int</font> RESMUL = 4;
+<font color="#555555">012 </font>
+<font color="#555555">013 </font>  <font color="#00AA00">//---Membervariablen---------------------------------</font>
+<font color="#555555">014 </font>  <font color="#0000AA">private</font> PrinterJob       pjob;
+<font color="#555555">015 </font>  <font color="#0000AA">private</font> PageFormat       pageformat;
+<font color="#555555">016 </font>  <font color="#0000AA">private</font> FilePrintHelper  fph;
+<font color="#555555">017 </font>  <font color="#0000AA">private</font> String           fname;
+<font color="#555555">018 </font>  <font color="#0000AA">private</font> RandomAccessFile in;
+<font color="#555555">019 </font>
+<font color="#555555">020 </font>  <font color="#00AA00">//---Konstruktoren-----------------------------------</font>
+<font color="#555555">021 </font>  <font color="#0000AA">public</font> SimpleFilePrinter(String fname)
+<font color="#555555">022 </font>  {
+<font color="#555555">023 </font>    <font color="#006699">this</font>.pjob  = PrinterJob.getPrinterJob();
+<font color="#555555">024 </font>    <font color="#006699">this</font>.fname = fname;
+<font color="#555555">025 </font>  }
+<font color="#555555">026 </font>
+<font color="#555555">027 </font>  <font color="#00AA00">//---&Ouml;ffentliche Methoden----------------------------</font>
+<font color="#555555">028 </font>  <font color="#0000AA">public</font> <font color="#006699">boolean</font> setupPageFormat()
+<font color="#555555">029 </font>  {
+<font color="#555555">030 </font>    PageFormat defaultPF = pjob.defaultPage();
+<font color="#555555">031 </font>    <font color="#006699">this</font>.pageformat = pjob.pageDialog(defaultPF);
+<font color="#555555">032 </font>    pjob.setPrintable(<font color="#006699">this</font>, <font color="#006699">this</font>.pageformat);
+<font color="#555555">033 </font>    <font color="#0000AA">return</font> (<font color="#006699">this</font>.pageformat != defaultPF);
+<font color="#555555">034 </font>  }
+<font color="#555555">035 </font>
+<font color="#555555">036 </font>  <font color="#0000AA">public</font> <font color="#006699">boolean</font> setupJobOptions()
+<font color="#555555">037 </font>  {
+<font color="#555555">038 </font>    <font color="#0000AA">return</font> pjob.printDialog();
+<font color="#555555">039 </font>  }
+<font color="#555555">040 </font>
+<font color="#555555">041 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> printFile()
+<font color="#555555">042 </font>  <font color="#0000AA">throws</font> PrinterException, IOException
+<font color="#555555">043 </font>  {
+<font color="#555555">044 </font>    fph = <font color="#0000AA">new</font> FilePrintHelper();
+<font color="#555555">045 </font>    in = <font color="#0000AA">new</font> RandomAccessFile(fname, <font color="#0000FF">"r"</font>);
+<font color="#555555">046 </font>    pjob.print();
+<font color="#555555">047 </font>    in.close();
+<font color="#555555">048 </font>  }
+<font color="#555555">049 </font>
+<font color="#555555">050 </font>  <font color="#00AA00">//---Implementierung von Printable-------------------</font>
+<font color="#555555">051 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> print(Graphics g, PageFormat pf, <font color="#006699">int</font> page)
+<font color="#555555">052 </font>  <font color="#0000AA">throws</font> PrinterException
+<font color="#555555">053 </font>  {
+<font color="#555555">054 </font>    <font color="#006699">int</font> ret = PAGE_EXISTS;
+<font color="#555555">055 </font>    String line = <font color="#006699">null</font>;
+<font color="#555555">056 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">057 </font>      <font color="#0000AA">if</font> (fph.knownPage(page)) {
+<font color="#555555">058 </font>        in.seek(fph.getFileOffset(page));
+<font color="#555555">059 </font>        line = in.readLine();
+<font color="#555555">060 </font>      } <font color="#0000AA">else</font> {
+<font color="#555555">061 </font>        <font color="#006699">long</font> offset = in.getFilePointer();
+<font color="#555555">062 </font>        line = in.readLine();
+<font color="#555555">063 </font>        <font color="#0000AA">if</font> (line == <font color="#006699">null</font>) {
+<font color="#555555">064 </font>          ret = NO_SUCH_PAGE;
+<font color="#555555">065 </font>        } <font color="#0000AA">else</font> {
+<font color="#555555">066 </font>          fph.createPage(page);
+<font color="#555555">067 </font>          fph.setFileOffset(page, offset);
+<font color="#555555">068 </font>        }
+<font color="#555555">069 </font>      }
+<font color="#555555">070 </font>      <font color="#0000AA">if</font> (ret == PAGE_EXISTS) {
+<font color="#555555">071 </font>        <font color="#00AA00">//Seite ausgeben, Grafikkontext vorbereiten</font>
+<font color="#555555">072 </font>        Graphics2D g2 = (Graphics2D)g; <a name="simplefileprinter.a"></a>
+<font color="#555555">073 </font>        g2.scale(1.0 / RESMUL, 1.0 / RESMUL);
+<font color="#555555">074 </font>        <font color="#006699">int</font> ypos = (<font color="#006699">int</font>)pf.getImageableY() * RESMUL;
+<font color="#555555">075 </font>        <font color="#006699">int</font> xpos = ((<font color="#006699">int</font>)pf.getImageableX() + 2) * RESMUL;
+<font color="#555555">076 </font>        <font color="#006699">int</font> yd = 12 * RESMUL;
+<font color="#555555">077 </font>        <font color="#006699">int</font> ymax = ypos + (<font color="#006699">int</font>)pf.getImageableHeight() * RESMUL - yd;
+<font color="#555555">078 </font>        <font color="#00AA00">//Seitentitel ausgeben</font>
+<font color="#555555">079 </font>        ypos += yd; <a name="simplefileprinter.b"></a>
+<font color="#555555">080 </font>        g2.setColor(Color.black);
+<font color="#555555">081 </font>        g2.setFont(<font color="#0000AA">new</font> Font(<font color="#0000FF">"Monospaced"</font>, Font.BOLD, 10 * RESMUL));
+<font color="#555555">082 </font>        g.drawString(fname + <font color="#0000FF">", Seite "</font> + (page + 1), xpos, ypos);
+<font color="#555555">083 </font>        g.drawLine(
+<font color="#555555">084 </font>          xpos,
+<font color="#555555">085 </font>          ypos + 6 * RESMUL,
+<font color="#555555">086 </font>          xpos + (<font color="#006699">int</font>)pf.getImageableWidth() * RESMUL,
+<font color="#555555">087 </font>          ypos + 6 * RESMUL
+<font color="#555555">088 </font>        );
+<font color="#555555">089 </font>        ypos += 2 * yd;
+<font color="#555555">090 </font>        <font color="#00AA00">//Zeilen ausgeben</font>
+<font color="#555555">091 </font>        g2.setColor(<font color="#0000AA">new</font> Color(0, 0, 127)); <a name="simplefileprinter.c"></a>
+<font color="#555555">092 </font>        g2.setFont(<font color="#0000AA">new</font> Font(<font color="#0000FF">"Monospaced"</font>, Font.PLAIN, 10 * RESMUL));
+<font color="#555555">093 </font>        <font color="#0000AA">while</font> (line != <font color="#006699">null</font>) {
+<font color="#555555">094 </font>          g.drawString(line, xpos, ypos);
+<font color="#555555">095 </font>          ypos += yd;
+<font color="#555555">096 </font>          <font color="#0000AA">if</font> (ypos &gt;= ymax) {
+<font color="#555555">097 </font>            <font color="#0000AA">break</font>;
+<font color="#555555">098 </font>          }
+<font color="#555555">099 </font>          line = in.readLine();
+<font color="#555555">100 </font>        }
+<font color="#555555">101 </font>      }
+<font color="#555555">102 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">103 </font>      <font color="#0000AA">throw</font> <font color="#0000AA">new</font> PrinterException(e.toString());
+<font color="#555555">104 </font>    }
+<font color="#555555">105 </font>    <font color="#0000AA">return</font> ret;
+<font color="#555555">106 </font>  }
+<font color="#555555">107 </font>
+<font color="#555555">108 </font>  <font color="#00AA00">//---Main--------------------------------------------</font>
+<font color="#555555">109 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">110 </font>  {
+<font color="#555555">111 </font>    SimpleFilePrinter sfp = <font color="#0000AA">new</font> SimpleFilePrinter(args[0]);
+<font color="#555555">112 </font>    <font color="#0000AA">if</font> (sfp.setupPageFormat()) {
+<font color="#555555">113 </font>      <font color="#0000AA">if</font> (sfp.setupJobOptions()) {
+<font color="#555555">114 </font>        <font color="#0000AA">try</font> {
+<font color="#555555">115 </font>          sfp.printFile();
+<font color="#555555">116 </font>        } <font color="#0000AA">catch</font> (Exception e) {
+<font color="#555555">117 </font>          System.err.println(e.toString());
+<font color="#555555">118 </font>          System.exit(1);
+<font color="#555555">119 </font>        }
+<font color="#555555">120 </font>      }
+<font color="#555555">121 </font>    }
+<font color="#555555">122 </font>    System.exit(0);
+<font color="#555555">123 </font>  }
+<font color="#555555">124 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/SimpleFilePrinter.java"><font color="#000055" size=-1>SimpleFilePrinter.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 35.2: Die Klasse SimpleFilePrinter</i></p>
+
+<p>
+In <a href="index_p.html#ixb100934"><font color=#000080><tt>print</tt></font></a>
+wird zun&auml;chst gepr&uuml;ft, ob die Seite schon einmal aufgerufen
+wurde. Ist das der Fall, wird ihr Dateioffset vom <font color="#000077"><tt>FilePrintHelper</tt></font>
+geholt und die erste Zeile der Seite erneut eingelesen. Falls nicht,
+pr&uuml;ft die Methode, ob &uuml;berhaupt noch weitere Daten vorhanden
+sind. In diesem Fall &uuml;bergibt sie den Dateioffset zur Speicherung
+an den <font color="#000077"><tt>FilePrintHelper</tt></font>. Andernfalls
+setzt sie den R&uuml;ckgabewert auf <a href="index_n.html#ixb101722"><font color=#000080><tt>NO_SUCH_PAGE</tt></font></a>
+und die Ausgabe der Seite ist beendet. 
+
+<p>
+Falls die Seite existiert, wird sie nun ausgegeben (im Listing ab
+<a href="k100232.html#simplefileprinter.a">Zeile 072</a>). Dazu wird
+der Grafikkontext nach <a href="index_g.html#ixb101720"><font color=#000080><tt>Graphics2D</tt></font></a>
+konvertiert und anschlie&szlig;end auf den Kehrwert der Konstante
+<font color="#000077"><tt>RESMUL</tt></font> skaliert. Da <font color="#000077"><tt>RESMUL</tt></font>
+den Wert 4 hat, f&uuml;hrt das dazu, dass alle Ausgaben um den Faktor
+4 verkleinert werden. Dieser Kunstgriff wird angewendet, um bei der
+Ausgabe nicht mit der groben Standardaufl&ouml;sung von 72 dpi arbeiten
+zu m&uuml;ssen. Die auf diese Weise simulierten 288 dpi lassen die
+Linie unter der Kopfzeile hinreichend d&uuml;nn erscheinen. Sie w&auml;re
+ansonsten mit einem viel zu kr&auml;ftigen 1/72 Zoll breiten Pixelstrich
+gezeichnet worden. Da nun auch alle anderen Positions- und L&auml;ngenangaben
+um den Faktor 4 verkleinert werden, multiplizieren wir sie in den
+folgenden Programmzeilen jeweils mit <font color="#000077"><tt>RESMUL</tt></font>
+und skalieren sie so auf ihre normale Gr&ouml;&szlig;e zur&uuml;ck.
+
+<p>
+Ab <a href="k100232.html#simplefileprinter.b">Zeile 079</a> wird der
+Seitentitel ausgeben. Dazu wird die Schriftfarbe auf schwarz eingestellt
+und eine fette Schrift ausgew&auml;hlt. Die Variable <font color="#000077"><tt>ypos</tt></font>
+repr&auml;sentiert den vertikalen Offset vom oberen Papierrand. Sie
+wird am Anfang auf das obere Ende des bedruckbaren Bereichs gestellt
+und nach jeder Zeile um einen konstanten Wert erh&ouml;ht. Ab <a href="k100232.html#simplefileprinter.c">Zeile 091</a>
+werden die Textzeilen ausgegeben. Mit <a href="index_r.html#ixb101004"><font color=#000080><tt>readLine</tt></font></a>
+wird dazu in einer Schleife die jeweils n&auml;chste Zeile aus der
+Eingabedatei gelesen und - wenn vorhanden - an der aktuellen y-Position
+ausgegeben. Falls keine weiteren Zeilen vorhanden sind oder das Ende
+des bedruckbaren Bereichs erreicht ist, wird die Schleife beendet.
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100230.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100231.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100233.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100236.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

@@ -1,0 +1,339 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100332.html;106,k100337.html;107,k100339.html;108,index.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100332.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100337.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100339.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 53 - Hilfsprogramme des JDK
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="jarwerkzeug"></a>
+<h2>53.6 jar - das <a name="ixa103924">Archivierungswerkzeug</a> <a name="ixa103925"></a>
+</h2>
+<hr>
+<ul>
+<li><a href="k100338.html#jarwerkzeug">53.6 jar - das Archivierungswerkzeug </a>
+<ul>
+<li><a href="k100338.html#sectlevel3id053006001">53.6.1 Aufruf</a>
+<li><a href="k100338.html#sectlevel3id053006002">53.6.2 Beschreibung</a>
+<li><a href="k100338.html#sectlevel3id053006003">53.6.3 Kommandos</a>
+<li><a href="k100338.html#sectlevel3id053006004">53.6.4 Verwendung einer Manifestdatei</a>
+<li><a href="k100338.html#jardateieninapplets">53.6.5 Verwendung von jar-Dateien in Applets</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id053006001"></a>
+<h3>53.6.1 Aufruf </h3>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+jar [ commands ] archive { input-file }
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id053006002"></a>
+<h3>53.6.2 Beschreibung </h3>
+
+<p>
+<a name="ixa103926"><a href="index_j.html#ixb100124"><font color=#000080><tt>jar</tt></font></a></a>
+ist ein Archivierungsprogramm, das Dateien und komplette Unterverzeichnisse
+komprimieren und in eine gemeinsame Archivdatei packen kann. Es verwendet
+ein Kompressionsformat, das den diversen <font color="#000077"><tt>zip</tt></font>-/<font color="#000077"><tt>unzip</tt></font>-Programmen
+&auml;hnelt, und wird analog dem UNIX-Tool <font color="#000077"><tt>tar</tt></font>
+bedient. Ein Vorteil von <a href="index_j.html#ixb100124"><font color=#000080><tt>jar</tt></font></a>
+ist seine Portabilit&auml;t, die sowohl f&uuml;r das erzeugte Dateiformat
+als auch f&uuml;r das (in Java geschriebene) Programm selbst gilt.
+
+<p>
+Wichtigster Einsatzzweck von <a href="index_j.html#ixb100124"><font color=#000080><tt>jar</tt></font></a>
+ist es, alle zu einem Java-Programm geh&ouml;renden Dateien (<font color="#660099">.class</font>-,
+Image-, Sound-Dateien usw.) in einer einzigen Datei zusammenzufassen.
+Neben den organisatorischen Vorteilen, die diese M&ouml;glichkeit
+zweifellos bietet, wurden jar-Dateien vor allem eingef&uuml;hrt, um
+das Laden von Applets aus dem Internet zu beschleunigen. Dadurch m&uuml;ssen
+Web-Browser n&auml;mlich nicht mehr f&uuml;r jede einzelne Datei,
+die in einem Applet ben&ouml;tigt wird, eine eigene GET-Transaktion
+absetzen, sondern k&ouml;nnen alle erforderlichen Files in einem Schritt
+laden. 
+
+<!-- Section -->
+
+<a name="sectlevel3id053006003"></a>
+<h3>53.6.3 Kommandos </h3>
+
+<p>
+Im Gegensatz zu den &uuml;brigen Programmen, die in diesem Kapitel
+vorgestellt wurden, kennt <a href="index_j.html#ixb100124"><font color=#000080><tt>jar</tt></font></a>
+keine Optionsparameter, sondern erwartet <i>Kommandos</i> an ihrer
+Stelle. Ein Kommando besteht aus einem Buchstaben, der ohne den Pr&auml;fix
+<font color="#000077"><tt>-</tt></font> angegeben wird. Sollen mehrere
+Kommandos kombiniert werden, so werden die zugeh&ouml;rigen Buchstaben
+ohne L&uuml;cken direkt hintereinander geschrieben. Diese abweichende
+Syntax stammt von dem Kommando <font color="#000077"><tt>tar</tt></font>,
+das auf UNIX-Rechnern zur Archivierung von Dateien eingesetzt wird.
+<a href="k100338.html#jarkommandos">Tabelle 53.7</a> gibt eine &Uuml;bersicht
+der verf&uuml;gbaren Kommandos. <a name="jarkommandos"></a>
+
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=28%><b>Kommando</b></td>
+<td valign=top align=left width=71%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>c</tt></font></td>
+<td valign=top align=left>Erzeugt eine neue Archivdatei (<i>create</i>).
+Kann nicht zusammen mit t oder x verwendet werden. </td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>t</tt></font></td>
+<td valign=top align=left>Gibt das Inhaltsverzeichnis der Archivdatei
+aus (<i>table of contents</i>). Kann nicht zusammen mit c oder x verwendet
+werden. </td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>x file</tt></font></td>
+<td valign=top align=left>Extrahiert eine oder mehrere Dateien aus
+dem Archiv (<i>extract</i>). Kann nicht zusammen mit c oder t verwendet
+werden. </td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>u</tt></font></td>
+<td valign=top align=left>F&uuml;gt die angegebenen Dateien in die
+bestehende Archivdatei ein. </td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>f</tt></font></td>
+<td valign=top align=left>Gibt an, dass der n&auml;chste Parameter
+der Name der Archivdatei ist. Wird das Kommando f nicht angegeben,
+verwendet jar stattdessen die Standardein- und -ausgabe. </td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>v</tt></font></td>
+<td valign=top align=left>Gibt zus&auml;tzliche Informationen aus
+(<i>verbose</i>). Kann zus&auml;tzlich zu einem der anderen Kommandos
+verwendet werden. </td></tr>
+<tr>
+<td valign=top align=left><font color="#000077"><tt>0</tt></font></td>
+<td valign=top align=left>Die Dateien werden ohne Kompression gespeichert.
+</td></tr>
+</table>
+<p><i>
+Tabelle 53.7: Kommandos von jar </i></p>
+
+<p>
+Sollen beispielsweise alle <font color="#660099">.java</font>-Dateien
+des aktuellen Verzeichnisses in ein Archiv mit der Bezeichnung <font color="#660099">xyz.jar</font>
+gepackt werden, so kann dazu folgendes Kommando verwendet werden:
+<font color="#000077">
+<pre>
+jar cf xyz.jar *.java
+</pre>
+</font>
+
+<p>
+Das Inhaltsverzeichnis des Archivs kann folgenderma&szlig;en abgerufen
+werden: 
+<font color="#000077">
+<pre>
+jar tf xyz.jar
+</pre>
+</font>
+
+<p>
+Etwas ausf&uuml;hrlicher geht es mit: 
+<font color="#000077">
+<pre>
+jar tvf xyz.jar
+</pre>
+</font>
+
+<p>
+Um die Datei <font color="#660099">Test.java</font> aus dem Archiv
+zu extrahieren, kann das folgende Kommando verwendet werden (das nat&uuml;rlich
+auch ohne den Zusatz <font color="#000077"><tt>v</tt></font> funktioniert):
+<font color="#000077">
+<pre>
+jar xvf xyz.jar Test.java
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="sectlevel3id053006004"></a>
+<h3>53.6.4 Verwendung einer Manifestdatei </h3>
+
+<p>
+In eine <font color="#660099">jar</font>-Datei kann in das Unterverzeichnis
+<font color="#660099">META-INF</font><a name="ixa103927"></a> eine
+Datei mit dem Namen <font color="#660099">MANIFEST.MF</font><a name="ixa103928"></a>
+abgelegt werden. Dabei handelt es sich um die sogenannte &#187;Manifest-Datei&#171;<a name="ixa103929"></a>,
+die den Inhalt der <font color="#660099">jar</font>-Datei mit Metainformationen
+anreichert. Ihr Aufbau ist genau spezifiziert, im Prinzip besteht
+sie aus einer Menge von Key-Value-Paaren. 
+
+<p>
+Neben einer Reihe weiterer Eigenschaften lassen sich insbesondere
+ein Klassenpfad und eine <font color="#000077"><tt>Main</tt></font>-Klasse
+darin ablegen. Ist die <font color="#000077"><tt>Main</tt></font>-Klasse
+spezifiziert, kann das <font color="#660099">jar</font>-File mit dem
+Kommando <font color="#000077"><tt>java -jar</tt></font> direkt gestartet
+werden. Der Inhalt der Manifest-Datei ist dann: 
+<font color="#000077">
+<pre>
+Main-Class: de.meinpaket.MeineKlasse
+</pre>
+</font>
+
+<p>
+Der Klassenname muss voll qualifiziert werden, die Klasse muss im
+<font color="#660099">jar</font>-File enthalten sein und nat&uuml;rlich
+eine <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>-Methode
+enthalten. 
+
+<p>
+Ben&ouml;tigt eine <font color="#660099">jar</font>-Datei zur Ausf&uuml;hrung
+ein anderes <font color="#660099">jar</font>-File, dann kann das in
+der Manifest-Datei durch einen entsprechenden Eintrag zum Ausdruck
+gebracht werden und der Aufrufer braucht die abh&auml;ngige <font color="#660099">jar</font>-Datei
+nicht mehr explizit in den Klassenpfad aufzunehmen. Die Manifestdatei
+sieht nun wie folgt aus: 
+<font color="#000077">
+<pre>
+Class-Path: meinjarfile.jar
+</pre>
+</font>
+
+<p>
+Wahlweise kann man auch mehrere Jar-Dateien im Klassenpfad spezifizieren,
+die durch Leerzeichen voneinander zu trennen sind: 
+<font color="#000077">
+<pre>
+Class-Path: meinjarfile1.jar meinjarfile2.jar ... 
+</pre>
+</font>
+
+<p>
+Nat&uuml;rlich kann man auch beide Eigenschaften in einer Manifestdatei
+vereinen: 
+<font color="#000077">
+<pre>
+Main-Class: de.meinpaket.MeineKlasse
+Class-Path: meinjarfile1.jar meinjarfile2.jar ... 
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="jardateieninapplets"></a>
+<h3>53.6.5 Verwendung von jar-Dateien in Applets </h3>
+
+<p>
+Die Verwendung von <font color="#660099">jar</font>-Dateien in Applets
+erfolgt mit Hilfe des <a name="ixa103930"><a href="index_a.html#ixb102173"><font color=#000080><tt>ARCHIVE</tt></font></a></a>-Parameters
+des APPLET-Tags<a name="ixa103931"></a> (siehe <a href="k100257.html#kapitelapplets1">Kapitel 40</a>).
+Soll beispielsweise das &#187;Hello, World&#171;-Programm <font color="#660099">HWApplet.java</font>
+aus <a href="k100260.html#hwapplet">Listing 40.7</a> aus einem <font color="#660099">jar</font>-Archiv
+<font color="#660099">hello.jar</font> ausgef&uuml;hrt werden, so
+ist in den folgenden Schritten vorzugehen. 
+
+<p>
+Zun&auml;chst werden die Dateien <font color="#660099">HWApplet.class</font>,
+<font color="#660099">hello.au</font> und <font color="#660099">world.au</font>
+in ein <font color="#660099">jar</font>-Archiv gepackt: 
+<font color="#000077">
+<pre>
+jar cvf hello.jar HWApplet.class hello.au world.au
+</pre>
+</font>
+
+<p>
+Anschlie&szlig;end wird die HTML-Datei <font color="#660099">HWApplet.html</font>
+zum Aufruf des Applets erstellt: 
+<a name="listingid053001"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">&lt;html&gt;</font>
+<font color="#555555">002 </font><font color="#0000AA">&lt;head&gt;</font>
+<font color="#555555">003 </font><font color="#0000AA">&lt;title&gt;</font>HWApplet<font color="#0000AA">&lt;/title&gt;</font>
+<font color="#555555">004 </font><font color="#0000AA">&lt;/head&gt;</font>
+<font color="#555555">005 </font><font color="#0000AA">&lt;body&gt;</font>
+<font color="#555555">006 </font><font color="#0000AA">&lt;h1&gt;</font>HWApplet<font color="#0000AA">&lt;/h1&gt;</font>
+<font color="#555555">007 </font><font color="#0000AA">&lt;applet
+<font color="#555555">008 </font>   code=HWApplet.class
+<font color="#555555">009 </font>   archive=hello.jar
+<font color="#555555">010 </font>   width=300
+<font color="#555555">011 </font>   height=200&gt;</font>
+<font color="#555555">012 </font>Hier steht das Applet HWApplet.class
+<font color="#555555">013 </font><font color="#0000AA">&lt;/applet&gt;</font>
+<font color="#555555">014 </font><font color="#0000AA">&lt;/body&gt;</font>
+<font color="#555555">015 </font><font color="#0000AA">&lt;/html&gt;</font></pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/HWApplet.html"><font color="#000055" size=-1>HWApplet.html</font></a></td>
+</tr>
+</table>
+<i>
+Listing 53.1: HTML mit ARCHIVE-Tag</i></p>
+
+<p>
+Nun kann das Applet wie bisher gestartet werden, ben&ouml;tigt aber
+zum Laden aller Dateien nur noch eine einzige HTTP-Transaktion. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100332.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100337.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100339.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

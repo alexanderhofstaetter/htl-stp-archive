@@ -1,0 +1,264 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100063.html;106,k100065.html;107,k100067.html;108,k100070.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100063.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100065.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100067.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100070.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 10 - OOP III: Interfaces
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id010003"></a>
+<h2>10.3 Mehrfachimplementierung und Vererbung </h2>
+<hr>
+<ul>
+<li><a href="k100066.html#sectlevel2id010003">10.3 Mehrfachimplementierung und Vererbung</a>
+<ul>
+<li><a href="k100066.html#sectlevel3id010003001">10.3.1 Mehrfachimplementierung</a>
+<li><a href="k100066.html#sectlevel3id010003002">10.3.2 Vererbung von Interfaces</a>
+<li><a href="k100066.html#sectlevel3id010003003">10.3.3 Ableiten von Interfaces</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id010003001"></a>
+<h3>10.3.1 Mehrfachimplementierung </h3>
+
+<p>
+Es ist durchaus m&ouml;glich (und gebr&auml;uchlich), dass eine Klasse
+<i>mehrere</i> Interfaces implementiert. Sie muss dann zu jedem Interface
+alle darin definierten Methoden implementieren. Mit jedem implementierten
+Interface wird sie zu dem dadurch definierten Datentyp kompatibel.
+Eine Klasse, die <i>n</i> Interfaces implementiert, ist demnach zu
+<i>n + 1</i> Datentypen (plus ihren jeweiligen Oberklassen) kompatibel:
+<ul>
+<li>Der Vaterklasse, aus der sie abgeleitet wurde (bzw. der Klasse
+<a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>,
+falls keine <a href="index_e.html#ixb100425"><font color=#000080><tt>extends</tt></font></a>-Klausel
+vorhanden war)
+<li>Den <i>n</i> Interfaces, die sie implementiert
+</ul>
+
+<p>
+Wir k&ouml;nnten beispielsweise die in <a href="k100064.html#listingauto2">Listing 10.2</a>
+definierte Klasse <font color="#000077"><tt>Auto2</tt></font> erweitern
+und sie die Interfaces <font color="#000077"><tt>Groesse</tt></font>
+und <a href="index_c.html#ixb100454"><font color=#000080><tt>Comparable</tt></font></a>
+implementieren lassen: 
+<a name="listingid010008"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Auto3.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Auto3
+<font color="#555555">004 </font><font color="#0000AA">implements</font> Groesse, Comparable
+<font color="#555555">005 </font>{
+<font color="#555555">006 </font>  <font color="#0000AA">public</font> String name;
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font>    erstzulassung;
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font>    leistung;
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font>    laenge;
+<font color="#555555">010 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font>    hoehe;
+<font color="#555555">011 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font>    breite;
+<font color="#555555">012 </font>
+<font color="#555555">013 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> laenge()
+<font color="#555555">014 </font>  {
+<font color="#555555">015 </font>    <font color="#0000AA">return</font> <font color="#006699">this</font>.laenge;
+<font color="#555555">016 </font>  }
+<font color="#555555">017 </font>
+<font color="#555555">018 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> hoehe()
+<font color="#555555">019 </font>  {
+<font color="#555555">020 </font>    <font color="#0000AA">return</font> <font color="#006699">this</font>.hoehe;
+<font color="#555555">021 </font>  }
+<font color="#555555">022 </font>
+<font color="#555555">023 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> breite()
+<font color="#555555">024 </font>  {
+<font color="#555555">025 </font>    <font color="#0000AA">return</font> <font color="#006699">this</font>.breite;
+<font color="#555555">026 </font>  }
+<font color="#555555">027 </font>
+<font color="#555555">028 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> compareTo(Object o)
+<font color="#555555">029 </font>  {
+<font color="#555555">030 </font>    <font color="#006699">int</font> ret = 0;
+<font color="#555555">031 </font>    <font color="#0000AA">if</font> (leistung &lt; ((Auto3)o).leistung) {
+<font color="#555555">032 </font>      ret = -1;
+<font color="#555555">033 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (leistung &gt; ((Auto3)o).leistung) {
+<font color="#555555">034 </font>      ret = 1;
+<font color="#555555">035 </font>    }
+<font color="#555555">036 </font>    <font color="#0000AA">return</font> ret;
+<font color="#555555">037 </font>  }
+<font color="#555555">038 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Auto3.java"><font color="#000055" size=-1>Auto3.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 10.8: Implementierung mehrerer Interfaces</i></p>
+
+<p>
+Nun sind Objekte dieses Typs sowohl zu <font color="#000077"><tt>Groesse</tt></font>
+als auch zu <font color="#000077"><tt>Comparable</tt></font> kompatibel.
+(Hinweis: Die Sortierung basiert in diesem Fall nicht auf der Gr&ouml;&szlig;e
+des Autos, sondern auf seiner Leistung.) 
+
+<!-- Section -->
+
+<a name="sectlevel3id010003002"></a>
+<h3>10.3.2 Vererbung von Interfaces </h3>
+
+<p>
+Die Implementierung h&auml;tte noch etwas vereinfacht werden k&ouml;nnen,
+wenn wir uns zu Nutze gemacht h&auml;tten, dass eine Klasse die Interfaces
+ihrer Basisklasse erbt: 
+<a name="listingid010009"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Auto4.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Auto4
+<font color="#555555">004 </font><font color="#0000AA">extends</font> Auto2
+<font color="#555555">005 </font><font color="#0000AA">implements</font> Comparable
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> compareTo(Object o)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#006699">int</font> ret = 0;
+<font color="#555555">010 </font>    <font color="#0000AA">if</font> (leistung &lt; ((Auto4)o).leistung) {
+<font color="#555555">011 </font>      ret = -1;
+<font color="#555555">012 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (leistung &gt; ((Auto4)o).leistung) {
+<font color="#555555">013 </font>      ret = 1;
+<font color="#555555">014 </font>    }
+<font color="#555555">015 </font>    <font color="#0000AA">return</font> ret;
+<font color="#555555">016 </font>  }
+<font color="#555555">017 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Auto4.java"><font color="#000055" size=-1>Auto4.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 10.9: Erben von Interfaces</i></p>
+
+<p>
+<font color="#000077"><tt>Auto4</tt></font> erbt von <font color="#000077"><tt>Auto2</tt></font>
+nicht nur die Implementierung, sondern auch die Klausel <font color="#000077"><tt>implements
+Groesse</tt></font> und erweitert sie um die Implementierung von <font color="#000077"><tt>Comparable</tt></font>.
+Damit ist <font color="#000077"><tt>Auto4</tt></font> gleichwertig
+zu <font color="#000077"><tt>Auto3</tt></font>. 
+
+<!-- Section -->
+
+<a name="sectlevel3id010003003"></a>
+<h3>10.3.3 Ableiten von Interfaces </h3>
+
+<p>
+Auch Interfaces selbst k&ouml;nnen abgeleitet werden. &Auml;hnlich
+einer Klasse erbt das abgeleitete Interface alle Methodendefinitionen
+des Basis-Interface. Die implementierende Klasse muss also auch alle
+Methoden von allen &uuml;bergeordneten Interfaces implementieren:
+<a name="listingid010010"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1010.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">interface</font> EinDimensional
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> laenge();
+<font color="#555555">006 </font>}
+<font color="#555555">007 </font>
+<font color="#555555">008 </font><font color="#0000AA">interface</font> ZweiDimensional
+<font color="#555555">009 </font><font color="#0000AA">extends</font> EinDimensional
+<font color="#555555">010 </font>{
+<font color="#555555">011 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> breite();
+<font color="#555555">012 </font>}
+<font color="#555555">013 </font>
+<font color="#555555">014 </font><font color="#0000AA">interface</font> DreiDimensional
+<font color="#555555">015 </font><font color="#0000AA">extends</font> ZweiDimensional
+<font color="#555555">016 </font>{
+<font color="#555555">017 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> hoehe();
+<font color="#555555">018 </font>}
+<font color="#555555">019 </font>
+<font color="#555555">020 </font><font color="#0000AA">interface</font> VierDimensional
+<font color="#555555">021 </font><font color="#0000AA">extends</font> DreiDimensional
+<font color="#555555">022 </font>{
+<font color="#555555">023 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> lebensdauer();
+<font color="#555555">024 </font>}
+<font color="#555555">025 </font>
+<font color="#555555">026 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1010
+<font color="#555555">027 </font><font color="#0000AA">implements</font> VierDimensional
+<font color="#555555">028 </font>{
+<font color="#555555">029 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> laenge() { <font color="#0000AA">return</font> 0; }
+<font color="#555555">030 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> breite() { <font color="#0000AA">return</font> 0; }
+<font color="#555555">031 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> hoehe() { <font color="#0000AA">return</font> 0; }
+<font color="#555555">032 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> lebensdauer() { <font color="#0000AA">return</font> 0; }
+<font color="#555555">033 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1010.java"><font color="#000055" size=-1>Listing1010.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 10.10: Ableiten von Interfaces</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100063.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100065.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100067.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100070.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

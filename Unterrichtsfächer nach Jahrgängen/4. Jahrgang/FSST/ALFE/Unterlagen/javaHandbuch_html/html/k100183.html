@@ -1,0 +1,934 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100181.html;106,k100182.html;107,k100184.html;108,k100185.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100181.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100182.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100184.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100185.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 28 - Event-Handling
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id028002"></a>
+<h2>28.2 Entwurfsmuster f&uuml;r den Nachrichtenverkehr </h2>
+<hr>
+<ul>
+<li><a href="k100183.html#sectlevel2id028002">28.2 Entwurfsmuster f&uuml;r den Nachrichtenverkehr</a>
+<ul>
+<li><a href="k100183.html#sectlevel3id028002001">28.2.1 Variante 1: Implementierung eines EventListener-Interface</a>
+<li><a href="k100183.html#lokaleanonymeeventhandler">28.2.2 Variante 2: Lokale und anonyme Klassen</a>
+<ul>
+<li><a href="k100183.html#sectlevel4id028002002001">Lokale Klassen</a>
+<li><a href="k100183.html#sectlevel4id028002002002">Anonyme Klassen</a>
+</ul>
+<li><a href="k100183.html#mediatorinjava">28.2.3 Variante 3: Trennung von GUI- und Anwendungscode</a>
+<li><a href="k100183.html#eventhandlingpattern4">28.2.4 Variante 4: &Uuml;berlagern der Event-Handler in den Komponenten</a>
+<li><a href="k100183.html#sectlevel3id028002005">28.2.5 Ausblick</a>
+</ul>
+</ul>
+<hr>
+
+<p>
+Wir wollen uns in diesem Abschnitt damit besch&auml;ftigen, die oben
+erw&auml;hnten Entwurfsmuster f&uuml;r die Abwicklung des Nachrichtenverkehrs
+in Java-Programmen vorzustellen. Wie bereits erw&auml;hnt, hat jedes
+dieser Verfahren seine ganz spezifischen Vor- und Nachteile und ist
+f&uuml;r verschiedene Programmieraufgaben unterschiedlich gut geeignet.
+
+<p>
+Als Basis f&uuml;r unsere Experimente wollen wir ein einfaches Programm
+schreiben, das die folgenden Anforderungen erf&uuml;llt: 
+<ul>
+<li>Nach dem Start soll das Programm ein Fenster mit dem Titel &#187;Nachrichtentransfer&#171;
+auf dem Bildschirm anzeigen.
+<li>Das Fenster soll einen grauen Hintergrund haben und in der Client-Area
+die Meldung &#187;Zum Beenden bitte ESC dr&uuml;cken ...&#171; anzeigen.
+<li>Nach Dr&uuml;cken der Taste <font color="#007700"><tt>[ESC]</tt></font>
+soll das Fenster geschlossen und das Programm beendet werden. Andere
+Tastendr&uuml;cke, Mausklicks oder &auml;hnliche Ereignisse werden
+ignoriert.
+</ul>
+
+<p>
+Basis der Programme ist das folgende Listing: 
+<a name="listingid028001"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2801.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2801
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    Listing2801 wnd = <font color="#0000AA">new</font> Listing2801();
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>  <font color="#0000AA">public</font> Listing2801()
+<font color="#555555">015 </font>  {
+<font color="#555555">016 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Nachrichtentransfer"</font>);
+<font color="#555555">017 </font>    setBackground(Color.lightGray);
+<font color="#555555">018 </font>    setSize(300,200);
+<font color="#555555">019 </font>    setLocation(200,100);
+<font color="#555555">020 </font>    setVisible(<font color="#006699">true</font>);
+<font color="#555555">021 </font>  }
+<font color="#555555">022 </font>
+<font color="#555555">023 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">024 </font>  {
+<font color="#555555">025 </font>    g.setFont(<font color="#0000AA">new</font> Font(<font color="#0000FF">"Serif"</font>,Font.PLAIN,18));
+<font color="#555555">026 </font>    g.drawString(<font color="#0000FF">"Zum Beenden bitte ESC dr&uuml;cken..."</font>,10,50);
+<font color="#555555">027 </font>  }
+<font color="#555555">028 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2801.java"><font color="#000055" size=-1>Listing2801.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 28.1: Basisprogramm f&uuml;r den Nachrichtentransfer</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Das Programm erf&uuml;llt die ersten der obengenannten Anforderungen,
+ist aber mangels Event-Handler noch nicht in der Lage, per <font color="#007700"><tt>[ESC]</tt></font>
+beendet zu werden. Um die Nachfolgeversionen vorzubereiten, haben
+wir bereits die Anweisung <font color="#000077"><tt>import java.awt.event.*</tt></font>
+eingef&uuml;gt.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Die Ausgabe des Programms ist: 
+<p>
+<a name="imageid028003"></a>
+<img src="images/NachrVerkehr.gif">
+<p>
+
+<p><i>
+Abbildung 28.3: Das Programm f&uuml;r den Nachrichtentransfer</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id028002001"></a>
+<h3>28.2.1 Variante 1: Implementierung eines EventListener-Interface
+</h3>
+
+<p>
+Bei der ersten Variante gibt es nur eine einzige Klasse, <font color="#000077"><tt>Listing2802</tt></font>.
+Sie ist einerseits eine Ableitung der Klasse <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>,
+um ein Fenster auf dem Bildschirm darzustellen und zu beschriften.
+Andererseits implementiert sie das Interface <a name="ixa101832"><a href="index_k.html#ixb101376"><font color=#000080><tt>KeyListener</tt></font></a></a>,
+das die Methoden <a name="ixa101833"><a href="index_k.html#ixb101377"><font color=#000080><tt>keyPressed</tt></font></a></a>,
+<a name="ixa101834"><a href="index_k.html#ixb101378"><font color=#000080><tt>keyReleased</tt></font></a></a>
+und <a name="ixa101835"><a href="index_k.html#ixb101379"><font color=#000080><tt>keyTyped</tt></font></a></a>
+definiert. Der eigentliche Code zur Reaktion auf die Taste <font color="#007700"><tt>[ESC]</tt></font>
+steckt in der Methode <a href="index_k.html#ixb101377"><font color=#000080><tt>keyPressed</tt></font></a>,
+die immer dann aufgerufen wird, wenn eine Taste gedr&uuml;ckt wurde.
+Mit der Methode <a name="ixa101836"><a href="index_g.html#ixb101430"><font color=#000080><tt>getKeyCode</tt></font></a></a>
+der Klasse <a name="ixa101837"><a href="index_k.html#ixb101351"><font color=#000080><tt>KeyEvent</tt></font></a></a>
+wird auf den Code der gedr&uuml;ckten Taste zugegriffen und dieser
+mit der symbolischen Konstante <a name="ixa101838"><a href="index_v.html#ixb101431"><font color=#000080><tt>VK_ESCAPE</tt></font></a></a>
+verglichen. Stimmen beide &uuml;berein, wurde <font color="#007700"><tt>[ESC]</tt></font>
+gedr&uuml;ckt und das Programm kann beendet werden. 
+<a name="variante1"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2802.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2802
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">008 </font><font color="#0000AA">implements</font> KeyListener
+<font color="#555555">009 </font>{
+<font color="#555555">010 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">011 </font>  {
+<font color="#555555">012 </font>    Listing2802 wnd = <font color="#0000AA">new</font> Listing2802();
+<font color="#555555">013 </font>  }
+<font color="#555555">014 </font>
+<font color="#555555">015 </font>  <font color="#0000AA">public</font> Listing2802()
+<font color="#555555">016 </font>  {
+<font color="#555555">017 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Nachrichtentransfer"</font>);
+<font color="#555555">018 </font>    setBackground(Color.lightGray);
+<font color="#555555">019 </font>    setSize(300,200);
+<font color="#555555">020 </font>    setLocation(200,100);
+<font color="#555555">021 </font>    setVisible(<font color="#006699">true</font>);
+<font color="#555555">022 </font>    addKeyListener(<font color="#006699">this</font>);
+<font color="#555555">023 </font>  }
+<font color="#555555">024 </font>
+<font color="#555555">025 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">026 </font>  {
+<font color="#555555">027 </font>    g.setFont(<font color="#0000AA">new</font> Font(<font color="#0000FF">"Serif"</font>,Font.PLAIN,18));
+<font color="#555555">028 </font>    g.drawString(<font color="#0000FF">"Zum Beenden bitte ESC dr&uuml;cken..."</font>,10,50);
+<font color="#555555">029 </font>  }
+<font color="#555555">030 </font>
+<font color="#555555">031 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> keyPressed(KeyEvent event)
+<font color="#555555">032 </font>  {
+<font color="#555555">033 </font>    <font color="#0000AA">if</font> (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
+<font color="#555555">034 </font>      setVisible(<font color="#006699">false</font>);
+<font color="#555555">035 </font>      dispose();
+<font color="#555555">036 </font>      System.exit(0);
+<font color="#555555">037 </font>    }
+<font color="#555555">038 </font>  }
+<font color="#555555">039 </font>
+<font color="#555555">040 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> keyReleased(KeyEvent event)
+<font color="#555555">041 </font>  {
+<font color="#555555">042 </font>  }
+<font color="#555555">043 </font>
+<font color="#555555">044 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> keyTyped(KeyEvent event)
+<font color="#555555">045 </font>  {
+<font color="#555555">046 </font>  }
+<font color="#555555">047 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2802.java"><font color="#000055" size=-1>Listing2802.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 28.2: Implementieren eines Listener-Interface</i></p>
+
+<p>
+Die Verbindung zwischen der Ereignisquelle (in diesem Fall der Fensterklasse
+<font color="#000077"><tt>Listing2802</tt></font>) und dem Ereignisempf&auml;nger
+(ebenfalls die Klasse <font color="#000077"><tt>Listing2802</tt></font>)
+erfolgt &uuml;ber den Aufruf der Methode <a name="ixa101839"><a href="index_a.html#ixb101304"><font color=#000080><tt>addKeyListener</tt></font></a></a>
+der Klasse <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>.
+Alle Tastaturereignisse werden dadurch an die Fensterklasse selbst
+weitergeleitet und f&uuml;hren zum Aufruf der Methoden <a href="index_k.html#ixb101377"><font color=#000080><tt>keyPressed</tt></font></a>,
+<a href="index_k.html#ixb101378"><font color=#000080><tt>keyReleased</tt></font></a>
+oder <a href="index_k.html#ixb101379"><font color=#000080><tt>keyTyped</tt></font></a>
+des Interface <a href="index_k.html#ixb101376"><font color=#000080><tt>KeyListener</tt></font></a>.
+Diese Implementierung ist sehr naheliegend, denn sie ist einfach zu
+implementieren und erfordert keine weiteren Klassen. Nachteilig ist
+dabei allerdings: 
+<ul>
+<li>Es besteht keine Trennung zwischen GUI-Code und Applikationslogik.
+Dies kann gro&szlig;e Programme un&uuml;bersichtlich und schwer wartbar
+machen.
+<li>F&uuml;r jeden Ereignistyp muss eine passende Listener-Klasse
+registriert werden. Da viele der <a href="index_e.html#ixb101336"><font color=#000080><tt>EventListener</tt></font></a>-Interfaces
+mehr als eine Methode definieren, werden dadurch schnell viele leere
+Methodenr&uuml;mpfe in der Fensterklasse zu finden sein. In diesem
+Beispiel sind es schon <a href="index_k.html#ixb101378"><font color=#000080><tt>keyReleased</tt></font></a>
+und <a href="index_k.html#ixb101379"><font color=#000080><tt>keyTyped</tt></font></a>,
+bei zus&auml;tzlichen Interfaces w&uuml;rden schnell weitere hinzukommen.
+</ul>
+
+<p>
+Diese Technik ist also h&ouml;chstens f&uuml;r kleine Programme geeignet,
+die nur begrenzt erweitert werden m&uuml;ssen. Durch die Vielzahl
+leerer Methodenr&uuml;mpfe k&ouml;nnen aber auch kleine Programme
+schnell un&uuml;bersichtlich werden. 
+
+<!-- Section -->
+
+<a name="lokaleanonymeeventhandler"></a>
+<h3>28.2.2 Variante 2: Lokale und anonyme Klassen </h3>
+
+<p>
+Die zweite Alternative bietet eine bessere L&ouml;sung. Sie basiert
+auf der Verwendung <i>lokaler</i> bzw. <i>anonymer</i> Klassen und
+kommt ohne die Nachteile der vorigen Version aus. Sie ist das in der
+Dokumentation des JDK empfohlene Entwurfsmuster f&uuml;r das Event-Handling
+in kleinen Programmen oder bei Komponenten mit einfacher Nachrichtenstruktur.
+Vor ihrem Einsatz sollte man allerdings das Prinzip lokaler und anonymer
+Klassen kennenlernen, das in <a href="k100071.html#lokaleanonymeklassen">Abschnitt 11.1</a>
+vorgestellt wurde. Wer diesen Abschnitt noch nicht gelesen hat, sollte
+das jetzt nachholen. 
+
+<!-- Section -->
+
+<a name="sectlevel4id028002002001"></a>
+<h4>Lokale Klassen<a name="ixa101840"></a> </h4>
+
+<p>
+Die Anwendung lokaler Klassen f&uuml;r die Ereignisbehandlung besteht
+darin, mit ihrer Hilfe die ben&ouml;tigten <a href="index_e.html#ixb101336"><font color=#000080><tt>EventListener</tt></font></a>
+zu implementieren. Dazu wird in dem GUI-Objekt, das einen Event-Handler
+ben&ouml;tigt, eine lokale Klasse definiert und aus einer passenden
+<i>Adapterklasse</i> abgeleitet. Nun braucht nicht mehr das gesamte
+Interface implementiert zu werden (denn die Methodenr&uuml;mpfe werden
+ja aus der Adapterklasse geerbt), sondern lediglich die tats&auml;chlich
+ben&ouml;tigten Methoden. Da die lokale Klasse zudem auf die Membervariablen
+und Methoden der Klasse zugreifen kann, in der sie definiert wurde,
+lassen sich auf diese Weise sehr schnell die ben&ouml;tigten Ereignisempf&auml;nger
+zusammenbauen. 
+
+<p>
+Das folgende Beispiel definiert eine lokale Klasse <font color="#000077"><tt>MyKeyListener</tt></font>,
+die aus <a name="ixa101841"><a href="index_k.html#ixb101363"><font color=#000080><tt>KeyAdapter</tt></font></a></a>
+abgeleitet wurde und auf diese Weise das <a name="ixa101842"><a href="index_k.html#ixb101376"><font color=#000080><tt>KeyListener</tt></font></a></a>-Interface
+implementiert. Sie &uuml;berlagert lediglich die Methode <a href="index_k.html#ixb101377"><font color=#000080><tt>keyPressed</tt></font></a>,
+um auf das Dr&uuml;cken einer Taste zu reagieren. Als lokale Klasse
+hat sie au&szlig;erdem Zugriff auf die Methoden der umgebenden Klasse
+und kann somit durch Aufruf von <a href="index_s.html#ixb101154"><font color=#000080><tt>setVisible</tt></font></a>
+und <a href="index_d.html#ixb101297"><font color=#000080><tt>dispose</tt></font></a>
+das Fenster, in dem sie als Ereignisempf&auml;nger registriert wurde,
+schlie&szlig;en. Die Registrierung der lokalen Klasse erfolgt durch
+Aufruf von <a href="index_a.html#ixb101304"><font color=#000080><tt>addKeyListener</tt></font></a>,
+bei dem gleichzeitig eine Instanz der lokalen Klasse erzeugt wird.
+Als lokale Klasse ist <font color="#000077"><tt>MyKeyListener</tt></font>
+&uuml;berall innerhalb von <font color="#000077"><tt>Listing2803</tt></font>
+sichtbar und kann an beliebiger Stelle instanziert werden. 
+<a name="variante2a"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2803.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2803
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    Listing2803 wnd = <font color="#0000AA">new</font> Listing2803();
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>  <font color="#0000AA">public</font> Listing2803()
+<font color="#555555">015 </font>  {
+<font color="#555555">016 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Nachrichtentransfer"</font>);
+<font color="#555555">017 </font>    setBackground(Color.lightGray);
+<font color="#555555">018 </font>    setSize(300,200);
+<font color="#555555">019 </font>    setLocation(200,100);
+<font color="#555555">020 </font>    setVisible(<font color="#006699">true</font>);
+<font color="#555555">021 </font>    addKeyListener(<font color="#0000AA">new</font> MyKeyListener());
+<font color="#555555">022 </font>  }
+<font color="#555555">023 </font>
+<font color="#555555">024 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">025 </font>  {
+<font color="#555555">026 </font>    g.setFont(<font color="#0000AA">new</font> Font(<font color="#0000FF">"Serif"</font>,Font.PLAIN,18));
+<font color="#555555">027 </font>    g.drawString(<font color="#0000FF">"Zum Beenden bitte ESC dr&uuml;cken..."</font>,10,50);
+<font color="#555555">028 </font>  }
+<font color="#555555">029 </font>
+<font color="#555555">030 </font>  <font color="#0000AA">class</font> MyKeyListener
+<font color="#555555">031 </font>  <font color="#0000AA">extends</font> KeyAdapter
+<font color="#555555">032 </font>  {
+<font color="#555555">033 </font>    <font color="#0000AA">public</font> <font color="#006699">void</font> keyPressed(KeyEvent event)
+<font color="#555555">034 </font>    {
+<font color="#555555">035 </font>      <font color="#0000AA">if</font> (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
+<font color="#555555">036 </font>        setVisible(<font color="#006699">false</font>);
+<font color="#555555">037 </font>        dispose();
+<font color="#555555">038 </font>        System.exit(0);
+<font color="#555555">039 </font>      }
+<font color="#555555">040 </font>    }
+<font color="#555555">041 </font>  }
+<font color="#555555">042 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2803.java"><font color="#000055" size=-1>Listing2803.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 28.3: Verwendung lokaler Klassen</i></p>
+
+<p>
+Der Vorteil dieser Vorgehensweise ist offensichtlich: Es werden keine
+unn&uuml;tzen Methodenr&uuml;mpfe erzeugt, aber trotzdem verbleibt
+der Ereignisempf&auml;ngercode wie im vorigen Beispiel innerhalb der
+Ereignisquelle. Dieses Verfahren ist also immer dann gut geeignet,
+wenn es von der Architektur oder der Komplexit&auml;t der Ereignisbehandlung
+her sinnvoll ist, Quelle und Empf&auml;nger zusammenzufassen. 
+
+<!-- Section -->
+
+<a name="sectlevel4id028002002002"></a>
+<h4>Anonyme Klassen<a name="ixa101843"></a> </h4>
+
+<p>
+Das folgende Beispiel ist eine leichte Variation des vorigen. Es zeigt
+die Verwendung einer anonymen Klasse als Ereignisempf&auml;nger, die
+aus <a name="ixa101844"><a href="index_k.html#ixb101363"><font color=#000080><tt>KeyAdapter</tt></font></a></a>
+abgeleitet wurde. Zum Instanzierungszeitpunkt erfolgt die Definition
+der &uuml;berlagernden Methode <a name="ixa101845"><a href="index_k.html#ixb101377"><font color=#000080><tt>keyPressed</tt></font></a></a>,
+in der der Code zur Reaktion auf das Dr&uuml;cken der Taste <font color="#007700"><tt>[ESC]</tt></font>
+untergebracht wird. 
+<a name="listingid028004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2804.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2804
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    Listing2804 wnd = <font color="#0000AA">new</font> Listing2804();
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>  <font color="#0000AA">public</font> Listing2804()
+<font color="#555555">015 </font>  {
+<font color="#555555">016 </font>     <font color="#006699">super</font>(<font color="#0000FF">"Nachrichtentransfer"</font>);
+<font color="#555555">017 </font>     setBackground(Color.lightGray);
+<font color="#555555">018 </font>     setSize(300,200);
+<font color="#555555">019 </font>     setLocation(200,100);
+<font color="#555555">020 </font>     setVisible(<font color="#006699">true</font>);
+<font color="#555555">021 </font>     addKeyListener(
+<font color="#555555">022 </font>       <font color="#0000AA">new</font> KeyAdapter() {
+<font color="#555555">023 </font>         <font color="#0000AA">public</font> <font color="#006699">void</font> keyPressed(KeyEvent event)
+<font color="#555555">024 </font>         {
+<font color="#555555">025 </font>           <font color="#0000AA">if</font> (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
+<font color="#555555">026 </font>             setVisible(<font color="#006699">false</font>);
+<font color="#555555">027 </font>             dispose();
+<font color="#555555">028 </font>             System.exit(0);
+<font color="#555555">029 </font>           }
+<font color="#555555">030 </font>         }
+<font color="#555555">031 </font>       }
+<font color="#555555">032 </font>     );
+<font color="#555555">033 </font>   }
+<font color="#555555">034 </font>
+<font color="#555555">035 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">036 </font>  {
+<font color="#555555">037 </font>    g.setFont(<font color="#0000AA">new</font> Font(<font color="#0000FF">"Serif"</font>,Font.PLAIN,18));
+<font color="#555555">038 </font>    g.drawString(<font color="#0000FF">"Zum Beenden bitte ESC dr&uuml;cken..."</font>,10,50);
+<font color="#555555">039 </font>  }
+<font color="#555555">040 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2804.java"><font color="#000055" size=-1>Listing2804.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 28.4: Verwendung einer anonymen Klasse als Ereignishandler</i></p>
+
+<p>
+Vorteilhaft bei dieser Vorgehensweise ist der verminderte Aufwand,
+denn es muss keine separate Klassendefinition angelegt werden. Stattdessen
+werden die wenigen Codezeilen, die zur Anpassung der Adapterklasse
+erforderlich sind, dort eingef&uuml;gt, wo die Klasse instanziert
+wird, n&auml;mlich beim Registrieren des Nachrichtenempf&auml;ngers.
+Anonyme Klassen haben einen &auml;hnlichen Einsatzbereich wie lokale,
+empfehlen sich aber vor allem, wenn sehr wenig Code f&uuml;r den Ereignisempf&auml;nger
+ben&ouml;tigt wird. Bei aufw&auml;ndigeren Ereignisempf&auml;ngern
+ist die explizite Definition einer benannten Klasse dagegen vorzuziehen.
+
+
+<!-- Section -->
+<a name="mediatorinjava"></a>
+<h3>28.2.3 Variante 3: Trennung von GUI- und Anwendungscode </h3>
+
+<p>
+Wir hatten am Anfang darauf hingewiesen, dass in gr&ouml;&szlig;eren
+Programmen eine Trennung zwischen Programmcode f&uuml;r die Oberfl&auml;che
+und solchem f&uuml;r die Anwendungslogik w&uuml;nschenswert ist. Dadurch
+wird eine bessere Modularisierung des Programms erreicht und der Austausch
+oder die Erweiterung von Teilen des Programms wird erleichtert. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Das Delegation Event Model wurde auch mit dem Designziel entworfen,
+eine solche Trennung zu erm&ouml;glichen bzw. zu erleichtern. Grundgedanke
+war es dabei, auch Nicht-Komponenten die Reaktion auf GUI-Events zu
+erm&ouml;glichen. Dies wurde dadurch erreicht, dass jede Art von Objekt
+als Ereignisempf&auml;nger registriert werden kann, solange es die
+erforderlichen Listener-Interfaces implementiert. Damit ist es m&ouml;glich,
+die Anwendungslogik vollkommen von der grafischen Oberfl&auml;che
+abzul&ouml;sen und in Klassen zu verlagern, die eigens f&uuml;r diesen
+Zweck entworfen wurden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Das nachfolgende Beispiel zeigt diese Vorgehensweise, indem es unser
+Beispielprogramm in die drei Klassen <font color="#000077"><tt>Listing2805</tt></font>,
+<font color="#000077"><tt>MainFrameCommand</tt></font> und <font color="#000077"><tt>MainFrameGUI</tt></font>
+aufteilt. <font color="#000077"><tt>Listing2805</tt></font> enth&auml;lt
+nur noch die <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>-Methode
+und dient lediglich dazu, die anderen beiden Klassen zu instanzieren.
+<font color="#000077"><tt>MainFrameGUI</tt></font> realisiert die
+GUI-Funktionalit&auml;t und stellt das Fenster auf dem Bildschirm
+dar. <font color="#000077"><tt>MainFrameCommand</tt></font> spielt
+die Rolle des Kommandointerpreters, der immer dann aufgerufen wird,
+wenn im Fenster ein Tastaturereignis aufgetreten ist. 
+
+<p>
+Die Verbindung zwischen beiden Klassen erfolgt durch Aufruf der Methode
+<a href="index_a.html#ixb101304"><font color=#000080><tt>addKeyListener</tt></font></a>
+in <font color="#000077"><tt>MainFrameGUI</tt></font>, an die das
+an den Konstruktor &uuml;bergebene <font color="#000077"><tt>MainFrameCommand</tt></font>-Objekt
+weitergereicht wird. Dazu ist es erforderlich, dass das Hauptprogramm
+den Ereignisempf&auml;nger <font color="#000077"><tt>cmd</tt></font>
+zuerst instanziert, um ihn bei der Instanzierung des GUI-Objekts <font color="#000077"><tt>gui</tt></font>
+&uuml;bergeben zu k&ouml;nnen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Umgekehrt ben&ouml;tigt nat&uuml;rlich auch das Kommando-Objekt Kenntnis
+&uuml;ber das GUI-Objekt, denn es soll ja das zugeordnete Fenster
+schlie&szlig;en und das Programm beenden. Der scheinbare Instanzierungskonflikt
+durch diese zirkul&auml;re Beziehung ist aber in Wirklichkeit gar
+keiner, denn bei jedem Aufruf einer der Methoden von <font color="#000077"><tt>MainFrameCommand</tt></font>
+wird an das <a href="index_k.html#ixb101351"><font color=#000080><tt>KeyEvent</tt></font></a>-Objekt
+der Ausl&ouml;ser der Nachricht &uuml;bergeben, und das ist in diesem
+Fall stets das <font color="#000077"><tt>MainFrameGUI</tt></font>-Objekt
+<font color="#000077"><tt>gui</tt></font>. So kann innerhalb des Kommando-Objekts
+auf alle &ouml;ffentlichen Methoden des GUI-Objekts zugegriffen werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<a name="variante3"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2805.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2805
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    MainFrameCommand cmd = <font color="#0000AA">new</font> MainFrameCommand();
+<font color="#555555">011 </font>    MainFrameGUI     gui = <font color="#0000AA">new</font> MainFrameGUI(cmd);
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>}
+<font color="#555555">014 </font>
+<font color="#555555">015 </font><font color="#0000AA">class</font> MainFrameGUI
+<font color="#555555">016 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">017 </font>{
+<font color="#555555">018 </font>  <font color="#0000AA">public</font> MainFrameGUI(KeyListener cmd)
+<font color="#555555">019 </font>  {
+<font color="#555555">020 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Nachrichtentransfer"</font>);
+<font color="#555555">021 </font>    setBackground(Color.lightGray);
+<font color="#555555">022 </font>    setSize(300,200);
+<font color="#555555">023 </font>    setLocation(200,100);
+<font color="#555555">024 </font>    setVisible(<font color="#006699">true</font>);
+<font color="#555555">025 </font>    addKeyListener(cmd);
+<font color="#555555">026 </font>  }
+<font color="#555555">027 </font>
+<font color="#555555">028 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">029 </font>  {
+<font color="#555555">030 </font>    g.setFont(<font color="#0000AA">new</font> Font(<font color="#0000FF">"Serif"</font>,Font.PLAIN,18));
+<font color="#555555">031 </font>    g.drawString(<font color="#0000FF">"Zum Beenden bitte ESC dr&uuml;cken..."</font>,10,50);
+<font color="#555555">032 </font>  }
+<font color="#555555">033 </font>}
+<font color="#555555">034 </font>
+<font color="#555555">035 </font><font color="#0000AA">class</font> MainFrameCommand
+<font color="#555555">036 </font><font color="#0000AA">extends</font> KeyAdapter
+<font color="#555555">037 </font>{
+<font color="#555555">038 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> keyPressed(KeyEvent event)
+<font color="#555555">039 </font>  {
+<font color="#555555">040 </font>    Frame source = (Frame)event.getSource();
+<font color="#555555">041 </font>    <font color="#0000AA">if</font> (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
+<font color="#555555">042 </font>      source.setVisible(<font color="#006699">false</font>);
+<font color="#555555">043 </font>      source.dispose();
+<font color="#555555">044 </font>      System.exit(0);
+<font color="#555555">045 </font>    }
+<font color="#555555">046 </font>  }
+<font color="#555555">047 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2805.java"><font color="#000055" size=-1>Listing2805.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 28.5: Trennung von GUI- und Anwendungslogik</i></p>
+
+<p>
+Diese Designvariante ist vorwiegend f&uuml;r gr&ouml;&szlig;ere Programme
+geeignet, bei denen eine Trennung von Programmlogik und Oberfl&auml;che
+sinnvoll ist. Sie entspricht in groben Z&uuml;gen dem <a name="ixa101846"><i>Mediator-Pattern</i></a>,
+das in &#187;Design-Patterns&#171; von Gamma et al. beschrieben wird.
+F&uuml;r sehr kleine Programme oder solche, die wenig Ereigniscode
+haben, sollte dagegen eher eine der vorherigen Varianten angewendet
+werden.<a name="ixa101847"></a>
+
+<p>
+Nat&uuml;rlich erhebt das vorliegende Beispielprogramm nicht den Anspruch,
+unver&auml;ndert in ein sehr gro&szlig;es Programm &uuml;bernommen
+zu werden. Es soll lediglich die M&ouml;glichkeit der Trennung von
+Programmlogik und Oberfl&auml;che in einem gro&szlig;en Programm mit
+Hilfe der durch das Event-Handling vorgegebenen M&ouml;glichkeiten
+aufzeigen. Eine sinnvolle Erweiterung dieses Konzepts k&ouml;nnte
+darin bestehen, weitere Modularisierungen vorzunehmen (z.B. analog
+dem <a name="ixa101848"><i>MVC</i></a>-Konzept von Smalltalk, bei
+dem GUI-Anwendungen in <i>Model</i>-, <i>View</i>- und <i>Controller</i>-Layer
+aufgesplittet werden, oder auch durch Abtrennen spezialisierter Kommandoklassen).
+Empfehlenswert ist in diesem Zusammenhang die Lekt&uuml;re der JDK-Dokumentation,
+die ein &auml;hnliches Beispiel in leicht ver&auml;nderter Form enth&auml;lt.
+
+
+<!-- Section -->
+<a name="eventhandlingpattern4"></a>
+<h3>28.2.4 Variante 4: &Uuml;berlagern der Event-Handler in den Komponenten
+</h3>
+
+<p>
+Als letzte M&ouml;glichkeit, auf Nachrichten zu reagieren, soll das
+&Uuml;berlagern der Event-Handler in den Ereignisquellen selbst aufgezeigt
+werden. Jede Ereignisquelle besitzt eine Reihe von Methoden, die f&uuml;r
+das Aufbereiten und Verteilen der Nachrichten zust&auml;ndig sind.
+Soll eine Nachricht weitergereicht werden, so wird dazu zun&auml;chst
+innerhalb der Nachrichtenquelle die Methode <a name="ixa101849"><a href="index_p.html#ixb101436"><font color=#000080><tt>processEvent</tt></font></a></a>
+aufgerufen. Diese verteilt die Nachricht anhand ihres Typs an spezialisierte
+Methoden, deren Name sich nach dem Typ der zugeh&ouml;rigen Ereignisklasse
+richtet. So ist beispielsweise die Methode <a name="ixa101850"><a href="index_p.html#ixb101437"><font color=#000080><tt>processActionEvent</tt></font></a></a>
+f&uuml;r das Handling von Action-Events und <a name="ixa101851"><a href="index_p.html#ixb101438"><font color=#000080><tt>processMouseEvent</tt></font></a></a>
+f&uuml;r das Handling von Mouse-Events zust&auml;ndig: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+protected void processEvent(AWTEvent e)
+
+protected void processComponentEvent(ComponentEvent e)
+
+protected void processFocusEvent(FocusEvent e)
+
+...
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Component.html" onClick="this.href=getApiDoc('java.awt.Component')"><font color="#660066" size=-1>java.awt.Component</font></a></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Beide Methodenarten k&ouml;nnen in einer abgeleiteten Klasse &uuml;berlagert
+werden, um die zugeh&ouml;rigen Ereignisempf&auml;nger zu implementieren.
+Wichtig ist dabei, dass in der abgeleiteten Klasse die gleichnamige
+Methode der Basisklasse aufgerufen wird, um das Standardverhalten
+sicherzustellen. Wichtig ist weiterhin, dass sowohl <a href="index_p.html#ixb101436"><font color=#000080><tt>processEvent</tt></font></a>
+als auch <a href="index_p.html#ixb101437"><font color=#000080><tt>processActionEvent</tt></font></a>
+usw. nur aufgerufen werden, wenn der entsprechende Ereignistyp f&uuml;r
+diese Ereignisquelle aktiviert wurde. Dies passiert in folgenden F&auml;llen:
+<ul>
+<li>Wenn ein passender Ereignisempf&auml;nger &uuml;ber die zugeh&ouml;rige
+<font color="#000077"><tt>addEventListener</tt></font>-Methode registriert
+wurde.
+<li>Wenn der Ereignistyp explizit durch Aufruf der Methode <a name="ixa101852"><a href="index_e.html#ixb101439"><font color=#000080><tt>enableEvents</tt></font></a></a>
+aktiviert wurde.
+</ul>
+</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Die Methode <a href="index_e.html#ixb101439"><font color=#000080><tt>enableEvents</tt></font></a>
+erwartet als Argument eine Maske, die durch eine bitweise Oder-Verkn&uuml;pfung
+der passenden Maskenkonstanten aus der Klasse <a name="ixa101853"><a href="index_a.html#ixb101341"><font color=#000080><tt>AWTEvent</tt></font></a></a>
+zusammengesetzt werden kann:
+
+<p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+protected final void enableEvents(long eventsToEnable)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Component.html" onClick="this.href=getApiDoc('java.awt.Component')"><font color="#660066" size=-1>java.awt.Component</font></a></td>
+</tr>
+</table>
+
+<p>
+Die verf&uuml;gbaren Masken sind analog zu den Ereignistypen benannt
+und hei&szlig;en <a name="ixa101854"><a href="index_a.html#ixb101440"><font color=#000080><tt>ACTION_EVENT_MASK</tt></font></a></a>,
+<a name="ixa101855"><a href="index_a.html#ixb101441"><font color=#000080><tt>ADJUSTMENT_EVENT_MASK</tt></font></a></a>,
+<a name="ixa101856"><a href="index_c.html#ixb101442"><font color=#000080><tt>COMPONENT_EVENT_MASK</tt></font></a></a>
+usw. 
+
+<p>
+Das folgende Beispiel &uuml;berlagert die Methode <a name="ixa101857"><a href="index_p.html#ixb101443"><font color=#000080><tt>processKeyEvent</tt></font></a></a>
+in der Klasse <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>
+(die sie aus <a href="index_c.html#ixb101293"><font color=#000080><tt>Component</tt></font></a>
+geerbt hat). Durch Aufruf von <a href="index_e.html#ixb101439"><font color=#000080><tt>enableEvents</tt></font></a>
+wird die Weiterleitung der Tastaturereignisse aktiviert und das Programm
+zeigt dasselbe Verhalten wie die vorigen Programme. 
+<a name="listingid028006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2806.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2806
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    Listing2806 wnd = <font color="#0000AA">new</font> Listing2806();
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>  <font color="#0000AA">public</font> Listing2806()
+<font color="#555555">015 </font>  {
+<font color="#555555">016 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Nachrichtentransfer"</font>);
+<font color="#555555">017 </font>    setBackground(Color.lightGray);
+<font color="#555555">018 </font>    setSize(300,200);
+<font color="#555555">019 </font>    setLocation(200,100);
+<font color="#555555">020 </font>    setVisible(<font color="#006699">true</font>);
+<font color="#555555">021 </font>    enableEvents(AWTEvent.KEY_EVENT_MASK);
+<font color="#555555">022 </font>  }
+<font color="#555555">023 </font>
+<font color="#555555">024 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">025 </font>  {
+<font color="#555555">026 </font>    g.setFont(<font color="#0000AA">new</font> Font(<font color="#0000FF">"Serif"</font>,Font.PLAIN,18));
+<font color="#555555">027 </font>    g.drawString(<font color="#0000FF">"Zum Beenden bitte ESC dr&uuml;cken..."</font>,10,50);
+<font color="#555555">028 </font>  }
+<font color="#555555">029 </font>
+<font color="#555555">030 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> processKeyEvent(KeyEvent event)
+<font color="#555555">031 </font>  {
+<font color="#555555">032 </font>    <font color="#0000AA">if</font> (event.getID() == KeyEvent.KEY_PRESSED) {
+<font color="#555555">033 </font>      <font color="#0000AA">if</font> (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
+<font color="#555555">034 </font>        setVisible(<font color="#006699">false</font>);
+<font color="#555555">035 </font>        dispose();
+<font color="#555555">036 </font>        System.exit(0);
+<font color="#555555">037 </font>      }
+<font color="#555555">038 </font>    }
+<font color="#555555">039 </font>    <font color="#006699">super</font>.processKeyEvent(event);
+<font color="#555555">040 </font>  }
+<font color="#555555">041 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2806.java"><font color="#000055" size=-1>Listing2806.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 28.6: &Uuml;berlagern der Komponenten-Event-Handler</i></p>
+
+<p>
+Diese Art der Ereignisbehandlung ist nur sinnvoll, wenn Fensterklassen
+oder Dialogelemente &uuml;berlagert werden und ihr Aussehen oder Verhalten
+signifikant ver&auml;ndert wird. Alternativ k&ouml;nnte nat&uuml;rlich
+auch in diesem Fall ein <a href="index_e.html#ixb101336"><font color=#000080><tt>EventListener</tt></font></a>
+implementiert und die entsprechenden Methoden im Konstruktor der abgeleiteten
+Klasse registriert werden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Das hier vorgestellte Verfahren umgeht das Delegation Event Model
+vollst&auml;ndig und hat damit die gleichen inh&auml;renten Nachteile
+wie das Event-Handling des alten JDK. Die Dokumentation zum JDK empfiehlt
+daher ausdr&uuml;cklich, f&uuml;r alle &#187;normalen&#171; Anwendungsf&auml;lle
+das Delegation Event Model zu verwenden und die Anwendungen nach einem
+der in den ersten drei Beispielen genannten Entwurfsmuster zu implementieren.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id028002005"></a>
+<h3>28.2.5 Ausblick </h3>
+
+<p>
+Die hier vorgestellten Entwurfsmuster geben einen &Uuml;berblick &uuml;ber
+die wichtigsten Designtechniken f&uuml;r das Event-Handling in Java-Programmen.
+W&auml;hrend die ersten beiden Beispiele f&uuml;r kleine bis mittelgro&szlig;e
+Programme gut geeignet sind, kommen die Vorteile der in Variante 3
+vorgestellten Trennung zwischen GUI-Code und Anwendungslogik vor allem
+bei gr&ouml;&szlig;eren Programmen zum Tragen. Die vierte Variante
+ist vornehmlich f&uuml;r Spezialf&auml;lle geeignet und sollte entsprechend
+umsichtig eingesetzt werden. Ein Beispiel dazu findet sich in <a href="k100223.html#listing7segmentanzeige">Listing 33.1</a>.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Wir werden in den nachfolgenden Kapiteln vorwiegend die ersten beiden
+Varianten einsetzen. Wenn es darum geht, Ereignishandler f&uuml;r
+die Beispielprogramme zu implementieren, werden wir also entweder
+die erforderlichen Listener-Interfaces in der Fensterklasse selbst
+implementieren oder sie in lokalen oder anonymen Klassen unterbringen.
+Da das Event-Handling des JDK eine Vielzahl von Designvarianten erlaubt,
+werden wir uns nicht immer sklavisch an die vorgestellten Entwurfsmuster
+halten, sondern teilweise leicht davon abweichen oder Mischformen
+verwenden. Dies ist beabsichtigt und soll den m&ouml;glichen Formenreichtum
+demonstrieren. Wo n&ouml;tig, werden wir auf spezielle Implementierungsdetails
+gesondert eingehen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+<a href="k100185.html#kapitellowlevelevents">Kapitel 29</a> widmet
+sich den wichtigsten Low-Level-Events und demonstriert den genauen
+Einsatz ihrer Listener- und Event-Methoden anhand vieler Beispiele.
+In sp&auml;teren Kapiteln werden die meisten der High-Level-Events
+erl&auml;utert. Sie werden in der Regel dort eingef&uuml;hrt, wo ihr
+Einsatz durch das korrespondierende Dialogelement motiviert wird.
+So erl&auml;utert <a href="k100193.html#kapitelmenues">Kapitel 30</a>
+in Zusammenhang mit der Vorstellung von Men&uuml;s die Action-Ereignisse
+und in <a href="k100207.html#kapitelawtdialogelemente">Kapitel 32</a>
+werden Ereignisse erl&auml;utert, die von den dort vorgestellten Dialogelementen
+ausgel&ouml;st werden. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100181.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100182.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100184.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100185.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

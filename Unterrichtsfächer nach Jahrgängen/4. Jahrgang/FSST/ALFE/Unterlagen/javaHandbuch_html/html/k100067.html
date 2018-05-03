@@ -1,0 +1,479 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100063.html;106,k100066.html;107,k100068.html;108,k100070.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100063.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100066.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100068.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100070.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 10 - OOP III: Interfaces
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="weitereanwinterfaces"></a>
+<h2>10.4 Weitere Anwendungen von Interfaces </h2>
+<hr>
+<ul>
+<li><a href="k100067.html#weitereanwinterfaces">10.4 Weitere Anwendungen von Interfaces</a>
+<ul>
+<li><a href="k100067.html#konstininterfaces">10.4.1 Konstanten in Interfaces</a>
+<ul>
+<li><a href="k100067.html#sectlevel4id010004001001">static import</a>
+</ul>
+<li><a href="k100067.html#sectlevel3id010004002">10.4.2 Implementierung von Flags</a>
+<li><a href="k100067.html#fzeigerinterfaces">10.4.3 Nachbildung von Funktionszeigern </a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="konstininterfaces"></a>
+<h3>10.4.1 <a name="ixa100560">Konstanten</a> in Interfaces </h3>
+
+<p>
+Neben abstrakten Methoden k&ouml;nnen Interfaces auch Konstanten,
+also Membervariablen mit den Attributen <a href="index_s.html#ixb100431"><font color=#000080><tt>static</tt></font></a>
+und <a href="index_f.html#ixb100410"><font color=#000080><tt>final</tt></font></a>,
+enthalten. Wenn eine Klasse ein Interface implementiert, erbt es auch
+alle seine Konstanten. Es ist auch erlaubt, dass ein Interface ausschlie&szlig;lich
+Konstanten enth&auml;lt. 
+
+<p>
+Dieses Feature kann zum Beispiel n&uuml;tzlich sein, wenn ein Programm
+sehr viele Konstanten definiert. Anstatt sie in ihren eigenen Klassen
+zu belassen und bei jedem Gebrauch durch den qualifizierten Ausdruck
+<font color="#000077"><tt>Klasse.Name</tt></font> aufzurufen, k&ouml;nnte
+ein Interface definiert werden, das alle Konstantendefinitionen vereinigt.
+Wenn nun jede Klasse, in der diese Konstanten ben&ouml;tigt werden,
+dieses Interface implementiert, stehen alle darin definierten Konstanten
+direkt zur Verf&uuml;gung und k&ouml;nnen ohne qualifizierten Klassennamen
+aufgerufen werden. 
+
+<p>
+Das folgende Listing zeigt die Anwendung dieses Prinzips am Beispiel
+eines Interface, das eine Reihe von Debug-Konstanten zur Verf&uuml;gung
+stellt. Sie werden beispielsweise zur bedingten &Uuml;bersetzung oder
+zur Steuerung von Debug-Ausgaben verwendet: 
+<a name="listingid010011"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1011.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">interface</font> Debug
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#0000AA">final</font> <font color="#006699">boolean</font> FUNCTIONALITY1 = <font color="#006699">false</font>;
+<font color="#555555">006 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#0000AA">final</font> <font color="#006699">boolean</font> FUNCTIONALITY2 = <font color="#006699">true</font>;
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#0000AA">final</font> <font color="#006699">boolean</font> FUNCTIONALITY3 = <font color="#006699">false</font>;
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#0000AA">final</font> <font color="#006699">boolean</font> FUNCTIONALITY4 = <font color="#006699">false</font>;
+<font color="#555555">009 </font>}
+<font color="#555555">010 </font>
+<font color="#555555">011 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1011
+<font color="#555555">012 </font><font color="#0000AA">implements</font> Debug
+<font color="#555555">013 </font>{
+<font color="#555555">014 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">015 </font>  {
+<font color="#555555">016 </font>    <font color="#00AA00">//...</font>
+<font color="#555555">017 </font>    <font color="#0000AA">if</font> (FUNCTIONALITY1) {
+<font color="#555555">018 </font>      System.out.println(<font color="#0000FF">"..."</font>);
+<font color="#555555">019 </font>    }
+<font color="#555555">020 </font>    <font color="#00AA00">//...</font>
+<font color="#555555">021 </font>    <font color="#0000AA">if</font> (FUNCTIONALITY2) {
+<font color="#555555">022 </font>      System.out.println(<font color="#0000FF">"..."</font>);
+<font color="#555555">023 </font>    }
+<font color="#555555">024 </font>    <font color="#00AA00">//...</font>
+<font color="#555555">025 </font>  }
+<font color="#555555">026 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1011.java"><font color="#000055" size=-1>Listing1011.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 10.11: Konstanten in Interfaces</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id010004001001"></a>
+<h4><a name="ixa100561">static import</a></h4>
+
+<p>
+Durch die <a href="index_i.html#ixb100452"><font color=#000080><tt>implements</tt></font></a>-Anweisung
+k&ouml;nnen die Konstanten direkt verwendet werden, also ohne vorangestellte
+Interface-Namen. Diese praktische und von vielen Entwicklern verwendete
+M&ouml;glichkeit ist allerdings nicht unbedingt im Sinne des Erfinders.
+Die Implementierung eines Interface soll ja schlie&szlig;lich die
+Zugeh&ouml;rigkeit einer Klasse zu einem bestimmten Typ dokumentieren
+- nicht die Schreibfaulheit des Entwicklers. 
+
+<p>
+In Java gibt es deshalb auch eine M&ouml;glichkeit, statische Teile
+aus Klassen und Interfaces unqualifiziert zu benutzen, ohne <a href="index_i.html#ixb100452"><font color=#000080><tt>implements</tt></font></a>
+zu verwenden. Bei diesem, als <i>static import</i> bezeichneten Verfahren
+werden die ben&ouml;tigten statischen Bestandteile in einer speziellen
+<a href="index_i.html#ixb100148"><font color=#000080><tt>import</tt></font></a>-Anweisung
+aufgelistet, bei der nach dem Schl&uuml;sselwort <a name="ixa100562"><a href="index_i.html#ixb100458"><font color=#000080><tt>import static</tt></font></a></a>
+der qualifizierte Name des statischen Members folgt. Dieser kann dann
+im weiteren Verlauf der Klasse unqualifiziert verwendet werden. Sollen
+alle statischen Member auf einmal verf&uuml;gbar gemacht werden, ist
+<font color="#000077"><tt>Klasse.*</tt></font> zu schreiben. Dieses
+Verfahren funktioniert sowohl mit Interfaces als auch mit Klassen
+und kann sowohl Methoden wie auch Membervariablen importieren. 
+
+<p>
+Das folgende Beispiel zeigt die Anwendung dieses neuen Features am
+Beispiel der Klasse <a name="ixa100563"><a href="index_m.html#ixb100444"><font color=#000080><tt>java.lang.Math</tt></font></a></a>.
+Die Methoden <a name="ixa100564"><a href="index_s.html#ixb100445"><font color=#000080><tt>sqrt</tt></font></a></a>
+und <a name="ixa100565"><a href="index_s.html#ixb100459"><font color=#000080><tt>sin</tt></font></a></a>
+sowie die Konstante <a name="ixa100566"><a href="index_p.html#ixb100460"><font color=#000080><tt>PI</tt></font></a></a>
+k&ouml;nnen nach dem statischen Import der Klasse unqualifiziert verwendet
+werden: 
+<a name="listingid010012"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1012.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> <font color="#0000AA">static</font> java.lang.Math.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1012
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    System.out.println(sqrt(2));
+<font color="#555555">010 </font>    System.out.println(sin(PI));
+<font color="#555555">011 </font>  }
+<font color="#555555">012 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1012.java"><font color="#000055" size=-1>Listing1012.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 10.12: static import</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id010004002"></a>
+<h3>10.4.2 Implementierung von Flags </h3>
+
+<p>
+Einige Interfaces definieren weder Methoden noch Konstanten. Sie stellen
+stattdessen eine Art Flag, also einen logischen An-/Aus-Schalter dar,
+der zur Compile- und Laufzeit abgefragt werden kann. Beispiele aus
+der Klassenbibliothek sind die Interfaces <a href="index_s.html#ixb100461"><font color=#000080><tt>java.io.Serializable</tt></font></a>
+oder <a href="index_c.html#ixb100462"><font color=#000080><tt>java.lang.Cloneable</tt></font></a>.
+W&auml;hrend <a href="index_s.html#ixb100461"><font color=#000080><tt>Serializable</tt></font></a>
+in <a href="k100269.html#kapitelserialisierung">Kapitel 42</a> ausf&uuml;hrlich
+gew&uuml;rdigt wird, wollen wir uns nachfolgend die Bedeutung des
+Interface <a href="index_c.html#ixb100462"><font color=#000080><tt>Cloneable</tt></font></a>
+ansehen. 
+
+<p>
+<a href="index_c.html#ixb100462"><font color=#000080><tt>Cloneable</tt></font></a>
+ist ein Schalter f&uuml;r die in der Klasse <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+implementierte Methode <a name="ixa100567"><a href="index_c.html#ixb100290"><font color=#000080><tt>clone</tt></font></a></a>.
+Implementiert eine abgeleitete Klasse dieses Interface nicht, so deutet
+<a href="index_c.html#ixb100290"><font color=#000080><tt>clone</tt></font></a>
+das als fehlende F&auml;higkeit (oder Bereitschaft) der Klasse, eine
+Objektkopie herzustellen, und l&ouml;st beim Aufruf eine <a name="ixa100568"><a href="index_c.html#ixb100463"><font color=#000080><tt>CloneNotSupportedException</tt></font></a></a>
+aus. Implementiert die abgeleitete Klasse dagegen <a href="index_c.html#ixb100462"><font color=#000080><tt>Cloneable</tt></font></a>,
+erzeugt ein Aufruf von <a href="index_c.html#ixb100290"><font color=#000080><tt>clone</tt></font></a>
+eine elementweise Kopie des aktuellen Objekts. 
+
+<p>
+Es ist wichtig zu verstehen, was der Begriff <i>elementweise</i> bedeutet
+- insbesondere wenn die Klasse Objekte als Membervariablen enth&auml;lt.
+Beim Aufruf von <a href="index_c.html#ixb100290"><font color=#000080><tt>clone</tt></font></a>
+werden n&auml;mlich lediglich die <i>Verweise</i> auf diese Membervariablen
+kopiert, nicht aber die dahinter stehenden Objekte (bei primitiven
+Membervariablen macht das keinen Unterschied, denn sie werden nicht
+als Zeiger gespeichert). Diese Vorgehensweise wird auch als <a name="ixa100569"><i>shallow
+copy</i></a> bezeichnet (&#187;flache Kopie&#171;).
+
+<p>
+Soll eine <a name="ixa100570"><i>deep copy</i></a> (&#187;tiefe Kopie&#171;)
+angelegt werden, muss man <a href="index_c.html#ixb100290"><font color=#000080><tt>clone</tt></font></a>
+&uuml;berlagern und selbst daf&uuml;r sorgen, dass alle vorhandenen
+Objekt-Membervariablen kopiert werden. Da jedes Memberobjekt weitere
+Objekte enthalten kann, die kopiert werden m&uuml;ssen, ist das Erstellen
+einer tiefen Kopie in der Regel ein rekursiver Vorgang. 
+
+<p>
+Wir wollen uns beispielhaft das tiefe Kopieren der folgenden Klasse
+<font color="#000077"><tt>BinTreeNode</tt></font> ansehen. Diese stellt
+einen Knoten in einem Bin&auml;rbaum dar und besitzt einen Namen und
+die &uuml;blichen Verweise auf den linken und rechten Unterbaum, ebenfalls
+vom Typ <font color="#000077"><tt>BinTreeNode</tt></font>. Beim Kopieren
+wird das aktuelle Objekt durch Aufruf von <a name="ixa100571"><a href="index_s.html#ixb100466"><font color=#000080><tt>super.clone</tt></font></a></a>
+zun&auml;chst flach kopiert. Dann wird <a href="index_c.html#ixb100290"><font color=#000080><tt>clone</tt></font></a>
+rekursiv aufgerufen, um Kopien des linken bzw. rechten Unterbaums
+anzulegen. Enth&auml;lt ein Unterbaum den Wert <a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>,
+so terminiert der Kopiervorgang und mit ihm die Rekursion. Auf diese
+Weise wird der Knoten mit allen Unterknoten, Unterunterknoten usw.
+kopiert und es entsteht eine Kopie, deren Objektvariablen keine gemeinsamen
+Objekte mit dem Original mehr besitzen. 
+<a name="listingid010013"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* BinTreeNode.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">class</font> BinTreeNode
+<font color="#555555">004 </font><font color="#0000AA">implements</font> Cloneable
+<font color="#555555">005 </font>{
+<font color="#555555">006 </font>  String      name;
+<font color="#555555">007 </font>  BinTreeNode leftChild;
+<font color="#555555">008 </font>  BinTreeNode rightChild;
+<font color="#555555">009 </font>
+<font color="#555555">010 </font>  <font color="#0000AA">public</font> BinTreeNode(String name)
+<font color="#555555">011 </font>  {
+<font color="#555555">012 </font>    <font color="#006699">this</font>.name       = name;
+<font color="#555555">013 </font>    <font color="#006699">this</font>.leftChild  = <font color="#006699">null</font>;
+<font color="#555555">014 </font>    <font color="#006699">this</font>.rightChild = <font color="#006699">null</font>;
+<font color="#555555">015 </font>  }
+<font color="#555555">016 </font>
+<font color="#555555">017 </font>  <font color="#0000AA">public</font> Object clone()
+<font color="#555555">018 </font>  {
+<font color="#555555">019 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">020 </font>      BinTreeNode newNode = (BinTreeNode)<font color="#006699">super</font>.clone();
+<font color="#555555">021 </font>      <font color="#0000AA">if</font> (<font color="#006699">this</font>.leftChild != <font color="#006699">null</font>) {
+<font color="#555555">022 </font>        newNode.leftChild = (BinTreeNode)<font color="#006699">this</font>.leftChild.clone();
+<font color="#555555">023 </font>      }
+<font color="#555555">024 </font>      <font color="#0000AA">if</font> (<font color="#006699">this</font>.rightChild != <font color="#006699">null</font>) {
+<font color="#555555">025 </font>        newNode.rightChild = (BinTreeNode)<font color="#006699">this</font>.rightChild.clone();
+<font color="#555555">026 </font>      }
+<font color="#555555">027 </font>      <font color="#0000AA">return</font> newNode;
+<font color="#555555">028 </font>    } <font color="#0000AA">catch</font> (CloneNotSupportedException e) {
+<font color="#555555">029 </font>      <font color="#00AA00">//Kann eigentlich nicht auftreten...</font>
+<font color="#555555">030 </font>      <font color="#0000AA">throw</font> <font color="#0000AA">new</font> InternalError();
+<font color="#555555">031 </font>    }
+<font color="#555555">032 </font>  }
+<font color="#555555">033 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/BinTreeNode.java"><font color="#000055" size=-1>BinTreeNode.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 10.13: Implementierung einer tiefen Kopie</i></p>
+
+
+<!-- Section -->
+<a name="fzeigerinterfaces"></a>
+<h3>10.4.3 Nachbildung von Funktionszeigern <a name="ixa100572"></a>
+</h3>
+
+<p>
+Eine wichtige Anwendung von Interfaces besteht darin, die aus C oder
+C++ bekannten, aber in Java nicht vorhandenen Funktionszeiger nachzubilden,
+die es erm&ouml;glichen, eine Funktion als Argument an andere Funktionen
+zu &uuml;bergeben. N&uuml;tzlich ist das vor allem, wenn die Konfigurationsanforderungen
+einer Funktion die durch die &Uuml;bergabe von Variablen gegebenen
+M&ouml;glichkeiten &uuml;bersteigen. Beispiele f&uuml;r ihre Anwendung
+sind etwa Funktionsplotter oder Callback-Funktionen bei der Programmierung
+grafischer Oberfl&auml;chen. 
+
+<p>
+Funktionszeiger k&ouml;nnen leicht mit Hilfe von Interfaces nachgebildet
+werden. Dazu wird zun&auml;chst ein Interface definiert, das eine
+einzelne Methode <font color="#000077"><tt>f</tt></font> des gew&uuml;nschten
+Typs deklariert. Es kann dann von unterschiedlichen Klassen so implementiert
+werden, dass in <font color="#000077"><tt>f</tt></font> jeweils die
+gew&uuml;nschte Berechnung ausgef&uuml;hrt wird. Anstelle der &Uuml;bergabe
+eines Zeigers wird nun einfach ein Objekt dieser Klasse instanziert
+und an die zu konfigurierende Methode &uuml;bergeben. Diese wird vom
+Typ des Interface deklariert und kann so die Methode <font color="#000077"><tt>f</tt></font>
+aufrufen. 
+
+<p>
+Als Beispiel soll ein Programm geschrieben werden, das in der Lage
+ist, eine Wertetabelle f&uuml;r beliebige <a href="index_d.html#ixb100254"><font color=#000080><tt>double</tt></font></a>-Funktionen
+auszugeben. Wir definieren dazu zun&auml;chst ein Interface <font color="#000077"><tt>DoubleMethod</tt></font>,
+das eine Methode <font color="#000077"><tt>compute</tt></font> deklariert,
+die zu einem <a href="index_d.html#ixb100254"><font color=#000080><tt>double</tt></font></a>-Argument
+ein <a href="index_d.html#ixb100254"><font color=#000080><tt>double</tt></font></a>-Ergebnis
+berechnet. 
+<a name="doublemethod"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* DoubleMethod.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">interface</font> DoubleMethod
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#006699">double</font> compute(<font color="#006699">double</font> value);
+<font color="#555555">006 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/DoubleMethod.java"><font color="#000055" size=-1>DoubleMethod.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 10.14: Das Interface DoubleMethod</i></p>
+
+<p>
+Anschlie&szlig;end implementieren wir das Interface in verschiedenen
+Klassen und stellen die Funktionen <i>Exponentation</i>, <i>Quadratwurzel</i>,
+<i>Multiplikation mit zwei</i> und <i>Quadrat</i> zur Verf&uuml;gung.
+Anschlie&szlig;end instanzieren wir diese Klassen und &uuml;bergeben
+die Objekte nacheinander an die Methode <font color="#000077"><tt>printTable</tt></font>,
+mit der die Wertetabelle erzeugt und ausgegeben wird: 
+<a name="fzeigerbeispiel"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1015.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">class</font> MathExp
+<font color="#555555">004 </font><font color="#0000AA">implements</font> DoubleMethod
+<font color="#555555">005 </font>{
+<font color="#555555">006 </font>  <font color="#0000AA">public</font> <font color="#006699">double</font> compute(<font color="#006699">double</font> value)
+<font color="#555555">007 </font>  {
+<font color="#555555">008 </font>    <font color="#0000AA">return</font> Math.exp(value);
+<font color="#555555">009 </font>  }
+<font color="#555555">010 </font>}
+<font color="#555555">011 </font>
+<font color="#555555">012 </font><font color="#0000AA">class</font> MathSqrt
+<font color="#555555">013 </font><font color="#0000AA">implements</font> DoubleMethod
+<font color="#555555">014 </font>{
+<font color="#555555">015 </font>  <font color="#0000AA">public</font> <font color="#006699">double</font> compute(<font color="#006699">double</font> value)
+<font color="#555555">016 </font>  {
+<font color="#555555">017 </font>    <font color="#0000AA">return</font> Math.sqrt(value);
+<font color="#555555">018 </font>  }
+<font color="#555555">019 </font>}
+<font color="#555555">020 </font>
+<font color="#555555">021 </font><font color="#0000AA">class</font> Times2
+<font color="#555555">022 </font><font color="#0000AA">implements</font> DoubleMethod
+<font color="#555555">023 </font>{
+<font color="#555555">024 </font>  <font color="#0000AA">public</font> <font color="#006699">double</font> compute(<font color="#006699">double</font> value)
+<font color="#555555">025 </font>  {
+<font color="#555555">026 </font>    <font color="#0000AA">return</font> 2 * value;
+<font color="#555555">027 </font>  }
+<font color="#555555">028 </font>}
+<font color="#555555">029 </font>
+<font color="#555555">030 </font><font color="#0000AA">class</font> Sqr
+<font color="#555555">031 </font><font color="#0000AA">implements</font> DoubleMethod
+<font color="#555555">032 </font>{
+<font color="#555555">033 </font>  <font color="#0000AA">public</font> <font color="#006699">double</font> compute(<font color="#006699">double</font> value)
+<font color="#555555">034 </font>  {
+<font color="#555555">035 </font>    <font color="#0000AA">return</font> value * value;
+<font color="#555555">036 </font>  }
+<font color="#555555">037 </font>}
+<font color="#555555">038 </font>
+<font color="#555555">039 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1015
+<font color="#555555">040 </font>{
+<font color="#555555">041 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> printTable(DoubleMethod meth)
+<font color="#555555">042 </font>  {
+<font color="#555555">043 </font>    System.out.println(<font color="#0000FF">"Wertetabelle "</font> + meth.toString());
+<font color="#555555">044 </font>    <font color="#0000AA">for</font> (<font color="#006699">double</font> x = 0.0; x &lt;= 5.0; x += 1) {
+<font color="#555555">045 </font>      System.out.println(<font color="#0000FF">" "</font> + x + <font color="#0000FF">"-&gt;"</font> + meth.compute(x));
+<font color="#555555">046 </font>    }
+<font color="#555555">047 </font>  }
+<font color="#555555">048 </font>
+<font color="#555555">049 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">050 </font>  {
+<font color="#555555">051 </font>    printTable(<font color="#0000AA">new</font> Times2());
+<font color="#555555">052 </font>    printTable(<font color="#0000AA">new</font> MathExp());
+<font color="#555555">053 </font>    printTable(<font color="#0000AA">new</font> Sqr());
+<font color="#555555">054 </font>    printTable(<font color="#0000AA">new</font> MathSqrt());
+<font color="#555555">055 </font>  }
+<font color="#555555">056 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1015.java"><font color="#000055" size=-1>Listing1015.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 10.15: Funktionszeiger mit Interfaces</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+In <a href="k100287.html#fzeigerreflection">Abschnitt 45.3.2</a> wird
+gezeigt, wie man Funktionszeiger auf &auml;hnliche Weise mit dem Reflection-API
+realisieren kann.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100063.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100066.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100068.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100070.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

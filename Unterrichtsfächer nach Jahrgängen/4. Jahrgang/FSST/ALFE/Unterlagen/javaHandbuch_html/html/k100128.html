@@ -1,0 +1,166 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100127.html;106,k100127.html;107,k100129.html;108,k100132.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100127.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100127.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100129.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100132.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 19 - Character-Streams
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id019001"></a>
+<h2>19.1 Allgemeine Konzepte </h2>
+<hr>
+<ul>
+<li><a href="k100128.html#sectlevel2id019001">19.1 Allgemeine Konzepte</a>
+</ul>
+<hr>
+
+<p>
+Als Sprache, die nicht nur das Erstellen vorwiegend grafikorientierter
+Web-Applets erm&ouml;glicht, sondern auch zur Entwicklung von eigenst&auml;ndigen
+Anwendungen eingesetzt werden soll, bietet Java eine umfangreiche
+Bibliothek zum sequenziellen und wahlfreien Zugriff auf Dateien und
+zur Verwaltung von Verzeichnissen. W&auml;hrend der wahlfreie Zugriff
+&auml;hnlich wie in anderen Sprachen gel&ouml;st ist, wurden bei der
+sequenziellen Ein-/Ausgabe neue Wege beschritten. Die daf&uuml;r verwendeten
+Klassen realisieren das aus anderen Sprachen bekannte Konzept der
+<i>Streams</i> auf der Basis objektorientierter Techniken. 
+
+<p>
+Ein <a name="ixa101233"><i>Stream</i></a> wird dabei zun&auml;chst
+als abstraktes Konstrukt eingef&uuml;hrt, dessen F&auml;higkeit darin
+besteht, Zeichen auf ein imagin&auml;res Ausgabeger&auml;t zu schreiben
+oder von diesem zu lesen. Erst konkrete Unterklassen binden die Zugriffsroutinen
+an echte Ein- oder Ausgabeger&auml;te, wie beispielsweise an Dateien,
+Strings oder Kommunikationskan&auml;le im Netzwerk. 
+
+<p>
+Das Stream-Klassenkonzept von Java bietet die M&ouml;glichkeit, Streams
+zu verketten oder zu schachteln. Die Verkettung von Streams erm&ouml;glicht
+es, mehrere Dateien zusammenzufassen und f&uuml;r den Aufrufer als
+einen einzigen Stream darzustellen. Das Schachteln von Streams erlaubt
+die Konstruktion von Filtern, die bei der Ein- oder Ausgabe bestimmte
+Zusatzfunktionen &uuml;bernehmen, beispielsweise das Puffern von Zeichen,
+das Z&auml;hlen von Zeilen oder die Interpretation bin&auml;rer Daten.
+Beide Konzepte sind mit normalen Sprachmitteln realisiert und k&ouml;nnen
+selbst erweitert werden. Es ist ohne Weiteres m&ouml;glich, eigene
+Filter zu schreiben, die den Ein- oder Ausgabestrom analysieren und
+anwendungsbezogene Funktionalit&auml;ten realisieren. 
+
+<p>
+Alle Klassen zur Dateiein- und -ausgabe befinden sich im Paket <a name="ixa101234"><a href="index_j.html#ixb100197"><font color=#000080><tt>java.io</tt></font></a></a>.
+Um sie zu verwenden, sollte daher folgende Anweisung an den Anfang
+eines Programms gestellt werden: 
+<font color="#000077">
+<pre>
+import java.io.*;
+</pre>
+</font>
+
+<p>
+Bis zur Version 1.0 des JDK gab es nur <a name="ixa101235"><i>Byte-Streams</i></a>
+in Java. Wesentliches Merkmal eines Byte-Streams war es dabei, dass
+jede einzelne Transporteinheit 8 Bit lang war (also ein einzelnes
+Byte). W&auml;hrend damit die Kompatibilit&auml;t zu Textdateien,
+die mit konventionellen Programmiersprachen erstellt wurden oder von
+diesen gelesen werden sollten, gew&auml;hrleistet war, gab es naturgem&auml;&szlig;
+Probleme bei der Umwandlung in die 16 Bit langen Unicode-Zeichen,
+die innerhalb von Java zur Zeichendarstellung benutzt werden. Zudem
+war die Abbildung zwischen Bytes und Characters eher unsystematisch
+gel&ouml;st und bot wenig Unterst&uuml;tzung f&uuml;r die Anpassung
+an unterschiedliche Zeichens&auml;tze und nationale Gegebenheiten.
+
+<p>
+All dies hat die JDK-Designer dazu bewogen, das Konzept der Streams
+in der Version 1.1 zu &uuml;berdenken und die neue Gruppe der <a name="ixa101236"><i>Character-Streams</i></a>
+einzuf&uuml;hren. Character-Streams verwenden grunds&auml;tzlich 16
+Bit lange Unicode-Zeichen und arbeiten daher besser mit den String-
+und Zeichentypen von Java zusammen. Um zu den 8-Bit-Zeichens&auml;tzen
+in externen Dateien kompatibel zu bleiben, wurden explizite Br&uuml;ckenklassen
+eingef&uuml;hrt, die Character-Streams in Byte-Streams &uuml;berf&uuml;hren
+und umgekehrt. Diese bieten nun auch die M&ouml;glichkeit der Anpassung
+an spezielle Zeichens&auml;tze und lokale Besonderheiten. 
+
+<p>
+Wir werden uns in diesem Kapitel ausschlie&szlig;lich mit den Character-Streams
+besch&auml;ftigen, weil sie f&uuml;r die Verarbeitung von textbasierten
+Streams wichtig sind. Byte-Streams und Br&uuml;ckenklassen werden
+im n&auml;chsten Kapitel erl&auml;utert. Wir werden dort sehen, dass
+es - selbst im UNICODE-Zeitalter - eine ganze Reihe von Anwendungen
+f&uuml;r byteorientierte Dateizugriffe gibt. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Beispiele in diesem Kapitel wurden haupts&auml;chlich unter Windows
+entwickelt und getestet und mitunter kommen darin windows-spezifische
+Besonderheiten vor. So wird als Zeilenendezeichen &#187;\r\n&#171;
+verwendet, obwohl unter UNIX &#187;\n&#171; und auf dem Mac &#187;\r&#171;
+gebr&auml;uchlich ist. Am besten ist es nat&uuml;rlich, das System-Property
+<a name="ixa101237"><a href="index_l.html#ixb100843"><font color=#000080><tt>line.separator</tt></font></a></a>
+zu verwenden (siehe <a href="k100117.html#systemproperties">Abschnitt 17.3.1</a>).
+Auch bei den Pfadseparatoren gibt es Unterschiede. W&auml;hrend unter
+Windows der Backslash &#187;\&#171; verwendet wird, ist es unter UNIX
+der Slash &#187;/&#171;. Mit dem System-Property <a name="ixa101238"><a href="index_f.html#ixb100840"><font color=#000080><tt>file.separator</tt></font></a></a>
+kann auch auf diese Eigenschaft portabel zugegriffen werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100127.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100127.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100129.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100132.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

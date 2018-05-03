@@ -1,0 +1,476 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100090.html;106,k100090.html;107,k100092.html;108,k100097.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100090.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100090.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100092.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100097.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 14 - Strukturierung von Java-Programmen
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id014001"></a>
+<h2>14.1 Programmelemente </h2>
+<hr>
+<ul>
+<li><a href="k100091.html#sectlevel2id014001">14.1 Programmelemente</a>
+<ul>
+<li><a href="k100091.html#sectlevel3id014001001">14.1.1 Anweisungen</a>
+<li><a href="k100091.html#sectlevel3id014001002">14.1.2 Bl&ouml;cke</a>
+<li><a href="k100091.html#sectlevel3id014001003">14.1.3 Methoden</a>
+<li><a href="k100091.html#sectlevel3id014001004">14.1.4 Klassen</a>
+<li><a href="k100091.html#subsectionpakete">14.1.5 Pakete</a>
+<li><a href="k100091.html#sectlevel3id014001006">14.1.6 Applikationen</a>
+<li><a href="k100091.html#sectlevel3id014001007">14.1.7 Applets</a>
+</ul>
+</ul>
+<hr>
+
+<p>
+Wie in jeder Programmiersprache kann man auch in Java Strukturen erkennen,
+die auf den unterschiedlichen Abstraktionsebenen die Bestandteile
+eines Programms bilden. Die Kenntnis und Bezeichnung dieser Strukturen
+ist hilfreich f&uuml;r das Verst&auml;ndnis der entwickelten Programme
+und f&uuml;r die Kommunikation mit anderen Programmierern. 
+
+<p>
+Wir wollen uns dazu in diesem Kapitel die folgenden Programmelemente
+ansehen: 
+<ul>
+<li>Anweisungen
+<li>Bl&ouml;cke
+<li>Methoden
+<li>Klassen
+<li>Pakete
+<li>Applikationen
+<li>Applets
+</ul>
+
+
+<!-- Section -->
+<a name="sectlevel3id014001001"></a>
+<h3>14.1.1 <a name="ixa100749">Anweisungen</a></h3>
+
+<p>
+Anweisungen geh&ouml;ren zu den elementarsten ausf&uuml;hrbaren Programmelementen
+in Java. Eine Anweisung kann eine Deklaration enthalten, einen Ausdruck
+auswerten oder den Programmablauf steuern. Wir wollen Anweisungen
+an dieser Stelle als die kleinsten Bausteine von Java betrachten und
+alle anderen Elemente sollen darauf aufbauen. 
+
+<!-- Section -->
+
+<a name="sectlevel3id014001002"></a>
+<h3>14.1.2 Bl&ouml;cke<a name="ixa100750"></a> </h3>
+
+<p>
+Ein Block ist eine Kollektion von Anweisungen, die nacheinander ausgef&uuml;hrt
+werden. Anders als eine einfache Anweisung kann ein Block eigene Variablen
+definieren, die nur innerhalb des Blocks sichtbar sind. Sie werden
+angelegt, wenn der Block aufgerufen wird, und zerst&ouml;rt, wenn
+er wieder verlassen wird. 
+
+<p>
+Interessant ist ein Block vor allem deshalb, weil er selbst eine <i>Anweisung</i>
+ist. W&auml;hrend er in seiner Zusammensetzung aus vielen verschiedenen
+Anweisungen bestehen kann, stellt sich ein Block nach au&szlig;en
+hin als eine einzige Anweisung dar. Die ganze Semantik einer blockstrukturierten
+Sprache ist darauf ausgelegt, dass ein Block f&uuml;r die Anweisungen,
+die ihn verwenden, wie eine homogene Einzelanweisung aussieht. 
+
+<p>
+Rekursive Konstruktionsschemata, wie das hier beschriebene, treten
+an vielen verschiedenen Stellen und in vielen verschiedenen Erscheinungsformen
+bei der Programmentwicklung auf. Es gibt Methoden, die sich selbst
+aufrufen, Strukturvariablen, die andere Variablen enthalten, oder
+eben Bl&ouml;cke, die Anweisungen <i>enthalten</i> und Anweisungen
+<i>sind</i>. Grundlage von rekursiven <i>Part-of</i>-Beziehungen ist
+immer der Umstand, dass die Kollektion selbst vom Typ der darin enthaltenen
+Elemente ist. 
+
+<p>
+Die Sichtbarkeit und Lebensdauer von Bl&ouml;cken <a name="ixa100751"></a>
+in Java entspricht den &uuml;blichen Regeln, die auch in anderen Programmiersprachen
+g&uuml;ltig sind. Lokale Variablen werden angelegt, wenn die Ausf&uuml;hrung
+des Blocks beginnt, und wieder zerst&ouml;rt, wenn der Block verlassen
+wird. Innerhalb eines Blocks sind die lokalen Variablen des Blocks
+und die lokalen Variablen der umgebenden Bl&ouml;cke bzw. der umgebenden
+Methode sichtbar. Zus&auml;tzlich sind die Variablen der Klasse sichtbar,
+in der die den Block umschlie&szlig;ende Methode enthalten ist. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Lokale Variablen verdecken gleichnamige Instanz- oder Klassenvariablen<a name="ixa100752"></a>.
+Durch Voranstellen des <a name="ixa100753"><a href="index_t.html#ixb100284"><font color=#000080><tt>this</tt></font></a></a>-Zeigers
+kann trotzdem auf sie zugegriffen werden. Dies wird in Java oft ausgenutzt,
+um im Konstruktor einer Methode Membervariablen zu initialisieren,
+die denselben Namen wie formale Parameter haben: 
+<a name="listingid014001"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">class</font> Point
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font> x, y;
+<font color="#555555">004 </font>  
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> Point(<font color="#006699">int</font> x, <font color="#006699">int</font> y)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#006699">this</font>.x = x;
+<font color="#555555">008 </font>    <font color="#006699">this</font>.y = y;
+<font color="#555555">009 </font>  }
+<font color="#555555">010 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 14.1: Zugriff auf verdeckte Membervariablen</i></p>
+</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Diese Vorgehensweise hat den Vorteil, dass man sich f&uuml;r die formalen
+Parameter nicht extra Namen ausdenken muss, nur damit sie sich von
+den zugeh&ouml;rigen Membervariablen unterscheiden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Sie hat aber auch den Nachteil, dass Membervariablen <i>versehentlich</i>
+durch lokale Variablen verdeckt werden k&ouml;nnen. Das folgende Beispiel
+zeigt einen typischen Fehler dieser Art: 
+<a name="verdeckmember"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1402.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1402
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">private</font> <font color="#006699">int</font> cnt = 0;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> printNext()
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#006699">int</font> value = cnt;
+<font color="#555555">010 </font>    System.out.println(<font color="#0000FF">"value = "</font> + value);
+<font color="#555555">011 </font>    <font color="#006699">int</font> cnt = value + 1; <a name="verdeckmember.a"></a>
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">015 </font>  {
+<font color="#555555">016 </font>    Listing1402 obj = <font color="#0000AA">new</font> Listing1402();
+<font color="#555555">017 </font>    obj.printNext();
+<font color="#555555">018 </font>    obj.printNext();
+<font color="#555555">019 </font>    obj.printNext();
+<font color="#555555">020 </font>  }
+<font color="#555555">021 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1402.java"><font color="#000055" size=-1>Listing1402.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 14.2: Versehentliches Verdecken einer Membervariable</i></p>
+
+<p>
+Auf den ersten Blick w&uuml;rde man erwarten, dass nacheinander die
+Werte 0, 1 und 2 ausgegeben werden. Dem ist aber nicht so, denn in
+<a href="k100091.html#verdeckmember.a">Zeile 011</a> wird der um eins
+erh&ouml;hte Wert nicht der Membervariablen <font color="#000077"><tt>cnt</tt></font>
+zugewiesen, sondern der lokalen Variablen gleichen Namens. Dieser
+Fehler ist recht t&uuml;ckisch und kann bei un&uuml;bersichtlichem
+Programmcode leicht entstehen. Die hier vorgestellte Variante passiert
+vor allem dann leicht, wenn eine ehemals lokale Variable zu einer
+Membervariable umfunktioniert wurde und der Programmierer nicht daran
+gedacht hat, den Typnamen zu entfernen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Im Gegensatz zu den meisten anderen Programmiersprachen gibt es in
+Java die Regel, dass <i>lokale</i> Variablen sich nicht gegenseitig
+verdecken d&uuml;rfen. Es ist also nicht erlaubt, innerhalb eines
+Blocks eine lokale Variable zu deklarieren, die unter demselben Namen
+bereits als lokale Variable sichtbar ist. Weitere Details zu Bl&ouml;cken
+sind in <a href="k100046.html#kapitelanweisungen">Kapitel 7</a> zu
+finden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id014001003"></a>
+<h3>14.1.3 <a name="ixa100754">Methoden</a></h3>
+
+<p>
+Methoden sind wie Bl&ouml;cke Kollektionen, die Deklarationen und
+Anweisungen enthalten k&ouml;nnen. Genaugenommen enthalten sie neben
+dem Funktionskopf genau <i>einen</i> Block, der alle anderen Elemente
+enth&auml;lt. Sie unterscheiden sich von Bl&ouml;cken folgenderma&szlig;en:
+<ul>
+<li>Sie haben einen Namen und k&ouml;nnen von verschiedenen Stellen
+des Programms aus aufgerufen werden.
+<li>Sie sind parametrisierbar und ihr Verhalten ist so zur Laufzeit
+strukturiert ver&auml;nderbar.
+<li>Sie k&ouml;nnen einen R&uuml;ckgabewert haben, mit dem ein Wert
+an den Aufrufer zur&uuml;ckgegeben werden kann.
+</ul>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Methoden werden in Java immer <i>lokal zu einer Klasse</i> definiert.
+Klassenlose Funktionen, wie sie beispielsweise in C++ zur Verf&uuml;gung
+stehen, gibt es in Java nicht. In diesem Sinne ist Java eine wirklich
+objektorientierte Programmiersprache, denn die Methoden operieren
+immer auf den Daten eines bestimmten Objekts, zu dem sie aufgerufen
+werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Allerdings gibt es noch die <a name="ixa100755"><i>Klassenmethoden</i></a>.
+Sie werden zwar auch innerhalb einer Klasse definiert, ben&ouml;tigen
+aber sp&auml;ter kein Objekt zur Ausf&uuml;hrung. Stattdessen entsprechen
+Klassenmethoden eher den globalen Funktionen anderer Programmiersprachen
+und haben somit keinen Zugriff auf die Membervariablen eines Objekts.
+Im Unterschied zu gew&ouml;hnlichen Funktionen werden Klassenmethoden
+aber innerhalb einer Klasse definiert und besitzen damit einen eigenen
+Namensraum, der sich &uuml;ber die Methoden der aktuellen Klasse erstreckt.
+Der Zugriff auf eine Klassenmethode erfordert immer die Verwendung
+eines qualifizierten Namens, der sich aus dem Klassennamen, einem
+Punkt und dem eigentlichen Methodennamen zusammensetzt. 
+
+<!-- Section -->
+
+<a name="sectlevel3id014001004"></a>
+<h3>14.1.4 <a name="ixa100756">Klassen</a></h3>
+
+<p>
+Klassen sind das wichtigste Strukturierungsmittel objektorientierter
+Sprachen. Eine Klasse enth&auml;lt eine Menge von Variablen, die den
+<i>Zustand</i> von Objekten dieser Klasse beschreiben, und eine Menge
+von Methoden, die das <i>Verhalten</i> der Objekte festlegen. 
+
+<p>
+Klassen sind insofern schachtelbar, als ihre Instanzvariablen vom
+Typ einer Klasse sein k&ouml;nnen. Dabei ist es insbesondere erlaubt,
+dass die Membervariablen von demselben Typ wie die zu definierende
+Klasse sind. Da in Java alle Objekte als Referenzen abgelegt werden,
+k&ouml;nnen auf diese Weise rekursive Datentypen erzeugt und zur Konstruktion
+von <a name="ixa100757">dynamischen Datenstrukturen</a> verwendet
+werden. 
+
+<!-- Section -->
+
+<a name="subsectionpakete"></a>
+<h3>14.1.5 <a name="ixa100758">Pakete</a></h3>
+
+<p>
+In gro&szlig;en Programmsystemen reichen Klassen als Strukturelemente
+alleine nicht aus. Deshalb bietet Java mit den <i>Packages</i> (oder
+Paketen) oberhalb der Ebene der Klassen eine weitere Kollektion f&uuml;r
+Programmelemente an. 
+
+<p>
+Ein Paket ist eine Sammlung von Klassen, die einen gemeinsamen Zweck
+verfolgen oder aus anderen Gr&uuml;nden zusammengefasst werden sollen.
+Jede Klasse in Java ist Bestandteil genau eines Pakets. Paketnamen
+k&ouml;nnen aus mehreren Teilen bestehen und beliebig tiefe Hierarchien
+ausdr&uuml;cken. 
+
+<p>
+Der Name einer Methode oder einer Variablen besteht damit grunds&auml;tzlich
+aus drei Elementen: 
+<ul>
+<li>Paketname
+<li>Klassen- oder Objektname
+<li>Methoden- bzw. Variablenname
+</ul>
+
+<p>
+Ein Beispiel f&uuml;r einen Methodennamen ist <font color="#000077"><tt>java.lang.Math.sqrt</tt></font>.
+Wir werden sp&auml;ter Mechanismen kennenlernen, mit denen es m&ouml;glich
+ist, die Namen bei ihrer Verwendung abzuk&uuml;rzen. 
+
+<!-- Section -->
+
+<a name="sectlevel3id014001006"></a>
+<h3>14.1.6 <a name="ixa100759">Applikationen</a></h3>
+
+<p>
+Applikationen bilden eigenst&auml;ndige Programme in Java. Sie ben&ouml;tigen
+keinen Browser zur Ausf&uuml;hrung, sondern nur den Java-Interpreter
+und die <font color="#660099">.class</font>-Files der verwendeten
+Klassen. 
+
+<p>
+Technisch betrachtet ist eine Applikation nicht mehr als eine einzelne
+Klasse, in der eine Methode vom Typ <font color="#000077"><tt>public
+static void main</tt></font><a name="ixa100760"></a> definiert wurde.
+Jede Klasse, die eine solche Methode enth&auml;lt, kann als Applikation
+verwendet werden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Durch einfaches Hinzuf&uuml;gen einer Methode <font color="#000077"><tt>public
+static void main</tt></font> kann also jede beliebige Klasse sehr
+leicht in eine Applikation verwandelt und vom Java-Interpreter aufgerufen
+werden. Dies kann beispielsweise n&uuml;tzlich sein, um eine solche
+Klasse mit Benutzungshinweisen auszustatten, die der Entwickler durch
+einfaches Starten der Klasse als Applikation abrufen kann.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id014001007"></a>
+<h3>14.1.7 <a name="ixa100761">Applets</a></h3>
+
+<p>
+Applets sind ebenfalls lauff&auml;hige Java-Programme. Anders als
+Applikationen werden sie aus einer HTML-Seite heraus aufgerufen und
+ben&ouml;tigen zur Ausf&uuml;hrung einen Web-Browser (oder ein Hilfsprogramm
+wie den <a name="ixa100762"><i>Appletviewer</i></a>, das sich in gewissem
+Sinne wie ein Web-Browser verh&auml;lt). 
+
+<p>
+Applets werden nicht durch die Methode <font color="#000077"><tt>public
+static void main</tt></font> gestartet, sondern m&uuml;ssen aus der
+Klasse <a name="ixa100763"><a href="index_a.html#ixb100603"><font color=#000080><tt>Applet</tt></font></a></a>
+abgeleitet und nach deren Architekturmerkmalen konstruiert werden.
+Zum Starten des Programms erzeugt der Browser eine Instanz der abgeleiteten
+Klasse und ruft nacheinander eine Reihe vordefinierter <a name="ixa100764"><i>Callback-Methoden</i></a>
+auf. Callback-Methoden sind Methoden, die von der abgeleiteten Klasse
+zur Verf&uuml;gung gestellt und vom Browser oder AppletViewer aufgerufen
+werden. Weitere Details zur Applet-Programmierung finden sich in <a href="k100257.html#kapitelapplets1">Kapitel 40</a>
+und <a href="k100263.html#kapitelapplets2">Kapitel 41</a>. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100090.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100090.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100092.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100097.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

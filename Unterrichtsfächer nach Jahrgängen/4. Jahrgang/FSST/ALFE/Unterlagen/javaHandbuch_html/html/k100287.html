@@ -1,0 +1,998 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100284.html;106,k100286.html;107,k100288.html;108,k100292.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100284.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100286.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100288.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100292.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 45 - Reflection
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="reflectionmethodenaufrufe"></a>
+<h2>45.3 Methoden- und Konstruktorenaufrufe </h2>
+<hr>
+<ul>
+<li><a href="k100287.html#reflectionmethodenaufrufe">45.3 Methoden- und Konstruktorenaufrufe</a>
+<ul>
+<li><a href="k100287.html#sectlevel3id045003001">45.3.1 Parameterlose Methoden</a>
+<li><a href="k100287.html#fzeigerreflection">45.3.2 Parametrisierte Methoden</a>
+<li><a href="k100287.html#sectlevel3id045003003">45.3.3 Parametrisierte Konstruktoren</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id045003001"></a>
+<h3>45.3.1 Parameterlose Methoden </h3>
+
+<p>
+Wir wollen uns ein erstes Beispiel f&uuml;r die Anwendung des Reflection-API
+ansehen. In der Praxis stellt sich immer wieder das Problem, wohin
+bei neu entwickelten Klassen der Code zum <i>Testen</i> der Klasse
+geschrieben werden soll. Ein Weg ist der, an das Ende der Klasse eine
+Methode <font color="#000077"><tt>public static void main</tt></font>
+zu h&auml;ngen und den Testcode dort zu platzieren: 
+<a name="listingid045002"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Queue
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  <font color="#00AA00">//...</font>
+<font color="#555555">004 </font>  <font color="#00AA00">//Implementierung der Queue</font>
+<font color="#555555">005 </font>  <font color="#00AA00">//...</font>
+<font color="#555555">006 </font>
+<font color="#555555">007 </font>  <font color="#00AA00">//---Testcode------------------------------</font>
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    Queue q = <font color="#0000AA">new</font> Queue();
+<font color="#555555">011 </font>    <font color="#00AA00">//...</font>
+<font color="#555555">012 </font>    <font color="#00AA00">//Code zum Testen der Queue</font>
+<font color="#555555">013 </font>    <font color="#00AA00">//...</font>
+<font color="#555555">014 </font>  }
+<font color="#555555">015 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 45.2: Testcode in der main-Methode</i></p>
+
+<p>
+Auf diese Weise l&auml;sst sich der Testcode einer Dienstleistungsklasse
+- wie beispielsweise einer Queue - ganz einfach mit dem Java-Interpreter
+aufrufen und reproduzierbar testen. Nachteilig ist nat&uuml;rlich,
+dass der eigentliche Code und der Testcode vermischt werden. Besser
+w&auml;re es, wenn der Testcode in einer separaten Klasse verbleiben
+w&uuml;rde. Wir wollen dazu ein kleines Programm zum Testen von Java-Klassen
+schreiben, das folgende Eigenschaften besitzen soll: 
+<ul>
+<li>Das Testing wird durch ein Rahmenprogramm <font color="#000077"><tt>Test</tt></font>
+ausgel&ouml;st, das als Argument den Namen der zu testenden Klasse
+erwartet.
+<li>Die zu testende Klasse soll automatisch gefunden, geladen und
+mit dem Default-Konstruktor instanziert werden.
+<li>In der Klasse mit dem Testcode sollen automatisch alle &ouml;ffentlichen,
+nichtstatischen Methoden ausgef&uuml;hrt werden, deren Name mit &#187;test&#171;
+beginnt.
+</ul>
+
+<p>
+Der Schl&uuml;ssel zur Implementierung der Klasse <font color="#000077"><tt>Test</tt></font>
+liegt in der Anwendung des Reflection-API. Das Laden der Testklasse
+entspricht dem vorigen Beispiel, zum Aufz&auml;hlen aller Methoden
+bedienen wir uns der Methode <a name="ixa103293"><a href="index_g.html#ixb102462"><font color=#000080><tt>getMethods</tt></font></a></a>
+der Klasse <a href="index_c.html#ixb100654"><font color=#000080><tt>Class</tt></font></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Method[] getMethods()
+  throws SecurityException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/Class.html" onClick="this.href=getApiDoc('java.lang.Class')"><font color="#660066" size=-1>java.lang.Class</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_g.html#ixb102462"><font color=#000080><tt>getMethods</tt></font></a>
+liefert ein Array von Objekten des Typs <a name="ixa103294"><a href="index_m.html#ixb102463"><font color=#000080><tt>Method</tt></font></a></a>,
+das f&uuml;r jede &ouml;ffentliche Methode der Klasse ein Element
+enth&auml;lt. Um auch die nicht&ouml;ffentlichen Methoden aufzulisten,
+kann die Methode <a name="ixa103295"><a href="index_g.html#ixb102464"><font color=#000080><tt>getDeclaredMethods</tt></font></a></a>
+verwendet werden. 
+
+<p>
+Die Klasse <a href="index_m.html#ixb102463"><font color=#000080><tt>Method</tt></font></a>
+stellt einige Methoden zum Zugriff auf das Methodenobjekt zur Verf&uuml;gung.
+Die wichtigsten sind: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+String getName()
+
+int getModifiers()
+
+Class[] getParameterTypes()
+
+Object invoke(Object obj, Object[] args)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/reflect/Method.html" onClick="this.href=getApiDoc('java.lang.reflect.Method')"><font color="#660066" size=-1>java.lang.reflect.Method</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa103296"><a href="index_g.html#ixb100679"><font color=#000080><tt>getName</tt></font></a></a>
+kann der Name der Methode ermittelt werden. <a name="ixa103297"><a href="index_g.html#ixb101354"><font color=#000080><tt>getModifiers</tt></font></a></a>
+liefert eine bitverkn&uuml;pfte Darstellung der Methodenattribute
+(<a href="index_s.html#ixb100431"><font color=#000080><tt>static</tt></font></a>,
+<a href="index_p.html#ixb100084"><font color=#000080><tt>private</tt></font></a>
+usw.). Der R&uuml;ckgabewert kann an die statischen Methoden der Klasse
+<a name="ixa103298"><a href="index_m.html#ixb102465"><font color=#000080><tt>Modifier</tt></font></a></a>
+&uuml;bergeben werden, um festzustellen, welche Attribute die Methode
+besitzt: <a name="ixa103299"></a> <a name="ixa103300"></a> <a name="ixa103301"></a>
+<a name="ixa103302"></a> <a name="ixa103303"></a> <a name="ixa103304"></a>
+<a name="ixa103305"></a> <a name="ixa103306"></a> <a name="ixa103307"></a>
+<a name="ixa103308"></a> <a name="ixa103309"></a> <a name="ixa103310"></a>
+<a name="ixa103311"></a> 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+static boolean isAbstract(int mod)
+static boolean isExplicit(int mod)
+static boolean isFinal(int mod)
+static boolean isInterface(int mod)
+static boolean isNative(int mod)
+static boolean isPrivate(int mod)
+static boolean isProtected(int mod)
+static boolean isPublic(int mod)
+static boolean isStatic(int mod)
+static boolean isStrict(int mod)
+static boolean isSynchronized(int mod)
+static boolean isTransient(int mod)
+static boolean isVolatile(int mod)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/reflect/Modifier.html" onClick="this.href=getApiDoc('java.lang.reflect.Modifier')"><font color="#660066" size=-1>java.lang.reflect.Modifier</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa103312"><a href="index_g.html#ixb102479"><font color=#000080><tt>getParameterTypes</tt></font></a></a>
+liefert ein Array mit Objekten des Typs <a href="index_c.html#ixb100654"><font color=#000080><tt>Class</tt></font></a>,
+das dazu verwendet werden kann, die Anzahl und Typen der formalen
+Argumente der Methode festzustellen. Jedes Array-Element repr&auml;sentiert
+dabei die Klasse des korrespondierenden formalen Arguments. Hat das
+Array die L&auml;nge 0, ist die Methode parameterlos. Gibt es beispielsweise
+zwei Elemente mit den Typen <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+und <a href="index_d.html#ixb100268"><font color=#000080><tt>Double</tt></font></a>,
+so besitzt die Methode zwei Parameter, die vom Typ <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+und <a href="index_d.html#ixb100268"><font color=#000080><tt>Double</tt></font></a>
+sind. 
+
+<p>
+Um auch primitive Typen auf diese Weise darstellen zu k&ouml;nnen,
+gibt es in den Wrapper-Klassen der primitiven Typen (siehe <a href="k100072.html#wrapperklassen">Abschnitt 11.2</a>)
+jeweils ein statisches <a href="index_c.html#ixb100654"><font color=#000080><tt>Class</tt></font></a>-Objekt
+mit der Bezeichnung <a name="ixa103313"><a href="index_t.html#ixb102480"><font color=#000080><tt>TYPE</tt></font></a></a>,
+das den zugeh&ouml;rigen primitiven Datentyp bezeichnet. Ein <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>-Argument
+wird also beispielsweise dadurch angezeigt, dass der R&uuml;ckgabewert
+von <a href="index_g.html#ixb102479"><font color=#000080><tt>getParameterTypes</tt></font></a>
+an der entsprechenden Stelle ein Objekt des Typs <a name="ixa103314"><a href="index_i.html#ixb102481"><font color=#000080><tt>Integer.TYPE</tt></font></a></a>
+enth&auml;lt.<a name="ixa103315"></a> Insgesamt gibt es neun derartige
+Klassenobjekte, und zwar f&uuml;r die acht primitiven Typen und f&uuml;r
+den &#187;leeren&#171; R&uuml;ckgabewert <a href="index_v.html#ixb100345"><font color=#000080><tt>void</tt></font></a>:
+<a name="tableid045001"></a>
+<p>
+<table cols=2 border width=66%>
+
+<tr>
+<td valign=top align=left width=66%><b>Klassenobjekt </b></td>
+<td valign=top align=left width=33%><b>Typ</b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103316"><a href="index_b.html#ixb102483"><font color=#000080><tt>Boolean.TYPE</tt></font></a></a>
+</td>
+<td valign=top align=left><a href="index_b.html#ixb100071"><font color=#000080><tt>boolean</tt></font></a></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103317"><a href="index_c.html#ixb102484"><font color=#000080><tt>Character.TYPE</tt></font></a></a></td>
+<td valign=top align=left><a href="index_c.html#ixb100223"><font color=#000080><tt>char</tt></font></a></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103318"><a href="index_b.html#ixb102485"><font color=#000080><tt>Byte.TYPE</tt></font></a></a>
+</td>
+<td valign=top align=left><a href="index_b.html#ixb100249"><font color=#000080><tt>byte</tt></font></a></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103319"><a href="index_s.html#ixb102486"><font color=#000080><tt>Short.TYPE</tt></font></a></a>
+</td>
+<td valign=top align=left><a href="index_s.html#ixb100250"><font color=#000080><tt>short</tt></font></a></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103314"><a href="index_i.html#ixb102481"><font color=#000080><tt>Integer.TYPE</tt></font></a></a>
+</td>
+<td valign=top align=left><a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103320"><a href="index_l.html#ixb102487"><font color=#000080><tt>Long.TYPE</tt></font></a></a>
+</td>
+<td valign=top align=left><a href="index_l.html#ixb100252"><font color=#000080><tt>long</tt></font></a></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103321"><a href="index_f.html#ixb102488"><font color=#000080><tt>Float.TYPE</tt></font></a></a>
+</td>
+<td valign=top align=left><a href="index_f.html#ixb100253"><font color=#000080><tt>float</tt></font></a></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103322"><a href="index_d.html#ixb102489"><font color=#000080><tt>Double.TYPE</tt></font></a></a>
+</td>
+<td valign=top align=left><a href="index_d.html#ixb100254"><font color=#000080><tt>double</tt></font></a></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103323"><a href="index_v.html#ixb102490"><font color=#000080><tt>Void.TYPE</tt></font></a></a>
+</td>
+<td valign=top align=left><a href="index_v.html#ixb100345"><font color=#000080><tt>void</tt></font></a></td></tr>
+</table>
+<p><i>
+Tabelle 45.1: Klassenobjekte f&uuml;r die primitiven Typen</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Alternativ zur .TYPE-Notation kann auch die in <a href="k100287.html#fzeigerreflection">Abschnitt 45.3.2</a>
+vorgestellte .class-Notation verwendet werden, um Klassenobjekte f&uuml;r
+primitive Typen zu erzeugen. Dazu ist einfach der Name des gew&uuml;nschten
+Typs um &#187;.class&#171; zu erg&auml;nzen, also z.B. <font color="#000077"><tt>boolean.class</tt></font>
+oder <font color="#000077"><tt>void.class</tt></font>. Der Compiler
+erzeugt dann ein passendes Klassenobjekt f&uuml;r den primitiven Typ.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Die Methode <a name="ixa103324"><a href="index_i.html#ixb102491"><font color=#000080><tt>invoke</tt></font></a></a>
+der Klasse <a href="index_m.html#ixb102463"><font color=#000080><tt>Method</tt></font></a>
+dient dazu, die durch dieses Methodenobjekt repr&auml;sentierte Methode
+tats&auml;chlich aufzurufen. Das erste Argument <font color="#000077"><tt>obj</tt></font>
+gibt dabei das Objekt an, auf dem die Methode ausgef&uuml;hrt werden
+soll. Es muss nat&uuml;rlich zu einem Objekt der Klasse geh&ouml;ren,
+auf der <a href="index_g.html#ixb102462"><font color=#000080><tt>getMethods</tt></font></a>
+aufgerufen wurde. Das zweite Argument &uuml;bergibt die aktuellen
+Parameter an die Methode. &Auml;hnlich wie bei <a href="index_g.html#ixb102479"><font color=#000080><tt>getParameterTypes</tt></font></a>
+wird auch hier ein Array angegeben, dessen Elemente den korrespondierenden
+aktuellen Argumenten entsprechen. Bei Objektparametern ist einfach
+ein Objekt des passenden Typs an der gew&uuml;nschten Stelle zu platzieren.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Besitzt die Methode auch primitive Argumente, wird eine automatische
+Konvertierung vorgenommen (<a name="ixa103325"><i>unwrapping</i></a>),
+indem das entsprechende Array-Element in den passenden primitiven
+Datentyp konvertiert wird. Erwartet die Methode beispielsweise ein
+<a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>,
+so ist ein <a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>-Objekt
+zu &uuml;bergeben, das dann beim Aufruf automatisch &#187;ausgepackt&#171;
+wird.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Die Implementierung der Klasse <font color="#000077"><tt>Test</tt></font>
+sieht so aus: 
+<a name="testapp"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Test.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.lang.reflect.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Test
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> Object createTestObject(String name)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#00AA00">//Klassennamen zusammenbauen</font>
+<font color="#555555">010 </font>    <font color="#006699">int</font> pos = name.lastIndexOf(<font color="#0000FF">'.'</font>);
+<font color="#555555">011 </font>    <font color="#0000AA">if</font> (pos == -1) {
+<font color="#555555">012 </font>      name = <font color="#0000FF">"Test"</font> + name;
+<font color="#555555">013 </font>    } <font color="#0000AA">else</font> {
+<font color="#555555">014 </font>      name = name.substring(0, pos + 1) + <font color="#0000FF">"Test"</font> +
+<font color="#555555">015 </font>             name.substring(pos + 1);
+<font color="#555555">016 </font>    }
+<font color="#555555">017 </font>    <font color="#00AA00">//Klasse laden</font>
+<font color="#555555">018 </font>    Object ret = <font color="#006699">null</font>;
+<font color="#555555">019 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">020 </font>      Class&lt;?&gt; testclass = Class.forName(name);
+<font color="#555555">021 </font>      <font color="#00AA00">//Testobjekt instanzieren</font>
+<font color="#555555">022 </font>      System.out.println(<font color="#0000FF">"=============================="</font>);
+<font color="#555555">023 </font>      System.out.println(<font color="#0000FF">"Instanzieren von: "</font> + name);
+<font color="#555555">024 </font>      System.out.println(<font color="#0000FF">"--"</font>);
+<font color="#555555">025 </font>      ret = testclass.newInstance();
+<font color="#555555">026 </font>    } <font color="#0000AA">catch</font> (ClassNotFoundException e) {
+<font color="#555555">027 </font>      System.err.println(<font color="#0000FF">"Kann Klasse nicht laden: "</font> + name);
+<font color="#555555">028 </font>    } <font color="#0000AA">catch</font> (InstantiationException e) {
+<font color="#555555">029 </font>      System.err.println(<font color="#0000FF">"Fehler beim Instanzieren: "</font> + name);
+<font color="#555555">030 </font>    } <font color="#0000AA">catch</font> (IllegalAccessException e) {
+<font color="#555555">031 </font>      System.err.println(<font color="#0000FF">"Unerlaubter Zugriff auf: "</font> + name);
+<font color="#555555">032 </font>    }
+<font color="#555555">033 </font>    <font color="#0000AA">return</font> ret;
+<font color="#555555">034 </font>  }
+<font color="#555555">035 </font>
+<font color="#555555">036 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> runTests(Object tester)
+<font color="#555555">037 </font>  {
+<font color="#555555">038 </font>    Class&lt;?&gt; clazz = tester.getClass();
+<font color="#555555">039 </font>    Method[] methods = clazz.getMethods();
+<font color="#555555">040 </font>    <font color="#006699">int</font> cnt = 0;
+<font color="#555555">041 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; methods.length; ++i) {
+<font color="#555555">042 </font>      <font color="#00AA00">//Methodenname muss mit "test" anfangen</font>
+<font color="#555555">043 </font>      String name = methods[i].getName();
+<font color="#555555">044 </font>      <font color="#0000AA">if</font> (!name.startsWith(<font color="#0000FF">"test"</font>)) {
+<font color="#555555">045 </font>        <font color="#0000AA">continue</font>;
+<font color="#555555">046 </font>      }
+<font color="#555555">047 </font>      <font color="#00AA00">//Methode muss parameterlos sein</font>
+<font color="#555555">048 </font>      Class&lt;?&gt;[] paras = methods[i].getParameterTypes();
+<font color="#555555">049 </font>      <font color="#0000AA">if</font> (paras.length &gt; 0) {
+<font color="#555555">050 </font>        <font color="#0000AA">continue</font>;
+<font color="#555555">051 </font>      }
+<font color="#555555">052 </font>      <font color="#00AA00">//Methode darf nicht static sein</font>
+<font color="#555555">053 </font>      <font color="#006699">int</font> modifiers = methods[i].getModifiers();
+<font color="#555555">054 </font>      <font color="#0000AA">if</font> (Modifier.isStatic(modifiers)) {
+<font color="#555555">055 </font>        <font color="#0000AA">continue</font>;
+<font color="#555555">056 </font>      }
+<font color="#555555">057 </font>      <font color="#00AA00">//Nun kann die Methode aufgerufen werden</font>
+<font color="#555555">058 </font>      ++cnt;
+<font color="#555555">059 </font>      System.out.println(<font color="#0000FF">"=============================="</font>);
+<font color="#555555">060 </font>      System.out.println(<font color="#0000FF">"Aufgerufen wird: "</font> + name);
+<font color="#555555">061 </font>      System.out.println(<font color="#0000FF">"--"</font>);
+<font color="#555555">062 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">063 </font>        methods[i].invoke(tester, <font color="#0000AA">new</font> Object[0]);
+<font color="#555555">064 </font>      } <font color="#0000AA">catch</font> (Exception e) {
+<font color="#555555">065 </font>        System.err.println(e.toString());
+<font color="#555555">066 </font>      }
+<font color="#555555">067 </font>    }
+<font color="#555555">068 </font>    <font color="#0000AA">if</font> (cnt &lt;= 0) {
+<font color="#555555">069 </font>      System.out.println(<font color="#0000FF">"Keine Testmethoden gefunden"</font>);
+<font color="#555555">070 </font>    }
+<font color="#555555">071 </font>  }
+<font color="#555555">072 </font>
+<font color="#555555">073 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">074 </font>  {
+<font color="#555555">075 </font>    <font color="#0000AA">if</font> (args.length &lt;= 0) {
+<font color="#555555">076 </font>      System.err.println(<font color="#0000FF">"Aufruf: java Test &lt;KlassenName&gt;"</font>);
+<font color="#555555">077 </font>      System.exit(1);
+<font color="#555555">078 </font>    }
+<font color="#555555">079 </font>    Object tester = createTestObject(args[0]);
+<font color="#555555">080 </font>    runTests(tester);
+<font color="#555555">081 </font>  }
+<font color="#555555">082 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Test.java"><font color="#000055" size=-1>Test.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 45.3: Die Klasse Test</i></p>
+
+<p>
+Das Hauptprogramm ruft zun&auml;chst die Methode <font color="#000077"><tt>createTestObject</tt></font>
+auf, um ein Objekt der Testklasse zu generieren. Falls als Argument
+also beispielsweise <font color="#000077"><tt>Queue</tt></font> &uuml;bergeben
+wurde, wird ein Objekt des Typs <font color="#000077"><tt>TestQueue</tt></font>
+erzeugt. Ist es nicht vorhanden oder kann es nicht instanziert werden,
+liefert die Methode <a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>
+als R&uuml;ckgabewert. 
+
+<p>
+Anschlie&szlig;end wird das Testobjekt an die Methode <font color="#000077"><tt>runTests</tt></font>
+&uuml;bergeben. Diese besorgt sich das Klassenobjekt und ruft <a href="index_g.html#ixb102462"><font color=#000080><tt>getMethods</tt></font></a>
+auf. Das zur&uuml;ckgegebene Array repr&auml;sentiert die Liste aller
+&ouml;ffentlichen Methoden und wird elementweise durchlaufen. Zun&auml;chst
+wird &uuml;berpr&uuml;ft, ob der Methodenname mit <font color="#000077"><tt>test</tt></font>
+anf&auml;ngt. Ist das der Fall, wird gepr&uuml;ft, ob die Methode
+parameterlos ist und nicht das <a href="index_s.html#ixb100431"><font color=#000080><tt>static</tt></font></a>-Attribut
+besitzt. Sind auch diese Bedingungen erf&uuml;llt, kann die Methode
+mit <a href="index_i.html#ixb102491"><font color=#000080><tt>invoke</tt></font></a>
+aufgerufen werden. Als erstes Argument wird das Testobjekt &uuml;bergeben.
+Als zweites folgt ein leeres Array des Typs <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>,
+um anzuzeigen, dass keine Parameter zu &uuml;bergeben sind. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Beachten Sie, dass am Anfang des Programms das Paket <a name="ixa103326"><a href="index_j.html#ixb100611"><font color=#000080><tt>java.lang.reflect</tt></font></a></a>
+eingebunden wurde. W&auml;hrend die Klassen <a href="index_c.html#ixb100654"><font color=#000080><tt>Class</tt></font></a>
+und <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+aus historischen Gr&uuml;nden in <a href="index_j.html#ixb100196"><font color=#000080><tt>java.lang</tt></font></a>
+liegen und deshalb automatisch importiert werden, liegen sie f&uuml;r
+die &uuml;brigen Bestandteile des Reflection-API in <a href="index_j.html#ixb100611"><font color=#000080><tt>java.lang.reflect</tt></font></a>
+und m&uuml;ssen deshalb explizit eingebunden werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Eine beispielhafte Implementierung der Klasse <font color="#000077"><tt>TestQueue</tt></font>
+k&ouml;nnte etwa so aussehen: 
+<a name="listingid045004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> TestQueue
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  <font color="#0000AA">public</font> TestQueue()
+<font color="#555555">004 </font>  {
+<font color="#555555">005 </font>    <font color="#00AA00">//Intialisierungen, z.B. Erzeugen eines zu</font>
+<font color="#555555">006 </font>    <font color="#00AA00">//testenden Queue-Objekts</font>
+<font color="#555555">007 </font>  }
+<font color="#555555">008 </font>
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> test1()
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    <font color="#00AA00">//Erste Testmethode</font>
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> test2()
+<font color="#555555">015 </font>  {
+<font color="#555555">016 </font>    <font color="#00AA00">//Zweite Testmethode</font>
+<font color="#555555">017 </font>  }
+<font color="#555555">018 </font>
+<font color="#555555">019 </font>  <font color="#00AA00">//...</font>
+<font color="#555555">020 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 45.4: Die Klasse TestQueue</i></p>
+
+<p>
+Ein Aufruf von 
+<font color="#000077">
+<pre>
+java Test Queue
+</pre>
+</font>
+
+<p>
+w&uuml;rde nun ein neues Objekt des Typs <font color="#000077"><tt>TestQueue</tt></font>
+instanzieren und nacheinander die Methoden <font color="#000077"><tt>test1</tt></font>,
+<font color="#000077"><tt>test2</tt></font> usw. aufrufen. 
+
+<!-- Section -->
+
+<a name="fzeigerreflection"></a>
+<h3>45.3.2 Parametrisierte Methoden<a name="ixa103327"></a> </h3>
+
+<p>
+Nun wollen wir uns den Aufruf <i>parametrisierter</i> Methoden ansehen.
+Als Beispiel soll ein Programm geschrieben werden, das die in Java
+nicht vorhandenen Funktionszeiger simuliert. Es soll eine Methode
+enthalten, die eine Wertetabelle f&uuml;r eine mathematische Funktion
+erzeugt, deren Name als String &uuml;bergeben wurde. Nach den &Uuml;berlegungen
+des vorigen Abschnitts k&ouml;nnen wir uns gleich das Listing ansehen:
+<a name="floattables"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* FloatTables.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.lang.reflect.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> FloatTables
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">double</font> times2(<font color="#006699">double</font> value)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#0000AA">return</font> 2 * value;
+<font color="#555555">010 </font>  }
+<font color="#555555">011 </font>
+<font color="#555555">012 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">double</font> sqr(<font color="#006699">double</font> value)
+<font color="#555555">013 </font>  {
+<font color="#555555">014 </font>    <font color="#0000AA">return</font> value * value;
+<font color="#555555">015 </font>  }
+<font color="#555555">016 </font>
+<font color="#555555">017 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> printTable(String methname)
+<font color="#555555">018 </font>  {
+<font color="#555555">019 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">020 </font>      System.out.println(<font color="#0000FF">"Wertetabelle fuer "</font> + methname);
+<font color="#555555">021 </font>      <font color="#006699">int</font> pos = methname.lastIndexOf(<font color="#0000FF">'.'</font>); <a name="floattables.a"></a>
+<font color="#555555">022 </font>      Class&lt;?&gt; clazz;
+<font color="#555555">023 </font>      <font color="#0000AA">if</font> (pos == -1) {
+<font color="#555555">024 </font>        clazz = FloatTables.<font color="#0000AA">class</font>;
+<font color="#555555">025 </font>      } <font color="#0000AA">else</font> {
+<font color="#555555">026 </font>        clazz = Class.forName(methname.substring(0, pos));
+<font color="#555555">027 </font>        methname = methname.substring(pos + 1);
+<font color="#555555">028 </font>      }
+<font color="#555555">029 </font>      Class&lt;?&gt;[] formparas = <font color="#0000AA">new</font> Class[1];
+<font color="#555555">030 </font>      formparas[0] = Double.TYPE;
+<font color="#555555">031 </font>      Method meth = clazz.getMethod(methname, formparas);
+<font color="#555555">032 </font>      <font color="#0000AA">if</font> (!Modifier.isStatic(meth.getModifiers())) {
+<font color="#555555">033 </font>        <font color="#0000AA">throw</font> <font color="#0000AA">new</font> Exception(methname + <font color="#0000FF">" ist nicht static"</font>);
+<font color="#555555">034 </font>      }
+<font color="#555555">035 </font>      Object[] actargs = <font color="#0000AA">new</font> Object[1];
+<font color="#555555">036 </font>      <font color="#0000AA">for</font> (<font color="#006699">double</font> x = 0.0; x &lt;= 5.0; x += 1) {
+<font color="#555555">037 </font>        actargs[0] = <font color="#0000AA">new</font> Double(x); <a name="floattables.b"></a>
+<font color="#555555">038 </font>        Double ret = (Double)meth.invoke(<font color="#006699">null</font>, actargs);
+<font color="#555555">039 </font>        <font color="#006699">double</font> result = ret.doubleValue();
+<font color="#555555">040 </font>        System.out.println(<font color="#0000FF">"  "</font> + x + <font color="#0000FF">" -&gt; "</font> + result);
+<font color="#555555">041 </font>      }
+<font color="#555555">042 </font>    } <font color="#0000AA">catch</font> (Exception e) {
+<font color="#555555">043 </font>      System.err.println(e.toString());
+<font color="#555555">044 </font>    }
+<font color="#555555">045 </font>  }
+<font color="#555555">046 </font>
+<font color="#555555">047 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">048 </font>  {
+<font color="#555555">049 </font>    printTable(<font color="#0000FF">"times2"</font>);
+<font color="#555555">050 </font>    printTable(<font color="#0000FF">"java.lang.Math.exp"</font>);
+<font color="#555555">051 </font>    printTable(<font color="#0000FF">"sqr"</font>);
+<font color="#555555">052 </font>    printTable(<font color="#0000FF">"java.lang.Math.sqrt"</font>);
+<font color="#555555">053 </font>  }
+<font color="#555555">054 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/FloatTables.java"><font color="#000055" size=-1>FloatTables.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 45.5: Funktionszeiger mit Reflection nachbilden</i></p>
+
+<p>
+Das Hauptprogramm ruft die Methode <font color="#000077"><tt>printTable</tt></font>
+viermal auf, um die Wertetabellen zu den statischen Funktionen <font color="#000077"><tt>times2</tt></font>,
+<font color="#000077"><tt>java.lang.Math.exp</tt></font>, <font color="#000077"><tt>sqr</tt></font>
+und <font color="#000077"><tt>java.lang.Math.sqrt</tt></font> zu erzeugen.
+Sie kann sowohl mit lokal definierten Methoden umgehen als auch mit
+solchen, die in einer anderen Klasse liegen (in diesem Fall sogar
+aus einem anderen Paket). 
+
+<p>
+In <a href="k100287.html#floattables.a">Zeile 021</a> wird zun&auml;chst
+der am weitesten rechts stehende Punkt im Methodennamen gesucht. Ist
+ein Punkt vorhanden, wird der String an dieser Stelle aufgeteilt.
+Der links davon stehende Teil wird als Klassenname angesehen, der
+rechts davon stehende als Methodenname. Gibt es keinen Punkt, wird
+als Klassenname der Name der eigenen Klasse verwendet. Anschlie&szlig;end
+wird das zugeh&ouml;rige Klassenobjekt geladen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Ist der Klassenname zur Compile-Zeit bekannt, kann anstelle des Aufrufs
+von <a name="ixa103328"><a href="index_f.html#ixb102370"><font color=#000080><tt>forName</tt></font></a></a>
+die abk&uuml;rzende Schreibweise <font color="#000077"><tt>.class</tt></font><a name="ixa103329"></a>
+verwendet werden. Das hat den Vorteil, dass bereits der Compiler &uuml;berpr&uuml;fen
+kann, ob die genannte Klasse vorhanden ist.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Anders als im vorigen Abschnitt generiert das Programm nun nicht eine
+Liste <i>aller</i> Methoden, sondern sucht mit <a name="ixa103330"><a href="index_g.html#ixb102494"><font color=#000080><tt>getMethod</tt></font></a></a>
+ganz konkret nach einer bestimmten: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Method getMethod(String name, Class[] parameterTypes)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/Class.html" onClick="this.href=getApiDoc('java.lang.Class')"><font color="#660066" size=-1>java.lang.Class</font></a></td>
+</tr>
+</table>
+
+<p>
+Dazu m&uuml;ssen der Name der Methode und eine Beschreibung ihrer
+formalen Argumente an <a href="index_g.html#ixb102494"><font color=#000080><tt>getMethod</tt></font></a>
+&uuml;bergeben werden. Auch hier werden die Argumente durch ein Array
+mit korrespondierenden Klassenobjekten repr&auml;sentiert. Da die
+Methoden, die in diesem Fall aufgerufen werden sollen, nur ein einziges
+Argument vom Typ <a href="index_d.html#ixb100254"><font color=#000080><tt>double</tt></font></a>
+haben sollen, hat unsere Parameterspezifikation <font color="#000077"><tt>formParas</tt></font>
+lediglich ein einziges Element <a name="ixa103331"><a href="index_d.html#ixb102489"><font color=#000080><tt>Double.TYPE</tt></font></a></a>.
+Wurde keine solche Methode gefunden oder besitzt sie nicht das <a href="index_s.html#ixb100431"><font color=#000080><tt>static</tt></font></a>-Attribut,
+l&ouml;st <a href="index_g.html#ixb102462"><font color=#000080><tt>getMethods</tt></font></a>
+eine Ausnahme des Typs <a name="ixa103332"><a href="index_n.html#ixb102495"><font color=#000080><tt>NoSuchMethodException</tt></font></a></a>
+aus. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+W&uuml;rde die Methode anstelle des primitiven Typs <a href="index_d.html#ixb100254"><font color=#000080><tt>double</tt></font></a>
+ein Argument des Referenztyps <a href="index_d.html#ixb100268"><font color=#000080><tt>Double</tt></font></a>
+erwarten, h&auml;tten wir ein Klassenobjekt der Klasse <a href="index_d.html#ixb100268"><font color=#000080><tt>Double</tt></font></a>
+&uuml;bergeben m&uuml;ssen. Daf&uuml;r gibt es verschiedene M&ouml;glichkeiten,
+beispielsweise die beiden folgenden: 
+<font color="#000077">
+<pre>
+formparas[0] = (new Double(0)).getClass();
+</pre>
+</font>
+
+<p>
+oder 
+<font color="#000077">
+<pre>
+formparas[0] = Double.class;
+</pre>
+</font>
+</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Auch eine parametrisierte Methode kann mit <a name="ixa103333"><a href="index_i.html#ixb102491"><font color=#000080><tt>invoke</tt></font></a></a>
+aufgerufen werden. Im Unterschied zur parameterlosen muss dann allerdings
+ein nichtleeres <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>-Array
+mit den aktuellen Argumenten &uuml;bergeben werden. Hier zeigt sich
+ein vermeintliches Problem, denn in einem Array vom <font color="#000077"><tt>Object[]</tt></font>
+k&ouml;nnen keine primitiven Typen abgelegt werden. Um Methoden mit
+primitiven Parametern aufrufen zu k&ouml;nnen, werden diese einfach
+in die passende Wrapper-Klasse verpackt (siehe <a href="k100072.html#wrapperklassen">Abschnitt 11.2</a>).
+Beim Aufruf von <a href="index_i.html#ixb102491"><font color=#000080><tt>invoke</tt></font></a>
+werden sie dann automatisch &#187;ausgepackt&#171; und dem primitiven
+Argument zugewiesen. 
+
+<p>
+Wir verpacken also den zu &uuml;bergebenden Wert in ein <a href="index_d.html#ixb100268"><font color=#000080><tt>Double</tt></font></a>-Objekt
+und stellen dieses in <a href="k100287.html#floattables.b">Zeile 037</a>
+in das Array mit den aktuellen Argumenten. Beim Methodenaufruf in
+der n&auml;chsten Zeile wird es dann automatisch ausgepackt und steht
+innerhalb der Methode als <a href="index_d.html#ixb100254"><font color=#000080><tt>double</tt></font></a>-Wert
+zur Verf&uuml;gung. Das Programm ruft die Methode f&uuml;r jeden der
+Werte 0.0, 1.0, 2.0, 3.0, 4.0 und 5.0 auf und erzeugt so eine einfache
+Wertetabelle. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Anders als in <a href="k100287.html#testapp">Listing 45.3</a> wird
+in diesem Beispiel als erstes Argument von <a href="index_i.html#ixb102491"><font color=#000080><tt>invoke</tt></font></a>
+nicht das Objekt &uuml;bergeben, an dem die Methode aufgerufen werden
+soll, sondern der Wert <a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>.
+Das liegt daran, dass wir eine <i>statische</i> Methode aufrufen,
+die keiner Objektinstanz, sondern dem Klassenobjekt zugeordnet ist.
+Bei nichtstatischen Methoden ist die &Uuml;bergabe von <a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>
+nat&uuml;rlich nicht erlaubt und w&uuml;rde zu einer <a name="ixa103334"><a href="index_n.html#ixb102496"><font color=#000080><tt>NullPointerException</tt></font></a></a>
+f&uuml;hren.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Die Ausgabe des Programms ist: 
+<font color="#333300">
+<pre>
+Wertetabelle fuer times2
+  0.0 -&gt; 0.0
+  1.0 -&gt; 2.0
+  2.0 -&gt; 4.0
+  3.0 -&gt; 6.0
+  4.0 -&gt; 8.0
+  5.0 -&gt; 10.0
+Wertetabelle fuer java.lang.Math.exp
+  0.0 -&gt; 1.0
+  1.0 -&gt; 2.7182818284590455
+  2.0 -&gt; 7.38905609893065
+  3.0 -&gt; 20.085536923187668
+  4.0 -&gt; 54.598150033144236
+  5.0 -&gt; 148.4131591025766
+Wertetabelle fuer sqr
+  0.0 -&gt; 0.0
+  1.0 -&gt; 1.0
+  2.0 -&gt; 4.0
+  3.0 -&gt; 9.0
+  4.0 -&gt; 16.0
+  5.0 -&gt; 25.0
+Wertetabelle fuer java.lang.Math.sqrt
+  0.0 -&gt; 0.0
+  1.0 -&gt; 1.0
+  2.0 -&gt; 1.4142135623730951
+  3.0 -&gt; 1.7320508075688772
+  4.0 -&gt; 2.0
+  5.0 -&gt; 2.23606797749979
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="sectlevel3id045003003"></a>
+<h3>45.3.3 Parametrisierte Konstruktoren </h3>
+
+<p>
+Die Methode <a href="index_n.html#ixb102293"><font color=#000080><tt>newInstance</tt></font></a>
+der Klasse <a href="index_c.html#ixb100654"><font color=#000080><tt>Class</tt></font></a>
+ruft immer den parameterlosen Konstruktor auf, um ein Objekt zu instanzieren.
+Mit Reflection ist es aber auch m&ouml;glich, parametrisierte Konstruktoren
+zur dynamischen Instanzierung zu verwenden. Dazu besitzt <a href="index_c.html#ixb100654"><font color=#000080><tt>Class</tt></font></a>
+zwei Methoden <a name="ixa103335"><a href="index_g.html#ixb102497"><font color=#000080><tt>getConstructors</tt></font></a></a>
+und <a name="ixa103336"><a href="index_g.html#ixb102498"><font color=#000080><tt>getConstructor</tt></font></a></a>,
+die dazu verwendet werden, Konstruktorenobjekte zu beschaffen. Anders
+als <a href="index_g.html#ixb102462"><font color=#000080><tt>getMethods</tt></font></a>
+und <a href="index_g.html#ixb102494"><font color=#000080><tt>getMethod</tt></font></a>
+liefern sie allerdings kein Objekt des Typs <a href="index_m.html#ixb102463"><font color=#000080><tt>Method</tt></font></a>,
+sondern eines vom Typ <a name="ixa103337"><a href="index_c.html#ixb102499"><font color=#000080><tt>Constructor</tt></font></a></a>
+zur&uuml;ck. 
+
+<p>
+Auch dieses besitzt die oben beschriebenen Methoden <a name="ixa103338"><a href="index_g.html#ixb101354"><font color=#000080><tt>getModifiers</tt></font></a></a>,
+<a name="ixa103339"><a href="index_g.html#ixb100679"><font color=#000080><tt>getName</tt></font></a></a>
+und <a name="ixa103340"><a href="index_g.html#ixb102479"><font color=#000080><tt>getParameterTypes</tt></font></a></a>.
+Der Aufruf einer Methode erfolgt allerdings nicht mit <a href="index_i.html#ixb102491"><font color=#000080><tt>invoke</tt></font></a>,
+sondern mit <a name="ixa103341"><a href="index_n.html#ixb102293"><font color=#000080><tt>newInstance</tt></font></a></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+Object newInstance(Object[] initargs)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/reflect/Constructor.html" onClick="this.href=getApiDoc('java.lang.reflect.Constructor')"><font color="#660066" size=-1>java.lang.reflect.Constructor</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_n.html#ixb102293"><font color=#000080><tt>newInstance</tt></font></a>
+erwartet ebenfalls ein Array von Argumenten des Typs <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>.
+Diese werden gegebenenfalls in der zuvor beschriebenen Weise auf primitive
+Typen abgebildet und rufen schlie&szlig;lich den passenden Konstruktor
+auf. Als R&uuml;ckgabewert von <a href="index_n.html#ixb102293"><font color=#000080><tt>newInstance</tt></font></a>
+wird das neu instanzierte Objekt geliefert. 
+
+<p>
+Das folgende Listing zeigt die Verwendung parametrisierter Konstruktoren
+mit dem Reflection-API: 
+<a name="listingid045006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4506.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.lang.reflect.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4506
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    Class&lt;TestConstructors&gt; clazz = TestConstructors.<font color="#0000AA">class</font>;
+<font color="#555555">010 </font>    <font color="#00AA00">//Formale Parameter definieren</font>
+<font color="#555555">011 </font>    Class&lt;String&gt;[] formparas = <font color="#0000AA">new</font> Class[2];
+<font color="#555555">012 </font>    formparas[0] = String.<font color="#0000AA">class</font>;
+<font color="#555555">013 </font>    formparas[1] = String.<font color="#0000AA">class</font>;
+<font color="#555555">014 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">015 </font>      Constructor&lt;TestConstructors&gt; cons = clazz.getConstructor(formparas);
+<font color="#555555">016 </font>      <font color="#00AA00">//Aktuelle Argumente definieren</font>
+<font color="#555555">017 </font>      Object[] actargs = <font color="#0000AA">new</font> Object[] {<font color="#0000FF">"eins"</font>, <font color="#0000FF">"zwei"</font>};
+<font color="#555555">018 </font>      Object obj = cons.newInstance(actargs);
+<font color="#555555">019 </font>      ((TestConstructors)obj).print();
+<font color="#555555">020 </font>    } <font color="#0000AA">catch</font> (Exception e) {
+<font color="#555555">021 </font>      System.err.println(e.toString());
+<font color="#555555">022 </font>      System.exit(1);
+<font color="#555555">023 </font>    }
+<font color="#555555">024 </font>  }
+<font color="#555555">025 </font>}
+<font color="#555555">026 </font>
+<font color="#555555">027 </font><font color="#0000AA">class</font> TestConstructors
+<font color="#555555">028 </font>{
+<font color="#555555">029 </font>  <font color="#0000AA">private</font> String arg1;
+<font color="#555555">030 </font>  <font color="#0000AA">private</font> String arg2;
+<font color="#555555">031 </font>
+<font color="#555555">032 </font>  <font color="#0000AA">public</font> TestConstructors()
+<font color="#555555">033 </font>  {
+<font color="#555555">034 </font>    arg1 = <font color="#0000FF">"leer"</font>;
+<font color="#555555">035 </font>    arg2 = <font color="#0000FF">"leer"</font>;
+<font color="#555555">036 </font>  }
+<font color="#555555">037 </font>
+<font color="#555555">038 </font>  <font color="#0000AA">public</font> TestConstructors(String arg1)
+<font color="#555555">039 </font>  {
+<font color="#555555">040 </font>    <font color="#006699">this</font>();
+<font color="#555555">041 </font>    <font color="#006699">this</font>.arg1 = arg1;
+<font color="#555555">042 </font>  }
+<font color="#555555">043 </font>
+<font color="#555555">044 </font>  <font color="#0000AA">public</font> TestConstructors(String arg1, String arg2)
+<font color="#555555">045 </font>  {
+<font color="#555555">046 </font>    <font color="#006699">this</font>();
+<font color="#555555">047 </font>    <font color="#006699">this</font>.arg1 = arg1;
+<font color="#555555">048 </font>    <font color="#006699">this</font>.arg2 = arg2;
+<font color="#555555">049 </font>  }
+<font color="#555555">050 </font>
+<font color="#555555">051 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> print()
+<font color="#555555">052 </font>  {
+<font color="#555555">053 </font>    System.out.println(<font color="#0000FF">"arg1 = "</font> + arg1);
+<font color="#555555">054 </font>    System.out.println(<font color="#0000FF">"arg2 = "</font> + arg2);
+<font color="#555555">055 </font>  }
+<font color="#555555">056 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4506.java"><font color="#000055" size=-1>Listing4506.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 45.6: Parametrisierte Konstruktoren mit Reflection aufrufen</i></p>
+
+<p>
+Das Programm erzeugt zun&auml;chst ein Klassenobjekt zu der Klasse
+<font color="#000077"><tt>TestConstructors</tt></font>. Anschlie&szlig;end
+wird ein Array mit zwei Klassenobjekten der Klasse <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+erzeugt und als Spezifikation der formalen Parameter an <a href="index_g.html#ixb102498"><font color=#000080><tt>getConstructor</tt></font></a>
+&uuml;bergeben. Das zur&uuml;ckgegebene <a href="index_c.html#ixb102499"><font color=#000080><tt>Constructor</tt></font></a>-Objekt
+wird dann mit zwei aktuellen Argumenten &#187;eins&#171; und &#187;zwei&#171;
+vom Typ <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+ausgestattet, die an seine Methode <a href="index_n.html#ixb102293"><font color=#000080><tt>newInstance</tt></font></a>
+&uuml;bergeben werden. Diese instanziert das Objekt, castet es auf
+die Klasse <font color="#000077"><tt>TestConstructors</tt></font>
+und ruft deren Methode <font color="#000077"><tt>print</tt></font>
+auf. Die Ausgabe des Programms ist: 
+<font color="#333300">
+<pre>
+arg1 = eins
+arg2 = zwei
+</pre>
+</font>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100284.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100286.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100288.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100292.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

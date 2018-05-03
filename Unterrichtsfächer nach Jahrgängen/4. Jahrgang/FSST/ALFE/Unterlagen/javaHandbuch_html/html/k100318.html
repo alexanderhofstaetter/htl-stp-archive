@@ -1,0 +1,1606 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100317.html;106,k100317.html;107,k100319.html;108,k100322.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100317.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100317.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100319.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100322.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 50 - Sicherheit und Kryptografie
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id050001"></a>
+<h2>50.1 Kryptografische Grundlagen </h2>
+<hr>
+<ul>
+<li><a href="k100318.html#sectlevel2id050001">50.1 Kryptografische Grundlagen</a>
+<ul>
+<li><a href="k100318.html#sectlevel3id050001001">50.1.1 Wichtige Begriffe</a>
+<li><a href="k100318.html#sectlevel3id050001002">50.1.2 Einfache Verschl&uuml;sselungen</a>
+<ul>
+<li><a href="k100318.html#sectlevel4id050001002001">Substitution</a>
+<li><a href="k100318.html#sectlevel4id050001002002">Exklusiv-ODER</a>
+<li><a href="k100318.html#sectlevel4id050001002003">Vorsicht!</a>
+</ul>
+<li><a href="k100318.html#messagedigests">50.1.3 Message Digests</a>
+<ul>
+<li><a href="k100318.html#sectlevel4id050001003001">Authentifizierung</a>
+<li><a href="k100318.html#sectlevel4id050001003002">&#187;Unwissende&#171; Beweise</a>
+<li><a href="k100318.html#sectlevel4id050001003003">Fingerprints</a>
+</ul>
+<li><a href="k100318.html#kryptozufallszahlen">50.1.4 Kryptografische Zufallszahlen</a>
+<li><a href="k100318.html#publickeykrypto">50.1.5 Public-Key-Verschl&uuml;sselung</a>
+<li><a href="k100318.html#digitaleunterschriften">50.1.6 Digitale Unterschriften</a>
+<ul>
+<li><a href="k100318.html#sectlevel4id050001006001">Erzeugen und Verwalten von Schl&uuml;sseln mit dem JDK</a>
+<li><a href="k100318.html#sectlevel4id050001006002">Erstellen einer digitalen Unterschrift</a>
+<li><a href="k100318.html#sectlevel4id050001006003">Verifizieren einer digitalen Unterschrift</a>
+</ul>
+<li><a href="k100318.html#zertifikate">50.1.7 Zertifikate</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id050001001"></a>
+<h3>50.1.1 Wichtige Begriffe </h3>
+
+<p>
+Thema dieses Kapitels ist es, die in Java verf&uuml;gbaren Sicherheitsmechanismen
+vorzustellen. Wir werden dabei zun&auml;chst auf allgemeine Konzepte
+aus dem Gebiet der Kryptografie und ihre Implementierung in Java eingehen.
+Anschlie&szlig;end werden die eingebauten Sicherheitsmechanismen von
+Java vorgestellt. Zum Abschluss zeigen wir, wie signierte Applets
+erstellt und verwendet werden und wie mit ihrer Hilfe eine fein differenzierte
+Sicherheitspolitik etabliert werden kann. Zun&auml;chst sollen allerdings
+wichtige Begriffe erl&auml;utert werden, die f&uuml;r das Verst&auml;ndnis
+der nachfolgenden Abschnitte von Bedeutung sind. 
+
+<p>
+Angenommen, ein <i>Sender</i> will eine Nachricht an einen <i>Empf&auml;nger</i>
+&uuml;bermitteln. Soll das geschehen, ohne dass ein Dritter, dem die
+Nachricht in die H&auml;nde fallen k&ouml;nnte, diese entziffern kann,
+k&ouml;nnte sie <a name="ixa103611"><i>verschl&uuml;sselt</i></a>
+werden. Der urspr&uuml;ngliche Nachrichtentext (der als <a name="ixa103612"><i>Klartext</i></a>
+bezeichnet wird) wird dabei mit Hilfe eines dem Sender bekannten Verfahrens
+unkenntlich gemacht. Das als <a name="ixa103613"><i>Schl&uuml;sseltext</i></a>
+bezeichnete Ergebnis wird an den Empf&auml;nger &uuml;bermittelt und
+mit Hilfe eines ihm bekannten Verfahrens wieder in den Klartext zur&uuml;ckverwandelt
+(was als <a name="ixa103614"><i>Entschl&uuml;sseln</i></a> bezeichnet
+wird). 
+<p>
+<a name="imageid050001"></a>
+<img src="images/Verschluesseln.gif">
+<p>
+
+<p><i>
+Abbildung 50.1: Verschl&uuml;sseln einer Nachricht</i></p>
+
+<p>
+Solange der Algorithmus zum Entschl&uuml;sseln geheim bleibt, ist
+die Nachricht sicher. Selbst wenn sie auf dem &Uuml;bertragungsweg
+entdeckt wird, kann kein Dritter sie entschl&uuml;sseln. Wird das
+Entschl&uuml;sselungsverfahren dagegen entdeckt, kann die Nachricht
+(und mit ihr alle anderen Nachrichten, die mit demselben Verfahren
+verschl&uuml;sselt wurden) entziffert werden. 
+
+<p>
+Um den Schaden durch das Entdecken eines Verschl&uuml;sselungsverfahrens
+gering zu halten, werden die Verschl&uuml;sselungsalgorithmen in aller
+Regel parametrisiert. Dazu wird beim Verschl&uuml;sseln eine als <a name="ixa103615"><i>Schl&uuml;ssel</i></a>
+bezeichnete Ziffern- oder Zeichenfolge angegeben, mit der die Nachricht
+verschl&uuml;sselt wird. Der Empf&auml;nger ben&ouml;tigt dann zus&auml;tzlich
+zur Kenntnis des Verfahrens noch den vom Sender verwendeten Schl&uuml;ssel,
+um die Nachricht entziffern zu k&ouml;nnen. 
+
+<p>
+Die Wissenschaft, die sich mit dem Verschl&uuml;sseln und Entschl&uuml;sseln
+von Nachrichten und eng verwandten Themen besch&auml;ftigt, wird als
+<a name="ixa103616"><i>Kryptografie</i></a> bezeichnet. Liegt der
+Schwerpunkt mehr auf dem Entschl&uuml;sseln, (insbesondere dem Entziffern
+geheimer Botschaften), wird dies als <a name="ixa103617"><i>Kryptoanalyse</i></a>
+bezeichnet. Die <a name="ixa103618"><i>Kryptologie</i></a> schlie&szlig;lich
+bezeichnet den Zweig der Mathematik, der sich mit den formal-mathematischen
+Aspekten der Kryptografie und Kryptoanalyse besch&auml;ftigt. 
+
+<!-- Section -->
+
+<a name="sectlevel3id050001002"></a>
+<h3>50.1.2 Einfache Verschl&uuml;sselungen </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id050001002001"></a>
+<h4>Substitution </h4>
+
+<p>
+Seit dem Altertum sind einfache Verschl&uuml;sselungsverfahren bekannt.
+Zu ihnen z&auml;hlen beispielsweise die Substitutions-Verschl&uuml;sselungen,
+bei denen einzelne Buchstaben systematisch durch andere ersetzt werden.
+Angenommen, Klartexte bestehen nur aus den Buchstaben A bis Z, so
+k&ouml;nnte man sie dadurch verschl&uuml;sseln, dass jeder Buchstabe
+des Klartextes durch den Buchstaben ersetzt wird, der im Alphabet
+um eine feste Anzahl Zeichen verschoben ist. Als Schl&uuml;ssel <i>k</i>
+kann beispielsweise die L&auml;nge der Verschiebung verwendet werden.
+Ist <i>k</i> beispielsweise 3, so w&uuml;rde jedes A durch ein D,
+jedes B durch ein E, jedes W durch ein Z, jedes X durch ein A usw.
+ersetzt werden. 
+
+<p>
+Dieses einfache Verfahren wurde beispielweise bereits von Julius C&auml;sar
+verwendet, um seinen Gener&auml;len geheime Nachrichten zu &uuml;bermitteln.
+Es wird daher auch als <a name="ixa103619"><i>C&auml;sarische Verschl&uuml;sselung</i></a>
+bezeichnet. Das folgende Listing zeigt eine einfache Implementierung
+dieses Verfahrens, bei dem Schl&uuml;ssel und Klartext als Argument
+&uuml;bergeben werden m&uuml;ssen: 
+<a name="listingid050001"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing5001.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing5001
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#006699">int</font> key = Integer.parseInt(args[0]);
+<font color="#555555">008 </font>    String msg = args[1];
+<font color="#555555">009 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; msg.length(); ++i) {
+<font color="#555555">010 </font>      <font color="#006699">int</font> c = (msg.charAt(i) - <font color="#0000FF">'A'</font> + key) % 26 + <font color="#0000FF">'A'</font>;
+<font color="#555555">011 </font>      System.out.print((<font color="#006699">char</font>)c);
+<font color="#555555">012 </font>    }
+<font color="#555555">013 </font>  }
+<font color="#555555">014 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing5001.java"><font color="#000055" size=-1>Listing5001.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 50.1: Verschl&uuml;sselung durch Substitution</i></p>
+
+<p>
+Um die Nachricht zu entschl&uuml;sseln, verwendet der Empf&auml;nger
+dasselbe Verfahren, allerdings mit dem Schl&uuml;ssel 26 - <i>k</i>:
+<font color="#333300">
+<pre>
+---&gt;<b>java Test2 3 HALLO</b>
+KDOOR
+---&gt;<b>java Test2 23 KDOOR</b>
+HALLO
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="sectlevel4id050001002002"></a>
+<h4>Exklusiv-ODER </h4>
+
+<p>
+Ein &auml;hnlich weitverbreitetes Verfahren besteht darin, jedes Zeichen
+des Klartexts mit Hilfe des Exklusiv-ODER-Operators mit dem Schl&uuml;ssel
+zu verkn&uuml;pfen. Durch dessen Anwendung werden alle Bits invertiert,
+die zu einem gesetztem Bit im Schl&uuml;ssel korrespondieren, alle
+anderen bleiben unver&auml;ndert. Das Entschl&uuml;sseln erfolgt durch
+erneute Anwendung des Verfahrens mit demselben Schl&uuml;ssel. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Ein Verfahren, bei dem Ver- und Entschl&uuml;sselung mit demselben
+Algorithmus und Schl&uuml;ssel durchgef&uuml;hrt werden, wird als
+<a name="ixa103620"><i>symmetrische Verschl&uuml;sselung</i></a> bezeichnet.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Eine einfache Implementierung der Exklusiv-ODER-Verschl&uuml;sselung
+zeigt folgendes Listing: 
+<a name="listingid050002"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing5002.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing5002
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#006699">int</font> key = Integer.parseInt(args[0]);
+<font color="#555555">008 </font>    String msg = args[1];
+<font color="#555555">009 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; msg.length(); ++i) {
+<font color="#555555">010 </font>      System.out.print((<font color="#006699">char</font>)(msg.charAt(i) ^ key));
+<font color="#555555">011 </font>    }
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing5002.java"><font color="#000055" size=-1>Listing5002.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 50.2: Verschl&uuml;sselung mit Exklusiv-ODER</i></p>
+
+<p>
+Ein Anwendungsbeispiel k&ouml;nnte so aussehen: 
+<font color="#333300">
+<pre>
+---&gt;<b>java Test2 65 hallo</b>
+) --.
+---&gt;<b>java Test2 65 ") --."</b>
+hallo
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Dass die R&uuml;ckkonvertierung &uuml;ber die Kommandozeile hier geklappt
+hat, liegt daran, dass die Verschl&uuml;sselung keine nichtdarstellbaren
+Sonderzeichen produziert hat (der Schl&uuml;ssel 65 kippt lediglich
+2 Bits in jedem Zeichen). Im Allgemeinen sollte der zu ver- oder entschl&uuml;sselnde
+Text aus einer Datei gelesen und das Resultat auch wieder in eine
+solche geschrieben werden. Dann k&ouml;nnen alle 256 m&ouml;glichen
+Bitkombinationen je Byte zuverl&auml;ssig gespeichert und &uuml;bertragen
+werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id050001002003"></a>
+<h4>Vorsicht! </h4>
+
+<p>
+Derart einfache Verschl&uuml;sselungen wie die hier vorgestellten
+sind zwar weit verbreitet, denn sie sind einfach zu implementieren.
+Leider bieten sie aber nicht die geringste Sicherheit gegen ernsthafte
+Krypto-Attacken. Einige der in letzter Zeit bekannt gewordenen (und
+f&uuml;r die betroffenen Unternehmen meist peinlichen, wenn nicht
+gar kostspieligen) F&auml;lle von Einbr&uuml;chen in Softwaresysteme
+waren darauf zur&uuml;ckzuf&uuml;hren, dass zu einfache Sicherheitssysteme
+verwendet wurden. 
+
+<p>
+Wir wollen diesen einfachen Verfahren nun den R&uuml;cken zuwenden,
+denn seit dem JDK 1.2 gibt es in Java M&ouml;glichkeiten, professionelle
+Sicherheitskonzepte zu verwenden. Es ist ein gro&szlig;er Vorteil
+der Sprache, dass auf verschiedenen Ebenen Sicherheitsmechanismen
+fest eingebaut wurden und eine missbr&auml;uchliche Anwendung der
+Sprache erschwert wird. In den folgenden Abschnitten werden wir die
+wichtigsten dieser Konzepte vorstellen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Allerdings sollte dieser Abschnitt nicht als umfassende Einf&uuml;hrung
+in die Grundlagen der Kryptografie missverstanden werden. Das Thema
+ist ausgesprochen vielschichtig, mathematisch anspruchsvoll und es
+erfordert in seiner Detailf&uuml;lle weitaus mehr Raum, als hier zur
+Verf&uuml;gung steht. Wir werden neue Begriffe nur so weit einf&uuml;hren,
+wie sie f&uuml;r das Verst&auml;ndnis der entsprechenden Abschnitte
+erforderlich sind. F&uuml;r Details sei auf weiterf&uuml;hrende Literatur
+verwiesen. Ein sehr gelungenes Buch ist &#187;Applied Cryptography&#171;
+von Bruce Schneier<a name="ixa103621"></a>. Es bietet einen umfassenden
+und dennoch verst&auml;ndlichen Einblick in die gesamte Materie und
+ist interessant zu lesen. Gleicherma&szlig;en unterhaltsam wie lehrreich
+ist auch die in &#187;Geheime Botschaften&#171; von Simon Singh dargestellte
+Geschichte der Kryptografie.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="messagedigests"></a>
+<h3>50.1.3 Message Digests<a name="ixa103622"></a> </h3>
+
+<p>
+Ein <i>Message Digest</i> ist eine Funktion, die zu einer gegebenen
+Nachricht eine Pr&uuml;fziffer berechnet. Im Gegensatz zu &auml;hnlichen
+Verfahren, die keine kryptografische Anwendung haben (siehe z.B. <a name="ixa103623"><a href="index_h.html#ixb100427"><font color=#000080><tt>hashCode</tt></font></a></a>
+in <a href="k100058.html#klasseobject">Abschnitt 9.1.2</a>), muss
+ein Message Digest zus&auml;tzlich folgende Eigenschaften besitzen:
+<ul>
+<li>Die Wahrscheinlichkeit, dass zwei unterschiedliche Nachrichten
+dieselbe Pr&uuml;fsumme haben, muss vernachl&auml;ssigbar gering sein.
+<li>Es muss praktisch unm&ouml;glich sein, aus der berechneten Pr&uuml;fsumme
+auf die urspr&uuml;ngliche Nachricht zur&uuml;ckzuschlie&szlig;en.
+</ul>
+
+<p>
+Ein Message Digest wird daher auch als <a name="ixa103624"><i>Einweg-Hashfunktion</i></a>
+bezeichnet. Er ist meist 16 oder 20 Byte lang und kann als eine Art
+komplizierte mathematische <i>Zusammenfassung</i> der Nachricht angesehen
+werden. Message Digests haben Anwendungen im Bereich digitaler Unterschriften
+und bei der Authentifizierung. Allgemein gesprochen werden sie dazu
+verwendet, sicherzustellen, dass eine Nachricht nicht ver&auml;ndert
+wurde. Bevor wir auf diese Anwendungen in den n&auml;chsten Abschnitten
+zur&uuml;ckkommen, wollen wir uns ihre Implementierung im JDK 1.2
+ansehen. 
+
+<p>
+Praktisch alle wichtigen Sicherheitsfunktionen sind im Paket <a href="index_j.html#ixb100616"><font color=#000080><tt>java.security</tt></font></a>
+oder einem seiner Unterpakete untergebracht. Ein Message Digest wird
+durch die Klasse <a name="ixa103625"><a href="index_m.html#ixb102729"><font color=#000080><tt>MessageDigest</tt></font></a></a>
+implementiert. Deren Objekte werden nicht direkt instanziert, sondern
+mit der Methode <a href="index_g.html#ixb102730"><font color=#000080><tt>getInstance</tt></font></a>
+erstellt: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static MessageDigest getInstance(String algorithm)
+  throws NoSuchAlgorithmException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/security/MessageDigest.html" onClick="this.href=getApiDoc('java.security.MessageDigest')"><font color="#660066" size=-1>java.security.MessageDigest</font></a></td>
+</tr>
+</table>
+
+<p>
+Als Argument wird dabei die Bezeichnung des gew&uuml;nschten Algorithmus
+angegeben. Im JDK 1.2 sind beispielsweise folgende Angaben m&ouml;glich:
+<ul>
+<li>&#187;SHA&#171;<a name="ixa103626"></a>: der 160-Bit lange &#187;Secure
+Hash Algorithm&#171; des amerikanischen <a name="ixa103627"><i>National Institute of Standards
+and Technology</i></a>
+<li>&#187;MD5&#171;<a name="ixa103628"></a>: der 128-Bit lange &#187;Message
+Digest 5&#171; von Ron L. Rivest<a name="ixa103629"></a>
+</ul>
+
+<p>
+Nachdem ein <a href="index_m.html#ixb102729"><font color=#000080><tt>MessageDigest</tt></font></a>-Objekt
+erzeugt wurde, bekommt es die Daten, zu denen die Pr&uuml;fziffer
+berechnet werden soll, in einzelnen Bytes oder Byte-Arrays durch fortgesetzten
+Aufruf der Methode <a name="ixa103630"><a href="index_u.html#ixb101687"><font color=#000080><tt>update</tt></font></a></a>
+&uuml;bergeben: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void update(byte input)
+public void update(byte[] input)
+public void update(byte[] input, int offset, int len)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/security/MessageDigest.html" onClick="this.href=getApiDoc('java.security.MessageDigest')"><font color="#660066" size=-1>java.security.MessageDigest</font></a></td>
+</tr>
+</table>
+
+<p>
+Wurden alle Daten &uuml;bergeben, kann durch Aufruf von <a name="ixa103631"><a href="index_d.html#ixb102735"><font color=#000080><tt>digest</tt></font></a></a>
+das Ergebnis ermittelt werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public byte[] digest()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/security/MessageDigest.html" onClick="this.href=getApiDoc('java.security.MessageDigest')"><font color="#660066" size=-1>java.security.MessageDigest</font></a></td>
+</tr>
+</table>
+
+<p>
+Zur&uuml;ckgegeben wird ein Array von 16 bzw. 20 Byte (im Falle anderer
+Algorithmen m&ouml;glicherweise auch andere L&auml;ngen), in dem der
+Message Digest untergebracht ist. Ein Aufruf f&uuml;hrt zudem dazu,
+dass der Message Digest zur&uuml;ckgesetzt, also auf den Anfangszustand
+initialisiert, wird. 
+
+<p>
+Das folgende Listing zeigt, wie ein Message Digest zu einer beliebigen
+Datei erstellt wird. Sowohl Algorithmus als auch Dateiname werden
+als Kommandozeilenargumente &uuml;bergeben: 
+<a name="listingid050003"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing5003.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.security.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing5003
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#00AA00">/**
+<font color="#555555">009 </font>   * Konvertiert ein Byte in einen Hex-String.
+<font color="#555555">010 </font>   */</font>
+<font color="#555555">011 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> String toHexString(<font color="#006699">byte</font> b)
+<font color="#555555">012 </font>  {
+<font color="#555555">013 </font>    <font color="#006699">int</font> value = (b &amp; 0x7F) + (b &lt; 0 ? 128 : 0);
+<font color="#555555">014 </font>    String ret = (value &lt; 16 ? <font color="#0000FF">"0"</font> : <font color="#0000FF">""</font>);
+<font color="#555555">015 </font>    ret += Integer.toHexString(value).toUpperCase();
+<font color="#555555">016 </font>    <font color="#0000AA">return</font> ret;
+<font color="#555555">017 </font>  }
+<font color="#555555">018 </font>
+<font color="#555555">019 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">020 </font>  {
+<font color="#555555">021 </font>    <font color="#0000AA">if</font> (args.length &lt; 2) {
+<font color="#555555">022 </font>      System.out.println(
+<font color="#555555">023 </font>        <font color="#0000FF">"Usage: java Listing5003 md-algorithm filename"</font>
+<font color="#555555">024 </font>      );
+<font color="#555555">025 </font>      System.exit(0);
+<font color="#555555">026 </font>    }
+<font color="#555555">027 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">028 </font>      <font color="#00AA00">//MessageDigest erstellen</font>
+<font color="#555555">029 </font>      MessageDigest md = MessageDigest.getInstance(args[0]);
+<font color="#555555">030 </font>      FileInputStream in = <font color="#0000AA">new</font> FileInputStream(args[1]);
+<font color="#555555">031 </font>      <font color="#006699">int</font> len;
+<font color="#555555">032 </font>      <font color="#006699">byte</font>[] data = <font color="#0000AA">new</font> <font color="#006699">byte</font>[1024];
+<font color="#555555">033 </font>      <font color="#0000AA">while</font> ((len = in.read(data)) &gt; 0) {
+<font color="#555555">034 </font>        <font color="#00AA00">//MessageDigest updaten</font>
+<font color="#555555">035 </font>        md.update(data, 0, len);
+<font color="#555555">036 </font>      }
+<font color="#555555">037 </font>      in.close();
+<font color="#555555">038 </font>      <font color="#00AA00">//MessageDigest berechnen und ausgeben</font>
+<font color="#555555">039 </font>      <font color="#006699">byte</font>[] result = md.digest();
+<font color="#555555">040 </font>      <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; result.length; ++i) {
+<font color="#555555">041 </font>        System.out.print(toHexString(result[i]) + <font color="#0000FF">" "</font>);
+<font color="#555555">042 </font>      }
+<font color="#555555">043 </font>      System.out.println();
+<font color="#555555">044 </font>    } <font color="#0000AA">catch</font> (Exception e) {
+<font color="#555555">045 </font>      System.err.println(e.toString());
+<font color="#555555">046 </font>      System.exit(1);
+<font color="#555555">047 </font>    }
+<font color="#555555">048 </font>  }
+<font color="#555555">049 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing5003.java"><font color="#000055" size=-1>Listing5003.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 50.3: Erstellen eines Message Digest</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Im Paket <a href="index_j.html#ixb100616"><font color=#000080><tt>java.security</tt></font></a>
+gibt es zwei Klassen, die einen Message Digest mit einem Stream kombinieren.
+<a href="index_d.html#ixb101037"><font color=#000080><tt>DigestInputStream</tt></font></a>
+ist ein Eingabe-Stream, der beim Lesen von Bytes parallel deren Message
+Digest berechnet; <a href="index_d.html#ixb101036"><font color=#000080><tt>DigestOutputStream</tt></font></a>
+f&uuml;hrt diese Funktion beim Schreiben aus. Beide &uuml;bertragen
+die eigentlichen Bytes unver&auml;ndert und k&ouml;nnen dazu verwendet
+werden, in einer Komposition von Streams &#187;nebenbei&#171; einen
+Message Digest zu berechnen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id050001003001"></a>
+<h4>Authentifizierung </h4>
+
+<p>
+Ein wichtiges Anwendungsgebiet von Message Digests ist die Authentifizierung,
+d.h. die &Uuml;berpr&uuml;fung, ob die Person oder Maschine, mit der
+kommuniziert werden soll, tats&auml;chlich &#187;echt&#171; ist (also
+die ist, die sie vorgibt zu sein). Eine Variante, bei der ein Anwender
+sich mit einem Benutzernamen und Passwort autorisiert, kann mit Hilfe
+eines Message Digest in folgender Weise realisiert werden: 
+<ul>
+<li>Zun&auml;chst wird vom System ein Benutzername vergeben.
+<li>Beim ersten Anmelden gibt der Anwender den Benutzernamen und ein
+von ihm vergebenes Passwort ein.
+<li>Das System berechnet den Message Digest f&uuml;r das Passwort
+und speichert ihn zusammen mit dem Benutzernamen in der Benutzerdatenbank
+ab.
+<li>Bei jedem weiteren Anmeldeversuch berechnet das System den Message
+Digest zum eingegebenen Passwort und vergleicht ihn mit dem in der
+Benutzerdatenbank zu diesem Benutzernamen gespeicherten. Sind beide
+identisch, wird der Zugang gew&auml;hrt, andernfalls wird er verweigert.
+</ul>
+
+<p>
+Bemerkenswert daran ist, dass das System nicht die Passw&ouml;rter
+selbst speichert, auch nicht in verschl&uuml;sselter Form. Ein Angriff
+auf die Benutzerdatenbank mit dem Versuch, gespeicherte Passw&ouml;rter
+zu entschl&uuml;sseln, ist daher nicht m&ouml;glich. Eine bekannte
+(und leider schon oft erfolgreich praktizierte) Methode des Angriffs
+besteht allerdings darin, Message Digests zu allen Eintr&auml;gen
+in gro&szlig;en W&ouml;rterb&uuml;chern berechnen zu lassen, und sie
+mit den Eintr&auml;gen der Benutzerdatenbank zu vergleichen. Das ist
+einer der Gr&uuml;nde daf&uuml;r, weshalb als Passw&ouml;rter niemals
+Allerweltsnamen oder einfache, in W&ouml;rterb&uuml;chern verzeichnete,
+Begriffe verwendet werden sollten. 
+
+<!-- Section -->
+
+<a name="sectlevel4id050001003002"></a>
+<h4>&#187;Unwissende&#171; Beweise </h4>
+
+<p>
+Eine weitere Anwendung von Message Digests besteht darin, die Existenz
+von Geheimnissen oder den Nachweis der Kenntnis bestimmter Sachverhalte
+nachzuweisen, ohne deren Inhalt preiszugeben - selbst eigentlich vertrauensw&uuml;rdigen
+Personen nicht. Dies wird in Bruce Schneiers Buch als <a name="ixa103632"><i>Zero-Knowledge
+Proof</i></a> bezeichnet und funktioniert so:
+<ul>
+<li>A speichert das Geheimnis in elektronischer Form und berechnet
+den Message Digest dazu.
+<li>A deponiert das Geheimnis an einer Stelle, die f&uuml;r Dritte
+unerreichbar ist.
+<li>A &uuml;bergibt den Message Digest zum Zeitpunkt X einem Notar,
+der Inhalt und Eingangsdatum best&auml;tigt und urkundlich festh&auml;lt.
+Alternativ kann A den Message Digest auch in der regionalen Tagespresse
+ver&ouml;ffentlichen und sich den Zeitungsausschnitt an die Wand h&auml;ngen.
+</ul>
+
+<p>
+Das Geheimnis ist nicht ver&ouml;ffentlicht, der Nachweis f&uuml;r
+seine Existenz zum Zeitpunkt X aber erbracht. Muss A Jahre sp&auml;ter
+die Existenz dieser Informationen nachweisen, holt es die Diskette
+mit dem Geheimnis aus dem Tresor, berechnet den Message Digest erneut
+und zeigt dessen &Uuml;bereinstimmung mit dem seinerzeit in der Zeitung
+ver&ouml;ffentlichten. 
+
+<!-- Section -->
+
+<a name="sectlevel4id050001003003"></a>
+<h4>Fingerprints<a name="ixa103633"></a><a name="ixa103634"></a> </h4>
+
+<p>
+Eine weitere Anwendung von Message Digests besteht im Erstellen von
+Fingerprints (also digitalen Fingerabdr&uuml;cken) zu &ouml;ffentlichen
+Schl&uuml;sseln (was das genau ist, wird in <a href="k100318.html#publickeykrypto">Abschnitt 50.1.5</a>
+erkl&auml;rt). Um die Korrektheit eines &ouml;ffentlichen Schl&uuml;ssels
+nachzuweisen, wird daraus ein Message Digest berechnet und als digitaler
+Fingerabdruck an prominenter Stelle ver&ouml;ffentlicht (beispielsweise
+in den Signaturen der E-Mails des Schl&uuml;sselinhabers). 
+
+<p>
+Soll vor der Verwendung eines &ouml;ffentlichen Schl&uuml;ssels &uuml;berpr&uuml;ft
+werden, ob dieser auch wirklich dem gew&uuml;nschten Inhaber geh&ouml;rt,
+ist lediglich der (durch das Schl&uuml;sselverwaltungsprogramm ad-hoc
+berechnete) Fingerprint des &ouml;ffentlichen Schl&uuml;ssels mit
+dem in der E-Mail ver&ouml;ffentlichten zu vergleichen. Stimmen beide
+&uuml;berein, erh&ouml;ht sich das Vertrauen in die Authentizit&auml;t
+des &ouml;ffentlichen Schl&uuml;ssels und er kann verwendet werden.
+Stimmen sie nicht &uuml;berein, sollte der Schl&uuml;ssel auf keinen
+Fall verwendet werden. Wir werden in <a href="k100318.html#zertifikate">Abschnitt 50.1.7</a>
+noch einmal auf diese Problematik zur&uuml;ckkommen. 
+
+<!-- Section -->
+
+<a name="kryptozufallszahlen"></a>
+<h3>50.1.4 Kryptografische Zufallszahlen </h3>
+
+<p>
+Zufallszahlen wurden bereits in <a href="k100115.html#zufallszahlen">Abschnitt 17.1</a>
+vorgestellt. In kryptografischen Anwendungen werden allerdings bessere
+Zufallszahlengeneratoren ben&ouml;tigt, als in den meisten Programmiersprachen
+implementiert sind. Einerseits sollte die Verteilung der Zufallszahlen
+besser sein, andererseits wird eine gr&ouml;&szlig;ere Periodizit&auml;t
+gefordert (das ist die L&auml;nge der Zahlensequenz, nach der sich
+eine Folge von Zufallszahlen fr&uuml;hestens wiederholt). Zudem muss
+die n&auml;chste Zahl der Folge praktisch unvorhersagbar sein - selbst
+wenn deren Vorg&auml;nger bekannt sind. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Es ist bekannt, dass sich mit deterministischen Maschinen (wie Computerprogramme
+es beispielsweise sind) keine <i>echten</i> Zufallszahlen erzeugen
+lassen. Eigentlich m&uuml;ssten wir daher von <a name="ixa103635"><i>Pseudo-Zufallszahlen</i></a>
+sprechen, um darauf hinzuweisen, dass unsere Zufallszahlengeneratoren
+stets deterministische Zahlenfolgen erzeugen. Mit der zus&auml;tzlichen
+Forderung kryptografischer Zufallszahlen, praktisch unvorhersagbare
+Zahlenfolgen zu generieren, wird diese Unterscheidung an dieser Stelle
+unbedeutend. Tats&auml;chlich besteht der wichtigste Unterschied zu
+&#187;echten&#171; Zufallsgeneratoren nur noch darin, dass deren Folgen
+nicht zuverl&auml;ssig <i>reproduziert</i> werden k&ouml;nnen (was
+bei unseren Pseudo-Zufallszahlen sehr wohl der Fall ist). Wir werden
+im Folgenden daher den Begriff &#187;Zufallszahl&#171; auch dann verwenden,
+wenn eigentlich &#187;Pseudo-Zufallszahl&#171; gemeint ist.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Die Klasse <a name="ixa103636"><a href="index_s.html#ixb102740"><font color=#000080><tt>SecureRandom</tt></font></a></a>
+des Pakets <a href="index_j.html#ixb100616"><font color=#000080><tt>java.security</tt></font></a>
+implementiert einen Generator f&uuml;r kryptografische Zufallszahlen,
+der die oben genannten Eigenschaften besitzt. Er wird durch Aufruf
+der Methode <a name="ixa103637"><a href="index_g.html#ixb102730"><font color=#000080><tt>getInstance</tt></font></a></a>
+&auml;hnlich instanziert wie ein Message Digest: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static SecureRandom getInstance(String algorithm)
+  throws NoSuchAlgorithmException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/security/MessageDigest.html" onClick="this.href=getApiDoc('java.security.MessageDigest')"><font color="#660066" size=-1>java.security.MessageDigest</font></a></td>
+</tr>
+</table>
+
+<p>
+Als Algorithmus ist beispielsweise &#187;SHA1PRNG&#171; im JDK 1.2
+implementiert. Hierbei entstehen die Zufallszahlen aus der Berechnung
+eines Message Digest f&uuml;r eine Pseudonachricht, die aus einer
+Kombination aus Initialwert und fortlaufendem Z&auml;hler besteht.
+Die Klasse <a href="index_s.html#ixb102740"><font color=#000080><tt>SecureRandom</tt></font></a>
+stellt weiterhin die Methoden <a name="ixa103638"><a href="index_s.html#ixb102741"><font color=#000080><tt>setSeed</tt></font></a></a>
+und <a name="ixa103639"><a href="index_n.html#ixb102742"><font color=#000080><tt>nextBytes</tt></font></a></a>
+zur Verf&uuml;gung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setSeed(long seed)
+
+public void nextBytes(byte[] bytes)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/security/MessageDigest.html" onClick="this.href=getApiDoc('java.security.MessageDigest')"><font color="#660066" size=-1>java.security.MessageDigest</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a href="index_s.html#ixb102741"><font color=#000080><tt>setSeed</tt></font></a>
+wird der Zufallszahlengenerator initialisiert. Die Methode sollte
+nach der Konstruktion einmal aufgerufen werden, um den Initialwert
+festzulegen (andernfalls macht es der Generator selbst). Gleiche Initialwerte
+f&uuml;hren auch zu gleichen Folgen von Zufallszahlen. Mit <a href="index_n.html#ixb102742"><font color=#000080><tt>nextBytes</tt></font></a>
+wird eine beliebig lange Folge von Zufallszahlen erzeugt und in dem
+als Argument &uuml;bergebenen Byte-Array zur&uuml;ckgegeben. 
+
+<p>
+Das folgende Listing instanziert einen Zufallszahlengenerator und
+erzeugt zehn Folgen zu je acht Bytes Zufallszahlen, die dann auf dem
+Bildschirm ausgegeben werden: 
+<a name="listingid050004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing5004.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.security.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing5004
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#00AA00">/**
+<font color="#555555">008 </font>   * Konvertiert ein Byte in einen Hex-String.
+<font color="#555555">009 </font>   */</font>
+<font color="#555555">010 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> String toHexString(<font color="#006699">byte</font> b)
+<font color="#555555">011 </font>  {
+<font color="#555555">012 </font>    <font color="#006699">int</font> value = (b &amp; 0x7F) + (b &lt; 0 ? 128 : 0);
+<font color="#555555">013 </font>    String ret = (value &lt; 16 ? <font color="#0000FF">"0"</font> : <font color="#0000FF">""</font>);
+<font color="#555555">014 </font>    ret += Integer.toHexString(value).toUpperCase();
+<font color="#555555">015 </font>    <font color="#0000AA">return</font> ret;
+<font color="#555555">016 </font>  }
+<font color="#555555">017 </font>
+<font color="#555555">018 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">019 </font>  {
+<font color="#555555">020 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">021 </font>      <font color="#00AA00">//Zufallszahlengenerator erstellen</font>
+<font color="#555555">022 </font>      SecureRandom rand = SecureRandom.getInstance(<font color="#0000FF">"SHA1PRNG"</font>);
+<font color="#555555">023 </font>      <font color="#006699">byte</font>[] data = <font color="#0000AA">new</font> <font color="#006699">byte</font>[8];
+<font color="#555555">024 </font>      <font color="#00AA00">//Startwert initialisieren</font>
+<font color="#555555">025 </font>      rand.setSeed(0x123456789ABCDEF0L);
+<font color="#555555">026 </font>      <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; 10; ++i) {
+<font color="#555555">027 </font>        <font color="#00AA00">//Zufallszahlen berechnen</font>
+<font color="#555555">028 </font>        rand.nextBytes(data);
+<font color="#555555">029 </font>        <font color="#00AA00">//Ausgeben</font>
+<font color="#555555">030 </font>        <font color="#0000AA">for</font> (<font color="#006699">int</font> j = 0; j &lt; 8; ++j) {
+<font color="#555555">031 </font>          System.out.print(toHexString(data[j]) + <font color="#0000FF">" "</font>);
+<font color="#555555">032 </font>        }
+<font color="#555555">033 </font>        System.out.println();
+<font color="#555555">034 </font>      }
+<font color="#555555">035 </font>    } <font color="#0000AA">catch</font> (Exception e) {
+<font color="#555555">036 </font>      System.err.println(e.toString());
+<font color="#555555">037 </font>      System.exit(1);
+<font color="#555555">038 </font>    }
+<font color="#555555">039 </font>  }
+<font color="#555555">040 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing5004.java"><font color="#000055" size=-1>Listing5004.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 50.4: Erzeugen kryptografischer Zufallszahlen</i></p>
+
+
+<!-- Section -->
+<a name="publickeykrypto"></a>
+<h3>50.1.5 <a name="ixa103640">Public-Key-Verschl&uuml;sselung</a></h3>
+
+<p>
+Eines der Hauptprobleme bei der Anwendung symmetrischer Verschl&uuml;sselungen
+ist das der <i>Schl&uuml;ssel&uuml;bertragung</i>. Eine verschl&uuml;sselte
+Nachricht kann n&auml;mlich nur dann sicher &uuml;bertragen werden,
+wenn der Schl&uuml;ssel auf einem sicheren Weg vom Sender zum Empf&auml;nger
+gelangt. Je nach r&auml;umlicher, technischer oder organisatorischer
+Distanz zwischen beiden Parteien kann das unter Umst&auml;nden sehr
+schwierig sein. 
+
+<p>
+Mit der Erfindung der Public-Key-Kryptosysteme wurde dieses Problem
+Mitte der siebziger Jahre entscheidend entsch&auml;rft. Bei einem
+solchen System wird nicht ein einzelner Schl&uuml;ssel verwendet,
+sondern diese treten immer paarweise auf. Einer der Schl&uuml;ssel
+ist &ouml;ffentlich und dient dazu, Nachrichten zu verschl&uuml;sseln.
+Der anderen Schl&uuml;ssel ist privat. Er dient dazu, mit dem &ouml;ffentlichen
+Schl&uuml;ssel verschl&uuml;sselte Nachrichten zu entschl&uuml;sseln.
+
+<p>
+Das Schl&uuml;ssel&uuml;bertragungsproblem wird nun dadurch gel&ouml;st,
+dass ein potenzieller Empf&auml;nger verschl&uuml;sselter Nachrichten
+seinen &ouml;ffentlichen Schl&uuml;ssel an allgemein zug&auml;nglicher
+Stelle publiziert. Seinen privaten Schl&uuml;ssel h&auml;lt er dagegen
+geheim. Will ein Sender eine geheime Nachricht an den Empf&auml;nger
+&uuml;bermitteln, verwendet er dessen allgemein bekannten &ouml;ffentlichen
+Schl&uuml;ssel und &uuml;bertr&auml;gt die verschl&uuml;sselte Nachricht
+an den Empf&auml;nger. Nur mit Hilfe seines privaten Schl&uuml;ssels
+kann dieser nun die Nachricht entziffern. 
+
+<p>
+Das Verfahren funktioniert nat&uuml;rlich nur, wenn der &ouml;ffentliche
+Schl&uuml;ssel nicht dazu taugt, die mit ihm verschl&uuml;sselte Nachricht
+zu entschl&uuml;sseln. Auch darf es nicht m&ouml;glich sein, mit vertretbarem
+Aufwand den privaten Schl&uuml;ssel aus dem &ouml;ffentlichen herzuleiten.
+Beide Probleme sind aber gel&ouml;st und es gibt sehr leistungsf&auml;hige
+und sichere Verschl&uuml;sselungsverfahren, die auf dem Prinzip der
+Public-Key-Kryptografie beruhen. Bekannte Beispiele f&uuml;r solche
+Systeme sind <a name="ixa103641"><i>RSA</i></a> (benannt nach ihren
+Erfindern Rivest, Shamir und Adleman) und <a name="ixa103642"><i>DSA</i></a>
+(<a name="ixa103643"><i>Digital Signature Architecture</i></a>). 
+
+<p>
+Asymmetrische Kryptosysteme haben meist den Nachteil, sehr viel langsamer
+zu arbeiten als symmetrische. In der Praxis kombiniert man daher beide
+Verfahren und kommt so zu hybriden Kryptosystemen<a name="ixa103644"></a>.
+Um eine geheime Nachricht von A nach B zu &uuml;bertragen, wird dabei
+in folgenden Schritten vorgegangen: 
+<ul>
+<li>Mit Hilfe eines kryptografischen Zufallszahlengenerators erzeugt
+A einen Einmalschl&uuml;ssel (der auch als <i>Session Key</i> bezeichnet
+wird).
+<li>A verschl&uuml;sselt die geheime Nachricht mit Hilfe des Session
+Key und eines (schnellen) symmetrischen Verfahrens.
+<li>A verschl&uuml;sselt den Session Key mit dem &ouml;ffentlichen
+Schl&uuml;ssel von B auf der Basis des vereinbarten Public-Key-Kryptoverfahrens
+und sendet ihn zusammen mit der verschl&uuml;sselten Nachricht an
+B.
+<li>B entschl&uuml;sselt den Session Key mit seinem privaten Schl&uuml;ssel.
+<li>B entschl&uuml;sselt die geheime Nachricht mit dem Session Key.
+</ul>
+
+<p>
+Fast alle Public-Key-Kryptosysteme arbeiten in dieser Weise als Hybridsysteme.
+Andernfalls w&uuml;rde das Ver- und Entschl&uuml;sseln bei gro&szlig;en
+Nachrichten viel zu lange dauern. Ein bekanntes Beispiel f&uuml;r
+ein solches System ist <a name="ixa103645"><i>PGP</i></a> (<a name="ixa103646"><i>Pretty
+Good Privacy</i></a>) von Phil Zimmermann.
+Es wird vorwiegend beim Versand von E-Mails verwendet und gilt als
+sehr sicher. Freie Implementierungen stehen f&uuml;r viele Plattformen
+zu Verf&uuml;gung. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Das Ver- und Entschl&uuml;sseln von Daten mit Hilfe von asymmetrischen
+Verfahren war bis zur Version 1.3 nicht im JDK enthalten. Zwar gab
+es als Erweiterung zum JDK die <a name="ixa103647"><i>JCE</i></a>
+(<a name="ixa103648"><i>Java Cryptography Extension</i></a>), doch
+diese durfte nur in den USA und Kanada verwendet werden. Mit dem JDK
+1.4 wurden die JCE sowie die <a name="ixa103649"><i>Java Secure Socket Extension</i></a>
+(<a name="ixa103650"><i>JSSE</i></a>) und der <a name="ixa103651"><i>Java Authentication
+and Authorization Service</i></a> (<a name="ixa103652"><i>JAAS</i></a>)
+fester Bestandteil des JDK. Dennoch gibt es nach wie vor einige Einschr&auml;nkungen
+in der Leistungsf&auml;higkeit der einzelnen Pakete, die auf US-Exportbeschr&auml;nkungen
+zur&uuml;ckzuf&uuml;hren sind. Details k&ouml;nnen in der Dokumentation
+zum JDK 1.4 oder neueren Versionen nachgelesen werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="digitaleunterschriften"></a>
+<h3>50.1.6 Digitale Unterschriften<a name="ixa103653"></a> </h3>
+
+<p>
+Ein gro&szlig;er Vorteil der Public-Key-Kryptosysteme ist es, dass
+sie M&ouml;glichkeiten zum Erstellen und Verifizieren von <i>digitalen
+Unterschriften</i> bieten. Eine digitale Unterschrift besitzt folgende
+wichtige Eigenschaften: 
+<ul>
+<li>Sie stellt sicher, dass eine Nachricht von einem ganz bestimmten
+und eindeutig identifizierbaren Absender stammt.
+<li>Sie stellt sicher, dass die Nachricht intakt ist und nicht w&auml;hrend
+der &Uuml;bertragung ver&auml;ndert wurde.
+</ul>
+
+<p>
+Beide Eigenschaften sind f&uuml;r den elektronischen Datenverkehr
+so fundamental wie die Verschl&uuml;sselung selbst. Technisch basieren
+sie darauf, dass die Funktionsweise eines Public-Key-Kryptosystems
+sich umkehren l&auml;sst. Dass es also m&ouml;glich ist, Nachrichten,
+die mit einem privaten Schl&uuml;ssel verschl&uuml;sselt wurden, mit
+Hilfe des korrespondierenden &ouml;ffentlichen Schl&uuml;ssels zu
+entschl&uuml;sseln. 
+
+<p>
+Im Prinzip funktioniert eine digitale Unterschrift so: 
+
+<p>
+Will A eine Nachricht signieren, so verschl&uuml;sselt er sie mit
+seinem privaten Schl&uuml;ssel. Jeder, der im Besitz des &ouml;ffentlichen
+Schl&uuml;ssel von A ist, kann sie entschl&uuml;sseln. Da nur A seinen
+eigenen privaten Schl&uuml;ssel kennt, <i>muss</i> die Nachricht von
+ihm stammen. Da es keinem Dritten m&ouml;glich ist, die entschl&uuml;sselte
+Nachricht zu modifizieren und sie erneut mit dem privaten Schl&uuml;ssel
+von A zu verschl&uuml;sseln, ist auch die Integrit&auml;t der Nachricht
+sichergestellt. Den Vorgang des &Uuml;berpr&uuml;fens der Integrit&auml;t
+und Authentizit&auml;t bezeichnet man als <i>Verifizieren</i> einer
+digitalen Unterschrift. 
+
+<p>
+In der Praxis sind die Dinge wieder einmal etwas komplizierter, denn
+die Langsamkeit der asymmetrischen Verfahren erfordert eine etwas
+aufw&auml;ndigere Vorgehensweise. Statt die komplette Nachricht zu
+verschl&uuml;sseln, berechnet A zun&auml;chst einen Message Digest
+der Nachricht. Diesen verschl&uuml;sselt A mit seinem privaten Schl&uuml;ssel
+und versendet ihn als Anhang zusammen mit der Nachricht. Ein Empf&auml;nger
+wird die Nachricht lesen, ihren Message Digest bilden und diesen dann
+mit dem (mit Hilfe des &ouml;ffentlichen Schl&uuml;ssels von A entschl&uuml;sselten)
+Original-Message-Digest vergleichen. Stimmen beide &uuml;berein, ist
+die Signatur g&uuml;ltig. Die Nachricht stammt dann sicher von A und
+wurde nicht ver&auml;ndert. Stimmen sie nicht &uuml;berein, wurde
+sie ver- oder gef&auml;lscht. 
+
+<p>
+Das JDK stellt Klassen zum Erzeugen und Verifizieren digitaler Unterschriften
+zur Verf&uuml;gung. Wir wollen uns beide Verfahren in den folgenden
+Abschnitten ansehen. Zuvor wird allerdings ein Schl&uuml;sselpaar
+ben&ouml;tigt, dessen Generierung im n&auml;chsten Abschnitt besprochen
+wird. 
+
+<!-- Section -->
+
+<a name="sectlevel4id050001006001"></a>
+<h4>Erzeugen und Verwalten von Schl&uuml;sseln mit dem JDK </h4>
+
+<p>
+Um digitale Unterschriften erzeugen und verifizieren zu k&ouml;nnen,
+m&uuml;ssen Schl&uuml;sselpaare erzeugt und verwaltet werden. Seit
+dem JDK 1.2 wird dazu eine Schl&uuml;sseldatenbank verwendet, auf
+die mit Hilfe des Hilfsprogramms <a name="ixa103654"><a href="index_k.html#ixb102757"><font color=#000080><tt>keytool</tt></font></a></a>
+zugegriffen werden kann. <a href="index_k.html#ixb102757"><font color=#000080><tt>keytool</tt></font></a>
+kann Schl&uuml;sselpaare erzeugen, in der Datenbank speichern und
+zur Bearbeitung wieder herausgeben. Zudem besitzt es die F&auml;higkeit,
+Zertifikate (siehe <a href="k100318.html#zertifikate">Abschnitt 50.1.7</a>)
+zu importieren und in der Datenbank zu verwalten. Die Datenbank hat
+standardm&auml;&szlig;ig den Namen &#187;.keystore&#171;<a name="ixa103655"></a>
+und liegt im Home-Verzeichnis des angemeldeten Benutzers (bzw. im
+Verzeichnis <font color="#660099">\windows</font> eines Windows-95/98-Einzelplatzsystems).
+
+<p>
+<a href="index_k.html#ixb102757"><font color=#000080><tt>keytool</tt></font></a>
+ist ein kommandozeilenbasiertes Hilfsprogramm, das eine gro&szlig;e
+Anzahl an Funktionen bietet. Wir wollen hier nur die f&uuml;r den
+Umgang mit digitalen Unterschriften ben&ouml;tigten betrachten. Eine
+vollst&auml;ndige Beschreibung findet sich in der Tool-Dokumentation
+des JDK. 
+
+<p>
+Um ein neues Schl&uuml;sselpaar zu erzeugen, ist <a href="index_k.html#ixb102757"><font color=#000080><tt>keytool</tt></font></a>
+mit dem Kommando <font color="#000077"><tt>-genkey</tt></font> aufzurufen.
+Zus&auml;tzlich m&uuml;ssen weitere Parameter angegeben werden: 
+<ul>
+<li>Mit <font color="#000077"><tt>-alias</tt></font> wird der Aliasname
+des neu zu generierenden Eintrags angegeben. Er dient als eindeutiger
+Bezeichner und wird k&uuml;nftig immer dann gebraucht, wenn auf diesen
+Eintrag zugegriffen werden soll.
+<li>Mit <font color="#000077"><tt>-dname</tt></font> wird ein strukturierter
+Name f&uuml;r den Schl&uuml;sselbesitzer angegeben. Er besteht aus
+mehreren Teilen, die durch Kommata voneinander getrennt sind. Jeder
+einzelne Teil besteht aus einer mnemonischen Bezeichnung, gefolgt
+von einem Gleichheitszeichen und dem zugeh&ouml;rigen Wert. Einzelne
+Bestandteile k&ouml;nnen ausgelassen werden. Der strukturierte Name
+kann folgende Teile enthalten : 
+<ul>
+<li><font color="#000077"><tt>CN</tt></font>: &Uuml;blicher Name (Common
+Name) 
+<li><font color="#000077"><tt>OU</tt></font>: Organisatorische Einheit
+(Organisational Unit) 
+<li><font color="#000077"><tt>O</tt></font>: Unternehmen/Organisation
+(Organisation) 
+<li><font color="#000077"><tt>L</tt></font>: Stadt (Location) 
+<li><font color="#000077"><tt>S</tt></font>: Bundesstaat (State) 
+<li><font color="#000077"><tt>C</tt></font>: Land (Countrycode) 
+</ul>
+</ul>
+
+<p>
+Die Optionen f&uuml;r den Schl&uuml;ssel- und Signaturtyp (<font color="#000077"><tt>-keyalg</tt></font>
+und <font color="#000077"><tt>-sigalg</tt></font>) sowie die Schl&uuml;ssell&auml;nge
+(<font color="#000077"><tt>-keysize</tt></font>) und die G&uuml;ltigkeitsdauer
+(<font color="#000077"><tt>-validity</tt></font>) sollen unspezifiziert
+bleiben (und daher gem&auml;&szlig; den eingebauten Voreinstellungen
+belegt werden). Zus&auml;tzlich besitzt jede Schl&uuml;sseldatenbank
+ein Zugriffspasswort, das mit der Option <font color="#000077"><tt>-storepass</tt></font>
+(oder alternativ in der Eingabezeile) angegeben wird. Schlie&szlig;lich
+besitzt jeder private Schl&uuml;ssel ein Schl&uuml;sselpasswort, das
+mit der Option <font color="#000077"><tt>-keypass</tt></font> (oder
+&uuml;ber die Eingabezeile) angegeben wird. 
+
+<p>
+Wir wollen zun&auml;chst ein Schl&uuml;sselpaar mit dem Aliasnamen
+&#187;hjp3&#171; erzeugen und mit dem Passwort &#187;hjp3key&#171;
+vor unberechtigtem Zugriff sch&uuml;tzen. Die Schl&uuml;sseldatenbank
+wird beim Anlegen des ersten Schl&uuml;ssels automatisch erzeugt und
+bekommt das Passwort &#187;hjp3ks&#171; zugewiesen. Wir verwenden
+dazu folgendes Kommando: 
+<font color="#333300">
+<pre>
+c:\--&gt;<b>keytool -genkey -alias hjp3 -dname
+      "CN=Guido Krueger,O=Computer Books,C=de"</b>
+Enter keystore password:  <b>hjp3ks</b>
+Enter key password for &lt;hjp3&gt;
+        (RETURN if same as keystore password):  <b>hjp3key</b>
+</pre>
+</font>
+
+<p>
+Nun wird ein DSA-Schl&uuml;sselpaar der L&auml;nge 1024 mit einer
+G&uuml;ltigkeitsdauer von 90 Tagen erzeugt. Zur &Uuml;berpr&uuml;fung
+kann das Kommando <font color="#000077"><tt>-list</tt></font> (in
+Kombination mit <font color="#000077"><tt>-v</tt></font>) angegeben
+werden: 
+<font color="#333300">
+<pre>
+C:\---&gt;<b>keytool -alias hjp3 -list -v</b>
+Enter keystore password:  <b>hjp3ks</b>
+Alias name: hjp3
+Creation date: Sun Dec 26 17:11:36 GMT+01:00 1999
+Entry type: keyEntry
+Certificate chain length: 1
+Certificate[1]:
+Owner: CN=Guido Krueger, O=Computer Books, C=de
+Issuer: CN=Guido Krueger, O=Computer Books, C=de
+Serial number: 38663e2d
+Valid from: Sun Dec 26 17:11:25 GMT+01:00 1999 until: Sat Mar 25 17:11:25 GMT+01:00 2000
+Certificate fingerprints:
+         MD5:  D5:73:AB:06:25:16:7F:36:27:DF:CF:9D:C9:DE:AD:35
+         SHA1: E0:A4:39:65:60:06:48:61:82:5E:8C:47:8A:2B:04:A4:6D:43:56:05
+</pre>
+</font>
+
+<p>
+Gleichzeitig wird ein <a name="ixa103656"><i>Eigenzertifikat</i></a>
+f&uuml;r den gerade generierten &ouml;ffentlichen Schl&uuml;ssel erstellt.
+Es kann dazu verwendet werden, digitale Unterschriften zu verifizieren.
+Jedes Zertifikat in der Schl&uuml;sseldatenbank (und damit jeder eingebettete
+&ouml;ffentliche Schl&uuml;ssel) gilt im JDK automatisch als vertrauensw&uuml;rdig.
+
+
+<!-- Section -->
+<a name="sectlevel4id050001006002"></a>
+<h4>Erstellen einer digitalen Unterschrift </h4>
+
+<p>
+Wie erw&auml;hnt, entsteht eine digitale Unterschrift zu einer Nachricht
+durch das Verschl&uuml;sseln des Message Digest der Nachricht mit
+dem privaten Schl&uuml;ssel des Unterzeichnenden. Nachdem wir nun
+ein Schl&uuml;sselpaar erstellt haben, k&ouml;nnen wir es dazu verwenden,
+beliebige Dateien zu signieren. 
+
+<p>
+Dazu wird die Klasse <a name="ixa103657"><a href="index_s.html#ixb102760"><font color=#000080><tt>Signature</tt></font></a></a>
+des Pakets <a href="index_j.html#ixb100616"><font color=#000080><tt>java.security</tt></font></a>
+verwendet. Ihre Programmierschnittstelle &auml;hnelt der der Klasse
+<a href="index_m.html#ixb102729"><font color=#000080><tt>MessageDigest</tt></font></a>:
+Zun&auml;chst wird ein Objekt mit Hilfe einer Factory-Methode beschafft,
+dann wird es initialisiert und schlie&szlig;lich werden die Daten
+durch wiederholten Aufruf von <a href="index_u.html#ixb101687"><font color=#000080><tt>update</tt></font></a>
+&uuml;bergeben. Nachdem alle Daten angegeben wurden, berechnet ein
+letzter Methodenaufruf das Resultat. 
+
+<p>
+Ein <a href="index_s.html#ixb102760"><font color=#000080><tt>Signature</tt></font></a>-Objekt
+kann wahlweise zum Signieren oder zum Verifizieren verwendet werden.
+Welche der beiden Funktionen aktiviert wird, ist nach der Instanzierung
+durch den Aufruf einer Initialisierungsmethode festzulegen. Ein Aufruf
+von <a name="ixa103658"><a href="index_i.html#ixb102761"><font color=#000080><tt>initSign</tt></font></a></a>
+initialisiert das Objekt zum Signieren, ein Aufruf von <a name="ixa103659"><a href="index_i.html#ixb102762"><font color=#000080><tt>initVerify</tt></font></a></a>
+zum Verifizieren. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static Signature getInstance(String algorithm)
+  throws NoSuchAlgorithmException
+
+public final void initSign(PrivateKey privateKey)
+  throws InvalidKeyException
+
+public final void initVerify(PublicKey publicKey)
+  throws InvalidKeyException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/security/Signature.html" onClick="this.href=getApiDoc('java.security.Signature')"><font color="#660066" size=-1>java.security.Signature</font></a></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Als Argument von <a href="index_g.html#ixb102730"><font color=#000080><tt>getInstance</tt></font></a>
+wird der gew&uuml;nschte Signier-Algorithmus &uuml;bergeben. Auch
+hier wird - wie an vielen Stellen im Security-API des JDK - eine Strategie
+verfolgt, nach der die verf&uuml;gbaren Algorithmen konfigurier- und
+austauschbar sind. Dazu wurde ein <i>Provider-Konzept</i><a name="ixa103660"></a>
+entwickelt, mit dessen Hilfe dem API Klassenpakete zur Verf&uuml;gung
+gestellt werden k&ouml;nnen, die Funktionalit&auml;ten des Security-Pakets
+teilweise oder ganz austauschen. Falls der Provider beim Aufruf von
+<a href="index_g.html#ixb102730"><font color=#000080><tt>getInstance</tt></font></a>
+nicht angegeben wird, benutzt die Methode den Standard-Provider &#187;SUN&#171;,
+der zusammen mit dem JDK ausgeliefert wird. Der zu dem von uns generierten
+Schl&uuml;ssel passende Algorithmus ist &#187;SHA/DSA&#171;.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Die zum Aufruf der init-Methoden ben&ouml;tigten Schl&uuml;ssel k&ouml;nnen
+aus der Schl&uuml;sseldatenbank beschafft werden. Auf sie kann mit
+Hilfe der Klasse <a name="ixa103661"><a href="index_k.html#ixb102764"><font color=#000080><tt>KeyStore</tt></font></a></a>
+des Pakets <a href="index_j.html#ixb100616"><font color=#000080><tt>java.security</tt></font></a>
+zugegriffen werden. Dazu wird zun&auml;chst ein <a href="index_k.html#ixb102764"><font color=#000080><tt>KeyStore</tt></font></a>-Objekt
+instanziert und durch Aufruf von <a href="index_l.html#ixb100721"><font color=#000080><tt>load</tt></font></a>
+mit den Daten aus der Schl&uuml;sseldatenbank gef&uuml;llt. Mit <a href="index_g.html#ixb100762"><font color=#000080><tt>getKey</tt></font></a>
+kann auf einen privaten Schl&uuml;ssel zugegriffen werden, mit <a href="index_g.html#ixb102765"><font color=#000080><tt>getCertificate</tt></font></a>
+auf einen &ouml;ffentlichen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static KeyStore getInstance(String type)
+  throws KeyStoreException
+
+public final Key getKey(String alias, char[] password)
+  throws KeyStoreException,
+         NoSuchAlgorithmException,
+         UnrecoverableKeyException
+
+public final Certificate getCertificate(String alias)
+  throws KeyStoreException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/security/KeyStore.html" onClick="this.href=getApiDoc('java.security.KeyStore')"><font color="#660066" size=-1>java.security.KeyStore</font></a></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Das von <a name="ixa103662"><a href="index_g.html#ixb102765"><font color=#000080><tt>getCertificate</tt></font></a></a>
+zur&uuml;ckgegebene Objekt vom Typ <a name="ixa103663"><a href="index_c.html#ixb102766"><font color=#000080><tt>Certificate</tt></font></a></a>
+stammt nicht aus dem Paket <a href="index_j.html#ixb100616"><font color=#000080><tt>java.security</tt></font></a>,
+sondern <a name="ixa103664"><a href="index_j.html#ixb102767"><font color=#000080><tt>java.security.cert</tt></font></a></a>.
+Das in <a href="index_j.html#ixb100616"><font color=#000080><tt>java.security</tt></font></a>
+vorhandene gleichnamige Interface wurde bis zum JDK 1.1 verwendet,
+ab 1.2 aber als <a name="ixa103665"><a href="index_d.html#ixb100139"><font color=#000080><tt>deprecated</tt></font></a></a>
+markiert. Wenn nicht mit qualifizierten Klassennamen gearbeitet wird,
+muss daher die <a href="index_i.html#ixb100148"><font color=#000080><tt>import</tt></font></a>-Anweisung
+f&uuml;r <a href="index_c.html#ixb102766"><font color=#000080><tt>java.security.cert.Certificate</tt></font></a>
+im Quelltext <i>vor</i> der <a href="index_i.html#ixb100148"><font color=#000080><tt>import</tt></font></a>-Anweisung
+von <a href="index_c.html#ixb102766"><font color=#000080><tt>java.security.Certificate</tt></font></a>
+stehen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Die Klasse <a href="index_c.html#ixb102766"><font color=#000080><tt>Certificate</tt></font></a>
+besitzt eine Methode <a name="ixa103666"><a href="index_g.html#ixb102768"><font color=#000080><tt>getPublicKey</tt></font></a></a>,
+mit der auf den im Zertifikat enthaltenen &ouml;ffentlichen Schl&uuml;ssel
+zugegriffen werden kann: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public PublicKey getPublicKey()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/security/cert/Certificate.html" onClick="this.href=getApiDoc('java.security.cert.Certificate')"><font color="#660066" size=-1>java.security.cert.Certificate</font></a></td>
+</tr>
+</table>
+
+<p>
+Ist das <a href="index_s.html#ixb102760"><font color=#000080><tt>Signature</tt></font></a>-Objekt
+initialisiert, wird es durch Aufruf von <a href="index_u.html#ixb101687"><font color=#000080><tt>update</tt></font></a>
+mit Daten versorgt. Nachdem alle Daten &uuml;bergeben wurden, kann
+mit <a name="ixa103667"><a href="index_s.html#ixb102769"><font color=#000080><tt>sign</tt></font></a></a>
+die Signatur abgefragt werden. Wurde das Objekt zum Verifizieren initialisiert,
+kann das Ergebnis durch Aufruf von <a name="ixa103668"><a href="index_v.html#ixb102770"><font color=#000080><tt>verify</tt></font></a></a>
+abgefragt werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public final byte[] sign()
+  throws SignatureException
+
+public final boolean verify(byte[] signature)
+  throws SignatureException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/security/Signature.html" onClick="this.href=getApiDoc('java.security.Signature')"><font color="#660066" size=-1>java.security.Signature</font></a></td>
+</tr>
+</table>
+
+<p>
+Nach diesen Vor&uuml;berlegungen k&ouml;nnen wir uns nun das Programm
+zum Erstellen einer digitalen Unterschrift ansehen. Es erwartet zwei
+Kommandozeilenargumente: den Namen der zu signierenden Datei und den
+Namen der Datei, in die die digitale Unterschrift ausgegeben werden
+soll. 
+<a name="listingid050005"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* DigitalSignature.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.security.cert.Certificate;
+<font color="#555555">005 </font><font color="#0000AA">import</font> java.security.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> DigitalSignature
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">static</font> <font color="#0000AA">final</font> String KEYSTORE = <font color="#0000FF">"c:\\windows\\.keystore"</font>;
+<font color="#555555">010 </font>  <font color="#0000AA">static</font> <font color="#0000AA">final</font> <font color="#006699">char</font>[] KSPASS   = {<font color="#0000FF">'h'</font>,<font color="#0000FF">'j'</font>,<font color="#0000FF">'p'</font>,<font color="#0000FF">'3'</font>,<font color="#0000FF">'k'</font>,<font color="#0000FF">'s'</font>};
+<font color="#555555">011 </font>  <font color="#0000AA">static</font> <font color="#0000AA">final</font> String ALIAS    = <font color="#0000FF">"hjp3"</font>;
+<font color="#555555">012 </font>  <font color="#0000AA">static</font> <font color="#0000AA">final</font> <font color="#006699">char</font>[] KEYPASS  = {<font color="#0000FF">'h'</font>,<font color="#0000FF">'j'</font>,<font color="#0000FF">'p'</font>,<font color="#0000FF">'3'</font>,<font color="#0000FF">'k'</font>,<font color="#0000FF">'e'</font>,<font color="#0000FF">'y'</font>};
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">015 </font>  {
+<font color="#555555">016 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">017 </font>      <font color="#00AA00">//Laden der Schl&uuml;sseldatenbank</font>
+<font color="#555555">018 </font>      KeyStore ks = KeyStore.getInstance(<font color="#0000FF">"JKS"</font>);
+<font color="#555555">019 </font>      FileInputStream ksin = <font color="#0000AA">new</font> FileInputStream(KEYSTORE);
+<font color="#555555">020 </font>      ks.load(ksin, KSPASS);
+<font color="#555555">021 </font>      ksin.close();
+<font color="#555555">022 </font>      <font color="#00AA00">//Privaten Schl&uuml;ssel "hjp3" lesen</font>
+<font color="#555555">023 </font>      Key key = ks.getKey(ALIAS, KEYPASS);
+<font color="#555555">024 </font>      <font color="#00AA00">//Signatur-Objekt erstellen</font>
+<font color="#555555">025 </font>      Signature signature = Signature.getInstance(<font color="#0000FF">"SHA/DSA"</font>);
+<font color="#555555">026 </font>      signature.initSign((PrivateKey)key);
+<font color="#555555">027 </font>      <font color="#00AA00">//Eingabedatei einlesen</font>
+<font color="#555555">028 </font>      FileInputStream in = <font color="#0000AA">new</font> FileInputStream(args[0]);
+<font color="#555555">029 </font>      <font color="#006699">int</font> len;
+<font color="#555555">030 </font>      <font color="#006699">byte</font>[] data = <font color="#0000AA">new</font> <font color="#006699">byte</font>[1024];
+<font color="#555555">031 </font>      <font color="#0000AA">while</font> ((len = in.read(data)) &gt; 0) {
+<font color="#555555">032 </font>        <font color="#00AA00">//Signatur updaten</font>
+<font color="#555555">033 </font>        signature.update(data, 0, len);
+<font color="#555555">034 </font>      }
+<font color="#555555">035 </font>      in.close();
+<font color="#555555">036 </font>      <font color="#00AA00">//Signatur berechnen</font>
+<font color="#555555">037 </font>      <font color="#006699">byte</font>[] result = signature.sign();
+<font color="#555555">038 </font>      <font color="#00AA00">//Signatur ausgeben</font>
+<font color="#555555">039 </font>      FileOutputStream out = <font color="#0000AA">new</font> FileOutputStream(args[1]);
+<font color="#555555">040 </font>      out.write(result, 0, result.length);
+<font color="#555555">041 </font>      out.close();
+<font color="#555555">042 </font>    } <font color="#0000AA">catch</font> (Exception e) {
+<font color="#555555">043 </font>      System.err.println(e.toString());
+<font color="#555555">044 </font>      System.exit(1);
+<font color="#555555">045 </font>    }
+<font color="#555555">046 </font>  }
+<font color="#555555">047 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/DigitalSignature.java"><font color="#000055" size=-1>DigitalSignature.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 50.5: Erstellen einer digitalen Unterschrift</i></p>
+
+<p>
+Will beispielsweise der Benutzer, dessen privater Schl&uuml;ssel unter
+dem Aliasnamen &#187;hjp3&#171; in der Schl&uuml;sseldatenbank gespeichert
+wurde, die Datei <font color="#660099">DigitalSignature.java</font>
+signieren und das Ergebnis in der Datei <font color="#660099">ds1.sign</font>
+abspeichern, so ist das Programm wie folgt aufzurufen: 
+<font color="#333300">
+<pre>
+C:\---&gt;<b>java DigitalSignature DigitalSignature.java ds1.sign</b>
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="sectlevel4id050001006003"></a>
+<h4>Verifizieren einer digitalen Unterschrift </h4>
+
+<p>
+Das Programm zum Verifizieren arbeitet &auml;hnlich wie das vorige.
+Statt mit <a href="index_i.html#ixb102761"><font color=#000080><tt>initSign</tt></font></a>
+wird das <a href="index_s.html#ixb102760"><font color=#000080><tt>Signature</tt></font></a>-Objekt
+nun mit <a href="index_i.html#ixb102762"><font color=#000080><tt>initVerify</tt></font></a>
+initialisiert und das Ergebnis wird nicht durch Aufruf von <a href="index_s.html#ixb102769"><font color=#000080><tt>sign</tt></font></a>,
+sondern durch Aufruf von <a href="index_v.html#ixb102770"><font color=#000080><tt>verify</tt></font></a>
+ermittelt. 
+<a name="listingid050006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* VerifySignature.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.security.cert.Certificate;
+<font color="#555555">005 </font><font color="#0000AA">import</font> java.security.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> VerifySignature
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">static</font> <font color="#0000AA">final</font> String KEYSTORE = <font color="#0000FF">"c:\\windows\\.keystore"</font>;
+<font color="#555555">010 </font>  <font color="#0000AA">static</font> <font color="#0000AA">final</font> <font color="#006699">char</font>[] KSPASS   = {<font color="#0000FF">'h'</font>,<font color="#0000FF">'j'</font>,<font color="#0000FF">'p'</font>,<font color="#0000FF">'3'</font>,<font color="#0000FF">'k'</font>,<font color="#0000FF">'s'</font>};
+<font color="#555555">011 </font>  <font color="#0000AA">static</font> <font color="#0000AA">final</font> String ALIAS    = <font color="#0000FF">"hjp3"</font>;
+<font color="#555555">012 </font>
+<font color="#555555">013 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">014 </font>  {
+<font color="#555555">015 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">016 </font>      <font color="#00AA00">//Laden der Schl&uuml;sseldatenbank</font>
+<font color="#555555">017 </font>      KeyStore ks = KeyStore.getInstance(<font color="#0000FF">"JKS"</font>);
+<font color="#555555">018 </font>      FileInputStream ksin = <font color="#0000AA">new</font> FileInputStream(KEYSTORE);
+<font color="#555555">019 </font>      ks.load(ksin, KSPASS);
+<font color="#555555">020 </font>      ksin.close();
+<font color="#555555">021 </font>      <font color="#00AA00">//Zertifikat "hjp3" lesen</font>
+<font color="#555555">022 </font>      Certificate cert = ks.getCertificate(ALIAS);
+<font color="#555555">023 </font>      <font color="#00AA00">//Signature-Objekt erstellen</font>
+<font color="#555555">024 </font>      Signature signature = Signature.getInstance(<font color="#0000FF">"SHA/DSA"</font>);
+<font color="#555555">025 </font>      signature.initVerify(cert.getPublicKey());
+<font color="#555555">026 </font>      <font color="#00AA00">//Eingabedatei lesen</font>
+<font color="#555555">027 </font>      FileInputStream in = <font color="#0000AA">new</font> FileInputStream(args[0]);
+<font color="#555555">028 </font>      <font color="#006699">int</font> len;
+<font color="#555555">029 </font>      <font color="#006699">byte</font>[] data = <font color="#0000AA">new</font> <font color="#006699">byte</font>[1024];
+<font color="#555555">030 </font>      <font color="#0000AA">while</font> ((len = in.read(data)) &gt; 0) {
+<font color="#555555">031 </font>        <font color="#00AA00">//Signatur updaten</font>
+<font color="#555555">032 </font>        signature.update(data, 0, len);
+<font color="#555555">033 </font>      }
+<font color="#555555">034 </font>      in.close();
+<font color="#555555">035 </font>      <font color="#00AA00">//Signaturdatei einlesen</font>
+<font color="#555555">036 </font>      in = <font color="#0000AA">new</font> FileInputStream(args[1]);
+<font color="#555555">037 </font>      len = in.read(data);
+<font color="#555555">038 </font>      in.close();
+<font color="#555555">039 </font>      <font color="#006699">byte</font>[] sign = <font color="#0000AA">new</font> <font color="#006699">byte</font>[len];
+<font color="#555555">040 </font>      System.arraycopy(data, 0, sign, 0, len);
+<font color="#555555">041 </font>      <font color="#00AA00">//Signatur ausgeben</font>
+<font color="#555555">042 </font>      <font color="#006699">boolean</font> result = signature.verify(sign);
+<font color="#555555">043 </font>      System.out.println(<font color="#0000FF">"verification result: "</font> + result);
+<font color="#555555">044 </font>    } <font color="#0000AA">catch</font> (Exception e) {
+<font color="#555555">045 </font>      System.err.println(e.toString());
+<font color="#555555">046 </font>      System.exit(1);
+<font color="#555555">047 </font>    }
+<font color="#555555">048 </font>  }
+<font color="#555555">049 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/VerifySignature.java"><font color="#000055" size=-1>VerifySignature.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 50.6: Verifizieren einer digitalen Unterschrift</i></p>
+
+<p>
+Soll die Datei <font color="#660099">DigitalSignature.java</font>
+mit der im vorigen Beispiel erstellten Signatur verifiziert werden,
+kann das durch folgendes Kommando geschehen: 
+<font color="#333300">
+<pre>
+C:\---&gt;<b>java VerifySignature DigitalSignature.java ds1.sign</b>
+verification result: true
+</pre>
+</font>
+
+<p>
+Wird nur ein einziges Byte in <font color="#660099">DigitalSignature.java</font>
+ver&auml;ndert, ist die Verifikation negativ und das Programm gibt
+<font color="#000077"><tt>false</tt></font> aus. Durch eine erfolgreich
+verifizierte digitale Unterschrift k&ouml;nnen wir sicher sein, dass
+die Datei nicht ver&auml;ndert wurde. Zudem k&ouml;nnen wir sicher
+sein, dass sie mit dem privaten Schl&uuml;ssel von &#187;hjp3&#171;
+signiert wurde, denn wir haben sie mit dessen &ouml;ffentlichen Schl&uuml;ssel
+verifiziert. 
+
+<!-- Section -->
+
+<a name="zertifikate"></a>
+<h3>50.1.7 Zertifikate </h3>
+
+<p>
+Ein gro&szlig;es Problem bei der Public-Key-Kryptografie besteht darin,
+die Authentizit&auml;t von &ouml;ffentlichen Schl&uuml;sseln sicherzustellen.
+W&uuml;rde beispielsweise B einen &ouml;ffentlichen Schl&uuml;ssel
+publizieren, der glaubhaft vorgibt, A zu geh&ouml;ren, k&ouml;nnte
+dies zu verschiedenen Unannehmlichkeiten f&uuml;hren: 
+<ul>
+<li>Angenommen, C will eine verschl&uuml;sselte Nachricht an A schicken
+und verwendet dazu versehentlich den &ouml;ffentlichen Schl&uuml;ssel
+von B (den es f&uuml;r den von A h&auml;lt). B kann nun mit seinem
+eigenen privaten Schl&uuml;ssel die vertrauliche Nachricht lesen.
+Um weiterhin unentdeckt zu bleiben, k&ouml;nnte B die Nachricht anschlie&szlig;end
+sogar mit dem echten &ouml;ffentlichen Schl&uuml;ssel von A verschl&uuml;sseln
+und an A weitersenden.
+<li>Noch folgenreicher ist die Umkehrung. B k&ouml;nnte (als A getarnt)
+Dokumente mit einer digitalen Unterschrift versenden, die f&uuml;r
+die von A gehalten wird, und so im Namen von A beispielsweise gesch&auml;ftliche
+oder rechtlich relevante Transaktionen ausl&ouml;sen. A w&auml;re
+anschlie&szlig;end in der unangenehmen Sitution, nachweisen zu m&uuml;ssen,
+dass ihm der von B verwendete private Schl&uuml;ssel nie geh&ouml;rte
+und bekannt war.
+</ul>
+
+<p>
+Einen Schutz gegen derartigen Missbrauch bieten <a name="ixa103669"><i>Zertifikate</i></a>.
+Ein Zertifikat ist eine Art Echtheitsbeweis f&uuml;r einen &ouml;ffentlichen
+Schl&uuml;ssel und erf&uuml;llt damit &auml;hnliche Aufgaben wie ein
+Personalausweis oder Reisepass. Ein Zertifikat besteht meist aus folgenden
+Teilen: 
+<ul>
+<li>Dem &ouml;ffentlichen Schl&uuml;ssel des Zertifikatsinhabers
+<li>Identit&auml;tsmerkmalen des Inhabers (beispielsweise Name, Wohnort,
+Firma, ein Foto etc.)
+<li>Der Bezeichnung des Zertifikatsausstellers
+<li>Der digitalen Signatur des Ausstellers
+<li>Der digitalen Signatur des Inhabers
+</ul>
+
+<p>
+Die Glaubw&uuml;rdigkeit des Zertifikats h&auml;ngt von der Glaubw&uuml;rdigkeit
+des Ausstellers ab. Wird dieser als vertrauensw&uuml;rdig angesehen,
+d.h., kann man seiner digitialen Unterschrift trauen, so wird man
+auch dem Zertifikat trauen und den darin enthaltenen &ouml;ffentlichen
+Schl&uuml;ssel akzeptieren. 
+
+<p>
+Dieses Vertrauen kann einerseits darauf basieren, dass der Aussteller
+eine anerkannte Zertifizierungsautorit&auml;t ist (auch <a name="ixa103670"><i>Certification
+Authority</i></a>, kurz <a name="ixa103671"><i>CA</i></a>,
+genannt), deren &ouml;ffentlicher Schl&uuml;ssel bekannt und deren
+Seri&ouml;sit&auml;t institutionell manifestiert ist. Mit anderen
+Worten: dessen eigenes Zertifikat in der eigenen Schl&uuml;sselverwaltung
+bekannt und als vertrauensw&uuml;rdig deklariert ist. Andererseits
+kann das Vertrauen in das Zertifikat daher stammen, dass der Aussteller
+pers&ouml;nlich bekannt ist, sein &ouml;ffentlicher Schl&uuml;ssel
+eindeutig nachgewiesen ist und seiner Unterschrift Glauben geschenkt
+wird. 
+
+<p>
+Der erste Ansatz wird beispielsweise bei X.509-Zertifikaten <a name="ixa103672"></a>
+verfolgt. Institute, die derartige Zertifikate ausstellen, werden
+meist staatlich autorisiert und gepr&uuml;ft. Beispiele daf&uuml;r
+sind <a name="ixa103673"><i>VeriSign</i></a>, <a name="ixa103674"><i>Thawte</i></a>
+oder das <a name="ixa103675"><i>TA Trustcenter</i></a>. Der zweite
+Ansatz liegt beispielsweise den Zertifikaten in PGP zugrunde. Hier
+ist es sogar m&ouml;glich, &ouml;ffentliche Schl&uuml;ssel mit mehreren
+digitalen Unterschriften unterschiedlicher Personen zu signieren und
+so die Glaubw&uuml;rdigkeit (bzw. ihre Reichweite) zu erh&ouml;hen.
+
+<p>
+Zertifizierungsinstitute stellen meist auch Schl&uuml;sseldatenbanken
+zur Verf&uuml;gung, aus denen Zertifikate abgerufen werden k&ouml;nnen.
+Diese dienen auch als Anlaufstelle, um ung&uuml;ltig gewordene oder
+unbrauchbare Zertifikate zu registrieren. Lokale Schl&uuml;sselverwaltungen
+k&ouml;nnen sich mit diesen Informationen synchronisieren, um ihren
+eigenen Schl&uuml;sselbestand up-to-date zu halten. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100317.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100317.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100319.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100322.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

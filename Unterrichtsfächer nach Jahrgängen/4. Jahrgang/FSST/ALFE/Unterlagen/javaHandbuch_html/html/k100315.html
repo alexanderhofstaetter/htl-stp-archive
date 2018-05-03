@@ -1,0 +1,972 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100313.html;106,k100314.html;107,k100316.html;108,k100317.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100313.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100314.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100316.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100317.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 49 - Remote Method Invocation
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id049002"></a>
+<h2>49.2 Aufbau eines einfachen Uhrzeit-Services </h2>
+<hr>
+<ul>
+<li><a href="k100315.html#sectlevel2id049002">49.2 Aufbau eines einfachen Uhrzeit-Services</a>
+<ul>
+<li><a href="k100315.html#sectlevel3id049002001">49.2.1 Vorgehensweise</a>
+<li><a href="k100315.html#sectlevel3id049002002">49.2.2 Das Remote-Interface</a>
+<li><a href="k100315.html#remoteintimpl">49.2.3 Implementierung des Remote-Interface</a>
+<ul>
+<li><a href="k100315.html#sectlevel4id049002003001">Die Implementierungsklasse</a>
+<li><a href="k100315.html#sectlevel4id049002003002">Erzeugen von Stub und Skeleton</a>
+</ul>
+<li><a href="k100315.html#rmiobjregistrieren">49.2.4 Registrieren der Objekte</a>
+<ul>
+<li><a href="k100315.html#sectlevel4id049002004001">Starten der RMI-Registry</a>
+<li><a href="k100315.html#sectlevel4id049002004002">Das Programm zur Registrierung des Remote-Objekts</a>
+<li><a href="k100315.html#sectlevel4id049002004003">&Auml;ndern der Policy-Datei</a>
+<li><a href="k100315.html#sectlevel4id049002004004">Registrierung des Remote-Objekts</a>
+</ul>
+<li><a href="k100315.html#sectlevel3id049002005">49.2.5 Zugriff auf den Uhrzeit-Service</a>
+<li><a href="k100315.html#sectlevel3id049002006">49.2.6 Ausblick</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id049002001"></a>
+<h3>49.2.1 Vorgehensweise </h3>
+
+<p>
+In diesem Abschnitt wollen wir eine einfache Client-Server-Anwendung
+entwickeln und dabei die wichtigsten Eigenschaften von RMI vorstellen.
+Dazu soll ein Remote-Interface <font color="#000077"><tt>TimeService</tt></font>
+geschrieben werden, das zwei Methoden <font color="#000077"><tt>getTime</tt></font>
+und <font color="#000077"><tt>storeTime</tt></font> definiert. Mit
+<font color="#000077"><tt>getTime</tt></font> kann ein Client die
+aktuelle Uhrzeit auf dem Server ermitteln und sie sich als <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+zur&uuml;ckgeben lassen. <font color="#000077"><tt>storeTime</tt></font>
+erledigt prinzipiell dieselbe Aufgabe, speichert die Uhrzeit aber
+in einem <font color="#000077"><tt>TimeStore</tt></font>-Objekt, an
+dem wir die Besonderheiten des Austauschs von Objekttypen zeigen wollen.
+
+<p>
+Der Server, der auf einem Computer mit dem Namen &#187;ph01&#171;
+l&auml;uft, wird ein einziges Remote-Objekt instanzieren und bei der
+ebenfalls auf &#187;ph01&#171; laufenden RMI-Registry unter dem Namen
+&#187;TimeService&#171; registrieren. Ein einfaches Client-Programm
+auf dem Rechner &#187;ph02&#171; wird bei der RMI-Registry eine Remote-Referenz
+auf das <font color="#000077"><tt>TimeService</tt></font>-Objekt beschaffen,
+mit seiner Hilfe die Uhrzeit des Servers abfragen und die Ergebnisse
+auf seiner eigenen Console ausgeben. 
+
+<p>
+Da insbesondere das Setup der Systeme einigen Aufwand erfordert, wollen
+wir die einzelnen Schritte genau erl&auml;utern: 
+<ul>
+<li>Zun&auml;chst wird das Remote-Interface erl&auml;utert.
+<li>Anschlie&szlig;end stellen wir seine Implementierung vor und zeigen,
+wie Stub und Skeleton erzeugt werden.
+<li>Danach erl&auml;utern wir, wie die RMI-Registry und der Server
+gestartet werden und welche Vorbereitungen dazu erforderlich sind.
+<li>Schlie&szlig;lich implementieren wir eine Client-Klasse und zeigen,
+wie sie gestartet und zum Zugriff auf den Server verwendet wird.
+</ul>
+
+
+<!-- Section -->
+<a name="sectlevel3id049002002"></a>
+<h3>49.2.2 Das Remote-Interface </h3>
+
+<p>
+Das Remote-Interface definiert die Schnittstelle zwischen Client und
+Server. Bei seiner Entwicklung m&uuml;ssen einige Regeln beachtet
+werden: 
+<ul>
+<li>Das Remote-Interface muss aus dem Interface <a name="ixa103593"><a href="index_r.html#ixb102703"><font color=#000080><tt>Remote</tt></font></a></a>
+des Pakets <a name="ixa103594"><a href="index_j.html#ixb100615"><font color=#000080><tt>java.rmi</tt></font></a></a>
+abgeleitet und als <a href="index_p.html#ixb100083"><font color=#000080><tt>public</tt></font></a>
+deklariert werden.
+<li>Jede Methode muss die Exception <a name="ixa103595"><a href="index_r.html#ixb102704"><font color=#000080><tt>RemoteException</tt></font></a></a>
+(ebenfalls aus dem Paket <a name="ixa103594"><a href="index_j.html#ixb100615"><font color=#000080><tt>java.rmi</tt></font></a></a>)
+deklarieren. Hiermit werden alle Arten von Netzwerkproblemen oder
+Verbindungsst&ouml;rungen zwischen Client und Server angezeigt.
+</ul>
+
+<p>
+Nur die im Remote-Interface definierten Methoden stehen sp&auml;ter
+den Clients zur Verf&uuml;gung. Werden sp&auml;ter bei der Implementierung
+des Servers weitere Methoden hinzugef&uuml;gt, so bleiben sie f&uuml;r
+den Client unsichtbar. Das Remote-Interface f&uuml;r unseren Uhrzeit-Service
+sieht so aus: 
+<a name="listingid049001"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* TimeService.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.rmi.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">interface</font> TimeService
+<font color="#555555">006 </font><font color="#0000AA">extends</font> Remote
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> String getTime()
+<font color="#555555">009 </font>    <font color="#0000AA">throws</font> RemoteException;
+<font color="#555555">010 </font>
+<font color="#555555">011 </font>  <font color="#0000AA">public</font> TimeStore storeTime(TimeStore store)
+<font color="#555555">012 </font>    <font color="#0000AA">throws</font> RemoteException;
+<font color="#555555">013 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/TimeService.java"><font color="#000055" size=-1>TimeService.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 49.1: Das Remote-Interface f&uuml;r den Uhrzeit-Service</i></p>
+
+<p>
+Die Methode <font color="#000077"><tt>getTime</tt></font> liefert
+einen String mit der aktuellen Server-Uhrzeit im Format &#187;h[h]:m[m]:s[s]&#171;.
+Die Methode <font color="#000077"><tt>storeTime</tt></font> erwartet
+ein Objekt vom Typ <font color="#000077"><tt>TimeStore</tt></font>,
+um den Uhrzeitstring dort hineinzuschreiben. Da Objekte (wegen der
+zur &Uuml;bertragung erforderlichen Serialisierung) per Wert &uuml;bergeben
+werden, w&uuml;rde jede &Auml;nderung an ihnen auf Client-Seite unsichtbar
+bleiben. <font color="#000077"><tt>storeTime</tt></font> gibt daher
+das <font color="#000077"><tt>TimeStore</tt></font>-Objekt mit der
+eingef&uuml;gten Uhrzeit als R&uuml;ckgabewert an den Client zur&uuml;ck.
+
+<p>
+<font color="#000077"><tt>TimeStore</tt></font> wird als Interface
+wie folgt definiert: 
+<a name="listingid049002"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">import</font> java.io.Serializable;
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">interface</font> TimeStore
+<font color="#555555">004 </font><font color="#0000AA">extends</font> Serializable
+<font color="#555555">005 </font>{
+<font color="#555555">006 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setTime(String time);
+<font color="#555555">007 </font>
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> String getTime();
+<font color="#555555">009 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/TimeStore.java"><font color="#000055" size=-1>TimeStore.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 49.2: Das TimeStore-Interface</i></p>
+
+<p>
+Mit <font color="#000077"><tt>setTime</tt></font> wird ein als String
+&uuml;bergebener Uhrzeitwert gespeichert, mit <font color="#000077"><tt>getTime</tt></font>
+kann er abgefragt werden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Der Grund daf&uuml;r, <font color="#000077"><tt>TimeStore</tt></font>
+als Interface zu definieren, liegt darin, dass wir mit seiner Hilfe
+zeigen wollen, auf welche Weise Code dynamisch zwischen Client und
+Server &uuml;bertragen werden kann. Auf der Client-Seite werden wir
+dazu sp&auml;ter eine Implementierung <font color="#000077"><tt>MyTimeStore</tt></font>
+verwenden, deren Bytecode server-seitig zun&auml;chst nicht bekannt
+ist, sondern zur Laufzeit nachgeladen wird.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="remoteintimpl"></a>
+<h3>49.2.3 Implementierung des Remote-Interface </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id049002003001"></a>
+<h4>Die Implementierungsklasse </h4>
+
+<p>
+Nach der Definition des Remote-Interface muss dessen Implementierung
+(also die Klasse f&uuml;r die Remote-Objekte) realisiert werden. Dazu
+erstellen wir eine Klasse <font color="#000077"><tt>TimeServiceImpl</tt></font>,
+die aus <a name="ixa103596"><a href="index_u.html#ixb102705"><font color=#000080><tt>UnicastRemoteObject</tt></font></a></a>
+abgeleitet ist und das Interface <font color="#000077"><tt>TimeService</tt></font>
+implementiert. <a href="index_u.html#ixb102705"><font color=#000080><tt>UnicastRemoteObject</tt></font></a>
+stammt aus dem Paket <a name="ixa103597"><a href="index_j.html#ixb102706"><font color=#000080><tt>java.rmi.server</tt></font></a></a>
+und ist f&uuml;r die Details der Kommunikation zwischen Client und
+Server verantwortlich. Zus&auml;tzlich &uuml;berlagert sie die Methoden
+<a href="index_c.html#ixb100290"><font color=#000080><tt>clone</tt></font></a>,
+<a href="index_e.html#ixb100230"><font color=#000080><tt>equals</tt></font></a>,
+<a href="index_h.html#ixb100427"><font color=#000080><tt>hashCode</tt></font></a>
+und <a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a>
+der Klasse <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>,
+um den Remote-Referenzen die Semantik von <i>Referenzen</i> zu verleihen.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Der hier verwendete Suffix &#187;Impl&#171; ist lediglich eine Namenskonvention,
+die anzeigt, dass das Objekt eine Implementierung von &#187;TimeService&#171;
+ist. Wir h&auml;tten auch jeden anderen Namen w&auml;hlen k&ouml;nnen.
+Die Klasse <font color="#000077"><tt>TimeServiceImpl</tt></font> wird
+sp&auml;ter nur bei der Instanzierung der zu registrierenden Remote-Objekte
+ben&ouml;tigt, auf Client-Seite kommt sie &uuml;berhaupt nicht vor.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Das folgende Listing zeigt die Implementierung: 
+<a name="listingid049003"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* TimeServiceImpl.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.rmi.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.rmi.server.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> TimeServiceImpl
+<font color="#555555">008 </font><font color="#0000AA">extends</font> UnicastRemoteObject
+<font color="#555555">009 </font><font color="#0000AA">implements</font> TimeService
+<font color="#555555">010 </font>{
+<font color="#555555">011 </font>  <font color="#0000AA">public</font> TimeServiceImpl()
+<font color="#555555">012 </font>  <font color="#0000AA">throws</font> RemoteException
+<font color="#555555">013 </font>  {
+<font color="#555555">014 </font>  }
+<font color="#555555">015 </font>
+<font color="#555555">016 </font>  <font color="#0000AA">public</font> String getTime()
+<font color="#555555">017 </font>  <font color="#0000AA">throws</font> RemoteException
+<font color="#555555">018 </font>  {
+<font color="#555555">019 </font>    GregorianCalendar cal = <font color="#0000AA">new</font> GregorianCalendar();
+<font color="#555555">020 </font>    StringBuffer sb = <font color="#0000AA">new</font> StringBuffer();
+<font color="#555555">021 </font>    sb.append(cal.get(Calendar.HOUR_OF_DAY));
+<font color="#555555">022 </font>    sb.append(<font color="#0000FF">":"</font> + cal.get(Calendar.MINUTE));
+<font color="#555555">023 </font>    sb.append(<font color="#0000FF">":"</font> + cal.get(Calendar.SECOND));
+<font color="#555555">024 </font>    <font color="#0000AA">return</font> sb.toString();
+<font color="#555555">025 </font>  }
+<font color="#555555">026 </font>
+<font color="#555555">027 </font>  <font color="#0000AA">public</font> TimeStore storeTime(TimeStore store)
+<font color="#555555">028 </font>  <font color="#0000AA">throws</font> RemoteException
+<font color="#555555">029 </font>  {
+<font color="#555555">030 </font>    store.setTime(getTime());
+<font color="#555555">031 </font>    <font color="#0000AA">return</font> store;
+<font color="#555555">032 </font>  }
+<font color="#555555">033 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/TimeServiceImpl.java"><font color="#000055" size=-1>TimeServiceImpl.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 49.3: Implementierung des Uhrzeit-Services</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Der parameterlose Konstruktor ist erforderlich, weil beim (ansonsten
+automatisch ausgef&uuml;hrten) Aufruf des Superklassenkonstruktors
+eine <a href="index_r.html#ixb102704"><font color=#000080><tt>RemoteException</tt></font></a>
+ausgel&ouml;st werden k&ouml;nnte. Ebenso wie die zu implementierenden
+Methoden kann er also stets eine <font color="#000077"><tt>RemoteException</tt></font>
+ausl&ouml;sen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+In <font color="#000077"><tt>getTime</tt></font> wird ein <a href="index_g.html#ixb100806"><font color=#000080><tt>GregorianCalendar</tt></font></a>-Objekt
+instanziert und mit der aktuellen Uhrzeit belegt. Aus den Stunden-,
+Minuten- und Sekundenwerten wird ein <a href="index_s.html#ixb100289"><font color=#000080><tt>StringBuffer</tt></font></a>
+erzeugt und nach Konvertierung in einen <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+an den Aufrufer zur&uuml;ckgegeben. <font color="#000077"><tt>storeTime</tt></font>
+ist noch einfacher aufgebaut. Es erzeugt zun&auml;chst einen Uhrzeitstring,
+speichert diesen in dem als Parameter &uuml;bergebenen <font color="#000077"><tt>TimeStore</tt></font>-Objekt
+und gibt es an den Aufrufer zur&uuml;ck. 
+
+<!-- Section -->
+
+<a name="sectlevel4id049002003002"></a>
+<h4>Erzeugen von Stub und Skeleton </h4>
+
+<p>
+Nachdem die Implementierungsklasse angelegt wurde, m&uuml;ssen Stub
+und Skeleton erzeugt werden. Diese Arbeit braucht gl&uuml;cklicherweise
+nicht per Hand erledigt zu werden, sondern kann mit Hilfe des Programms
+<a name="ixa103598"><a href="index_r.html#ixb102707"><font color=#000080><tt>rmic</tt></font></a></a>
+aus dem JDK ausgef&uuml;hrt werden. <a href="index_r.html#ixb102707"><font color=#000080><tt>rmic</tt></font></a>
+erwartet den Namen der Implementierungsklasse als Argument (falls
+erforderlich, mit der vollen Paketbezeichnung) und erzeugt daraus
+die beiden Klassendateien f&uuml;r Stub und Skeleton. Aus der Klasse
+<font color="#000077"><tt>TimeServiceImpl</tt></font> werden die Klassen
+<font color="#000077"><tt>TimeServiceImpl_Stub</tt></font> und <font color="#000077"><tt>TimeServiceImpl_Skel</tt></font>
+erzeugt und als <font color="#660099">.class</font>-Dateien zur Verf&uuml;gung
+gestellt. 
+
+<p>
+<a href="index_r.html#ixb102707"><font color=#000080><tt>rmic</tt></font></a>
+ist ein Kommandozeilenprogramm, das &auml;hnliche Optionen wie <a href="index_j.html#ixb100131"><font color=#000080><tt>javac</tt></font></a>
+kennt. Im einfachsten Fall reicht es aus, den Namen der Implementierungsklasse
+anzugeben: 
+<font color="#333300">
+<pre>
+rmic TimeServiceImpl
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+<a href="index_r.html#ixb102707"><font color=#000080><tt>rmic</tt></font></a>
+analysiert den Bytecode der &uuml;bergebenen Klasse und erzeugt daraus
+die angegebenen Klassendateien. Falls die Implememtierungsklasse noch
+nicht &uuml;bersetzt war, wird dies automatisch erledigt. Wer sich
+einmal den Quellcode von Stub und Skeleton ansehen m&ouml;chte, kann
+<a href="index_r.html#ixb102707"><font color=#000080><tt>rmic</tt></font></a>
+mit der Option &#187;-keep&#171; anweisen, die tempor&auml;ren <font color="#660099">.java</font>-Dateien
+nach dem Erzeugen der Klassendateien nicht zu l&ouml;schen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="rmiobjregistrieren"></a>
+<h3>49.2.4 Registrieren der Objekte </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id049002004001"></a>
+<h4>Starten der RMI-Registry </h4>
+
+<p>
+Um den <font color="#000077"><tt>TimeService</tt></font> verwenden
+zu k&ouml;nnen, muss wenigstens eine Instanz von <font color="#000077"><tt>TimeServiceImpl</tt></font>
+erzeugt und bei der RMI-Registry registriert werden. Diese wird im
+JDK durch das Kommandozeilenprogramm <a name="ixa103599"><a href="index_r.html#ixb102708"><font color=#000080><tt>rmiregistry</tt></font></a></a>
+zur Verf&uuml;gung gestellt. Es wird auf dem Server gestartet und
+muss so lange laufen, wie Remote-Objekte dieses Servers verwendet
+werden sollen. Der einzige Parameter von <a href="index_r.html#ixb102708"><font color=#000080><tt>rmiregistry</tt></font></a>
+ist eine optionale TCP-Portnummer. Diese gibt an, auf welchem TCP-Port
+eingehende Anfragen empfangen werden sollen. Sie ist standardm&auml;&szlig;ig
+auf 1099 eingestellt, kann aber auch auf einen anderen Wert gesetzt
+werden. 
+
+<p>
+Unter UNIX kann man die RMI-Registry im Hintergrund starten: 
+<font color="#333300">
+<pre>
+rmiregistry &amp;
+</pre>
+</font>
+
+<p>
+Unter Windows kann sie direkt von der Kommandozeile oder mit Hilfe
+des <font color="#000077"><tt>start</tt></font>-Kommandos in einer
+eigenen DOS-Box gestartet werden: 
+<font color="#333300">
+<pre>
+start rmiregistry
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="sectlevel4id049002004002"></a>
+<h4>Das Programm zur Registrierung des Remote-Objekts </h4>
+
+<p>
+Nachdem <a href="index_r.html#ixb102708"><font color=#000080><tt>rmiregistry</tt></font></a>
+l&auml;uft, k&ouml;nnen die zur Verf&uuml;gung stehenden Remote-Objekte
+registriert werden. Wir verwenden dazu eine eigene Klasse <font color="#000077"><tt>TimeServiceRegistration</tt></font>,
+in deren <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>-Methode
+die Registrierung vorgenommen wird: 
+<a name="tsreg"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* TimeServiceRegistration.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.rmi.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> TimeServiceRegistration
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    System.setSecurityManager(<font color="#0000AA">new</font> RMISecurityManager()); <a name="tsreg.a"></a>
+<font color="#555555">010 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">011 </font>      System.out.println(<font color="#0000FF">"Registering TimeService"</font>);
+<font color="#555555">012 </font>      TimeServiceImpl tsi = <font color="#0000AA">new</font> TimeServiceImpl();
+<font color="#555555">013 </font>      Naming.rebind(<font color="#0000FF">"TimeService"</font>, tsi);
+<font color="#555555">014 </font>      System.out.println(<font color="#0000FF">"  Done."</font>);
+<font color="#555555">015 </font>    } <font color="#0000AA">catch</font> (Exception e) {
+<font color="#555555">016 </font>      System.err.println(e.toString());
+<font color="#555555">017 </font>      System.exit(1);
+<font color="#555555">018 </font>    }
+<font color="#555555">019 </font>  }
+<font color="#555555">020 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/TimeServiceRegistration.java"><font color="#000055" size=-1>TimeServiceRegistration.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 49.4: Registrierung von Remote-Objekten</i></p>
+
+<p>
+Das Programm erzeugt eine neue Instanz von <font color="#000077"><tt>TimeServiceImpl</tt></font>
+und &uuml;bergibt diese unter dem Namen &#187;TimeService&#171; an
+die RMI-Registry. Dazu wird die statische Methode <a name="ixa103600"><a href="index_r.html#ixb102709"><font color=#000080><tt>rebind</tt></font></a></a>
+der Klasse <a name="ixa103601"><a href="index_n.html#ixb102710"><font color=#000080><tt>Naming</tt></font></a></a>
+aufgerufen. <a href="index_n.html#ixb102710"><font color=#000080><tt>Naming</tt></font></a>
+ist die Programmierschnittstelle zur RMI-Registry, sie stellt folgende
+Methoden zur Verf&uuml;gung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static void bind(String name, Remote obj)
+  throws AlreadyBoundException,
+         MalformedURLException,
+         RemoteException
+
+public static void rebind(String name, Remote obj)
+  throws RemoteException,
+         MalformedURLException
+
+public static void unbind(String name)
+ throws RemoteException,
+        MalformedURLException,
+        NotBoundException
+
+public static Remote lookup(String name)
+  throws NotBoundException,
+         MalformedURLException,
+         RemoteException
+
+public static String[] list(String name)
+  throws RemoteException,
+         MalformedURLException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/rmi/Naming.html" onClick="this.href=getApiDoc('java.rmi.Naming')"><font color="#660066" size=-1>java.rmi.Naming</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa103602"><a href="index_b.html#ixb102711"><font color=#000080><tt>bind</tt></font></a></a>
+wird ein Remote-Objekt unter einem vorgegebenen Namen registriert.
+Gab es bereits ein Objekt dieses Namens, wird eine Ausnahme ausgel&ouml;st.
+<a href="index_r.html#ixb102709"><font color=#000080><tt>rebind</tt></font></a>
+erledigt dieselbe Aufgabe, ersetzt jedoch ein eventuell vorhandenes
+gleichnamiges Objekt. Mit <a name="ixa103603"><a href="index_u.html#ixb102712"><font color=#000080><tt>unbind</tt></font></a></a>
+kann ein registriertes Objekt aus der RMI-Registry entfernt werden.
+Die Methode <a name="ixa103604"><a href="index_l.html#ixb100676"><font color=#000080><tt>lookup</tt></font></a></a>
+dient dazu, zu einem gegebenen Namen eine Remote-Referenz zu erhalten.
+Sie wird uns beim Client wiederbegegnen. Mit <a name="ixa103605"><a href="index_l.html#ixb101095"><font color=#000080><tt>list</tt></font></a></a>
+kann eine Liste der Namen von allen registrierten Remote-Referenzen
+beschafft werden. 
+
+<p>
+Die an <a href="index_n.html#ixb102710"><font color=#000080><tt>Naming</tt></font></a>
+&uuml;bergebenen Namen haben das Format von URLs (siehe <a href="k100264.html#dieklasseurl">Abschnitt 41.1.1</a>).
+Die Dienstebezeichnung ist &#187;rmi&#171;, der Rest entspricht einer
+HTTP-URL. Eine g&uuml;ltige rmi-URL w&auml;re also beispielsweise:
+<font color="#000077">
+<pre>
+rmi://ph01:1099/TimeService
+</pre>
+</font>
+
+<p>
+Der Server hei&szlig;t hier &#187;ph01&#171; und wird auf Port 1099
+angesprochen, der Name des Remote-Objekts ist &#187;TimeService&#171;.
+Servername und Portnummer sind optional. Fehlt der Server, wird &#187;localhost&#171;
+angenommen, fehlt die Portnummer, erfolgt die Kommunikation auf TCP-Port
+1099. Aus diesem Grund haben wir bei der Registrierung des <font color="#000077"><tt>TimeServiceImpl</tt></font>-Objekts
+mit &#187;TimeService&#171; lediglich den Namen des Remote-Objekts
+angegeben. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Der Name, unter dem ein Remote-Objekt bei der RMI-Registry registriert
+werden soll, ist frei w&auml;hlbar. Tats&auml;chlich hat der in unserem
+Fall verwendete Begriff &#187;TimeService&#171; nichts mit dem Namen
+des Interface <font color="#000077"><tt>TimeService</tt></font> zu
+tun. Er stellt lediglich eine Vereinbarung zwischen Server und Client
+dar und h&auml;tte ebenso gut &#187;ts&#171; oder &#187;TimeService1&#171;
+lauten k&ouml;nnen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id049002004003"></a>
+<h4>&Auml;ndern der Policy-Datei </h4>
+
+<p>
+Die in <a href="k100315.html#tsreg.a">Zeile 009</a> stehende Installation
+der Klasse <a name="ixa103606"><a href="index_r.html#ixb102713"><font color=#000080><tt>RMISecurityManager</tt></font></a></a>
+ist erforderlich, weil der Server den Code f&uuml;r die auf dem Client
+erzeugte <font color="#000077"><tt>TimeStore</tt></font>-Implementierung
+dynamisch laden soll. Aus Sicherheitsgr&uuml;nden ist das Laden von
+externem Bytecode aber nur dann erlaubt, wenn ein <a href="index_s.html#ixb102714"><font color=#000080><tt>SecurityManager</tt></font></a>
+installiert ist. Um diesen mit den erforderlichen Rechten auszustatten,
+muss (ab dem JDK 1.2) die Policy-Datei auf dem Server um folgenden
+Eintrag erg&auml;nzt werden: 
+<font color="#000077">
+<pre>
+grant {
+  permission java.net.SocketPermission "ph01:1099", "connect,resolve";
+  permission java.net.SocketPermission "ph02:80", "connect";
+};
+</pre>
+</font>
+
+<p>
+Der erste Eintrag erm&ouml;glicht die TCP-Kommunikation mit der RMI-Registry
+auf Port 1099. Der zweite erm&ouml;glicht es dem Server, auf TCP-Port
+80 eine Verbindung zu dem Rechner mit dem Namen &#187;ph02&#171; herzustellen.
+Dort wird sp&auml;ter der Webserver laufen, mit dem der Client die
+Klassendatei mit der <font color="#000077"><tt>TimeStore</tt></font>-Implementierung
+zur Verf&uuml;gung stellt. 
+
+<p>
+Am besten ist es, die entsprechenden Eintr&auml;ge in der benutzerspezifischen
+Policy-Datei vorzunehmen. Sie liegt im Home-Verzeichnis des aktuellen
+Benutzers und hei&szlig;t <font color="#660099">.java.policy</font>.
+Auf Windows 95/98-Einzelplatzsystemen liegt sie im Windows-Verzeichnis
+(meist <font color="#660099">c:\windows</font>). Weitere Informationen
+zur Policy-Datei sind im Kapitel &uuml;ber Sicherheit und Kryptografie
+in <a href="k100320.html#policydateien">Abschnitt 50.3.4</a> zu finden.
+
+
+<!-- Section -->
+<a name="sectlevel4id049002004004"></a>
+<h4>Registrierung des Remote-Objekts </h4>
+
+<p>
+Nach dem &Auml;ndern der Policy-Datei kann das Programm zur Registrierung
+des Remote-Objekts gestartet werden. Damit der Server sp&auml;ter
+die dynamischen Klassendateien findet, muss das System-Property &#187;java.rmi.server.codebase&#171;
+gesetzt werden. In unserem Fall handelt es sich um eine http-Verbindung
+in das WebServer-Root-Verzeichnis auf dem Rechner &#187;ph02&#171;.
+
+<p>
+Der Aufruf des Programms sieht damit wie folgt aus: 
+<font color="#333300">
+<pre>
+c:\---&gt;<b>java -Djava.rmi.server.codebase=http://ph02/ TimeServiceRegistration</b>
+Registering TimeService
+  Done.
+</pre>
+</font>
+
+<p>
+Er ist nur erfolgreich, wenn die RMI-Registry l&auml;uft und die entsprechenden
+&Auml;nderungen in der Policy-Datei vorgenommen wurden. Andernfalls
+wird eine Ausnahme ausgel&ouml;st und das Programm mit einer Fehlermeldung
+beendet. War die Registrierung erfolgreich, wird die <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>-Methode
+beendet, das Programm l&auml;uft aber trotzdem weiter. Das liegt daran,
+dass der Konstruktor von <a href="index_u.html#ixb102705"><font color=#000080><tt>UnicastRemoteObject</tt></font></a>
+einen neuen Thread zur Kommunikation mit der RMI-Registry aufgebaut
+hat, in dem er unter anderem das soeben erzeugte Objekt vorh&auml;lt.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die RMI-Kommunikation zwischen Client und Server k&ouml;nnte auch
+v&ouml;llig ohne <a href="index_s.html#ixb102714"><font color=#000080><tt>SecurityManager</tt></font></a>,
+Webserver und &Auml;nderungen an den Policy-Dateien durchgef&uuml;hrt
+werden. In diesem Fall w&auml;re es aber nicht m&ouml;glich, zur Laufzeit
+Bytecode zwischen den beiden Maschinen zu &uuml;bertragen. Alle ben&ouml;tigten
+Klassendateien m&uuml;ssten dann im lokalen Klassenpfad des Clients
+bzw. Servers liegen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id049002005"></a>
+<h3>49.2.5 Zugriff auf den Uhrzeit-Service </h3>
+
+<p>
+Nach der Implementierung des Servers wollen wir uns nun die Realisierung
+der Client-Seite ansehen. Dazu soll das folgende Programm verwendet
+werden: 
+<a name="tsclient"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* TimeServiceClient.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.rmi.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> TimeServiceClient
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">010 </font>      String host = <font color="#0000FF">"ph01"</font>;
+<font color="#555555">011 </font>      String port = <font color="#0000FF">"1099"</font>;
+<font color="#555555">012 </font>      String srv  = <font color="#0000FF">"TimeService"</font>;
+<font color="#555555">013 </font>      String url = <font color="#0000FF">"rmi://"</font> + host + <font color="#0000FF">":"</font> + port + <font color="#0000FF">"/"</font> + srv;
+<font color="#555555">014 </font>      System.out.println(<font color="#0000FF">"Looking-up TimeService "</font> + url);
+<font color="#555555">015 </font>      TimeService ts = (TimeService)Naming.lookup(url); <a name="tsclient.a"></a>
+<font color="#555555">016 </font>      System.out.println(<font color="#0000FF">"  Server time is "</font> + ts.getTime()); <a name="tsclient.b"></a>
+<font color="#555555">017 </font>      System.out.print(<font color="#0000FF">"  MyTimeStore contains "</font>);
+<font color="#555555">018 </font>      TimeStore tsd = <font color="#0000AA">new</font> MyTimeStore(); <a name="tsclient.c"></a>
+<font color="#555555">019 </font>      tsd = ts.storeTime(tsd); <a name="tsclient.d"></a>
+<font color="#555555">020 </font>      System.out.println(tsd.getTime());
+<font color="#555555">021 </font>    } <font color="#0000AA">catch</font> (Exception e) {
+<font color="#555555">022 </font>      System.err.println(e.toString());
+<font color="#555555">023 </font>      System.exit(1);
+<font color="#555555">024 </font>    }
+<font color="#555555">025 </font>
+<font color="#555555">026 </font>  }
+<font color="#555555">027 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/TimeServiceClient.java"><font color="#000055" size=-1>TimeServiceClient.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 49.5: Der TimeService-Client</i></p>
+
+<p>
+Das Programm erstellt zun&auml;chst den URL-String zur Suche in der
+RMI-Registry. Er lautet &#187;rmi://ph01:1099/TimeService&#171; und
+wird in <a href="k100315.html#tsclient.a">Zeile 015</a> an die Methode
+<a href="index_l.html#ixb100676"><font color=#000080><tt>lookup</tt></font></a>
+der Klasse <a href="index_n.html#ixb102710"><font color=#000080><tt>Naming</tt></font></a>
+&uuml;bergeben. Falls auf dem Rechner &#187;ph01&#171; eine RMI-Registry
+auf Port 1099 l&auml;uft und ein Objekt mit dem Namen &#187;TimeService&#171;
+vorh&auml;lt, wird durch diesen Aufruf eine passende Remote-Referenz
+erzeugt und der Variablen <font color="#000077"><tt>ts</tt></font>
+zugewiesen. 
+
+<p>
+Deren Methode <font color="#000077"><tt>getTime</tt></font> wird in
+<a href="k100315.html#tsclient.b">Zeile 016</a> aufgerufen und &uuml;ber
+die Stub-Skeleton-Verbindung an das <font color="#000077"><tt>TimeServiceImpl</tt></font>-Objekt
+des Servers weitergeleitet. Der dort erzeugte R&uuml;ckgabewert wird
+in umgekehrter Richtung an den Client zur&uuml;ckgegeben (die Klasse
+<a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+ist standardm&auml;&szlig;ig serialisierbar) und auf dessen Konsole
+ausgegeben. Damit das Programm funktioniert, muss zuvor allerdings
+die Stub-Klasse <font color="#660099">TimeServiceImpl_Stub.class</font>
+in das Startverzeichnis der Client-Klasse kopiert werden. Obwohl auch
+das dynamische &Uuml;bertragen von Stubs leicht m&ouml;glich w&auml;re,
+haben wir es hier aus Gr&uuml;nden der &Uuml;bersichtlichkeit nicht
+realisiert. 
+
+<p>
+In <a href="k100315.html#tsclient.c">Zeile 018</a> wird eine Instanz
+der Klasse <font color="#000077"><tt>MyTimeStore</tt></font> erzeugt
+und an die Methode <font color="#000077"><tt>storeTime</tt></font>
+des Remote-Objekts &uuml;bergeben. Dort wird die aktuelle Uhrzeit
+des Servers eingetragen und das Objekt als R&uuml;ckgabewert an den
+Aufrufer zur&uuml;ckgegeben. Vor der R&uuml;ck&uuml;bertragung wird
+es nun ebenfalls serialisiert und landet nach der Deserialisierung
+durch den Client in <a href="k100315.html#tsclient.d">Zeile 019</a>
+in der Variablen <font color="#000077"><tt>tsd</tt></font>. Der darin
+enthaltene Uhrzeitstring wird dann ebenfalls auf der Console ausgegeben.
+
+<p>
+Die im Client verwendete Klasse <font color="#000077"><tt>MyTimeStore</tt></font>
+ist sehr einfach aufgebaut: 
+<a name="listingid049006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* MyTimeStore.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> MyTimeStore
+<font color="#555555">006 </font><font color="#0000AA">implements</font> TimeStore, Serializable
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  String time;
+<font color="#555555">009 </font>
+<font color="#555555">010 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setTime(String time)
+<font color="#555555">011 </font>  {
+<font color="#555555">012 </font>    <font color="#006699">this</font>.time = time;
+<font color="#555555">013 </font>  }
+<font color="#555555">014 </font>
+<font color="#555555">015 </font>  <font color="#0000AA">public</font> String getTime()
+<font color="#555555">016 </font>  {
+<font color="#555555">017 </font>    <font color="#0000AA">return</font> <font color="#006699">this</font>.time;
+<font color="#555555">018 </font>  }
+<font color="#555555">019 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/MyTimeStore.java"><font color="#000055" size=-1>MyTimeStore.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 49.6: Die Klasse MyTimeStore</i></p>
+
+<p>
+Sie implementiert das Interface <font color="#000077"><tt>TimeStore</tt></font>,
+um zu Parameter und R&uuml;ckgabewert der <font color="#000077"><tt>TimeService</tt></font>-Methode
+<font color="#000077"><tt>storeTime</tt></font> kompatibel zu sein.
+Das Interface <a href="index_s.html#ixb100461"><font color=#000080><tt>Serializable</tt></font></a>
+implementiert sie dagegen, um vom RMI-Laufzeitsystem zwischen Client
+und Server &uuml;bertragen werden zu k&ouml;nnen. 
+
+<p>
+Die Klasse <font color="#000077"><tt>MyTimeStore</tt></font> ist zun&auml;chst
+nur auf dem Client bekannt und wird dort &uuml;bersetzt. Wie eingangs
+erw&auml;hnt, besitzt RMI die F&auml;higkeit, Bytecode dynamisch nachzuladen.
+Dazu wird allerdings kein eigenes, sondern das aus dem World Wide
+Web bekannte HTTP-Protokoll verwendet. Wie ein Web-Browser fragt also
+einer der beiden Teilnehmer per HTTP-GET-Transaktion (siehe <a href="k100309.html#zugriffwebserver">Abschnitt 48.2.4</a>)
+bei seinem Partner nach der ben&ouml;tigten Klassendatei. 
+
+<p>
+Damit der Server den Bytecode f&uuml;r <font color="#000077"><tt>MyTimeStore</tt></font>
+laden kann, muss also auf dem Client ein Webserver laufen, der den
+Bytecode auf Anfrage zur Verf&uuml;gung stellt. Wir k&ouml;nnen dazu
+einfach den in <a href="k100310.html#experimentwebserver">Abschnitt 48.3.3</a>
+entwickelten <font color="#000077"><tt>ExperimentalWebServer</tt></font>
+verwenden und vor dem Aufruf des Client-Programms in dem Verzeichnis
+mit der Datei <font color="#660099">MyTimeStore.class</font> starten:
+<font color="#333300">
+<pre>
+c:\---&gt;<b>start java ExperimentalWebServer 80</b>
+</pre>
+</font>
+
+<p>
+Nun kann das Client-Programm gestartet werden: 
+<font color="#333300">
+<pre>
+c:\---&gt;<b>java TimeServiceClient</b>
+</pre>
+</font>
+
+<p>
+Vorausgesetzt, dass die Server-Programme wie zuvor beschrieben gestartet
+wurden, die Klassendateien <font color="#660099">MyTimeStore.class</font>,
+<font color="#660099">TimeServiceClient.class</font> und <font color="#660099">TimeServiceImpl_Stub.class</font>
+auf dem Client vorhanden sind und der Webserver l&auml;uft, erhalten
+wir nun die Verbindung zum Server und die Ausgabe des Clients sieht
+etwa so aus: 
+<font color="#333300">
+<pre>
+Looking-up TimeService rmi://ph01:1099/TimeService
+  Server time is 21:37:47
+  MyTimeStore contains 21:37:48
+</pre>
+</font>
+
+<p>
+<a href="k100315.html#rmi3">Abbildung 49.3</a> stellt die Zusammenh&auml;nge
+noch einmal bildlich dar: 
+<p>
+<a name="rmi3"></a>
+<img src="images/RMI3.gif">
+<p>
+
+<p><i>
+Abbildung 49.3: Kommunikation im RMI-Beispiel</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id049002006"></a>
+<h3>49.2.6 Ausblick </h3>
+
+<p>
+Mit dem vorliegenden Beispiel wurden die grundlegenden Mechanismen
+von RMI vorgestellt. In der Praxis wird man meist etwas mehr Aufwand
+treiben m&uuml;ssen, um eine stabile und performante RMI-Applikation
+zu erstellen. Nachfolgend seien einige der Aspekte genannt, die dabei
+von Bedeutung sind: 
+<ul>
+<li>Zugriffe auf die RMI-Registry k&ouml;nnen je nach Konfiguration
+der Systeme recht kostspielig sein. Es ist daher sinnvoll, nur eines
+oder wenige Bootstrap-Objekte &uuml;ber die Registry zu laden und
+an sie das Beschaffen weiterer Remote-Referenzen zu delegieren.
+<li>Die RMI-Registry bietet lediglich eine sehr einfache Abbildung
+von Namen auf Remote-Objekte. Hierarchische Namensr&auml;ume, dynamische
+Objektsuche, Lastverteilung oder &auml;hnliche Eigenschaften fehlen
+ihr dagegen. M&ouml;glicherweise ist es besser, einen anderen Namens-Service
+zu verwenden. Mit <a name="ixa103607"><i>JNDI</i></a> (<a name="ixa103608"><i>Java Naming
+and Directory Interface</i></a>) steht dabei
+seit dem JDK 1.3 bereits eine m&ouml;gliche Alternative standardm&auml;&szlig;ig
+zur Verf&uuml;gung.
+<li>Das dynamische Laden von Bytecode wurde hier nur angedeutet. In
+der Praxis sollen m&ouml;glicherweise auch Stubs dynamisch geladen
+werden. Andererseits kann vielleicht nicht jeder Client einen eigenen
+Webserver zur Verf&uuml;gung stellen. Die Verteilung des Bytecodes
+ist also ebenso zu organisieren wie die Verteilung der Objekte.
+<li>Auch auf den konkurrierenden Zugriff mehrerer Clients auf ein
+und dasselbe Remote-Objekt sind wir nicht eingegangen. Tats&auml;chlich
+ist es in der Regel so, dass das RMI-Laufzeitsystem f&uuml;r jeden
+Zugriff eines Clients einen eigenen Thread erzeugt und somit parallel
+auf das Remote-Objekt zugegriffen wird. Die RMI-Spezifikation schreibt
+konsequenterweise vor, die Remote-Objekte thread-sicher zu implementieren.
+</ul>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100313.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100314.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100316.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100317.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

@@ -1,0 +1,974 @@
+   1               		.file	"tag.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   8               		.text
+   9               	.Ltext0:
+ 102               	.global	getTaste
+ 104               	getTaste:
+ 106               	.Ltext1:
+   1:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h **** #include <avr/io.h>					// Include File für IO Definitionen
+   2:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h **** #include <avr/interrupt.h>			// Include File für sei(), cli()
+   3:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h **** #include <util/delay.h>
+   4:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h **** 
+   5:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h **** //  PD0 PD1 PD2 PD3
+   6:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h **** //   |   |   |   |
+   7:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h **** //
+   8:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h **** //   1   2   3   A  -- PD4 Ausgang
+   9:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h **** //   4   5   6   B  -- PD5 Ausgang
+  10:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h **** //   7   8   9   C  -- PD6 Ausgang
+  11:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h **** //   *   0   #   A  -- PD7 Ausgang
+  12:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h **** 
+  13:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h **** #define PORT_USED PORTB
+  14:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h **** #define DDR_USED DDRB
+  15:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h **** #define PIN_USED PINB
+  16:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h **** 
+  17:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h **** unsigned char getTaste(void)
+  18:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h **** {
+ 108               	.LM0:
+ 109               	.LFBB1:
+ 110               	/* prologue: function */
+ 111               	/* frame size = 0 */
+ 112               	/* stack size = 0 */
+ 113               	.L__stack_usage = 0
+  19:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     char zeile,spalte;
+  20:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     // *********** Auswertung der Zeile ***********************
+  21:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     DDR_USED = 0xF0; //Zwischenschritt lt. Dantenblatt für Umkonfiguration der Portpins
+ 115               	.LM1:
+ 116 0000 80EF      		ldi r24,lo8(-16)
+ 117 0002 84B9      		out 0x4,r24
+  22:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     PORT_USED = 0xF0; //von INPUT mit Pull Up auf OUTPUT LOW
+ 119               	.LM2:
+ 120 0004 85B9      		out 0x5,r24
+  23:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     DDR_USED = 0x0F; //PD 4-7 als OUTPUT (Spalten), PB 3-0 als INPUT (Zeilen)
+ 122               	.LM3:
+ 123 0006 8FE0      		ldi r24,lo8(15)
+ 124 0008 84B9      		out 0x4,r24
+  24:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     PORT_USED = PORT_USED | 0xF0; //PD 3-0 int. Pull Up Widerstände ein
+ 126               	.LM4:
+ 127 000a 85B1      		in r24,0x5
+ 128 000c 806F      		ori r24,lo8(-16)
+ 129 000e 85B9      		out 0x5,r24
+  25:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     PORT_USED = PORT_USED & 0xF0; //PD 4-7 auf "0"
+ 131               	.LM5:
+ 132 0010 85B1      		in r24,0x5
+ 133 0012 807F      		andi r24,lo8(-16)
+ 134 0014 85B9      		out 0x5,r24
+  26:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     
+  27:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     switch ((PIND & 0xF0))
+ 136               	.LM6:
+ 137 0016 89B1      		in r24,0x9
+ 138 0018 807F      		andi r24,lo8(-16)
+ 139 001a 803B      		cpi r24,lo8(-80)
+ 140 001c 01F0      		breq .L3
+ 141 001e 00F4      		brsh .L4
+ 142 0020 8037      		cpi r24,lo8(112)
+ 143 0022 01F4      		brne .L2
+  28:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     {   // Spalte Zeile
+  29:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****         case 0xE0: //Zeile PD0 = "0" 0000 1110
+  30:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****             spalte = 1; break;
+  31:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****         case 0xD0: //Zeile PD1 = "0" 0000 1101
+  32:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****             spalte = 2; break;
+  33:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****         case 0xB0: //Zeile PD2 = "0" 0000 1011
+  34:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****             spalte = 3; break;
+  35:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****         case 0x70: //Zeile PD3 = "0" 0000 0111
+  36:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****             spalte = 4; break;
+ 145               	.LM7:
+ 146 0024 84E0      		ldi r24,lo8(4)
+ 147 0026 00C0      		rjmp .L6
+ 148               	.L4:
+  27:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     switch ((PIND & 0xF0))
+ 150               	.LM8:
+ 151 0028 803D      		cpi r24,lo8(-48)
+ 152 002a 01F0      		breq .L13
+ 153 002c 803E      		cpi r24,lo8(-32)
+ 154 002e 01F4      		brne .L2
+  30:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****             spalte = 1; break;
+ 156               	.LM9:
+ 157 0030 81E0      		ldi r24,lo8(1)
+ 158 0032 00C0      		rjmp .L6
+ 159               	.L3:
+  34:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****             spalte = 3; break;
+ 161               	.LM10:
+ 162 0034 83E0      		ldi r24,lo8(3)
+ 163 0036 00C0      		rjmp .L6
+ 164               	.L2:
+  37:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****         default : //mehrere Tasten wurden gedrückt
+  38:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****             spalte = 0; break;
+ 166               	.LM11:
+ 167 0038 80E0      		ldi r24,0
+ 168 003a 00C0      		rjmp .L6
+ 169               	.L13:
+  32:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****             spalte = 2; break;
+ 171               	.LM12:
+ 172 003c 82E0      		ldi r24,lo8(2)
+ 173               	.L6:
+  39:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     }
+  40:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     
+  41:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     // ************ Auswertung der Spalten ******************
+  42:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     DDR_USED = 0x0F; //Zwischenschritt lt. Dantenblatt für Umkonfiguration der Portpins
+ 175               	.LM13:
+ 176 003e 9FE0      		ldi r25,lo8(15)
+ 177 0040 94B9      		out 0x4,r25
+  43:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     PORT_USED = 0x0F; //von INPUT mit Pull Up auf OUTPUT LOW
+ 179               	.LM14:
+ 180 0042 95B9      		out 0x5,r25
+  44:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     DDR_USED = 0xF0; //PB 4-7 als INPUT (Spalten), PD3-0 als OUTPUT (Zeilen)
+ 182               	.LM15:
+ 183 0044 20EF      		ldi r18,lo8(-16)
+ 184 0046 24B9      		out 0x4,r18
+  45:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     PORT_USED = (spalte | 0x0F); //Erg. von Zeile auf PD3-0 damit gedr. Zeile=0 und alle anderen Ze
+ 186               	.LM16:
+ 187 0048 95B9      		out 0x5,r25
+  46:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     
+  47:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     //PD 4-7 int. Pull Up Widerstände ein
+  48:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     switch (PIN_USED & 0x0F) // oberen 4 Bit = 1 => gedr. Taste zieht dann Spalte von 1=>0
+ 189               	.LM17:
+ 190 004a E3B1      		in r30,0x3
+ 191 004c EF70      		andi r30,lo8(15)
+ 192 004e E750      		subi r30,lo8(-(-7))
+ 193 0050 E830      		cpi r30,lo8(8)
+ 194 0052 00F4      		brsh .L8
+ 195 0054 F0E0      		ldi r31,0
+ 196 0056 E050      		subi r30,lo8(-(CSWTCH.3))
+ 197 0058 F040      		sbci r31,hi8(-(CSWTCH.3))
+ 198 005a 9081      		ld r25,Z
+  49:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     { // Spalte Zeile
+  50:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****         case 0x0E: //Spalte PD4 = "0" 1110 0000
+  51:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****             zeile = 1; break;
+  52:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****         case 0x0D: //Spalte PD5 = "0" 1101 0000
+  53:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****             zeile = 2; break;
+  54:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****         case 0x0B: //Spalte PD6 = "0" 1011 0000
+  55:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****             zeile = 3; break;
+  56:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****         case 0x07: //Spalte PD7 = "0" 0111 0000
+  57:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****             zeile = 4; break;
+  58:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****         default: //mehrere Spalten sind auf "0"
+  59:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****             zeile = 0; break;
+  60:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     }
+  61:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h **** 
+  62:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     if      (zeile == 1 && spalte == 1) return '1';
+ 200               	.LM18:
+ 201 005c 9130      		cpi r25,lo8(1)
+ 202 005e 01F4      		brne .L9
+ 204               	.LM19:
+ 205 0060 8130      		cpi r24,lo8(1)
+ 206 0062 01F0      		breq .L14
+  63:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 1 && spalte == 2) return '2';
+ 208               	.LM20:
+ 209 0064 8230      		cpi r24,lo8(2)
+ 210 0066 01F0      		breq .L15
+  64:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 1 && spalte == 3) return '3';
+ 212               	.LM21:
+ 213 0068 8330      		cpi r24,lo8(3)
+ 214 006a 01F0      		breq .L16
+  65:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 1 && spalte == 4) return 'A';
+ 216               	.LM22:
+ 217 006c 8430      		cpi r24,lo8(4)
+ 218 006e 01F4      		brne .L8
+ 219 0070 00C0      		rjmp .L30
+ 220               	.L9:
+  66:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 2 && spalte == 1) return '4';
+ 222               	.LM23:
+ 223 0072 9230      		cpi r25,lo8(2)
+ 224 0074 01F4      		brne .L11
+ 226               	.LM24:
+ 227 0076 8130      		cpi r24,lo8(1)
+ 228 0078 01F0      		breq .L18
+  67:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 2 && spalte == 2) return '5';
+ 230               	.LM25:
+ 231 007a 8230      		cpi r24,lo8(2)
+ 232 007c 01F0      		breq .L19
+  68:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 2 && spalte == 3) return '6';
+ 234               	.LM26:
+ 235 007e 8330      		cpi r24,lo8(3)
+ 236 0080 01F0      		breq .L20
+  69:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 2 && spalte == 4) return 'B';
+ 238               	.LM27:
+ 239 0082 8430      		cpi r24,lo8(4)
+ 240 0084 01F0      		breq .L21
+ 241               	.L8:
+  70:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 3 && spalte == 1) return '7';
+  71:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 3 && spalte == 2) return '8';
+  72:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 3 && spalte == 3) return '9';
+  73:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 3 && spalte == 4) return 'C';
+  74:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 4 && spalte == 1) return '*';
+  75:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 4 && spalte == 2) return '0';
+  76:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 4 && spalte == 3) return '#';
+  77:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 4 && spalte == 4) return 'D';
+  78:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     return 0;
+ 243               	.LM28:
+ 244 0086 80E0      		ldi r24,0
+ 245 0088 0895      		ret
+ 246               	.L11:
+  70:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 3 && spalte == 1) return '7';
+ 248               	.LM29:
+ 249 008a 9330      		cpi r25,lo8(3)
+ 250 008c 01F4      		brne .L12
+  70:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 3 && spalte == 1) return '7';
+ 252               	.LM30:
+ 253 008e 8130      		cpi r24,lo8(1)
+ 254 0090 01F0      		breq .L22
+  71:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 3 && spalte == 2) return '8';
+ 256               	.LM31:
+ 257 0092 8230      		cpi r24,lo8(2)
+ 258 0094 01F0      		breq .L23
+  72:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 3 && spalte == 3) return '9';
+ 260               	.LM32:
+ 261 0096 8330      		cpi r24,lo8(3)
+ 262 0098 01F0      		breq .L24
+  73:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 3 && spalte == 4) return 'C';
+ 264               	.LM33:
+ 265 009a 8430      		cpi r24,lo8(4)
+ 266 009c 01F4      		brne .L8
+  73:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 3 && spalte == 4) return 'C';
+ 268               	.LM34:
+ 269 009e 83E4      		ldi r24,lo8(67)
+ 270 00a0 0895      		ret
+ 271               	.L12:
+  74:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 4 && spalte == 1) return '*';
+ 273               	.LM35:
+ 274 00a2 9430      		cpi r25,lo8(4)
+ 275 00a4 01F4      		brne .L8
+  74:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 4 && spalte == 1) return '*';
+ 277               	.LM36:
+ 278 00a6 8130      		cpi r24,lo8(1)
+ 279 00a8 01F0      		breq .L26
+  75:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 4 && spalte == 2) return '0';
+ 281               	.LM37:
+ 282 00aa 8230      		cpi r24,lo8(2)
+ 283 00ac 01F0      		breq .L27
+  76:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 4 && spalte == 3) return '#';
+ 285               	.LM38:
+ 286 00ae 8330      		cpi r24,lo8(3)
+ 287 00b0 01F0      		breq .L28
+  77:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 4 && spalte == 4) return 'D';
+ 289               	.LM39:
+ 290 00b2 8430      		cpi r24,lo8(4)
+ 291 00b4 01F4      		brne .L8
+  77:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 4 && spalte == 4) return 'D';
+ 293               	.LM40:
+ 294 00b6 84E4      		ldi r24,lo8(68)
+ 295 00b8 0895      		ret
+ 296               	.L14:
+  62:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     if      (zeile == 1 && spalte == 1) return '1';
+ 298               	.LM41:
+ 299 00ba 81E3      		ldi r24,lo8(49)
+ 300 00bc 0895      		ret
+ 301               	.L15:
+  63:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 1 && spalte == 2) return '2';
+ 303               	.LM42:
+ 304 00be 82E3      		ldi r24,lo8(50)
+ 305 00c0 0895      		ret
+ 306               	.L16:
+  64:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 1 && spalte == 3) return '3';
+ 308               	.LM43:
+ 309 00c2 83E3      		ldi r24,lo8(51)
+ 310 00c4 0895      		ret
+ 311               	.L30:
+  65:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 1 && spalte == 4) return 'A';
+ 313               	.LM44:
+ 314 00c6 81E4      		ldi r24,lo8(65)
+ 315 00c8 0895      		ret
+ 316               	.L18:
+  66:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 2 && spalte == 1) return '4';
+ 318               	.LM45:
+ 319 00ca 84E3      		ldi r24,lo8(52)
+ 320 00cc 0895      		ret
+ 321               	.L19:
+  67:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 2 && spalte == 2) return '5';
+ 323               	.LM46:
+ 324 00ce 85E3      		ldi r24,lo8(53)
+ 325 00d0 0895      		ret
+ 326               	.L20:
+  68:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 2 && spalte == 3) return '6';
+ 328               	.LM47:
+ 329 00d2 86E3      		ldi r24,lo8(54)
+ 330 00d4 0895      		ret
+ 331               	.L21:
+  69:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 2 && spalte == 4) return 'B';
+ 333               	.LM48:
+ 334 00d6 82E4      		ldi r24,lo8(66)
+ 335 00d8 0895      		ret
+ 336               	.L22:
+  70:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 3 && spalte == 1) return '7';
+ 338               	.LM49:
+ 339 00da 87E3      		ldi r24,lo8(55)
+ 340 00dc 0895      		ret
+ 341               	.L23:
+  71:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 3 && spalte == 2) return '8';
+ 343               	.LM50:
+ 344 00de 88E3      		ldi r24,lo8(56)
+ 345 00e0 0895      		ret
+ 346               	.L24:
+  72:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 3 && spalte == 3) return '9';
+ 348               	.LM51:
+ 349 00e2 89E3      		ldi r24,lo8(57)
+ 350 00e4 0895      		ret
+ 351               	.L26:
+  74:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 4 && spalte == 1) return '*';
+ 353               	.LM52:
+ 354 00e6 8AE2      		ldi r24,lo8(42)
+ 355 00e8 0895      		ret
+ 356               	.L27:
+  75:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 4 && spalte == 2) return '0';
+ 358               	.LM53:
+ 359 00ea 80E3      		ldi r24,lo8(48)
+ 360 00ec 0895      		ret
+ 361               	.L28:
+  76:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h ****     else if (zeile == 4 && spalte == 3) return '#';
+ 363               	.LM54:
+ 364 00ee 83E2      		ldi r24,lo8(35)
+  79:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/../Global/Matrixtastatur.h **** }...
+ 366               	.LM55:
+ 367 00f0 0895      		ret
+ 373               	.Lscope1:
+ 375               	.global	initTag
+ 377               	initTag:
+ 379               	.Ltext2:
+   1:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** #include <avr/io.h>
+   2:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** #include <avr/interrupt.h>
+   3:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** #include <util/delay.h>
+   4:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** 
+   5:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** 
+   6:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** #include "../Global/Manchester.h"
+   7:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** #include "../Global/Matrixtastatur.h"
+   8:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** 
+   9:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** #include "tag.h"
+  10:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** 
+  11:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** 
+  12:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** int main(void)
+  13:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** {
+  14:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     unsigned char msg [] = "Das ist ein text ";
+  15:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     initTag();
+  16:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     
+  17:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     unsigned char taste;
+  18:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     
+  19:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     
+  20:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     taste = getTaste();
+  21:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     //if(taste != 0)
+  22:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****        sendeDaten(msg,12);
+  23:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         
+  24:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     
+  25:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     
+  26:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     return 0;
+  27:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** }
+  28:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** 
+  29:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** void initTag(void)
+  30:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** {
+ 381               	.LM56:
+ 382               	.LFBB2:
+ 383               	/* prologue: function */
+ 384               	/* frame size = 0 */
+ 385               	/* stack size = 0 */
+ 386               	.L__stack_usage = 0
+  31:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     /* TX_PIN als Ausgang setzen */
+  32:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     SET_BIT(TX_DDR,TX_PIN);
+ 388               	.LM57:
+ 389 00f2 209A      		sbi 0x4,0
+  33:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     
+  34:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     /* TCNT0 mit clk/8 prescaler einstellen bzw. einschalten */
+  35:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     SET_BIT(TCCR0B,CS01);
+ 391               	.LM58:
+ 392 00f4 85B5      		in r24,0x25
+ 393 00f6 8260      		ori r24,lo8(2)
+ 394 00f8 85BD      		out 0x25,r24
+ 395 00fa 0895      		ret
+ 397               	.Lscope2:
+ 400               	.global	checksumme
+ 402               	checksumme:
+  36:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** }
+  37:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** 
+  38:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** uint16_t checksumme(const uint8_t* data, uint16_t bytes)
+  39:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** {
+ 404               	.LM59:
+ 405               	.LFBB3:
+ 406               	/* prologue: function */
+ 407               	/* frame size = 0 */
+ 408               	/* stack size = 0 */
+ 409               	.L__stack_usage = 0
+  40:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     
+  41:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     uint16_t summe1 = 0xFF;
+  42:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     uint16_t summe2 = 0xFF;
+ 411               	.LM60:
+ 412 00fc 4FEF      		ldi r20,lo8(-1)
+ 413 00fe 50E0      		ldi r21,0
+  41:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     uint16_t summe1 = 0xFF;
+ 415               	.LM61:
+ 416 0100 2FEF      		ldi r18,lo8(-1)
+ 417 0102 30E0      		ldi r19,0
+ 418               	.L33:
+  43:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     
+  44:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     uint16_t laenge;
+  45:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     
+  46:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     while (bytes)
+ 420               	.LM62:
+ 421 0104 6115      		cp r22,__zero_reg__
+ 422 0106 7105      		cpc r23,__zero_reg__
+ 423 0108 01F0      		breq .L38
+  47:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     {
+  48:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         /* Maximale L√§nge bevor Overflow ensteht */
+  49:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         laenge = (bytes > 20) ? 20 : bytes;
+ 425               	.LM63:
+ 426 010a DB01      		movw r26,r22
+ 427 010c 6531      		cpi r22,21
+ 428 010e 7105      		cpc r23,__zero_reg__
+ 429 0110 00F0      		brlo .L34
+ 430 0112 A4E1      		ldi r26,lo8(20)
+ 431 0114 B0E0      		ldi r27,0
+ 432               	.L34:
+  50:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         
+  51:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         bytes -= laenge;
+ 434               	.LM64:
+ 435 0116 6A1B      		sub r22,r26
+ 436 0118 7B0B      		sbc r23,r27
+ 437 011a FC01      		movw r30,r24
+ 438 011c A80F      		add r26,r24
+ 439 011e B91F      		adc r27,r25
+ 440               	.L36:
+  52:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         
+  53:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         do
+  54:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         {
+  55:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****             summe1 += *(data++);
+ 442               	.LM65:
+ 443 0120 8191      		ld r24,Z+
+ 444 0122 280F      		add r18,r24
+ 445 0124 311D      		adc r19,__zero_reg__
+  56:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****             summe2 += summe1;
+ 447               	.LM66:
+ 448 0126 420F      		add r20,r18
+ 449 0128 531F      		adc r21,r19
+  57:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         }
+  58:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         
+  59:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         while (--laenge);
+ 451               	.LM67:
+ 452 012a EA17      		cp r30,r26
+ 453 012c FB07      		cpc r31,r27
+ 454 012e 01F4      		brne .L36
+ 455 0130 CF01      		movw r24,r30
+  60:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         
+  61:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         summe1 = (summe1 & 0xFF) + (summe1 >> 8);
+ 457               	.LM68:
+ 458 0132 E32F      		mov r30,r19
+ 459 0134 FF27      		clr r31
+ 460 0136 DF01      		movw r26,r30
+ 461 0138 A20F      		add r26,r18
+ 462 013a B11D      		adc r27,__zero_reg__
+ 463 013c 9D01      		movw r18,r26
+  62:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         summe2 = (summe2 & 0xFF) + (summe2 >> 8);
+ 465               	.LM69:
+ 466 013e E52F      		mov r30,r21
+ 467 0140 FF27      		clr r31
+ 468 0142 DF01      		movw r26,r30
+ 469 0144 A40F      		add r26,r20
+ 470 0146 B11D      		adc r27,__zero_reg__
+ 471 0148 AD01      		movw r20,r26
+ 472 014a 00C0      		rjmp .L33
+ 473               	.L38:
+  63:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     }
+  64:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     
+  65:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     /* Zur Sicherheit unn√∂tiges abschneiden */
+  66:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     summe1 = (summe1 & 0xFF) + (summe1 >> 8);
+ 475               	.LM70:
+ 476 014c 632F      		mov r22,r19
+ 477 014e 7727      		clr r23
+  67:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     summe2 = (summe2 & 0xFF) + (summe2 >> 8);
+ 479               	.LM71:
+ 480 0150 852F      		mov r24,r21
+ 481 0152 9927      		clr r25
+ 482 0154 840F      		add r24,r20
+ 483 0156 911D      		adc r25,__zero_reg__
+  68:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     
+  69:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     /* Beiden Summen als 16 Bit Wert zur√ºckgeben*/
+  70:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     return summe2 << 8 | summe1;
+ 485               	.LM72:
+ 486 0158 982F      		mov r25,r24
+ 487 015a 8827      		clr r24
+  66:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     summe1 = (summe1 & 0xFF) + (summe1 >> 8);
+ 489               	.LM73:
+ 490 015c 620F      		add r22,r18
+ 491 015e 711D      		adc r23,__zero_reg__
+  71:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** }
+ 493               	.LM74:
+ 494 0160 862B      		or r24,r22
+ 495 0162 972B      		or r25,r23
+ 496 0164 0895      		ret
+ 501               	.Lscope3:
+ 504               	.global	sendeHIGHBit
+ 506               	sendeHIGHBit:
+  72:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** 
+  73:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** void sendeDaten(const uint8_t* data, uint16_t bytes)
+  74:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** {
+  75:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     uint8_t i;
+  76:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     uint16_t chksm;
+  77:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     
+  78:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     /* Checksumme der Daten berechnen */
+  79:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     chksm = checksumme(data,bytes);
+  80:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     
+  81:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     /* Viele 10s senden um am Empf√§nger aufs Signal synchronisieren zu k√∂nnen */
+  82:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     for(i = 0; i < 75; ++i)
+  83:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         sendeByte(0);
+  84:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     
+  85:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     /* Letzte 10s senden und dann zwei 01 Start Impulse */
+  86:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     sendeByte(3);
+  87:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     
+  88:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     /* Daten Byte f√ºr Byte senden */
+  89:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     for (i = 0; i < bytes; ++i)
+  90:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         sendeByte(data[i]);
+  91:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     
+  92:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     /* Checksumme anh√§ngen, als erstrs oberes dann unteres byte */
+  93:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     sendeByte((chksm >> 8));
+  94:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     sendeByte((chksm & 0xFF)); 
+  95:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     
+  96:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     /* Es werden keine Bits mehr gesendet, aber das letzte Bit muss noch fertig werden, sonst, 
+  97:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****        wenn das letzte Bit HIGH ist, w√ºrde es nicht mehr erkannt werden, weil der TX Pin abgedreht
+  98:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****        wird nachher -> w√ºrde sonst eine 0 werden*/
+  99:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     
+ 100:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     while(TCNT0 < HALF_TIME);
+ 101:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     
+ 102:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     /* Sende Pin anschlie√üend auf LOW setzen */
+ 103:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     CLEAR_BIT(TX_PORT,TX_PIN);
+ 104:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** }
+ 105:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** 
+ 106:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** void sendeByte(const uint8_t byte)
+ 107:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** {
+ 108:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     int8_t bit = 7;
+ 109:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     
+ 110:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     for (; bit >= 0; --bit)
+ 111:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     {
+ 112:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         if ( IS_SET(byte,bit) )
+ 113:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****             sendeHIGHBit(1);
+ 114:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         
+ 115:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         else
+ 116:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****             sendeLOWBit(1);
+ 117:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         
+ 118:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     }
+ 119:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     
+ 120:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** }
+ 121:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** void sendeHIGHBit(unsigned char anzahl)
+ 122:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** /* Setze Pin auf LOW, warte auf die Mitte der Periode,
+ 123:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****  * dann wieder HIGH setzen und auf das Ende der Periode warten.
+ 124:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****  *   => HIGH Bit laut Manchester Code (01)
+ 125:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****  */
+ 126:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** {
+ 508               	.LM75:
+ 509               	.LFBB4:
+ 510               	/* prologue: function */
+ 511               	/* frame size = 0 */
+ 512               	/* stack size = 0 */
+ 513               	.L__stack_usage = 0
+ 514               	.LBB2:
+ 127:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     for(int i=0;i<anzahl;i++)
+ 516               	.LM76:
+ 517 0166 20E0      		ldi r18,0
+ 518 0168 30E0      		ldi r19,0
+ 519 016a 90E0      		ldi r25,0
+ 128:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     {
+ 129:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         while(TCNT0 < (BIT_TIME/2));    // warten
+ 130:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         CLEAR_BIT(TX_PORT,TX_PIN);      // Sende PIN auf 0 setzen
+ 131:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         TCNT0 = 0;
+ 132:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         
+ 133:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         while(TCNT0 < (BIT_TIME/2));
+ 134:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         SET_BIT(TX_PORT,TX_PIN);        // Sende PIN auf 1 setzen
+ 135:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         TCNT0 = 1;
+ 521               	.LM77:
+ 522 016c 41E0      		ldi r20,lo8(1)
+ 523               	.L40:
+ 127:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     for(int i=0;i<anzahl;i++)
+ 525               	.LM78:
+ 526 016e 2817      		cp r18,r24
+ 527 0170 3907      		cpc r19,r25
+ 528 0172 04F4      		brge .L46
+ 529               	.L42:
+ 129:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         while(TCNT0 < (BIT_TIME/2));    // warten
+ 531               	.LM79:
+ 532 0174 56B5      		in r21,0x26
+ 533 0176 583C      		cpi r21,lo8(-56)
+ 534 0178 00F0      		brlo .L42
+ 130:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         CLEAR_BIT(TX_PORT,TX_PIN);      // Sende PIN auf 0 setzen
+ 536               	.LM80:
+ 537 017a 2898      		cbi 0x5,0
+ 131:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         TCNT0 = 0;
+ 539               	.LM81:
+ 540 017c 16BC      		out 0x26,__zero_reg__
+ 541               	.L44:
+ 133:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         while(TCNT0 < (BIT_TIME/2));
+ 543               	.LM82:
+ 544 017e 56B5      		in r21,0x26
+ 545 0180 583C      		cpi r21,lo8(-56)
+ 546 0182 00F0      		brlo .L44
+ 134:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         SET_BIT(TX_PORT,TX_PIN);        // Sende PIN auf 1 setzen
+ 548               	.LM83:
+ 549 0184 289A      		sbi 0x5,0
+ 551               	.LM84:
+ 552 0186 46BD      		out 0x26,r20
+ 127:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     for(int i=0;i<anzahl;i++)
+ 554               	.LM85:
+ 555 0188 2F5F      		subi r18,-1
+ 556 018a 3F4F      		sbci r19,-1
+ 557 018c 00C0      		rjmp .L40
+ 558               	.L46:
+ 559               	/* epilogue start */
+ 560               	.LBE2:
+ 136:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         
+ 137:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     }
+ 138:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** }
+ 562               	.LM86:
+ 563 018e 0895      		ret
+ 568               	.Lscope4:
+ 571               	.global	sendeLOWBit
+ 573               	sendeLOWBit:
+ 139:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** 
+ 140:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** void sendeLOWBit(unsigned char anzahl)
+ 141:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** /* Setze auf Pin auf HIGH, warte auf die Mitter der Periode,
+ 142:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****  * dann wieder LOW setzen und auf das Ende der Periode warten.
+ 143:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****  *   => LOW Bit laut Manchester Code (10)
+ 144:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****  */
+ 145:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** {
+ 575               	.LM87:
+ 576               	.LFBB5:
+ 577               	/* prologue: function */
+ 578               	/* frame size = 0 */
+ 579               	/* stack size = 0 */
+ 580               	.L__stack_usage = 0
+ 581               	.LBB3:
+ 146:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     for(int i=0;i<anzahl;i++)
+ 583               	.LM88:
+ 584 0190 20E0      		ldi r18,0
+ 585 0192 30E0      		ldi r19,0
+ 586 0194 90E0      		ldi r25,0
+ 147:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     {
+ 148:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         while(TCNT0 < (BIT_TIME/2));    // warten
+ 149:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         SET_BIT(TX_PORT,TX_PIN);        // Sende PIN auf 1 setzen
+ 150:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         TCNT0 = 0;
+ 151:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         
+ 152:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         while(TCNT0 < (BIT_TIME/2));
+ 153:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         CLEAR_BIT(TX_PORT,TX_PIN);      // Sende PIN auf 0 setzen
+ 154:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         TCNT0 = 1;
+ 588               	.LM89:
+ 589 0196 41E0      		ldi r20,lo8(1)
+ 590               	.L48:
+ 146:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     for(int i=0;i<anzahl;i++)
+ 592               	.LM90:
+ 593 0198 2817      		cp r18,r24
+ 594 019a 3907      		cpc r19,r25
+ 595 019c 04F4      		brge .L54
+ 596               	.L50:
+ 148:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         while(TCNT0 < (BIT_TIME/2));    // warten
+ 598               	.LM91:
+ 599 019e 56B5      		in r21,0x26
+ 600 01a0 583C      		cpi r21,lo8(-56)
+ 601 01a2 00F0      		brlo .L50
+ 149:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         SET_BIT(TX_PORT,TX_PIN);        // Sende PIN auf 1 setzen
+ 603               	.LM92:
+ 604 01a4 289A      		sbi 0x5,0
+ 150:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         TCNT0 = 0;
+ 606               	.LM93:
+ 607 01a6 16BC      		out 0x26,__zero_reg__
+ 608               	.L52:
+ 152:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         while(TCNT0 < (BIT_TIME/2));
+ 610               	.LM94:
+ 611 01a8 56B5      		in r21,0x26
+ 612 01aa 583C      		cpi r21,lo8(-56)
+ 613 01ac 00F0      		brlo .L52
+ 153:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         CLEAR_BIT(TX_PORT,TX_PIN);      // Sende PIN auf 0 setzen
+ 615               	.LM95:
+ 616 01ae 2898      		cbi 0x5,0
+ 618               	.LM96:
+ 619 01b0 46BD      		out 0x26,r20
+ 146:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     for(int i=0;i<anzahl;i++)
+ 621               	.LM97:
+ 622 01b2 2F5F      		subi r18,-1
+ 623 01b4 3F4F      		sbci r19,-1
+ 624 01b6 00C0      		rjmp .L48
+ 625               	.L54:
+ 626               	/* epilogue start */
+ 627               	.LBE3:
+ 155:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     }
+ 156:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** }...
+ 629               	.LM98:
+ 630 01b8 0895      		ret
+ 635               	.Lscope5:
+ 638               	.global	sendeByte
+ 640               	sendeByte:
+ 107:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** {
+ 642               	.LM99:
+ 643               	.LFBB6:
+ 644 01ba 8F92      		push r8
+ 645 01bc 9F92      		push r9
+ 646 01be AF92      		push r10
+ 647 01c0 BF92      		push r11
+ 648 01c2 CF92      		push r12
+ 649 01c4 DF92      		push r13
+ 650 01c6 EF92      		push r14
+ 651 01c8 FF92      		push r15
+ 652 01ca CF93      		push r28
+ 653 01cc DF93      		push r29
+ 654               	/* prologue: function */
+ 655               	/* frame size = 0 */
+ 656               	/* stack size = 10 */
+ 657               	.L__stack_usage = 10
+ 107:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** {
+ 659               	.LM100:
+ 660 01ce C7E0      		ldi r28,lo8(7)
+ 661 01d0 D0E0      		ldi r29,0
+ 112:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         if ( IS_SET(byte,bit) )
+ 663               	.LM101:
+ 664 01d2 C12C      		mov r12,__zero_reg__
+ 665 01d4 D12C      		mov r13,__zero_reg__
+ 666 01d6 7601      		movw r14,r12
+ 667 01d8 C394      		inc r12
+ 668 01da 882E      		mov r8,r24
+ 669 01dc 912C      		mov r9,__zero_reg__
+ 670 01de A12C      		mov r10,__zero_reg__
+ 671 01e0 B12C      		mov r11,__zero_reg__
+ 672               	.L59:
+ 673 01e2 B701      		movw r22,r14
+ 674 01e4 A601      		movw r20,r12
+ 675 01e6 0C2E      		mov r0,r28
+ 676 01e8 00C0      		rjmp 2f
+ 677               		1:
+ 678 01ea 440F      		lsl r20
+ 679 01ec 551F      		rol r21
+ 680 01ee 661F      		rol r22
+ 681 01f0 771F      		rol r23
+ 682               		2:
+ 683 01f2 0A94      		dec r0
+ 684 01f4 02F4      		brpl 1b
+ 685 01f6 4821      		and r20,r8
+ 686 01f8 5921      		and r21,r9
+ 687 01fa 6A21      		and r22,r10
+ 688 01fc 7B21      		and r23,r11
+ 689 01fe 0C2E      		mov r0,r28
+ 690 0200 00C0      		rjmp 2f
+ 691               		1:
+ 692 0202 7695      		lsr r23
+ 693 0204 6795      		ror r22
+ 694 0206 5795      		ror r21
+ 695 0208 4795      		ror r20
+ 696               		2:
+ 697 020a 0A94      		dec r0
+ 698 020c 02F4      		brpl 1b
+ 113:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****             sendeHIGHBit(1);
+ 700               	.LM102:
+ 701 020e 81E0      		ldi r24,lo8(1)
+ 112:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         if ( IS_SET(byte,bit) )
+ 703               	.LM103:
+ 704 0210 452B      		or r20,r21
+ 705 0212 462B      		or r20,r22
+ 706 0214 472B      		or r20,r23
+ 707 0216 01F0      		breq .L56
+ 113:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****             sendeHIGHBit(1);
+ 709               	.LM104:
+ 710 0218 0E94 0000 		call sendeHIGHBit
+ 711 021c 00C0      		rjmp .L57
+ 712               	.L56:
+ 116:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****             sendeLOWBit(1);
+ 714               	.LM105:
+ 715 021e 0E94 0000 		call sendeLOWBit
+ 716               	.L57:
+ 717 0222 2197      		sbiw r28,1
+ 718 0224 00F4      		brcc .L59
+ 719               	/* epilogue start */
+ 120:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** }
+ 721               	.LM106:
+ 722 0226 DF91      		pop r29
+ 723 0228 CF91      		pop r28
+ 724 022a FF90      		pop r15
+ 725 022c EF90      		pop r14
+ 726 022e DF90      		pop r13
+ 727 0230 CF90      		pop r12
+ 728 0232 BF90      		pop r11
+ 729 0234 AF90      		pop r10
+ 730 0236 9F90      		pop r9
+ 731 0238 8F90      		pop r8
+ 732 023a 0895      		ret
+ 734               	.Lscope6:
+ 738               	.global	sendeDaten
+ 740               	sendeDaten:
+  74:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** {
+ 742               	.LM107:
+ 743               	.LFBB7:
+ 744 023c DF92      		push r13
+ 745 023e EF92      		push r14
+ 746 0240 FF92      		push r15
+ 747 0242 0F93      		push r16
+ 748 0244 1F93      		push r17
+ 749 0246 CF93      		push r28
+ 750 0248 DF93      		push r29
+ 751               	/* prologue: function */
+ 752               	/* frame size = 0 */
+ 753               	/* stack size = 7 */
+ 754               	.L__stack_usage = 7
+ 755 024a 8C01      		movw r16,r24
+ 756 024c EB01      		movw r28,r22
+  79:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     chksm = checksumme(data,bytes);
+ 758               	.LM108:
+ 759 024e 0E94 0000 		call checksumme
+ 760 0252 E82E      		mov r14,r24
+ 761 0254 D92E      		mov r13,r25
+ 762 0256 BBE4      		ldi r27,lo8(75)
+ 763 0258 FB2E      		mov r15,r27
+ 764               	.L62:
+  83:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         sendeByte(0);
+ 766               	.LM109:
+ 767 025a 80E0      		ldi r24,0
+ 768 025c 0E94 0000 		call sendeByte
+ 769 0260 FA94      		dec r15
+  82:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     for(i = 0; i < 75; ++i)
+ 771               	.LM110:
+ 772 0262 01F4      		brne .L62
+  86:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     sendeByte(3);
+ 774               	.LM111:
+ 775 0264 83E0      		ldi r24,lo8(3)
+ 776 0266 0E94 0000 		call sendeByte
+ 777               	.L63:
+  89:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     for (i = 0; i < bytes; ++i)
+ 779               	.LM112:
+ 780 026a 2F2D      		mov r18,r15
+ 781 026c 30E0      		ldi r19,0
+ 782 026e 2C17      		cp r18,r28
+ 783 0270 3D07      		cpc r19,r29
+ 784 0272 00F4      		brsh .L67
+  90:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****         sendeByte(data[i]);
+ 786               	.LM113:
+ 787 0274 F801      		movw r30,r16
+ 788 0276 E20F      		add r30,r18
+ 789 0278 F31F      		adc r31,r19
+ 790 027a 8081      		ld r24,Z
+ 791 027c 0E94 0000 		call sendeByte
+  89:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     for (i = 0; i < bytes; ++i)
+ 793               	.LM114:
+ 794 0280 F394      		inc r15
+ 795 0282 00C0      		rjmp .L63
+ 796               	.L67:
+  93:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     sendeByte((chksm >> 8));
+ 798               	.LM115:
+ 799 0284 8D2D      		mov r24,r13
+ 800 0286 0E94 0000 		call sendeByte
+  94:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     sendeByte((chksm & 0xFF)); 
+ 802               	.LM116:
+ 803 028a 8E2D      		mov r24,r14
+ 804 028c 0E94 0000 		call sendeByte
+ 805               	.L66:
+ 100:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     while(TCNT0 < HALF_TIME);
+ 807               	.LM117:
+ 808 0290 86B5      		in r24,0x26
+ 809 0292 883C      		cpi r24,lo8(-56)
+ 810 0294 00F0      		brlo .L66
+ 103:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     CLEAR_BIT(TX_PORT,TX_PIN);
+ 812               	.LM118:
+ 813 0296 2898      		cbi 0x5,0
+ 814               	/* epilogue start */
+ 104:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** }
+ 816               	.LM119:
+ 817 0298 DF91      		pop r29
+ 818 029a CF91      		pop r28
+ 819 029c 1F91      		pop r17
+ 820 029e 0F91      		pop r16
+ 821 02a0 FF90      		pop r15
+ 822 02a2 EF90      		pop r14
+ 823 02a4 DF90      		pop r13
+ 824 02a6 0895      		ret
+ 829               	.Lscope7:
+ 830               		.section	.rodata.str1.1,"aMS",@progbits,1
+ 831               	.LC0:
+ 832 0000 4461 7320 		.string	"Das ist ein text "
+ 832      6973 7420 
+ 832      6569 6E20 
+ 832      7465 7874 
+ 832      2000 
+ 833               		.section	.text.startup,"ax",@progbits
+ 835               	.global	main
+ 837               	main:
+  13:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** {
+ 839               	.LM120:
+ 840               	.LFBB8:
+ 841 0000 CF93      		push r28
+ 842 0002 DF93      		push r29
+ 843 0004 CDB7      		in r28,__SP_L__
+ 844 0006 DEB7      		in r29,__SP_H__
+ 845 0008 6297      		sbiw r28,18
+ 846 000a 0FB6      		in __tmp_reg__,__SREG__
+ 847 000c F894      		cli
+ 848 000e DEBF      		out __SP_H__,r29
+ 849 0010 0FBE      		out __SREG__,__tmp_reg__
+ 850 0012 CDBF      		out __SP_L__,r28
+ 851               	/* prologue: function */
+ 852               	/* frame size = 18 */
+ 853               	/* stack size = 20 */
+ 854               	.L__stack_usage = 20
+  14:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     unsigned char msg [] = "Das ist ein text ";
+ 856               	.LM121:
+ 857 0014 82E1      		ldi r24,lo8(18)
+ 858 0016 E0E0      		ldi r30,lo8(.LC0)
+ 859 0018 F0E0      		ldi r31,hi8(.LC0)
+ 860 001a DE01      		movw r26,r28
+ 861 001c 1196      		adiw r26,1
+ 862               		0:
+ 863 001e 0190      		ld r0,Z+
+ 864 0020 0D92      		st X+,r0
+ 865 0022 8A95      		dec r24
+ 866 0024 01F4      		brne 0b
+  15:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     initTag();
+ 868               	.LM122:
+ 869 0026 0E94 0000 		call initTag
+  20:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****     taste = getTaste();
+ 871               	.LM123:
+ 872 002a 0E94 0000 		call getTaste
+  22:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c ****        sendeDaten(msg,12);
+ 874               	.LM124:
+ 875 002e 6CE0      		ldi r22,lo8(12)
+ 876 0030 70E0      		ldi r23,0
+ 877 0032 CE01      		movw r24,r28
+ 878 0034 0196      		adiw r24,1
+ 879 0036 0E94 0000 		call sendeDaten
+  27:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Tag/tag.c **** }
+ 881               	.LM125:
+ 882 003a 80E0      		ldi r24,0
+ 883 003c 90E0      		ldi r25,0
+ 884               	/* epilogue start */
+ 885 003e 6296      		adiw r28,18
+ 886 0040 0FB6      		in __tmp_reg__,__SREG__
+ 887 0042 F894      		cli
+ 888 0044 DEBF      		out __SP_H__,r29
+ 889 0046 0FBE      		out __SREG__,__tmp_reg__
+ 890 0048 CDBF      		out __SP_L__,r28
+ 891 004a DF91      		pop r29
+ 892 004c CF91      		pop r28
+ 893 004e 0895      		ret
+ 898               	.Lscope8:
+ 899               		.section	.rodata
+ 902               	CSWTCH.3:
+ 903 0000 04        		.byte	4
+ 904 0001 00        		.byte	0
+ 905 0002 00        		.byte	0
+ 906 0003 00        		.byte	0
+ 907 0004 03        		.byte	3
+ 908 0005 00        		.byte	0
+ 909 0006 02        		.byte	2
+ 910 0007 01        		.byte	1
+ 911               		.text
+ 913               	.Letext0:
+ 914               		.ident	"GCC: (GNU) 4.8.1"
+ 915               	.global __do_copy_data
+DEFINED SYMBOLS
+                            *ABS*:00000000 tag.c
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc9OT2E3.s:2      *ABS*:0000003e __SP_H__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc9OT2E3.s:3      *ABS*:0000003d __SP_L__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc9OT2E3.s:4      *ABS*:0000003f __SREG__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc9OT2E3.s:5      *ABS*:00000000 __tmp_reg__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc9OT2E3.s:6      *ABS*:00000001 __zero_reg__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc9OT2E3.s:104    .text:00000000 getTaste
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc9OT2E3.s:902    .rodata:00000000 CSWTCH.3
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc9OT2E3.s:377    .text:000000f2 initTag
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc9OT2E3.s:402    .text:000000fc checksumme
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc9OT2E3.s:506    .text:00000166 sendeHIGHBit
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc9OT2E3.s:573    .text:00000190 sendeLOWBit
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc9OT2E3.s:640    .text:000001ba sendeByte
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc9OT2E3.s:740    .text:0000023c sendeDaten
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc9OT2E3.s:837    .text.startup:00000000 main
+
+UNDEFINED SYMBOLS
+__do_copy_data

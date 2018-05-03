@@ -1,0 +1,821 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100090.html;106,k100091.html;107,k100093.html;108,k100097.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100090.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100091.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100093.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100097.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 14 - Strukturierung von Java-Programmen
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id014002"></a>
+<h2>14.2 <a name="ixa100765">Pakete</a></h2>
+<hr>
+<ul>
+<li><a href="k100092.html#sectlevel2id014002">14.2 Pakete</a>
+<ul>
+<li><a href="k100092.html#sectlevel3id014002001">14.2.1 Verwendung von Paketen</a>
+<ul>
+<li><a href="k100092.html#sectlevel4id014002001001">Der Import von java.lang</a>
+<li><a href="k100092.html#sectlevel4id014002001002">Die vordefinierten Pakete im JDK</a>
+</ul>
+<li><a href="k100092.html#bedeutungpaketnamen">14.2.2 Die Bedeutung der Paketnamen</a>
+<ul>
+<li><a href="k100092.html#sectlevel4id014002002001">Laden von Klassen</a>
+<li><a href="k100092.html#sectlevel4id014002002002">Umgekehrte Domain-Namen</a>
+</ul>
+<li><a href="k100092.html#zuspaketeeinbinden">14.2.3 Einbinden zus&auml;tzlicher Pakete</a>
+<li><a href="k100092.html#sectlevel3id014002004">14.2.4 Erstellen eigener Pakete</a>
+<ul>
+<li><a href="k100092.html#sectlevel4id014002004001">Benannte Pakete</a>
+<li><a href="k100092.html#sectlevel4id014002004002">Das Default-Paket</a>
+<li><a href="k100092.html#sectlevel4id014002004003">Das public-Attribut</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id014002001"></a>
+<h3>14.2.1 Verwendung von Paketen </h3>
+
+<p>
+Jede Klasse in Java ist Bestandteil eines Pakets. Der vollst&auml;ndige
+Name einer Klasse besteht aus dem Namen des Pakets, gefolgt von einem
+Punkt, dem sich der eigentliche Name der Klasse anschlie&szlig;t.
+Der Name des Pakets selbst kann ebenfalls einen oder mehrere Punkte
+enthalten. 
+
+<p>
+Damit eine Klasse verwendet werden kann, muss angegeben werden, in
+welchem Paket sie liegt. Hierzu gibt es zwei unterschiedliche M&ouml;glichkeiten:
+<ul>
+<li>Die Klasse wird &uuml;ber ihren vollen (qualifizierten) Namen
+angesprochen: 
+<font color="#000077">
+<pre>
+java.util.Date d = new java.util.Date();
+</pre>
+</font>
+<li>Am Anfang des Programms werden die gew&uuml;nschten Klassen mit
+Hilfe einer <a name="ixa100766"><a href="index_i.html#ixb100148"><font color=#000080><tt>import</tt></font></a></a>-Anweisung
+eingebunden: 
+<font color="#000077">
+<pre>
+import java.util.*;
+...
+Date d = new Date();
+</pre>
+</font>
+</ul>
+
+<p>
+Die Verwendung voll qualifizierter Namen hat den Nachteil, dass die
+Klassennamen sehr lang und unhandlich werden. Bequemer ist daher die
+Anwendung der zweiten Variante, bei der die ben&ouml;tigten Klassen
+mit Hilfe einer <a href="index_i.html#ixb100148"><font color=#000080><tt>import</tt></font></a>-Anweisung
+dem Compiler bekanntgemacht werden. 
+
+<p>
+Die <a href="index_i.html#ixb100148"><font color=#000080><tt>import</tt></font></a>-Anweisung
+gibt es in zwei unterschiedlichen Auspr&auml;gungen: 
+<ul>
+<li>Mit der Syntax <font color="#000077"><tt>import Paket.Klasse;</tt></font>
+wird genau eine Klasse importiert. Alle anderen Klassen des Pakets
+bleiben unsichtbar: 
+<font color="#000077">
+<pre>
+import java.util.Date;
+...
+Date d = new Date();
+java.util.ArrayList l = new java.util.ArrayList();
+</pre>
+</font>
+<li>Unter Verwendung der Syntax <font color="#000077"><tt>import Paket.*;</tt></font>
+k&ouml;nnen alle Klassen des angegebenen Pakets auf einmal importiert
+werden: 
+<font color="#000077">
+<pre>
+import java.util.*;
+...
+Date d = new Date();
+ArrayList l = new ArrayList();
+</pre>
+</font>
+</ul>
+
+<p>
+Seit der J2SE 5.0 gibt es unter dem Stichwort <i>static import</i>
+eine weitere Variante der <a href="index_i.html#ixb100148"><font color=#000080><tt>import</tt></font></a>-Anweisung.
+Weitere Informationen sowie ein Beispiel dazu finden Sie in <a href="k100067.html#weitereanwinterfaces">Abschnitt 10.4</a>.
+
+<p>
+Im Gegensatz zu &auml;hnlichen Konstrukten in anderen Sprachen ist
+die Verwendung der zweiten Variante der <a href="index_i.html#ixb100148"><font color=#000080><tt>import</tt></font></a>-Anweisung
+nicht zwangsl&auml;ufig ineffizienter als die der ersten. In der Sprachspezifikation
+wird sie als <i>type import on demand</i> bezeichnet, was bedeutet,
+dass die Klasse erst dann in den angegebenen Paketen gesucht wird,
+wenn das Programm sie wirklich ben&ouml;tigt. Keinesfalls muss der
+Compiler beim Parsen der <a href="index_i.html#ixb100148"><font color=#000080><tt>import</tt></font></a>-Anweisung
+zwangsl&auml;ufig alle Klassendateien des angegebenen Pakets in den
+Hauptspeicher laden oder &auml;hnlich zeit- und speicheraufw&auml;ndige
+Dinge machen. Es schadet also im Allgemeinen nichts, die zweite Variante
+der <a href="index_i.html#ixb100148"><font color=#000080><tt>import</tt></font></a>-Anweisung
+zu verwenden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Allerdings kann es zur Vermeidung von Verwechslungen mitunter n&ouml;tig
+sein, die erste Variante zu verwenden. Enthalten n&auml;mlich zwei
+oder mehr Pakete, die mit der *-Notation importiert wurden, Klassen
+mit demselben Namen, w&uuml;rde der Compiler die &Uuml;bersetzung
+mit einer Fehlermeldung &#187;mehrdeutige Referenz auf Klasse...&#171;
+abbrechen. In diesem Fall muss im Programm entweder der qualifizierte
+Klassenname verwendet oder die gew&uuml;nschte Variante der Klasse
+mit einer expliziten <a href="index_i.html#ixb100148"><font color=#000080><tt>import</tt></font></a>-Anweisung
+eingebunden werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id014002001001"></a>
+<h4>Der <a name="ixa100767">Import von java.lang</a> </h4>
+
+<p>
+In vielen verschiedenen Beispielen in diesem Buch werden Klassennamen
+(wie beispielsweise <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>,
+<a href="index_t.html#ixb100606"><font color=#000080><tt>Thread</tt></font></a>
+oder <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>)
+verwendet, ohne dass eine zugeh&ouml;rige <a name="ixa100768"><a href="index_i.html#ixb100148"><font color=#000080><tt>import</tt></font></a></a>-Anweisung
+zu erkennen w&auml;re. In diesem Fall entstammen die Klassen dem Paket
+<a name="ixa100769"><a href="index_j.html#ixb100196"><font color=#000080><tt>java.lang</tt></font></a></a>.
+
+<p>
+Dieses Paket wurde von den Entwicklern der Sprache als so wichtig
+angesehen, dass es bei jedem Compiler-Lauf automatisch importiert
+wird. Man kann sich das so vorstellen, als wenn am Anfang jeder Quelldatei
+implizit die folgende Anweisung stehen w&uuml;rde: 
+<font color="#000077">
+<pre>
+import java.lang.*;
+</pre>
+</font>
+
+<p>
+Ein expliziter Import von <a href="index_j.html#ixb100196"><font color=#000080><tt>java.lang</tt></font></a>
+ist daher niemals n&ouml;tig. Alle anderen Pakete m&uuml;ssen jedoch
+vor ihrer Verwendung importiert werden, wenn auf die Anwendung voll
+qualifizierter Klassennamen verzichtet werden soll. 
+
+<!-- Section -->
+
+<a name="sectlevel4id014002001002"></a>
+<h4>Die vordefinierten Pakete im JDK<a name="ixa100770"></a> </h4>
+
+<p>
+W&auml;hrend beim Wechsel der Java-Versionen die Sprachspezifikation
+relativ stabil geblieben ist, hat sich der Umfang der Laufzeitbibliothek
+um ein Vielfaches erh&ouml;ht. Dies zeigt sich unter anderem an der
+gestiegenen Anzahl an vordefinierten Paketen, die mit dem JDK ausgeliefert
+werden (siehe <a href="k100092.html#vordefiniertestdpakete">Tabelle 14.1</a>
+und <a href="k100092.html#vordefinierteextpakete">Tabelle 14.2</a>).
+Sie stieg von acht Standardpaketen im JDK 1.0 auf &uuml;ber 200 seit
+der Java 7 Standard Edition. <a name="vordefiniertestdpakete"></a>
+
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=33%><b>Paket</b></td>
+<td valign=top align=left width=66%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100771"><a href="index_j.html#ixb100608"><font color=#000080><tt>java.applet</tt></font></a></a></td>
+<td valign=top align=left>Applets </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100772"><a href="index_j.html#ixb100198"><font color=#000080><tt>java.awt</tt></font></a></a></td>
+<td valign=top align=left>Das Abstract Windowing Toolkit inkl. diverser
+Unterpakete </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100773"><a href="index_j.html#ixb100609"><font color=#000080><tt>java.beans</tt></font></a></a></td>
+<td valign=top align=left>Java Beans </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100774"><a href="index_j.html#ixb100197"><font color=#000080><tt>java.io</tt></font></a></a></td>
+<td valign=top align=left>Bildschirm- und Datei-I/O </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100775"><a href="index_j.html#ixb100196"><font color=#000080><tt>java.lang</tt></font></a></a></td>
+<td valign=top align=left>Elementare Sprachunterst&uuml;tzung </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100776"><a href="index_j.html#ixb100610"><font color=#000080><tt>java.lang.ref</tt></font></a></a></td>
+<td valign=top align=left>Referenz-Objekte </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100777"><a href="index_j.html#ixb100611"><font color=#000080><tt>java.lang.reflect</tt></font></a></a></td>
+<td valign=top align=left>Reflection-API </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100778"><a href="index_j.html#ixb100612"><font color=#000080><tt>java.math</tt></font></a></a></td>
+<td valign=top align=left>Flie&szlig;komma-Arithmetik </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100779"><a href="index_j.html#ixb100202"><font color=#000080><tt>java.net</tt></font></a></a></td>
+<td valign=top align=left>Netzwerkunterst&uuml;tzung </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100780"><a href="index_j.html#ixb100613"><font color=#000080><tt>java.nio</tt></font></a></a></td>
+<td valign=top align=left>Das seit dem JDK 1.4 vorhandene <a name="ixa100781"><i>New I/O
+Package</i></a> </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100782"><a href="index_j.html#ixb100615"><font color=#000080><tt>java.rmi</tt></font></a></a></td>
+<td valign=top align=left>Remote Method Invocation (RMI) </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100783"><a href="index_j.html#ixb100616"><font color=#000080><tt>java.security</tt></font></a></a></td>
+<td valign=top align=left>Security-Dienste </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100784"><a href="index_j.html#ixb100201"><font color=#000080><tt>java.sql</tt></font></a></a></td>
+<td valign=top align=left>Datenbankzugriff (JDBC) </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100785"><a href="index_j.html#ixb100557"><font color=#000080><tt>java.text</tt></font></a></a></td>
+<td valign=top align=left>Internationalisierung </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100786"><a href="index_j.html#ixb100149"><font color=#000080><tt>java.util</tt></font></a></a></td>
+<td valign=top align=left>Diverse Utilities, Collection-Klassen und
+Datenstrukturen </td></tr>
+</table>
+<p><i>
+Tabelle 14.1: Wichtige Standardpakete des JDK </i></p>
+
+<p>
+Neben den Standardpaketen gibt es eine Reihe von <a name="ixa100787"><i>Standarderweiterungen</i></a>,
+deren Paketname mit <font color="#000077"><tt>javax.</tt></font><a name="ixa100788"></a>
+beginnt. Sie stellen erweiterte Funktionalit&auml;ten in einer oder
+mehreren <font color="#660099">.jar</font>-Dateien zur Verf&uuml;gung
+und werden typischerweise im Unterverzeichnis <font color="#660099">lib\ext</font>
+des JDK installiert. Im Gegensatz zu den Standardpaketen des JDK sind
+sie nicht unbedingt Bestandteil jedes Java-Entwicklungssystems und
+m&uuml;ssen nicht auf allen Plattformen zur Verf&uuml;gung stehen.
+Sie stellen h&auml;ufig gebrauchte Erweiterungen zur Verf&uuml;gung,
+deren Umfang die reinen Kernbibliotheken um ein Vielfaches &uuml;bertrifft:
+<a name="vordefinierteextpakete"></a>
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=33%><b>Paket</b></td>
+<td valign=top align=left width=66%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100789"><a href="index_j.html#ixb100619"><font color=#000080><tt>javax.accessibility</tt></font></a></a></td>
+<td valign=top align=left>Unterst&uuml;tzung f&uuml;r Braille-Zeilen
+und &auml;hnliche Ein-/Ausgabeger&auml;te </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100790"><a href="index_j.html#ixb100620"><font color=#000080><tt>javax.crypto</tt></font></a></a></td>
+<td valign=top align=left>Kryptografische Erweiterungen </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100791"><a href="index_j.html#ixb100621"><font color=#000080><tt>javax.imageio</tt></font></a></a></td>
+<td valign=top align=left>Lesen und Schreiben von Bilddateien </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100792"><a href="index_j.html#ixb100622"><font color=#000080><tt>javax.naming</tt></font></a></a></td>
+<td valign=top align=left>Zugriff auf Namens-Services </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100793"><a href="index_j.html#ixb100623"><font color=#000080><tt>javax.print</tt></font></a></a></td>
+<td valign=top align=left>Unterst&uuml;tzung zum Drucken </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100794"><a href="index_j.html#ixb100624"><font color=#000080><tt>javax.security.auth</tt></font></a></a></td>
+<td valign=top align=left>Authentifizierung und Autorisierung </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100795"><a href="index_j.html#ixb100625"><font color=#000080><tt>javax.sound</tt></font></a></a></td>
+<td valign=top align=left>Das Sound-API </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100796"><a href="index_j.html#ixb100200"><font color=#000080><tt>javax.swing</tt></font></a></a></td>
+<td valign=top align=left>Das SWING-Toolkit </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa100797"><a href="index_j.html#ixb100626"><font color=#000080><tt>javax.xml</tt></font></a></a></td>
+<td valign=top align=left>Zugriff auf XML-Dateien </td></tr>
+</table>
+<p><i>
+Tabelle 14.2: Wichtige Standarderweiterungen des JDK </i></p>
+
+<p>
+Des Weiteren sind einige Pakete im JDK enthalten, deren Inhalt von
+Dritten hergestellt wurde. Beispiele daf&uuml;r sind die diversen
+Pakete unterhalb der <a name="ixa100798"><a href="index_o.html#ixb100627"><font color=#000080><tt>org.omg</tt></font></a></a>-Hierarchie,
+mit deren Hilfe CORBA-Support<a name="ixa100799"></a> zur Verf&uuml;gung
+gestellt wird. Oder die Pakethierarchien <a name="ixa100800"><a href="index_o.html#ixb100629"><font color=#000080><tt>org.xml</tt></font></a></a>
+und <a name="ixa100801"><a href="index_o.html#ixb100630"><font color=#000080><tt>org.w3c</tt></font></a></a>,
+die Unterst&uuml;tzung zum Zugriff auf <a name="ixa100802"><i>XML-Dateien</i></a>
+zur Verf&uuml;gung stellen (siehe <a href="k100274.html#kapitelxml">Kapitel 43</a>).
+
+
+<!-- Section -->
+<a name="bedeutungpaketnamen"></a>
+<h3>14.2.2 Die Bedeutung der Paketnamen </h3>
+
+<p>
+Paketnamen bestehen in Java aus mehreren Komponenten, die durch Punkte
+voneinander getrennt sind. Neben der Aufgabe, die Paketnamen <i>visuell</i>
+zu strukturieren, hat die Unterteilung aber noch eine andere, sehr
+viel wichtigere Bedeutung. 
+
+<p>
+Jeder Teil eines mehrstufigen Paketnamens bezeichnet n&auml;mlich
+ein Unterverzeichnis auf dem Weg zu der gew&uuml;nschten Klassendatei.
+Soll beispielsweise eine Klasse aus dem Paket <a href="index_j.html#ixb100105"><font color=#000080><tt>java.awt.image</tt></font></a>
+eingebunden werden, sucht es der Java-Compiler im Unterverzeichnis
+<font color="#660099">java\awt\image</font>. Soll dagegen eine Klasse
+aus dem Paket <a name="ixa100803"><a href="index_c.html#ixb100632"><font color=#000080><tt>com.sun.image.codec.jpeg</tt></font></a></a>
+geladen werden, wird es im Unterverzeichnis <font color="#660099">com\sun\image\codec\jpeg</font>
+gesucht. Interessant ist in diesem Zusammenhang nat&uuml;rlich die
+Frage, in welchem Verzeichnis der Compiler mit der Suche beginnt.
+
+
+<!-- Section -->
+<a name="sectlevel4id014002002001"></a>
+<h4>Laden von Klassen </h4>
+
+<p>
+Mit dem JDK 1.2 wurde die Bedeutung der <a href="index_c.html#ixb100137"><font color=#000080><tt>CLASSPATH</tt></font></a>-Umgebungsvariable
+so definiert, dass sie nur zur Suche der <i>benutzerspezifischen</i>
+Klassen verwendet wird. Alle Standardpakete und Standarderweiterungen
+(beide zusammen werden seit dem JDK 1.2 <a name="ixa100804"><i>Bootstrap Classes</i></a>
+genannt) werden unabh&auml;ngig vom <a href="index_c.html#ixb100137"><font color=#000080><tt>CLASSPATH</tt></font></a>
+mit Hilfe der auf das Installationsverzeichnis verweisenden Systemeigenschaft
+<a name="ixa100805"><a href="index_s.html#ixb100634"><font color=#000080><tt>sun.boot.class.path</tt></font></a></a>
+gefunden. Sie wird bei der JDK-Installation automatisch gesetzt und
+sollte sp&auml;ter nicht mehr ver&auml;ndert werden. Der <a href="index_c.html#ixb100137"><font color=#000080><tt>CLASSPATH</tt></font></a>
+braucht also nur noch dann explizit gesetzt zu werden, wenn benutzerspezifische
+Klassen vorhanden sind, die nicht im aktuellen Verzeichnis liegen
+(Letzteres wird ebenfalls automatisch durchsucht). 
+
+<!-- Section -->
+
+<a name="sectlevel4id014002002002"></a>
+<h4>Umgekehrte Domain-Namen </h4>
+
+<p>
+Die Entwickler von Java haben sich einen Mechanismus ausgedacht, um
+auch bei sehr gro&szlig;en Projekten, an denen m&ouml;glicherweise
+viele Entwickler beteiligt sind, Namenskollisionen zwischen den beteiligten
+Klassen und Paketen zu vermeiden. Auch die Verwendung einer gro&szlig;en
+Anzahl unterschiedlicher Klassenbibliotheken von verschiedenen Herstellern
+sollte m&ouml;glich sein, ohne dass Namens&uuml;berschneidungen dies
+schon im Keim ersticken. 
+
+<p>
+Um diese Probleme zu l&ouml;sen, hat sich das Java-Team eine Vorgehensweise
+zur Vergabe von Paketnamen &uuml;berlegt, die an das <i>Domain-Namen</i>-System
+bei Internetadressen angelehnt ist. Danach sollte jeder Anbieter seine
+Pakete entsprechend dem eigenen Domain-Namen benennen, dabei allerdings
+die Namensbestandteile in umgekehrter Reihenfolge verwenden. 
+
+<p>
+So sollten beispielsweise die Klassen der Firma SUN, deren Domain-Name
+<font color="#000077"><tt>sun.com</tt></font> ist, in einem Paket
+<font color="#000077"><tt>com.sun</tt></font> oder in darunter befindlichen
+Subpaketen liegen. Da die Domain-Namen weltweit eindeutig sind, werden
+Namenskollisionen zwischen Paketen unterschiedlicher Hersteller auf
+diese Weise von vornherein vermieden. Beispiele f&uuml;r derartige
+Paketnamen liefert die Standardinstallation gleich mit. So stellt
+das JDK 1.2 diverse Pakete <font color="#000077"><tt>com.sun.*</tt></font>
+zur Verf&uuml;gung. Sie geh&ouml;ren nicht zum Standardsprachumfang
+eines Java-Entwicklungssystems, sondern werden als eigenst&auml;ndige
+Erweiterung mit dem JDK ausgeliefert. 
+
+<p>
+Unterhalb des Basispakets k&ouml;nnen Unterpakete beliebig geschachtelt
+werden. Die Namensvergabe liegt dabei in der Entscheidung des Unternehmens.
+Gibt es beispielsweise die Abteilungen <font color="#000077"><tt>is</tt></font>,
+<font color="#000077"><tt>se</tt></font> und <font color="#000077"><tt>tx</tt></font>
+in einem Unternehmen mit der Domain <font color="#000077"><tt>tl.de</tt></font>,
+kann es sinnvoll sein, diese Abteilungsnamen auch als Unterprojekte
+zu verwenden. Die von diesen Abteilungen erstellten Klassen w&uuml;rden
+dann in den Paketen <font color="#000077"><tt>de.tl.is</tt></font>,
+<font color="#000077"><tt>de.tl.se</tt></font> und <font color="#000077"><tt>de.tl.tx</tt></font>
+liegen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Der Vollst&auml;ndigkeit halber sollte man anmerken, dass es in der
+Praxis Ausnahmen zu dem hier beschriebenen System gibt, beispielsweise
+die Klassen der <font color="#000077"><tt>java.*</tt></font>- und
+<font color="#000077"><tt>javax.*</tt></font>-Hierarchie. Auch verwenden
+manche Entwickler ein Schema, bei dem die Top-Level-Domain ausgelassen
+wird. Die Paketnamen beginnen in diesem Fall nicht mit <font color="#000077"><tt>org</tt></font>
+oder <font color="#000077"><tt>com</tt></font>, sondern direkt mit
+dem zweiten Teil des Domain-Namens (oder einem &auml;hnlichen herstellerspezifischen
+K&uuml;rzel). Dadurch werden sie etwas k&uuml;rzer und sind leichter
+zu handhaben, aber die Gefahr von &Uuml;berschneidungen mit Paketen
+anderer Anbieter ist nat&uuml;rlich gr&ouml;&szlig;er.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="zuspaketeeinbinden"></a>
+<h3>14.2.3 Einbinden zus&auml;tzlicher Pakete<a name="ixa100806"></a>
+</h3>
+
+<p>
+In der Praxis wird man neben der Klassenbibliothek des JDK h&auml;ufig
+zus&auml;tzliche Pakete von Drittanbietern verwenden wollen. Um den
+Klassenpfad nicht unn&ouml;tig lang werden zu lassen, empfiehlt es
+sich, die Pakete in einem gemeinsamen Verzeichnis abzulegen. Falls
+sich alle Entwickler von Libraries an das oben besprochene Schema
+zur Vergabe von Paketnamen halten, kann es keine &Uuml;berschneidungen
+geben. 
+
+<p>
+Als Beispiel wollen wir einige Java-Klassen des Autors (zu finden
+als Datei <font color="#660099">gkjava.zip</font> unter <a href="http://www.gkrueger.com">http://www.gkrueger.com</a>
+oder auf der DVD zum Buch im Verzeichnis <font color="#660099">\misc</font>)
+und die jar-Datei des JUnit-Projekts von Erich Gamma, Kent Beck und
+anderen (<a href="http://www.junit.org">http://www.junit.org</a>)
+installieren: 
+<ul>
+<li>Zun&auml;chst legen wir ein gemeinsames Unterverzeichnis f&uuml;r
+unsere Klassendateien an, beispielsweise <font color="#660099">c:\classes</font>.
+<li>Nun wird die <font color="#660099">.zip</font>-Datei mit den Klassen
+des Autors geladen und im Verzeichnis <font color="#660099">c:\classes</font>
+ausgepackt. Da alle Paketnamen mit <font color="#000077"><tt>gk</tt></font>
+beginnen, landen alle Dateien im Unterverzeichnis <font color="#660099">gk</font>.
+<li>Auf die gleiche Weise packen wir die Klassendateien des JUnit-Projekts
+aus. Alle Klassen liegen im Paket <font color="#000077"><tt>org</tt></font>
+und seinen Unterpaketen und im Paket <font color="#000077"><tt>junit</tt></font>
+und landen damit in den entsprechenden Unterverzeichnissen.
+<li>Nun braucht lediglich noch der <a name="ixa100807"><a href="index_c.html#ixb100137"><font color=#000080><tt>CLASSPATH</tt></font></a></a>
+so gesetzt zu werden, dass er das Verzeichnis <font color="#660099">c:\classes</font>
+beinhaltet: 
+<font color="#000077">
+<pre>
+set CLASSPATH=.;c:\classes
+</pre>
+</font>
+</ul>
+
+<p>
+Alle Libraries, die sich an diese Konventionen halten, k&ouml;nnen
+in der beschriebenen Weise installiert werden. Probleme gibt es nur,
+wenn ein Anbieter seine Klassendateien nicht in Paketen ablegt. In
+diesem Fall m&uuml;ssten die Klassendateien in das aktuelle Verzeichnis
+oder nach <font color="#660099">c:\classes</font> kopiert werden.
+Das w&uuml;rde bei Klassendateien von mehr als einem Anbieter nat&uuml;rlich
+schnell zum Chaos f&uuml;hren, kommt aber in der Praxis gl&uuml;cklicherweise
+kaum noch vor. 
+
+<p>
+Beide Varianten sind unbefriedigend und es bleibt zu hoffen, dass
+die Anbieter von Java-Klassenbibliotheken sich verst&auml;rkt an die
+Namenskonventionen des Java-Teams halten werden. 
+
+<!-- Section -->
+
+<a name="sectlevel3id014002004"></a>
+<h3>14.2.4 <a name="ixa100808">Erstellen eigener Pakete</a><a name="ixa100809"></a></h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id014002004001"></a>
+<h4>Benannte Pakete </h4>
+
+<p>
+Bisher wurde nur gezeigt, wie man Klassen aus fremden Paketen verwendet,
+nicht aber, wie man selbst Pakete erstellt. Gl&uuml;cklicherweise
+ist das aber keine Aufgabe f&uuml;r Spezialisten, sondern sehr einfach
+mit Bordmitteln realisierbar. 
+
+<p>
+Um eine Klasse einem ganz bestimmten Paket zuzuordnen, muss lediglich
+am Anfang des Quelltextes eine geeignete <a name="ixa100810"><a href="index_p.html#ixb100637"><font color=#000080><tt>package</tt></font></a></a>-Anweisung
+verwendet werden. Diese besteht (analog zur <a href="index_i.html#ixb100148"><font color=#000080><tt>import</tt></font></a>-Anweisung)
+aus dem Schl&uuml;sselwort <a href="index_p.html#ixb100637"><font color=#000080><tt>package</tt></font></a>
+und dem Namen des Pakets, dem die nachfolgende Klasse zugeordnet werden
+soll. Die <a href="index_p.html#ixb100637"><font color=#000080><tt>package</tt></font></a>-Anweisung
+muss als erste Anweisung in einer Quelldatei stehen, so dass der Compiler
+sie noch vor den <a href="index_i.html#ixb100148"><font color=#000080><tt>import</tt></font></a>-Anweisungen
+findet. 
+
+<p>
+Der Aufbau und die Bedeutung der Paketnamen in der <a href="index_p.html#ixb100637"><font color=#000080><tt>package</tt></font></a>-Anweisung
+entsprechen exakt dem der <a href="index_i.html#ixb100148"><font color=#000080><tt>import</tt></font></a>-Anweisung.
+Der Compiler l&ouml;st ebenso wie beim <a href="index_i.html#ixb100148"><font color=#000080><tt>import</tt></font></a>
+den dort angegebenen hierarchischen Namen in eine Kette von Unterverzeichnissen
+auf, an deren Ende die Quelldatei steht. Neben der Quelldatei wird
+auch die Klassendatei in diesem Unterverzeichnis erstellt. 
+
+<p>
+Da der Java-Compiler eingebundene Quelldateien, die noch nicht &uuml;bersetzt
+sind, w&auml;hrend der &Uuml;bersetzung einer anderen Klasse automatisch
+mit &uuml;bersetzt, ist das Erstellen eines neuen Pakets sehr einfach.
+Wir wollen uns ein Beispiel ansehen, bei dem zwei Pakete <font color="#000077"><tt>demo</tt></font>
+und <font color="#000077"><tt>demo.tools</tt></font> angelegt und
+die darin enthaltenen Klassen <font color="#000077"><tt>A</tt></font>,
+<font color="#000077"><tt>B</tt></font> und <font color="#000077"><tt>C</tt></font>
+in einer Klasse <font color="#000077"><tt>PackageDemo</tt></font>
+verwendet werden. Am einfachsten ist es, wie nachfolgend beschrieben
+vorzugehen. 
+
+<p>
+Wir gehen davon aus, dass der <a name="ixa100811"><a href="index_c.html#ixb100137"><font color=#000080><tt>CLASSPATH</tt></font></a></a>
+das aktuelle Verzeichnis enth&auml;lt (also beispielsweise den Inhalt
+<font color="#000077"><tt>".;c:\classes"</tt></font> hat), und legen
+im aktuellen Verzeichnis die Unterverzeichnisse <font color="#660099">demo</font>
+und <font color="#660099">demo\tools</font> an. 
+<ul>
+<li>Zun&auml;chst wird im Unterverzeichnis <font color="#660099">demo</font>
+die Datei <font color="#660099">A.java</font> angelegt: 
+<a name="listingid014003"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">package</font> demo;
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> A
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> hello()
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    System.out.println(<font color="#0000FF">"Hier ist A"</font>);
+<font color="#555555">008 </font>  }
+<font color="#555555">009 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/demo/A.java"><font color="#000055" size=-1>demo/A.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 14.3: Die Klasse A des Pakets demo</i></p>
+
+<p>
+Sie enth&auml;lt die Anweisung <font color="#000077"><tt>package demo;</tt></font>,
+um anzuzeigen, dass die Klasse <font color="#000077"><tt>A</tt></font>
+zum Paket <font color="#000077"><tt>demo</tt></font> geh&ouml;rt.
+<li>Im Unterverzeichnis <font color="#660099">demo</font> wird weiterhin
+die Datei <font color="#660099">B.java</font> angelegt: 
+<a name="listingid014004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">package</font> demo;
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> B
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> hello()
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    System.out.println(<font color="#0000FF">"Hier ist B"</font>);
+<font color="#555555">008 </font>  }
+<font color="#555555">009 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/demo/B.java"><font color="#000055" size=-1>demo/B.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 14.4: Die Klasse B des Pakets demo</i></p>
+
+<p>
+Auch diese Quelldatei enth&auml;lt die Anweisung <font color="#000077"><tt>package
+demo;</tt></font>, um anzuzeigen, dass die Klasse zum Paket <font color="#000077"><tt>demo</tt></font>
+geh&ouml;rt. 
+<li>Im Unterverzeichnis <font color="#660099">demo\tools</font> wird
+die Datei <font color="#660099">C.java</font> angelegt: 
+<a name="listingid014005"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">package</font> demo.tools;
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> C
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> hello()
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    System.out.println(<font color="#0000FF">"Hier ist C"</font>);
+<font color="#555555">008 </font>  }
+<font color="#555555">009 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/demo/tools/C.java"><font color="#000055" size=-1>demo/tools/C.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 14.5: Die Klasse C des Pakets demo.tools</i></p>
+
+<p>
+Diese Quelldatei enth&auml;lt die Anweisung <font color="#000077"><tt>package
+demo.tools;</tt></font>, um anzuzeigen, dass die Klasse zum Paket
+<font color="#000077"><tt>demo.tools</tt></font> geh&ouml;rt. 
+<li>Nun wird im Stammverzeichnis die Datei <font color="#660099">PackageDemo.java</font>
+angelegt: 
+<a name="listingid014006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">import</font> demo.*;
+<font color="#555555">002 </font><font color="#0000AA">import</font> demo.tools.*;
+<font color="#555555">003 </font>
+<font color="#555555">004 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> PackageDemo
+<font color="#555555">005 </font>{
+<font color="#555555">006 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">007 </font>  {
+<font color="#555555">008 </font>    (<font color="#0000AA">new</font> A()).hello();
+<font color="#555555">009 </font>    (<font color="#0000AA">new</font> B()).hello();
+<font color="#555555">010 </font>    (<font color="#0000AA">new</font> C()).hello();
+<font color="#555555">011 </font>  }
+<font color="#555555">012 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/PackageDemo.java"><font color="#000055" size=-1>PackageDemo.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 14.6: Verwendung der Klassen aus selbst definierten Paketen</i></p>
+</ul>
+
+<p>
+Ohne vorher die Klassen <font color="#000077"><tt>A</tt></font>, <font color="#000077"><tt>B</tt></font>
+oder <font color="#000077"><tt>C</tt></font> separat &uuml;bersetzen
+zu m&uuml;ssen, kann nun einfach <font color="#000077"><tt>PackageDemo</tt></font>
+kompiliert werden. Der Compiler erkennt die Verwendung von <font color="#000077"><tt>A</tt></font>,
+<font color="#000077"><tt>B</tt></font> und <font color="#000077"><tt>C</tt></font>,
+findet die Paketverzeichnisse <font color="#660099">demo</font> und
+<font color="#660099">demo\tools</font> und erkennt, dass die Quellen
+noch nicht &uuml;bersetzt wurden. Er erzeugt dann aus den <font color="#660099">.java</font>-Dateien
+<a name="ixa100812"></a> die zugeh&ouml;rigen <font color="#660099">.class</font>-Dateien
+<a name="ixa100813"></a> (in demselben Verzeichnis wie die Quelldateien),
+bindet sie ein und &uuml;bersetzt schlie&szlig;lich die Klasse <font color="#000077"><tt>PackageDemo</tt></font>.
+Die Ausgabe des Programms ist: 
+<font color="#333300">
+<pre>
+Hier ist A
+Hier ist B
+Hier ist C
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="sectlevel4id014002004002"></a>
+<h4>Das <a name="ixa100814">Default-Paket</a> </h4>
+
+<p>
+W&uuml;rde nur dann ein eigenes Paket erzeugt werden, wenn die Quelldatei
+eine <a href="index_p.html#ixb100637"><font color=#000080><tt>package</tt></font></a>-Anweisung
+enth&auml;lt, m&uuml;sste man sich fragen, zu welchem Paket die Klassen
+geh&ouml;ren, in deren Quelldatei die <a href="index_p.html#ixb100637"><font color=#000080><tt>package</tt></font></a>-Anweisung
+fehlt (was ja erlaubt ist). Die Antwort auf diese Frage lautet, dass
+es in Java ein <i>Default-Paket</i> gibt, das genau dann verwendet
+wird, wenn keine andere Zuordnung getroffen wurde. 
+
+<p>
+Das Default-Paket ist ein Zugest&auml;ndnis an kleinere Programme
+oder einfache Programmierprojekte, bei denen es sich nicht lohnt,
+eigene Pakete anzulegen. Ohne Teile des Projekts in Unterverzeichnissen
+abzulegen und durch <a href="index_i.html#ixb100148"><font color=#000080><tt>import</tt></font></a>-
+und <a href="index_p.html#ixb100637"><font color=#000080><tt>package</tt></font></a>-Anweisungen
+unn&ouml;tigen Aufwand zu treiben, ist es auf diese Weise m&ouml;glich,
+Quelldateien einfach im aktuellen Verzeichnis abzulegen, dort zu kompilieren
+und automatisch einzubinden. Klassen des Default-Pakets k&ouml;nnen
+ohne explizite <a href="index_i.html#ixb100148"><font color=#000080><tt>import</tt></font></a>-Anweisung
+verwendet werden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Ein Java-Compiler braucht laut Spezifikation nur ein einziges Default-Paket
+zur Verf&uuml;gung zu stellen. Typischerweise wird dieses Konzept
+aber so realisiert, dass jedes unterschiedliche Verzeichnis die Rolle
+eines Default-Pakets &uuml;bernimmt. Auf diese Weise lassen sich beliebig
+viele Default-Pakete erzeugen, indem bei Bedarf einfach ein neues
+Unterverzeichnis angelegt wird und die Quelldateien eines Java-Projekts
+dort abgelegt werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id014002004003"></a>
+<h4>Das public-Attribut<a name="ixa100815"></a> </h4>
+
+<p>
+Es gibt noch eine wichtige Besonderheit bei der Deklaration von Klassen,
+die von anderen Klassen verwendet werden sollen. Damit eine Klasse
+<font color="#000077"><tt>A</tt></font> eine andere Klasse <font color="#000077"><tt>B</tt></font>
+einbinden darf, muss n&auml;mlich eine der beiden folgenden Bedingungen
+erf&uuml;llt sein: 
+<ul>
+<li>Entweder geh&ouml;ren <font color="#000077"><tt>A</tt></font>
+und <font color="#000077"><tt>B</tt></font> zu demselben Paket oder
+<li>die Klasse <font color="#000077"><tt>B</tt></font> wurde als <a href="index_p.html#ixb100083"><font color=#000080><tt>public</tt></font></a>
+deklariert.
+</ul>
+
+<p>
+Wenn also nur Default-Pakete verwendet werden, spielt es keine Rolle,
+ob eine Klasse vom Typ <a href="index_p.html#ixb100083"><font color=#000080><tt>public</tt></font></a>
+ist, denn alle Klassen liegen in demselben Paket. Werden aber Klassen
+aus externen Paketen eingebunden, so gelingt das nur, wenn die einzubindende
+Klasse vom Typ <a href="index_p.html#ixb100083"><font color=#000080><tt>public</tt></font></a>
+ist. Andernfalls verweigert der Compiler deren Einbindung und bricht
+die &Uuml;bersetzung mit einer Fehlermeldung ab. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100090.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100091.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100093.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100097.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

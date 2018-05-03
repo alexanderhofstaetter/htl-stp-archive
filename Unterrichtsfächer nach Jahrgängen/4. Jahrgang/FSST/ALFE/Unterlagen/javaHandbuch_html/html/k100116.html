@@ -1,0 +1,767 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100114.html;106,k100115.html;107,k100117.html;108,k100121.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100114.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100115.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100117.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100121.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 17 - Utility-Klassen I
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id017002"></a>
+<h2>17.2 Die Klassen Date, Calendar und GregorianCalendar<a name="ixa101039"></a>
+</h2>
+<hr>
+<ul>
+<li><a href="k100116.html#sectlevel2id017002">17.2 Die Klassen Date, Calendar und GregorianCalendar</a>
+<ul>
+<li><a href="k100116.html#sectlevel3id017002001">17.2.1 Konstruktoren</a>
+<li><a href="k100116.html#sectlevel3id017002002">17.2.2 Abfragen und Setzen von Datumsbestandteilen</a>
+<li><a href="k100116.html#sectlevel3id017002003">17.2.3 Vergleiche und Datums-/Zeitarithmetik</a>
+<li><a href="k100116.html#sectlevel3id017002004">17.2.4 Umwandlung zwischen Date und Calendar</a>
+</ul>
+</ul>
+<hr>
+
+<p>
+In den Anfangsjahren von Java war zur Darstellung und Manipulation
+von Datumswerten die Klasse <a name="ixa101040"><a href="index_d.html#ixb100559"><font color=#000080><tt>Date</tt></font></a></a>
+vorgesehen. Leider war sie nicht ganz fehlerfrei und aufgrund diverser
+Einschr&auml;nkungen nur sehr bedingt zu gebrauchen. Ab der Version
+1.1 des JDK gibt es neben <a href="index_d.html#ixb100559"><font color=#000080><tt>Date</tt></font></a>
+die Klasse <a name="ixa101041"><a href="index_c.html#ixb100558"><font color=#000080><tt>Calendar</tt></font></a></a>
+zur Verarbeitung von Datumswerten. Obgleich der Name den Anschein
+erwecken mag, dass ein Objekt vom Typ <a href="index_c.html#ixb100558"><font color=#000080><tt>Calendar</tt></font></a>
+ein visueller Kalender ist, der als Komponente in GUI-basierten Programmen
+verwendet werden kann, ist dies nicht der Fall. Stattdessen stellt
+<a href="index_c.html#ixb100558"><font color=#000080><tt>Calendar</tt></font></a>
+eine Kapselung f&uuml;r <a href="index_d.html#ixb100559"><font color=#000080><tt>Date</tt></font></a>
+dar, deren Aufgabe es ist, ein Datums-/Uhrzeitobjekt zu realisieren
+und Methoden zur Konstruktion, zum Ver&auml;ndern und Auslesen von
+Datums-/Uhrzeitbestandteilen und f&uuml;r die Zeit- und Datumsarithmetik
+zur Verf&uuml;gung zu stellen. 
+
+<p>
+Zun&auml;chst ist <a href="index_c.html#ixb100558"><font color=#000080><tt>Calendar</tt></font></a>
+nichts weiter als eine abstrakte Basisklasse. Sie enth&auml;lt die
+Methoden, mit denen auf die einzelnen Elemente konkreter Kalenderklassen
+zugegriffen werden kann bzw. mit denen diese Klassen manipuliert werden
+k&ouml;nnen. Als einzige konkrete Ableitung von <a href="index_c.html#ixb100558"><font color=#000080><tt>Calendar</tt></font></a>
+steht die Klasse <a name="ixa101042"><a href="index_g.html#ixb100806"><font color=#000080><tt>GregorianCalendar</tt></font></a></a>
+zur Verf&uuml;gung, die ein Datum nach dem hierzulande verwendeten
+gregorianischen Kalender implementiert. Die Komplexit&auml;t der Klassen
+<a href="index_c.html#ixb100558"><font color=#000080><tt>Calendar</tt></font></a>
+und <a href="index_g.html#ixb100806"><font color=#000080><tt>GregorianCalendar</tt></font></a>
+kommt vor allem durch folgende Ursachen zustande: 
+<ul>
+<li>Datumsarithmetik ist grunds&auml;tzlich eine nicht ganz triviale
+Angelegenheit.
+<li>Lokale Besonderheiten sind zu ber&uuml;cksichtigen (Ausgabeformatierung,
+an welchem Tag beginnt die Woche, 12/24-Stunden-Darstellung, wie viele
+Tage muss die erste Woche des Jahres mindestens haben usw.).
+<li><a name="ixa101043">Zeitzonen</a> sind zu ber&uuml;cksichtigen.
+<li>Schaltjahre oder -sekunden und &auml;hnliche Abweichungen zu astronomischen
+Kalendern m&uuml;ssen ber&uuml;cksichtigt werden.
+<li>Weltweit kommen viele unterschiedliche Kalender zum Einsatz.
+</ul>
+
+<p>
+In der Tat ist die Implementierung der Kalenderklassen des JDK komplex
+und war lange Zeit fehlerbehaftet. Sie wird insbesondere dadurch erschwert,
+dass ein Datumsobjekt nicht nur aus den einzelnen Feldern f&uuml;r
+Tag, Monat, Jahr usw. besteht, sondern zus&auml;tzlich einen ganzzahligen
+Wert des Typs <a href="index_l.html#ixb100252"><font color=#000080><tt>long</tt></font></a>
+enth&auml;lt, der das Datum als <i>Anzahl der Millisekunden seit dem
+1.1.1970</i> speichert. Beide Werte m&uuml;ssen auch nach Ver&auml;nderungen
+einzelner Bestandteile des Datumsobjekts konsistent gehalten werden.
+
+<p>
+Auch die Bedienung der Kalenderklassen ist nicht so eing&auml;ngig
+wie in vielen anderen Programmiersprachen. Hinderlich ist dabei oft
+die Tatsache, dass neben Datum und Uhrzeit grunds&auml;tzlich auch
+die Zeitzone mit betrachtet wird. Wir wollen in diesem Abschnitt einen
+pragmatischen Ansatz w&auml;hlen und nur die wesentlichen Eigenschaften
+der beiden Klassen vorstellen. Fortgeschrittenere Themen wie Zeitzonenkalkulation
+oder Lokalisierung werden au&szlig;en vor bleiben. 
+
+<!-- Section -->
+
+<a name="sectlevel3id017002001"></a>
+<h3>17.2.1 Konstruktoren </h3>
+
+<p>
+Da die Klasse <a href="index_c.html#ixb100558"><font color=#000080><tt>Calendar</tt></font></a>
+abstrakt ist, m&uuml;ssen konkrete Datumsobjekte aus der Klasse <a href="index_g.html#ixb100806"><font color=#000080><tt>GregorianCalendar</tt></font></a>
+erzeugt werden. Dazu stehen folgende Konstruktoren zur Verf&uuml;gung:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public GregorianCalendar()
+
+public GregorianCalendar(int year, int month, int date)
+
+public GregorianCalendar(
+   int year, int month, int date,
+   int hour, int minute
+)
+
+public GregorianCalendar(
+   int year, int month, int date,
+   int hour, int minute, int second
+)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/GregorianCalendar.html" onClick="this.href=getApiDoc('java.util.GregorianCalendar')"><font color="#660066" size=-1>java.util.GregorianCalendar</font></a></td>
+</tr>
+</table>
+
+<p>
+Der parameterlose Konstruktor initialisiert das Datumsobjekt mit dem
+aktuellen Datum und der aktuellen Uhrzeit. Die &uuml;brigen Konstruktoren
+weisen die als Parameter &uuml;bergebenen Werte zu. Neben den hier
+vorgestellten Konstruktoren gibt es noch weitere, die es erlauben,
+die Zeitzone und Lokalisierung zu ver&auml;ndern. Standardm&auml;&szlig;ig
+werden die lokale Zeitzone und die aktuelle Lokalisierung verwendet.
+
+
+<!-- Section -->
+<a name="sectlevel3id017002002"></a>
+<h3>17.2.2 Abfragen und Setzen von Datumsbestandteilen </h3>
+
+<p>
+Das Abfragen und Setzen von Datumsbestandteilen erfolgt mit den Methoden
+<a name="ixa101044"><a href="index_s.html#ixb100160"><font color=#000080><tt>set</tt></font></a></a>
+und <a name="ixa101045"><a href="index_g.html#ixb100713"><font color=#000080><tt>get</tt></font></a></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public final int get(int field)
+
+public final void set(int field, int value)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Calendar.html" onClick="this.href=getApiDoc('java.util.Calendar')"><font color="#660066" size=-1>java.util.Calendar</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_g.html#ixb100713"><font color=#000080><tt>get</tt></font></a>
+und <a href="index_s.html#ixb100160"><font color=#000080><tt>set</tt></font></a>
+erwarten als erstes Argument einen Feldbezeichner, der angibt, auf
+welches der diversen Datums-/Zeitfelder des Objekts zugegriffen werden
+soll. Als R&uuml;ckgabewert liefert <a href="index_g.html#ixb100713"><font color=#000080><tt>get</tt></font></a>
+den Inhalt des angegebenen Felds; <a href="index_s.html#ixb100160"><font color=#000080><tt>set</tt></font></a>
+schreibt den als zweiten Parameter <font color="#000077"><tt>value</tt></font>
+&uuml;bergebenen Wert in das Feld hinein. <a href="k100116.html#feldergregor">Tabelle 17.1</a>
+enth&auml;lt eine &Uuml;bersicht der in <a href="index_c.html#ixb100558"><font color=#000080><tt>Calendar</tt></font></a>
+vorgesehenen Feldbezeichner, ihrer Wertegrenzen und Bedeutung: <a name="feldergregor"></a>
+
+<p>
+<table cols=4 border width=100%>
+
+<tr>
+<td valign=top align=left width=16%><b>Feldbezeichner</b></td>
+<td valign=top align=left width=16%><b>Minimalwert</b></td>
+<td valign=top align=left width=16%><b>Maximalwert</b></td>
+<td valign=top align=left width=50%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101046"><a href="index_e.html#ixb100808"><font color=#000080><tt>Calendar.ERA</tt></font></a></a></td>
+<td valign=top align=left>0</td>
+<td valign=top align=left>1</td>
+<td valign=top align=left>&Auml;ra </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101047"><a href="index_y.html#ixb100809"><font color=#000080><tt>Calendar.YEAR</tt></font></a></a></td>
+<td valign=top align=left>1</td>
+<td valign=top align=left>5,000,000</td>
+<td valign=top align=left>Jahr </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101048"><a href="index_m.html#ixb100810"><font color=#000080><tt>Calendar.MONTH</tt></font></a></a></td>
+<td valign=top align=left>0</td>
+<td valign=top align=left>11</td>
+<td valign=top align=left>Monat - 1 </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101049"><a href="index_w.html#ixb100811"><font color=#000080><tt>Calendar.WEEK_OF_YEAR</tt></font></a></a></td>
+<td valign=top align=left>1</td>
+<td valign=top align=left>54</td>
+<td valign=top align=left>Woche im Jahr </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101050"><a href="index_w.html#ixb100812"><font color=#000080><tt>Calendar.WEEK_OF_MONTH</tt></font></a></a></td>
+<td valign=top align=left>1</td>
+<td valign=top align=left>6</td>
+<td valign=top align=left>Woche im Monat </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101051"><a href="index_d.html#ixb100813"><font color=#000080><tt>Calendar.DAY_OF_MONTH</tt></font></a></a></td>
+<td valign=top align=left>1</td>
+<td valign=top align=left>31</td>
+<td valign=top align=left>Tag im Monat </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101052"><a href="index_d.html#ixb100814"><font color=#000080><tt>Calendar.DAY_OF_YEAR</tt></font></a></a></td>
+<td valign=top align=left>1</td>
+<td valign=top align=left>366</td>
+<td valign=top align=left>Tag im Jahr </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101053"><a href="index_d.html#ixb100815"><font color=#000080><tt>Calendar.DAY_OF_WEEK</tt></font></a></a></td>
+<td valign=top align=left>1</td>
+<td valign=top align=left>7</td>
+<td valign=top align=left>Wochentag </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101054"><a href="index_d.html#ixb100816"><font color=#000080><tt>Calendar.DAY_OF_WEEK_IN_MONTH</tt></font></a></a></td>
+<td valign=top align=left>-1</td>
+<td valign=top align=left>6</td>
+<td valign=top align=left>Wochentagswiederholung im Monat </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101055"><a href="index_a.html#ixb100817"><font color=#000080><tt>Calendar.AM_PM</tt></font></a></a></td>
+<td valign=top align=left>0</td>
+<td valign=top align=left>1</td>
+<td valign=top align=left>Vor-/nachmittags </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101056"><a href="index_h.html#ixb100818"><font color=#000080><tt>Calendar.HOUR</tt></font></a></a></td>
+<td valign=top align=left>0</td>
+<td valign=top align=left>12</td>
+<td valign=top align=left>Amerik. Stunde </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101057"><a href="index_h.html#ixb100819"><font color=#000080><tt>Calendar.HOUR_OF_DAY</tt></font></a></a></td>
+<td valign=top align=left>0</td>
+<td valign=top align=left>23</td>
+<td valign=top align=left>Stunde </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101058"><a href="index_m.html#ixb100820"><font color=#000080><tt>Calendar.MINUTE</tt></font></a></a></td>
+<td valign=top align=left>0</td>
+<td valign=top align=left>59</td>
+<td valign=top align=left>Minute </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101059"><a href="index_s.html#ixb100821"><font color=#000080><tt>Calendar.SECOND</tt></font></a></a></td>
+<td valign=top align=left>0</td>
+<td valign=top align=left>59</td>
+<td valign=top align=left>Sekunde </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101060"><a href="index_m.html#ixb100822"><font color=#000080><tt>Calendar.MILLISECOND</tt></font></a></a></td>
+<td valign=top align=left>0</td>
+<td valign=top align=left>999</td>
+<td valign=top align=left>Millisekunde </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101061"><a href="index_z.html#ixb100823"><font color=#000080><tt>Calendar.ZONE_OFFSET</tt></font></a></a></td>
+<td valign=top align=left>-12*60*60*1000</td>
+<td valign=top align=left>12*60*60*1000</td>
+<td valign=top align=left>Zeitzonenoffset </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa101062"><a href="index_d.html#ixb100824"><font color=#000080><tt>Calendar.DST_OFFSET</tt></font></a></a></td>
+<td valign=top align=left>0</td>
+<td valign=top align=left>1*60*60*1000</td>
+<td valign=top align=left>Sommerzeitoffset </td></tr>
+</table>
+<p><i>
+Tabelle 17.1: Feldbezeichner der Klasse Calendar </i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Beim Lesen und Setzen der Felder gibt es einige Besonderheiten zu
+beachten. So wird beispielsweise der Monat nicht von 1 bis 12 gemessen,
+sondern von 0 bis 11 - ein ziemlich t&uuml;ckischer Fehler, auf den
+auch erfahrene Programmierer immer mal wieder hereinfallen! Das Feld
+<a name="ixa101046"><a href="index_e.html#ixb100808"><font color=#000080><tt>ERA</tt></font></a></a>
+gibt an, ob das Datum vor Christi Geburt oder danach liegt. <a name="ixa101053"><a href="index_d.html#ixb100815"><font color=#000080><tt>DAY_OF_WEEK</tt></font></a></a>
+geht von 1 = Sonntag bis 7 = Samstag, es stehen aber auch symbolische
+Konstanten zur Verf&uuml;gung. <a name="ixa101061"><a href="index_z.html#ixb100823"><font color=#000080><tt>ZONE_OFFSET</tt></font></a></a>
+und <a name="ixa101062"><a href="index_d.html#ixb100824"><font color=#000080><tt>DST_OFFSET</tt></font></a></a>
+sind die Zeitzonen- und Sommerzeitabweichungen, die in Millisekunden
+gemessen werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Wir wollen uns die Verwendung der verschiedenen Felder an einem einfachen
+Beispiel ansehen. Das Programm zeigt auch die Verwendung einiger symbolischer
+Konstanten zur Darstellung von Wochentagen und der &Auml;ra (vor/nach
+Christi Geburt): 
+<a name="calendarfelder"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1702.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1702
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#00AA00">//Zuerst Ausgabe des aktuellen Datums</font>
+<font color="#555555">010 </font>    GregorianCalendar cal = <font color="#0000AA">new</font> GregorianCalendar();
+<font color="#555555">011 </font>    printCalendarInfo(cal);
+<font color="#555555">012 </font>    System.out.println(<font color="#0000FF">"---"</font>);
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>    <font color="#00AA00">//Nun Ausgabe der Informationen zum 22.6.1910,</font>
+<font color="#555555">015 </font>    <font color="#00AA00">//dem Geburtstag von Konrad Zuse</font>
+<font color="#555555">016 </font>    cal.set(Calendar.DATE, 22);
+<font color="#555555">017 </font>    cal.set(Calendar.MONTH, 6 - 1);
+<font color="#555555">018 </font>    cal.set(Calendar.YEAR, 1910);
+<font color="#555555">019 </font>    printCalendarInfo(cal);
+<font color="#555555">020 </font>  }
+<font color="#555555">021 </font>
+<font color="#555555">022 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> printCalendarInfo(GregorianCalendar cal)
+<font color="#555555">023 </font>  {
+<font color="#555555">024 </font>    <font color="#00AA00">//Aera</font>
+<font color="#555555">025 </font>    <font color="#006699">int</font> value = cal.get(Calendar.ERA);
+<font color="#555555">026 </font>    <font color="#0000AA">if</font> (value == cal.BC) {
+<font color="#555555">027 </font>      System.out.println(<font color="#0000FF">"Aera.......: vor Christi Geburt"</font>);
+<font color="#555555">028 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (value == cal.AD) {
+<font color="#555555">029 </font>      System.out.println(<font color="#0000FF">"Aera.......: Anno Domini"</font>);
+<font color="#555555">030 </font>    } <font color="#0000AA">else</font> {
+<font color="#555555">031 </font>      System.out.println(<font color="#0000FF">"Aera.......: unbekannt"</font>);
+<font color="#555555">032 </font>    }
+<font color="#555555">033 </font>    <font color="#00AA00">//Datum</font>
+<font color="#555555">034 </font>    System.out.println(
+<font color="#555555">035 </font>      <font color="#0000FF">"Datum......: "</font> +
+<font color="#555555">036 </font>      cal.get(Calendar.DATE) + <font color="#0000FF">"."</font> +
+<font color="#555555">037 </font>      (cal.get(Calendar.MONTH)+1) + <font color="#0000FF">"."</font> +
+<font color="#555555">038 </font>      cal.get(Calendar.YEAR)
+<font color="#555555">039 </font>    );
+<font color="#555555">040 </font>    <font color="#00AA00">//Zeit</font>
+<font color="#555555">041 </font>    System.out.println(
+<font color="#555555">042 </font>      <font color="#0000FF">"Zeit.......: "</font> +
+<font color="#555555">043 </font>      cal.get(Calendar.HOUR_OF_DAY) + <font color="#0000FF">":"</font> +
+<font color="#555555">044 </font>      cal.get(Calendar.MINUTE) + <font color="#0000FF">":"</font> +
+<font color="#555555">045 </font>      cal.get(Calendar.SECOND) + <font color="#0000FF">" (+"</font> +
+<font color="#555555">046 </font>      cal.get(Calendar.MILLISECOND) + <font color="#0000FF">" ms)"</font>
+<font color="#555555">047 </font>    );
+<font color="#555555">048 </font>    <font color="#00AA00">//Zeit, amerikanisch</font>
+<font color="#555555">049 </font>    System.out.print(
+<font color="#555555">050 </font>      <font color="#0000FF">"Am.Zeit....: "</font> +
+<font color="#555555">051 </font>      cal.get(Calendar.HOUR) + <font color="#0000FF">":"</font> +
+<font color="#555555">052 </font>      cal.get(Calendar.MINUTE) + <font color="#0000FF">":"</font> +
+<font color="#555555">053 </font>      cal.get(Calendar.SECOND)
+<font color="#555555">054 </font>    );
+<font color="#555555">055 </font>    value = cal.get(Calendar.AM_PM);
+<font color="#555555">056 </font>    <font color="#0000AA">if</font> (value == cal.AM) {
+<font color="#555555">057 </font>      System.out.println(<font color="#0000FF">" AM"</font>);
+<font color="#555555">058 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (value == cal.PM) {
+<font color="#555555">059 </font>      System.out.println(<font color="#0000FF">" PM"</font>);
+<font color="#555555">060 </font>    }
+<font color="#555555">061 </font>    <font color="#00AA00">//Tag</font>
+<font color="#555555">062 </font>    System.out.println(
+<font color="#555555">063 </font>      <font color="#0000FF">"Tag........: "</font> +
+<font color="#555555">064 </font>      cal.get(Calendar.DAY_OF_YEAR) + <font color="#0000FF">". im Jahr"</font>
+<font color="#555555">065 </font>    );
+<font color="#555555">066 </font>    System.out.println(
+<font color="#555555">067 </font>      <font color="#0000FF">"             "</font> +
+<font color="#555555">068 </font>      cal.get(Calendar.DAY_OF_MONTH) + <font color="#0000FF">". im Monat"</font>
+<font color="#555555">069 </font>    );
+<font color="#555555">070 </font>    <font color="#00AA00">//Woche</font>
+<font color="#555555">071 </font>    System.out.println(
+<font color="#555555">072 </font>      <font color="#0000FF">"Woche......: "</font> +
+<font color="#555555">073 </font>      cal.get(Calendar.WEEK_OF_YEAR) + <font color="#0000FF">". im Jahr"</font>
+<font color="#555555">074 </font>    );
+<font color="#555555">075 </font>    System.out.println(
+<font color="#555555">076 </font>      <font color="#0000FF">"             "</font> +
+<font color="#555555">077 </font>      cal.get(Calendar.WEEK_OF_MONTH) + <font color="#0000FF">". im Monat"</font>
+<font color="#555555">078 </font>    );
+<font color="#555555">079 </font>    <font color="#00AA00">//Wochentag</font>
+<font color="#555555">080 </font>    System.out.print(
+<font color="#555555">081 </font>      <font color="#0000FF">"Wochentag..: "</font> +
+<font color="#555555">082 </font>      cal.get(Calendar.DAY_OF_WEEK_IN_MONTH) +
+<font color="#555555">083 </font>      <font color="#0000FF">". "</font>
+<font color="#555555">084 </font>    );
+<font color="#555555">085 </font>    value = cal.get(Calendar.DAY_OF_WEEK);
+<font color="#555555">086 </font>    <font color="#0000AA">if</font> (value == cal.SUNDAY) {
+<font color="#555555">087 </font>      System.out.print(<font color="#0000FF">"Sonntag"</font>);
+<font color="#555555">088 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (value == cal.MONDAY) {
+<font color="#555555">089 </font>      System.out.print(<font color="#0000FF">"Montag"</font>);
+<font color="#555555">090 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (value == cal.TUESDAY) {
+<font color="#555555">091 </font>      System.out.print(<font color="#0000FF">"Dienstag"</font>);
+<font color="#555555">092 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (value == cal.WEDNESDAY) {
+<font color="#555555">093 </font>      System.out.print(<font color="#0000FF">"Mittwoch"</font>);
+<font color="#555555">094 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (value == cal.THURSDAY) {
+<font color="#555555">095 </font>      System.out.print(<font color="#0000FF">"Donnerstag"</font>);
+<font color="#555555">096 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (value == cal.FRIDAY) {
+<font color="#555555">097 </font>      System.out.print(<font color="#0000FF">"Freitag"</font>);
+<font color="#555555">098 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (value == cal.SATURDAY) {
+<font color="#555555">099 </font>      System.out.print(<font color="#0000FF">"Samstag"</font>);
+<font color="#555555">100 </font>    } <font color="#0000AA">else</font> {
+<font color="#555555">101 </font>      System.out.print(<font color="#0000FF">"unbekannt"</font>);
+<font color="#555555">102 </font>    }
+<font color="#555555">103 </font>    System.out.println(<font color="#0000FF">" im Monat"</font>);
+<font color="#555555">104 </font>    <font color="#00AA00">//Zeitzone</font>
+<font color="#555555">105 </font>    System.out.println(
+<font color="#555555">106 </font>      <font color="#0000FF">"Zeitzone...: "</font> +
+<font color="#555555">107 </font>      cal.get(Calendar.ZONE_OFFSET)/3600000 +
+<font color="#555555">108 </font>      <font color="#0000FF">" Stunden"</font>
+<font color="#555555">109 </font>    );
+<font color="#555555">110 </font>    System.out.println(
+<font color="#555555">111 </font>      <font color="#0000FF">"Sommerzeit.: "</font> +
+<font color="#555555">112 </font>      cal.get(Calendar.DST_OFFSET)/3600000 +
+<font color="#555555">113 </font>      <font color="#0000FF">" Stunden"</font>
+<font color="#555555">114 </font>    );
+<font color="#555555">115 </font>  }
+<font color="#555555">116 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1702.java"><font color="#000055" size=-1>Listing1702.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 17.2: Die Felder der Klasse Calendar</i></p>
+
+<p>
+Das Programm erzeugt zun&auml;chst ein <a href="index_g.html#ixb100806"><font color=#000080><tt>GregorianCalendar</tt></font></a>-Objekt
+f&uuml;r das aktuelle Tagesdatum und gibt die internen Feldwerte aus.
+Anschlie&szlig;end &auml;ndert es durch mehrfachen Aufruf von <a href="index_s.html#ixb100160"><font color=#000080><tt>set</tt></font></a>
+das Datum in den 22.6.1910 ab und gibt die Felder erneut aus. Die
+Ausgabe des Programms lautet: 
+<font color="#333300">
+<pre>
+Aera.......: Anno Domini
+Datum......: 24.6.2011
+Zeit.......: 20:18:13 (+733 ms)
+Am.Zeit....: 8:18:13 PM
+Tag........: 175. im Jahr
+             24. im Monat
+Woche......: 25. im Jahr
+             4. im Monat
+Wochentag..: 4. Freitag im Monat
+Zeitzone...: 1 Stunden
+Sommerzeit.: 1 Stunden
+---
+Aera.......: Anno Domini
+Datum......: 22.6.1910
+Zeit.......: 20:18:13 (+733 ms)
+Am.Zeit....: 8:18:13 PM
+Tag........: 173. im Jahr
+             22. im Monat
+Woche......: 25. im Jahr
+             4. im Monat
+Wochentag..: 4. Mittwoch im Monat
+Zeitzone...: 1 Stunden
+Sommerzeit.: 0 Stunden
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="sectlevel3id017002003"></a>
+<h3>17.2.3 Vergleiche und <a name="ixa101063">Datums-/Zeitarithmetik</a>
+</h3>
+
+<p>
+Die Methoden <a href="index_e.html#ixb100230"><font color=#000080><tt>equals</tt></font></a>,
+<a name="ixa101064"><a href="index_b.html#ixb100826"><font color=#000080><tt>before</tt></font></a></a>
+und <a name="ixa101065"><a href="index_a.html#ixb100827"><font color=#000080><tt>after</tt></font></a></a>
+erlauben es, zwei Datumswerte auf ihre relative zeitliche Lage zueinander
+zu vergleichen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public boolean equals(Object obj)
+
+public boolean before(Object obj)
+
+public boolean after(Object obj)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Calendar.html" onClick="this.href=getApiDoc('java.util.Calendar')"><font color="#660066" size=-1>java.util.Calendar</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit Hilfe der Methode <a name="ixa101066"><a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a></a>
+kann zu einem beliebigen Feld eines <a href="index_c.html#ixb100558"><font color=#000080><tt>Calendar</tt></font></a>-
+oder <a href="index_g.html#ixb100806"><font color=#000080><tt>GregorianCalendar</tt></font></a>-Objekts
+ein beliebiger positiver oder negativer Wert hinzugez&auml;hlt werden:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public abstract void add(int field, int amount)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Calendar.html" onClick="this.href=getApiDoc('java.util.Calendar')"><font color="#660066" size=-1>java.util.Calendar</font></a></td>
+</tr>
+</table>
+
+<p>
+Dabei ist es auch erlaubt, dass die Summe den f&uuml;r dieses Feld
+erlaubten Grenzwert &uuml;ber- bzw. unterschreitet. In diesem Fall
+wird der n&auml;chsth&ouml;herwertige Datums- bzw. Zeitbestandteil
+entsprechend angepasst. 
+
+<p>
+Das folgende Programm konstruiert zun&auml;chst ein Datum f&uuml;r
+den 30.10.1908 und gibt es aus. Anschlie&szlig;end wird zun&auml;chst
+der Tag, dann der Monat und schlie&szlig;lich das Jahr je zweimal
+um 1 erh&ouml;ht. Nach erfolgter Ausgabe wird die &Auml;nderung schrittweise
+wieder r&uuml;ckg&auml;ngig gemacht und der urspr&uuml;ngliche Wert
+wieder erzeugt: 
+<a name="listingid017003"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1703.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1703
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    GregorianCalendar cal   = <font color="#0000AA">new</font> GregorianCalendar();
+<font color="#555555">010 </font>    cal.set(Calendar.DATE, 30);
+<font color="#555555">011 </font>    cal.set(Calendar.MONTH, 10 - 1);
+<font color="#555555">012 </font>    cal.set(Calendar.YEAR, 1908);
+<font color="#555555">013 </font>    showDate(cal);
+<font color="#555555">014 </font>    addOne(cal, Calendar.DATE);
+<font color="#555555">015 </font>    addOne(cal, Calendar.DATE);
+<font color="#555555">016 </font>    addOne(cal, Calendar.MONTH);
+<font color="#555555">017 </font>    addOne(cal, Calendar.MONTH);
+<font color="#555555">018 </font>    addOne(cal, Calendar.YEAR);
+<font color="#555555">019 </font>    addOne(cal, Calendar.YEAR);
+<font color="#555555">020 </font>
+<font color="#555555">021 </font>    cal.add(Calendar.DATE, -2);
+<font color="#555555">022 </font>    cal.add(Calendar.MONTH, -2);
+<font color="#555555">023 </font>    cal.add(Calendar.YEAR, -2);
+<font color="#555555">024 </font>    showDate(cal);
+<font color="#555555">025 </font>  }
+<font color="#555555">026 </font>
+<font color="#555555">027 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> addOne(Calendar cal, <font color="#006699">int</font> field)
+<font color="#555555">028 </font>  {
+<font color="#555555">029 </font>    cal.add(field,1);
+<font color="#555555">030 </font>    showDate(cal);
+<font color="#555555">031 </font>  }
+<font color="#555555">032 </font>
+<font color="#555555">033 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> showDate(Calendar cal)
+<font color="#555555">034 </font>  {
+<font color="#555555">035 </font>    String ret = <font color="#0000FF">""</font>;
+<font color="#555555">036 </font>    <font color="#006699">int</font>    value = cal.get(Calendar.DAY_OF_WEEK);
+<font color="#555555">037 </font>
+<font color="#555555">038 </font>    <font color="#0000AA">switch</font> (value) {
+<font color="#555555">039 </font>    <font color="#0000AA">case</font> Calendar.SUNDAY:
+<font color="#555555">040 </font>      ret += <font color="#0000FF">"Sonntag"</font>;
+<font color="#555555">041 </font>      <font color="#0000AA">break</font>;
+<font color="#555555">042 </font>    <font color="#0000AA">case</font> Calendar.MONDAY:
+<font color="#555555">043 </font>      ret += <font color="#0000FF">"Montag"</font>;
+<font color="#555555">044 </font>      <font color="#0000AA">break</font>;
+<font color="#555555">045 </font>    <font color="#0000AA">case</font> Calendar.TUESDAY:
+<font color="#555555">046 </font>      ret += <font color="#0000FF">"Dienstag"</font>;
+<font color="#555555">047 </font>      <font color="#0000AA">break</font>;
+<font color="#555555">048 </font>    <font color="#0000AA">case</font> Calendar.WEDNESDAY:
+<font color="#555555">049 </font>      ret += <font color="#0000FF">"Mittwoch"</font>;
+<font color="#555555">050 </font>      <font color="#0000AA">break</font>;
+<font color="#555555">051 </font>    <font color="#0000AA">case</font> Calendar.THURSDAY:
+<font color="#555555">052 </font>      ret += <font color="#0000FF">"Donnerstag"</font>;
+<font color="#555555">053 </font>      <font color="#0000AA">break</font>;
+<font color="#555555">054 </font>    <font color="#0000AA">case</font> Calendar.FRIDAY:
+<font color="#555555">055 </font>      ret += <font color="#0000FF">"Freitag"</font>;
+<font color="#555555">056 </font>      <font color="#0000AA">break</font>;
+<font color="#555555">057 </font>    <font color="#0000AA">case</font> Calendar.SATURDAY:
+<font color="#555555">058 </font>      ret += <font color="#0000FF">"Samstag"</font>;
+<font color="#555555">059 </font>      <font color="#0000AA">break</font>;
+<font color="#555555">060 </font>    }
+<font color="#555555">061 </font>    ret += <font color="#0000FF">", den "</font>;
+<font color="#555555">062 </font>    ret += cal.get(Calendar.DATE) + <font color="#0000FF">"."</font>;
+<font color="#555555">063 </font>    ret += (cal.get(Calendar.MONTH)+1) + <font color="#0000FF">"."</font>;
+<font color="#555555">064 </font>    ret += cal.get(Calendar.YEAR);
+<font color="#555555">065 </font>    System.out.println(ret);
+<font color="#555555">066 </font>  }
+<font color="#555555">067 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1703.java"><font color="#000055" size=-1>Listing1703.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 17.3: Datumsarithmetik</i></p>
+
+<p>
+Die Ausgabe des Programms lautet: 
+<font color="#333300">
+<pre>
+Freitag, den 30.10.1908
+Samstag, den 31.10.1908
+Sonntag, den 1.11.1908
+Dienstag, den 1.12.1908
+Freitag, den 1.1.1909
+Samstag, den 1.1.1910
+Sonntag, den 1.1.1911
+Freitag, den 30.10.1908
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die formatierte Ausgabe von Datumswerten kann unter Verwendung der
+in verschiedenen Klassen implementierten Methode <a href="index_p.html#ixb100143"><font color=#000080><tt>printf</tt></font></a>
+vereinfacht werden (siehe <a href="k100082.html#ausgabeformatierung">Abschnitt 12.6</a>).
+Weitere M&ouml;glichkeiten werden im Zusammenhang mit der Internationalisierung
+von Java-Programmen in <a href="k100125.html#i18ndatumformatieren">Abschnitt 18.4.3</a>
+erl&auml;utert.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id017002004"></a>
+<h3>17.2.4 Umwandlung zwischen Date und Calendar </h3>
+
+<p>
+In der Praxis ist es mitunter erforderlich, zwischen den beiden konkurrierenden
+Zeitdarstellungen der Klassen <a name="ixa101067"><a href="index_d.html#ixb100559"><font color=#000080><tt>Date</tt></font></a></a>
+und <a name="ixa101068"><a href="index_c.html#ixb100558"><font color=#000080><tt>Calendar</tt></font></a></a>
+hin- und herzuschalten. So ist beispielsweise der in JDBC (siehe <a href="k100278.html#kapiteljdbc">Kapitel 44</a>)
+h&auml;ufig verwendete SQL-Datentyp <a name="ixa101069"><a href="index_d.html#ixb100559"><font color=#000080><tt>java.sql.Date</tt></font></a></a>
+aus <a name="ixa101067"><a href="index_d.html#ixb100559"><font color=#000080><tt>java.util.Date</tt></font></a></a>
+abgeleitet und repr&auml;sentiert ein Datum als Anzahl der Millisekunden
+seit dem 1.1.1970. Mit Hilfe der Methoden <a name="ixa101070"><a href="index_s.html#ixb100828"><font color=#000080><tt>setTime</tt></font></a></a>
+und <a name="ixa101071"><a href="index_g.html#ixb100829"><font color=#000080><tt>getTime</tt></font></a></a>
+k&ouml;nnen beide Darstellungen ineinander &uuml;berf&uuml;hrt werden:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public final Date getTime()
+
+public final void setTime(Date date)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Calendar.html" onClick="this.href=getApiDoc('java.util.Calendar')"><font color="#660066" size=-1>java.util.Calendar</font></a></td>
+</tr>
+</table>
+
+<p>
+Ein Aufruf von <a href="index_g.html#ixb100829"><font color=#000080><tt>getTime</tt></font></a>
+liefert das Datum als Objekt des Typs <a href="index_d.html#ixb100559"><font color=#000080><tt>Date</tt></font></a>.
+Soll das Datum aus einem vorhandenen <a href="index_d.html#ixb100559"><font color=#000080><tt>Date</tt></font></a>-Objekt
+in ein <a href="index_c.html#ixb100558"><font color=#000080><tt>Calendar</tt></font></a>-Objekt
+&uuml;bertragen werden, kann dazu die Methode <a href="index_s.html#ixb100828"><font color=#000080><tt>setTime</tt></font></a>
+aufgerufen werden. Die Klasse <a href="index_d.html#ixb100559"><font color=#000080><tt>Date</tt></font></a>
+kann weiterhin dazu verwendet werden, auf die Anzahl der Millisekunden
+seit dem 1.1.1970 zuzugreifen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Date(long date)
+
+public long getTime()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Date.html" onClick="this.href=getApiDoc('java.util.Date')"><font color="#660066" size=-1>java.util.Date</font></a></td>
+</tr>
+</table>
+
+<p>
+Der Konstruktor erzeugt aus dem <a href="index_l.html#ixb100252"><font color=#000080><tt>long</tt></font></a>
+ein <a href="index_d.html#ixb100559"><font color=#000080><tt>Date</tt></font></a>-Objekt
+und die Methode <a href="index_g.html#ixb100829"><font color=#000080><tt>getTime</tt></font></a>
+kann dazu verwendet werden, zu einem gegebenen <a href="index_d.html#ixb100559"><font color=#000080><tt>Date</tt></font></a>-Objekt
+die Anzahl der Millisekunden seit dem 1.1.1970 zu ermitteln. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100114.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100115.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100117.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100121.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

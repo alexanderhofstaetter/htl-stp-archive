@@ -1,0 +1,1169 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100278.html;106,k100280.html;107,k100282.html;108,k100284.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100278.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100280.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100282.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100284.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 44 - Datenbankzugriffe mit JDBC
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="dirdb"></a>
+<h2>44.3 Die DirDB-Beispieldatenbank </h2>
+<hr>
+<ul>
+<li><a href="k100281.html#dirdb">44.3 Die DirDB-Beispieldatenbank</a>
+<ul>
+<li><a href="k100281.html#sectlevel3id044003001">44.3.1 Anforderungen und Design</a>
+<li><a href="k100281.html#sectlevel3id044003002">44.3.2 Das Rahmenprogramm</a>
+<li><a href="k100281.html#verbindungherstellen">44.3.3 Die Verbindung zur Datenbank herstellen</a>
+<ul>
+<li><a href="k100281.html#sectlevel4id044003003001">Systemvoraussetzungen</a>
+</ul>
+<li><a href="k100281.html#sectlevel3id044003004">44.3.4 Anlegen und F&uuml;llen der Tabellen</a>
+<li><a href="k100281.html#zaehlenverzdateien">44.3.5 Z&auml;hlen der Verzeichnisse und Dateien</a>
+<li><a href="k100281.html#sectlevel3id044003006">44.3.6 Suchen von Dateien und Verzeichnissen</a>
+<li><a href="k100281.html#sectlevel3id044003007">44.3.7 Die zehn gr&ouml;&szlig;ten Dateien</a>
+<li><a href="k100281.html#sectlevel3id044003008">44.3.8 Speicherverschwendung durch Clustering</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id044003001"></a>
+<h3>44.3.1 Anforderungen und Design </h3>
+
+<p>
+In diesem Abschnitt wollen wir uns die zuvor eingef&uuml;hrten Konzepte
+in der Praxis ansehen. Dazu erzeugen wir eine einfache Datenbank <i>DirDB</i>,
+die Informationen zu Dateien und Verzeichnissen speichern kann. &Uuml;ber
+eine einfache Kommandozeilenschnittstelle k&ouml;nnen die Tabellen
+mit den Informationen aus dem lokalen Dateisystem gef&uuml;llt und
+auf unterschiedliche Weise abgefragt werden. 
+
+<p>
+<i>DirDB</i> besitzt lediglich zwei Tabellen <i>dir</i> und <i>file</i>
+f&uuml;r Verzeichnisse und Dateien. Sie haben folgende Struktur: <a name="tableid044002"></a>
+
+<p>
+<table cols=3 border width=66%>
+
+<tr>
+<td valign=top align=left width=25%><b>Name </b></td>
+<td valign=top align=left width=25%><b>Typ </b></td>
+<td valign=top align=left width=50%><b>Bedeutung</b></td></tr>
+<tr>
+<td valign=top align=left>did </td>
+<td valign=top align=left>INT </td>
+<td valign=top align=left>Prim&auml;rschl&uuml;ssel</td></tr>
+<tr>
+<td valign=top align=left>dname </td>
+<td valign=top align=left>CHAR(100) </td>
+<td valign=top align=left>Verzeichnisname</td></tr>
+<tr>
+<td valign=top align=left>fatherdid </td>
+<td valign=top align=left>INT </td>
+<td valign=top align=left>Schl&uuml;ssel Vaterverzeichnis</td></tr>
+<tr>
+<td valign=top align=left>entries </td>
+<td valign=top align=left>INT </td>
+<td valign=top align=left>Anzahl der Verzeichniseintr&auml;ge</td></tr>
+</table>
+<p><i>
+Tabelle 44.2: Die Struktur der dir-Tabelle</i></p>
+<a name="tableid044003"></a>
+<p>
+<table cols=3 border width=66%>
+
+<tr>
+<td valign=top align=left width=25%><b>Name </b></td>
+<td valign=top align=left width=25%><b>Typ </b></td>
+<td valign=top align=left width=50%><b>Bedeutung</b></td></tr>
+<tr>
+<td valign=top align=left>fid </td>
+<td valign=top align=left>INT </td>
+<td valign=top align=left>Prim&auml;rschl&uuml;ssel</td></tr>
+<tr>
+<td valign=top align=left>did </td>
+<td valign=top align=left>INT </td>
+<td valign=top align=left>Zugeh&ouml;riges Verzeichnis</td></tr>
+<tr>
+<td valign=top align=left>fname </td>
+<td valign=top align=left>CHAR(100) </td>
+<td valign=top align=left>Dateiname</td></tr>
+<tr>
+<td valign=top align=left>fsize </td>
+<td valign=top align=left>INT </td>
+<td valign=top align=left>Dateigr&ouml;&szlig;e</td></tr>
+<tr>
+<td valign=top align=left>fdate </td>
+<td valign=top align=left>DATE </td>
+<td valign=top align=left>&Auml;nderungsdatum</td></tr>
+<tr>
+<td valign=top align=left>ftime </td>
+<td valign=top align=left>TIME </td>
+<td valign=top align=left>&Auml;nderungszeit</td></tr>
+</table>
+<p><i>
+Tabelle 44.3: Die Struktur der file-Tabelle</i></p>
+
+<p>
+Beide Tabellen besitzen einen Prim&auml;rschl&uuml;ssel, der beim
+Anlegen eines neuen Satzes vom Programm vergeben wird. Die Struktur
+von <i>dir</i> ist baumartig; im Feld <i>fatherid</i> wird ein Verweis
+auf das Verzeichnis gehalten, in dem das aktuelle Verzeichnis enthalten
+ist. Dessen Wert ist im Startverzeichnis per Definition 0. &Uuml;ber
+den Fremdschl&uuml;ssel <i>did</i> zeigt jeder Datensatz aus der <i>file</i>-Tabelle
+an, zu welchem Verzeichnis er geh&ouml;rt. Die Tabellen stehen demnach
+in einer 1:n-Beziehung zueinander. Auch die Tabelle <i>dir</i> steht
+in einer 1:n-Beziehung zu sich selbst. <a href="k100281.html#erdiagramm">Abbildung 44.1</a>
+zeigt ein vereinfachtes E/R-Diagramm des Tabellendesigns. 
+<p>
+<a name="erdiagramm"></a>
+<img src="images/ERDirDB.gif">
+<p>
+
+<p><i>
+Abbildung 44.1: E/R-Diagramm f&uuml;r DirDB</i></p>
+
+<p>
+Das Programm <font color="#660099">DirDB.java</font> soll folgende
+Anforderungen erf&uuml;llen: 
+<ul>
+<li>Es soll wahlweise mit <a name="ixa103219"><i>MS-Access</i></a>,
+<a name="ixa103220"><i>Java DB</i></a> oder mit <a name="ixa103221"><i>HSQLDB</i></a>
+zusammenarbeiten. <i>Java DB</i> ist seit der Version 6 Bestandteil
+des JDK.
+<li>Es soll folgende Befehle interpretieren: 
+<ul>
+<li>Leeren der Datenbank und Einlesen eines vorgegebenen Verzeichnisses
+inkl. aller Unterverzeichnisse 
+<li>Z&auml;hlen der Dateien und Verzeichnisse in der Datenbank 
+<li>Suchen beliebiger Dateien oder Verzeichnisse 
+<li>Anzeige der gr&ouml;&szlig;ten Dateien 
+<li>Berechnen des durch Clustering verschwendeten Festplattenplatzes
+</ul>
+</ul>
+
+
+<!-- Section -->
+<a name="sectlevel3id044003002"></a>
+<h3>44.3.2 Das Rahmenprogramm </h3>
+
+<p>
+Wir implementieren eine Klasse <font color="#000077"><tt>DirDB</tt></font>,
+die (der Einfachheit halber) alle Funktionen mit Hilfe statischer
+Methoden realisiert. Die Klasse und ihre <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>-Methode
+sehen so aus: 
+<a name="dirdbrahmen"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4402.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.File;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.sql.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> java.text.SimpleDateFormat;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> DirDB
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#00AA00">//---Enums---------------------------------------------------</font>
+<font color="#555555">010 </font>  enum Dbms
+<font color="#555555">011 </font>  {
+<font color="#555555">012 </font>    JAVADB,
+<font color="#555555">013 </font>    ACCESS95,
+<font color="#555555">014 </font>    HSQLDB
+<font color="#555555">015 </font>  }
+<font color="#555555">016 </font>
+<font color="#555555">017 </font>  <font color="#00AA00">//---Pseudo constants----------------------------------------</font>
+<font color="#555555">018 </font>  <font color="#0000AA">static</font> String FILESEP = System.getProperty(<font color="#0000FF">"file.separator"</font>);
+<font color="#555555">019 </font>
+<font color="#555555">020 </font>  <font color="#00AA00">//---Static Variables----------------------------------------</font>
+<font color="#555555">021 </font>  <font color="#0000AA">static</font> Dbms             db = Dbms.JAVADB;
+<font color="#555555">022 </font>  <font color="#0000AA">static</font> Connection       con;
+<font color="#555555">023 </font>  <font color="#0000AA">static</font> Statement        stmt;
+<font color="#555555">024 </font>  <font color="#0000AA">static</font> Statement        stmt1;
+<font color="#555555">025 </font>  <font color="#0000AA">static</font> DatabaseMetaData dmd;
+<font color="#555555">026 </font>  <font color="#0000AA">static</font> <font color="#006699">int</font>              nextdid = 1;
+<font color="#555555">027 </font>  <font color="#0000AA">static</font> <font color="#006699">int</font>              nextfid = 1;
+<font color="#555555">028 </font>
+<font color="#555555">029 </font>  <font color="#00AA00">//---main-------------------------------------------------</font>
+<font color="#555555">030 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">031 </font>  {
+<font color="#555555">032 </font>    <font color="#0000AA">if</font> (args.length &lt; 1) {
+<font color="#555555">033 </font>      System.out.println(
+<font color="#555555">034 </font>        <font color="#0000FF">"usage: java DirDB [A|J|H] &lt;command&gt; [&lt;options&gt;]"</font>
+<font color="#555555">035 </font>      );
+<font color="#555555">036 </font>      System.out.println(<font color="#0000FF">""</font>);
+<font color="#555555">037 </font>      System.out.println(<font color="#0000FF">"command      options"</font>);
+<font color="#555555">038 </font>      System.out.println(<font color="#0000FF">"---------------------------------"</font>);
+<font color="#555555">039 </font>      System.out.println(<font color="#0000FF">"POPULATE     &lt;directory&gt;"</font>);
+<font color="#555555">040 </font>      System.out.println(<font color="#0000FF">"COUNT"</font>);
+<font color="#555555">041 </font>      System.out.println(<font color="#0000FF">"FINDFILE     &lt;name&gt;"</font>);
+<font color="#555555">042 </font>      System.out.println(<font color="#0000FF">"FINDDIR      &lt;name&gt;"</font>);
+<font color="#555555">043 </font>      System.out.println(<font color="#0000FF">"BIGGESTFILES &lt;howmany&gt;"</font>);
+<font color="#555555">044 </font>      System.out.println(<font color="#0000FF">"CLUSTERING   &lt;clustersize&gt;"</font>);
+<font color="#555555">045 </font>      System.exit(1);
+<font color="#555555">046 </font>    }
+<font color="#555555">047 </font>    <font color="#0000AA">if</font> (args[0].equalsIgnoreCase(<font color="#0000FF">"A"</font>)) {
+<font color="#555555">048 </font>      db = Dbms.ACCESS95;
+<font color="#555555">049 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (args[0].equalsIgnoreCase(<font color="#0000FF">"H"</font>)) {
+<font color="#555555">050 </font>      db = Dbms.HSQLDB;
+<font color="#555555">051 </font>    }
+<font color="#555555">052 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">053 </font>      <font color="#0000AA">if</font> (args[1].equalsIgnoreCase(<font color="#0000FF">"populate"</font>)) {
+<font color="#555555">054 </font>        open();
+<font color="#555555">055 </font>        createTables();
+<font color="#555555">056 </font>        populate(args[2]);
+<font color="#555555">057 </font>        close();
+<font color="#555555">058 </font>      } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (args[1].equalsIgnoreCase(<font color="#0000FF">"count"</font>)) {
+<font color="#555555">059 </font>        open();
+<font color="#555555">060 </font>        countRecords();
+<font color="#555555">061 </font>        close();
+<font color="#555555">062 </font>      } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (args[1].equalsIgnoreCase(<font color="#0000FF">"findfile"</font>)) {
+<font color="#555555">063 </font>        open();
+<font color="#555555">064 </font>        findFile(args[2]);
+<font color="#555555">065 </font>        close();
+<font color="#555555">066 </font>      } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (args[1].equalsIgnoreCase(<font color="#0000FF">"finddir"</font>)) {
+<font color="#555555">067 </font>        open();
+<font color="#555555">068 </font>        findDir(args[2]);
+<font color="#555555">069 </font>        close();
+<font color="#555555">070 </font>      } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (args[1].equalsIgnoreCase(<font color="#0000FF">"biggestfiles"</font>)) {
+<font color="#555555">071 </font>        open();
+<font color="#555555">072 </font>        biggestFiles(Integer.parseInt(args[2]));
+<font color="#555555">073 </font>        close();
+<font color="#555555">074 </font>      } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (args[1].equalsIgnoreCase(<font color="#0000FF">"clustering"</font>)) {
+<font color="#555555">075 </font>        open();
+<font color="#555555">076 </font>        clustering(Integer.parseInt(args[2]));
+<font color="#555555">077 </font>        close();
+<font color="#555555">078 </font>      }
+<font color="#555555">079 </font>    } <font color="#0000AA">catch</font> (SQLException e) {
+<font color="#555555">080 </font>      <font color="#0000AA">while</font> (e != <font color="#006699">null</font>) {
+<font color="#555555">081 </font>        System.err.println(e.toString());
+<font color="#555555">082 </font>        System.err.println(<font color="#0000FF">"SQL-State: "</font> + e.getSQLState());
+<font color="#555555">083 </font>        System.err.println(<font color="#0000FF">"ErrorCode: "</font> + e.getErrorCode());
+<font color="#555555">084 </font>        e = e.getNextException();
+<font color="#555555">085 </font>      }
+<font color="#555555">086 </font>      System.exit(1);
+<font color="#555555">087 </font>    } <font color="#0000AA">catch</font> (Exception e) {
+<font color="#555555">088 </font>      System.err.println(e.toString());
+<font color="#555555">089 </font>      System.exit(1);
+<font color="#555555">090 </font>    }
+<font color="#555555">091 </font>  }
+<font color="#555555">092 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 44.2: Das Rahmenprogramm der DirDB-Datenbank</i></p>
+
+<p>
+In <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>
+wird zun&auml;chst ein <i>usage</i>-Text definiert, der immer dann
+ausgegeben wird, wenn das Programm ohne Argumente gestartet wird.
+Die korrekte Aufrufsyntax ist: 
+<font color="#000077">
+<pre>
+java DirDB [A|J|H] &lt;command&gt; [&lt;options&gt;]
+</pre>
+</font>
+
+<p>
+Nach dem Programmnamen folgt zun&auml;chst der Buchstabe &#187;A&#171;,
+&#187;J&#171; oder &#187;H&#171;, um anzugeben, ob die Access-, Java
+DB- oder HSQLDB-Datenbank verwendet werden soll. Das n&auml;chste
+Argument gibt den Namen des gew&uuml;nschten Kommandos an. In der
+folgenden verschachtelten Verzweigung werden gegebenenfalls weitere
+Argumente gelesen und die Methode zum Ausf&uuml;hren des Programms
+aufgerufen. Den Abschluss der <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>-Methode
+bildet die Fehlerbehandlung, bei der die Ausnahmen des Typs <a href="index_s.html#ixb102374"><font color=#000080><tt>SQLException</tt></font></a>
+und <a href="index_e.html#ixb100579"><font color=#000080><tt>Exception</tt></font></a>
+getrennt behandelt werden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Das vollst&auml;ndige Programm findet sich auf der DVD zum Buch unter
+dem Namen <font color="#660099">DirDB.java</font>. In diesem Abschnitt
+sind zwar auch alle Teile abgedruckt, sie finden sich jedoch nicht
+zusammenh&auml;ngend wieder, sondern sind &uuml;ber die verschiedenen
+Unterabschnitte verteilt. </td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="verbindungherstellen"></a>
+<h3>44.3.3 Die Verbindung zur Datenbank herstellen </h3>
+
+<p>
+Wie in <a href="k100281.html#dirdbrahmen">Listing 44.2</a> zu sehen
+ist, rufen alle Kommandos zun&auml;chst die Methode <font color="#000077"><tt>open</tt></font>
+zum &Ouml;ffnen der Datenbank auf. Anschlie&szlig;end f&uuml;hren
+sie ihre spezifischen Kommandos aus und rufen dann <font color="#000077"><tt>close</tt></font>
+auf, um die Datenbank wieder zu schlie&szlig;en. 
+
+<p>
+Beim &Ouml;ffnen der Datenbank wird zun&auml;chst mit <a href="index_f.html#ixb102370"><font color=#000080><tt>Class.forName</tt></font></a>
+der passende Datenbanktreiber geladen und beim Treibermanager registriert.
+Anschlie&szlig;end besorgt das Programm ein <a href="index_c.html#ixb100590"><font color=#000080><tt>Connection</tt></font></a>-Objekt,
+das an die statische Variable <font color="#000077"><tt>con</tt></font>
+gebunden wird. An dieser Stelle sind die potenziellen Code-Unterschiede
+zwischen den beiden Datenbanken gut zu erkennen: 
+<ul>
+<li>W&auml;hrend der Treibername f&uuml;r Java DB die Bezeichnung
+<font color="#000077"><tt>org.apache.derby.jdbc.EmbeddedDriver</tt></font>
+hat, lautet er f&uuml;r die JDBC-ODBC-Bridge <font color="#000077"><tt>sun.jdbc.odbc.JdbcOdbcDriver</tt></font>
+und f&uuml;r HSQLDB <font color="#000077"><tt>org.hsqldb.jdbc.JDBCDriver</tt></font>.
+<li>Der Connection-URL bei Java DB ist &#187;jdbc:derby:&#171;, gefolgt
+von dem Namen der Datenbank und optionalen Parametern. Bei der JDBC-ODBC-Bridge
+beginnt der URL immer mit &#187;jdbc:odbc&#171;, gefolgt vom Namen
+der ODBC-Datenquelle. Bei HSQLDB beginnt er mit &#187;jdbc:hsqldb:&#171;,
+wie bei Java DB folgt der Name der Datenbank.
+</ul>
+<a name="jdbcconfig"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/**
+<font color="#555555">002 </font> * &Ouml;ffnet die Datenbank.
+<font color="#555555">003 </font> */</font>
+<font color="#555555">004 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> open()
+<font color="#555555">005 </font><font color="#0000AA">throws</font> Exception
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#00AA00">//Treiber laden und Connection erzeugen</font>
+<font color="#555555">008 </font>  <font color="#0000AA">if</font> (db == Dbms.JAVADB) {
+<font color="#555555">009 </font>    Class.forName(<font color="#0000FF">"org.apache.derby.jdbc.EmbeddedDriver"</font>);
+<font color="#555555">010 </font>    con = DriverManager.getConnection(
+<font color="#555555">011 </font>      <font color="#0000FF">"jdbc:derby:dirdb;create=true"</font>);
+<font color="#555555">012 </font>  } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (db == Dbms.HSQLDB) {
+<font color="#555555">013 </font>    Class.forName(<font color="#0000FF">"org.hsqldb.jdbcDriver"</font>);
+<font color="#555555">014 </font>    con = DriverManager.getConnection(
+<font color="#555555">015 </font>      <font color="#0000FF">"jdbc:hsqldb:hsqldbtest"</font>,
+<font color="#555555">016 </font>      <font color="#0000FF">"SA"</font>,
+<font color="#555555">017 </font>      <font color="#0000FF">""</font>
+<font color="#555555">018 </font>    );
+<font color="#555555">019 </font>  } <font color="#0000AA">else</font> {
+<font color="#555555">020 </font>    Class.forName(<font color="#0000FF">"sun.jdbc.odbc.JdbcOdbcDriver"</font>);
+<font color="#555555">021 </font>    con = DriverManager.getConnection(<font color="#0000FF">"jdbc:odbc:DirDB"</font>);
+<font color="#555555">022 </font>  }
+<font color="#555555">023 </font>  <font color="#00AA00">//Metadaten ausgeben</font>
+<font color="#555555">024 </font>  dmd = con.getMetaData();
+<font color="#555555">025 </font>  System.out.println(<font color="#0000FF">""</font>);
+<font color="#555555">026 </font>  System.out.println(<font color="#0000FF">"Connection URL: "</font> + dmd.getURL());
+<font color="#555555">027 </font>  System.out.println(<font color="#0000FF">"Driver Name:    "</font> + dmd.getDriverName());
+<font color="#555555">028 </font>  System.out.println(<font color="#0000FF">"Driver Version: "</font> + dmd.getDriverVersion());
+<font color="#555555">029 </font>  System.out.println(<font color="#0000FF">""</font>);
+<font color="#555555">030 </font>  <font color="#00AA00">//Statementobjekte erzeugen</font>
+<font color="#555555">031 </font>  stmt = con.createStatement();
+<font color="#555555">032 </font>  stmt1 = con.createStatement();
+<font color="#555555">033 </font>}
+<font color="#555555">034 </font>
+<font color="#555555">035 </font><font color="#00AA00">/**
+<font color="#555555">036 </font> * Schlie&szlig;t die Datenbank.
+<font color="#555555">037 </font> */</font>
+<font color="#555555">038 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> close()
+<font color="#555555">039 </font><font color="#0000AA">throws</font> SQLException
+<font color="#555555">040 </font>{
+<font color="#555555">041 </font>  stmt.close();
+<font color="#555555">042 </font>  stmt1.close();
+<font color="#555555">043 </font>  con.close();
+<font color="#555555">044 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 44.3: &Ouml;ffnen und Schlie&szlig;en der DirDB-Datenbank</i></p>
+
+<p>
+Nachdem die Verbindung hergestellt wurde, liefert der Aufruf von <a name="ixa103222"><a href="index_g.html#ixb102406"><font color=#000080><tt>getMetaData</tt></font></a></a>
+ein Objekt des Typs <a name="ixa103223"><a href="index_d.html#ixb102407"><font color=#000080><tt>DatabaseMetaData</tt></font></a></a>.
+Es kann dazu verwendet werden, weitere Informationen &uuml;ber die
+Datenbank abzufragen. Wir geben lediglich den Connection-String und
+Versionsinformationen zu den geladenen Treibern aus. <a href="index_d.html#ixb102407"><font color=#000080><tt>DatabaseMetaData</tt></font></a>
+besitzt dar&uuml;ber hinaus noch viele weitere Variablen und Methoden,
+auf die wir hier nicht n&auml;her eingehen wollen. Am Ende von <font color="#000077"><tt>open</tt></font>
+erzeugt das Programm zwei <a href="index_s.html#ixb100591"><font color=#000080><tt>Statement</tt></font></a>-Objekte
+<font color="#000077"><tt>stmt</tt></font> und <font color="#000077"><tt>stmt1</tt></font>,
+die in den &uuml;brigen Methoden zum Ausf&uuml;hren der SQL-Befehle
+verwendet werden. Zum Schlie&szlig;en der Datenbank werden zun&auml;chst
+die beiden <a href="index_s.html#ixb100591"><font color=#000080><tt>Statement</tt></font></a>-Objekte
+und dann die Verbindung selbst geschlossen. 
+
+<!-- Section -->
+
+<a name="sectlevel4id044003003001"></a>
+<h4>Systemvoraussetzungen </h4>
+
+<p>
+Um tats&auml;chlich eine Verbindung zu einer der drei angegebenen
+Datenbanken herstellen zu k&ouml;nnen, m&uuml;ssen auf Systemebene
+die n&ouml;tigen Voraussetzungen daf&uuml;r geschaffen werden: 
+<ul>
+<li>Soll auf eine ODBC-Datenquelle zugegriffen werden, muss diese
+unter der Windows-Systemsteuerung mit Hilfe des Men&uuml;punkts &#187;ODBC-Datenquellen&#171;
+zun&auml;chst eingerichtet werden. Im Falle von Microsoft Access ist
+eine &#187;Benutzer-DSN&#171; hinzuzuf&uuml;gen, in der als wichtigste
+Eigenschaften der gew&uuml;nschte Name der Datenquelle sowie der Pfad
+der <font color="#660099">.mdb</font>-Datei angegeben werden m&uuml;ssen.
+In unserem Beispiel wird &#187;DirDB&#171; als Datenquellenname verwendet.
+Im Verzeichnis mit den Beispieldateien zum Buch befindet sich eine
+leere Datenbank <font color="#660099">emptydb.mdb</font>, die mit
+<i>Access 2000</i> erstellt wurde und f&uuml;r erste Experimente verwendet
+werden kann. Sie sollte zu den Access-ODBC-Treibern, die aktuellen
+Windows-Betriebssystemen beiliegen, kompatibel sein.
+<li>Java DB und HSQLDB sind reine Java-Datenbanken, die ohne separat
+zu installierende Treiber betrieben werden k&ouml;nnen. &Uuml;blicherweise
+muss bei ihnen lediglich das zugeh&ouml;rige jar-Archiv in den <a href="index_c.html#ixb100137"><font color=#000080><tt>CLASSPATH</tt></font></a>
+aufgenommen werden, damit ein Java-Programm darauf zugreifen kann.
+Java DB liegt dem JDK praktischerweise seit Version 6 bei, man findet
+die Datei <font color="#660099">derby.jar</font> unter <font color="#660099">db/lib</font>.
+HSQLDB ist der Nachfolger von <a name="ixa103224"><i>Hypersonic SQL</i></a>.
+Die Datenbank ist frei verf&uuml;gbar und wird als <i>SourceForge</i>-Projekt
+weiterentwickelt. Ihre Homepage ist <a href="http://hsqldb.sourceforge.net/">http://hsqldb.sourceforge.net/</a>.
+</ul>
+
+
+<!-- Section -->
+<a name="sectlevel3id044003004"></a>
+<h3>44.3.4 Anlegen und F&uuml;llen der Tabellen </h3>
+
+<p>
+Unsere Anwendung geht davon aus, dass die Datenbank bereits angelegt
+ist, erstellt die n&ouml;tigen Tabellen und Indexdateien aber selbst.
+Die dazu n&ouml;tigen SQL-Befehle sind <font color="#000077"><tt>CREATE
+TABLE</tt></font> zum Anlegen einer Tabelle und <font color="#000077"><tt>CREATE
+INDEX</tt></font> zum Anlegen einer Indexdatei. Diese Befehle werden
+mit der Methode <a href="index_e.html#ixb102378"><font color=#000080><tt>executeUpdate</tt></font></a>
+des <a href="index_s.html#ixb100591"><font color=#000080><tt>Statement</tt></font></a>-Objekts
+ausgef&uuml;hrt, denn sie produzieren keine Ergebnismenge, sondern
+als DDL-Anweisungen lediglich den R&uuml;ckgabewert 0. Das Anlegen
+der Tabellen erfolgt mit der Methode <font color="#000077"><tt>createTables</tt></font>:
+<a name="listingid044004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/**
+<font color="#555555">002 </font> * Legt die Tabellen an.
+<font color="#555555">003 </font> */</font>
+<font color="#555555">004 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> createTables()
+<font color="#555555">005 </font><font color="#0000AA">throws</font> SQLException
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#00AA00">//Anlegen der Tabelle dir</font>
+<font color="#555555">008 </font>  <font color="#0000AA">try</font> {
+<font color="#555555">009 </font>    stmt.executeUpdate(<font color="#0000FF">"DROP TABLE dir"</font>);
+<font color="#555555">010 </font>  } <font color="#0000AA">catch</font> (SQLException e) {
+<font color="#555555">011 </font>    <font color="#00AA00">//Nichts zu tun</font>
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>  stmt.executeUpdate(<font color="#0000FF">"CREATE TABLE dir ("</font> +
+<font color="#555555">014 </font>    <font color="#0000FF">"did       INT,"</font> +
+<font color="#555555">015 </font>    <font color="#0000FF">"dname     CHAR(100),"</font> +
+<font color="#555555">016 </font>    <font color="#0000FF">"fatherdid INT,"</font> +
+<font color="#555555">017 </font>    <font color="#0000FF">"entries   INT)"</font>
+<font color="#555555">018 </font>  );
+<font color="#555555">019 </font>  stmt.executeUpdate(<font color="#0000FF">"CREATE INDEX idir1 ON dir ( did )"</font>);
+<font color="#555555">020 </font>  stmt.executeUpdate(<font color="#0000FF">"CREATE INDEX idir2 ON dir ( fatherdid )"</font>);
+<font color="#555555">021 </font>  <font color="#00AA00">//Anlegen der Tabelle file</font>
+<font color="#555555">022 </font>  <font color="#0000AA">try</font> {
+<font color="#555555">023 </font>    stmt.executeUpdate(<font color="#0000FF">"DROP TABLE file"</font>);
+<font color="#555555">024 </font>  } <font color="#0000AA">catch</font> (SQLException e) {
+<font color="#555555">025 </font>    <font color="#00AA00">//Nichts zu tun</font>
+<font color="#555555">026 </font>  }
+<font color="#555555">027 </font>  stmt.executeUpdate(<font color="#0000FF">"CREATE TABLE file ("</font> +
+<font color="#555555">028 </font>    <font color="#0000FF">"fid       INT ,"</font> +
+<font color="#555555">029 </font>    <font color="#0000FF">"did       INT,"</font> +
+<font color="#555555">030 </font>    <font color="#0000FF">"fname     CHAR(100),"</font> +
+<font color="#555555">031 </font>    <font color="#0000FF">"fsize     INT,"</font> +
+<font color="#555555">032 </font>    <font color="#0000FF">"fdate     DATE,"</font> +
+<font color="#555555">033 </font>    <font color="#0000FF">"ftime     CHAR(5))"</font>
+<font color="#555555">034 </font>  );
+<font color="#555555">035 </font>  stmt.executeUpdate(<font color="#0000FF">"CREATE INDEX ifile1 ON file ( fid )"</font>);
+<font color="#555555">036 </font>}  </pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 44.4: Anlegen der DirDB-Tabellen</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Um die Tabellen zu l&ouml;schen, falls sie bereits vorhanden sind,
+wird zun&auml;chst die Anweisung <font color="#000077"><tt>DROP TABLE</tt></font>
+ausgef&uuml;hrt. Sie ist in einem eigenen <a href="index_t.html#ixb100571"><font color=#000080><tt>try</tt></font></a>-<a href="index_c.html#ixb100572"><font color=#000080><tt>catch</tt></font></a>-Block
+gekapselt, denn manche Datenbanken l&ouml;sen eine Ausnahme aus, falls
+die zu l&ouml;schenden Tabellen nicht existieren. Diesen &#187;Fehler&#171;
+wollen wir nat&uuml;rlich ignorieren und nicht an den Aufrufer weitergeben.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Nachdem die Tabellen angelegt wurden, k&ouml;nnen sie mit der Methode
+<font color="#000077"><tt>populate</tt></font> gef&uuml;llt werden.
+<font color="#000077"><tt>populate</tt></font> bekommt dazu vom Rahmenprogramm
+den Namen des Startverzeichnisses &uuml;bergeben, das rekursiv durchlaufen
+werden soll, und ruft <font color="#000077"><tt>addDirectory</tt></font>
+auf, um das erste Verzeichnis mit Hilfe des Kommandos <font color="#000077"><tt>INSERT
+INTO</tt></font> (das ebenfalls an <a href="index_e.html#ixb102378"><font color=#000080><tt>executeUpdate</tt></font></a>
+&uuml;bergeben wird) in die Tabelle <i>dir</i> einzutragen. Der Code
+sieht etwas unleserlich aus, weil einige Stringliterale einschlie&szlig;lich
+der zugeh&ouml;rigen einfachen Anf&uuml;hrungsstriche &uuml;bergeben
+werden m&uuml;ssen. Sie dienen in SQL-Befehlen als Begrenzungszeichen
+von Zeichenketten. 
+
+<p>
+F&uuml;r das aktuelle Verzeichnis wird dann ein <a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a>-Objekt
+erzeugt und mit <a name="ixa103225"><a href="index_l.html#ixb101099"><font color=#000080><tt>listFiles</tt></font></a></a>
+eine Liste der Dateien und Verzeichnisse in diesem Verzeichnis erstellt.
+Jede Datei wird mit einem weiteren <font color="#000077"><tt>INSERT
+INTO</tt></font> in die <i>file</i>-Tabelle eingetragen, f&uuml;r
+jedes Unterverzeichnis ruft <font color="#000077"><tt>addDirectory</tt></font>
+sich selbst rekursiv auf. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Am Ende wird mit einem <font color="#000077"><tt>UPDATE</tt></font>-Kommando
+die Anzahl der Eintr&auml;ge im aktuellen Verzeichnis in das Feld
+<i>entries</i> der Tabelle <i>dir</i> eingetragen. Der Grund f&uuml;r
+diese etwas umst&auml;ndliche Vorgehensweise (wir h&auml;tten das
+auch gleich beim Anlegen des <i>dir</i>-Satzes erledigen k&ouml;nnen)
+liegt darin, dass wir auch ein Beispiel f&uuml;r die Anwendung der
+<font color="#000077"><tt>UPDATE</tt></font>-Anweisung geben wollten.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<a name="tabellenfuellen"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/**
+<font color="#555555">002 </font> * Durchl&auml;uft den Verzeichnisbaum rekursiv und schreibt
+<font color="#555555">003 </font> * Verzeichnis- und Dateinamen in die Datenbank.
+<font color="#555555">004 </font> */</font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> populate(String dir)
+<font color="#555555">006 </font><font color="#0000AA">throws</font> Exception
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  addDirectory(0, <font color="#0000FF">""</font>, dir);
+<font color="#555555">009 </font>}
+<font color="#555555">010 </font>
+<font color="#555555">011 </font><font color="#00AA00">/**
+<font color="#555555">012 </font> * F&uuml;gt das angegebene Verzeichnis und alle
+<font color="#555555">013 </font> * Unterverzeichnisse mit allen darin enthaltenen
+<font color="#555555">014 </font> * Dateien zur Datenbank hinzu.
+<font color="#555555">015 </font> */</font>
+<font color="#555555">016 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> addDirectory(
+<font color="#555555">017 </font>  <font color="#006699">int</font> fatherdid, String parent, String name
+<font color="#555555">018 </font>)
+<font color="#555555">019 </font><font color="#0000AA">throws</font> Exception
+<font color="#555555">020 </font>{
+<font color="#555555">021 </font>  String dirname = <font color="#0000FF">""</font>;
+<font color="#555555">022 </font>  <font color="#0000AA">if</font> (parent.length() &gt; 0) {
+<font color="#555555">023 </font>    dirname = parent;
+<font color="#555555">024 </font>    <font color="#0000AA">if</font> (!parent.endsWith(FILESEP)) {
+<font color="#555555">025 </font>      dirname += FILESEP;
+<font color="#555555">026 </font>    }
+<font color="#555555">027 </font>  }
+<font color="#555555">028 </font>  dirname += name;
+<font color="#555555">029 </font>  System.out.println(<font color="#0000FF">"processing "</font> + dirname);
+<font color="#555555">030 </font>  File dir = <font color="#0000AA">new</font> File(dirname);
+<font color="#555555">031 </font>  <font color="#0000AA">if</font> (!dir.isDirectory()) {
+<font color="#555555">032 </font>    <font color="#0000AA">throw</font> <font color="#0000AA">new</font> Exception(<font color="#0000FF">"not a directory: "</font> + dirname);
+<font color="#555555">033 </font>  }
+<font color="#555555">034 </font>  <font color="#00AA00">//Verzeichnis anlegen</font>
+<font color="#555555">035 </font>  <font color="#006699">int</font> did = nextdid++;
+<font color="#555555">036 </font>  stmt.executeUpdate(
+<font color="#555555">037 </font>    <font color="#0000FF">"INSERT INTO dir VALUES ("</font> +
+<font color="#555555">038 </font>    did + <font color="#0000FF">","</font> +
+<font color="#555555">039 </font>    <font color="#0000FF">"\'"</font> + name + <font color="#0000FF">"\',"</font> +
+<font color="#555555">040 </font>    fatherdid + <font color="#0000FF">","</font> +
+<font color="#555555">041 </font>    <font color="#0000FF">"0)"</font>
+<font color="#555555">042 </font>  );
+<font color="#555555">043 </font>  <font color="#00AA00">//Verzeichniseintr&auml;ge lesen</font>
+<font color="#555555">044 </font>  File[] entries = dir.listFiles();
+<font color="#555555">045 </font>  <font color="#00AA00">//Verzeichnis durchlaufen</font>
+<font color="#555555">046 </font>  <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; entries.length; ++i) {
+<font color="#555555">047 </font>    <font color="#0000AA">if</font> (entries[i].isDirectory()) {
+<font color="#555555">048 </font>      addDirectory(did, dirname, entries[i].getName());
+<font color="#555555">049 </font>    } <font color="#0000AA">else</font> {
+<font color="#555555">050 </font>      java.util.Date d = <font color="#0000AA">new</font> java.util.Date(
+<font color="#555555">051 </font>        entries[i].lastModified()
+<font color="#555555">052 </font>      );
+<font color="#555555">053 </font>      SimpleDateFormat sdf;
+<font color="#555555">054 </font>      <font color="#00AA00">//Datum</font>
+<font color="#555555">055 </font>      sdf = <font color="#0000AA">new</font> SimpleDateFormat(<font color="#0000FF">"yyyy-MM-dd"</font>);
+<font color="#555555">056 </font>      String date = sdf.format(d);
+<font color="#555555">057 </font>      <font color="#00AA00">//Zeit</font>
+<font color="#555555">058 </font>      sdf = <font color="#0000AA">new</font> SimpleDateFormat(<font color="#0000FF">"HH:mm"</font>);
+<font color="#555555">059 </font>      String time = sdf.format(d);
+<font color="#555555">060 </font>      <font color="#00AA00">//Satz anh&auml;ngen</font>
+<font color="#555555">061 </font>      stmt.executeUpdate(
+<font color="#555555">062 </font>        <font color="#0000FF">"INSERT INTO file VALUES ("</font> +
+<font color="#555555">063 </font>        (nextfid++) + <font color="#0000FF">","</font> +
+<font color="#555555">064 </font>        did + <font color="#0000FF">","</font> +
+<font color="#555555">065 </font>        <font color="#0000FF">"\'"</font> + entries[i].getName() + <font color="#0000FF">"\',"</font> +
+<font color="#555555">066 </font>        entries[i].length() + <font color="#0000FF">","</font> +
+<font color="#555555">067 </font>        <font color="#0000FF">"{d \'"</font> + date + <font color="#0000FF">"\'},"</font> +
+<font color="#555555">068 </font>        <font color="#0000FF">"\'"</font> + time + <font color="#0000FF">"\')"</font>
+<font color="#555555">069 </font>      );
+<font color="#555555">070 </font>      System.out.println(<font color="#0000FF">"  "</font> + entries[i].getName());
+<font color="#555555">071 </font>    }
+<font color="#555555">072 </font>  }
+<font color="#555555">073 </font>  <font color="#00AA00">//Anzahl der Eintr&auml;ge aktualisieren</font>
+<font color="#555555">074 </font>  stmt.executeUpdate(
+<font color="#555555">075 </font>    <font color="#0000FF">"UPDATE dir SET entries = "</font> + entries.length +
+<font color="#555555">076 </font>    <font color="#0000FF">"  WHERE did = "</font> + did
+<font color="#555555">077 </font>  );
+<font color="#555555">078 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 44.5: F&uuml;llen der DirDB-Tabellen</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Hier tauchen die beiden im Rahmenprogramm definierten statischen Variablen
+<font color="#000077"><tt>nextdid</tt></font> und <font color="#000077"><tt>nextfid</tt></font>
+wieder auf. Sie liefern die Prim&auml;rschl&uuml;ssel f&uuml;r Datei-
+und Verzeichniss&auml;tze und werden nach jedem eingef&uuml;gten Satz
+automatisch um eins erh&ouml;ht. Dass dieses Verfahren nicht mehrbenutzerf&auml;hig
+ist, leuchtet ein, denn die Z&auml;hler werden <i>lokal zur laufenden
+Applikation</i> erh&ouml;ht. Eine bessere L&ouml;sung bieten Prim&auml;rschl&uuml;sselfelder
+(sogenannte Autoincrement-Felder), die beim Einf&uuml;gen <i>von der
+Datenbank</i> einen automatisch hochgez&auml;hlten eindeutigen Wert
+erhalten. Meist kann ein solches Feld in der <a name="ixa103226"><a href="index_i.html#ixb102394"><font color=#000080><tt>INSERT INTO</tt></font></a></a>-Anweisung
+einfach ausgelassen werden. Alternativ k&ouml;nnten Schl&uuml;sselwerte
+vor dem Einf&uuml;gen aus einer zentralen Key-Tabelle geholt und transaktionssicher
+hochgez&auml;hlt werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="zaehlenverzdateien"></a>
+<h3>44.3.5 Z&auml;hlen der Verzeichnisse und Dateien </h3>
+
+<p>
+Das <font color="#000077"><tt>COUNT</tt></font>-Kommando soll die
+Anzahl der Verzeichnisse und Dateien z&auml;hlen, die mit dem <font color="#000077"><tt>POPULATE</tt></font>-Kommando
+in die Datei eingef&uuml;gt wurden. Wir verwenden dazu ein einfaches
+<font color="#000077"><tt>SELECT</tt></font>-Kommando, das mit der
+<font color="#000077"><tt>COUNT(*)</tt></font>-Option die Anzahl der
+S&auml;tze in einer Tabelle z&auml;hlt: 
+<a name="listingid044006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/**
+<font color="#555555">002 </font> * Gibt die Anzahl der Dateien und Verzeichnisse aus.
+<font color="#555555">003 </font> */</font>
+<font color="#555555">004 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> countRecords()
+<font color="#555555">005 </font><font color="#0000AA">throws</font> SQLException
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  ResultSet rs = stmt.executeQuery(
+<font color="#555555">008 </font>    <font color="#0000FF">"SELECT count(*) FROM dir"</font>
+<font color="#555555">009 </font>  );
+<font color="#555555">010 </font>  <font color="#0000AA">if</font> (!rs.next()) {
+<font color="#555555">011 </font>    <font color="#0000AA">throw</font> <font color="#0000AA">new</font> SQLException(<font color="#0000FF">"SELECT COUNT(*): no result"</font>);
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>  System.out.println(<font color="#0000FF">"Directories: "</font> + rs.getInt(1));
+<font color="#555555">014 </font>  rs = stmt.executeQuery(<font color="#0000FF">"SELECT count(*) FROM file"</font>);
+<font color="#555555">015 </font>  <font color="#0000AA">if</font> (!rs.next()) {
+<font color="#555555">016 </font>    <font color="#0000AA">throw</font> <font color="#0000AA">new</font> SQLException(<font color="#0000FF">"SELECT COUNT(*): no result"</font>);
+<font color="#555555">017 </font>  }
+<font color="#555555">018 </font>  System.out.println(<font color="#0000FF">"Files: "</font> + rs.getInt(1));
+<font color="#555555">019 </font>  rs.close();
+<font color="#555555">020 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 44.6: Anzahl der S&auml;tze in der DirDB-Datenbank</i></p>
+
+<p>
+Die <font color="#000077"><tt>SELECT</tt></font>-Befehle werden mit
+der Methode <a href="index_e.html#ixb102377"><font color=#000080><tt>executeQuery</tt></font></a>
+an das <a href="index_s.html#ixb100591"><font color=#000080><tt>Statement</tt></font></a>-Objekt
+&uuml;bergeben, denn wir erwarten nicht nur eine einfache Ganzzahl
+als R&uuml;ckgabewert, sondern eine komplette Ergebnismenge. Die Besonderheit
+liegt in diesem Fall darin, dass wegen der Spaltenangabe <font color="#000077"><tt>COUNT(*)</tt></font>
+lediglich ein einziger Satz zur&uuml;ckgegeben wird, der auch nur
+ein einziges Feld enth&auml;lt. Auf dieses k&ouml;nnen wir am einfachsten
+&uuml;ber seinen numerischen Index 1 zugreifen und es durch Aufruf
+von <a href="index_g.html#ixb102380"><font color=#000080><tt>getInt</tt></font></a>
+gleich in ein <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>
+umwandeln lassen. Das Ergebnis geben wir auf dem Bildschirm aus und
+wiederholen anschlie&szlig;end dieselbe Prozedur f&uuml;r die Tabelle
+<i>file</i>. 
+
+<!-- Section -->
+
+<a name="sectlevel3id044003006"></a>
+<h3>44.3.6 Suchen von Dateien und Verzeichnissen </h3>
+
+<p>
+Um eine bestimmte Datei oder Tabelle in unserer Datenbank zu suchen,
+verwenden wir ebenfalls ein <font color="#000077"><tt>SELECT</tt></font>-Statement.
+Im Gegensatz zu vorher lassen wir uns nun mit der Spaltenangabe &#187;*&#171;
+<i>alle</i> Felder der Tabelle geben. Zudem h&auml;ngen wir an die
+Abfrageanweisung eine <font color="#000077"><tt>WHERE</tt></font>-Klausel
+an, um eine Suchbedingung formulieren zu k&ouml;nnen. Mit Hilfe des
+<font color="#000077"><tt>LIKE</tt></font>-Operators f&uuml;hren wir
+eine Mustersuche durch, bei der die beiden SQL-Wildcards &#187;%&#171;
+(eine beliebige Anzahl Zeichen) und &#187;_&#171; (ein einzelnes beliebiges
+Zeichen) verwendet werden k&ouml;nnen. 
+
+<p>
+Die von <a href="index_e.html#ixb102377"><font color=#000080><tt>executeQuery</tt></font></a>
+zur&uuml;ckgegebene Ergebnismenge wird mit <a href="index_n.html#ixb100112"><font color=#000080><tt>next</tt></font></a>
+Satz f&uuml;r Satz durchlaufen und auf dem Bildschirm ausgegeben.
+Mit Hilfe der Methode <font color="#000077"><tt>getDirPath</tt></font>
+wird zuvor der zugeh&ouml;rige Verzeichnisname rekonstruiert und vor
+dem Dateinamen ausgegeben. Dazu wird in einer Schleife zur angegebenen
+<font color="#000077"><tt>did</tt></font> (Verzeichnisschl&uuml;ssel)
+so lange das zugeh&ouml;rige Verzeichnis gesucht, bis dessen <font color="#000077"><tt>fatherdid</tt></font>
+0 ist, also das Startverzeichnis erreicht ist. R&uuml;ckw&auml;rts
+zusammengebaut und mit Trennzeichen versehen, ergibt diese Namenskette
+den kompletten Verzeichnisnamen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Der in dieser Methode verwendete <a href="index_r.html#ixb100592"><font color=#000080><tt>ResultSet</tt></font></a>
+wurde mit dem zweiten <a href="index_s.html#ixb100591"><font color=#000080><tt>Statement</tt></font></a>-Objekt
+<font color="#000077"><tt>stmt1</tt></font> erzeugt. H&auml;tten wir
+daf&uuml;r die zu diesem Zeitpunkt noch ge&ouml;ffnete Variable <font color="#000077"><tt>stmt</tt></font>
+verwendet, w&auml;re das Verhalten des Programms undefiniert gewesen,
+weil die bestehende Ergebnismenge durch das Erzeugen einer neuen Ergebnismenge
+auf demselben <a href="index_s.html#ixb100591"><font color=#000080><tt>Statement</tt></font></a>-Objekt
+ung&uuml;ltig geworden w&auml;re.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<a name="listingid044007"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/**
+<font color="#555555">002 </font> * Gibt eine Liste aller Files auf dem Bildschirm aus,
+<font color="#555555">003 </font> * die zu dem angegebenen Dateinamen passen. Darin d&uuml;rfen
+<font color="#555555">004 </font> * die &uuml;blichen SQL-Wildcards % und _ enthalten sein.
+<font color="#555555">005 </font> */</font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> findFile(String name)
+<font color="#555555">007 </font><font color="#0000AA">throws</font> SQLException
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  String query = <font color="#0000FF">"SELECT * FROM file "</font> +
+<font color="#555555">010 </font>                 <font color="#0000FF">"WHERE fname LIKE \'"</font> + name + <font color="#0000FF">"\'"</font>;
+<font color="#555555">011 </font>  ResultSet rs = stmt.executeQuery(query);
+<font color="#555555">012 </font>  <font color="#0000AA">while</font> (rs.next()) {
+<font color="#555555">013 </font>    String path = getDirPath(rs.getInt(<font color="#0000FF">"did"</font>));
+<font color="#555555">014 </font>    System.out.println(
+<font color="#555555">015 </font>      path + FILESEP +
+<font color="#555555">016 </font>      rs.getString(<font color="#0000FF">"fname"</font>).trim()
+<font color="#555555">017 </font>    );
+<font color="#555555">018 </font>  }
+<font color="#555555">019 </font>  rs.close();
+<font color="#555555">020 </font>}
+<font color="#555555">021 </font>
+<font color="#555555">022 </font><font color="#00AA00">/**
+<font color="#555555">023 </font> * Liefert den Pfadnamen zu dem Verzeichnis mit dem
+<font color="#555555">024 </font> * angegebenen Schl&uuml;ssel.
+<font color="#555555">025 </font> */</font>
+<font color="#555555">026 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> String getDirPath(<font color="#006699">int</font> did)
+<font color="#555555">027 </font><font color="#0000AA">throws</font> SQLException
+<font color="#555555">028 </font>{
+<font color="#555555">029 </font>  String ret = <font color="#0000FF">""</font>;
+<font color="#555555">030 </font>  <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">031 </font>    ResultSet rs = stmt1.executeQuery(
+<font color="#555555">032 </font>      <font color="#0000FF">"SELECT * FROM dir WHERE did = "</font> + did
+<font color="#555555">033 </font>    );
+<font color="#555555">034 </font>    <font color="#0000AA">if</font> (!rs.next()) {
+<font color="#555555">035 </font>      <font color="#0000AA">throw</font> <font color="#0000AA">new</font> SQLException(
+<font color="#555555">036 </font>        <font color="#0000FF">"no dir record found with did = "</font> + did
+<font color="#555555">037 </font>      );
+<font color="#555555">038 </font>    }
+<font color="#555555">039 </font>    ret = rs.getString(<font color="#0000FF">"dname"</font>).trim() +
+<font color="#555555">040 </font>          (ret.length() &gt; 0 ? FILESEP + ret : <font color="#0000FF">""</font>);
+<font color="#555555">041 </font>    <font color="#0000AA">if</font> ((did = rs.getInt(<font color="#0000FF">"fatherdid"</font>)) == 0) {
+<font color="#555555">042 </font>      <font color="#0000AA">break</font>;
+<font color="#555555">043 </font>    }
+<font color="#555555">044 </font>  }
+<font color="#555555">045 </font>  <font color="#0000AA">return</font> ret;
+<font color="#555555">046 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 44.7: Suchen nach Dateien in der DirDB-Datenbank</i></p>
+
+<p>
+Das DirDB-Programm bietet mit dem Kommando <font color="#000077"><tt>FINDDIR</tt></font>
+auch die M&ouml;glichkeit, nach Verzeichnisnamen zu suchen. Die Implementierung
+dieser Funktion &auml;hnelt der vorigen und wird durch die Methode
+<font color="#000077"><tt>findDir</tt></font> realisiert: 
+<a name="listingid044008"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/**
+<font color="#555555">002 </font> * Gibt eine Liste aller Verzeichnisse auf dem Bildschirm
+<font color="#555555">003 </font> * aus, die zu dem angegebenen Verzeichnisnamen passen.
+<font color="#555555">004 </font> * Darin d&uuml;rfen die &uuml;blichen SQL-Wildcards % und _
+<font color="#555555">005 </font> * enthalten sein.
+<font color="#555555">006 </font> */</font>
+<font color="#555555">007 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> findDir(String name)
+<font color="#555555">008 </font><font color="#0000AA">throws</font> SQLException
+<font color="#555555">009 </font>{
+<font color="#555555">010 </font>  String query = <font color="#0000FF">"SELECT * FROM dir "</font> +
+<font color="#555555">011 </font>                 <font color="#0000FF">"WHERE dname LIKE \'"</font> + name + <font color="#0000FF">"\'"</font>;
+<font color="#555555">012 </font>  ResultSet rs = stmt.executeQuery(query);
+<font color="#555555">013 </font>  <font color="#0000AA">while</font> (rs.next()) {
+<font color="#555555">014 </font>    System.out.println(
+<font color="#555555">015 </font>      getDirPath(rs.getInt(<font color="#0000FF">"did"</font>)) +
+<font color="#555555">016 </font>      <font color="#0000FF">" ("</font> + rs.getInt(<font color="#0000FF">"entries"</font>) + <font color="#0000FF">" entries)"</font>
+<font color="#555555">017 </font>    );
+<font color="#555555">018 </font>  }
+<font color="#555555">019 </font>  rs.close();
+<font color="#555555">020 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 44.8: Suchen nach Verzeichnissen in der DirDB-Datenbank</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Wird das DirDB-Programm von der Kommandozeile aufgerufen, kann es
+unter Umst&auml;nden schwierig sein, die Wildcards &#187;%&#171; oder
+&#187;_&#171; einzugeben, weil sie vom Betriebssystem oder der Shell
+als Sonderzeichen angesehen werden. Durch Voranstellen des passenden
+Escape-Zeichens (das k&ouml;nnte beispielsweise der Backslash sein)
+kann die Sonderbedeutung aufgehoben werden. In der DOS-Box von Windows
+kann die Sonderbedeutung des &#187;%&#171; nur aufgehoben werden,
+indem das Zeichen &#187;%&#171; doppelt geschrieben wird. Soll beispielsweise
+nach allen Dateien mit der Erweiterung <font color="#660099">.java</font>
+gesucht werden, so ist <font color="#000077"><tt>DirDb</tt></font>
+unter Windows wie folgt aufzurufen: 
+<font color="#000077">
+<pre>
+java DirDB I findfile %%.java
+</pre>
+</font>
+
+<p>
+Weiterhin ist zu beachten, dass die Interpretation der Wildcards von
+den unterschiedlichen Datenbanken leider nicht einheitlich gehandhabt
+wird. Bei der Access-Datenbank ist die Ergebnismenge des obigen Statements
+leer. Der Grund kann - je nach verwendeter Version - darin liegen,
+dass entweder der Stern &#187;*&#171; anstelle des &#187;%&#171; als
+Wildcard erwartet wird oder dass die <i>Leerzeichen am Ende des Felds</i>
+als signifikant angesehen werden und daher auch <i>hinter</i> dem
+Suchbegriff ein Wildcard-Zeichen angegeben werden muss: 
+<font color="#000077">
+<pre>
+java DirDB A findfile %%.java%%
+</pre>
+</font>
+</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id044003007"></a>
+<h3>44.3.7 Die zehn gr&ouml;&szlig;ten Dateien </h3>
+
+<p>
+Eine &auml;hnliche <font color="#000077"><tt>SELECT</tt></font>-Anweisung
+begegnet uns, wenn wir uns die Aufgabe stellen, die <i>howmany</i>
+gr&ouml;&szlig;ten Dateien unserer Datenbank anzuzeigen. Hierzu f&uuml;gen
+wir eine <font color="#000077"><tt>ORDER BY</tt></font>-Klausel an
+und sortieren die Abfrage absteigend nach der Spalte <i>fsize</i>.
+Von der Ergebnismenge geben wir dann die ersten <i>howmany</i> Elemente
+aus: 
+<a name="listingid044009"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/**
+<font color="#555555">002 </font> * Gibt die howmany gr&ouml;&szlig;ten Dateien aus.
+<font color="#555555">003 </font> */</font>
+<font color="#555555">004 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> biggestFiles(<font color="#006699">int</font> howmany)
+<font color="#555555">005 </font><font color="#0000AA">throws</font> SQLException
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  ResultSet rs = stmt.executeQuery(
+<font color="#555555">008 </font>    <font color="#0000FF">"SELECT * FROM file ORDER BY fsize DESC"</font>
+<font color="#555555">009 </font>  );
+<font color="#555555">010 </font>  <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; howmany; ++i) {
+<font color="#555555">011 </font>    <font color="#0000AA">if</font> (rs.next()) {
+<font color="#555555">012 </font>      System.out.print(
+<font color="#555555">013 </font>        getDirPath(rs.getInt(<font color="#0000FF">"did"</font>)) +
+<font color="#555555">014 </font>        FILESEP + rs.getString(<font color="#0000FF">"fname"</font>).trim()
+<font color="#555555">015 </font>      );
+<font color="#555555">016 </font>      System.out.format(<font color="#0000FF">"%10d\n"</font>, rs.getInt(<font color="#0000FF">"fsize"</font>));
+<font color="#555555">017 </font>    }
+<font color="#555555">018 </font>  }
+<font color="#555555">019 </font>  rs.close();
+<font color="#555555">020 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 44.9: Sortieren der Ergebnismenge</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id044003008"></a>
+<h3>44.3.8 Speicherverschwendung durch Clustering </h3>
+
+<p>
+Bevor wir uns weiterf&uuml;hrenden Themen zuwenden, wollen wir uns
+eine letzte Anwendung unserer Beispieldatenbank ansehen. Viele Dateisysteme
+(allen voran das alte FAT-Dateisystem unter MS-DOS und Windows) speichern
+die Dateien in verketteten Zuordnungseinheiten fester Gr&ouml;&szlig;e,
+den <a name="ixa103227"><i>Clustern</i></a>. Ist die Cluster-Gr&ouml;&szlig;e
+beispielsweise 4096 Byte, so belegt eine Datei auch dann 4 kByte Speicher,
+wenn sie nur ein Byte gro&szlig; ist. Immer, wenn die Gr&ouml;&szlig;e
+einer Datei nicht ein genaues Vielfaches der Cluster-Gr&ouml;&szlig;e
+ist, bleibt der letzte Cluster unvollst&auml;ndig belegt und wertvoller
+Plattenspeicher bleibt ungenutzt. Ist die Cluster-Gr&ouml;&szlig;e
+hoch, wird vor allem dann viel Platz verschwendet, wenn das Dateisystem
+sehr viele kleine Dateien enth&auml;lt. Die folgende Funktion <font color="#000077"><tt>clustering</tt></font>
+berechnet zu einer gegebenen Cluster-Gr&ouml;&szlig;e die Summe der
+Dateil&auml;ngen und stellt sie dem tats&auml;chlichen Platzbedarf
+aufgrund der geclusterten Speicherung gegen&uuml;ber: 
+<a name="listingid044010"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/**
+<font color="#555555">002 </font> * Summiert einerseits die tats&auml;chliche Gr&ouml;&szlig;e aller
+<font color="#555555">003 </font> * Dateien und andererseits die Gr&ouml;&szlig;e, die sie durch
+<font color="#555555">004 </font> * das Clustering mit der angegebenen Clustergr&ouml;&szlig;e
+<font color="#555555">005 </font> * belegen. Zus&auml;tzlich wird der durch das Clustering
+<font color="#555555">006 </font> * "verschwendete" Speicherplatz ausgegeben.
+<font color="#555555">007 </font> */</font>
+<font color="#555555">008 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> clustering(<font color="#006699">int</font> clustersize)
+<font color="#555555">009 </font><font color="#0000AA">throws</font> SQLException
+<font color="#555555">010 </font>{
+<font color="#555555">011 </font>  <font color="#006699">int</font> truesize = 0;
+<font color="#555555">012 </font>  <font color="#006699">int</font> clusteredsize = 0;
+<font color="#555555">013 </font>  <font color="#006699">double</font> wasted;
+<font color="#555555">014 </font>  ResultSet rs = stmt.executeQuery(
+<font color="#555555">015 </font>    <font color="#0000FF">"SELECT * FROM file"</font>
+<font color="#555555">016 </font>  );
+<font color="#555555">017 </font>  <font color="#0000AA">while</font> (rs.next()) {
+<font color="#555555">018 </font>    <font color="#006699">int</font> fsize = rs.getInt(<font color="#0000FF">"fsize"</font>);
+<font color="#555555">019 </font>    truesize += fsize;
+<font color="#555555">020 </font>    <font color="#0000AA">if</font> (fsize % clustersize == 0) {
+<font color="#555555">021 </font>      clusteredsize += fsize;
+<font color="#555555">022 </font>    } <font color="#0000AA">else</font> {
+<font color="#555555">023 </font>      clusteredsize += ((fsize / clustersize) + 1)*clustersize;
+<font color="#555555">024 </font>    }
+<font color="#555555">025 </font>  }
+<font color="#555555">026 </font>  System.out.println(<font color="#0000FF">"true size      = "</font> + truesize);
+<font color="#555555">027 </font>  System.out.println(<font color="#0000FF">"clustered size = "</font> + clusteredsize);
+<font color="#555555">028 </font>  wasted = 100 * (1 - ((<font color="#006699">double</font>)truesize / clusteredsize));
+<font color="#555555">029 </font>  System.out.println(<font color="#0000FF">"wasted space   = "</font> + wasted + <font color="#0000FF">" %"</font>);
+<font color="#555555">030 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 44.10: Cluster-Berechnung mit der DirDB-Datenbank</i></p>
+
+<p>
+Um beispielsweise den Einfluss der geclusterten Darstellung bei einer
+Cluster-Gr&ouml;&szlig;e von 8192 zu ermitteln, kann das Programm
+wie folgt aufgerufen werden: 
+<font color="#000077">
+<pre>
+java DirDB I clustering 8192
+</pre>
+</font>
+
+<p>
+Die Ausgabe des Programms k&ouml;nnte dann beispielsweise so aussehen:
+<font color="#333300">
+<pre>
+Connection URL: jdbc:derby:dirdb
+Driver Name:    Apache Derby Embedded JDBC Driver
+Driver Version: 10.5.3.0 - (802917)
+
+true size      = 568519414
+clustered size = 638812160
+wasted space   = 11.003664363558762 %
+</pre>
+</font>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100278.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100280.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100282.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100284.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

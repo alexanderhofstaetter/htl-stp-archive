@@ -1,0 +1,1061 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100327.html;106,k100329.html;107,k100331.html;108,k100332.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100327.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100329.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100331.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100332.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 52 - Performance-Tuning
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="profilereinsatz"></a>
+<h2>52.3 Einsatz eines Profilers </h2>
+<hr>
+<ul>
+<li><a href="k100330.html#profilereinsatz">52.3 Einsatz eines Profilers</a>
+<ul>
+<li><a href="k100330.html#sectlevel3id052003001">52.3.1 Grundlagen</a>
+<li><a href="k100330.html#sectlevel3id052003002">52.3.2 Eine Beispielsitzung mit dem hprof-Profiler</a>
+<ul>
+<li><a href="k100330.html#sectlevel4id052003002001">Erzeugen der Profiling-Informationen</a>
+<li><a href="k100330.html#sectlevel4id052003002002">Das CPU-Profile</a>
+<li><a href="k100330.html#sectlevel4id052003002003">Das Heap-Profile</a>
+<li><a href="k100330.html#sectlevel4id052003002004">Die optimierte Version des Programms</a>
+</ul>
+<li><a href="k100330.html#visualvm">52.3.3 Eine Beispielsitzung mit Visual VM</a>
+<ul>
+<li><a href="k100330.html#sectlevel4id052003003001">Das CPU-Profile</a>
+<li><a href="k100330.html#sectlevel4id052003003002">Das Heap-Profile</a>
+</ul>
+<li><a href="k100330.html#sectlevel3id052003004">52.3.4 Ausblick</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id052003001"></a>
+<h3>52.3.1 Grundlagen </h3>
+
+<p>
+Die bisher vorgestellten Tipps und Tricks sind sicherlich eine Hilfe,
+um bereits w&auml;hrend der Entwicklung eines Programms grunds&auml;tzliche
+Performance-Probleme zu vermeiden. L&auml;uft das fertige Programm
+dann trotzdem nicht mit der gew&uuml;nschten Geschwindigkeit (was
+in der Praxis durchaus vorkommt), helfen pauschale Hinweise leider
+nicht weiter. Stattdessen gilt es herauszufinden, welche Teile des
+Programms f&uuml;r dessen schlechte Performance verantwortlich sind.
+Bei gr&ouml;&szlig;eren Programmen, die aus vielen tausend Zeilen
+Quellcode bestehen, ist das eine komplizierte Aufgabe, die nur mit
+Hilfe eines guten <a name="ixa103840"><i>Profilers</i></a> bew&auml;ltigt
+werden kann. Der Profiler ist ein Werkzeug, mit dessen Hilfe im laufenden
+Programm <i>Performance-Parameter</i>, wie beispielsweise die verbrauchte
+CPU-Zeit, die Anzahl der allozierten Objekte oder die Anzahl der Aufrufe
+bestimmter Methoden, &uuml;berwacht und gemessen werden k&ouml;nnen.
+Durch manuelle Inspektion der erzeugten Logdateien oder mit Hilfe
+eines Auswertungsprogramms kann dann festgestellt werden, welche Teile
+des Programms die gr&ouml;&szlig;te Last erzeugen und daher verbesserungsbed&uuml;rftig
+sind. 
+
+<p>
+Das Standard-JDK enth&auml;lt bereits seit der Version 1.0 den eingebauten
+<a name="ixa103841"><i>hprof</i></a>-Profiler, der Informationen &uuml;ber
+Laufzeit und Aufrufh&auml;ufigkeit von Methoden geben kann. Im JDK
+1.2 wurde er erweitert und kann seither den Speicherverbrauch messen
+und Profiling-Informationen threadweise ausgeben. 
+
+<p>
+Im Vergleich zu spezialisierten Produkten sind die F&auml;higkeiten
+des eingebauten Profilers etwas rudiment&auml;r. Insbesondere die
+vom Profiler erzeugte Ausgabedatei erfordert einigen Nachbearbeitungsaufwand.
+Zudem gibt es keine grafischen Auswertungen wie bei kommerziellen
+Profilern. Dennoch ist der JDK-Profiler ein brauchbares und hilfreiches
+Instrument, mit dem Performance-Probleme und Speicherengp&auml;sse
+analysiert werden k&ouml;nnen. Seit der Version 6 liegt dem JDK mit
+dem aus der Netbeans-IDE bekannten <a name="ixa103842"><i>Visual VM</i></a>
+ein zweiter Profiler bei, der im Gegensatz zu <font color="#000077"><tt>hprof</tt></font>
+eine moderne grafische Oberfl&auml;che besitzt. Wir wollen uns in
+diesem Abschnitt sowohl mit <font color="#000077"><tt>hprof</tt></font>
+als auch mit Visual VM vertraut machen. 
+
+<p>
+Als Beispiel f&uuml;r die Anwendung der Profiler wollen wir ein Programm
+verwenden, dessen simple Aufgabe darin besteht, einen <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+mit 75000 Punkten zu erzeugen und auf dem Bildschirm auszugeben. Statt
+die Ratschl&auml;ge aus dem vorigen Abschnitt zu beherzigen, verwendet
+das Programm den Operator <font color="#000077"><tt>+=</tt></font>,
+um den <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+Zeichen f&uuml;r Zeichen in einer Schleife zusammenzusetzen. 
+<a name="listingid052012"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* ProfTest1A.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> ProfTest1A
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> String dots(<font color="#006699">int</font> len)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    String ret = <font color="#0000FF">""</font>;
+<font color="#555555">008 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; len; ++i) {
+<font color="#555555">009 </font>      ret += <font color="#0000FF">"."</font>;
+<font color="#555555">010 </font>    }
+<font color="#555555">011 </font>    <font color="#0000AA">return</font> ret;
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">015 </font>  {
+<font color="#555555">016 </font>    String s = dots(75000);
+<font color="#555555">017 </font>    System.out.println(s);
+<font color="#555555">018 </font>  }
+<font color="#555555">019 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/ProfTest1A.java"><font color="#000055" size=-1>ProfTest1A.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 52.12: Ein Beispielprogramm zum Testen des Profilers</i></p>
+
+<p>
+Nachfolgend wollen wir uns eine Beispielsitzung jeweils mit dem <font color="#000077"><tt>hprof</tt></font>-Profiler
+und mit Visual VM ansehen. &Auml;hnlich wie bei einem Debugger besteht
+die typische Vorgehensweise darin, schrittweise Informationen &uuml;ber
+Rechenzeit- und Speicherverbrauch zu gewinnen und das Programm auf
+Basis dieser Informationen nach und nach zu optimieren. F&uuml;r gew&ouml;hnlich
+gibt es dabei kein Patentrezept, das direkt zum Erfolg f&uuml;hrt,
+sondern der Umgang mit dem Profiler &auml;hnelt eher einer Detektivarbeit,
+bei der die einzelnen Teile der L&ouml;sung nach und nach gefunden
+werden. 
+
+<!-- Section -->
+
+<a name="sectlevel3id052003002"></a>
+<h3>52.3.2 Eine Beispielsitzung mit dem hprof-Profiler </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id052003002001"></a>
+<h4>Erzeugen der Profiling-Informationen </h4>
+
+<p>
+Zun&auml;chst muss das Programm wie gew&ouml;hnlich &uuml;bersetzt
+werden: 
+<font color="#333300">
+<pre>
+javac ProfTest1A.java
+</pre>
+</font>
+
+<p>
+Um das Programm unter Kontrolle des Profilers zu starten, ist die
+Option <a name="ixa103843"><a href="index_0.html#ixb102901"><font color=#000080><tt>-Xrunhprof</tt></font></a></a>
+zu verwenden und nach einem Doppelpunkt mit den erforderlichen Parametrisierungen
+zu versehen. Die Parameter werden als kommaseparierte Liste von Argumenten
+der Form &#187;Name=Wert&#171; angegeben. Die wichtigsten Parameter
+von <a name="ixa103844"><a href="index_h.html#ixb102902"><font color=#000080><tt>hprof</tt></font></a></a>
+sind: <a name="tableid052003"></a>
+
+<p>
+<table cols=2 border width=66%>
+
+<tr>
+<td valign=top align=left width=25%><b>Name</b></td>
+<td valign=top align=left width=75%><b>M&ouml;gliche Werte</b></td></tr>
+<tr>
+<td valign=top align=left>cpu</td>
+<td valign=top align=left>samples, times, old</td></tr>
+<tr>
+<td valign=top align=left>heap</td>
+<td valign=top align=left>dump, sites, all</td></tr>
+<tr>
+<td valign=top align=left>file</td>
+<td valign=top align=left>Name der Ausgabedatei</td></tr>
+<tr>
+<td valign=top align=left>depth</td>
+<td valign=top align=left>Maximale Tiefe der Stacktraces</td></tr>
+</table>
+<p><i>
+Tabelle 52.3: Parameter von hprof</i></p>
+
+<p>
+Mit der Option <font color="#000077"><tt>cpu</tt></font> wird der
+CPU-Profiler aktiviert. Er kennt die Modi &#187;samples&#171;, &#187;times&#171;
+und &#187;old&#171;. Im Modus &#187;samples&#171; werden die Profiling-Informationen
+dadurch gewonnen, dass das laufende Programm mit Hilfe eines separaten
+Threads regelm&auml;&szlig;ig unterbrochen wird. Bei jeder Unterbrechung
+wird ein Stacktrace gezogen, der dem Profiler Auskunft dar&uuml;ber
+gibt, welche Methode gerade ausgef&uuml;hrt wird, in welcher Quelltextzeile
+das Programm steht und wie die Kette ihrer Aufrufer aussieht. Jeder
+derartige Schnappschuss wird als <i>Sample</i> bezeichnet. 
+
+<p>
+Die unterschiedlichen Stacktraces werden mit einem Aufrufz&auml;hler
+versehen, der immer dann um 1 erh&ouml;ht wird, wenn bei einer Unterbrechung
+ein entsprechender Stacktrace gefunden wird. Aus dem Endwert der Z&auml;hler
+kann dann abgeleitet werden, wo das Programm die meiste Rechenzeit
+verbraucht hat. Denn je h&ouml;her der Z&auml;hler war, desto &ouml;fter
+wurde das Programm an der zugeh&ouml;rigen Programmstelle &#187;angetroffen&#171;
+und desto wahrscheinlicher ist es, dass dort nennenswert Rechenzeit
+verbraucht wird. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Nat&uuml;rlich ist diese Vorgehensweise nicht sehr pr&auml;zise und
+es sind F&auml;lle denkbar, bei denen sie ganz versagt. Aber sie ist
+einfach zu implementieren und beeintr&auml;chtigt die Laufzeit des
+Programms nur unwesentlich. In der Praxis sollten die Ergebnisse mit
+der n&ouml;tigen Vorsicht betrachtet werden. Sie d&uuml;rfen nicht
+als absolute Messwerte angesehen werden, sondern helfen, Trends aufzuzeigen,
+um Programmteile mit besonders hoher Rechenzeit ausfindig zu machen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Der zweite Modus &#187;times&#171; arbeitet etwas anders. Statt lediglich
+die Anzahl der Stacktraces zu z&auml;hlen, misst er tats&auml;chlich
+die innerhalb der einzelnen Methoden verbrauchte Rechenzeit. Allerdings
+wird dadurch auch die Laufzeit des Programms st&auml;rker erh&ouml;ht
+als im Modus &#187;samples&#171;. In der Praxis kann eine gemischte
+Vorgehensweise sinnvoll sein, bei der zun&auml;chst per &#187;samples&#171;
+die gr&ouml;&szlig;ten Performance-Fresser gesucht werden und dann
+per &#187;times&#171; das Feintuning vorgenommen wird. 
+
+<p>
+Bei der Verwendung des CPU-Profilers sind weiterhin die Optionen <font color="#000077"><tt>file</tt></font>
+und <font color="#000077"><tt>depth</tt></font> von Bedeutung. Mit
+<font color="#000077"><tt>file</tt></font> kann der Name der Ausgabedatei
+angegeben werden, er ist standardm&auml;&szlig;ig <font color="#660099">java.hprof.txt</font>.
+Mit <font color="#000077"><tt>depth</tt></font> wird festgelegt, mit
+welcher maximalen Tiefe die Stacktraces aufgezeichnet werden (standardm&auml;&szlig;ig
+4). Ist die Aufrufkette einer Methode l&auml;nger als der angegebene
+Wert, wird der Stacktrace abgeschnitten und bei der Analyse ist nicht
+mehr bis ins letzte Detail erkennbar, von welcher Stelle aus der Aufruf
+erfolgte. Wird <font color="#000077"><tt>depth</tt></font> auf 1 gesetzt,
+sind nur noch die Aufrufstellen sichtbar, die Aufrufer selbst bleiben
+unsichtbar. 
+
+<p>
+Wir wollen einen ersten Lauf mit dem CPU-Profiler im Modus &#187;samples&#171;
+und mit einer maximalen Stacktiefe von 10 machen und rufen das Programm
+daher wie folgt auf: 
+<font color="#333300">
+<pre>
+java -Xint -Xrunhprof:cpu=samples,depth=10 ProfTest1A
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Option <a name="ixa103845"><a href="index_0.html#ixb102903"><font color=#000080><tt>-Xint</tt></font></a></a>
+geben wir an, um das Programm im Interpreter-Modus laufen zu lassen
+und m&ouml;gliche Verf&auml;lschungen durch den Hotspot-Compiler zu
+vermeiden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id052003002002"></a>
+<h4>Das CPU-Profile </h4>
+
+<p>
+Das Programm erzeugt nun die Ausgabedatei <font color="#660099">java.hprof.txt</font>
+mit den Profiling-Informationen. Sie besteht aus drei Teilen: 
+<ul>
+<li>Im oberen Teil werden allgemeine Informationen zur Struktur der
+Datei und den darin verwendeten Eintr&auml;gen gegeben.
+<li>Im mittleren Teil befinden sich die Stacktraces.
+<li>Im unteren Teil werden die Sampling-Ergebnisse ausgegeben.
+</ul>
+
+<p>
+Die Analyse beginnt im unteren Teil. Er sieht bei unserer Beispielsitzung
+wie folgt aus (die Samples ab Position 11 wurden aus Gr&uuml;nden
+der &Uuml;bersichtlichkeit entfernt): 
+<font color="#333300">
+<pre>
+CPU SAMPLES BEGIN (total = 1187) Mon May 30 20:41:17 2011
+rank   self  accum   count trace method
+   1 32,94% 32,94%     391 300026 java.lang.AbstractStringBuilder.&lt;init&gt;
+   2 32,01% 64,95%     380 300025 java.util.Arrays.copyOfRange
+   3 16,76% 81,72%     199 300030 java.lang.System.arraycopy
+   4 16,43% 98,15%     195 300031 java.lang.System.arraycopy
+   5  1,10% 99,24%      13 300029 java.lang.System.arraycopy
+   6  0,08% 99,33%       1 300012 sun.net.www.URLConnection.&lt;init&gt;
+   7  0,08% 99,41%       1 300032 java.lang.Object.&lt;init&gt;
+   8  0,08% 99,49%       1 300033 java.lang.StringBuilder.toString
+   9  0,08% 99,58%       1 300034 ProfTest1A.dots
+  10  0,08% 99,66%       1 300035 java.lang.AbstractStringBuilder.&lt;init&gt;
+  11 ...
+</pre>
+</font>
+
+<p>
+Die Ausgabe ist nach Aufrufh&auml;ufigkeit geordnet. Von den insgesamt
+1187 Samples, die w&auml;hrend des Programmlaufs gezogen wurden, waren
+391 im Konstruktor der Klasse <font color="#000077"><tt>AbstractStringBuilder</tt></font>
+und 380 in der Methode <font color="#000077"><tt>copyOfRange</tt></font>
+der Klasse <a href="index_a.html#ixb100880"><font color=#000080><tt>Arrays</tt></font></a>.
+Noch einmal 407 Aufrufe entfielen auf <a href="index_a.html#ixb100868"><font color=#000080><tt>arraycopy</tt></font></a>
+der Klasse <a href="index_s.html#ixb100182"><font color=#000080><tt>System</tt></font></a>.
+Insgesamt waren diese Methoden f&uuml;r 99,24 Prozent der Gesamtlaufzeit
+verantwortlich. 
+
+<p>
+Da die auff&auml;lligen Methoden nicht selbst geschrieben sind und
+sich damit direkten Optimierungsversuchen entziehen, kann eine Performance-Verbesserung
+lediglich dadurch erreicht werden, dass die Anzahl ihrer Aufrufe vermindert
+wird. Dazu m&uuml;ssen wir die Methoden-Aufrufer herausfinden und
+uns die in der f&uuml;nfte Spalte angegebenen Stacktraces ansehen.
+Der Stacktrace zu <font color="#000077"><tt>AbstractStringBuilder</tt></font>
+hat beispielsweise die Nummer 300026 und sieht so aus: 
+<font color="#333300">
+<pre>
+TRACE 300026:
+        java.lang.AbstractStringBuilder.&lt;init&gt;(AbstractStringBuilder.java:45)
+        java.lang.StringBuilder.&lt;init&gt;(StringBuilder.java:92)
+        ProfTest1A.dots(ProfTest1A.java:9)
+        ProfTest1A.main(ProfTest1A.java:16)
+</pre>
+</font>
+
+<p>
+Er besagt, dass der Sample in Zeile 45 des Konstruktors der Klasse
+<font color="#000077"><tt>AbstractStringBuilder</tt></font> erzeugt
+wurde. Diese wurde vom Konstruktor der Klasse <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>
+aufgerufen, das von unserer eigenen Methode <font color="#000077"><tt>dots</tt></font>
+in Zeile 9 aufgerufen wurde. In Zeile 9 steht zwar kein Aufruf von
+<a href="index_a.html#ixb100188"><font color=#000080><tt>append</tt></font></a>,
+dort befindet sich aber der <font color="#000077"><tt>+=</tt></font>-Operator
+zur Verkettung der Strings. Dieser wird vom Compiler in entsprechende
+Methoden- und Konstruktorenaufrufe der Klassen <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+und <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>
+&uuml;bersetzt (siehe <a href="k100329.html#stringverkettunguebersetzung">Listing 52.2</a>).
+
+<p>
+Als erste Erkenntnis stellen wir also fest, dass offensichtlich der
+<font color="#000077"><tt>+=</tt></font>-Operator zur <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Verkettung
+interne <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>-Objekte
+erzeugt, die einen erheblichen Teil der CPU-Zeit ben&ouml;tigen, um
+w&auml;hrend des Anf&uuml;gens von Zeichen vergr&ouml;&szlig;ert zu
+werden. 
+
+<p>
+Die Stacktraces 300025 und 300030 der n&auml;chsten beiden Kandidaten
+verst&auml;rken den Eindruck, dass der <font color="#000077"><tt>+=</tt></font>-Operator
+in unserem Programm CPU-intensiven Code erzeugt: 
+<font color="#333300">
+<pre>
+TRACE 300025:
+        java.util.Arrays.copyOfRange(Arrays.java:3209)
+        java.lang.String.&lt;init&gt;(String.java:215)
+        java.lang.StringBuilder.toString(StringBuilder.java:430)
+        ProfTest1A.dots(ProfTest1A.java:9)
+        ProfTest1A.main(ProfTest1A.java:16)
+
+TRACE 300030:
+        java.lang.System.arraycopy(System.java:Unknown line)
+        java.lang.String.getChars(String.java:854)
+        java.lang.AbstractStringBuilder.append(AbstractStringBuilder.java:391)
+        java.lang.StringBuilder.append(StringBuilder.java:119)
+        java.lang.StringBuilder.&lt;init&gt;(StringBuilder.java:93)
+        ProfTest1A.dots(ProfTest1A.java:9)
+        ProfTest1A.main(ProfTest1A.java:16)
+</pre>
+</font>
+
+<p>
+Beide Arten von Samples gehen letztlich auf Zeile 9 unseres Programms
+zur&uuml;ck und zeigen Rechenzeitverbr&auml;uche, die durch die vom
+<font color="#000077"><tt>+=</tt></font>-Operator ausgel&ouml;ste
+Verarbeitung tempor&auml;rer Strings und StringBuilder verursacht
+werden. 
+
+<p>
+Unsere erste Vermutung hat sich also best&auml;tigt: Der harmlos aussehende
+Aufruf des <font color="#000077"><tt>+=</tt></font>-Operators in Zeile
+9 unseres Programms erzeugt tempor&auml;re <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-
+und <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>-Objekte,
+in der ein Gro&szlig;teil der Rechenzeit durch das Anh&auml;ngen und
+Kopieren von Zeichen und das Erh&ouml;hen der Kapazit&auml;t verbraucht
+wird. 
+
+<!-- Section -->
+
+<a name="sectlevel4id052003002003"></a>
+<h4>Das Heap-Profile </h4>
+
+<p>
+Einen noch deutlicheren Eindruck vermittelt ein Heap-Profile. Wir
+erstellen es, indem wir das Programm mit der Option <font color="#000077"><tt>heap=sites</tt></font>
+erneut unter Profiler-Kontrolle laufen lassen: 
+<font color="#333300">
+<pre>
+java -Xint -Xrunhprof:heap=sites,depth=10 ProfTest1A
+</pre>
+</font>
+
+<p>
+Die Ausgabe besteht wie beim CPU-Profiling aus drei Teilen. Die ersten
+beiden entsprechen dem CPU-Profiler, der dritte enth&auml;lt Informationen
+zur dynamischen Heap-Belegung: 
+<font color="#333300">
+<pre>
+SITES BEGIN (ordered by live bytes) Tue May 31 19:37:14 2011
+          percent          live          alloc'ed  stack class
+ rank   self  accum     bytes objs     bytes  objs trace name
+    1 49,88% 49,88%  44774568  299 1333782704 75000 300316 char[]
+    2 49,80% 99,68%  44699728  299 1331532704 75000 300318 char[]
+    3  0,01% 99,69%      9696  303    2400000 75000 300317 java.lang.String
+SITES END
+</pre>
+</font>
+
+<p>
+Auch hier geben die erste Spalte die Rangordnung und die n&auml;chsten
+beiden die einzelnen und kumulierten Prozentanteile am Gesamtverbrauch
+an. Die Spalten 4 und 5 geben einen &Uuml;berblick &uuml;ber die aktiven
+Objekte, die n&auml;chsten beiden &uuml;ber die insgesamt allozierten
+Objekte (jeweils mit der Gesamtzahl allozierter Bytes und der Anzahl
+der Objekte). Die letzte Spalte stellt den Datentyp des Objekts dar.
+
+<p>
+Am auff&auml;lligsten ist die oberste Zeile und die darin ersichtliche
+Diskrepanz zwischen aktiven und allozierten Objekten. Dort steht,
+dass unser Programm 75000 Zeichen-Arrays mit insgesamt 1,3 GByte Speicher
+alloziert hat, davon aber nur noch 299 Objekte mit kaum 44 MByte Speicher
+aktiv sind. Hier wurden also in erheblichem Umfang kurzlebige Objekte
+erzeugt und anschlie&szlig;end wieder fallengelassen. Stacktrace 300316
+sieht so aus: 
+<font color="#333300">
+<pre>
+TRACE 300316:
+        java.lang.AbstractStringBuilder.&lt;init&gt;(AbstractStringBuilder.java:45)
+        java.lang.StringBuilder.&lt;init&gt;(StringBuilder.java:92)
+        ProfTest1A.dots(ProfTest1A.java:9)
+        ProfTest1A.main(ProfTest1A.java:16)
+</pre>
+</font>
+
+<p>
+Wieder liegt der Verursacher in Zeile 9 unseres Programms und wir
+sehen, dass der <font color="#000077"><tt>+=</tt></font>-Operator
+nicht nur viel Rechenzeit verbraucht, sondern zudem eine gro&szlig;e
+Anzahl tempor&auml;rer Objekte erzeugt und damit das Laufzeitsystem
+und den Garbage Collector belastet. 
+
+<!-- Section -->
+
+<a name="sectlevel4id052003002004"></a>
+<h4>Die optimierte Version des Programms </h4>
+
+<p>
+Da wir auf die Implementierung von <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+und <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>
+keinen Einfluss haben, es dort also f&uuml;r uns nichts zu optimieren
+gibt, m&uuml;ssen wir die Verwendung des <font color="#000077"><tt>+=</tt></font>-Operators
+einschr&auml;nken oder eine besser geeignete Alternative suchen. Aus
+<a href="k100329.html#tuningstring">Abschnitt 52.2.1</a> wissen wir
+bereits, dass es besser ist, direkt mit <a href="index_s.html#ixb100548"><font color=#000080><tt>StringBuilder</tt></font></a>-Objekten
+zu arbeiten, und eine verbesserte Version unseres Programms sieht
+dann so aus: 
+<a name="proftest1b"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* ProfTest1B.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> ProfTest1B
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> String dots(<font color="#006699">int</font> len)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    StringBuilder sb = <font color="#0000AA">new</font> StringBuilder(len + 10);
+<font color="#555555">008 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; len; ++i) {
+<font color="#555555">009 </font>      sb.append(<font color="#0000FF">'.'</font>);
+<font color="#555555">010 </font>    }
+<font color="#555555">011 </font>    <font color="#0000AA">return</font> sb.toString();
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">015 </font>  {
+<font color="#555555">016 </font>    String s = dots(10000);
+<font color="#555555">017 </font>    System.out.println(s); <a name="proftest1b.a"></a>
+<font color="#555555">018 </font>  }
+<font color="#555555">019 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/ProfTest1B.java"><font color="#000055" size=-1>ProfTest1B.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 52.13: Das verbesserte Programm nach der Profiler-Sitzung</i></p>
+
+<p>
+Wird nun ein CPU-Profiling durchgef&uuml;hrt, ergibt sich ein g&auml;nzlich
+anderes Bild: 
+<font color="#333300">
+<pre>
+CPU SAMPLES BEGIN (total = 10) Tue May 31 19:49:51 2011
+rank   self  accum   count trace method
+   1 30,00% 30,00%       3 300009 java.io.FileInputStream.readBytes
+   2 20,00% 50,00%       2 300027 java.lang.AbstractStringBuilder.append
+   3 10,00% 60,00%       1 300005 java.security.AccessController.doPrivileged
+   4 10,00% 70,00%       1 300011 sun.net.www.protocol.file.Handler.create-
+                                  FileURLConnection
+   5 10,00% 80,00%       1 300022 java.security.ProtectionDomain.&lt;clinit&gt;
+   6 10,00% 90,00%       1 300026 ProfTest1B.dots
+   7 10,00% 100,00%      1 300028 java.lang.AbstractStringBuilder.append
+CPU SAMPLES END
+</pre>
+</font>
+
+<p>
+Statt 1187 gab es nur noch 10 Samples (denn die Laufzeit des Programms
+hat sich drastisch reduziert) und nur noch ein einziger von ihnen
+wurde durch den Aufruf der Methode <font color="#000077"><tt>dots</tt></font>
+verursacht. Der Heap-Profiler liefert ein &auml;hnliches Bild: Der
+gesamte Speicherverbrauch des Programms liegt nun in der Gr&ouml;&szlig;enordnung
+von 150 kByte und es gibt keine nennenswerten tempor&auml;ren Objektallokationen
+mehr. Diese Version des Programms erzielt das gleiche Ergebnis also
+erheblich ressourcenschonender als die vorige. 
+
+<!-- Section -->
+
+<a name="visualvm"></a>
+<h3>52.3.3 Eine Beispielsitzung mit Visual VM<a name="ixa103846"></a>
+</h3>
+
+<p>
+<a name="ixa103846"><i>Visual VM</i></a> ist ein Profiler mit grafischer
+Oberfl&auml;che, der seit Version 6 Update 7 zusammen mit dem JDK
+ausgeliefert wird. Das Programm <font color="#660099">jvisualvm.exe</font>
+findet sich im <font color="#660099">bin</font>-Verzeichnis der JDK-Installation
+und l&auml;sst sich von dort aus starten. 
+
+<p>
+Die Vorgehensweise ist etwas anders als bei <a href="index_h.html#ixb102902"><font color=#000080><tt>hprof</tt></font></a>.
+W&auml;hrend der Profiler bei <a href="index_h.html#ixb102902"><font color=#000080><tt>hprof</tt></font></a>
+in der VM des Programmes selbst mitl&auml;uft, wird Visual VM als
+eigenst&auml;ndiges Programm gestartet, das sich mit dem laufenden
+Java-Programm verbindet, das auf der gleichen Maschine oder auf anderen
+Rechnern im Netzwerk laufen kann. Nach dem Start von Visual VM erscheint
+folgendes Fenster: 
+<p>
+<a name="imageid052001"></a>
+<img src="images/VisualVM_Init.gif">
+<p>
+
+<p><i>
+Abbildung 52.1: Visual VM</i></p>
+
+<p>
+Der Bildschirm ist in zwei Bereiche geteilt. Links finden Sie unter
+&#187;Local&#171; und &#187;Remote&#171; eine Liste aller lokalen
+bzw. im Netzwerk laufenden Java-Programme. Unter anderem sieht man
+dort auch Visual VM selbst, denn auch dieses l&auml;uft als Java-Programm
+innerhalb einer JVM. Wenn man ein Java-Programm startet, erscheint
+es mit einer kurzen Verz&ouml;gerung in der Liste; endet es, verschwindet
+es wieder aus der Auflistung. 
+
+<p>
+Meist ist diese Architektur hilfreich, weil man vorab keine Vorkehrungen
+treffen muss, um ein Java-Programm zu profilen, sondern spontan in
+ein beliebiges Java-Programm &#187;hineinschauen&#171; kann. In unserem
+Fall ist das jedoch nicht so einfach, denn unser Testprogramm l&auml;uft
+nur wenige Augenblicke. Wir erweitern unser Listing daher so, dass
+vor und nach dem kritischen Abschnitt auf eine Tasteneingabe gewartet
+wird (siehe <a href="k100330.html#visualvmtestprogramm.b">Zeile 025</a>
+und <a href="k100330.html#visualvmtestprogramm.c">Zeile 028</a> in
+folgendem Listing). 
+
+<p>
+Visual VM bietet einige Funktionen, um Speicherl&ouml;cher auszumachen,
+also Referenzen auf verwaiste oder sehr gro&szlig;e Objektgeflechte,
+die unn&ouml;tig Speicher blockieren. Weniger gut eignet sich Visual
+VM dagegen f&uuml;r die Suche nach Stellen, an denen Speicher verschwendet
+wird, d.h. an denen viele tempor&auml;re, kurzlebige Objekte erzeugt
+werden - etwa wie in unserem obigen Beispielprogramm. Wir schreiben
+unser Listing daher so um, dass wir ein &#187;Speicherloch&#171; simulieren,
+indem wir unser Ergebnis in einer statischen Variablen speichern (siehe
+<a href="k100330.html#visualvmtestprogramm.a">Zeile 006</a>). Anschlie&szlig;end
+werden wir versuchen, diese Stelle mit Visual VM zu finden. 
+
+<p>
+<a name="visualvmtestprogramm"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* ProfTest1A_VVM.java */</font>
+<font color="#555555">002 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">003 </font>
+<font color="#555555">004 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> ProfTest1A_VVM
+<font color="#555555">005 </font>{
+<font color="#555555">006 </font>  <font color="#0000AA">private</font> <font color="#0000AA">static</font> String s; <a name="visualvmtestprogramm.a"></a>
+<font color="#555555">007 </font>  
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> String dots(<font color="#006699">int</font> len)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    String ret = <font color="#0000FF">""</font>;
+<font color="#555555">011 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; len; ++i) {
+<font color="#555555">012 </font>      ret += <font color="#0000FF">"."</font>;
+<font color="#555555">013 </font>    }
+<font color="#555555">014 </font>    <font color="#0000AA">return</font> ret;
+<font color="#555555">015 </font>  }
+<font color="#555555">016 </font>
+<font color="#555555">017 </font>  <font color="#0000AA">private</font> <font color="#0000AA">static</font> <font color="#006699">void</font> enter() <font color="#0000AA">throws</font> IOException
+<font color="#555555">018 </font>  {
+<font color="#555555">019 </font>    System.out.println(<font color="#0000FF">"Bitte Enter dr&uuml;cken"</font>);
+<font color="#555555">020 </font>    <font color="#0000AA">while</font> (System.in.read() != <font color="#0000FF">'\n'</font>);
+<font color="#555555">021 </font>  }
+<font color="#555555">022 </font>
+<font color="#555555">023 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args) <font color="#0000AA">throws</font> IOException
+<font color="#555555">024 </font>  {
+<font color="#555555">025 </font>    enter(); <a name="visualvmtestprogramm.b"></a>
+<font color="#555555">026 </font>    s = dots(75000);
+<font color="#555555">027 </font>    System.out.println(s);
+<font color="#555555">028 </font>    enter(); <a name="visualvmtestprogramm.c"></a>
+<font color="#555555">029 </font>  }
+<font color="#555555">030 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/ProfTest1A_VVM.java"><font color="#000055" size=-1>ProfTest1A_VVM.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 52.14: Ein Beispielprogramm zum Testen von Visual VM</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+In der Vergangenheit kam es mitunter zu Problemen mit der Stabilit&auml;t
+von Visual VM. So gab es beispielsweise Schwierigkeiten, wenn Visual
+VM mit einer anderen JDK-Version lief als das zu untersuchende Programm.
+Es kam dann zum Beispiel vor, dass das zu untersuchende Programm nicht
+in der Liste erschien. Daneben gab es weitere kleine, aber auf Dauer
+st&ouml;rende Fehler. Visual VM wurde jedoch mit jeder Version stabiler,
+so dass es sich empfiehlt, f&uuml;r die folgenden Versuche ein m&ouml;glichst
+aktuelles JDK zu verwenden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id052003003001"></a>
+<h4>Das CPU-Profile</h4>
+
+<p>
+Zun&auml;chst &uuml;bersetzen wir das Listing mit 
+<font color="#333300">
+<pre>
+javac ProfTest1A_VVM.java
+</pre>
+</font>
+
+<p>
+und starten es mit 
+<font color="#333300">
+<pre>
+java -Xint ProfTest1A_VVM
+</pre>
+</font>
+
+<p>
+Jetzt dr&uuml;cken wir noch nicht <font color="#007700"><tt>[ENTER]</tt></font>,
+sondern wechseln zun&auml;chst zu Visual VM. In der Liste der Programme
+erscheint unter anderem auch <font color="#000077"><tt>ProfTest1A_VVM</tt></font>,
+mit dem wir uns per Doppelklick verbinden. Auf der rechten Seite erscheint
+ein neues Bild und auf dem <i>Overview</i>-Reiter sehen wir allgemeine
+Informationen zum laufenden Prozess. 
+
+<p>
+F&uuml;r das CPU-Profile sind zwei weitere Reiter auf der rechten
+Seite des Fensters von Interesse: <i>Sampler</i> und <i>Profiler</i>.
+Im Prinzip handelt es sich um zwei verschiedene Profiler, die sich
+durch die Methoden unterscheiden, mit denen die Daten gewonnen werden.
+Wir verwenden den <i>Sampler</i>, der &auml;hnlich wie der <a href="index_h.html#ixb102902"><font color=#000080><tt>hprof</tt></font></a>-Profiler
+in regelm&auml;&szlig;igen Abst&auml;nden Threaddumps zieht, also
+Stichproben nimmt. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#FF9900"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#FF9900"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+In &auml;lteren JDKs steht der Sample-Modus noch nicht zur Verf&uuml;gung.
+In diesem Fall kann die Sitzung alternativ mit dem alternativen Profiler
+durchgef&uuml;hrt werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#FF9900">
+<tr>
+<td><font color="#FFFFFF">&nbsp;JDK6.0-7.0&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#FF9900"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<p>
+<a name="imageid052002"></a>
+<img src="images/VisualVM_Sampler.gif">
+<p>
+
+<p><i>
+Abbildung 52.2: Sampler-Reiter in Visual VM</i></p>
+
+<p>
+Wir haken nun die Checkbox <i>Settings</i> an und tragen in der dann
+erscheinenden Textarea <i>Do not profile packages</i> Folgendes ein:
+<font color="#000077">
+<pre>
+java.io.*, java.lang.reflect.*, java.net.*, javax.*,
+sun.*, sunw.*, com.sun.*, java.security.*, java.util.*, 
+java.lang.Thread
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Visual VM verbindet sich &uuml;ber eine Socket-Verbindung mit dem
+laufenden Programm. Beim Datentransfer zwischen den Programmen entsteht
+ein nicht unerheblicher Overhead, den Visual VM leider nicht von dem
+restlichen Aufwand unterscheiden kann und der daher in das Gesamtergebnis
+einflie&szlig;t. Wir sorgen durch die obigen Einstellungen daf&uuml;r,
+dass der Aufwand, der f&uuml;r das Profiling anf&auml;llt, herausgefiltert
+wird. </td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Dr&uuml;cken Sie den <i>CPU</i>-Button, um den Profiling-Vorgang zu
+beginnen, und wechseln Sie anschlie&szlig;end in Ihre Anwendung. Dr&uuml;cken
+Sie <font color="#007700"><tt>[ENTER]</tt></font>, um den aufw&auml;ndigen
+Programmteil zu durchlaufen. Klicken Sie auf den <i>Stop</i>-Button,
+sobald das Testprogramm Sie erneut zum Dr&uuml;cken der <font color="#007700"><tt>[ENTER]</tt></font>-Taste
+auffordert, um den Profiling-Vorgang zu beenden. Achten Sie darauf,
+dass das Testprogramm weiterhin l&auml;uft, denn viele Informationen
+und Optionen stehen nur so lange zur Verf&uuml;gung, wie der Prozess
+am Leben ist. Das Ergebnis sollte etwa so aussehen: 
+<p>
+<a name="imageid052003"></a>
+<img src="images/VisualVM_Result.gif">
+<p>
+
+<p><i>
+Abbildung 52.3: CPU-Profiling-Ergebnis in Visual VM</i></p>
+
+<p>
+Vielleicht wundern Sie sich, dass die Methode <font color="#000077"><tt>dots</tt></font>
+nicht als Hotspot in der Liste auftaucht. Das liegt daran, dass die
+Liste absteigend nach Selftime, also <i>Nettolaufzeit</i>, sortiert
+ist. Die Methode <font color="#000077"><tt>dots</tt></font> selbst
+ben&ouml;tigt aber ann&auml;hernd keine Zeit, sondern nur die von
+ihr aufgerufenen Methoden. Ihre Nettolaufzeit liegt also nahe 0 msek.
+
+<p>
+F&uuml;r eine tiefergehende Analyse dr&uuml;cken wir den <i>Snapshot</i>-Button,
+um die bislang gesammelten Daten in einem neuen Reiter zusammenzufassen.
+In dieser Ansicht kann man sich die Verteilung der Laufzeit in einer
+Baumdarstellung ansehen: 
+<p>
+<a name="imageid052004"></a>
+<img src="images/VisualVM_Cpu_Snapshot.gif">
+<p>
+
+<p><i>
+Abbildung 52.4: CPU-Snapshot in Visual VM</i></p>
+
+<p>
+In der ersten Spalte sehen wir den Methodennamen. Die zweite und dritte
+Spalte stellt die <i>Bruttolaufzeiten</i> dar, und zwar grafisch,
+in absoluten Zeiten und anteilig. Die letzte Spalte zeigt die gez&auml;hlte
+Anzahl von Aufrufen, die deutlich geringer als die tats&auml;chliche
+Anzahl ist (es handelt sich ja um eine Stichprobe). Im Vergleich zu
+<font color="#000077"><tt>hprof</tt></font> arbeitet der Sampler leider
+nicht mit Zeilen-, sondern nur mit Methodengenauigkeit. 
+
+<p>
+Wir erkennen, dass innerhalb der Methode <font color="#000077"><tt>dots</tt></font>
+aufw&auml;ndige Stringoperationen stattfinden, die einen gro&szlig;en
+Anteil der Laufzeit ausmachen. Das Ergebnis haben wir erwartet, wir
+kennen es schon aus der Sitzung mit dem <a href="index_h.html#ixb102902"><font color=#000080><tt>hprof</tt></font></a>-Profiler.
+
+
+<!-- Section -->
+<a name="sectlevel4id052003003002"></a>
+<h4>Das Heap-Profile </h4>
+
+<p>
+Um mit Visual VM ein Heap-Profile zu erzeugen, geht man &auml;hnlich
+vor. Zun&auml;chst starten wir das Programm mit 
+<font color="#333300">
+<pre>
+java -Xint ProfTest1A_VVM
+</pre>
+</font>
+
+<p>
+Nun wechseln wir zu Visual VM und gehen wie oben beschrieben in die
+Sampler-Ansicht. Anschlie&szlig;end dr&uuml;cken wir den <i>Memory</i>-Button
+und danach <font color="#007700"><tt>[ENTER]</tt></font> in unserem
+Testprogramm. Wenn das Programm fertig ist, dr&uuml;cken wir <i>Stop</i>
+und sehen uns das Ergebnis an: 
+<p>
+<a name="imageid052005"></a>
+<img src="images/VisualVM_Heap.gif">
+<p>
+
+<p><i>
+Abbildung 52.5: Heap-Profiling-Ergebnis in Visual VM</i></p>
+
+<p>
+Wir k&ouml;nnen auf einen Blick erkennen, dass sehr viele <a href="index_c.html#ixb100223"><font color=#000080><tt>char</tt></font></a>-Array-Objekte
+erzeugt wurden, die insgesamt viel Speicherplatz verbraucht haben,
+insbesondere in Relation zur L&auml;nge des Ergebnis-Strings von 75.000
+Zeichen. Leider kann mit Visual VM nicht die Codestelle zur&uuml;ckverfolgt
+werden, die diesen &#187;Datenm&uuml;ll&#171; erzeugt hat. Wir konzentrieren
+uns also auf die Suche nach Speicherl&ouml;chern und erzeugen einen
+Heap-Dump, indem wir auf den gleichnamigen Button dr&uuml;cken. Wenn
+wir nun auf <i>Summary</i> klicken, sehen wir am rechten Bildschirmrand
+einen <i>Find</i>-Button, mit dem die gr&ouml;&szlig;ten Objekte im
+Hauptspeicher gesucht werden k&ouml;nnen (siehe <a href="k100330.html#listedergroesstenobjekte">Abbildung 52.6</a>).
+
+<p>
+Diese Aktion erzeugt eine Auflistung, die absteigend nach Objektgr&ouml;&szlig;e
+sortiert ist. Die linke Spalte enth&auml;lt den Typ des Objekts und
+rechts sieht man seine Gr&ouml;&szlig;e in Bytes. Ganz oben in der
+Liste erscheint unser gesuchter String. Man sieht, dass die Klasse
+<font color="#000077"><tt>ProfTest1A_VVM</tt></font> die gleiche Gr&ouml;&szlig;e
+besitzt und auch ein <a href="index_c.html#ixb100223"><font color=#000080><tt>char</tt></font></a>-Array
+auf Platz drei ann&auml;hernd die gleiche Gr&ouml;&szlig;e aufweist.
+Die Erkl&auml;rung ist einfach: Eine statische Variable der Klasse
+<font color="#000077"><tt>ProfTest1A_VVM</tt></font> referenziert
+den String von Platz 1 (unser &#187;Speicherloch&#171;). Die Gr&ouml;&szlig;e
+eines Objekts setzt sich rekursiv aus der Gr&ouml;&szlig;e seiner
+referenzierten Objekte zusammen. 
+<p>
+<a name="listedergroesstenobjekte"></a>
+<img src="images/VisualVM_Biggest_Objects.gif">
+<p>
+
+<p><i>
+Abbildung 52.6: Verfolgung der gr&ouml;&szlig;ten Objekte in Visual
+VM</i></p>
+
+<p>
+Wenn man auf den Link des String-Objekts klickt, gelangt man in eine
+Ansicht, in der n&auml;here Informationen zu dem String angezeigt
+werden, insbesondere auch die R&uuml;ckw&auml;rtsreferenzen zu diesem
+Objekt: 
+<p>
+<a name="rueckreferenzen"></a>
+<img src="images/VisualVM_Heap_References.gif">
+<p>
+
+<p><i>
+Abbildung 52.7: Referenzen verfolgen in Visual VM</i></p>
+
+<p>
+In dieser <i>Instance</i>-View sehen wir links eine Auflistung aller
+Objekte des aktuell gew&auml;hlten Typs; vorausgew&auml;hlt ist der
+String, &uuml;ber den wir eingestiegen sind. Rechts oben sehen wir
+die Membervariablen des Objekts, die sich genauer inspizieren lassen.
+Rechts unten sehen wir den Stacktrace aller Referenzen auf dieses
+Objekt, den f&uuml;r uns interessantesten Teil des Fensters. Wir erkennen
+in <a href="k100330.html#rueckreferenzen">Abbildung 52.7</a>, dass
+die Klasse <font color="#000077"><tt>ProfTest1A_VVM</tt></font> &uuml;ber
+die statische Variable <font color="#000077"><tt>s</tt></font> eine
+Referenz auf den langen String h&auml;lt. 
+
+<!-- Section -->
+
+<a name="sectlevel3id052003004"></a>
+<h3>52.3.4 Ausblick </h3>
+
+<p>
+Egal, ob mit dem eingebauten Profiler das Laufzeitverhalten oder der
+Speicherverbrauch der Anwendung untersucht werden soll, die prinzipielle
+Vorgehensweise ist stets gleich: 
+<ul>
+<li>Zun&auml;chst wird das Programm gestartet, dabei werden Profiling-Informationen
+gesammelt.
+<li>Die gr&ouml;&szlig;ten Rechenzeit- und Speicherverbraucher werden
+ermittelt und &uuml;ber ihre Stacktraces wird bestimmt, woher sie
+aufgerufen werden und in welcher Weise sie zum Programmergebnis beitragen.
+<li>Stehen gen&uuml;gend Erkenntnisse zur Verf&uuml;gung, kann das
+Programm verbessert werden und mit einem neuen Profiler-Lauf gepr&uuml;ft
+werden.
+<li>Sind die Ergebnisse zufriedenstellend, kann der Profiler deaktiviert
+werden, andernfalls beginnt das Spiel von vorne.
+</ul>
+
+<p>
+Ist der Anteil von lokalem Code am Rechenzeitverbrauch hoch, kann
+versucht werden, diesen zu verringern. Typische Ansatzpunkte daf&uuml;r
+sind das Vermindern der Anzahl von Schleifendurchl&auml;ufen (durch
+bessere Algorithmen), die Verwendung von Ganz- statt Flie&szlig;kommazahlen,
+das Herausziehen von schleifeninvariantem Code, das Vermeiden der
+Doppelauswertung von gemeinsamen Teilausdr&uuml;cken, das Wiederverwenden
+bekannter Teilergebnisse, die Verwendung alternativer Datenstrukturen,
+das Eliminieren von unbenutztem Code oder das Reduzieren der St&auml;rke
+von Ausdr&uuml;cken, indem sie durch algebraisch gleichwertige, aber
+schnellere Ausdr&uuml;cke ersetzt werden. Wird ein gro&szlig;er Anteil
+der Rechenzeit dagegen in Aufrufen von Untermethoden verbraucht, kann
+versucht werden, deren Aufrufh&auml;ufigkeit zu vermindern, sie durch
+performantere Aufrufe zu ersetzen oder - im Falle eigener Methoden
+- ihre Ablaufgeschwindigkeit zu erh&ouml;hen. 
+
+<p>
+Der zielgerichtete Einsatz dieser Techniken erfordert gute Werkzeuge,
+insbesondere einen guten Profiler. Bei kleineren Problemen mag es
+ausreichend sein, die Ablaufgeschwindigkeit mit Ausgabeanweisungen
+und <a name="ixa103847"><a href="index_c.html#ixb100866"><font color=#000080><tt>System.currentTimeMillis</tt></font></a></a>
+zu ermitteln, bei gr&ouml;&szlig;eren Problemen sollte man <a href="index_h.html#ixb102902"><font color=#000080><tt>hprof</tt></font></a>
+oder Visual VM verwenden. Daneben gibt es einige kommerzielle Produkte,
+wie etwa <a name="ixa103848"><i>JProbe</i></a> (<a href="http://www.quest.com/jprobe/">http://www.quest.com/jprobe/</a>),
+der auch f&uuml;r Teile der Software zu diesem Buch verwendet wurde,
+oder <a name="ixa103849"><i>JProfiler</i></a> (<a href="http://www.ej-technologies.com/products/jprofiler/overview.html">http://www.ej-technologies.com/products/jprofiler/overview.html</a>).
+
+<p>
+Zu ihren F&auml;higkeiten z&auml;hlen beispielsweise: 
+<ul>
+<li>Die grafische Darstellung der Aufrufhierarchie mit Laufzeitinformationen
+zu Methoden und Aufrufen
+<li>Das Ermitteln von Profiling-Informationen bis auf die Ebene einzelner
+Quelltextzeilen hinab
+<li>Das Erstellen dynamischer Profile, um die Ver&auml;nderung wichtiger
+Parameter bereits w&auml;hrend des laufenden Programms beobachten
+zu k&ouml;nnen
+<li>Die R&uuml;ckverfolgung von alloziertem Speicher sowohl zu den
+Programmstellen, die den Speicher belegt haben, als auch zu den Variablen,
+in denen die zugeh&ouml;rigen Objekte gehalten werden
+<li>Das Vergleichen von Profiling-L&auml;ufen, um die Auswirkungen
+von Optimierungsversuchen studieren zu k&ouml;nnen
+<li>Die Ausgabe von Reports und HTML-Dateien zu Vergleichs- und Dokumentationszwecken
+</ul>
+
+<p>
+Vor einigen Jahren waren das Alleinstellungsmerkmale kommerzieller
+Produkte, heute bietet bereits das normale JDK mit Visual VM viele
+dieser Features. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100327.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100329.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100331.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100332.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

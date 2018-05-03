@@ -1,0 +1,96 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100230.html;106,k100230.html;107,k100232.html;108,k100236.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100230.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100230.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100232.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100236.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 35 - Drucken
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id035001"></a>
+<h2>35.1 Einleitung </h2>
+<hr>
+<ul>
+<li><a href="k100231.html#sectlevel2id035001">35.1 Einleitung</a>
+</ul>
+<hr>
+
+<p>
+Das Ausdrucken von Texten und Grafiken war anfangs eine <i>der</i>
+Achillesfersen von Java. Im JDK 1.0 beispielsweise konnte &uuml;berhaupt
+nicht gedruckt werden, denn es gab schlicht und einfach keinerlei
+Klassen, die das Drucken unterst&uuml;tzten. Nachdem die Java-Entwicklergemeinde
+bereits begonnen hatte, propriet&auml;re Erweiterungen zu entwickeln,
+wurde mit der Version 1.1 immerhin ein einfaches Druck-API in das
+JDK aufgenommen. 
+
+<p>
+Leider war dessen Design recht unvollst&auml;ndig und das API war
+voll von Schw&auml;chen und Restriktionen. Mit dem JDK 1.2 wurde ein
+neuer Entwurf, das <a name="ixa102269"><i>Java 2D Printing API</i></a>,
+vorgestellt, das die Schw&auml;chen des vorigen beheben sollte. Tats&auml;chlich
+hatte er ein besseres Design und viele der zuvor unerf&uuml;llt gebliebenen
+Anforderungen wurden jetzt erf&uuml;llt. 
+
+<p>
+Ungl&uuml;cklicherweise war die Implementierung des 1.2er-API langsam
+und tr&auml;ge. In der Praxis traten - selbst bei einfachen Druckjobs
+- mitunter Spool-Dateien von 20 MB oder mehr auf (was zu dieser Zeit
+viel war) und der Ausdruck solcher Dateien dauerte mitunter zehn Minuten
+oder l&auml;nger. Erst mit dem JDK 1.3 wurden viele dieser Probleme
+behoben, so dass von diesem Release an aus Java-Programmen heraus
+tats&auml;chlich mit einer gewissen Zuverl&auml;ssigkeit gedruckt
+werden konnte. 
+
+<p>
+Mit der Version 4 des JDK wurde das <a name="ixa102270"><i>Java Print Service API</i></a>
+eingef&uuml;hrt. Es erweitert das Java 2D Printing API um einige Schnittstellen
+und Funktionalit&auml;ten, die das Drucken vereinfachen sollen. Wir
+werden in diesem Kapitel die beiden APIs vorstellen und Beispiele
+f&uuml;r ihre Anwendung geben. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100230.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100230.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100232.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100236.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

@@ -1,0 +1,260 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100090.html;106,k100092.html;107,k100094.html;108,k100097.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100090.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100092.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100094.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100097.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 14 - Strukturierung von Java-Programmen
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id014003"></a>
+<h2>14.3 Der <a name="ixa100816">Entwicklungszyklus</a> </h2>
+<hr>
+<ul>
+<li><a href="k100093.html#sectlevel2id014003">14.3 Der Entwicklungszyklus</a>
+<ul>
+<li><a href="k100093.html#sectlevel3id014003001">14.3.1 Schematische Darstellung</a>
+<li><a href="k100093.html#sectlevel3id014003002">14.3.2 Projektverwaltung</a>
+<ul>
+<li><a href="k100093.html#sectlevel4id014003002001">Getrenntes Kompilieren</a>
+<li><a href="k100093.html#sectlevel4id014003002002">Java und ant</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id014003001"></a>
+<h3>14.3.1 Schematische Darstellung </h3>
+
+<p>
+Der Turn-around-Zyklus beim Entwickeln von Java-Programmen unterscheidet
+sich in mehrfacher Hinsicht von dem in traditionellen kompilierten
+Programmiersprachen. 
+<ul>
+<li>Der Compiler erzeugt keine direkt ausf&uuml;hrbaren Programme,
+sondern <font color="#660099">.class</font>-Files<a name="ixa100817"></a>,
+die von einem Java-Interpreter ausgef&uuml;hrt werden. Mittlerweile
+arbeiten bereits mehrere Betriebssystemhersteller daran, <font color="#660099">.class</font>-Files
+direkt ausf&uuml;hrbar zu machen, und es gibt schon Prozessoren, die
+den Maschinencode in <font color="#660099">.class</font>-Files ohne
+zwischengeschalteten Interpreter verstehen.
+<li>Es gibt keinen expliziten Link-Lauf, denn die verschiedenen <font color="#660099">.class</font>-Files
+werden zur Ausf&uuml;hrungszeit gebunden.
+<li>Die <font color="#660099">.class</font>-Files eines einzigen Projekts
+k&ouml;nnen auf unterschiedlichen Plattformen mit unterschiedlichen
+Compilern erzeugt werden.
+<li>Die <font color="#660099">.class</font>-Files lassen sich auf
+allen Plattformen ausf&uuml;hren, die einen Java-Interpreter besitzen;
+unabh&auml;ngig davon, wo sie urspr&uuml;nglich entwickelt wurden.
+</ul>
+
+<p>
+<a href="k100093.html#entwicklungszyklus">Abbildung 14.1</a> zeigt
+den schematischen Ablauf bei der Entwicklung eines Java-Programms,
+das aus den Klassen <font color="#000077"><tt>A</tt></font>, <font color="#000077"><tt>B</tt></font>
+und <font color="#000077"><tt>C</tt></font> besteht. 
+<p>
+<a name="entwicklungszyklus"></a>
+<img src="images/EntZyklus1.gif">
+<p>
+
+<p><i>
+Abbildung 14.1: Der Entwicklungszyklus in Java</i></p>
+
+<p>
+Da der Java-<a name="ixa100818">Bytecode</a> plattformunabh&auml;ngig
+ist, h&auml;tten die Klassen <font color="#000077"><tt>A</tt></font>,
+<font color="#000077"><tt>B</tt></font> und <font color="#000077"><tt>C</tt></font>
+aber auch ebenso gut von verschiedenen Entwicklern auf drei unterschiedlichen
+Plattformen entwickelt werden k&ouml;nnen, um sp&auml;ter auf einer
+vierten Plattform ausgef&uuml;hrt zu werden. <a href="k100093.html#plattformuebergreifend">Abbildung 14.2</a>
+zeigt dies beispielhaft. 
+<p>
+<a name="plattformuebergreifend"></a>
+<img src="images/EntZyklus2.gif">
+<p>
+
+<p><i>
+Abbildung 14.2: Plattform&uuml;bergreifende Entwicklung in Java</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id014003002"></a>
+<h3>14.3.2 <a name="ixa100819">Projektverwaltung</a></h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id014003002001"></a>
+<h4>Getrenntes Kompilieren </h4>
+
+<p>
+Wie die Abbildungen deutlich machen, spielen die <font color="#660099">.class</font>-Files
+<a name="ixa100820"></a><a name="ixa100821"></a> f&uuml;r den Entwicklungsprozess
+und die Portierbarkeit von Java-Programmen eine entscheidende Rolle.
+Jede <font color="#660099">.class</font>-Datei enth&auml;lt den Bytecode
+f&uuml;r eine &uuml;bersetzte Klasse. Zus&auml;tzlich sind in ihr
+Informationen enthalten, um dynamisches Linken und Late-Bindung zu
+unterst&uuml;tzen und gegebenenfalls Symbole, Zeilennummern und andere
+Informationen f&uuml;r den Debugger zur Verf&uuml;gung zu stellen.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Eine der Grundregeln bei der Entwicklung von Java-Programmen ist es,
+genau eine Klassendefinition je Quelldatei aufzunehmen. Anders als
+etwa in C++, ist es in Java grunds&auml;tzlich nicht m&ouml;glich,
+die Quellen einer einzigen Klasse auf mehrere Dateien zu verteilen
+(und auf diese Weise <i>weniger</i> als eine Klasse in einer Quelldatei
+zu speichern). Obwohl es - wie wir gleich sehen werden - m&ouml;glich
+ist, <i>mehr</i> als eine Klasse in einer Quelldatei abzulegen, sollte
+dies in der Regel nicht getan werden. Wenn diese Regeln eingehalten
+werden, ergibt sich eine eindeutige Abbildung zwischen Klassen und
+Quelldateien, die bei der sauberen Strukturierung eines Projekts hilft.
+Durch die Verwendung von Paketen kann eine Verteilung der Quelltexte
+auf verschiedene Verzeichnisse und Unterverzeichnisse erreicht werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Wie bereits angedeutet, d&uuml;rfen tats&auml;chlich auch zwei oder
+mehr Klassen in einer Quelldatei enthalten sein. Voraussetzung daf&uuml;r
+ist allerdings, dass h&ouml;chstens eine von ihnen als <a name="ixa100822"><a href="index_p.html#ixb100083"><font color=#000080><tt>public</tt></font></a></a>
+deklariert wurde. Eine solche Vorgehensweise kann beispielsweise bei
+sehr kleinen Projekten, die nur aus ganz wenigen Klassen bestehen,
+sinnvoll sein, um alle Klassen in eine einzige Datei zu bekommen.
+Sie kann auch angewendet werden, wenn kleine Hilfsklassen ben&ouml;tigt
+werden, die nur f&uuml;r eine einzige andere Klasse von Bedeutung
+sind. Der Compiler erzeugt in jedem Fall eine separate <font color="#660099">.class</font>-Datei
+f&uuml;r jede Klasse, die in einer Quelldatei enthalten ist. Wurde
+in einer Quelldatei mehr als eine Klasse <a href="index_p.html#ixb100083"><font color=#000080><tt>public</tt></font></a>
+deklariert, gibt es einen Compiler-Fehler. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Wichtig ist in dem Zusammenhang auch, dass der Name der <a href="index_p.html#ixb100083"><font color=#000080><tt>public</tt></font></a>-Klasse
+und der Name der Quelldatei identisch sein m&uuml;ssen. Dabei muss
+auch die Gro&szlig;- und Kleinschreibung beachtet werden; Klassen-
+und Dateiname unterscheiden sich also nur durch die Extension <font color="#660099">.java</font>.
+So befindet sich beispielsweise die Klasse <a href="index_i.html#ixb100150"><font color=#000080><tt>Integer</tt></font></a>
+in einer Datei mit dem Namen <font color="#660099">Integer.java</font>
+und die Klasse <a href="index_i.html#ixb100642"><font color=#000080><tt>InterruptedException</tt></font></a>
+in einer Datei mit dem Namen <font color="#660099">InterruptedException.java</font>.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Interessanterweise bietet Java volle <a name="ixa100823">Typsicherheit</a>
+auch &uuml;ber die Grenzen von Quelldateien hinweg, ohne dass dazu
+Header-Dateien oder andere Interface-Beschreibungen n&ouml;tig w&auml;ren.
+Der Compiler verwendet w&auml;hrend der &Uuml;bersetzung einer Java-Klasse
+die <font color="#660099">.class</font>-Dateien aller eingebundenen
+Klassen und entnimmt diesen die Signatur der aufgerufenen Methoden.
+Die Notwendigkeit zur Bereitstellung von separaten Header-Dateien
+(wie beispielsweise in C++) und das fehlertr&auml;chtige Management
+der Abh&auml;ngigkeiten zwischen ihnen und ihren Quelltexten entf&auml;llt
+daher. 
+
+<!-- Section -->
+
+<a name="sectlevel4id014003002002"></a>
+<h4>Java und ant </h4>
+
+<p>
+Das Open-Source-Projekt <a name="ixa100824"><a href="index_a.html#ixb100644"><font color=#000080><tt>ant</tt></font></a></a>,
+ein komplett in Java geschriebenes Buildtool, erm&ouml;glicht es Ihnen,
+Zusammenh&auml;nge und Abh&auml;ngigkeiten auf der Ebene oberhalb
+der Java-Programme abzubilden. H&auml;ufig geh&ouml;ren zu einem lauff&auml;higen
+Programm mehr als die &uuml;bersetzten <font color="#000077"><tt>class</tt></font>-Dateien.
+Bilder, Texte und Konfigurationsdateien, also Dateien, &uuml;ber die
+der Java-Compiler kein Wissen &uuml;ber die Abh&auml;ngigkeiten besitzt,
+k&ouml;nnen mit Hilfe von <font color="#000077"><tt>ant</tt></font>
+bequem in den Build-Prozess eingebunden werden. 
+
+<p>
+<a href="index_a.html#ixb100644"><font color=#000080><tt>ant</tt></font></a>
+bietet weitere, umfangreiche Scripting-M&ouml;glichkeiten. Es kann
+daher als Weiterentwicklung von <a name="ixa100825"><a href="index_m.html#ixb100645"><font color=#000080><tt>make</tt></font></a></a>
+angesehen werden. Basierend auf XML als Steuerungssprache bietet es
+eine Vielzahl von eingebauten Kommandos, die beim &Uuml;bersetzen
+von Java-Programmen und w&auml;hrend des gesamten Build-Prozesses
+n&uuml;tzlich sind. Eigene Erweiterungen k&ouml;nnen in Java geschrieben
+und nahtlos integriert werden. <a href="index_a.html#ixb100644"><font color=#000080><tt>ant</tt></font></a>
+wird als <a name="ixa100826"><i>Jakarta</i></a>-Projekt entwickelt,
+seine Homepage ist <a href="http://ant.apache.org/">http://ant.apache.org/</a>.
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100090.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100092.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100094.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100097.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

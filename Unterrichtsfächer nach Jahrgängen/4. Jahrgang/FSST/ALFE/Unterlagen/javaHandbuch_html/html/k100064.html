@@ -1,0 +1,488 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100063.html;106,k100063.html;107,k100065.html;108,k100070.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100063.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100063.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100065.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100070.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 10 - OOP III: Interfaces
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="interfacedefinitionen"></a>
+<h2>10.1 Grundlagen <a name="ixa100549"></a><a name="ixa100550"></a>
+</h2>
+<hr>
+<ul>
+<li><a href="k100064.html#interfacedefinitionen">10.1 Grundlagen </a>
+<ul>
+<li><a href="k100064.html#sectlevel3id010001001">10.1.1 Definition eines Interface</a>
+<li><a href="k100064.html#sectlevel3id010001002">10.1.2 Implementierung eines Interface</a>
+<li><a href="k100064.html#sectlevel3id010001003">10.1.3 Verwenden eines Interface</a>
+</ul>
+</ul>
+<hr>
+
+<p>
+Es wurde bereits erw&auml;hnt, dass es in Java keine <a name="ixa100551"><i>Mehrfachvererbung</i></a>
+von Klassen gibt. Die m&ouml;glichen Schwierigkeiten beim Umgang mit
+mehrfacher Vererbung und die Einsicht, dass das Erben nichttrivialer
+Methoden aus mehr als einer Klasse in der Praxis selten zu realisieren
+ist, haben die Designer dazu veranlasst, dieses Feature nicht zu implementieren.
+Andererseits sah man es als w&uuml;nschenswert an, dass Klassen eine
+oder mehrere Schnittstellendefinitionen erben k&ouml;nnen, und hat
+mit den <i>Interfaces</i> ein Ersatzkonstrukt geschaffen, das dieses
+Feature bietet. 
+
+<!-- Section -->
+
+<a name="sectlevel3id010001001"></a>
+<h3>10.1.1 Definition eines Interface </h3>
+
+<p>
+Ein Interface ist eine besondere Form einer Klasse, die ausschlie&szlig;lich
+abstrakte Methoden und Konstanten enth&auml;lt. Anstelle des Schl&uuml;sselworts
+<a href="index_c.html#ixb100178"><font color=#000080><tt>class</tt></font></a>
+wird ein Interface mit dem Bezeichner <a name="ixa100552"><a href="index_i.html#ixb100450"><font color=#000080><tt>interface</tt></font></a></a>
+deklariert. Alle Methoden eines Interface sind implizit abstrakt und
+&ouml;ffentlich. Neben Methoden kann ein Interface auch Konstanten
+enthalten, die Definition von Konstruktoren ist allerdings nicht erlaubt.
+
+<p>
+Wir wollen uns ein einfaches Beispiel ansehen. Das folgende Listing
+definiert ein Interface <font color="#000077"><tt>Groesse</tt></font>,
+das die drei Methoden <font color="#000077"><tt>laenge</tt></font>,
+<font color="#000077"><tt>hoehe</tt></font> und <font color="#000077"><tt>breite</tt></font>
+enth&auml;lt: 
+<a name="listingid010001"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Groesse.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">interface</font> Groesse
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> laenge();
+<font color="#555555">006 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> hoehe();
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> breite();
+<font color="#555555">008 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Groesse.java"><font color="#000055" size=-1>Groesse.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 10.1: Definition eines Interface</i></p>
+
+<p>
+Diese Definition &auml;hnelt sehr einer abstrakten Klasse und dient
+dazu, eine Schnittstelle f&uuml;r den Zugriff auf die <i>r&auml;umliche
+Ausdehnung</i> eines Objekts festzulegen. Wir wollen uns an dieser
+Stelle keine Gedanken &uuml;ber komplizierte Details wie zu verwendende
+Ma&szlig;einheiten oder Objekte mit mehr oder weniger als drei Dimensionen
+machen. 
+
+<!-- Section -->
+
+<a name="sectlevel3id010001002"></a>
+<h3>10.1.2 Implementierung eines Interface </h3>
+
+<p>
+Durch das blo&szlig;e Definieren eines Interface wird die gew&uuml;nschte
+Funktionalit&auml;t aber noch nicht zur Verf&uuml;gung gestellt, sondern
+lediglich <i>beschrieben</i>. Soll diese von einer Klasse tats&auml;chlich
+realisiert werden, muss sie das Interface <i>implementieren</i>.<a name="ixa100553"></a>
+Dazu erweitert sie die <font color="#000077"><tt>class</tt></font>-Anweisung
+um eine <a name="ixa100554"><a href="index_i.html#ixb100452"><font color=#000080><tt>implements</tt></font></a></a>-Klausel,
+hinter der der Name des zu implementierenden Interface angegeben wird.
+Der Compiler sorgt daf&uuml;r, dass alle im Interface geforderten
+Methoden definitionsgem&auml;&szlig; implementiert werden. Zus&auml;tzlich
+&#187;verleiht&#171; er der Klasse einen neuen Datentyp, der - wie
+wir noch sehen werden - &auml;hnliche Eigenschaften wie eine echte
+Klasse hat. 
+
+<p>
+Eine beispielhafte Implementierung des Interface <font color="#000077"><tt>Groesse</tt></font>
+k&ouml;nnte etwa von der schon bekannten <font color="#000077"><tt>Auto</tt></font>-Klasse
+vorgenommen werden: 
+<a name="listingauto2"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Auto2.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Auto2
+<font color="#555555">004 </font><font color="#0000AA">implements</font> Groesse
+<font color="#555555">005 </font>{
+<font color="#555555">006 </font>  <font color="#0000AA">public</font> String name;
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font>    erstzulassung;
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font>    leistung;
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font>    laenge;
+<font color="#555555">010 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font>    hoehe;
+<font color="#555555">011 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font>    breite;
+<font color="#555555">012 </font>
+<font color="#555555">013 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> laenge()
+<font color="#555555">014 </font>  {
+<font color="#555555">015 </font>    <font color="#0000AA">return</font> <font color="#006699">this</font>.laenge;
+<font color="#555555">016 </font>  }
+<font color="#555555">017 </font>
+<font color="#555555">018 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> hoehe()
+<font color="#555555">019 </font>  {
+<font color="#555555">020 </font>    <font color="#0000AA">return</font> <font color="#006699">this</font>.hoehe;
+<font color="#555555">021 </font>  }
+<font color="#555555">022 </font>
+<font color="#555555">023 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> breite()
+<font color="#555555">024 </font>  {
+<font color="#555555">025 </font>    <font color="#0000AA">return</font> <font color="#006699">this</font>.breite;
+<font color="#555555">026 </font>  }
+<font color="#555555">027 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Auto2.java"><font color="#000055" size=-1>Auto2.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 10.2: Implementierung eines Interface</i></p>
+
+<p>
+Wir haben die Klasse dazu um drei ver&auml;nderliche Instanzmerkmale
+erweitert, die es uns erlauben, die vom Interface geforderten Methoden
+auf einfache Weise zu implementieren. Ebenso wie die Klasse <font color="#000077"><tt>Auto</tt></font>
+k&ouml;nnte auch jede andere Klasse das Interface <font color="#000077"><tt></tt></font>
+implementieren und so Informationen &uuml;ber seine r&auml;umliche
+Ausdehnung geben: 
+<a name="listingid010003"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> FussballPlatz
+<font color="#555555">002 </font><font color="#0000AA">implements</font> Groesse
+<font color="#555555">003 </font>{
+<font color="#555555">004 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> laenge()
+<font color="#555555">005 </font>  {
+<font color="#555555">006 </font>    <font color="#0000AA">return</font> 105000;
+<font color="#555555">007 </font>  }
+<font color="#555555">008 </font>
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> hoehe()
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    <font color="#0000AA">return</font> 0;
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> breite()
+<font color="#555555">015 </font>  {
+<font color="#555555">016 </font>    <font color="#0000AA">return</font> 70000;
+<font color="#555555">017 </font>  }
+<font color="#555555">018 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/FussballPlatz.java"><font color="#000055" size=-1>FussballPlatz.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 10.3: Die Klasse FussballPlatz</i></p>
+
+<p>
+Hier geben die Interface-Methoden konstante Werte zur&uuml;ck (in
+der Annahme, dass alle Fu&szlig;ballpl&auml;tze gleich gro&szlig;
+sind). Ebenso gut ist es m&ouml;glich, dass die Gr&ouml;&szlig;e von
+anderen Instanzmerkmalen abh&auml;ngig ist und zur Implementierung
+des Interface etwas mehr Aufwand getrieben werden muss: 
+<a name="listingid010004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* PapierBlatt.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> PapierBlatt
+<font color="#555555">004 </font><font color="#0000AA">implements</font> Groesse
+<font color="#555555">005 </font>{
+<font color="#555555">006 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> format; <font color="#00AA00">//0=DIN A0, 1=DIN A1 usw.</font>
+<font color="#555555">007 </font>
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> laenge()
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    <font color="#006699">int</font> ret = 0;
+<font color="#555555">011 </font>    <font color="#0000AA">if</font> (format == 0) {
+<font color="#555555">012 </font>      ret = 1189;
+<font color="#555555">013 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (format == 1) {
+<font color="#555555">014 </font>      ret = 841;
+<font color="#555555">015 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (format == 2) {
+<font color="#555555">016 </font>      ret = 594;
+<font color="#555555">017 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (format == 3) {
+<font color="#555555">018 </font>      ret = 420;
+<font color="#555555">019 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (format == 4) {
+<font color="#555555">020 </font>      ret = 297;
+<font color="#555555">021 </font>    }
+<font color="#555555">022 </font>    <font color="#00AA00">//usw...</font>
+<font color="#555555">023 </font>    <font color="#0000AA">return</font> ret;
+<font color="#555555">024 </font>  }
+<font color="#555555">025 </font>
+<font color="#555555">026 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> hoehe()
+<font color="#555555">027 </font>  {
+<font color="#555555">028 </font>    <font color="#0000AA">return</font> 0;
+<font color="#555555">029 </font>  }
+<font color="#555555">030 </font>
+<font color="#555555">031 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> breite()
+<font color="#555555">032 </font>  {
+<font color="#555555">033 </font>    <font color="#006699">int</font> ret = 0;
+<font color="#555555">034 </font>    <font color="#0000AA">if</font> (format == 0) {
+<font color="#555555">035 </font>      ret = 841;
+<font color="#555555">036 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (format == 1) {
+<font color="#555555">037 </font>      ret = 594;
+<font color="#555555">038 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (format == 2) {
+<font color="#555555">039 </font>      ret = 420;
+<font color="#555555">040 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (format == 3) {
+<font color="#555555">041 </font>      ret = 297;
+<font color="#555555">042 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (format == 4) {
+<font color="#555555">043 </font>      ret = 210;
+<font color="#555555">044 </font>    }
+<font color="#555555">045 </font>    <font color="#00AA00">//usw...</font>
+<font color="#555555">046 </font>    <font color="#0000AA">return</font> ret;
+<font color="#555555">047 </font>  }
+<font color="#555555">048 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/PapierBlatt.java"><font color="#000055" size=-1>PapierBlatt.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 10.4: Die Klasse PapierBlatt</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Art der Realisierung der vereinbarten Methoden spielt f&uuml;r
+das Implementieren eines Interface keine Rolle. Tats&auml;chlich kommt
+es ausgesprochen h&auml;ufig vor, dass Interfaces von sehr unterschiedlichen
+Klassen implementiert und die erforderlichen Methoden auf sehr unterschiedliche
+Weise realisiert werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Eine Klasse kann ein Interface auch dann implementieren, wenn sie
+nicht alle seine Methoden implementiert. In diesem Fall ist die Klasse
+allerdings als <a name="ixa100555"><a href="index_a.html#ixb100448"><font color=#000080><tt>abstract</tt></font></a></a>
+zu deklarieren und kann nicht dazu verwendet werden, Objekte zu instanzieren.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id010001003"></a>
+<h3>10.1.3 Verwenden eines Interface </h3>
+
+<p>
+N&uuml;tzlich ist ein Interface immer dann, wenn <i>Eigenschaften</i>
+einer Klasse beschrieben werden sollen, die nicht direkt in seiner
+normalen Vererbungshierarchie abgebildet werden k&ouml;nnen. H&auml;tten
+wir beispielsweise <font color="#000077"><tt>Groesse</tt></font> als
+abstrakte Klasse definiert, erg&auml;be sich eine sehr unnat&uuml;rliche
+Ableitungshierarchie, wenn Autos, Fu&szlig;ballpl&auml;tze und Papierbl&auml;tter
+daraus abgeleitet w&auml;ren. Durch Implementieren des <font color="#000077"><tt>Groesse</tt></font>-Interface
+k&ouml;nnen wir die Verf&uuml;gbarkeit der drei Methoden <font color="#000077"><tt>laenge</tt></font>,
+<font color="#000077"><tt>hoehe</tt></font> und <font color="#000077"><tt>breite</tt></font>
+dagegen <i>unabh&auml;ngig</i> von ihrer eigenen Vererbungslinie garantieren.
+
+<p>
+Wir wollen uns ein einfaches Beispiel f&uuml;r die Anwendung des Interface
+ansehen. Dazu soll eine Methode <font color="#000077"><tt>grundflaeche</tt></font>
+entwickelt werden, die zu jedem Objekt, das das Interface <font color="#000077"><tt>Groesse</tt></font>
+implementiert, dessen Grundfl&auml;che (L&auml;nge mal Breite) berechnet:
+<a name="grundflaeche"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1005.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1005
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">long</font> grundflaeche(Groesse g)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#0000AA">return</font> (<font color="#006699">long</font>)g.laenge() * g.breite();
+<font color="#555555">008 </font>  }
+<font color="#555555">009 </font>
+<font color="#555555">010 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">011 </font>  {
+<font color="#555555">012 </font>    <font color="#00AA00">//Zuerst erzeugen wir ein Auto2...</font>
+<font color="#555555">013 </font>    Auto2 auto = <font color="#0000AA">new</font> Auto2();
+<font color="#555555">014 </font>    auto.laenge = 4235;
+<font color="#555555">015 </font>    auto.hoehe = 1650;
+<font color="#555555">016 </font>    auto.breite = 1820;
+<font color="#555555">017 </font>    <font color="#00AA00">//Nun ein DIN A4-Blatt...</font>
+<font color="#555555">018 </font>    PapierBlatt blatt = <font color="#0000AA">new</font> PapierBlatt();
+<font color="#555555">019 </font>    blatt.format = 4;
+<font color="#555555">020 </font>    <font color="#00AA00">//Und zum Schluss einen Fu&szlig;ballplatz...</font>
+<font color="#555555">021 </font>    FussballPlatz platz = <font color="#0000AA">new</font> FussballPlatz();
+<font color="#555555">022 </font>    <font color="#00AA00">//Nun werden sie ausgegeben</font>
+<font color="#555555">023 </font>    System.out.println(<font color="#0000FF">"Auto:  "</font> + grundflaeche(auto));
+<font color="#555555">024 </font>    System.out.println(<font color="#0000FF">"Blatt: "</font> + grundflaeche(blatt));
+<font color="#555555">025 </font>    System.out.println(<font color="#0000FF">"Platz: "</font> + grundflaeche(platz));
+<font color="#555555">026 </font>  }
+<font color="#555555">027 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1005.java"><font color="#000055" size=-1>Listing1005.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 10.5: Verwendung eines Interface</i></p>
+
+<p>
+Das Programm erzeugt zun&auml;chst einige Objekte, die das <font color="#000077"><tt>Groesse</tt></font>-Interface
+implementieren. Anschlie&szlig;end werden sie an die Methode <font color="#000077"><tt>grundflaeche</tt></font>
+&uuml;bergeben, deren Argument <font color="#000077"><tt>g</tt></font>
+vom Typ <font color="#000077"><tt>Groesse</tt></font> ist. Durch diese
+Typisierung kann der Compiler sicherstellen, dass nur Objekte &#187;des
+Typs&#171; <font color="#000077"><tt>Groesse</tt></font> an <font color="#000077"><tt>grundflaeche</tt></font>
+&uuml;bergeben werden. Das ist genau dann der Fall, wenn das &uuml;bergebene
+Objekt dieses Interface implementiert. 
+
+<p>
+Die Ausgabe des Programms ist: 
+<font color="#333300">
+<pre>
+Auto:  7707700
+Blatt: 62370
+Platz: 7350000000
+</pre>
+</font>
+
+<p>
+An diesem Beispiel kann man bereits die wichtigste Gemeinsamkeit zwischen
+abstrakten Klassen und Interfaces erkennen: Beide k&ouml;nnen im Programm
+zur Deklaration von lokalen Variablen, Membervariablen oder Methodenparametern
+verwendet werden. Eine Interface-Variable ist kompatibel zu allen
+Objekten, deren Klassen dieses Interface implementieren. 
+
+<p>
+Auch der <a href="index_i.html#ixb100341"><font color=#000080><tt>instanceof</tt></font></a>-Operator
+kann auf Interface-Namen angewendet werden. Eine alternative Implementierung
+der Methode <font color="#000077"><tt>grundflaeche</tt></font>, die
+mit allen Objekttypen funktioniert, k&ouml;nnte dann etwa so aussehen:
+<a name="listingid010006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">long</font> grundflaeche(Object o)
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  <font color="#006699">long</font> ret = 0;
+<font color="#555555">004 </font>  <font color="#0000AA">if</font> (o <font color="#0000AA">instanceof</font> Groesse) {
+<font color="#555555">005 </font>    Groesse g = (Groesse)o;
+<font color="#555555">006 </font>    ret = (<font color="#006699">long</font>)g.laenge() * g.breite();
+<font color="#555555">007 </font>  }
+<font color="#555555">008 </font>  <font color="#0000AA">return</font> ret;
+<font color="#555555">009 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 10.6: Der instanceof-Operator auf Interfaces</i></p>
+
+<p>
+Diese Implementierung verh&auml;lt sich f&uuml;r alle Objekte, die
+das Interface <font color="#000077"><tt>Groesse</tt></font> implementieren,
+so wie die vorige. F&uuml;r alle &uuml;brigen Objekte wird 0 zur&uuml;ckgegeben.
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100063.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100063.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100065.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100070.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

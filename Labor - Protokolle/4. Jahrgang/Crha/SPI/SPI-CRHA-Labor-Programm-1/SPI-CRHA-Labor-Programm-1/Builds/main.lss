@@ -1,0 +1,209 @@
+
+Builds/main.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00800100  00000126  0000019a  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         00000126  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .stab         000005d0  00000000  00000000  0000019c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  3 .stabstr      00000c5e  00000000  00000000  0000076c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .comment      00000011  00000000  00000000  000013ca  2**0
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000020  00000000  00000000  000013e0  2**3
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   000000be  00000000  00000000  00001400  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000014  00000000  00000000  000014be  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   00000058  00000000  00000000  000014d2  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 56 00 	jmp	0xac	; 0xac <__ctors_end>
+   4:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+   8:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+   c:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  10:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  14:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  18:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  1c:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  20:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  24:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  28:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  2c:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  30:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  34:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  38:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  3c:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  40:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  44:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  48:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  4c:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  50:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  54:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  58:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  5c:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  60:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  64:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  68:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  6c:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  70:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  74:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  78:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  7c:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  80:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  84:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  88:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  8c:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  90:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  94:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  98:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  9c:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  a0:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  a4:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+  a8:	0c 94 60 00 	jmp	0xc0	; 0xc0 <__bad_interrupt>
+
+000000ac <__ctors_end>:
+  ac:	11 24       	eor	r1, r1
+  ae:	1f be       	out	0x3f, r1	; 63
+  b0:	cf ef       	ldi	r28, 0xFF	; 255
+  b2:	da e0       	ldi	r29, 0x0A	; 10
+  b4:	de bf       	out	0x3e, r29	; 62
+  b6:	cd bf       	out	0x3d, r28	; 61
+  b8:	0e 94 81 00 	call	0x102	; 0x102 <main>
+  bc:	0c 94 91 00 	jmp	0x122	; 0x122 <_exit>
+
+000000c0 <__bad_interrupt>:
+  c0:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+000000c4 <sende>:
+void sende (unsigned char adr, unsigned char daten)
+{
+    unsigned char Maske = 0x80; // 1000 0000
+    unsigned char i; // Zählvariable
+    
+    CS0;
+  c4:	2a 98       	cbi	0x05, 2	; 5
+    CLK0;
+  c6:	29 98       	cbi	0x05, 1	; 5
+  c8:	98 e0       	ldi	r25, 0x08	; 8
+#define CS0  PORTB=PORTB&~(1<<PB2); //CS = 0
+#define CS1  PORTB=PORTB|(1<<PB2);  //CS = 1
+
+void sende (unsigned char adr, unsigned char daten)
+{
+    unsigned char Maske = 0x80; // 1000 0000
+  ca:	20 e8       	ldi	r18, 0x80	; 128
+    CS0;
+    CLK0;
+    
+    for(i=1; i<=8; i++) // Schleife zur Ausgabe der 8 Daten-Bits
+    {
+        if(adr & Maske) // Parallel => Serienumwandlung
+  cc:	32 2f       	mov	r19, r18
+  ce:	38 23       	and	r19, r24
+  d0:	11 f0       	breq	.+4      	; 0xd6 <sende+0x12>
+        {
+            DIN1;
+  d2:	28 9a       	sbi	0x05, 0	; 5
+  d4:	01 c0       	rjmp	.+2      	; 0xd8 <sende+0x14>
+        }
+        
+        else
+        {
+            DIN0;
+  d6:	28 98       	cbi	0x05, 0	; 5
+        }
+        
+        CLK1;
+  d8:	29 9a       	sbi	0x05, 1	; 5
+        CLK0;
+  da:	29 98       	cbi	0x05, 1	; 5
+        Maske = Maske>>1; // Maske um 1 Bit nach rechts verschieben
+  dc:	26 95       	lsr	r18
+  de:	91 50       	subi	r25, 0x01	; 1
+    unsigned char i; // Zählvariable
+    
+    CS0;
+    CLK0;
+    
+    for(i=1; i<=8; i++) // Schleife zur Ausgabe der 8 Daten-Bits
+  e0:	a9 f7       	brne	.-22     	; 0xcc <sende+0x8>
+  e2:	88 e0       	ldi	r24, 0x08	; 8
+  e4:	90 e8       	ldi	r25, 0x80	; 128
+    
+    
+    Maske = 0x80;
+    for(i=1; i<=8; i++) // Schleif zur Ausgabe der 8 Daten-Bits
+    {
+        if(daten & Maske){ DIN1;} // Parallel => Serienumwandlung
+  e6:	29 2f       	mov	r18, r25
+  e8:	26 23       	and	r18, r22
+  ea:	11 f0       	breq	.+4      	; 0xf0 <sende+0x2c>
+  ec:	28 9a       	sbi	0x05, 0	; 5
+  ee:	01 c0       	rjmp	.+2      	; 0xf2 <sende+0x2e>
+        else {DIN0;}
+  f0:	28 98       	cbi	0x05, 0	; 5
+        CLK1;
+  f2:	29 9a       	sbi	0x05, 1	; 5
+        CLK0;
+  f4:	29 98       	cbi	0x05, 1	; 5
+        Maske = Maske>>1; // Maske um 1 Bit nach rechts verschieben
+  f6:	96 95       	lsr	r25
+  f8:	81 50       	subi	r24, 0x01	; 1
+        Maske = Maske>>1; // Maske um 1 Bit nach rechts verschieben
+    }
+    
+    
+    Maske = 0x80;
+    for(i=1; i<=8; i++) // Schleif zur Ausgabe der 8 Daten-Bits
+  fa:	a9 f7       	brne	.-22     	; 0xe6 <sende+0x22>
+        else {DIN0;}
+        CLK1;
+        CLK0;
+        Maske = Maske>>1; // Maske um 1 Bit nach rechts verschieben
+    }
+    DIN0; // Serielle Datenleitung auf 0
+  fc:	28 98       	cbi	0x05, 0	; 5
+    CS1; // Übernahme der Adr.- und Daten-Bits
+  fe:	2a 9a       	sbi	0x05, 2	; 5
+ 100:	08 95       	ret
+
+00000102 <main>:
+}
+
+int main(void)
+{
+    CLKPR=0x80;
+ 102:	e1 e6       	ldi	r30, 0x61	; 97
+ 104:	f0 e0       	ldi	r31, 0x00	; 0
+ 106:	80 e8       	ldi	r24, 0x80	; 128
+ 108:	80 83       	st	Z, r24
+    CLKPR=0x01;
+ 10a:	81 e0       	ldi	r24, 0x01	; 1
+ 10c:	80 83       	st	Z, r24
+    
+    DDRB |= (1<<DDB0)|(1<<DDB1)|(1<<DDB2);
+ 10e:	84 b1       	in	r24, 0x04	; 4
+ 110:	87 60       	ori	r24, 0x07	; 7
+ 112:	84 b9       	out	0x04, r24	; 4
+    
+    sende(7,7);
+ 114:	67 e0       	ldi	r22, 0x07	; 7
+ 116:	87 e0       	ldi	r24, 0x07	; 7
+ 118:	0e 94 62 00 	call	0xc4	; 0xc4 <sende>
+ 11c:	80 e0       	ldi	r24, 0x00	; 0
+ 11e:	90 e0       	ldi	r25, 0x00	; 0
+ 120:	08 95       	ret
+
+00000122 <_exit>:
+ 122:	f8 94       	cli
+
+00000124 <__stop_program>:
+ 124:	ff cf       	rjmp	.-2      	; 0x124 <__stop_program>

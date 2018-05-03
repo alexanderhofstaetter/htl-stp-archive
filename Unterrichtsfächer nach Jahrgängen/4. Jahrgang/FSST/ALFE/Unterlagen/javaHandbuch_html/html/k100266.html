@@ -1,0 +1,441 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100263.html;106,k100265.html;107,k100267.html;108,k100269.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100263.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100265.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100267.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100269.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 41 - Applets II
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id041003"></a>
+<h2>41.3 Umwandlung einer Applikation in ein Applet </h2>
+<hr>
+<ul>
+<li><a href="k100266.html#sectlevel2id041003">41.3 Umwandlung einer Applikation in ein Applet</a>
+<ul>
+<li><a href="k100266.html#sectlevel3id041003001">41.3.1 Die Beispiel-Applikation</a>
+<li><a href="k100266.html#sectlevel3id041003002">41.3.2 Variante 1: Das Programm als Popup-Fenster</a>
+<li><a href="k100266.html#sectlevel3id041003003">41.3.3 Variante 2: Erstellen eines gleichwertigen Applets</a>
+</ul>
+</ul>
+<hr>
+
+<p>
+In der Praxis steht man manchmal vor der Aufgabe, eine bestehende
+Applikation in ein Applet umzuwandeln, etwa wenn ein vorhandendes
+Programm in eine HTML-Pr&auml;sentation eingebunden werden soll. Da
+die Unterschiede zwischen Applets und Applikationen nicht so gro&szlig;
+sind, kann diese Konvertierung - etwas Gl&uuml;ck vorausgesetzt -
+mit &uuml;berschaubarem Aufwand erledigt werden. Wir wollen in diesem
+Abschnitt die prinzipielle Vorgehensweise erl&auml;utern und auf einige
+der dabei m&ouml;glicherweise auftretenden Besonderheiten eingehen.
+
+
+<!-- Section -->
+<a name="sectlevel3id041003001"></a>
+<h3>41.3.1 Die Beispiel-Applikation </h3>
+
+<p>
+Als Beispiel soll ein sehr einfaches Programm verwendet werden. Es
+enth&auml;lt ein Textfeld mit einem Zahlenwert und vier Buttons, mit
+denen die Zahl um 1, 10, 100 oder 1000 erh&ouml;ht werden kann. Die
+Dialogelemente werden in einem <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>
+angeordnet, der von der <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>-Methode
+erzeugt wird. Seine Gr&ouml;&szlig;e und Position werden ebenfalls
+explizit vorgegeben: 
+<a name="listingid041005"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Calculator.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Calculator
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">008 </font><font color="#0000AA">implements</font> ActionListener
+<font color="#555555">009 </font>{
+<font color="#555555">010 </font>  <font color="#0000AA">private</font> TextField tf;
+<font color="#555555">011 </font>
+<font color="#555555">012 </font>  <font color="#0000AA">public</font> Calculator()
+<font color="#555555">013 </font>  {
+<font color="#555555">014 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Calculator"</font>);
+<font color="#555555">015 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">016 </font>    setBackground(Color.lightGray);
+<font color="#555555">017 </font>    setLayout(<font color="#0000AA">new</font> GridLayout(2, 1));
+<font color="#555555">018 </font>    tf = <font color="#0000AA">new</font> TextField(<font color="#0000FF">"777"</font>);
+<font color="#555555">019 </font>    add(tf);
+<font color="#555555">020 </font>    Panel p = <font color="#0000AA">new</font> Panel();
+<font color="#555555">021 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 1; i &lt;= 1000; i *= 10) {
+<font color="#555555">022 </font>      Button b = <font color="#0000AA">new</font> Button(<font color="#0000FF">"+"</font> + i);
+<font color="#555555">023 </font>      b.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">024 </font>      p.add(b);
+<font color="#555555">025 </font>    }
+<font color="#555555">026 </font>    add(p);
+<font color="#555555">027 </font>  }
+<font color="#555555">028 </font>
+<font color="#555555">029 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> actionPerformed(ActionEvent event)
+<font color="#555555">030 </font>  {
+<font color="#555555">031 </font>    String cmd = event.getActionCommand();
+<font color="#555555">032 </font>    <font color="#006699">int</font> n1 = Integer.parseInt(tf.getText());
+<font color="#555555">033 </font>    <font color="#006699">int</font> n2 = Integer.parseInt(cmd.substring(1));
+<font color="#555555">034 </font>    tf.setText(<font color="#0000FF">""</font> + (n1 + n2));
+<font color="#555555">035 </font>  }
+<font color="#555555">036 </font>
+<font color="#555555">037 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">038 </font>  {
+<font color="#555555">039 </font>    Calculator calc = <font color="#0000AA">new</font> Calculator();
+<font color="#555555">040 </font>    calc.setLocation(100, 100);
+<font color="#555555">041 </font>    calc.setSize(200, 85);
+<font color="#555555">042 </font>    calc.setVisible(<font color="#006699">true</font>);
+<font color="#555555">043 </font>  }
+<font color="#555555">044 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Calculator.java"><font color="#000055" size=-1>Calculator.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 41.5: Die Calculator-Applikation</i></p>
+
+<p>
+Die Ausgabe des Programms nach dem Starten sieht so aus: 
+<p>
+<a name="imageid041003"></a>
+<img src="images/Calculator.gif">
+<p>
+
+<p><i>
+Abbildung 41.3: Die Calculator-Applikation</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+In vielen Beispielen in diesem Buch wird der Einfachheit halber die
+in <a href="k100159.html#fensterschliessen">Abschnitt 24.2.4</a> vorgestellte
+Klasse <a href="index_w.html#ixb100136"><font color=#000080><tt>WindowClosingAdapter</tt></font></a>
+verwendet, um einen Listener zum Schlie&szlig;en des Fensters zu registrieren.
+Damit ein solches Beispiel sich kompilieren l&auml;sst, muss die Datei
+<font color="#660099">WindowClosingAdapter.java</font> im aktuellen
+Verzeichnis vorhanden sein. Sie befindet sich auf der DVD zum Buch
+oder in <a href="k100159.html#windowclosingadapter">Listing 24.2</a>.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id041003002"></a>
+<h3>41.3.2 Variante 1: Das Programm als Popup-Fenster </h3>
+
+<p>
+Die einfachste M&ouml;glichkeit, die Applikation als Applet laufen
+zu lassen, besteht darin, die aus <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>
+abgeleitete Fensterklasse zu erhalten und aus dem Applet heraus als
+eigenst&auml;ndiges Hauptfenster aufzurufen. Dazu schreiben wir ein
+Hilfsapplet <font color="#000077"><tt>CalculatorApplet1</tt></font>,
+das den ehemals in <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>
+enthaltenen Code in der <a href="index_i.html#ixb101826"><font color=#000080><tt>init</tt></font></a>-Methode
+ausf&uuml;hrt. Um das Fenster sichtbar zu machen, wird der Aufruf
+von <font color="#000077"><tt>setVisible(true)</tt></font> in die
+Methode <a href="index_s.html#ixb101113"><font color=#000080><tt>start</tt></font></a>
+verlegt und in <a href="index_s.html#ixb101118"><font color=#000080><tt>stop</tt></font></a>
+wird <font color="#000077"><tt>setVisible(false)</tt></font> aufgerufen.
+Das Fenster wird dadurch immer dann angezeigt, wenn die Seite mit
+dem Applet im Browser sichtbar ist: 
+<a name="listingid041006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* CalculatorApplet1.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.applet.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> CalculatorApplet1
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Applet
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  Calculator calc;
+<font color="#555555">010 </font>
+<font color="#555555">011 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> init()
+<font color="#555555">012 </font>  {
+<font color="#555555">013 </font>    calc = <font color="#0000AA">new</font> Calculator();
+<font color="#555555">014 </font>    calc.setLocation(100, 100);
+<font color="#555555">015 </font>    calc.setSize(200, 130);
+<font color="#555555">016 </font>  }
+<font color="#555555">017 </font>
+<font color="#555555">018 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> start()
+<font color="#555555">019 </font>  {
+<font color="#555555">020 </font>    calc.setVisible(<font color="#006699">true</font>);
+<font color="#555555">021 </font>  }
+<font color="#555555">022 </font>
+<font color="#555555">023 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> stop()
+<font color="#555555">024 </font>  {
+<font color="#555555">025 </font>    calc.setVisible(<font color="#006699">false</font>);
+<font color="#555555">026 </font>  }
+<font color="#555555">027 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/CalculatorApplet1.java"><font color="#000055" size=-1>CalculatorApplet1.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 41.6: Ein Applikations-Applet im Popup-Fenster</i></p>
+
+<p>
+Das Applet kann mit folgender HTML-Datei im Browser angezeigt werden:
+<a name="listingid041007"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">&lt;html&gt;</font>
+<font color="#555555">002 </font><font color="#0000AA">&lt;head&gt;</font>
+<font color="#555555">003 </font><font color="#0000AA">&lt;title&gt;</font>CalculatorApplet1<font color="#0000AA">&lt;/title&gt;</font>
+<font color="#555555">004 </font><font color="#0000AA">&lt;/head&gt;</font>
+<font color="#555555">005 </font><font color="#0000AA">&lt;body&gt;</font>
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">&lt;h1&gt;</font>CalculatorApplet1<font color="#0000AA">&lt;/h1&gt;</font>
+<font color="#555555">008 </font>
+<font color="#555555">009 </font><font color="#0000AA">&lt;applet code=</font><font color="#0000FF">"CalculatorApplet1.class"</font><font color="#0000AA"> width=200 height=100&gt;</font>
+<font color="#555555">010 </font>CalculatorApplet1
+<font color="#555555">011 </font><font color="#0000AA">&lt;/applet&gt;</font>
+<font color="#555555">012 </font>
+<font color="#555555">013 </font><font color="#0000AA">&lt;/body&gt;</font>
+<font color="#555555">014 </font><font color="#0000AA">&lt;/html&gt;</font></pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/CalculatorApplet1.html"><font color="#000055" size=-1>CalculatorApplet1.html</font></a></td>
+</tr>
+</table>
+<i>
+Listing 41.7: HTML-Datei zum Aufruf des Beispiel-Applets</i></p>
+
+<p>
+Die vorgeschlagene Methode ist einfach umzusetzen, hat aber einige
+Nachteile: 
+<ul>
+<li>Eigenst&auml;ndige Hauptfenster werden im Browser mit einem zus&auml;tzlichen
+Warnhinweis angezeigt (um das Erstellen von Trojanern zu erschweren).
+Wir haben daher die H&ouml;he des Fensters von 85 auf 130 Pixel erh&ouml;ht.
+<li>Der in dem <font color="#000077"><tt>WindowClosingAdapter</tt></font>
+untergebrachte Aufruf zum Beenden des Programms beim Bet&auml;tigen
+des Schlie&szlig;en-Buttons ist im Browser aus Sicherheitsgr&uuml;nden
+nicht erlaubt und l&ouml;st eine <a name="ixa102975"><a href="index_a.html#ixb102220"><font color=#000080><tt>AppletSecurityException</tt></font></a></a>
+aus. Auch <a href="index_d.html#ixb101297"><font color=#000080><tt>dispose</tt></font></a>
+sollte nicht aufgerufen werden, da das Fenster unter Umst&auml;nden
+noch einmal ben&ouml;tigt wird.
+</ul>
+
+
+<!-- Section -->
+<a name="sectlevel3id041003003"></a>
+<h3>41.3.3 Variante 2: Erstellen eines gleichwertigen Applets </h3>
+
+<p>
+Um den eigentlichen Vorteil von Applets, das <i>Einbetten</i> von
+laufenden Programmen in HTML-Seiten, ausnutzen zu k&ouml;nnen, m&uuml;ssen
+wir etwas mehr Aufwand treiben. Wir wollen uns dazu die Schritte ansehen,
+um aus unserer Beispielapplikation ein gleichwertiges Applet zu machen:
+<ul>
+<li>Die Klassen <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>
+und <a href="index_a.html#ixb100603"><font color=#000080><tt>Applet</tt></font></a>
+haben mit <a href="index_c.html#ixb101294"><font color=#000080><tt>Container</tt></font></a>
+eine gemeinsame Basisklasse. Die Funktionalit&auml;t zum Hinzuf&uuml;gen
+von Dialogelementen und Anordnen derselben mit Hilfe eines Layoutmanagers
+steht also auch in <a href="index_a.html#ixb100603"><font color=#000080><tt>Applet</tt></font></a>
+zur Verf&uuml;gung. Im ersten Schritt &auml;ndern wir daher einfach
+die Basisklasse und leiten unser zuk&uuml;nftiges Applet von <a href="index_a.html#ixb100603"><font color=#000080><tt>Applet</tt></font></a>
+ab. Zus&auml;tzlich muss das Paket <a href="index_j.html#ixb100608"><font color=#000080><tt>java.applet</tt></font></a>
+importiert werden.
+<li>Nun entfernen wir den Konstruktor und platzieren den dort befindlichen
+Code in der <a href="index_i.html#ixb101826"><font color=#000080><tt>init</tt></font></a>-Methode.
+Der Aufruf des Superklassenkonstruktors kann entfallen, weil ein Applet
+keine Titelzeile hat. Auch alle eventuell vorhandenen Aufrufe von
+<a href="index_s.html#ixb101318"><font color=#000080><tt>setTitle</tt></font></a>
+m&uuml;ssen entfernt werden. Die Beschriftung des Applets kann in
+der HTML-Datei erfolgen.
+<li>Falls der <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>
+keinen expliziten Layoutmanager gesetzt hat, sondern mit dem vordefinierten
+<a href="index_b.html#ixb101541"><font color=#000080><tt>BorderLayout</tt></font></a>
+gearbeitet hat, muss ein Aufruf von <a href="index_s.html#ixb101538"><font color=#000080><tt>setLayout</tt></font></a>
+erfolgen. <a href="index_a.html#ixb100603"><font color=#000080><tt>Applet</tt></font></a>
+verwendet n&auml;mlich standardm&auml;&szlig;ig ein <a href="index_f.html#ixb101539"><font color=#000080><tt>FlowLayout</tt></font></a>.
+<li>Nun m&uuml;ssen die Aufrufe der <a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>-
+bzw. <a href="index_w.html#ixb101153"><font color=#000080><tt>Window</tt></font></a>-spezifischen
+Methoden entfernt werden. In unserem Beispiel betrifft das lediglich
+<a name="ixa102976"><a href="index_s.html#ixb102221"><font color=#000080><tt>setWindowAdapter</tt></font></a></a>,
+weitere Beispiele w&auml;ren <a href="index_s.html#ixb101497"><font color=#000080><tt>setMenuBar</tt></font></a>,
+<a href="index_s.html#ixb101320"><font color=#000080><tt>setIconImage</tt></font></a>
+oder <a href="index_s.html#ixb101582"><font color=#000080><tt>setResizable</tt></font></a>.
+Am einfachsten ist es, das Programm in diesem Stadium zu kompilieren
+und die Fehlermeldungen des Compilers auszuwerten.
+<li>Nun sollte noch die <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>-Methode
+entfernt werden. Das Instanzieren des Applets und der Aufruf von <a href="index_s.html#ixb101154"><font color=#000080><tt>setVisible</tt></font></a>
+k&ouml;nnen entfallen, denn sie werden vom Browser erledigt. Die Position
+des Applets ergibt sich aus der HTML-Datei und die Gr&ouml;&szlig;e
+des Applets kann mit Hilfe der Parameter <a href="index_w.html#ixb102168"><font color=#000080><tt>WIDTH</tt></font></a>
+und <a href="index_h.html#ixb102169"><font color=#000080><tt>HEIGHT</tt></font></a>
+im APPLET-Tag festgelegt werden.
+</ul>
+
+<p>
+Nachdem die Schritte beendet wurden, steht nun (wenigstens in diesem
+nicht sehr komplexen Beispiel) ein gleichwertiges Applet zur Verf&uuml;gung:
+<a name="listingid041008"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* CalculatorApplet2.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font><font color="#0000AA">import</font> java.applet.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> CalculatorApplet2
+<font color="#555555">008 </font><font color="#0000AA">extends</font> Applet
+<font color="#555555">009 </font><font color="#0000AA">implements</font> ActionListener
+<font color="#555555">010 </font>{
+<font color="#555555">011 </font>  <font color="#0000AA">private</font> TextField tf;
+<font color="#555555">012 </font>
+<font color="#555555">013 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> init()
+<font color="#555555">014 </font>  {
+<font color="#555555">015 </font>    setBackground(Color.lightGray);
+<font color="#555555">016 </font>    setLayout(<font color="#0000AA">new</font> GridLayout(2, 1));
+<font color="#555555">017 </font>    tf = <font color="#0000AA">new</font> TextField(<font color="#0000FF">"777"</font>);
+<font color="#555555">018 </font>    add(tf);
+<font color="#555555">019 </font>    Panel p = <font color="#0000AA">new</font> Panel();
+<font color="#555555">020 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 1; i &lt;= 1000; i *= 10) {
+<font color="#555555">021 </font>      Button b = <font color="#0000AA">new</font> Button(<font color="#0000FF">"+"</font> + i);
+<font color="#555555">022 </font>      b.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">023 </font>      p.add(b);
+<font color="#555555">024 </font>    }
+<font color="#555555">025 </font>    add(p);
+<font color="#555555">026 </font>  }
+<font color="#555555">027 </font>
+<font color="#555555">028 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> actionPerformed(ActionEvent event)
+<font color="#555555">029 </font>  {
+<font color="#555555">030 </font>    String cmd = event.getActionCommand();
+<font color="#555555">031 </font>    <font color="#006699">int</font> n1 = Integer.parseInt(tf.getText());
+<font color="#555555">032 </font>    <font color="#006699">int</font> n2 = Integer.parseInt(cmd.substring(1));
+<font color="#555555">033 </font>    tf.setText(<font color="#0000FF">""</font> + (n1 + n2));
+<font color="#555555">034 </font>  }
+<font color="#555555">035 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/CalculatorApplet2.java"><font color="#000055" size=-1>CalculatorApplet2.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 41.8: Das gleichwertige Calculator-Applet</i></p>
+
+<p>
+Nun kann die HTML-Datei erstellt und das Applet aufgerufen werden:
+<a name="listingid041009"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">&lt;html&gt;</font>
+<font color="#555555">002 </font><font color="#0000AA">&lt;head&gt;</font>
+<font color="#555555">003 </font><font color="#0000AA">&lt;title&gt;</font>CalculatorApplet2<font color="#0000AA">&lt;/title&gt;</font>
+<font color="#555555">004 </font><font color="#0000AA">&lt;/head&gt;</font>
+<font color="#555555">005 </font><font color="#0000AA">&lt;body&gt;</font>
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">&lt;h1&gt;</font>CalculatorApplet2<font color="#0000AA">&lt;/h1&gt;</font>
+<font color="#555555">008 </font>
+<font color="#555555">009 </font><font color="#0000AA">&lt;applet code=</font><font color="#0000FF">"CalculatorApplet2.class"</font><font color="#0000AA"> width=200 height=85&gt;</font>
+<font color="#555555">010 </font>CalculatorApplet2
+<font color="#555555">011 </font><font color="#0000AA">&lt;/applet&gt;</font>
+<font color="#555555">012 </font>
+<font color="#555555">013 </font><font color="#0000AA">&lt;/body&gt;</font>
+<font color="#555555">014 </font><font color="#0000AA">&lt;/html&gt;</font></pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/CalculatorApplet2.html"><font color="#000055" size=-1>CalculatorApplet2.html</font></a></td>
+</tr>
+</table>
+<i>
+Listing 41.9: HTML-Datei zum Aufruf des Beispiel-Applets</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100263.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100265.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100267.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100269.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

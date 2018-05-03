@@ -1,0 +1,790 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100132.html;106,k100133.html;107,k100135.html;108,k100137.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100132.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100133.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100135.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100137.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 20 - Byte-Streams
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id020002"></a>
+<h2>20.2 Ausgabe-Streams </h2>
+<hr>
+<ul>
+<li><a href="k100134.html#sectlevel2id020002">20.2 Ausgabe-Streams</a>
+<ul>
+<li><a href="k100134.html#sectlevel3id020002001">20.2.1 Die Basisklasse OutputStream</a>
+<li><a href="k100134.html#sectlevel3id020002002">20.2.2 Aus OutputStream direkt abgeleitete Klassen</a>
+<ul>
+<li><a href="k100134.html#sectlevel4id020002002001">FileOutputStream</a>
+<li><a href="k100134.html#sectlevel4id020002002002">ByteArrayOutputStream</a>
+<li><a href="k100134.html#sectlevel4id020002002003">ObjectOutputStream</a>
+<li><a href="k100134.html#sectlevel4id020002002004">PipedOutputStream</a>
+</ul>
+<li><a href="k100134.html#filteroutputstream">20.2.3 Aus FilterOutputStream abgeleitete Klassen</a>
+<ul>
+<li><a href="k100134.html#sectlevel4id020002003001">BufferedOutputStream</a>
+<li><a href="k100134.html#sectlevel4id020002003002">PrintStream</a>
+<li><a href="k100134.html#sectlevel4id020002003003">DataOutput und DataOutputStream</a>
+<li><a href="k100134.html#sectlevel4id020002003004">Komprimieren von Dateien</a>
+<li><a href="k100134.html#sectlevel4id020002003005">Berechnung von Pr&uuml;fsummen</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id020002001"></a>
+<h3>20.2.1 Die Basisklasse OutputStream </h3>
+
+<p>
+Basis der Ausgabe-Streams ist die abstrakte Klasse <a name="ixa101320"><a href="index_o.html#ixb100588"><font color=#000080><tt>OutputStream</tt></font></a></a>.
+Sie stellt folgende Methoden zur Verf&uuml;gung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+protected OutputStream()
+
+public void close()
+public void flush()
+
+public void write(int b)
+public void write(byte[] b)
+public void write(byte[] b, int offs, int len)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/OutputStream.html" onClick="this.href=getApiDoc('java.io.OutputStream')"><font color="#660066" size=-1>java.io.OutputStream</font></a></td>
+</tr>
+</table>
+
+<p>
+Der parameterlose Konstruktor initialisiert einen <a href="index_o.html#ixb100588"><font color=#000080><tt>OutputStream</tt></font></a>.
+Er ist <a href="index_p.html#ixb100085"><font color=#000080><tt>protected</tt></font></a>
+und wird in abgeleiteten Klassen &uuml;berlagert. Mit <a name="ixa101321"><a href="index_c.html#ixb100596"><font color=#000080><tt>close</tt></font></a></a>
+wird der <a href="index_o.html#ixb100588"><font color=#000080><tt>OutputStream</tt></font></a>
+geschlossen und <a name="ixa101322"><a href="index_f.html#ixb100966"><font color=#000080><tt>flush</tt></font></a></a>
+schreibt die gepufferten Daten physikalisch auf das Ausgabeger&auml;t
+und leert alle Puffer. 
+
+<p>
+Die <a name="ixa101323"><a href="index_w.html#ixb100967"><font color=#000080><tt>write</tt></font></a></a>-Methoden
+erwarten Bytes oder Byte-Arrays als Daten. Wird ein <a href="index_b.html#ixb100249"><font color=#000080><tt>byte</tt></font></a>-Array
+angegeben, so gibt die Klasse es vollst&auml;ndig aus, wenn nicht
+zus&auml;tzlich ein Arrayoffset und die Anzahl der zu schreibenden
+Bytes angegeben wird. Die Methode zum Schreiben eines einzelnen Bytes
+erwartet ein <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>
+als Argument, gibt aber lediglich seine unteren 8 Bit aus und ignoriert
+alle &uuml;brigen. 
+
+<!-- Section -->
+
+<a name="sectlevel3id020002002"></a>
+<h3>20.2.2 Aus OutputStream direkt abgeleitete Klassen </h3>
+
+<p>
+Aus <a href="index_o.html#ixb100588"><font color=#000080><tt>OutputStream</tt></font></a>
+sind einige weitere Klassen direkt abgeleitet. Wie bei den Character-Streams
+bestimmen sie im Wesentlichen die Art bzw. das Ziel der Datenausgabe.
+
+
+<!-- Section -->
+<a name="sectlevel4id020002002001"></a>
+<h4>FileOutputStream </h4>
+
+<p>
+Der <a name="ixa101324"><a href="index_f.html#ixb101010"><font color=#000080><tt>FileOutputStream</tt></font></a></a>
+stellt einen Byte-Stream zur Ausgabe in eine Datei zur Verf&uuml;gung.
+Er besitzt folgende Konstruktoren: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public FileOutputStream(String name)
+  throws FileNotFoundException
+
+public FileOutputStream(String name, boolean append)
+  throws FileNotFoundException
+
+public FileOutputStream(File file)
+  throws IOException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/FileOutputStream.html" onClick="this.href=getApiDoc('java.io.FileOutputStream')"><font color="#660066" size=-1>java.io.FileOutputStream</font></a></td>
+</tr>
+</table>
+
+<p>
+Wird lediglich ein Dateiname angegeben, legt ein <a href="index_f.html#ixb101010"><font color=#000080><tt>FileOutputStream</tt></font></a>
+die gew&uuml;nschte Ausgabedatei neu an und setzt den Dateizeiger
+auf den Anfang der Datei. Wird der zweite Konstruktor verwendet und
+<a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+als zweites Argument &uuml;bergeben, wird der Dateizeiger auf das
+Ende der Datei positioniert, falls diese bereits existiert. Andernfalls
+entspricht das Verhalten dem des ersten Konstruktors. Der dritte Konstruktor
+entspricht dem ersten, erwartet aber ein <a href="index_f.html#ixb100980"><font color=#000080><tt>File</tt></font></a>-Objekt
+anstelle eines Strings. 
+
+<p>
+Das folgende Programm zeigt beispielhaft die Anwendung eines <a href="index_f.html#ixb101010"><font color=#000080><tt>FileOutputStream</tt></font></a>.
+Es legt die in der Kommandozeile angegebene Datei an (bzw. springt
+zu ihrem Ende, falls sie bereits vorhanden ist) und h&auml;ngt 256
+Bytes mit den Werten 0 bis 255 an. 
+<a name="listingid020001"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2001.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2001
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">010 </font>      FileOutputStream out = <font color="#0000AA">new</font> FileOutputStream(
+<font color="#555555">011 </font>        args[0],
+<font color="#555555">012 </font>        <font color="#006699">true</font>
+<font color="#555555">013 </font>      );
+<font color="#555555">014 </font>      <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; 256; ++i) {
+<font color="#555555">015 </font>        out.write(i);
+<font color="#555555">016 </font>      }
+<font color="#555555">017 </font>      out.close();
+<font color="#555555">018 </font>    } <font color="#0000AA">catch</font> (Exception e) {
+<font color="#555555">019 </font>      System.err.println(e.toString());
+<font color="#555555">020 </font>      System.exit(1);
+<font color="#555555">021 </font>    }
+<font color="#555555">022 </font>  }
+<font color="#555555">023 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2001.java"><font color="#000055" size=-1>Listing2001.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 20.1: Verwendung eines FileOutputStream</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id020002002002"></a>
+<h4>ByteArrayOutputStream </h4>
+
+<p>
+Die Klasse <a name="ixa101325"><a href="index_b.html#ixb101011"><font color=#000080><tt>ByteArrayOutputStream</tt></font></a></a>
+schreibt die auszugebenden Daten in ein <a href="index_b.html#ixb100249"><font color=#000080><tt>byte</tt></font></a>-Array,
+dessen Gr&ouml;&szlig;e mit dem Datenvolumen w&auml;chst. Sie besitzt
+zwei Konstruktoren: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public ByteArrayOutputStream()
+public ByteArrayOutputStream(int size)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/ByteArrayOutputStream.html" onClick="this.href=getApiDoc('java.io.ByteArrayOutputStream')"><font color="#660066" size=-1>java.io.ByteArrayOutputStream</font></a></td>
+</tr>
+</table>
+
+<p>
+Der parameterlose Konstruktor legt ein Ausgabe-Array mit einer anf&auml;nglichen
+Gr&ouml;&szlig;e von 32 Byte an, der andere erlaubt die freie Vorgabe
+der initialen Puffergr&ouml;&szlig;e. 
+
+<!-- Section -->
+
+<a name="sectlevel4id020002002003"></a>
+<h4>ObjectOutputStream </h4>
+
+<p>
+Ein <a name="ixa101326"><a href="index_o.html#ixb101012"><font color=#000080><tt>ObjectOutputStream</tt></font></a></a>
+erlaubt es, primitive Datentypen und komplette Objekte (inklusive
+aller referenzierten Objekte) auszugeben. Zwar ist er nicht von <a href="index_f.html#ixb101013"><font color=#000080><tt>FilterOutputStream</tt></font></a>
+abgeleitet, wird aber ebenso verwendet und erwartet im Konstruktor
+einen <a href="index_o.html#ixb100588"><font color=#000080><tt>OutputStream</tt></font></a>
+zur Weiterleitung der Ausgabedaten. Die Klasse <a href="index_o.html#ixb101012"><font color=#000080><tt>ObjectOutputStream</tt></font></a>
+ist eine der S&auml;ulen des Serialisierungs-API in Java. Sie wird
+in <a href="k100270.html#objectoutputstream">Abschnitt 42.1.2</a>
+ausf&uuml;hrlich beschrieben. 
+
+<!-- Section -->
+
+<a name="sectlevel4id020002002004"></a>
+<h4>PipedOutputStream </h4>
+
+<p>
+Ein <a name="ixa101327"><a href="index_p.html#ixb100977"><font color=#000080><tt>PipedOutputStream</tt></font></a></a>
+dient zusammen mit einem <a href="index_p.html#ixb100976"><font color=#000080><tt>PipedInputStream</tt></font></a>
+zur Kommunikation zweier Threads. Beide zusammen implementieren eine
+<a name="ixa101328"><i>Message Queue</i></a>, in die einer der beiden
+Threads seine Daten hineinschreibt, w&auml;hrend der andere sie daraus
+liest. Ein ausf&uuml;hrliches Beispiel zur Anwendung der beiden Klassen
+findet sich in <a href="k100154.html#pipedthreads">Abschnitt 23.4.5</a>.
+
+
+<!-- Section -->
+<a name="filteroutputstream"></a>
+<h3>20.2.3 Aus FilterOutputStream abgeleitete Klassen </h3>
+
+<p>
+Die aus <a href="index_o.html#ixb100588"><font color=#000080><tt>OutputStream</tt></font></a>
+abgeleitete Klasse <a name="ixa101329"><a href="index_f.html#ixb101013"><font color=#000080><tt>FilterOutputStream</tt></font></a></a>
+ist die Basisklasse aller gefilterten Ausgabe-Streams. Diese definieren
+kein eigenes Ausgabeger&auml;t, sondern bekommen es beim Instanzieren
+in Form eines <a href="index_o.html#ixb100588"><font color=#000080><tt>OutputStream</tt></font></a>-Arguments
+&uuml;bergeben: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public FilterOutputStream(OutputStream out)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/FilterOutputStream.html" onClick="this.href=getApiDoc('java.io.FilterOutputStream')"><font color="#660066" size=-1>java.io.FilterOutputStream</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Aufgabe der aus <a href="index_f.html#ixb101013"><font color=#000080><tt>FilterOutputStream</tt></font></a>
+abgeleiteten Klassen besteht darin, die Schreibzugriffe abzufangen,
+in einer f&uuml;r sie charakteristischen Weise zu verarbeiten und
+dann an das eigentliche Ausgabeger&auml;t (den im Konstruktor &uuml;bergebenen
+<a href="index_o.html#ixb100588"><font color=#000080><tt>OutputStream</tt></font></a>)
+weiterzuleiten. 
+
+<!-- Section -->
+
+<a name="sectlevel4id020002003001"></a>
+<h4>BufferedOutputStream </h4>
+
+<p>
+<a name="ixa101330"><a href="index_b.html#ixb101015"><font color=#000080><tt>BufferedOutputStream</tt></font></a></a>
+puffert die Ausgabe in einen <a href="index_o.html#ixb100588"><font color=#000080><tt>OutputStream</tt></font></a>.
+Er kann insbesondere dann die Ausgabe beschleunigen, wenn viele einzelne
+<a href="index_w.html#ixb100967"><font color=#000080><tt>write</tt></font></a>-Aufrufe
+erfolgen, die jeweils nur wenig Daten &uuml;bergeben. Ein <a href="index_b.html#ixb101015"><font color=#000080><tt>BufferedOutputStream</tt></font></a>
+besitzt zwei zus&auml;tzliche Konstruktoren und eine Methode <a name="ixa101331"><a href="index_f.html#ixb100966"><font color=#000080><tt>flush</tt></font></a></a>,
+die daf&uuml;r sorgt, dass die gepufferten Daten tats&auml;chlich
+geschrieben werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public BufferedOutputStream(OutputStream out)
+public BufferedOutputStream(OutputStream out, int size)
+
+public void flush()
+  throws IOException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/BufferedOutputStream.html" onClick="this.href=getApiDoc('java.io.BufferedOutputStream')"><font color="#660066" size=-1>java.io.BufferedOutputStream</font></a></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id020002003002"></a>
+<h4>PrintStream </h4>
+
+<p>
+Ein <a name="ixa101332"><a href="index_p.html#ixb100562"><font color=#000080><tt>PrintStream</tt></font></a></a>
+bietet die M&ouml;glichkeit, Strings und primitive Typen im Textformat
+auszugeben. Er stellt eine Vielzahl von <a name="ixa101333"><a href="index_p.html#ixb100934"><font color=#000080><tt>print</tt></font></a></a>-
+und <a name="ixa101334"><a href="index_p.html#ixb100181"><font color=#000080><tt>println</tt></font></a></a>-Methoden
+f&uuml;r unterschiedliche Datentypen zur Verf&uuml;gung. Seine Schnittstelle
+und Anwendung entspricht der Klasse <a href="index_p.html#ixb100561"><font color=#000080><tt>PrintWriter</tt></font></a>,
+die in <a href="k100129.html#charausgabestreamsschachteln">Abschnitt 19.2.3</a>
+beschrieben wurde. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Im Zuge der Internationalisierung des JDK wurden mit der Version 1.1
+die &ouml;ffentlichen Konstruktoren der Klasse <a href="index_p.html#ixb100562"><font color=#000080><tt>PrintStream</tt></font></a>
+als <a name="ixa101335"><a href="index_d.html#ixb100139"><font color=#000080><tt>deprecated</tt></font></a></a>
+markiert (wegen der m&ouml;glicherweise unzul&auml;nglichen Konvertierung
+zwischen Bytes und Zeichen). Damit war die Klasse praktisch nicht
+mehr verwendbar. Insbesondere war es nicht mehr m&ouml;glich, die
+Methoden <a name="ixa101336"><a href="index_s.html#ixb100862"><font color=#000080><tt>setOut</tt></font></a></a>
+und <a name="ixa101337"><a href="index_s.html#ixb100863"><font color=#000080><tt>setErr</tt></font></a></a>
+der Klasse <a href="index_s.html#ixb100182"><font color=#000080><tt>System</tt></font></a>
+sinnvoll zu verwenden (siehe <a href="k100117.html#inerrout">Abschnitt 17.3.2</a>).
+Sp&auml;ter wurde die Entscheidung als falsch angesehen und mit dem
+JDK 1.2 revidiert. Seither sind die Konstruktoren wieder zul&auml;ssig.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id020002003003"></a>
+<h4>DataOutput und DataOutputStream </h4>
+
+<p>
+Ein <a name="ixa101338"><a href="index_d.html#ixb101016"><font color=#000080><tt>DataOutputStream</tt></font></a></a>
+erm&ouml;glicht es, primitive Datentypen in definierter (und portabler)
+Weise auszugeben. So geschriebene Daten k&ouml;nnen mit Hilfe eines
+<a name="ixa101339"><a href="index_d.html#ixb101017"><font color=#000080><tt>DataInputStream</tt></font></a></a>
+wieder eingelesen werden. Ein <a href="index_d.html#ixb101016"><font color=#000080><tt>DataOutputStream</tt></font></a>
+implementiert das Interface <a name="ixa101340"><a href="index_d.html#ixb101018"><font color=#000080><tt>DataOutput</tt></font></a></a>,
+das folgende Methoden enth&auml;lt: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+void write(int b)
+  throws IOException
+void write(byte[] b)
+  throws IOException
+void write(byte[] b, int off, int len)
+  throws IOException
+void writeBoolean(boolean v)
+  throws IOException
+void writeByte(int v)
+  throws IOException
+void writeShort(int v)
+  throws IOException
+void writeChar(int v)
+  throws IOException
+void writeInt(int v)
+  throws IOException
+void writeLong(long v)
+  throws IOException
+void writeFloat(float v)
+  throws IOException
+void writeDouble(double v)
+  throws IOException
+void writeBytes(String s)
+  throws IOException
+void writeChars(String s)
+  throws IOException
+void writeUTF(String str)
+  throws IOException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/io/DataOutput.html" onClick="this.href=getApiDoc('java.io.DataOutput')"><font color="#660066" size=-1>java.io.DataOutput</font></a></td>
+</tr>
+</table>
+
+<p>
+Zu jeder einzelnen Methode ist in der JDK-Dokumentation genau angegeben,
+auf welche Weise der jeweilige Datentyp ausgegeben wird. Dadurch ist
+garantiert, dass eine mit <a href="index_d.html#ixb101016"><font color=#000080><tt>DataOutputStream</tt></font></a>
+geschriebene Datei auf jedem anderen Java-System mit einem <a href="index_d.html#ixb101017"><font color=#000080><tt>DataInputStream</tt></font></a>
+lesbar ist. Die Beschreibungen sind sogar so genau, dass Interoperabilit&auml;t
+mit Nicht-Java-Systemen erreicht werden kann, wenn diese in der Lage
+sind, die primitiven Typen in der beschriebenen Weise zu verarbeiten.
+
+<p>
+Eine Sonderstellung nimmt die Methode <a name="ixa101341"><a href="index_w.html#ixb101019"><font color=#000080><tt>writeUTF</tt></font></a></a>
+ein. Sie dient dazu, die 2 Byte langen UNICODE-Zeichen, mit denen
+Java intern arbeitet, in definierter Weise in 1, 2 oder 3 Byte lange
+Einzelzeichen zu verwandeln. Hat das Zeichen einen Wert zwischen \u0000
+und \u007F, wird es als Einzelbyte ausgeben. Hat es einen Wert zwischen
+\u0080 und \u07FF, belegt es zwei Byte, und in allen anderen F&auml;llen
+werden drei Byte verwendet. Diese Darstellung wird als <a name="ixa101342"><i>UTF-8-Codierung</i></a>
+bezeichnet und ist entsprechend <a href="k100134.html#utf8encoding">Tabelle 20.1</a>
+implementiert. Zus&auml;tzlich werden an den Anfang jedes UTF-8-Strings
+zwei L&auml;ngenbytes geschrieben. <a name="utf8encoding"></a>
+
+<p>
+<table cols=4 border width=100%>
+
+<tr>
+<td valign=top align=left width=16%><b>Von</b></td>
+<td valign=top align=left width=16%><b>Bis</b></td>
+<td valign=top align=left width=16%><b>Byte</b></td>
+<td valign=top align=left width=50%><b>Darstellung </b></td></tr>
+<tr>
+<td valign=top align=left>\u0000</td>
+<td valign=top align=left>\u007F</td>
+<td valign=top align=left>1</td>
+<td valign=top align=left>0nnnnnnn </td></tr>
+<tr>
+<td valign=top align=left>\u0080</td>
+<td valign=top align=left>\u07FF</td>
+<td valign=top align=left>2</td>
+<td valign=top align=left>110nnnnn 10nnnnnn </td></tr>
+<tr>
+<td valign=top align=left>\u0800</td>
+<td valign=top align=left>\uFFFF</td>
+<td valign=top align=left>3</td>
+<td valign=top align=left>1110nnnn 10nnnnnn 10nnnnnn </td></tr>
+</table>
+<p><i>
+Tabelle 20.1: Die UTF-8-Kodierung </i></p>
+
+<p>
+Die UTF-8-Kodierung arbeitet bei den gebr&auml;uchlichsten Sprachen
+platzsparend. Alle ASCII-Zeichen werden mit nur einem Byte codiert
+und viele andere wichtige Zeichen (insbesondere die im ISO-8859-Zeichensatz
+definierten nationalen Sonderzeichen, aber auch griechische, hebr&auml;ische
+und kyrillische Zeichen) ben&ouml;tigen nur zwei Byte zur Darstellung.
+Jedes Byte mit gesetztem High-Bit ist Teil einer Multibyte-Sequenz
+und am ersten Byte einer Sequenz kann die Anzahl der Folgezeichen
+abgelesen werden. 
+
+<p>
+Wir wollen uns ein Beispielprogramm ansehen: 
+<a name="dataoutputstreamexample"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing2002.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing2002
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">010 </font>      DataOutputStream out = <font color="#0000AA">new</font> DataOutputStream(
+<font color="#555555">011 </font>                             <font color="#0000AA">new</font> BufferedOutputStream(
+<font color="#555555">012 </font>                             <font color="#0000AA">new</font> FileOutputStream(<font color="#0000FF">"test.txt"</font>)));
+<font color="#555555">013 </font>      out.writeInt(1);
+<font color="#555555">014 </font>      out.writeInt(-1);
+<font color="#555555">015 </font>      out.writeDouble(Math.PI);
+<font color="#555555">016 </font>      out.writeUTF(<font color="#0000FF">"h&auml;&szlig;liches"</font>);
+<font color="#555555">017 </font>      out.writeUTF(<font color="#0000FF">"Entlein"</font>);
+<font color="#555555">018 </font>      out.close();
+<font color="#555555">019 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">020 </font>      System.err.println(e.toString());
+<font color="#555555">021 </font>    }
+<font color="#555555">022 </font>  }
+<font color="#555555">023 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing2002.java"><font color="#000055" size=-1>Listing2002.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 20.2: Verwendung der Klasse DataOutputStream</i></p>
+
+<p>
+Das Programm erzeugt eine Ausgabedatei <font color="#660099">test.txt</font>
+von 38 Byte L&auml;nge (wie sie wieder eingelesen wird, zeigt <a href="k100135.html#datainputstreamexample">Listing 20.5</a>):
+<font color="#333300">
+<pre>
+00 00 00 01 FF FF FF FF-40 09 21 FB 54 44 2D 18   ........@.!.TD-.
+00 0B 68 C3 A4 C3 9F 6C-69 63 68 65 73 00 07 45   ..h....liches..E
+6E 74 6C 65 69 6E                                 ntlein
+</pre>
+</font>
+<ul>
+<li>Die ersten 4 Byte stellen den int-Wert 1 dar.
+<li>Die n&auml;chsten 4 Byte repr&auml;sentieren die -1 (es wird die
+&uuml;bliche Zweierkomplementdarstellung verwendet).
+<li>Anschlie&szlig;end folgen 8 Byte mit der double-Darstellung der
+Zahl pi.
+<li>Nun folgt die L&auml;ngeninformation 000B des ersten UTF-8-Strings
+und danach dessen 11 Zeichen. Man kann sehen, dass die beiden Umlaute
+&auml; und &szlig; jeweils zwei Byte belegen, alle &uuml;brigen Zeichen
+jedoch nur eines.
+<li>Schlie&szlig;lich folgt der zweite UTF-8-String. Er hat die L&auml;nge
+7 und alle Zeichen werden mit einem Byte dargestellt.
+</ul>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+<a href="index_d.html#ixb101018"><font color=#000080><tt>DataOutput</tt></font></a>
+wird nicht nur von <a href="index_d.html#ixb101016"><font color=#000080><tt>DataOutputStream</tt></font></a>
+implementiert, sondern auch von der Klasse <a name="ixa101343"><a href="index_r.html#ixb101021"><font color=#000080><tt>RandomAccessFile</tt></font></a></a>,
+die dar&uuml;ber hinaus das Interface <a href="index_d.html#ixb101022"><font color=#000080><tt>DataInput</tt></font></a>
+implementiert. Sollen primitive Daten wahlweise seriell oder wahlfrei
+verarbeitet werden, ist es daher sinnvoll, die serielle Verarbeitung
+mit Hilfe der Klassen <a href="index_d.html#ixb101016"><font color=#000080><tt>DataOutputStream</tt></font></a>
+und <a href="index_d.html#ixb101017"><font color=#000080><tt>DataInputStream</tt></font></a>
+vorzunehmen. Die Verarbeitung von Random-Access-Dateien wird in <a href="k100137.html#kapitelrandomaccessio">Kapitel 21</a>
+behandelt.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id020002003004"></a>
+<h4>Komprimieren von Dateien </h4>
+
+<p>
+Die aus <a href="index_f.html#ixb101013"><font color=#000080><tt>FilterOutputStream</tt></font></a>
+abgeleitete Klasse <a name="ixa101344"><a href="index_d.html#ixb101023"><font color=#000080><tt>DeflaterOutputStream</tt></font></a></a>
+ist die Basisklasse der beiden Klassen <a name="ixa101345"><a href="index_z.html#ixb101024"><font color=#000080><tt>ZipOutputStream</tt></font></a></a>
+und <a name="ixa101346"><a href="index_g.html#ixb101025"><font color=#000080><tt>GZIPOutputStream</tt></font></a></a>
+aus dem Paket <a name="ixa101347"><a href="index_j.html#ixb101026"><font color=#000080><tt>java.util.zip</tt></font></a></a>.
+Zudem ist <a href="index_z.html#ixb101024"><font color=#000080><tt>ZipOutputStream</tt></font></a>
+Basisklasse von <a name="ixa101348"><a href="index_j.html#ixb101027"><font color=#000080><tt>JarOutputStream</tt></font></a></a>
+aus dem Paket <a name="ixa101349"><a href="index_j.html#ixb101028"><font color=#000080><tt>java.util.jar</tt></font></a></a>.
+Sie alle dienen dazu, die auszugebenden Daten in eine Archivdatei
+zu schreiben und platzsparend zu komprimieren: 
+<ul>
+<li>Das ZIP-Format stammt aus der PC-Welt, ist aber mittlerweile unter
+praktisch allen Betriebssystemen verf&uuml;gbar. Es kann mehrere Dateien
+komprimieren und in einem Archiv zusammenfassen.
+<li>Das GZIP-Format stammt aus der GNU-Welt und kann lediglich eine
+einzige Datei komprimieren. Zur Erstellung von Archiven, die mehrere
+Dateien enthalten, wird es meist zusammen mit <font color="#000077"><tt>tar</tt></font>
+verwendet.
+<li>Das JAR-Format entspricht dem ZIP-Format, beinhaltet aber zus&auml;tzlich
+noch Manifest-Dateien, die Metainformationen &uuml;ber die gespeicherten
+Dateien enthalten.
+</ul>
+
+<p>
+Das folgende Listing zeigt, wie mehrere Dateien mit Hilfe eines <a href="index_z.html#ixb101024"><font color=#000080><tt>ZipOutputStream</tt></font></a>
+komprimiert und in eine gemeinsame Archivdatei geschrieben werden.
+Es wird als Kommandozeilenprogramm aufgerufen und erwartet die Namen
+der zu erstellenden Archivdatei und der Eingabedateien als Argumente.
+Das erzeugte Archiv kann mit <a href="index_j.html#ixb100124"><font color=#000080><tt>jar</tt></font></a>,
+<a name="ixa101350"><a href="index_w.html#ixb101029"><font color=#000080><tt>winzip</tt></font></a></a>
+oder <a name="ixa101351"><a href="index_p.html#ixb101030"><font color=#000080><tt>pkunzip</tt></font></a></a>
+ausgepackt werden. 
+<a name="zipexample"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Zip.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.util.zip.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Zip
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    <font color="#0000AA">if</font> (args.length &lt; 2) {
+<font color="#555555">011 </font>      System.out.println(<font color="#0000FF">"Usage: java Zip zipfile files..."</font>);
+<font color="#555555">012 </font>      System.exit(1);
+<font color="#555555">013 </font>    }
+<font color="#555555">014 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">015 </font>      <font color="#006699">byte</font>[] buf = <font color="#0000AA">new</font> <font color="#006699">byte</font>[4096];
+<font color="#555555">016 </font>      ZipOutputStream out = <font color="#0000AA">new</font> ZipOutputStream(
+<font color="#555555">017 </font>                            <font color="#0000AA">new</font> FileOutputStream(args[0]));
+<font color="#555555">018 </font>      <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 1; i &lt; args.length; ++i) {
+<font color="#555555">019 </font>        String fname = args[i];
+<font color="#555555">020 </font>        System.out.println(<font color="#0000FF">"adding "</font> + fname);
+<font color="#555555">021 </font>        FileInputStream in = <font color="#0000AA">new</font> FileInputStream(fname);
+<font color="#555555">022 </font>        out.putNextEntry(<font color="#0000AA">new</font> ZipEntry(fname));
+<font color="#555555">023 </font>        <font color="#006699">int</font> len;
+<font color="#555555">024 </font>        <font color="#0000AA">while</font> ((len = in.read(buf)) &gt; 0) {
+<font color="#555555">025 </font>          out.write(buf, 0, len);
+<font color="#555555">026 </font>        }
+<font color="#555555">027 </font>        in.close();
+<font color="#555555">028 </font>      }
+<font color="#555555">029 </font>      out.close();
+<font color="#555555">030 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">031 </font>      System.err.println(e.toString());
+<font color="#555555">032 </font>    }
+<font color="#555555">033 </font>  }
+<font color="#555555">034 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Zip.java"><font color="#000055" size=-1>Zip.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 20.3: Erstellen eines ZIP-Archivs</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Bitte beachten Sie, dass das Programm nur die Grundz&uuml;ge des Erstellens
+von ZIP-Dateien demonstriert. Insbesondere verzichtet es darauf, die
+verschiedenen Eigenschaften des jeweiligen ZIP-Eintrags korrekt zu
+setzen (Gr&ouml;&szlig;e, Datum/Uhrzeit, Pr&uuml;fsumme etc.). Um
+dies zu tun, m&uuml;ssten die entsprechenden Daten ermittelt und dann
+an die jeweiligen <a href="index_s.html#ixb100160"><font color=#000080><tt>set</tt></font></a>-Methoden
+des <a name="ixa101352"><a href="index_z.html#ixb101031"><font color=#000080><tt>ZipEntry</tt></font></a></a>-Objekts
+&uuml;bergeben werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id020002003005"></a>
+<h4>Berechnung von Pr&uuml;fsummen </h4>
+
+<p>
+Soll sichergestellt werden, dass Daten w&auml;hrend einer &Uuml;bertragung
+unver&auml;ndert bleiben (etwa weil der &Uuml;bertragungskanal unsicher
+oder st&ouml;ranf&auml;llig ist), werden diese meist mit einer Pr&uuml;fsumme
+&uuml;bertragen. Dazu wird aus den Originaldaten eine Art mathematische
+Zusammenfassung gebildet und zusammen mit den Daten &uuml;bertragen.
+Der Empf&auml;nger berechnet aus den empfangenen Daten mit demselben
+Verfahren die Pr&uuml;fsumme und vergleicht sie mit der &uuml;bertragenen.
+Stimmen beide &uuml;berein, kann davon ausgegangen werden, dass die
+Daten nicht verf&auml;lscht wurden. 
+
+<p>
+Das Verfahren zur Berechnung der Pr&uuml;fsumme muss nat&uuml;rlich
+so beschaffen sein, dass m&ouml;glichst viele &Uuml;bertragungsfehler
+aufgedeckt werden. Oder mit anderen Worten: Es soll m&ouml;glichst
+unwahrscheinlich sein, dass zwei unterschiedliche Texte (von denen
+der eine durch Modifikation des anderen entstanden ist) dieselbe Pr&uuml;fsumme
+ergeben. 
+
+<p>
+Im JDK k&ouml;nnen Pr&uuml;fsummen beim Schreiben von Daten mit der
+Klasse <a name="ixa101353"><a href="index_c.html#ixb101032"><font color=#000080><tt>CheckedOutputStream</tt></font></a></a>
+berechnet werden. Sie ist aus <a href="index_f.html#ixb101013"><font color=#000080><tt>FilterOutputStream</tt></font></a>
+abgeleitet und erweitert deren Schnittstelle um einen Konstruktor
+zur Auswahl des Pr&uuml;fsummenverfahrens und um die Methode <a name="ixa101354"><a href="index_g.html#ixb101033"><font color=#000080><tt>getChecksum</tt></font></a></a>
+zur Berechnung der Pr&uuml;fsumme. Ihre Anwendung ist einfach und
+entspricht der Klasse <a href="index_c.html#ixb101034"><font color=#000080><tt>CheckedInputStream</tt></font></a>,
+die in <a href="k100135.html#adler32example">Listing 20.6</a> vorgestellt
+wird. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Ein <a name="ixa101355"><i>Message Digest</i></a> ist eine erweiterte
+Form einer Pr&uuml;fsumme. Er besitzt zus&auml;tzliche Eigenschaften,
+die ihn f&uuml;r kryptografische Anwendungen qualifizieren, und wird
+in <a href="k100318.html#messagedigests">Abschnitt 50.1.3</a> erl&auml;utert.
+Die Klasse <a name="ixa101356"><a href="index_d.html#ixb101036"><font color=#000080><tt>DigestOutputStream</tt></font></a></a>
+dient dazu, einen Message Digest f&uuml;r Daten zu berechnen, die
+mit einem <a href="index_o.html#ixb100588"><font color=#000080><tt>OutputStream</tt></font></a>
+ausgegeben werden. Analog dazu gibt es eine Klasse <a name="ixa101357"><a href="index_d.html#ixb101037"><font color=#000080><tt>DigestInputStream</tt></font></a></a>
+zur Berechnung eines Message Digest f&uuml;r einen <a href="index_i.html#ixb100587"><font color=#000080><tt>InputStream</tt></font></a>.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100132.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100133.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100135.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100137.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

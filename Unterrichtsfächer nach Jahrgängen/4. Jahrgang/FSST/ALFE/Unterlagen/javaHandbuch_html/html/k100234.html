@@ -1,0 +1,167 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100230.html;106,k100233.html;107,k100235.html;108,k100236.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100230.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100233.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100235.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100236.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 35 - Drucken
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id035004"></a>
+<h2>35.4 Drucken mit dem Desktop API<a name="ixa102349"></a> </h2>
+<hr>
+<ul>
+<li><a href="k100234.html#sectlevel2id035004">35.4 Drucken mit dem Desktop API</a>
+</ul>
+<hr>
+
+<p>
+Eine weitere interessante Alternative ist das Drucken mit dem Desktop
+API. Zentrum des API ist die Klasse <a name="ixa102350"><a href="index_d.html#ixb101760"><font color=#000080><tt>Desktop</tt></font></a></a>
+des Package <a href="index_j.html#ixb100198"><font color=#000080><tt>java.awt</tt></font></a>.
+Hierbei wird eine Datei anhand ihrer Endung an die daf&uuml;r zust&auml;ndige
+Applikation &uuml;bergeben und diese angewiesen, den Druck durchzuf&uuml;hren.
+So kann sie sich beispielsweise den Acrobat Reader f&uuml;r das Drucken
+von PDF-Dateien zunutze machen, den Standardbrowser zum Drucken von
+HTML-Dateien usw. 
+
+<p>
+Allerdings ist nicht sichergestellt, dass das Drucken auf allen Plattformen
+funktioniert. Folgende Voraussetzungen m&uuml;ssen erf&uuml;llt sein:
+<ul>
+<li>Das Desktop API muss das verwendete Betriebssystem unterst&uuml;tzen.
+<li>Das Desktop API muss auf der verwendeten Plattform das Drucken
+unterst&uuml;tzen.
+<li>Es muss eine Standardapplikation zu der Dateieindung registriert
+sein.
+<li>Die Standardapplikation muss die Datei drucken k&ouml;nnen.
+</ul>
+
+<p>
+Mit den folgenden Methoden kann man abfragen, ob der Desktop auf dieser
+Plattform unterst&uuml;tzt wird und das Drucken erm&ouml;glicht: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+static boolean isDesktopSupported()
+
+boolean isSupported(Action action)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Desktop.html" onClick="this.href=getApiDoc('java.awt.Desktop')"><font color="#660066" size=-1>java.awt.Desktop</font></a></td>
+</tr>
+</table>
+
+<p>
+Das folgende Programm zeigt die beispielhafte Verwendung des API.
+Es druckt die Datei, die als Parameter &uuml;ber die Kommandozeile
+&uuml;bergeben wird: 
+<a name="listingid035004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3504.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.Desktop.Action;
+<font color="#555555">005 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3504
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args) <font color="#0000AA">throws</font> IOException
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    Desktop d;
+<font color="#555555">012 </font>    <font color="#0000AA">if</font> (Desktop.isDesktopSupported()) {
+<font color="#555555">013 </font>      d = Desktop.getDesktop();
+<font color="#555555">014 </font>      
+<font color="#555555">015 </font>      <font color="#0000AA">if</font> (d.isSupported(Action.PRINT)) {
+<font color="#555555">016 </font>        File file = <font color="#0000AA">new</font> File(args[0]);
+<font color="#555555">017 </font>        <font color="#0000AA">if</font> (file.exists()) {
+<font color="#555555">018 </font>          d.print(file);
+<font color="#555555">019 </font>        }
+<font color="#555555">020 </font>        <font color="#0000AA">else</font> {
+<font color="#555555">021 </font>          <font color="#0000AA">throw</font> <font color="#0000AA">new</font> IllegalStateException(
+<font color="#555555">022 </font>          file + <font color="#0000FF">" existiert nicht"</font>);
+<font color="#555555">023 </font>        }
+<font color="#555555">024 </font>      }
+<font color="#555555">025 </font>      <font color="#0000AA">else</font> {
+<font color="#555555">026 </font>        <font color="#0000AA">throw</font> <font color="#0000AA">new</font> IllegalStateException(
+<font color="#555555">027 </font>        <font color="#0000FF">"Drucken wird nicht unterst&uuml;tzt"</font>);
+<font color="#555555">028 </font>      }
+<font color="#555555">029 </font>    }
+<font color="#555555">030 </font>    <font color="#0000AA">else</font> {
+<font color="#555555">031 </font>      <font color="#0000AA">throw</font> <font color="#0000AA">new</font> IllegalStateException(
+<font color="#555555">032 </font>      <font color="#0000FF">"Desktop wird nicht unterst&uuml;tzt"</font>);
+<font color="#555555">033 </font>    }
+<font color="#555555">034 </font>  }
+<font color="#555555">035 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3504.java"><font color="#000055" size=-1>Listing3504.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 35.4: Drucken einer Datei mit dem Desktop API</i></p>
+
+<p>
+Beim Drucken &uuml;ber das Desktop API ist es nicht m&ouml;glich,
+die Ausgabe optisch zu beeinflussen, au&szlig;erdem k&ouml;nnen keine
+Kopien gedruckt oder abweichende Druckerf&auml;cher angesteuert werden.
+Zudem eignet es sich aufgrund seiner konzeptionell bedingten Tr&auml;gheit
+nat&uuml;rlich nicht f&uuml;r den Massendruck. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100230.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100233.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100235.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100236.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

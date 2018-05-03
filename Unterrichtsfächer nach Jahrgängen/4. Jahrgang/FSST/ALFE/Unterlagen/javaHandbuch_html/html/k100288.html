@@ -1,0 +1,329 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100284.html;106,k100287.html;107,k100289.html;108,k100292.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100284.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100287.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100289.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100292.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 45 - Reflection
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectionrefmember"></a>
+<h2>45.4 Zugriff auf Membervariablen </h2>
+<hr>
+<ul>
+<li><a href="k100288.html#sectionrefmember">45.4 Zugriff auf Membervariablen</a>
+</ul>
+<hr>
+
+<p>
+Nachdem wir uns in den vorangegangenen Abschnitten die beiden Reflection-Aspekte
+<i>Instanzierung</i> und <i>Methodenaufruf</i> angesehen haben, wollen
+wir uns nun mit dem Zugriff auf Membervariablen (also auf die &#187;Felder&#171;
+eines Objekts) mit Hilfe von Reflection besch&auml;ftigen. Prinzipiell
+gibt es keine gro&szlig;en Unterschiede gegen&uuml;ber dem Zugriff
+auf eine Methode oder einen Konstruktor: 
+<ol type=1>
+<li>Zun&auml;chst wird ein Klassenobjekt f&uuml;r das zu bearbeitende
+Objekt beschafft.
+<li>Dann wird eine Methode aufgerufen, um ein Bearbeitungsobjekt f&uuml;r
+eine ganz bestimmte oder eine Liste aller Membervariablen zu beschaffen.
+<li>Das Bearbeitungsobjekt wird verwendet, um die Membervariable zu
+lesen, zu ver&auml;ndern oder andere Eigenschaften abzufragen.
+</ol>
+
+<p>
+Der erste Schritt erfolgt wie gewohnt durch Aufruf von <a href="index_g.html#ixb100792"><font color=#000080><tt>getClass</tt></font></a>
+oder die <font color="#000077"><tt>.class</tt></font>-Notation. Die
+im zweiten Schritt ben&ouml;tigten Bearbeitungsobjekte sind vom Typ
+<a name="ixa103342"><a href="index_f.html#ixb102500"><font color=#000080><tt>Field</tt></font></a></a>,
+sie k&ouml;nnen auf dem Klassenobjekt durch Aufruf einer der folgenden
+Methoden beschafft werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+Field getField(String name)
+Field[] getFields()
+
+Field getDeclaredField(String name)
+Field[] getDeclaredFields()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/Class.html" onClick="this.href=getApiDoc('java.lang.Class')"><font color="#660066" size=-1>java.lang.Class</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa103343"><a href="index_g.html#ixb102501"><font color=#000080><tt>getField</tt></font></a></a>
+wird die Membervariable mit dem angegebenen Namen beschafft und <a name="ixa103344"><a href="index_g.html#ixb102502"><font color=#000080><tt>getFields</tt></font></a></a>
+liefert ein Array mit <a href="index_f.html#ixb102500"><font color=#000080><tt>Field</tt></font></a>-Objekten
+zu allen &ouml;ffentlichen Membervariablen. Die beiden Methoden <a name="ixa103345"><a href="index_g.html#ixb102503"><font color=#000080><tt>getDeclaredField</tt></font></a></a>
+und <a name="ixa103346"><a href="index_g.html#ixb102504"><font color=#000080><tt>getDeclaredFields</tt></font></a></a>
+liefern dar&uuml;ber hinaus auch nicht&ouml;ffentliche Membervariablen.
+
+<p>
+Die Klasse <a href="index_f.html#ixb102500"><font color=#000080><tt>Field</tt></font></a>
+besitzt Methoden zum Zugriff auf die Membervariable: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+Class&lt;?&gt; getType()
+
+Object get(Object obj)
+
+void set(Object obj, Object value)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/reflect/Field.html" onClick="this.href=getApiDoc('java.lang.reflect.Field')"><font color="#660066" size=-1>java.lang.reflect.Field</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa103347"><a href="index_g.html#ixb102505"><font color=#000080><tt>getType</tt></font></a></a>
+kann der Typ der Membervariable bestimmt werden. Das zur&uuml;ckgegebene
+Klassenobjekt beschreibt ihn in derselben Weise wie beispielsweise
+das Parameterobjekt von <a href="index_g.html#ixb102494"><font color=#000080><tt>getMethod</tt></font></a>.
+Mit <a name="ixa103348"><a href="index_g.html#ixb100713"><font color=#000080><tt>get</tt></font></a></a>
+kann auf den Wert zugegriffen werden, den die Membervariable in dem
+als Argument &uuml;bergebenen Objekt hat. Handelt es sich um einen
+primitiven Typ, wird dieser automatisch in die passende Wrapper-Klasse
+verpackt und als Objekt zur&uuml;ckgegeben. Referenztypen werden unver&auml;ndert
+zur&uuml;ckgegeben. Mit Hilfe der Methode <a name="ixa103349"><a href="index_s.html#ixb100160"><font color=#000080><tt>set</tt></font></a></a>
+kann der Wert einer Membervariable ver&auml;ndert werden. Das erste
+Argument repr&auml;sentiert das zu ver&auml;nderende Objekt, das zweite
+den neuen Wert der Membervariable. Soll ein primitiver Typ ver&auml;ndert
+werden, muss er vor der &Uuml;bergabe in die passende Wrapper-Klasse
+verpackt werden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Neben den generischen <a href="index_g.html#ixb100713"><font color=#000080><tt>get</tt></font></a>-
+und <a href="index_s.html#ixb100160"><font color=#000080><tt>set</tt></font></a>-Methoden
+gibt es diese auch in typisierter Form. So dient beispielsweise <a name="ixa103350"><a href="index_g.html#ixb102380"><font color=#000080><tt>getInt</tt></font></a></a>
+dazu, ein <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>-Feld
+abzufragen, mit <a name="ixa103351"><a href="index_g.html#ixb102385"><font color=#000080><tt>getDouble</tt></font></a></a>
+kann auf ein <a href="index_d.html#ixb100254"><font color=#000080><tt>double</tt></font></a>
+zugegriffen werden usw. Das Gegenst&uuml;ck dazu sind die Methoden
+<a name="ixa103352"><a href="index_s.html#ixb102506"><font color=#000080><tt>setInt</tt></font></a></a>,
+<a name="ixa103353"><a href="index_s.html#ixb102507"><font color=#000080><tt>setDouble</tt></font></a></a>
+usw., mit denen die Membervariablen typisiert ver&auml;ndert werden
+k&ouml;nnen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Wir wollen als Beispiel eine Klasse <font color="#000077"><tt>PrintableObject</tt></font>
+erstellen, die direkt aus <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+abgeleitet ist und die Methode <a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a>
+&uuml;berlagert. Im Gegensatz zur Implementierung von <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+soll unsere Variante von <a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a>
+in der Lage sein, die Namen und Inhalte aller Membervariablen des
+zugeh&ouml;rigen Objekts auszugeben: 
+<a name="listingid045007"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* PrintableObject.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.lang.reflect.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> PrintableObject
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> String toString()
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    StringBuffer sb = <font color="#0000AA">new</font> StringBuffer(200);
+<font color="#555555">010 </font>    Class&lt;?&gt; clazz = getClass();
+<font color="#555555">011 </font>    <font color="#0000AA">while</font> (clazz != <font color="#006699">null</font>) {
+<font color="#555555">012 </font>      Field[] fields = clazz.getDeclaredFields();
+<font color="#555555">013 </font>      <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; fields.length; ++i) {
+<font color="#555555">014 </font>        sb.append(fields[i].getName() + <font color="#0000FF">" = "</font>);
+<font color="#555555">015 </font>        <font color="#0000AA">try</font> {
+<font color="#555555">016 </font>          Object obj = fields[i].get(<font color="#006699">this</font>);
+<font color="#555555">017 </font>          <font color="#0000AA">if</font> (obj.getClass().isArray()) {
+<font color="#555555">018 </font>            Object[] ar = (Object[])obj;
+<font color="#555555">019 </font>            <font color="#0000AA">for</font> (<font color="#006699">int</font> j = 0; j &lt; ar.length; ++j) {
+<font color="#555555">020 </font>              sb.append(ar[j].toString() + <font color="#0000FF">" "</font>);
+<font color="#555555">021 </font>            }
+<font color="#555555">022 </font>            sb.append(<font color="#0000FF">"\n"</font>);
+<font color="#555555">023 </font>          } <font color="#0000AA">else</font> {
+<font color="#555555">024 </font>            sb.append(obj.toString() + <font color="#0000FF">"\n"</font>);
+<font color="#555555">025 </font>          }
+<font color="#555555">026 </font>        } <font color="#0000AA">catch</font> (IllegalAccessException e) {
+<font color="#555555">027 </font>          sb.append(e.toString() + <font color="#0000FF">"\n"</font>);
+<font color="#555555">028 </font>        }
+<font color="#555555">029 </font>      }
+<font color="#555555">030 </font>      clazz = clazz.getSuperclass();
+<font color="#555555">031 </font>    }
+<font color="#555555">032 </font>    <font color="#0000AA">return</font> sb.toString();
+<font color="#555555">033 </font>  }
+<font color="#555555">034 </font>
+<font color="#555555">035 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">036 </font>  {
+<font color="#555555">037 </font>    JavaProgrammer jim = <font color="#0000AA">new</font> JavaProgrammer();
+<font color="#555555">038 </font>    jim.name           = <font color="#0000FF">"Jim Miller"</font>;
+<font color="#555555">039 </font>    jim.department     = <font color="#0000FF">"Operating Systems"</font>;
+<font color="#555555">040 </font>    jim.age            = 32;
+<font color="#555555">041 </font>    String[] langs     = {<font color="#0000FF">"C"</font>, <font color="#0000FF">"Pascal"</font>, <font color="#0000FF">"PERL"</font>, <font color="#0000FF">"Java"</font>};
+<font color="#555555">042 </font>    jim.languages      = langs;
+<font color="#555555">043 </font>    jim.linesofcode    = 55000;
+<font color="#555555">044 </font>    jim.jdk12          = <font color="#006699">true</font>;
+<font color="#555555">045 </font>    jim.swing          = <font color="#006699">false</font>;
+<font color="#555555">046 </font>    System.out.println(jim);
+<font color="#555555">047 </font>  }
+<font color="#555555">048 </font>}
+<font color="#555555">049 </font>
+<font color="#555555">050 </font><font color="#0000AA">class</font> Employee
+<font color="#555555">051 </font><font color="#0000AA">extends</font> PrintableObject
+<font color="#555555">052 </font>{
+<font color="#555555">053 </font>  <font color="#0000AA">public</font> String name;
+<font color="#555555">054 </font>  <font color="#0000AA">public</font> String department;
+<font color="#555555">055 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font>    age;
+<font color="#555555">056 </font>}
+<font color="#555555">057 </font>
+<font color="#555555">058 </font><font color="#0000AA">class</font> Programmer
+<font color="#555555">059 </font><font color="#0000AA">extends</font> Employee
+<font color="#555555">060 </font>{
+<font color="#555555">061 </font>  <font color="#0000AA">public</font> String[] languages;
+<font color="#555555">062 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font>      linesofcode;
+<font color="#555555">063 </font>}
+<font color="#555555">064 </font>
+<font color="#555555">065 </font><font color="#0000AA">class</font> JavaProgrammer
+<font color="#555555">066 </font><font color="#0000AA">extends</font> Programmer
+<font color="#555555">067 </font>{
+<font color="#555555">068 </font>  <font color="#0000AA">public</font> <font color="#006699">boolean</font> jdk12;
+<font color="#555555">069 </font>  <font color="#0000AA">public</font> <font color="#006699">boolean</font> swing;
+<font color="#555555">070 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/PrintableObject.java"><font color="#000055" size=-1>PrintableObject.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 45.7: Die Klasse PrintableObject</i></p>
+
+<p>
+<a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a>
+besorgt zun&auml;chst ein Klassenobjekt zum aktuellen Objekt. Mit
+<a href="index_g.html#ixb102504"><font color=#000080><tt>getDeclaredFields</tt></font></a>
+wird dann eine Liste <i>aller</i> Felder (nicht nur der &ouml;ffentlichen)
+dieser Klasse besorgt und jeweils mit <a href="index_g.html#ixb100679"><font color=#000080><tt>getName</tt></font></a>
+sein Name und mit <a href="index_g.html#ixb100713"><font color=#000080><tt>get</tt></font></a>
+sein Wert ausgegeben. Wir machen uns dabei die F&auml;higkeit zunutze,
+dass alle Objekte (auch die Wrapper-Klassen der primitiven Typen)
+eine Methode <a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a>
+haben, die ihren Wert als String liefert. Ist die Membervariable ein
+Array, durchl&auml;uft das Programm dessen Elemente und gibt sie einzeln
+aus. 
+
+<p>
+Da eine Klasse Membervariablen aus ihren Vaterklassen erbt, ist es
+notwendig, die Vererbungshierarchie von unten nach oben zu durchlaufen,
+denn <a href="index_g.html#ixb102504"><font color=#000080><tt>getDeclaredFields</tt></font></a>
+liefert nur die Membervariablen der aktuellen Klasse. Der Aufruf von
+<a name="ixa103354"><a href="index_g.html#ixb102508"><font color=#000080><tt>getSuperClass</tt></font></a></a>
+am Ende der Schleife liefert zur aktuellen Klasse die Vaterklasse.
+Ist der R&uuml;ckgabewert <a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>,
+ist das Ende der Vererbungshierarchie erreicht (<font color="#000077"><tt>clazz</tt></font>
+repr&auml;sentiert dann die Klasse <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>)
+und die Schleife wird beendet. 
+
+<p>
+Die Klassen <font color="#000077"><tt>Employee</tt></font>, <font color="#000077"><tt>Programmer</tt></font>
+und <font color="#000077"><tt>JavaProgrammer</tt></font> zeigen beispielhaft
+die Anwendung von <font color="#000077"><tt>PrintableObject</tt></font>.
+<font color="#000077"><tt>Employee</tt></font> ist aus <font color="#000077"><tt>PrintableObject</tt></font>
+abgeleitet und erbt die modifizierte Methode <a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a>.
+<font color="#000077"><tt>Programmer</tt></font> ist aus <font color="#000077"><tt>Employee</tt></font>
+abgeleitet und <font color="#000077"><tt>JavaProgrammer</tt></font>
+aus <font color="#000077"><tt>Programmer</tt></font>. Das Hauptprogramm
+erzeugt ein Objekt des Typs <font color="#000077"><tt>JavaProgrammer</tt></font>
+und weist seinen eigenen und den geerbten Membervariablen Werte zu,
+die durch den anschlie&szlig;enden Aufruf von <a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a>
+auf dem Bildschirm ausgegeben werden. Die Ausgabe des Programms ist:
+<font color="#333300">
+<pre>
+jdk12 = true
+swing = false
+languages = C Pascal PERL Java
+linesofcode = 55000
+name = Jim Miller
+department = Operating Systems
+age = 32
+</pre>
+</font>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100284.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100287.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100289.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100292.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

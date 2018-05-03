@@ -1,0 +1,450 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100008.html;106,k100009.html;107,k100011.html;108,k100012.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100008.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100009.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100011.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100012.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 1 - Was ist Java?
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id001002"></a>
+<h2>1.2 Eigenschaften von Java </h2>
+<hr>
+<ul>
+<li><a href="k100010.html#sectlevel2id001002">1.2 Eigenschaften von Java</a>
+<ul>
+<li><a href="k100010.html#sectlevel3id001002001">1.2.1 Sprachmerkmale</a>
+<li><a href="k100010.html#einleitungapplets">1.2.2 Applets: eine neue Klasse von Programmen</a>
+<li><a href="k100010.html#sectlevel3id001002003">1.2.3 Grafikprogrammierung</a>
+<li><a href="k100010.html#sectlevel3id001002004">1.2.4 Umfangreiche Klassenbibliothek</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id001002001"></a>
+<h3>1.2.1 <a name="ixa100064">Sprachmerkmale</a></h3>
+
+<p>
+Java wurde vollst&auml;ndig neu entworfen. Die Designer versuchten,
+die Syntax der Sprachen C und C++ soweit wie m&ouml;glich nachzuahmen,
+verzichteten aber auf einen Gro&szlig;teil der komplexen und fehlertr&auml;chtigen
+Merkmale beider Sprachen. Das Ergebnis ihrer Bem&uuml;hungen haben
+sie wie folgt zusammengefasst: 
+
+<p>
+<i>&#187;Java soll eine einfache, objektorientierte, verteilte, interpretierte,
+robuste, sichere, architekturneutrale, portable, performante, nebenl&auml;ufige,
+dynamische Programmiersprache sein.&#171;</i> 
+
+<p>
+Der fr&uuml;he Erfolg von Java h&auml;ngt eng damit zusammen, dass
+ein wesentlicher Teil dieser Forderungen tats&auml;chlich in einer
+f&uuml;r viele Programmierer akzeptablen Weise erf&uuml;llt wurde
+- obgleich wir am Ende dieses Kapitels auch einige kritische Anmerkungen
+dazu geben werden. 
+
+<p>
+Java ist sowohl eine objektorientierte Programmiersprache in der Tradition
+von Smalltalk als auch eine klassische imperative Programmiersprache
+nach dem Vorbild von C. Im Detail unterscheidet sich Java aber recht
+deutlich von C++, das denselben Anspruch erhebt. Durch die Integration
+einer gro&szlig;en Anzahl anspruchsvoller Features wie Multithreading,
+strukturiertem Exceptionhandling oder eingebauten grafischen F&auml;higkeiten
+implementiert Java eine Reihe interessanter Neuerungen auf dem Gebiet
+der Programmiersprachen. 
+
+<p>
+Zudem profitiert Java davon, dass viele der Features von C++ <i>nicht</i>
+realisiert wurden und die Sprache dadurch schlank und &uuml;bersichtlich
+wurde. So gibt es beispielsweise keine expliziten <a name="ixa100065"><i>Pointer</i></a>,
+keine separaten Header-Dateien und keine <a name="ixa100066"><i>Mehrfachvererbung</i></a>.
+Wer allerdings glaubt, Java sei eine Programmiersprache, die nur das
+Allern&ouml;tigste bietet, irrt. Tats&auml;chlich ist Java eine elegante
+Sprache, die auch f&uuml;r gr&ouml;&szlig;ere Projekte und anspruchsvolle
+Aufgaben alle erforderlichen Voraussetzungen besitzt. 
+
+<p>
+In Java gibt es die meisten elementaren Datentypen, die auch C besitzt.
+Arrays und Strings sind als Objekte implementiert und sowohl im Compiler
+als auch im Laufzeitsystem verankert. Methodenlose Strukturtypen wie
+<font color="#000077"><tt>struct</tt></font> oder <font color="#000077"><tt>union</tt></font>
+gibt es in Java nicht. Alle primitiven Datentypen sind vorzeichenbehaftet
+und in ihrer Gr&ouml;&szlig;e exakt spezifiziert, unabh&auml;ngig
+von der Zielplattform. Java besitzt einen eingebauten logischen Datentyp
+<a href="index_b.html#ixb100071"><font color=#000080><tt>boolean</tt></font></a>.
+
+<p>
+Java bietet <a name="ixa100067">semidynamische Arrays</a>, deren initiale
+Gr&ouml;&szlig;e zur Laufzeit festgelegt werden kann. Arrays werden
+als Objekte angesehen, die wohldefinierte Eigenschaften haben. Mehrdimensionale
+Arrays werden wie in C dadurch realisiert, dass einfache Arrays ineinandergeschachtelt
+werden. Dabei k&ouml;nnen auch nichtrechteckige Arrays erzeugt werden.
+Alle Array-Zugriffe werden zur Laufzeit auf Einhaltung der Bereichsgrenzen
+gepr&uuml;ft. 
+
+<p>
+Die <a name="ixa100068">Ausdr&uuml;cke</a> in Java entsprechen weitgehend
+denen von C und C++. Java besitzt eine <a name="ixa100069"><a href="index_i.html#ixb100074"><font color=#000080><tt>if</tt></font></a></a>-Anweisung,
+eine <a name="ixa100070"><a href="index_w.html#ixb100075"><font color=#000080><tt>while</tt></font></a></a>-,
+<a name="ixa100071"><a href="index_d.html#ixb100076"><font color=#000080><tt>do</tt></font></a></a>-
+und <a name="ixa100072"><a href="index_f.html#ixb100077"><font color=#000080><tt>for</tt></font></a></a>-Schleife
+und ein <a name="ixa100073"><a href="index_s.html#ixb100078"><font color=#000080><tt>switch</tt></font></a></a>-Statement.
+Es gibt die von C bekannten <a name="ixa100074"><a href="index_b.html#ixb100079"><font color=#000080><tt>break</tt></font></a></a>-
+und <a name="ixa100075"><a href="index_c.html#ixb100080"><font color=#000080><tt>continue</tt></font></a></a>-Anweisungen
+in normaler und gelabelter Form. Letztere erm&ouml;glicht es, mehr
+als eine Schleifengrenze zu &uuml;berspringen. Java besitzt kein <font color="#000077"><tt>goto</tt></font>-Statement
+(obgleich es sich um ein reserviertes Wort handelt). Variablendeklarationen
+werden wie in C++ als Anweisungen angesehen und k&ouml;nnen an beliebiger
+Stelle innerhalb des Codes auftauchen. Seit der Version 1.4 besitzt
+Java eine <a name="ixa100076"><a href="index_a.html#ixb100053"><font color=#000080><tt>assert</tt></font></a></a>-Anweisung,
+die zur Laufzeit an- und abgeschaltet werden kann. 
+
+<p>
+Java besitzt alle Eigenschaften moderner objektorientierter Programmiersprachen
+(&#187;OOP-Sprachen&#171;<a name="ixa100077"></a>).<a name="ixa100078"></a>
+Wie C++ erlaubt Java die Definition von Klassen, aus denen Objekte
+erzeugt werden k&ouml;nnen. Objekte werden dabei stets als Referenzdatentypen
+behandelt, die wie Variablen angelegt und verwendet werden k&ouml;nnen.
+Zur Initialisierung gibt es Konstruktoren und es kann eine optionale
+<i>Finalizer</i>-Methode definiert werden, die bei der Zerst&ouml;rung
+des Objekts aufgerufen wird. Seit der Version 1.1 gibt es lokale Klassen,
+die innerhalb einer anderen Klasse definiert werden. 
+
+<p>
+Alle Methodenaufrufe in Java sind dynamisch. Methoden k&ouml;nnen
+&uuml;berladen werden, Operatoren allerdings nicht. Anders als in
+C++ ist das Late-Binding standardm&auml;&szlig;ig aktiviert, kann
+aber per Methode deaktiviert werden. Java erlaubt Einfach-, aber keine
+Mehrfachvererbung von Implementierungen. Mit Hilfe von <i>Interfaces</i>,
+also abstrakten Klassendefinitionen, die nur aus Methodensignaturen
+bzw. den Schnittstellen bestehen, ist jedoch eine restriktive Form
+der Mehrfachvererbung m&ouml;glich. Java erlaubt die Definition abstrakter
+Basisklassen, die neben konkreten auch abstrakte Methoden enthalten.
+
+<p>
+Neben Instanzvariablen und -methoden k&ouml;nnen auch Klassenvariablen
+und -methoden definiert werden. Alle Elemente einer Klassendefinition
+k&ouml;nnen mit Hilfe der aus C++ bekannten Schl&uuml;sselw&ouml;rter
+<a name="ixa100079"><a href="index_p.html#ixb100083"><font color=#000080><tt>public</tt></font></a></a>,
+<a name="ixa100080"><a href="index_p.html#ixb100084"><font color=#000080><tt>private</tt></font></a></a>
+und <a name="ixa100081"><a href="index_p.html#ixb100085"><font color=#000080><tt>protected</tt></font></a></a>
+in ihrer Sichtbarkeit eingeschr&auml;nkt werden. Es gibt zwar keine
+<a name="ixa100082"><a href="index_f.html#ixb100086"><font color=#000080><tt>friends</tt></font></a></a>,
+aber die Sichtbarkeit von Methoden oder Klassen kann auf das eigene
+Paket beschr&auml;nkt werden. Objektvariablen werden als Referenzen
+implementiert. Mit ihrer Hilfe ist eine gegen&uuml;ber C/C++ eingeschr&auml;nkte
+Zeigerverarbeitung m&ouml;glich, die das Erstellen dynamischer Datenstrukturen
+erm&ouml;glicht. 
+
+<p>
+Das Speichermanagement in Java erfolgt automatisch.<a name="ixa100083"></a>
+W&auml;hrend das Erzeugen von Objekten (von wenigen Ausnahmen abgesehen)
+immer einen expliziten Aufruf des <a href="index_n.html#ixb100088"><font color=#000080><tt>new</tt></font></a>-Operators
+erfordert, erfolgt die R&uuml;ckgabe von nicht mehr ben&ouml;tigtem
+Speicher automatisch. Ein Garbage-Collector <a name="ixa100084"></a>,
+der als niedrigpriorisierter Hintergrundprozess l&auml;uft, sucht
+in regelm&auml;&szlig;igen Abst&auml;nden nach nicht mehr referenzierten
+Objekten und gibt den durch sie belegten Speicher an das Laufzeitsystem
+zur&uuml;ck. Viele der Fehler, die bei der Programmierung in C oder
+C++ dadurch entstehen, dass der Entwickler selbst f&uuml;r das Speichermanagement
+verantwortlich ist, k&ouml;nnen in Java nicht mehr auftreten. 
+
+<p>
+In Java gibt es eine strukturierte Ausnahmebehandlung (engl. Exceptionhandling).
+<a name="ixa100085"></a> Damit ist es m&ouml;glich, Laufzeitfehler
+zu erkennen und in kontrollierter Weise zu behandeln. Eine Methode
+muss jeden Laufzeitfehler, der w&auml;hrend ihrer Abarbeitung auftreten
+kann, entweder abfangen oder durch eine geeignete Deklaration an den
+Aufrufer weitergeben. Dieser hat dann seinerseits die Pflicht, sich
+um den Fehler zu k&uuml;mmern. Exceptions sind normale Objekte und
+die zugeh&ouml;rigen Klassen k&ouml;nnen erweitert und als Grundlage
+f&uuml;r anwendungsspezifische Fehler-Objekte verwendet werden. 
+
+<!-- Section -->
+
+<a name="einleitungapplets"></a>
+<h3>1.2.2 <a name="ixa100086">Applets</a>: eine neue Klasse von Programmen
+</h3>
+
+<p>
+Eine der am meisten gebrauchten Erkl&auml;rungen f&uuml;r den fr&uuml;hen
+Erfolg von Java war die enge Verbindung der Sprache zum World Wide
+Web. Mit Hilfe von Java ist es m&ouml;glich, Programme zu entwickeln,
+die &uuml;ber das Web verbreitet und innerhalb eines Browsers wie
+<a name="ixa100087">Mozilla Firefox</a>, <a name="ixa100088">Microsoft Internet Explorer</a>
+oder <a name="ixa100089">Safari</a> ausgef&uuml;hrt werden. Dazu wurde
+die Sprache HTML um das APPLET-Tag<a name="ixa100090"></a> erweitert,
+um kompilierten Java-Code in normale Webseiten einzubinden. 
+
+<p>
+Ein Java-f&auml;higer Browser enth&auml;lt einen Java-Interpreter
+(die virtuelle Java-Maschine<a name="ixa100091"></a>, auch kurz <a name="ixa100092"><i>VM</i></a>
+genannt) und die Laufzeitbibliothek, die ben&ouml;tigt wird, um die
+Ausf&uuml;hrung des Programms zu unterst&uuml;tzen. Die genaue Beschreibung
+der virtuellen Maschine ist Bestandteil der Java-Spezifikation und
+Java-VMs sind auf praktisch alle bedeutenden Betriebssystemplattformen
+portiert worden. Ein Applet kann damit als eine neue Art von Bin&auml;rprogramm
+angesehen werden, das &uuml;ber verschiedene Hardware- und Betriebssystemplattformen
+hinweg portabel ist und auf einfache Weise im Internet verteilt werden
+kann. 
+
+<p>
+Ein Applet besitzt alle Eigenschaften eines grafischen Ausgabefensters
+und kann zur Anzeige von Text, Grafik und Dialogelementen verwendet
+werden. Einer der Vorteile von Applets gegen&uuml;ber herk&ouml;mmlichen
+Programmen ist ihre einfache Verteilbarkeit. Anstelle explizit auszuf&uuml;hrender
+Installationsroutinen l&auml;dt der <a name="ixa100093"><i>Classloader</i></a>
+des Browsers die Bestandteile eines Applets einfach aus dem Netz und
+f&uuml;hrt sie direkt aus. Das ist vor allem bei kleineren und mittelgro&szlig;en
+Anwendungen in einer lokalen Netzwerkumgebung sehr hilfreich, insbesondere
+wenn diese sich h&auml;ufig &auml;ndern. 
+
+<p>
+Sicherheit<a name="ixa100094"></a> war eines der wichtigsten Designziele
+bei der Entwicklung von Java und es gibt eine ganze Reihe von Sicherheitsmechanismen,
+die verhindern sollen, dass Java-Applets w&auml;hrend ihrer Ausf&uuml;hrung
+Schaden anrichten. So ist es einem Applet, das in einem Web-Browser
+l&auml;uft, beispielsweise nicht erlaubt, Dateioperationen auf dem
+lokalen Rechner durchzuf&uuml;hren oder externe Programme zu starten.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Es soll allerdings nicht verschwiegen werden, dass die Applet-Euphorie
+im Laufe der Zeit deutlich abgeklungen ist. Dies lag einerseits an
+den Java-Implementierungen der Web-Browser, die mit den JDKs nicht
+Schritt halten konnten. Zudem legten die Sicherheitsfeatures den Entwicklern
+oft so gro&szlig;e Beschr&auml;nkungen auf, dass sie die N&uuml;tzlichkeit
+von Applets erheblich einschr&auml;nkten. Der gro&szlig;e Erfolg von
+Java in der Post-1.1-&Auml;ra ist eher in der Entwicklung von Applikationen
+als von Applets zu sehen. Mit der Ver&ouml;ffentlichung der <i>WebStart</i>-Technologie
+w&auml;hrend des JDK 1.3 wurden dann die Vorteile beider Technologien
+wieder miteinander verbunden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id001002003"></a>
+<h3>1.2.3 Grafikprogrammierung </h3>
+
+<p>
+Die Java-Laufzeitbibliothek bietet umfassende grafische F&auml;higkeiten.
+Diese sind im Wesentlichen plattformunabh&auml;ngig und k&ouml;nnen
+dazu verwendet werden, portable Programme mit GUI-F&auml;higkeiten
+auszustatten: 
+<ul>
+<li>Das <a name="ixa100095"><i>Abstract Windowing Toolkit</i></a>
+(kurz <a name="ixa100096"><i>AWT</i></a>) bietet elementare Grafik-
+und Fensterfunktionen auf der Basis der auf der jeweiligen Zielmaschine
+verf&uuml;gbaren F&auml;higkeiten.
+<li>Das <a name="ixa100097"><i>Swing Toolset</i></a> stellt eine Reihe
+zus&auml;tzlicher Dialogelemente zur Verf&uuml;gung und erm&ouml;glicht
+die Konstruktion komplexer grafischer Oberfl&auml;chen. Mit seinem
+<a name="ixa100098"><i>Pluggable Look-and-Feel</i></a> bietet es die
+M&ouml;glichkeit, das Aussehen und die Bedienung eines Programms zur
+Laufzeit umzuschalten und den Bed&uuml;rfnissen des jeweiligen Benutzers
+anzupassen.
+<li>Die <a name="ixa100099"><i>Java 2D API</i></a> stellt dar&uuml;ber
+hinaus komplexe Grafikoperationen und Bildbearbeitungsroutinen zur
+Verf&uuml;gung.
+</ul>
+
+<p>
+Das AWT stellt eine Reihe von elementaren Operationen zur Verf&uuml;gung,
+um grafische Ausgabeelemente, wie Linien, Polygone, Kreise, Ellipsen,
+Kreisabschnitte oder Rechtecke, zu erzeugen. Diese Methoden k&ouml;nnen
+auch in einem F&uuml;llmodus verwendet werden, der daf&uuml;r sorgt,
+dass die gezeichneten Fl&auml;chen mit Farbe ausgef&uuml;llt werden.
+Wie in den meisten Grafik-Libraries realisiert auch Java die Bildschirmausgabe
+mit Hilfe des Konzepts eines <i>Grafikkontexts</i>, der eine Abstraktion
+des tats&auml;chlichen Ausgabeger&auml;ts bildet. 
+
+<p>
+Neben grafischen Elementen kann auch Text ausgegeben und an beliebiger
+Stelle innerhalb der Fenster platziert werden. Text kann skaliert
+werden und es ist m&ouml;glich, mit unterschiedlichen Fonts zu arbeiten.
+Das AWT bem&uuml;ht sich, einen portablen Weg zur Font-Auswahl anzubieten,
+indem eine Reihe von elementaren Schriftarten auch &uuml;ber Plattformgrenzen
+hinweg angeboten werden. Mit Hilfe von Font-Metriken k&ouml;nnen numerische
+Eigenschaften der verwendeten Schriftarten bestimmt und bei der Ausgabe
+ber&uuml;cksichtigt werden. 
+
+<p>
+Das Farbmodell von Java basiert auf dem RGB-Modell, das seine Farben
+additiv auf der Basis der enthaltenen Rot-, Gr&uuml;n- und Blauanteile
+bestimmt. Daneben wird auch das HSB-Modell unterst&uuml;tzt (<i>hue,
+saturation, brightness</i>) und es gibt Methoden zur Konvertierung
+zwischen beiden. Das Farbsystem unterst&uuml;tzt eine Reihe von vordefinierten
+Farben, die plattform&uuml;bergreifend zur Verf&uuml;gung stehen.
+
+<p>
+Neben Grafik kann auch <a name="ixa100100">Sound</a> ausgegeben werden
+und Java unterst&uuml;tzt die Wiedergabe diverser Soundformate. Samples
+k&ouml;nnen einmalig abgespielt oder in einer Schleife wiederholt
+werden. Daneben ist es m&ouml;glich, zwei oder mehr Sound-Dateien
+gleichzeitig abzuspielen. Seit dem JDK 1.2 gibt es ein eigenes Sound-API,
+das neben <a name="ixa100101"><i>Wave-Dateien</i></a> auch <a name="ixa100102"><i>Midi-Dateien</i></a>
+wiedergeben und bearbeiten kann. 
+
+<p>
+Das AWT erlaubt die Anzeige und Manipulation von Bilddaten. Mit Hilfe
+von Standardmethoden k&ouml;nnen Grafiken in elementaren Formaten
+wie GIF oder JPEG geladen, skaliert und auf dem Bildschirm angezeigt
+werden. Zus&auml;tzlich gibt es das Paket <a name="ixa100103"><a href="index_j.html#ixb100105"><font color=#000080><tt>java.awt.image</tt></font></a></a>,
+das f&uuml;r die Manipulation von Bilddaten entworfen wurde und ausgefeilte
+Funktionen zur Bild- und Farbmanipulation zur Verf&uuml;gung stellt.
+
+<p>
+Wie in den meisten grafischen Entwicklungsumgebungen wird auch beim
+AWT der Programmfluss durch Nachrichten (Events) gesteuert. Sie werden
+beim Auftreten bestimmter Ereignisse an das Programm gesendet und
+von diesem in geeigneter Weise behandelt. Java stellt Nachrichten
+zur Bearbeitung von Maus-, Tastatur-, Fenster-, Dialog- und vielen
+anderen Ereignissen zur Verf&uuml;gung. Das Event-Handling erlaubt
+es, Nachrichten an jedes beliebige Objekt zu senden, das die Schnittstelle
+eines Nachrichtenempf&auml;ngers implementiert. 
+
+<p>
+Die zweite grafische Oberfl&auml;che des JDK, das Swing-Toolkit, bietet
+noch weitreichendere F&auml;higkeiten als das AWT. Dazu wurde eine
+vollkommen neue Architektur entworfen, in der viele zus&auml;tzliche
+Dialogelemente, wie Tabellen, Trees oder Karteikarten, zur Verf&uuml;gung
+stehen. Anstatt wie im AWT auf die Eigenschaften vorgefertigter GUI-Elemente
+zu vertrauen, verwendet Swing lediglich einen sehr eingeschr&auml;nkten
+Satz an plattformspezifischen Grafikoperationen. Alle Dialogelemente
+werden unter Verwendung einfacher und portabler Grafikprimitive selbst
+dargestellt. Die Anzahl der Unterschiede zwischen den verschiedenen
+Plattformen wird auf diese Weise drastisch reduziert und die Swing-Dialogelemente
+lassen sich wesentlich einfacher und konsistenter auf unterschiedliche
+Grafiksysteme portieren. 
+
+<!-- Section -->
+
+<a name="sectlevel3id001002004"></a>
+<h3>1.2.4 Umfangreiche Klassenbibliothek </h3>
+
+<p>
+Die Java-Klassenbibliothek bietet mit einer ganzen Reihe n&uuml;tzlicher
+Klassen und Interfaces die M&ouml;glichkeit, sehr problemnah zu programmieren.
+Einige dieser Features sind von Anfang an n&uuml;tzlich, andere erschlie&szlig;en
+sich erst nach einer gewissen Einarbeitung. 
+
+<p>
+Neben grafischen Ausgabem&ouml;glichkeiten stellt Java auch einfache
+Textausgaben zur Verf&uuml;gung, &auml;hnlich den entsprechenden Funktionen
+in C oder C++. Damit ist es m&ouml;glich, Programme mit einfachen,
+zeilenorientierten Ein-/Ausgabem&ouml;glichkeiten auszustatten, wenn
+keine aufw&auml;ndige Benutzerschnittstelle ben&ouml;tigt wird. 
+
+<p>
+Eines der wichtigsten Elemente der Klassenbibliothek ist die Klasse
+<a name="ixa100104"><a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a></a>,
+die Java-Implementierung von <a name="ixa100105">Zeichenketten</a>.
+<a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+bietet eine Vielzahl wichtiger Methoden zur Manipulation und zum Zugriff
+auf Zeichenketten, wie beispielsweise Operationen f&uuml;r numerische
+Konvertierungen, Zeichen- und Teilstringextraktion sowie f&uuml;r
+Textsuche und Stringvergleich. 
+
+<p>
+Eine <a name="ixa100106"><a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a></a>
+in Java ist eine lineare Liste, die jede Art von Objekt aufnehmen
+kann und auf deren Elemente sowohl sequenziell als auch wahlfrei zugegriffen
+werden kann. Die L&auml;nge einer Liste ist ver&auml;nderlich und
+Elemente k&ouml;nnen am Ende oder an einer beliebigen anderen Stelle
+eingef&uuml;gt werden. Wie gew&ouml;hnlich erfolgt auch das Speichermanagement
+einer Liste vollkommen automatisch. Neben <a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>
+gibt es weitere Container-Klassen. So bietet beispielsweise <a name="ixa100107"><a href="index_m.html#ixb100109"><font color=#000080><tt>Map</tt></font></a></a>
+die M&ouml;glichkeit, Schl&uuml;ssel-Wert-Paare zusammenh&auml;ngend
+zu speichern und bei gegebenem Schl&uuml;ssel den zugeh&ouml;rigen
+Wert effizient wieder aufzufinden. 
+
+<p>
+Ein n&uuml;tzlicher Mechanismus zum Durchlaufen von Container-Klassen
+ist das <a name="ixa100108"><a href="index_i.html#ixb100110"><font color=#000080><tt>Iterator</tt></font></a></a>-Interface,
+das die Methoden <a name="ixa100109"><a href="index_h.html#ixb100111"><font color=#000080><tt>hasNext()</tt></font></a></a>
+und <a name="ixa100110"><a href="index_n.html#ixb100112"><font color=#000080><tt>next()</tt></font></a></a>
+zur Verf&uuml;gung stellt. Diese k&ouml;nnen verwendet werden, um
+in einer Schleife alle Elemente des Containers sukzessive zu durchlaufen.
+Alle vordefinierten Container-Klassen stellen Methoden zur Verf&uuml;gung,
+die Iterator-Objekte zum Durchlaufen der eigenen Elemente zur&uuml;ckgeben.
+
+<p>
+Seit dem JDK 1.1 werden dar&uuml;ber hinaus mit jedem Release weitere
+hochspezialisierte (und teilweise sehr aufw&auml;ndige) Bibliotheken
+zur Verf&uuml;gung gestellt. So bietet beispielsweise <a name="ixa100111">JDBC</a>
+(<a name="ixa100112"><i>Java Database Connectivity</i></a>) den Zugriff
+auf relationale Datenbanken, das <a name="ixa100113">JPA</a> (<a name="ixa100114"><i>Java
+Persistence API</i></a>) erlaubt dies sogar
+vollst&auml;ndig objektorientiert. Mit <a name="ixa100115"><i>JavaBeans</i></a>
+steht eine portable Komponentenarchitektur zur Verf&uuml;gung und
+mit dem <a name="ixa100116"><i>Networking-API</i></a> und RMI (<a name="ixa100117"><i>Remote
+Method Invocation</i></a>) kann unternehmensweit
+auf Netzwerkressourcen und verteilte Objekte zugegriffen werden. Per
+<a name="ixa100118"><i>Serialisierung</i></a> k&ouml;nnen nahezu beliebige
+Objekte dauerhaft gespeichert werden und mit dem <a name="ixa100119"><i>Reflection-API</i></a>
+kann der Aufbau von Objekten und Klassen zur Laufzeit untersucht und
+dynamisch darauf zugegriffen werden. Zu guter Letzt gibt es Bibliotheken
+zum Lesen und zum Schreiben von XML-Dateien. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100008.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100009.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100011.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100012.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

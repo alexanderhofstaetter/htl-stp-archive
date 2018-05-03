@@ -1,0 +1,217 @@
+********************************************************************************
+***                  Micro-Cap 11.0.0.8 Evaluation Version                   ***
+***                                   Alex                                   ***
+***                                 HTL STP                                  ***
+***                     Transient Analysis of Simulation                     ***
+***                           16.12.2014 20:34:27                            ***
+********************************************************************************
+Limits
+======
+Time Range               1u
+Maximum Time Step        0
+Number of Points         51
+Temperature              Linear 27
+Retrace Runs             1
+Run Options              Normal
+State Variables          Zero
+Operating Point          On
+Operating Point Only     Off
+Auto Scale Ranges        Off
+Accumulate Plots         Off
+Fixed Time Step          Off
+Periodic Steady State    Off
+Ignore Expression Errors Off
+
+
+*****************************************************
+***                Temperature=27                 ***
+*****************************************************
+
+Temperature=27
+
+DC Operating Point Voltages
+===========================
+Node         Voltage  Node         Voltage  Node         Voltage 
+1            15.000   2             2.034   3            14.344  
+4             1.410   5             0.000   6             1.410  
+7             7.199   8             0.000  
+
+
+Operating Point for Devices of Type Bipolar Junction Transistors NPN
+====================================================================
+Instance:                T1
+Using model:        2N2222A
+
+Beta Terms:
+BETADC             186.167 
+BETAAC             202.423 
+
+Capacitance Terms:
+CPI                 90.311p
+CMU                  7.173p
+CBX                  0.000 
+CJS                  0.000 
+
+Conductance Terms:
+GM                  21.736m
+
+Current Terms:
+IB                   2.961u
+IC                 551.213u
+
+Resistance Terms:
+RPI                  9.313K
+RX                   0.000 
+RO                 203.750K
+
+Voltage Terms:
+VBE                624.285m
+VBC                -12.310 
+VCE                 12.934 
+
+Frequency Terms:
+FT                35.487MEG
+
+Power DC Terms:
+PD                   7.131m
+PS                   0.000 
+
+DC Pin Currents:
+Ib                   2.961u
+Ic                 551.213u
+Ie                -554.174u
+Is                   0.000 
+
+Condition:
+State                   LIN
+
+Device Variables:
+area                 1.000 
+vbe                  0.000 
+vce                  0.000 
+
+
+
+Operating Point for Devices of Type Bipolar Junction Transistors PNP
+====================================================================
+Instance:                T2
+Using model:         2N4125
+
+Beta Terms:
+BETADC              80.999 
+BETAAC             105.844 
+
+Capacitance Terms:
+CPI                 18.667p
+CMU                  2.686p
+CBX                  0.000 
+CJS                  0.000 
+
+Conductance Terms:
+GM                  14.156m
+
+Current Terms:
+IB                   4.764u
+IC                 385.911u
+
+Resistance Terms:
+RPI                  7.477K
+RX                   0.000 
+RO                 167.168K
+
+Voltage Terms:
+VBE               -655.738m
+VBC                  7.145 
+VCE                 -7.801 
+
+Frequency Terms:
+FT               105.510MEG
+
+Power DC Terms:
+PD                   3.014m
+PS                   0.000 
+
+DC Pin Currents:
+Ib                  -4.764u
+Ic                -385.911u
+Ie                 390.675u
+Is                   0.000 
+
+Condition:
+State                   LIN
+
+Device Variables:
+area                 1.000 
+vbe                  0.000 
+vce                  0.000 
+
+
+
+Operating Point for Devices of Type Resistor
+============================================
+Instance:                RB2            RB1          V1.RS            RE1
+V                    12.966          2.034          0.000          1.410 
+Power DC Terms:
+PD                  509.413u        73.908u         0.000          1.326m
+
+DC Pin Currents:
+Ir                   39.290u        36.329u         0.000        940.085u
+
+Device Variables:
+tc1                   0.000          0.000          0.000          0.000 
+tc2                   0.000          0.000          0.000          0.000 
+
+
+Instance:                RE2            RC1            RC2             RL
+V                     0.000        655.738m         5.789          0.000 
+Power DC Terms:
+PD                    0.000        358.327u         2.234m         0.000 
+
+DC Pin Currents:
+Ir                    0.000        546.449u       385.911u         0.000 
+
+Device Variables:
+tc1                   0.000          0.000          0.000          0.000 
+tc2                   0.000          0.000          0.000          0.000 
+
+
+
+Operating Point for Devices of Type Capacitor
+=============================================
+Instance:                 C1             C2             C3
+V                    -2.034         -1.410         -7.199 
+Power DC Terms:
+PS                    0.000          0.000          0.000 
+
+DC Pin Currents:
+Ic                    0.000          0.000          0.000 
+
+Device Variables:
+ic                    0.000          0.000          0.000 
+
+
+
+Operating Point for Devices of Type Sine Source
+===============================================
+Instance:                 V1
+Using model:              UE
+V                     0.000 
+Power DC Terms:
+PG                    0.000 
+
+DC Pin Currents:
+ISource               0.000 
+
+
+
+Operating Point for Devices of Type SPICE Source
+================================================
+Instance:                V2
+V                   15.000 
+Power DC Terms:
+PG                  14.646m
+
+DC Pin Currents:
+ISource           -976.414u
+
+

@@ -1,0 +1,266 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100313.html;106,k100313.html;107,k100315.html;108,k100317.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100313.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100313.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100315.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100317.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 49 - Remote Method Invocation
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id049001"></a>
+<h2>49.1 Einleitung </h2>
+<hr>
+<ul>
+<li><a href="k100314.html#sectlevel2id049001">49.1 Einleitung</a>
+<ul>
+<li><a href="k100314.html#sectlevel3id049001001">49.1.1 Prinzipielle Arbeitsweise</a>
+<li><a href="k100314.html#sectlevel3id049001002">49.1.2 Einzelheiten der Kommunikation</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id049001001"></a>
+<h3>49.1.1 Prinzipielle Arbeitsweise </h3>
+
+<p>
+Im vorigen Kapitel wurde die Netzwerkprogrammierung mit Hilfe von
+Sockets und URL-Objekten erl&auml;utert. Dabei wurden im Wesentlichen
+Dienste verwendet, deren Aufgabe es war, <i>Daten</i> zwischen zwei
+Netzwerkknoten zu &uuml;bertragen. H&ouml;here Anwendungen, wie etwa
+das Kopieren von Dateien, die Manipulation von Verzeichnissen oder
+das Starten von Programmen auf dem Server, wurden mit zus&auml;tzlichen
+Anwendungsprotokollen wie FTP oder HTTP realisiert. 
+
+<p>
+Neben der reinen &Uuml;bertragung von Daten besteht eine weitere wichtige
+Anwendung von Netzwerkstrukturen darin, Programmcode zu verteilen
+und von unterschiedlichen Arbeitspl&auml;tzen im Netz aufzurufen.
+Auf diese Weise k&ouml;nnen spezielle Aufgaben einer Applikation (wie
+etwa der Datenbankzugriff oder die Kommunikation mit externen Systemen)
+an geeignete Server delegiert und so die Applikationslast gleichm&auml;&szlig;iger
+verteilt und die Skalierbarkeit des Systems erh&ouml;ht werden. 
+
+<p>
+Mit RMI (<i>Remote Method Invocation</i>) stellt das JDK seit der
+Version 1.1 einen Mechanismus zur Verf&uuml;gung, der es erm&ouml;glicht,
+Objekte auf einfache Weise im Netz zu verteilen und ihre Dienste anderen
+Arbeitspl&auml;tzen zur Verf&uuml;gung zu stellen. Die prinzipielle
+Arbeitsweise von RMI l&auml;sst sich wie folgt skizzieren (siehe <a href="k100314.html#rmi1">Abbildung 49.1</a>):
+<ul>
+<li>In einem <a name="ixa103584"><i>Remote-Interface</i></a> werden
+eine oder mehrere Methoden definiert, die als aufrufbare Dienste anderen
+Arbeitspl&auml;tzen zur Verf&uuml;gung gestellt werden sollen.
+<li>Eine Serverklasse implementiert das Interface und erzeugt eine
+oder mehrere Instanzen, die als <a name="ixa103585"><i>Remote-Objekte</i></a>
+bezeichnet werden.
+<li>Die Remote-Objekte werden bei einem <a name="ixa103586"><i>Namens-Service</i></a>
+registriert, der von potenziellen Clients abgefragt werden kann. Mit
+der <a name="ixa103587"><i>RMI-Registry</i></a> ist ein einfacher
+Namens-Service bereits Bestandteil des RMI-Pakets.
+<li>Clients beschaffen mit Hilfe der RMI-Registry Referenzen auf die
+ben&ouml;tigten Objekte und rufen die gew&uuml;nschten Methoden auf.
+Die beim Aufruf &uuml;bergebenen Parameter werden an das Remote-Objekt
+&uuml;bertragen und die passende Methode wird dort ausgef&uuml;hrt.
+Der R&uuml;ckgabewert wird an den Client zur&uuml;ck&uuml;bertragen.
+Die Referenzen auf die Remote-Objekte werden als <a name="ixa103588"><i>Remote-Referenzen</i></a>
+bezeichnet.
+</ul>
+<p>
+<a name="rmi1"></a>
+<img src="images/RMI1.gif">
+<p>
+
+<p><i>
+Abbildung 49.1: Prinzipielle Arbeitsweise von RMI</i></p>
+
+<p>
+RMI etabliert also eine Client-Server-Architektur zwischen lokalen
+Java-Objekten und den von ihnen aufgerufenen Remote-Objekten. Die
+eigentliche Kommunikation zwischen den Teilnehmern ist fast vollst&auml;ndig
+unsichtbar. 
+
+<p>
+Die Rollen von Client und Server sind dabei keineswegs statisch festgelegt.
+So kann ein Client durchaus Server-Funktionalit&auml;ten implementieren
+oder ein Server kann zur Ausf&uuml;hrung eines Client-Calls die Hilfe
+eines anderen Remote-Objekts in Anspruch nehmen. Eine interessante
+Eigenschaft von RMI besteht auch darin, fehlenden Code dynamisch nachzuladen.
+Ben&ouml;tigt beispielsweise ein Server zur Ausf&uuml;hrung eines
+Auftrags eine bis dato unbekannte Klasse vom Client (die nat&uuml;rlich
+ein ihm zur Compile-Zeit bekanntes Interface implementiert), so kann
+er diese dynamisch vom Client laden und - dank der Plattformunabh&auml;ngigkeit
+von Java - auf dem Server ausf&uuml;hren. 
+
+<!-- Section -->
+
+<a name="sectlevel3id049001002"></a>
+<h3>49.1.2 Einzelheiten der Kommunikation </h3>
+
+<p>
+Bei der Kommunikation mit RMI hat der Client den Eindruck, Methoden
+von Objekten aufzurufen, die auf dem Server liegen. In Wirklichkeit
+liegen die Dinge nat&uuml;rlich etwas komplizierter, denn der Client
+hat von der RMI-Registry lediglich ein <a name="ixa103589"><i>Stub</i></a>-Objekt
+erhalten und das Remote-Objekt hat den Server nicht wirklich verlassen.
+Ein Stub ist eine Klasse, die - wie das implementierende Remote-Objekt
+- das Remote-Interface implementiert und daher f&uuml;r den Client
+als Platzhalter f&uuml;r den Zugriff auf das Remote-Objekt dient.
+
+<p>
+Der Stub kommuniziert &uuml;ber eine TCP-Verbindung mit dem als <a name="ixa103590"><i>Skeleton</i></a>
+bezeichneten Gegenst&uuml;ck auf der Server-Seite. Das Skeleton kennt
+das tats&auml;chliche Applikationsobjekt, leitet die Anfragen des
+Stubs an dieses weiter und gibt den R&uuml;ckgabewert an ihn zur&uuml;ck.
+Stub und Skeleton werden w&auml;hrend der Entwicklung mit Hilfe eines
+Tools generiert und verbergen die komplizierten Details der Kommunikation
+zwischen Server und Client. 
+<p>
+<a name="imageid049002"></a>
+<img src="images/RMI2.gif">
+<p>
+
+<p><i>
+Abbildung 49.2: Stubs und Skeletons</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+RMI verfolgt mit der Verteilung von Objekten im Netz einen &auml;hnlichen
+Ansatz wie <a name="ixa103591"><i>CORBA</i></a> (die <i>Common Object
+Request Broker Architecture</i>, siehe beispielsweise <a href="http://www.omg.org">http://www.omg.org</a>).
+Da auch CORBA von Java sehr gut unterst&uuml;tzt wird, muss man sich
+als Entwickler nat&uuml;rlich die Frage stellen, welche der beiden
+Architekturen in einem entsprechenden Projekt die bessere Wahl ist.
+F&uuml;r CORBA spricht die Vielzahl der verf&uuml;gbaren Implementierungen,
+die gr&ouml;&szlig;ere Verbreitung und die Tatsache, dass neben Java
+auch andere Programmiersprachen unterst&uuml;tzt werden (etwa C++).
+Es ist daher ideal f&uuml;r heterogene Projekte, deren Gr&ouml;&szlig;e
+eine gewisse kritische Masse &uuml;berschreiten. 
+
+<p>
+RMI ist dagegen einfacher zu erlernen, bietet dynamischen Code-Austausch,
+erfordert keine zus&auml;tzlichen Lizenzen und kommt mit insgesamt
+weniger Aufwand aus. F&uuml;r reine Java-Projekte k&ouml;nnte es sich
+daher als geeignete Wahl erweisen. Seit der Version 1.3 unterst&uuml;tzt
+das JDK die RMI-Kommunikation auch auf der Basis des CORBA-Protokolls
+<a name="ixa103592"><i>IIOP</i></a> und erleichtert so die Integration
+von RMI- und CORBA-Anwendungen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Bei der Kommunikation zwischen Client und Server (wenn also der Client
+eine Methode auf einem Remote-Objekt aufruft) sind drei Arten von
+Datentypen zu unterscheiden: 
+<ul>
+<li>Werden beim Aufruf einer Methode primitive Datentypen &uuml;bergeben
+oder zur&uuml;ckgegeben (<a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>,
+<a href="index_c.html#ixb100223"><font color=#000080><tt>char</tt></font></a>,
+<a href="index_b.html#ixb100071"><font color=#000080><tt>boolean</tt></font></a>
+usw.), werden sie wie gew&ouml;hnlich per Wert &uuml;bergeben (<i>call
+by value</i>). In diesem Fall besteht also &uuml;berhaupt kein Unterschied
+zu lokalen Java-Programmen.
+<li>Lokale <i>Objekte</i> k&ouml;nnen dagegen nur dann als Parameter
+oder R&uuml;ckgabewert verwendet werden, wenn sie serialisierbar sind.
+Sie werden bei der &Uuml;bertragung kopiert und somit ebenfalls per
+Wert &uuml;bergeben (siehe <a href="k100269.html#kapitelserialisierung">Kapitel 42</a>).
+Viele Klassen des JDK, wie etwa <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>,
+<a href="index_c.html#ixb100558"><font color=#000080><tt>Calendar</tt></font></a>,
+die numerischen Wrapper-Klassen oder die Collection-Klassen sind bereits
+serialisierbar und k&ouml;nnen direkt verwendet werden. Eigene Klassen
+m&uuml;ssen das Interface <a href="index_s.html#ixb100461"><font color=#000080><tt>Serializable</tt></font></a>
+implementieren.
+<li>Verweise auf Remote-Objekte, wie sie beispielsweise vom Namens-Service
+zur&uuml;ckgegeben werden, haben dagegen Referenzcharakter und werden
+wie gew&ouml;hnliche Objektreferenzen behandelt.
+</ul>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Objekte, die weder Remote-Referenzen noch serialisierbar sind, k&ouml;nnen
+per RMI nicht ausgetauscht werden. Beispiele daf&uuml;r sind die Klassen
+<a href="index_t.html#ixb100606"><font color=#000080><tt>Thread</tt></font></a>,
+<a href="index_s.html#ixb100182"><font color=#000080><tt>System</tt></font></a>
+oder <a href="index_r.html#ixb101021"><font color=#000080><tt>RandomAccessFile</tt></font></a>.
+Derartige Objekte haben allerdings auch meist nur lokale Bedeutung
+und die &Uuml;bertragung an eine andere virtuelle Maschine ergibt
+wenig Sinn.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100313.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100313.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100315.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100317.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

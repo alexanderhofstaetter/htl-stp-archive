@@ -1,0 +1,118 @@
+   1               		.file	"main.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   8               		.text
+   9               	.Ltext0:
+ 103               		.section	.text.startup,"ax",@progbits
+ 105               	.global	main
+ 107               	main:
+   1:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c **** #ifndef F_CPU            //Wenn CPU-Takt nicht bereits definiert wurde...
+   2:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c **** #define F_CPU 16000000   //...dann definiere ihn auf 16MHz
+   3:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c **** #endif
+   4:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c **** 
+   5:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c **** #include "i2cmaster.h"
+   6:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c **** 
+   7:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c **** #include <avr/io.h>
+   8:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c **** #include <avr/interrupt.h>
+   9:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c **** #include <util/delay.h>
+  10:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c **** 
+  11:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c **** 
+  12:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c **** int main(void) {
+ 109               	.LM0:
+ 110               	.LFBB1:
+ 111               	/* prologue: function */
+ 112               	/* frame size = 0 */
+ 113               	/* stack size = 0 */
+ 114               	.L__stack_usage = 0
+  13:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c ****     
+  14:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c ****     i2c_init();                // Starte I2C Bus
+ 116               	.LM1:
+ 117 0000 0E94 0000 		call i2c_init
+ 118               	.L6:
+ 119               	.LBB2:
+  15:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c ****     
+  16:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c ****     while(1)
+  17:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c ****     {
+  18:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c ****         
+  19:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c ****         for (int i = 0; i<=255; i++)
+ 121               	.LM2:
+ 122 0004 C0E0      		ldi r28,0
+ 123 0006 D0E0      		ldi r29,0
+ 124               	.L2:
+ 126               	.LM3:
+ 127 0008 CF3F      		cpi r28,-1
+ 128 000a D105      		cpc r29,__zero_reg__
+ 129 000c 01F0      		breq .+2
+ 130 000e 04F4      		brge .L8
+  20:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c ****         {   i2c_start(0b10010000);
+ 132               	.LM4:
+ 133 0010 80E9      		ldi r24,lo8(-112)
+ 134 0012 0E94 0000 		call i2c_start
+  21:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c ****             i2c_write(0b01000000);
+ 136               	.LM5:
+ 137 0016 80E4      		ldi r24,lo8(64)
+ 138 0018 0E94 0000 		call i2c_write
+  22:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c ****             i2c_write(i);
+ 140               	.LM6:
+ 141 001c 8C2F      		mov r24,r28
+ 142 001e 0E94 0000 		call i2c_write
+  23:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c ****             i2c_stop();
+ 144               	.LM7:
+ 145 0022 0E94 0000 		call i2c_stop
+  19:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c ****         for (int i = 0; i<=255; i++)
+ 147               	.LM8:
+ 148 0026 2196      		adiw r28,1
+ 149 0028 00C0      		rjmp .L2
+ 150               	.L8:
+  19:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c ****         for (int i = 0; i<=255; i++)
+ 152               	.LM9:
+ 153 002a CFEF      		ldi r28,lo8(-1)
+ 154 002c D0E0      		ldi r29,0
+ 155               	.L5:
+ 156               	.LBE2:
+ 157               	.LBB3:
+  24:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c ****         }
+  25:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c ****         
+  26:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c ****         for (int i = 255; i>=0; --i)
+  27:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c ****         {   i2c_start(0b10010000);
+ 159               	.LM10:
+ 160 002e 80E9      		ldi r24,lo8(-112)
+ 161 0030 0E94 0000 		call i2c_start
+  28:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c ****             i2c_write(0b01000000);
+ 163               	.LM11:
+ 164 0034 80E4      		ldi r24,lo8(64)
+ 165 0036 0E94 0000 		call i2c_write
+  29:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c ****             i2c_write(i);
+ 167               	.LM12:
+ 168 003a 8C2F      		mov r24,r28
+ 169 003c 0E94 0000 		call i2c_write
+  30:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c ****             i2c_stop();
+ 171               	.LM13:
+ 172 0040 0E94 0000 		call i2c_stop
+  26:/Users/alexhofstaetter/Dropbox/Schule/5-Jahrgang/Labor/CRHA/3-I2C/I2C/I2C/main.c ****         for (int i = 255; i>=0; --i)
+ 174               	.LM14:
+ 175 0044 2197      		sbiw r28,1
+ 176 0046 00F4      		brcc .L5
+ 177 0048 00C0      		rjmp .L6
+ 178               	.LBE3:
+ 186               	.Lscope1:
+ 187               		.text
+ 189               	.Letext0:
+ 190               		.ident	"GCC: (GNU) 4.8.1"
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccjInLzZ.s:2      *ABS*:0000003e __SP_H__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccjInLzZ.s:3      *ABS*:0000003d __SP_L__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccjInLzZ.s:4      *ABS*:0000003f __SREG__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccjInLzZ.s:5      *ABS*:00000000 __tmp_reg__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccjInLzZ.s:6      *ABS*:00000001 __zero_reg__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//ccjInLzZ.s:107    .text.startup:00000000 main
+
+UNDEFINED SYMBOLS
+i2c_init
+i2c_start
+i2c_write
+i2c_stop

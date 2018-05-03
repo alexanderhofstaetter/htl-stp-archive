@@ -1,0 +1,183 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100028.html;106,k100032.html;107,k100034.html;108,k100036.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100028.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100032.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100034.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100036.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 5 - Datentypen
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id005005"></a>
+<h2>5.5 <a name="ixa100307">Referenztypen</a><a name="ixa100308"></a></h2>
+<hr>
+<ul>
+<li><a href="k100033.html#sectlevel2id005005">5.5 Referenztypen</a>
+<ul>
+<li><a href="k100033.html#sectlevel3id005005001">5.5.1 Beschreibung</a>
+<li><a href="k100033.html#sectlevel3id005005002">5.5.2 Speichermanagement</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id005005001"></a>
+<h3>5.5.1 Beschreibung </h3>
+
+<p>
+Referenztypen sind neben den primitiven Datentypen die zweite wichtige
+Klasse von Datentypen in Java. Zu den Referenztypen geh&ouml;ren Objekte,
+Strings und Arrays. Weiterhin gibt es die vordefinierte Konstante
+<a name="ixa100309"><a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a></a>,
+die eine <i>leere</i> Referenz bezeichnet. 
+
+<p>
+Eigentlich sind auch Strings und Arrays Objekte, aber es gibt bei
+ihnen einige Besonderheiten, die eine Unterscheidung von normalen
+Objekten rechtfertigen: 
+<ul>
+<li>Sowohl bei Strings als auch bei Arrays kennt der Compiler Literale,
+die einen expliziten Aufruf des <a href="index_n.html#ixb100088"><font color=#000080><tt>new</tt></font></a>-Operators
+&uuml;berfl&uuml;ssig machen.
+<li>Arrays sind &#187;klassenlose&#171; Objekte. Sie k&ouml;nnen ausschlie&szlig;lich
+vom Compiler erzeugt werden, besitzen aber keine explizite Klassendefinition.
+Dennoch haben sie eine &ouml;ffentliche Instanzvariable <a name="ixa100310"><a href="index_l.html#ixb100286"><font color=#000080><tt>length</tt></font></a></a>
+und werden vom Laufzeitsystem wie normale Objekte behandelt.
+<li>Die Klasse <a name="ixa100311"><a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a></a>
+ist zwar wie eine gew&ouml;hnliche Klasse in der Laufzeitbibliothek
+von Java vorhanden. Der Compiler hat aber Kenntnisse &uuml;ber den
+inneren Aufbau von Strings und generiert bei Stringoperationen Code,
+der auf Methoden der Klassen <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+und <a name="ixa100312"><a href="index_s.html#ixb100289"><font color=#000080><tt>StringBuffer</tt></font></a></a>
+zugreift. Eine &auml;hnlich enge Zusammenarbeit zwischen Compiler
+und Laufzeitbibliothek gibt es auch bei Threads und Exceptions. Wir
+werden auf diese Besonderheiten in den nachfolgenden Kapiteln noch
+einmal zur&uuml;ckkommen.
+</ul>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Das Verst&auml;ndnis f&uuml;r Referenztypen ist entscheidend f&uuml;r
+die Programmierung in Java. Referenztypen k&ouml;nnen prinzipiell
+genauso benutzt werden wie primitive Typen. Da sie jedoch lediglich
+einen Verweis darstellen, ist die Semantik einiger Operatoren anders
+als bei primitiven Typen:</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<ul>
+<li>Die Zuweisung einer Referenz kopiert lediglich den Verweis auf
+das betreffende Objekt, das Objekt selbst dagegen bleibt unkopiert.
+Nach einer Zuweisung zweier Referenztypen zeigen diese also auf ein
+und dasselbe Objekt. Sollen Referenztypen kopiert werden, so ist ein
+Aufruf der Methode <a name="ixa100313"><a href="index_c.html#ixb100290"><font color=#000080><tt>clone</tt></font></a></a>
+erforderlich (siehe <a href="k100058.html#klasseobject">Abschnitt 9.1.2</a>).
+<li>Der Gleichheitstest zweier Referenzen testet, ob beide Verweise
+gleich sind, d.h. auf ein und dasselbe Objekt zeigen. Das ist aber
+eine strengere Forderung als inhaltliche Gleichheit. Soll lediglich
+auf inhaltliche Gleichheit getestet werden, kann dazu die <a name="ixa100314"><a href="index_e.html#ixb100230"><font color=#000080><tt>equals</tt></font></a></a>-Methode
+verwendet werden, die von den meisten Klassen implementiert wird (ebenfalls
+in <a href="k100058.html#klasseobject">Abschnitt 9.1.2</a> erl&auml;utert).
+Analoges gilt f&uuml;r den Test auf Ungleichheit.
+</ul>
+
+<p>
+Anders als in C und C++, wo der <font color="#000077"><tt>*</tt></font>-Operator
+zur Dereferenzierung eines Zeigers n&ouml;tig ist, erfolgt in Java
+der Zugriff auf Referenztypen in der gleichen Weise wie der auf primitive
+Typen. Einen expliziten Dereferenzierungsoperator gibt es dagegen
+nicht. 
+
+<!-- Section -->
+
+<a name="sectlevel3id005005002"></a>
+<h3>5.5.2 <a name="ixa100315">Speichermanagement</a></h3>
+
+<p>
+W&auml;hrend primitive Typen lediglich deklariert werden, reicht dies
+bei Referenztypen nicht aus. Sie m&uuml;ssen mit Hilfe des <a name="ixa100316"><a href="index_n.html#ixb100088"><font color=#000080><tt>new</tt></font></a></a>-Operators
+oder - im Falle von Arrays und Strings - durch Zuweisung von Literalen
+zus&auml;tzlich noch explizit erzeugt werden. 
+<a name="listingid005011"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+Date d = <font color="#0000AA">new</font> Date();</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 5.11: Erzeugen eines Objekts mit dem new-Operator</i></p>
+
+<p>
+Java verf&uuml;gt &uuml;ber ein automatisches <a name="ixa100315">Speichermanagement</a>.
+Dadurch braucht man sich als Java-Programmierer nicht um die R&uuml;ckgabe
+von Speicher zu k&uuml;mmern, der von Referenzvariablen belegt wird.
+Ein mit niedriger Priorit&auml;t im Hintergrund arbeitender <a name="ixa100317"><i>Garbage
+Collector</i></a> sucht periodisch nach Objekten,
+die nicht mehr referenziert werden, um den durch sie belegten Speicher
+freizugeben. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100028.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100032.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100034.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100036.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

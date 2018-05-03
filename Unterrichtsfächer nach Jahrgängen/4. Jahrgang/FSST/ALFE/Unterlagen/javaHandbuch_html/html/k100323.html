@@ -1,0 +1,156 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100322.html;106,k100322.html;107,k100324.html;108,k100327.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100322.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100322.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100324.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100327.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 51 - Sound
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id051001"></a>
+<h2>51.1 Grundlagen und Konzepte </h2>
+<hr>
+<ul>
+<li><a href="k100323.html#sectlevel2id051001">51.1 Grundlagen und Konzepte</a>
+</ul>
+<hr>
+
+<p>
+Seit der Version 1.3 besitzt das JDK Sound-F&auml;higkeiten, die weit
+&uuml;ber die in <a href="k100260.html#appletsound">Abschnitt 40.3</a>
+erl&auml;uterten M&ouml;glichkeiten hinausgehen. Mit Hilfe des Sound-API
+k&ouml;nnen Samples abgespielt oder aufgenommen werden. Es k&ouml;nnen
+Midi-Dateien erzeugt oder wiedergegeben werden und es ist m&ouml;glich,
+direkt auf angeschlossene oder eingebaute Tonerzeuger zuzugreifen.
+Das API abstrahiert alle f&uuml;r das Erzeugen und Bearbeiten von
+Sounds wesentlichen Konzepte und unterst&uuml;tzt die Erkennung und
+Verwendung unterschiedlichster Hardware-Komponenten. 
+
+<p>
+Das Sound-API ist allerdings nicht ganz leicht zu bedienen und wird
+in der Literatur sehr stiefm&uuml;tterlich behandelt. Die Schwierigkeiten
+haben mehrere Ursachen: 
+<ul>
+<li>Einerseits handelt es sich um ein Low-Level-API, also eines, bei
+dem schon zur Erzielung relativ einfacher Effekte recht viel Programmieraufwand
+n&ouml;tig ist.
+<li>Andererseits kann das API wenig Annahmen &uuml;ber standardm&auml;&szlig;ig
+verf&uuml;gbare Hardware machen. Soll beispielsweise eine Fl&ouml;tenmelodie
+erklingen, muss das Programm erst einmal herausfinden, ob ein Synthesizer
+eingebaut oder &uuml;ber einen der Midi-Ports erreichbar ist. Zudem
+muss er das entsprechende Instrument zur Verf&uuml;gung stellen k&ouml;nnen.
+Erst dann kann dieser konfiguriert und mit den entsprechenden Tonerzeugungskommandos
+beschickt werden.
+<li>Zu guter Letzt erfordert der Umgang mit dem Sound-API ein grundlegendes
+Verst&auml;ndnis f&uuml;r viele der auf diesem Gebiet relevanten Konzepte.
+Das API ist sehr eng an Begriffe angelehnt, die direkte Pendants in
+der elektronischen oder elektronikunterst&uuml;tzten Musik haben.
+Ohne ein Basiswissen in Themenbereichen wie <a name="ixa103696"><i>Samples</i></a>,
+<a name="ixa103697"><i>Midi</i></a>, <a name="ixa103698"><i>Tracks</i></a>,
+<a name="ixa103699"><i>Timecodes</i></a>, <a name="ixa103700"><i>Sequencer</i></a>,
+<a name="ixa103701"><i>Synthesizer</i></a> <a name="ixa103702"><i>Soundbanks</i></a>
+oder <a name="ixa103703"><i>Mixer</i></a> sind die korrespondierenden
+Klassen und Interfaces schwerlich korrekt zu verwenden.
+</ul>
+
+<p>
+Wir wollen deshalb in diesem Kapitel einen sehr pragmatischen Ansatz
+w&auml;hlen. Erforderliche Begriffe werden, wo n&ouml;tig, lediglich
+kurz erkl&auml;rt, denn wir gehen davon aus, dass beim Leser bereits
+ein Grundstock an einschl&auml;gigen Grundkenntnissen vorhanden ist.
+Oder wenigstens die Bereitschaft, sich diese w&auml;hrend des Lesens
+und Experimentierens anzueignen. Auch werden wir die APIs nur ansatzweise
+erl&auml;utern, denn mehr ist aus Platzgr&uuml;nden nicht m&ouml;glich.
+
+<p>
+Die Beispielprogramme wurden so gew&auml;hlt, dass sie einen unmittelbaren
+Praxisnutzen haben. Sie stellen leicht einzusetzende Routinen zum
+Abspielen von Samples sowie zum Erzeugen einfacher Midi-Sequenzen
+und zum Abspielen von Midi-Files zur Verf&uuml;gung. Damit werden
+die wichtigsten Standardf&auml;lle beim Einsatz von Sound abgedeckt.
+
+<p>
+Das Sound-API dient als Basis f&uuml;r alle Arten von Sound-Support
+in Java. Seine Anwendungsgebiete reichen von interaktiven Applikationen
+oder Spielen mit Sound-Unterst&uuml;tzung &uuml;ber Media-Player und
+Musik-Tools bis hin zu Telefonie- und Konferenz-Applikationen. Des
+Weiteren ist das Sound-API Basis h&ouml;herer Programmierschnittstellen,
+wie etwa des <a name="ixa103704"><i>Java Media Framework</i></a>,
+das eine Schnittstelle zum Abspielen und Erzeugen einer ganzen Reihe
+von Audio- und Videoformaten zur Verf&uuml;gung stellt. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Beispiele in diesem Buch funktionieren nat&uuml;rlich nur dann,
+wenn auf dem Computer, an dem sie nachvollzogen werden sollen, eine
+geeignete (und vom Java-Sound-API unterst&uuml;tzte) Sound-Hardware
+vorhanden ist. Dabei handelt es sich typischerweise um eine Sound-Karte,
+es kann aber (wenigstens beim Midi-API) auch eine Midi-Schnittstelle
+mit angeschlossenem Synthesizer verwendet werden. Ist eine solche
+Hardware nicht verf&uuml;gbar, erklingt beim Ausf&uuml;hren der Beispielprogramme
+entweder gar nichts (oder das Falsche) oder es wird eine Ausnahme
+ausgel&ouml;st.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100322.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100322.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100324.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100327.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

@@ -1,0 +1,601 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100090.html;106,k100093.html;107,k100095.html;108,k100097.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100090.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100093.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100095.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100097.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 14 - Strukturierung von Java-Programmen
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id014004"></a>
+<h2>14.4 Auslieferung von Java-Programmen </h2>
+<hr>
+<ul>
+<li><a href="k100094.html#sectlevel2id014004">14.4 Auslieferung von Java-Programmen</a>
+<ul>
+<li><a href="k100094.html#sectionclasspath">14.4.1 Weitergabe des Bytecodes</a>
+<ul>
+<li><a href="k100094.html#sectlevel4id014004001001">Direkte Weitergabe der Klassendateien</a>
+<li><a href="k100094.html#subsectionclasspath">Verwendung eines jar-Archivs</a>
+<li><a href="k100094.html#sectlevel4id014004001003">Ausf&uuml;hrbare jar-Archive</a>
+</ul>
+<li><a href="k100094.html#sectlevel3id014004002">14.4.2 Einbinden von Ressourcendateien</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectionclasspath"></a>
+<h3>14.4.1 Weitergabe des Bytecodes </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id014004001001"></a>
+<h4>Direkte Weitergabe der Klassendateien </h4>
+
+<p>
+Der ausf&uuml;hrbare Programmcode einer Java-Applikation befindet
+sich in den vom Compiler erzeugten <font color="#660099">.class</font>-Dateien.
+Sie sind der wichtigste Bestandteil bei der Auslieferung eines Java-Programms.
+Wir werden uns in diesem Abschnitt ansehen, auf welche Weise die Klassendateien
+weitergegeben werden k&ouml;nnen und was dabei zu beachten ist. Neben
+den Klassendateien m&uuml;ssen mitunter auch zus&auml;tzliche Dateien
+mit &Uuml;bersetzungstexten, Fehlermeldungen, Icons oder Bilddateien
+weitergegeben werden. Wie diese zusammen mit den Klassendateien ausgeliefert
+und verwendet werden k&ouml;nnen, zeigt der n&auml;chste Abschnitt.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Ausf&uuml;hrungen in diesem und dem n&auml;chsten Abschnitt sind
+m&ouml;glicherweise schwierig zu verstehen, denn sie setzen Kenntnisse
+voraus, die teilweise erst in sp&auml;teren Kapiteln vermittelt werden.
+Wegen ihres engen thematischen Bezugs zum vorliegenden Kapitel sind
+sie hier dennoch richtig aufgehoben und Sie sollten den Ausf&uuml;hrungen
+zumindest in groben Z&uuml;gen folgen k&ouml;nnen. Lesen Sie diese
+Abschnitte bei Bedarf einfach zu einem sp&auml;teren Zeitpunkt noch
+einmal und viele Dinge, die jetzt unklar sind, werden dann leicht
+zu verstehen sein.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Die einfachste M&ouml;glichkeit, ein Java-Programm auszuliefern, besteht
+darin, die Klassendateien so zu belassen, wie sie sind, und sie entsprechend
+ihrer Paketstruktur auf das Zielsystem zu kopieren. Das Programm kann
+dann auf dem Zielsystem gestartet werden, indem der Java-Interpreter
+aus dem Installationsverzeichnis aufgerufen und der Name der zu startenden
+Klasse als Argument angegeben wird. 
+
+<p>
+Als Beispiel wollen wir uns eine hypothetische Applikation ansehen,
+die aus folgenden Klassen besteht: 
+<font color="#000077">
+<pre>
+com.gkrueger.app.App
+com.gkrueger.app.AppFrame
+com.gkrueger.util.Logger
+</pre>
+</font>
+
+<p>
+Die Klassen <font color="#000077"><tt>App</tt></font> und <font color="#000077"><tt>AppFrame</tt></font>
+befinden sich im Paket <font color="#000077"><tt>com.gkrueger.app</tt></font>
+und die Klasse <font color="#000077"><tt>Logger</tt></font> im Paket
+<font color="#000077"><tt>com.gkrueger.util</tt></font>. Ausgehend
+vom Basisverzeichnis, liegen die Klassendateien also in den Unterverzeichnissen
+<font color="#660099">com\gkrueger\app</font> und <font color="#660099">com\gkrueger\util</font>.
+Die <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>-Methode
+befindet sich in der Klasse <font color="#000077"><tt>App</tt></font>.
+Soll das Programm auf dem Zielsystem beispielsweise im Verzeichnis
+<font color="#660099">c:\gkapp</font> installiert werden, m&uuml;ssen
+die drei Dateien wie folgt kopiert werden: 
+<ul>
+<li><font color="#660099">App.class</font> nach <font color="#660099">c:\gkapp\com\gkrueger\app</font>
+<li><font color="#660099">AppFrame.class</font> nach <font color="#660099">c:\gkapp\com\gkrueger\app</font>
+<li><font color="#660099">Logger.class</font> nach <font color="#660099">c:\gkapp\com\gkrueger\util</font>
+</ul>
+
+<p>
+Das Programm kann dann aus dem Installationsverzeichnis <font color="#660099">c:\gkapp</font>
+durch Angabe des qualifizierten Klassennamens gestartet werden: 
+<font color="#333300">
+<pre>
+java com.gkrueger.app.App
+</pre>
+</font>
+
+<p>
+Voraussetzung zum Starten der Applikation ist, dass der Klassenpfad
+korrekt gesetzt ist. Soll das Programm stets aus dem Installationsverzeichnis
+heraus gestartet werden, muss das aktuelle Verzeichnis &#187;.&#171;
+im <a href="index_c.html#ixb100137"><font color=#000080><tt>CLASSPATH</tt></font></a>
+enthalten sein (alternativ kann seit dem JDK 1.2 auch gar kein Klassenpfad
+gesetzt sein). Soll das Programm von beliebiger Stelle aus gestartet
+werden k&ouml;nnen, muss der Pfad des Installationsverzeichnisses
+<font color="#660099">c:\gkapp</font> in den Klassenpfad aufgenommen
+werden. Dazu kann entweder die Umgebungsvariable <a href="index_c.html#ixb100137"><font color=#000080><tt>CLASSPATH</tt></font></a>
+modifiziert oder der gew&uuml;nschte Klassenpfad mit einer der Optionen
+<a name="ixa100827"><a href="index_0.html#ixb100161"><font color=#000080><tt>-cp</tt></font></a></a>
+oder <a name="ixa100828"><a href="index_0.html#ixb100162"><font color=#000080><tt>-classpath</tt></font></a></a>
+an den Java-Interpreter &uuml;bergeben werden. Daf&uuml;r w&auml;re
+beispielsweise folgender Aufruf geeignet: 
+<font color="#333300">
+<pre>
+java -cp c:\gkapp com.gkrueger.app.App
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Variante, bei der die Umgebungsvariable unver&auml;ndert bleibt,
+ist nat&uuml;rlich die bessere, denn Modifikationen an Umgebungsvariablen
+beeinflussen m&ouml;glicherweise auch andere Programme. Zudem hat
+die explizite und pr&auml;zise &Uuml;bergabe des Klassenpfads an den
+Interpreter den Vorteil, dass nicht versehentlich weitere Verzeichnisse
+im Klassenpfad enthalten sind und unerw&uuml;nschte Nebeneffekte verursachen
+k&ouml;nnen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="subsectionclasspath"></a>
+<h4>Verwendung eines jar-Archivs </h4>
+
+<p>
+Noch einfacher wird die Installation, wenn anstelle der verschiedenen
+Klassendateien eine einzelne jar-Datei ausgeliefert wird. Auf dem
+Zielsystem spielt es dann keine Rolle mehr, aus welchem Verzeichnis
+heraus die Applikation aufgerufen wird und wie die <a href="index_c.html#ixb100137"><font color=#000080><tt>CLASSPATH</tt></font></a>-Variable
+gesetzt ist. Weitere Hinweise zur Anwendung des jar-Programms finden
+sich in <a href="k100338.html#jarwerkzeug">Abschnitt 53.6</a>. Dort
+wird auch erl&auml;utert, wie <i>Applets</i> in jar-Dateien ausgeliefert
+werden k&ouml;nnen. 
+
+<p>
+Angenommen, das Basisverzeichnis f&uuml;r die Programmentwicklung
+auf der Quellmaschine ist <font color="#660099">c:\prog\java</font>
+und die Klassendateien liegen in den Verzeichnissen <font color="#660099">c:\prog\java\com\gkrueger\app</font>
+und <font color="#660099">c:\prog\java\com\gkrueger\util</font>. Um
+eine jar-Datei zu unserem Beispielprojekt zu erstellen, ist aus dem
+Entwicklungsverzeichnis <font color="#660099">c:\prog\java</font>
+heraus folgendes <a href="index_j.html#ixb100124"><font color=#000080><tt>jar</tt></font></a>-Kommando
+abzusetzen: 
+<font color="#333300">
+<pre>
+jar cvf myapp.jar com
+</pre>
+</font>
+
+<p>
+Dadurch werden alle Dateien aus dem Unterverzeichnis <font color="#660099">com</font>
+und allen darin enthaltenen Unterverzeichnissen unter Beibehaltung
+der Verzeichnishierarchie in die jar-Datei <font color="#660099">myapp.jar</font>
+kopiert. Um das Programm auf der Zielmaschine aufzurufen, reicht es
+aus, <font color="#660099">myapp.jar</font> an eine beliebige Stelle
+zu kopieren und den Java-Interpreter wie folgt zu starten: 
+<font color="#333300">
+<pre>
+java -cp myapp.jar com.gkrueger.app.App
+</pre>
+</font>
+
+<p>
+Anstelle des Unterverzeichnisses mit den Klassendateien haben wir
+nun die jar-Datei im Klassenpfad angegeben. F&uuml;r den Interpreter
+sind beide Varianten gleichwertig und er wird das Programm in der
+gleichen Weise wie zuvor starten. Vorteilhaft an dieser Vorgehensweise
+ist, dass auf der Zielmaschine nur noch eine einzige Datei ben&ouml;tigt
+wird und nicht mehr ein ganzes System von Verzeichnissen und Unterverzeichnissen
+wie zuvor. Das vereinfacht nicht nur die Installation, sondern erh&ouml;ht
+auch ihre Haltbarkeit, denn einzelne Dateien k&ouml;nnen nicht mehr
+&uuml;berschrieben werden oder verlorengehen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Das oben beschriebene jar-Kommando kopiert <i>alle</i> Dateien aus
+dem <font color="#660099">com</font>-Unterverzeichnis und den darin
+enthaltenen Unterverzeichnissen in die jar-Datei. Dazu z&auml;hlen
+nat&uuml;rlich auch die Quelldateien, sofern sie in denselben Verzeichnissen
+liegen. Da diese aber meist nicht mit ausgeliefert werden sollen,
+empfiehlt es sich, entweder die Klassendateien (unter Beibehaltung
+der Unterverzeichnisstruktur) zuvor in ein leeres Verzeichnis zu kopieren
+und das jar-Kommando von dort aus zu starten. Oder die Klassendateien
+werden schon bei der Entwicklung von den Quelltexten getrennt, indem
+beim Kompilieren die Option <a name="ixa100829"><a href="index_0.html#ixb100647"><font color=#000080><tt>-d</tt></font></a></a>
+verwendet wird.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id014004001003"></a>
+<h4>Ausf&uuml;hrbare jar-Archive </h4>
+
+<p>
+Wir k&ouml;nnen sogar noch einen Schritt weitergehen und die jar-Datei
+selbst &#187;ausf&uuml;hrbar&#171; machen. Dazu m&uuml;ssen wir eine
+<a name="ixa100830"><i>Manifest-Datei</i></a> erstellen, in der der
+Name der Klasse angegeben wird, die die <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>-Methode
+enth&auml;lt. Anschlie&szlig;end l&auml;sst sich die jar-Datei mit
+der Option <a name="ixa100831"><a href="index_0.html#ixb100649"><font color=#000080><tt>-jar</tt></font></a></a>
+des Interpreters ohne explizite Angabe der Hauptklasse starten. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die <a name="ixa100830">Manifest-Datei</a> ist eine Hilfsdatei mit
+Informationen &uuml;ber den Inhalt der jar-Datei. Sie hat den Namen
+<font color="#660099">manifest.mf</font> und liegt im Unterverzeichnis
+<font color="#660099">meta-inf</font> des jar-Archivs<a name="ixa100832"></a>.
+Die Manifest-Datei kann mit einem normalen Texteditor erstellt und
+mit Hilfe der Option &#187;m&#171; in das jar-Archiv eingebunden werden.
+In unserem Fall muss sie lediglich einen Eintrag <a name="ixa100833"><a href="index_m.html#ixb100651"><font color=#000080><tt>Main-Class</tt></font></a></a>
+enthalten. Weitere Informationen zu Manifest-Dateien finden sich in
+<a href="k100295.html#integrationbeans">Abschnitt 46.3.3</a> bei der
+Beschreibung der Java-Beans-Architektur.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Wir erstellen also zun&auml;chst eine Textdatei <font color="#660099">manifest.txt</font>
+mit folgendem Inhalt (bitte mit einer Zeilenschaltung abschlie&szlig;en,
+sonst wird die Manifest-Datei nicht korrekt erstellt): 
+<font color="#000077">
+<pre>
+Main-Class: com.gkrueger.app.App
+</pre>
+</font>
+
+<p>
+Nun kann das jar-Archiv erzeugt und die Manifest-Datei einbezogen
+werden: 
+<font color="#333300">
+<pre>
+jar cvfm myapp.jar manifest.txt com
+</pre>
+</font>
+
+<p>
+Dieses Archiv kann nun mit Hilfe der Option <a href="index_0.html#ixb100649"><font color=#000080><tt>-jar</tt></font></a>
+ohne Angabe des Klassennamens gestartet werden: 
+<font color="#333300">
+<pre>
+java -jar myapp.jar
+</pre>
+</font>
+
+<p>
+Auch jetzt verh&auml;lt sich das Programm genauso wie in den beiden
+zuvor beschriebenen Beispielen. Diese Variante ist vor allem n&uuml;tzlich,
+wenn die komplette Applikation in einem einzigen jar-Archiv ausgeliefert
+wird und nur eine einzige <a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a>-Methode
+enth&auml;lt. Sie bietet sich beispielsweise f&uuml;r kleinere Programme,
+Beispiel- oder Testapplikationen an (die Demos des JDK sind beispielsweise
+in derartigen jar-Dateien untergebracht). Ist die Konfiguration dagegen
+komplizierter oder gibt es mehr als eine lauff&auml;hige Applikation
+in der jar-Datei, sollte der zuvor beschriebenen Variante der Vorzug
+gegeben werden. 
+
+<!-- Section -->
+
+<a name="sectlevel3id014004002"></a>
+<h3>14.4.2 Einbinden von Ressourcendateien </h3>
+
+<p>
+Wie eingangs erw&auml;hnt, ben&ouml;tigt ein Programm neben den Klassendateien
+meist weitere Dateien mit zus&auml;tzlichen Informationen. Wird auf
+diese ausschlie&szlig;lich lesend zugegriffen, wollen wir sie als
+<a name="ixa100834"><i>Ressourcendateien</i></a> bezeichnen, also
+als Dateien, die dem Programm neben den Klassendateien als zus&auml;tzliche
+Informationslieferanten zur Laufzeit zur Verf&uuml;gung stehen. Die
+Ressourcendateien k&ouml;nnten zwar als separate Dateien ausgeliefert
+und mit den Klassen zur Dateiverarbeitung eingelesen werden (diese
+werden ab <a href="k100127.html#kapitelcharacterstreams">Kapitel 19</a>
+vorgestellt). Das h&auml;tte jedoch den Nachteil, dass sich nicht
+mehr alle ben&ouml;tigten Dateien in einem jar-Archiv befinden w&uuml;rden
+und die Auslieferung dadurch verkompliziert w&uuml;rde. 
+
+<p>
+Gl&uuml;cklicherweise gibt es im JDK die M&ouml;glichkeit, auch Ressourcendateien
+in jar-Archiven unterzubringen und zur Laufzeit daraus einzulesen.
+Mit dem Klassenlader steht das daf&uuml;r erforderliche Werkzeug allen
+Java-Programmen standardm&auml;&szlig;ig zur Verf&uuml;gung. W&auml;hrend
+der Klassenlader normalerweise von der virtuellen Maschine dazu verwendet
+wird, Klassendateien einzulesen, kann er von der Anwendung zum Einlesen
+beliebiger Dateien zweckentfremdet werden. Einzige Bedingung ist,
+dass die Ressourcendateien in einem Verzeichnis stehen, das vom Klassenlader
+erreicht werden kann, das also innerhalb des Klassenpfads liegt. 
+
+<p>
+Dazu kann beispielsweise im Basisverzeichnis der Anwendung ein Unterverzeichnis
+<font color="#660099">resources</font> angelegt werden und die Ressourcendateien
+k&ouml;nnen dort hineinkopiert werden. In unserem Fall w&uuml;rden
+wir also ein Unterverzeichnis <font color="#660099">com\gkrueger\resources</font>
+anlegen. Mit Hilfe der Methode <a name="ixa100835"><a href="index_g.html#ixb100653"><font color=#000080><tt>getResourceAsStream</tt></font></a></a>
+der Klasse <a name="ixa100836"><a href="index_c.html#ixb100654"><font color=#000080><tt>Class</tt></font></a></a>
+(siehe <a href="k100286.html#dieklasseclass">Abschnitt 45.2.2</a>)
+kann ein <a href="index_i.html#ixb100587"><font color=#000080><tt>InputStream</tt></font></a>
+beschafft werden, mit dem die Datei Byte f&uuml;r Byte eingelesen
+werden kann: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public InputStream getResourceAsStream(String name)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/Class.html" onClick="this.href=getApiDoc('java.lang.Class')"><font color="#660066" size=-1>java.lang.Class</font></a></td>
+</tr>
+</table>
+
+<p>
+Als Parameter wird der vollst&auml;ndige Name der Ressourcendatei
+angegeben, allerdings unter Beachtung einiger Besonderheiten. Zun&auml;chst
+werden die einzelnen Paketnamen nicht wie gewohnt durch Punkte, sondern
+durch Schr&auml;gstriche &#187;/&#171; voneinander getrennt (auch
+unter Windows wird dazu nicht der Backslash verwendet). Nur die Dateierweiterung
+wird wie &uuml;blich hinter einem Punkt angegeben. Zudem muss als
+erstes Zeichen ebenfalls ein Schr&auml;gstrich angegeben werden. Soll
+also beispielsweise die Datei <font color="#660099">hello.txt</font>
+aus dem Ressourcenverzeichnis geladen werden, so lautet der an <a href="index_g.html#ixb100653"><font color=#000080><tt>getResourceAsStream</tt></font></a>
+zu &uuml;bergebende Dateiname <font color="#660099">/com/gkrueger/resources/hello.txt</font>.
+
+<p>
+Das folgende Listing zeigt eine einfache Methode, in der die angesprochenen
+Regeln implementiert werden. Sie beschafft zu einer beliebigen Datei,
+die sich in einem vorgegebenen Ressource-Verzeichnis befindet, das
+innerhalb des Klassenpfads liegt, einen <a href="index_i.html#ixb100587"><font color=#000080><tt>InputStream</tt></font></a>,
+mit dem die darin enthaltenen Daten eingelesen werden k&ouml;nnen:
+<a name="listingid014007"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">private</font> InputStream getResourceStream(String pkgname, String fname)
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  String resname = <font color="#0000FF">"/"</font> + pkgname.replace(<font color="#0000FF">'.'</font>, <font color="#0000FF">'/'</font>) + <font color="#0000FF">"/"</font> + fname;
+<font color="#555555">004 </font>  Class clazz = getClass();
+<font color="#555555">005 </font>  InputStream is = clazz.getResourceAsStream(resname);
+<font color="#555555">006 </font>  <font color="#0000AA">return</font> is;
+<font color="#555555">007 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 14.7: Einen InputStream zu einer Ressourcendatei beschaffen</i></p>
+
+<p>
+Als Argument wird der Paketname (in Punktnotation) und der Name der
+Ressourcendatei angegeben. Den obigen Regeln entsprechend werden beide
+in einen Ressourcen-Namen umgewandelt und an <a href="index_g.html#ixb100653"><font color=#000080><tt>getResourceAsStream</tt></font></a>
+&uuml;bergeben. Diese liefert einen <a href="index_i.html#ixb100587"><font color=#000080><tt>InputStream</tt></font></a>,
+der zum Einlesen der Daten verwendet werden kann. Soll beispielsweise
+eine Text-Ressource in einen <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+geladen werden, kann dazu folgende Methode verwendet werden: 
+<a name="listingid014008"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* TestResource.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#00AA00">//...</font>
+<font color="#555555">007 </font>
+<font color="#555555">008 </font><font color="#0000AA">public</font> String loadTextResource(String pkgname, String fname)
+<font color="#555555">009 </font><font color="#0000AA">throws</font> IOException
+<font color="#555555">010 </font>{
+<font color="#555555">011 </font>  String ret = <font color="#006699">null</font>;
+<font color="#555555">012 </font>  InputStream is = getResourceStream(pkgname, fname);
+<font color="#555555">013 </font>  <font color="#0000AA">if</font> (is != <font color="#006699">null</font>) {
+<font color="#555555">014 </font>    StringBuffer sb = <font color="#0000AA">new</font> StringBuffer();
+<font color="#555555">015 </font>    <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">016 </font>      <font color="#006699">int</font> c = is.read();
+<font color="#555555">017 </font>      <font color="#0000AA">if</font> (c == -1) {
+<font color="#555555">018 </font>        <font color="#0000AA">break</font>;
+<font color="#555555">019 </font>      }
+<font color="#555555">020 </font>      sb.append((<font color="#006699">char</font>)c);
+<font color="#555555">021 </font>    }
+<font color="#555555">022 </font>    is.close();
+<font color="#555555">023 </font>    ret = sb.toString();
+<font color="#555555">024 </font>  }
+<font color="#555555">025 </font>  <font color="#0000AA">return</font> ret;
+<font color="#555555">026 </font>}
+<font color="#555555">027 </font>
+<font color="#555555">028 </font><font color="#00AA00">//...</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/TestResource.inc"><font color="#000055" size=-1>TestResource.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 14.8: Laden einer Text-Ressource</i></p>
+
+<p>
+Auch das Laden von <a href="index_i.html#ixb100655"><font color=#000080><tt>Image</tt></font></a>-Ressourcen
+(Programm-Icons, Abbildungen etc.) kann auf &auml;hnliche Weise realisiert
+werden: 
+<a name="listingid014009"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* ImageResource.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#00AA00">//...</font>
+<font color="#555555">007 </font>
+<font color="#555555">008 </font><font color="#0000AA">public</font> Image loadImageResource(String pkgname, String fname)
+<font color="#555555">009 </font><font color="#0000AA">throws</font> IOException
+<font color="#555555">010 </font>{
+<font color="#555555">011 </font>  Image ret = <font color="#006699">null</font>;
+<font color="#555555">012 </font>  InputStream is = getResourceStream(pkgname, fname);
+<font color="#555555">013 </font>  <font color="#0000AA">if</font> (is != <font color="#006699">null</font>) {
+<font color="#555555">014 </font>    <font color="#006699">byte</font>[] buffer = <font color="#0000AA">new</font> <font color="#006699">byte</font>[0];
+<font color="#555555">015 </font>    <font color="#006699">byte</font>[] tmpbuf = <font color="#0000AA">new</font> <font color="#006699">byte</font>[1024];
+<font color="#555555">016 </font>    <font color="#0000AA">while</font> (<font color="#006699">true</font>) {
+<font color="#555555">017 </font>      <font color="#006699">int</font> len = is.read(tmpbuf);
+<font color="#555555">018 </font>      <font color="#0000AA">if</font> (len &lt;= 0) {
+<font color="#555555">019 </font>        <font color="#0000AA">break</font>;
+<font color="#555555">020 </font>      }
+<font color="#555555">021 </font>      <font color="#006699">byte</font>[] newbuf = <font color="#0000AA">new</font> <font color="#006699">byte</font>[buffer.length + len];
+<font color="#555555">022 </font>      System.arraycopy(buffer, 0, newbuf, 0, buffer.length);
+<font color="#555555">023 </font>      System.arraycopy(tmpbuf, 0, newbuf, buffer.length, len);
+<font color="#555555">024 </font>      buffer = newbuf;
+<font color="#555555">025 </font>    }
+<font color="#555555">026 </font>    <font color="#00AA00">//create image</font>
+<font color="#555555">027 </font>    ret = Toolkit.getDefaultToolkit().createImage(buffer);
+<font color="#555555">028 </font>    is.close();
+<font color="#555555">029 </font>  }
+<font color="#555555">030 </font>  <font color="#0000AA">return</font> ret;
+<font color="#555555">031 </font>}
+<font color="#555555">032 </font>
+<font color="#555555">033 </font><font color="#00AA00">//...</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/ImageResource.inc"><font color="#000055" size=-1>ImageResource.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 14.9: Laden einer Image-Ressource</i></p>
+
+<p>
+Voraussetzung ist nat&uuml;rlich, dass das Format der in den Puffer
+<font color="#000077"><tt>buffer</tt></font> eingelesenen Datei von
+der Methode <a name="ixa100837"><a href="index_c.html#ixb100656"><font color=#000080><tt>createImage</tt></font></a></a>
+verstanden wird. Beispiele f&uuml;r g&uuml;ltige Formate sind GIF
+oder JPEG. 
+
+<p>
+Der gro&szlig;e Vorteil bei dieser Vorgehensweise ist, dass sie sowohl
+mit separaten Klassendateien funktioniert, als auch, wenn die komplette
+Applikation inklusive der Ressourcendateien innerhalb einer einzigen
+jar-Datei ausgeliefert wird. F&uuml;r die Anwendung selbst ist es
+vollkommen gleichg&uuml;ltig, aus welcher Quelle die Dateien stammen.
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100090.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100093.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100095.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100097.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

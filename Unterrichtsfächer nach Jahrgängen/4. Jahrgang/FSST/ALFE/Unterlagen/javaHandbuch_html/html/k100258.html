@@ -1,0 +1,559 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100257.html;106,k100257.html;107,k100259.html;108,k100263.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100257.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100257.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100259.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100263.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 40 - Applets I
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id040001"></a>
+<h2>40.1 Die Architektur eines Applets </h2>
+<hr>
+<ul>
+<li><a href="k100258.html#sectlevel2id040001">40.1 Die Architektur eines Applets</a>
+<ul>
+<li><a href="k100258.html#sectlevel3id040001001">40.1.1 Grundlagen</a>
+<li><a href="k100258.html#sectlevel3id040001002">40.1.2 Die Klasse java.applet.Applet</a>
+<li><a href="k100258.html#sectlevel3id040001003">40.1.3 Initialisierung und Endebehandlung</a>
+<ul>
+<li><a href="k100258.html#sectlevel4id040001003001">Instanzierung des Applets</a>
+<li><a href="k100258.html#sectlevel4id040001003002">Initialisierung des Applets</a>
+<li><a href="k100258.html#sectlevel4id040001003003">Starten des Applets</a>
+<li><a href="k100258.html#sectlevel4id040001003004">Stoppen des Applets</a>
+<li><a href="k100258.html#sectlevel4id040001003005">Zerst&ouml;ren des Applets</a>
+</ul>
+<li><a href="k100258.html#sectlevel3id040001004">40.1.4 Weitere Methoden der Klasse Applet</a>
+<ul>
+<li><a href="k100258.html#sectlevel4id040001004001">Methoden zum Nachrichtentransfer</a>
+<li><a href="k100258.html#sectlevel4id040001004002">showStatus</a>
+<li><a href="k100258.html#sectlevel4id040001004003">getParameterInfo</a>
+<li><a href="k100258.html#sectlevel4id040001004004">getAppletInfo</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id040001001"></a>
+<h3>40.1.1 Grundlagen </h3>
+
+<p>
+Auf die Funktionsweise und Bedeutung von Applets sind wir schon in
+<a href="k100010.html#einleitungapplets">Abschnitt 1.2.2</a> eingegangen.
+Tats&auml;chlich stand in den ersten Jahren nach Ver&ouml;ffentlichung
+der Sprache f&uuml;r viele Java-Programmierer die Entwicklung von
+Applets im Vordergrund und war einer der Hauptgr&uuml;nde f&uuml;r
+die Besch&auml;ftigung mit der Sprache. 
+
+<p>
+Sp&auml;ter gewann Java dann zunehmend auch als Sprache f&uuml;r die
+Anwendungsentwicklung an Bedeutung und die Programmierung von Applets
+trat mehr und mehr in den Hintergrund. Dennoch werden auch heute noch
+Applets entwickelt und als Java-Programmierer sollte man die dazu
+erforderlichen Techniken beherrschen. 
+
+<p>
+Gl&uuml;cklicherweise unterscheiden sich Applets und Applikationen
+gar nicht so stark voneinander, wie man vermuten k&ouml;nnte. Bis
+auf wenige Ausnahmen werden sie mit denselben Werkzeugen und Techniken
+konstruiert. Vereinfacht kann man sagen, dass Java-Applikationen eigenst&auml;ndige
+Programme sind, die zur Ausf&uuml;hrung den Stand-Alone-Java-Interpreter
+ben&ouml;tigen, w&auml;hrend Java-Applets aus HTML-Seiten heraus aufgerufen
+werden und zur Ausf&uuml;hrung einen Web-Browser ben&ouml;tigen. 
+
+<p>
+Die wichtigsten Unterschiede kann man wie folgt zusammenfassen: 
+<ul>
+<li>Das Hauptprogramm eines Applets wird immer aus der Klasse <a name="ixa102894"><a href="index_a.html#ixb100603"><font color=#000080><tt>Applet</tt></font></a></a>
+abgeleitet. Bei einer Applikation ist es prinzipiell gleichg&uuml;ltig,
+woraus die Hauptklasse abgeleitet wird.
+<li>Eine Applikation wird gestartet, indem vom Java-Interpreter die
+Klassenmethode <a name="ixa102895"><a href="index_m.html#ixb100129"><font color=#000080><tt>main</tt></font></a></a>
+aufgerufen wird. Das Starten eines Applets wird dadurch erreicht,
+dass der Web-Browser die Applet-Klasse instanziert und die Methoden
+<a name="ixa102896"><a href="index_i.html#ixb101826"><font color=#000080><tt>init</tt></font></a></a>
+und <a name="ixa102897"><a href="index_s.html#ixb101113"><font color=#000080><tt>start</tt></font></a></a>
+aufruft.
+<li>Aus Sicherheitsgr&uuml;nden darf ein Applet in der Regel weder
+auf Dateien des lokalen Rechners zugreifen noch externe Programme
+auf diesem starten. Eine Ausnahme bilden <a name="ixa102898"><i>signierte Applets</i></a>.
+F&uuml;r eine Applikation gelten diese Beschr&auml;nkungen nicht.
+<li>Ein Applet arbeitet immer grafik- und ereignisorientiert. Bei
+einer Applikation dagegen ist es m&ouml;glich, auf die Verwendung
+des AWT zu verzichten und alle Ein-/Ausgaben textorientiert zu erledigen.
+</ul>
+
+<p>
+Dieses Kapitel erkl&auml;rt die Grundlagen der Applet-Programmierung
+und erl&auml;utert die Einbindung von Applets in HTML-Dokumente. Es
+baut dabei auf vielen der in den Kapiteln <a href="k100157.html#kapitelgrafikausgabe">24</a>
+bis <a href="k100226.html#kapitelbitmapsanimationen">34</a> des Buchs
+vermittelten AWT-Features auf, ohne deren Kenntnis die Applet-Programmierung
+kaum m&ouml;glich w&auml;re. 
+
+<!-- Section -->
+
+<a name="sectlevel3id040001002"></a>
+<h3>40.1.2 Die Klasse java.applet.Applet </h3>
+
+<p>
+Wie schon erw&auml;hnt, wird das Hauptprogramm eines Applets aus der
+Klasse <a href="index_a.html#ixb100603"><font color=#000080><tt>Applet</tt></font></a>
+des Pakets <a href="index_j.html#ixb100608"><font color=#000080><tt>java.applet</tt></font></a>
+abgeleitet. <a href="index_a.html#ixb100603"><font color=#000080><tt>Applet</tt></font></a>
+ist dabei keine der abstrakten Basisklassen der Java-Klassenbibliothek,
+wie man es vielleicht erwarten w&uuml;rde, sondern eine konkrete Grafikklasse
+am Ende der Klassenhierarchie. <a href="index_a.html#ixb100603"><font color=#000080><tt>Applet</tt></font></a>
+ist aus der Klasse <a href="index_p.html#ixb101295"><font color=#000080><tt>Panel</tt></font></a>
+abgeleitet, diese aus <a href="index_c.html#ixb101294"><font color=#000080><tt>Container</tt></font></a>
+und <a href="index_c.html#ixb101294"><font color=#000080><tt>Container</tt></font></a>
+aus <a href="index_c.html#ixb101293"><font color=#000080><tt>Component</tt></font></a>.
+<a href="k100258.html#appletableitung">Abbildung 40.1</a> stellt die
+Ableitungshierarchie schematisch dar: 
+<p>
+<a name="appletableitung"></a>
+<img src="images/VererbApplet.gif">
+<p>
+
+<p><i>
+Abbildung 40.1: Ableitungsbaum der Applet-Klasse</i></p>
+
+<p>
+Ein Applet ist also ein rechteckiges Bildschirmelement, das eine Gr&ouml;&szlig;e
+und Position hat, Ereignisse empfangen kann und in der Lage ist, grafische
+Ausgaben vorzunehmen. Tats&auml;chlich kommt dies dem Anspruch eines
+Applets nat&uuml;rlich sehr entgegen, ein eigenst&auml;ndiges Programm
+zu sein, das innerhalb eines fensterartigen Ausschnitts in einem grafikf&auml;higen
+Web-Browser l&auml;uft. Durch die Vererbungshierarchie erbt ein Applet
+bereits von seinen Vaterklassen einen gro&szlig;en Teil der F&auml;higkeiten,
+die es zur Ausf&uuml;hrung ben&ouml;tigt. Die &uuml;ber die F&auml;higkeiten
+von <a href="index_c.html#ixb101294"><font color=#000080><tt>Container</tt></font></a>,
+<a href="index_c.html#ixb101293"><font color=#000080><tt>Component</tt></font></a>
+und <a href="index_p.html#ixb101295"><font color=#000080><tt>Panel</tt></font></a>
+hinaus erforderliche Funktionalit&auml;t, die ben&ouml;tigt wird,
+um ein Objekt der Klasse <a href="index_a.html#ixb100603"><font color=#000080><tt>Applet</tt></font></a>
+als Hauptmodul eines eigenst&auml;ndigen Programms laufen zu lassen,
+wird von der Klasse <a href="index_a.html#ixb100603"><font color=#000080><tt>Applet</tt></font></a>
+selbst zur Verf&uuml;gung gestellt. 
+
+<!-- Section -->
+
+<a name="sectlevel3id040001003"></a>
+<h3>40.1.3 Initialisierung und Endebehandlung </h3>
+
+<p>
+Die Kommunikation zwischen einem Applet und seinem Browser l&auml;uft
+auf verschiedenen Ebenen ab. Nach dem Laden wird das Applet zun&auml;chst
+<i>instanziert</i> und dann <i>initialisiert</i>. Anschlie&szlig;end
+wird es gestartet, erh&auml;lt GUI-Events und wird irgendwann wieder
+gestoppt. Schlie&szlig;lich wird das Applet vom Browser nicht mehr
+ben&ouml;tigt und zerst&ouml;rt. 
+
+<p>
+Zu jedem dieser Schritte gibt es eine korrespondierende Methode, die
+vor dem entsprechenden Statuswechsel aufgerufen wird. Die aus <a href="index_a.html#ixb100603"><font color=#000080><tt>Applet</tt></font></a>
+abgeleitete Klasse ist daf&uuml;r verantwortlich, diese Methoden zu
+&uuml;berlagern und mit der erforderlichen Funktionalit&auml;t auszustatten.
+
+
+<!-- Section -->
+<a name="sectlevel4id040001003001"></a>
+<h4>Instanzierung des Applets </h4>
+
+<p>
+Bevor ein Applet aktiv werden kann, muss der Browser zun&auml;chst
+ein Objekt der abgeleiteten <a href="index_a.html#ixb100603"><font color=#000080><tt>Applet</tt></font></a>-Klasse
+instanzieren. Hierzu ruft er den parameterlosen Default-Konstruktor
+der Klasse auf: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Applet()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/applet/Applet.html" onClick="this.href=getApiDoc('java.applet.Applet')"><font color="#660066" size=-1>java.applet.Applet</font></a></td>
+</tr>
+</table>
+
+<p>
+&Uuml;blicherweise wird dieser in der abgeleiteten Klasse nicht &uuml;berlagert,
+sondern von <a href="index_a.html#ixb100603"><font color=#000080><tt>Applet</tt></font></a>
+geerbt. Notwendige Initialisierungen von Membervariablen werden sp&auml;ter
+erledigt. 
+
+<!-- Section -->
+
+<a name="sectlevel4id040001003002"></a>
+<h4>Initialisierung des Applets<a name="ixa102899"></a> </h4>
+
+<p>
+Nach der Instanzierung ruft der Browser die Methode <a name="ixa102900"><a href="index_i.html#ixb101826"><font color=#000080><tt>init</tt></font></a></a>
+auf, um dem Applet die M&ouml;glichkeit zu geben, Initialisierungen
+vorzunehmen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void init()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/applet/Applet.html" onClick="this.href=getApiDoc('java.applet.Applet')"><font color="#660066" size=-1>java.applet.Applet</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_i.html#ixb101826"><font color=#000080><tt>init</tt></font></a>
+wird w&auml;hrend der Lebensdauer eines Applets <i>genau einmal</i>
+aufgerufen, nachdem die Klassendatei geladen und das Applet instanziert
+wurde. Innerhalb von <a href="index_i.html#ixb101826"><font color=#000080><tt>init</tt></font></a>
+k&ouml;nnen Membervariablen initialisiert, Images oder Fonts geladen
+oder Parameter ausgewertet werden. 
+
+<!-- Section -->
+
+<a name="sectlevel4id040001003003"></a>
+<h4>Starten des Applets<a name="ixa102901"></a> </h4>
+
+<p>
+Nachdem die Initialisierung abgeschlossen ist, wird die Methode <a name="ixa102902"><a href="index_s.html#ixb101113"><font color=#000080><tt>start</tt></font></a></a>
+aufgerufen, um die Ausf&uuml;hrung des Applets zu starten: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void start()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/applet/Applet.html" onClick="this.href=getApiDoc('java.applet.Applet')"><font color="#660066" size=-1>java.applet.Applet</font></a></td>
+</tr>
+</table>
+
+<p>
+Im Gegensatz zur Initialisierung kann das Starten eines Applets mehrfach
+erfolgen. Wenn der Browser eine andere Webseite l&auml;dt, wird das
+Applet nicht komplett zerst&ouml;rt, sondern lediglich gestoppt (siehe
+n&auml;chsten Abschnitt). Bei wiederholtem Aufruf der Seite wird es
+dann erneut gestartet und die Methode <a href="index_s.html#ixb101113"><font color=#000080><tt>start</tt></font></a>
+wird noch einmal aufgerufen. 
+
+<!-- Section -->
+
+<a name="sectlevel4id040001003004"></a>
+<h4>Stoppen des Applets<a name="ixa102903"></a> </h4>
+
+<p>
+Durch Aufrufen der Methode <a name="ixa102904"><a href="index_s.html#ixb101118"><font color=#000080><tt>stop</tt></font></a></a>
+zeigt der Browser dem Applet an, dass es gestoppt werden soll: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void stop()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/applet/Applet.html" onClick="this.href=getApiDoc('java.applet.Applet')"><font color="#660066" size=-1>java.applet.Applet</font></a></td>
+</tr>
+</table>
+
+<p>
+Wie erw&auml;hnt, geschieht dies immer dann, wenn eine andere Seite
+geladen wird. W&auml;hrend der Lebensdauer eines Applets k&ouml;nnen
+die Methoden <a href="index_s.html#ixb101113"><font color=#000080><tt>start</tt></font></a>
+und <a href="index_s.html#ixb101118"><font color=#000080><tt>stop</tt></font></a>
+also mehrfach aufgerufen werden. Keinesfalls darf ein Applet also
+innerhalb von <a href="index_s.html#ixb101118"><font color=#000080><tt>stop</tt></font></a>
+irgendwelche endg&uuml;ltigen Aufr&auml;umarbeiten durchf&uuml;hren
+und Ressourcen entfernen, die es bei einem nachtr&auml;glichen Neustart
+wieder ben&ouml;tigen w&uuml;rde. 
+
+<!-- Section -->
+
+<a name="sectlevel4id040001003005"></a>
+<h4>Zerst&ouml;ren des Applets<a name="ixa102905"></a> </h4>
+
+<p>
+Wenn ein Applet ganz bestimmt nicht mehr gebraucht wird (z.B. weil
+der Browser beendet wird), ruft der Browser die Methode <a name="ixa102906"><a href="index_d.html#ixb100878"><font color=#000080><tt>destroy</tt></font></a></a>
+auf: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void destroy()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/applet/Applet.html" onClick="this.href=getApiDoc('java.applet.Applet')"><font color="#660066" size=-1>java.applet.Applet</font></a></td>
+</tr>
+</table>
+
+<p>
+Diese kann &uuml;berlagert werden, um Aufr&auml;umarbeiten zu erledigen,
+die erforderlich sind, wenn das Applet nicht mehr verwendet wird.
+Eine typische Anwendung von <a href="index_d.html#ixb100878"><font color=#000080><tt>destroy</tt></font></a>
+besteht beispielsweise darin, einen Thread zu zerst&ouml;ren, der
+bei der Initialisierung eines Applets angelegt wurde. 
+
+<!-- Section -->
+
+<a name="sectlevel3id040001004"></a>
+<h3>40.1.4 Weitere Methoden der Klasse Applet </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id040001004001"></a>
+<h4>Methoden zum Nachrichtentransfer </h4>
+
+<p>
+Neben diesen vier speziellen Methoden kann ein Applet alle Nachrichten
+erhalten, die an ein <a href="index_c.html#ixb101293"><font color=#000080><tt>Component</tt></font></a>-Objekt
+versendet werden. Hierzu z&auml;hlen Mouse-, MouseMotion-, Key-, Focus-
+und Component-Events ebenso wie die Aufforderung an das Applet, seine
+Client-Area neu zu zeichnen. Bez&uuml;glich Reaktion auf die Events
+und die Registrierung und Programmierung geeigneter Listener-Klassen
+verh&auml;lt sich ein Applet genauso wie jedes andere Fenster. In
+<a href="k100181.html#kapiteleventhandling">Kapitel 28</a> und <a href="k100185.html#kapitellowlevelevents">Kapitel 29</a>
+wurden die m&ouml;glichen Ereignisse und die Reaktion des Programms
+darauf vorgestellt. 
+
+<!-- Section -->
+
+<a name="sectlevel4id040001004002"></a>
+<h4>showStatus </h4>
+
+<p>
+Mit der Methode <a name="ixa102907"><a href="index_s.html#ixb102162"><font color=#000080><tt>showStatus</tt></font></a></a>
+kann das Applet einen Text in die <a name="ixa102908">Statuszeile des HTML-Browsers</a>
+schreiben, der das Applet ausf&uuml;hrt: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void showStatus(String msg)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/applet/Applet.html" onClick="this.href=getApiDoc('java.applet.Applet')"><font color="#660066" size=-1>java.applet.Applet</font></a></td>
+</tr>
+</table>
+
+<p>
+Das folgende Beispiel zeigt ein sehr einfaches Applet, das den Text
+&#187;Hello, world&#171; auf dem Bildschirm ausgibt und in die Statuszeile
+des Browsers schreibt: 
+<a name="listingid040001"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4001.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.applet.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4001
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Applet
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    showStatus(<font color="#0000FF">"Hello, world"</font>);
+<font color="#555555">012 </font>    g.drawString(<font color="#0000FF">"Hello, world"</font>,10,50);
+<font color="#555555">013 </font>  }
+<font color="#555555">014 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4001.java"><font color="#000055" size=-1>Listing4001.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 40.1: Ein einfaches Applet</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id040001004003"></a>
+<h4>getParameterInfo </h4>
+
+<p>
+Die Klasse <a href="index_a.html#ixb100603"><font color=#000080><tt>Applet</tt></font></a>
+besitzt eine Methode <a name="ixa102909"><a href="index_g.html#ixb102164"><font color=#000080><tt>getParameterInfo</tt></font></a></a>,
+die in abgeleiteten Klassen &uuml;berlagert werden sollte: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public String[][] getParameterInfo()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/applet/Applet.html" onClick="this.href=getApiDoc('java.applet.Applet')"><font color="#660066" size=-1>java.applet.Applet</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_g.html#ixb102164"><font color=#000080><tt>getParameterInfo</tt></font></a>
+kann vom Browser aufgerufen werden, um Informationen &uuml;ber die
+vom Applet akzeptierten Parameter zu erhalten. Der R&uuml;ckgabewert
+von <a href="index_g.html#ixb102164"><font color=#000080><tt>getParameterInfo</tt></font></a>
+ist ein zweidimensionales Array von Strings. Jedes Element des Arrays
+beschreibt einen Parameter des Applets durch ein Subarray mit drei
+Elementen. Das erste Element gibt den Namen des Parameters an, das
+zweite seinen Typ und das dritte eine textuelle Beschreibung des Parameters.
+Die Informationen sollten so gestaltet sein, dass sie f&uuml;r <i>menschliche</i>
+Benutzer verst&auml;ndlich sind; eine programmgesteuerte Verwendung
+ist eigentlich nicht vorgesehen. 
+
+<p>
+Das nachfolgende Listing zeigt eine beispielhafte Implementierung
+der Methode <a href="index_g.html#ixb102164"><font color=#000080><tt>getParameterInfo</tt></font></a>
+f&uuml;r das Applet in <a href="k100259.html#rotweisseschranke">Listing 40.5</a>:
+
+<p>
+<a name="listingid040002"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> String[][] getParameterInfo()
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  String[][] ret = {
+<font color="#555555">004 </font>    {<font color="#0000FF">"redwidth"</font>,<font color="#0000FF">"int"</font>,<font color="#0000FF">"Breite eines roten Segments"</font>},
+<font color="#555555">005 </font>    {<font color="#0000FF">"whitewidth"</font>,<font color="#0000FF">"int"</font>,<font color="#0000FF">"Breite eines weissen Segments"</font>}
+<font color="#555555">006 </font>  };
+<font color="#555555">007 </font>  <font color="#0000AA">return</font> ret;
+<font color="#555555">008 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 40.2: Verwendung von getParameterInfo</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id040001004004"></a>
+<h4>getAppletInfo </h4>
+
+<p>
+&Auml;hnlich der Methode <a href="index_g.html#ixb102164"><font color=#000080><tt>getParameterInfo</tt></font></a>
+gibt es eine Methode <a name="ixa102910"><a href="index_g.html#ixb102165"><font color=#000080><tt>getAppletInfo</tt></font></a></a>,
+mit der die Anwendung Informationen &uuml;ber das Applet zur Verf&uuml;gung
+stellen sollte: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public String getAppletInfo()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/applet/Applet.html" onClick="this.href=getApiDoc('java.applet.Applet')"><font color="#660066" size=-1>java.applet.Applet</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Sprachspezifikation gibt an, dass hier ein String zur&uuml;ckgegeben
+werden sollte, der Angaben zum Applet selbst, zur aktuellen Version
+und zum Autor des Applets macht. Eine beispielhafte Implementierung
+k&ouml;nnte so aussehen: 
+<a name="listingid040003"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> String getAppletInfo()
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  <font color="#0000AA">return</font> <font color="#0000FF">"AppletBeispiel Ver. 1.0 (C) 1997-2011 Guido Krueger"</font>;
+<font color="#555555">004 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 40.3: Die Methode getAppletInfo</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100257.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100257.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100259.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100263.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

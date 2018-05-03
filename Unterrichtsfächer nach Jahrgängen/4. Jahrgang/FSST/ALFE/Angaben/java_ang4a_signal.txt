@@ -1,0 +1,35 @@
+
+  Java - Aufgabe 4a      
+  -----------------
+  
+  Erstelle die Java Applikation "Signale.java"
+  mit folgenden Hilfsklassen
+  
+  Klasse " Analyse" mit den Methoden 
+           mittel(...),max(..),min(..),
+		   ass(..) "Amplitude-Spitze-Spitze",
+		   rms(..) "Root-Mean-Square (echter Effektivwert)" 
+		 
+  Klasse " Generator" mit den Methoden 
+           sinus(...) , rechteck(..), random(..), ...       
+		   und einem Konstruktor mit der Angabe der 
+		   Anzahl der Samples (Feldgröße)   
+		   sowie der Möglichkeit der Überlagerung der Signale
+		   
+  
+           Formel zur Berechnung der Sinussamples :   
+              s[i]=am*sin(2*PI*i*fn/n + PI*phi/180)  
+		
+           Hinweis :  Ausführung der Methoden von Generator 
+           entweder Samplearray(Referenz) als Parameter 
+                   public void sinus(float am, float fn, float phi, float[] s) 
+           oder Samplearray(Referenz) als Rückgabewert  
+         	   public float[] sinus(float am, float fn, float phi)   
+    
+    Die Auswahl der Signalform und der Signalparameter erfolgt im Hauptprogramm
+   ( in der Methode main der Hauptklasse "Signale.java" )  
+    über die Konsole, die Berechnung und Ausgabe der Signalwerte als Tabelle und 
+    darunter der Analysewerte ebenso. 
+
+
+

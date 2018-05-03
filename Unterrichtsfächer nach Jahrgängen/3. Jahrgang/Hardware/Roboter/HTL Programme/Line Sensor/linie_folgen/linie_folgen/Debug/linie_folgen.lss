@@ -1,0 +1,746 @@
+
+linie_folgen.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000042c  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .bss          00000008  00800100  00800100  000004a0  2**0
+                  ALLOC
+  2 .stab         000006cc  00000000  00000000  000004a0  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  3 .stabstr      00000085  00000000  00000000  00000b6c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_aranges 00000080  00000000  00000000  00000bf8  2**3
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   000005d8  00000000  00000000  00000c78  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000001da  00000000  00000000  00001250  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000003ae  00000000  00000000  0000142a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  0000013c  00000000  00000000  000017d8  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000001d4  00000000  00000000  00001914  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    000001fe  00000000  00000000  00001ae8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 56 00 	jmp	0xac	; 0xac <__ctors_end>
+   4:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+   8:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+   c:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  10:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  14:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  18:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  1c:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  20:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  24:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  28:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  2c:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  30:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  34:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  38:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  3c:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  40:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  44:	0c 94 ed 00 	jmp	0x1da	; 0x1da <__vector_17>
+  48:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  4c:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  50:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  54:	0c 94 cb 00 	jmp	0x196	; 0x196 <__vector_21>
+  58:	0c 94 d6 00 	jmp	0x1ac	; 0x1ac <__vector_22>
+  5c:	0c 94 e1 00 	jmp	0x1c2	; 0x1c2 <__vector_23>
+  60:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  64:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  68:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  6c:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  70:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  74:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  78:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  7c:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  80:	0c 94 03 01 	jmp	0x206	; 0x206 <__vector_32>
+  84:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  88:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  8c:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  90:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  94:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  98:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  9c:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  a0:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  a4:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+  a8:	0c 94 73 00 	jmp	0xe6	; 0xe6 <__bad_interrupt>
+
+000000ac <__ctors_end>:
+  ac:	11 24       	eor	r1, r1
+  ae:	1f be       	out	0x3f, r1	; 63
+  b0:	cf ef       	ldi	r28, 0xFF	; 255
+  b2:	da e0       	ldi	r29, 0x0A	; 10
+  b4:	de bf       	out	0x3e, r29	; 62
+  b6:	cd bf       	out	0x3d, r28	; 61
+
+000000b8 <__do_copy_data>:
+  b8:	11 e0       	ldi	r17, 0x01	; 1
+  ba:	a0 e0       	ldi	r26, 0x00	; 0
+  bc:	b1 e0       	ldi	r27, 0x01	; 1
+  be:	ec e2       	ldi	r30, 0x2C	; 44
+  c0:	f4 e0       	ldi	r31, 0x04	; 4
+  c2:	02 c0       	rjmp	.+4      	; 0xc8 <__do_copy_data+0x10>
+  c4:	05 90       	lpm	r0, Z+
+  c6:	0d 92       	st	X+, r0
+  c8:	a0 30       	cpi	r26, 0x00	; 0
+  ca:	b1 07       	cpc	r27, r17
+  cc:	d9 f7       	brne	.-10     	; 0xc4 <__do_copy_data+0xc>
+
+000000ce <__do_clear_bss>:
+  ce:	11 e0       	ldi	r17, 0x01	; 1
+  d0:	a0 e0       	ldi	r26, 0x00	; 0
+  d2:	b1 e0       	ldi	r27, 0x01	; 1
+  d4:	01 c0       	rjmp	.+2      	; 0xd8 <.do_clear_bss_start>
+
+000000d6 <.do_clear_bss_loop>:
+  d6:	1d 92       	st	X+, r1
+
+000000d8 <.do_clear_bss_start>:
+  d8:	a8 30       	cpi	r26, 0x08	; 8
+  da:	b1 07       	cpc	r27, r17
+  dc:	e1 f7       	brne	.-8      	; 0xd6 <.do_clear_bss_loop>
+  de:	0e 94 a8 01 	call	0x350	; 0x350 <main>
+  e2:	0c 94 14 02 	jmp	0x428	; 0x428 <_exit>
+
+000000e6 <__bad_interrupt>:
+  e6:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+000000ea <init>:
+int ADCDiffernz;
+
+
+void init (void)
+{
+	MCUCR = MCUCR|(1<<JTD);					//JTAG disable
+  ea:	85 b7       	in	r24, 0x35	; 53
+  ec:	80 68       	ori	r24, 0x80	; 128
+  ee:	85 bf       	out	0x35, r24	; 53
+	MCUCR = MCUCR|(1<<JTD);
+  f0:	85 b7       	in	r24, 0x35	; 53
+  f2:	80 68       	ori	r24, 0x80	; 128
+  f4:	85 bf       	out	0x35, r24	; 53
+	
+	CLKPR = 0x80;							//Ändern des internen CLK-Prescalers
+  f6:	e1 e6       	ldi	r30, 0x61	; 97
+  f8:	f0 e0       	ldi	r31, 0x00	; 0
+  fa:	80 e8       	ldi	r24, 0x80	; 128
+  fc:	80 83       	st	Z, r24
+	CLKPR = 0x01;							//16 Mhz :2 = 8 MHz 
+  fe:	81 e0       	ldi	r24, 0x01	; 1
+ 100:	80 83       	st	Z, r24
+
+///////////////////////////// Motoren /////////////////////////////////////////////////
+
+/////////// Ports /////////////////
+	DDRB = DDRB | (1<<DDB6);				//PB6 als Ausgang (normaler IO-Pin), linkes Rad
+ 102:	26 9a       	sbi	0x04, 6	; 4
+	DDRD = DDRD | (1<<DDD0);				//PD0 als Ausgang (OC0B), rechtes Rad
+ 104:	50 9a       	sbi	0x0a, 0	; 10
+	DDRF = DDRF | (1<<DDF5);				//PF5 als Ausgang (Motor Driver Enable)
+ 106:	85 9a       	sbi	0x10, 5	; 16
+
+/////////// Timer 0 Fast PWM /////////////////	
+	TCCR0A = TCCR0A | (1<<WGM00);
+ 108:	84 b5       	in	r24, 0x24	; 36
+ 10a:	81 60       	ori	r24, 0x01	; 1
+ 10c:	84 bd       	out	0x24, r24	; 36
+	TCCR0A = TCCR0A | (1<<WGM01);
+ 10e:	84 b5       	in	r24, 0x24	; 36
+ 110:	82 60       	ori	r24, 0x02	; 2
+ 112:	84 bd       	out	0x24, r24	; 36
+	TCCR0B = TCCR0B &~(1<<WGM02);			//WGM2:0=3		Fast PWM
+ 114:	85 b5       	in	r24, 0x25	; 37
+ 116:	87 7f       	andi	r24, 0xF7	; 247
+ 118:	85 bd       	out	0x25, r24	; 37
+
+	TCCR0A = TCCR0A &~(1<<COM0A0);
+ 11a:	84 b5       	in	r24, 0x24	; 36
+ 11c:	8f 7b       	andi	r24, 0xBF	; 191
+ 11e:	84 bd       	out	0x24, r24	; 36
+	TCCR0A = TCCR0A | (1<<COM0A1);			//COM1:2=2      Non Inverting, für links (PB6/normaler IO-Pin)
+ 120:	84 b5       	in	r24, 0x24	; 36
+ 122:	80 68       	ori	r24, 0x80	; 128
+ 124:	84 bd       	out	0x24, r24	; 36
+	
+	TCCR0A = TCCR0A &~(1<<COM0B0);
+ 126:	84 b5       	in	r24, 0x24	; 36
+ 128:	8f 7e       	andi	r24, 0xEF	; 239
+ 12a:	84 bd       	out	0x24, r24	; 36
+	TCCR0A = TCCR0A | (1<<COM0B1);			//COM1:2=2      Non Inverting, für rechts (PD0/OC0B)
+ 12c:	84 b5       	in	r24, 0x24	; 36
+ 12e:	80 62       	ori	r24, 0x20	; 32
+ 130:	84 bd       	out	0x24, r24	; 36
+	
+	TCCR0B = TCCR0B|(1<<CS01);				//:8 Teiler, startet die PWM, fPWM_Interrupt = fquarz/(Teiler*256) = 3.9 kHz (besser wären 2kHz)
+ 132:	85 b5       	in	r24, 0x25	; 37
+ 134:	82 60       	ori	r24, 0x02	; 2
+ 136:	85 bd       	out	0x25, r24	; 37
+	
+	TIMSK0 = TIMSK0|(1<<OCIE0A)|(1<<OCIE0B)|(1<<TOIE0);//Interrupts freigeben
+ 138:	ee e6       	ldi	r30, 0x6E	; 110
+ 13a:	f0 e0       	ldi	r31, 0x00	; 0
+ 13c:	80 81       	ld	r24, Z
+ 13e:	87 60       	ori	r24, 0x07	; 7
+ 140:	80 83       	st	Z, r24
+	sei();
+ 142:	78 94       	sei
+
+
+///////////////////////////// LEDs /////////////////////////////////////////////////
+
+//	DDRB = DDRB | (1<<DDB7);				//PB7 LED front left   ist durch PWM (OC0A) "verseucht"
+	DDRD = DDRD | (1<<DDD2);				//PD2 LED front right
+ 144:	52 9a       	sbi	0x0a, 2	; 10
+	DDRB = DDRB | (1<<DDB3);				//PB3 LED back left
+ 146:	23 9a       	sbi	0x04, 3	; 4
+//	DDRx = DDRx | (1<<DDxy);				//P-- LED back right    nicht beschaltet
+	DDRB = DDRB | (1<<DDB1);				//PB1 LED line sensor	
+ 148:	21 9a       	sbi	0x04, 1	; 4
+
+	TIMSK3 = TIMSK3 | (1<<OCIE3A);			//Timer_3 CompareA Interrupt freigeben
+ 14a:	e1 e7       	ldi	r30, 0x71	; 113
+ 14c:	f0 e0       	ldi	r31, 0x00	; 0
+ 14e:	80 81       	ld	r24, Z
+ 150:	82 60       	ori	r24, 0x02	; 2
+ 152:	80 83       	st	Z, r24
+	OCR3A = 781;							//Endwert für 100 ms (Teiler :1024)
+ 154:	8d e0       	ldi	r24, 0x0D	; 13
+ 156:	93 e0       	ldi	r25, 0x03	; 3
+ 158:	90 93 99 00 	sts	0x0099, r25
+ 15c:	80 93 98 00 	sts	0x0098, r24
+	sei();	
+ 160:	78 94       	sei
+
+	PORTB = PORTB|(1<<PORTB7)|(1<<PORTB3)|(1<<PORTB1);		//alle LEDs aus
+ 162:	25 b1       	in	r18, 0x05	; 5
+ 164:	2a 68       	ori	r18, 0x8A	; 138
+ 166:	25 b9       	out	0x05, r18	; 5
+	PORTD = PORTD|(1<<PORTD2);								//alle LEDs aus
+ 168:	5a 9a       	sbi	0x0b, 2	; 11
+
+
+///////////////////////////// Beep /////////////////////////////////////////////////
+  	DDRB = DDRB | (1<<DDB5);				//PB5 als Ausgang (Lautsprecher)
+ 16a:	25 9a       	sbi	0x04, 5	; 4
+	 
+	TIMSK1 = TIMSK1 | (1<<OCIE1A);			//Timer_1 CompareA Interrupt freigeben
+ 16c:	ef e6       	ldi	r30, 0x6F	; 111
+ 16e:	f0 e0       	ldi	r31, 0x00	; 0
+ 170:	20 81       	ld	r18, Z
+ 172:	22 60       	ori	r18, 0x02	; 2
+ 174:	20 83       	st	Z, r18
+	OCR1A = 781;							//Endwert für 100 ms (Teiler :1024)
+ 176:	90 93 89 00 	sts	0x0089, r25
+ 17a:	80 93 88 00 	sts	0x0088, r24
+	sei();
+ 17e:	78 94       	sei
+
+///////////////////////////// Line Sensor /////////////////////////////////////////////////
+	DDRF = DDRF&~(1<<DDF0)&~(1<<DDF1);		//PF0/ADC0 line sensor left und PF1/ADC1 line sensor right als INPUT
+ 180:	80 b3       	in	r24, 0x10	; 16
+ 182:	8c 7f       	andi	r24, 0xFC	; 252
+ 184:	80 bb       	out	0x10, r24	; 16
+	DDRB = DDRB | (1<<DDB1);				//PB1 LED Line Sensor OUTPUT
+ 186:	21 9a       	sbi	0x04, 1	; 4
+	
+	PORTB = PORTB&~(1<<PORTB1);									//LED Line Sensor ON
+ 188:	29 98       	cbi	0x05, 1	; 5
+	ADCSRA = ADCSRA|(1<<ADEN)|(1<<ADPS2)|(1<<ADPS1);			//Wandler ein,:64 Teiler
+ 18a:	ea e7       	ldi	r30, 0x7A	; 122
+ 18c:	f0 e0       	ldi	r31, 0x00	; 0
+ 18e:	80 81       	ld	r24, Z
+ 190:	86 68       	ori	r24, 0x86	; 134
+ 192:	80 83       	st	Z, r24
+}
+ 194:	08 95       	ret
+
+00000196 <__vector_21>:
+
+// Interrupts für Fast PWM auf beliebigen Portpins
+ISR(TIMER0_COMPA_vect)
+{
+ 196:	1f 92       	push	r1
+ 198:	0f 92       	push	r0
+ 19a:	0f b6       	in	r0, 0x3f	; 63
+ 19c:	0f 92       	push	r0
+ 19e:	11 24       	eor	r1, r1
+	PORTB = PORTB &~ (1<<PORTB6);			//Motor links (PB6)
+ 1a0:	2e 98       	cbi	0x05, 6	; 5
+}
+ 1a2:	0f 90       	pop	r0
+ 1a4:	0f be       	out	0x3f, r0	; 63
+ 1a6:	0f 90       	pop	r0
+ 1a8:	1f 90       	pop	r1
+ 1aa:	18 95       	reti
+
+000001ac <__vector_22>:
+
+ISR(TIMER0_COMPB_vect)
+{
+ 1ac:	1f 92       	push	r1
+ 1ae:	0f 92       	push	r0
+ 1b0:	0f b6       	in	r0, 0x3f	; 63
+ 1b2:	0f 92       	push	r0
+ 1b4:	11 24       	eor	r1, r1
+	PORTD = PORTD &~ (1<<PORTD0);			//Motor rechts (PD0/OC0B)
+ 1b6:	58 98       	cbi	0x0b, 0	; 11
+}   
+ 1b8:	0f 90       	pop	r0
+ 1ba:	0f be       	out	0x3f, r0	; 63
+ 1bc:	0f 90       	pop	r0
+ 1be:	1f 90       	pop	r1
+ 1c0:	18 95       	reti
+
+000001c2 <__vector_23>:
+
+ISR(TIMER0_OVF_vect)
+{
+ 1c2:	1f 92       	push	r1
+ 1c4:	0f 92       	push	r0
+ 1c6:	0f b6       	in	r0, 0x3f	; 63
+ 1c8:	0f 92       	push	r0
+ 1ca:	11 24       	eor	r1, r1
+	PORTB = PORTB | (1<<PORTB6);			//Motor links
+ 1cc:	2e 9a       	sbi	0x05, 6	; 5
+	PORTD = PORTD | (1<<PORTD0);			//Motor rechts
+ 1ce:	58 9a       	sbi	0x0b, 0	; 11
+}
+ 1d0:	0f 90       	pop	r0
+ 1d2:	0f be       	out	0x3f, r0	; 63
+ 1d4:	0f 90       	pop	r0
+ 1d6:	1f 90       	pop	r1
+ 1d8:	18 95       	reti
+
+000001da <__vector_17>:
+
+
+ISR (TIMER1_COMPA_vect)						// Beeper
+{	
+ 1da:	1f 92       	push	r1
+ 1dc:	0f 92       	push	r0
+ 1de:	0f b6       	in	r0, 0x3f	; 63
+ 1e0:	0f 92       	push	r0
+ 1e2:	11 24       	eor	r1, r1
+ 1e4:	8f 93       	push	r24
+ 1e6:	9f 93       	push	r25
+	TCNT1 = 0x0000;
+ 1e8:	10 92 85 00 	sts	0x0085, r1
+ 1ec:	10 92 84 00 	sts	0x0084, r1
+	PORTB = PORTB^(1<<PORTB5);				//PB5 Lautsprecher aus/ein
+ 1f0:	95 b1       	in	r25, 0x05	; 5
+ 1f2:	80 e2       	ldi	r24, 0x20	; 32
+ 1f4:	89 27       	eor	r24, r25
+ 1f6:	85 b9       	out	0x05, r24	; 5
+}	
+ 1f8:	9f 91       	pop	r25
+ 1fa:	8f 91       	pop	r24
+ 1fc:	0f 90       	pop	r0
+ 1fe:	0f be       	out	0x3f, r0	; 63
+ 200:	0f 90       	pop	r0
+ 202:	1f 90       	pop	r1
+ 204:	18 95       	reti
+
+00000206 <__vector_32>:
+
+
+ISR (TIMER3_COMPA_vect)						//blinken
+{	
+ 206:	1f 92       	push	r1
+ 208:	0f 92       	push	r0
+ 20a:	0f b6       	in	r0, 0x3f	; 63
+ 20c:	0f 92       	push	r0
+ 20e:	11 24       	eor	r1, r1
+ 210:	8f 93       	push	r24
+ 212:	9f 93       	push	r25
+	TCNT3 = 0x0000;
+ 214:	10 92 95 00 	sts	0x0095, r1
+ 218:	10 92 94 00 	sts	0x0094, r1
+	PORTB = PORTB^((1<<PORTB3)|(1<<PORTB1));//LEDs aus/ein
+ 21c:	95 b1       	in	r25, 0x05	; 5
+ 21e:	8a e0       	ldi	r24, 0x0A	; 10
+ 220:	89 27       	eor	r24, r25
+ 222:	85 b9       	out	0x05, r24	; 5
+	PORTD = PORTD^(1<<PORTD2);				//LEDs aus/ein
+ 224:	9b b1       	in	r25, 0x0b	; 11
+ 226:	84 e0       	ldi	r24, 0x04	; 4
+ 228:	89 27       	eor	r24, r25
+ 22a:	8b b9       	out	0x0b, r24	; 11
+}			
+ 22c:	9f 91       	pop	r25
+ 22e:	8f 91       	pop	r24
+ 230:	0f 90       	pop	r0
+ 232:	0f be       	out	0x3f, r0	; 63
+ 234:	0f 90       	pop	r0
+ 236:	1f 90       	pop	r1
+ 238:	18 95       	reti
+
+0000023a <beep>:
+	
+
+	
+void beep (char ein)
+{
+	if (ein == 1)
+ 23a:	81 30       	cpi	r24, 0x01	; 1
+ 23c:	31 f4       	brne	.+12     	; 0x24a <beep+0x10>
+		{TCCR1B = TCCR1B|(1<<CS12)|(1<<CS10);}				//Timer1 :1024 Teiler => dt=1024/8MHz=128µs
+ 23e:	e1 e8       	ldi	r30, 0x81	; 129
+ 240:	f0 e0       	ldi	r31, 0x00	; 0
+ 242:	80 81       	ld	r24, Z
+ 244:	85 60       	ori	r24, 0x05	; 5
+ 246:	80 83       	st	Z, r24
+ 248:	08 95       	ret
+	else
+	{
+		TCCR1B = TCCR1B&~(1<<CS12)&~(1<<CS11)&~(1<<CS10);	//Timer1 stop
+ 24a:	e1 e8       	ldi	r30, 0x81	; 129
+ 24c:	f0 e0       	ldi	r31, 0x00	; 0
+ 24e:	80 81       	ld	r24, Z
+ 250:	88 7f       	andi	r24, 0xF8	; 248
+ 252:	80 83       	st	Z, r24
+		PORTB = PORTB &~ (1<<PORTB5);						//Lautsprecher aus
+ 254:	2d 98       	cbi	0x05, 5	; 5
+ 256:	08 95       	ret
+
+00000258 <blink>:
+
+
+	
+void blink (char ein)
+{
+	if (ein == 1)
+ 258:	81 30       	cpi	r24, 0x01	; 1
+ 25a:	31 f4       	brne	.+12     	; 0x268 <blink+0x10>
+		{TCCR3B = TCCR3B|(1<<CS32)|(1<<CS30);}				//Timer3 :1024 Teiler => dt=1024/8MHz=128µs
+ 25c:	e1 e9       	ldi	r30, 0x91	; 145
+ 25e:	f0 e0       	ldi	r31, 0x00	; 0
+ 260:	80 81       	ld	r24, Z
+ 262:	85 60       	ori	r24, 0x05	; 5
+ 264:	80 83       	st	Z, r24
+ 266:	08 95       	ret
+	else
+	{
+		TCCR3B = TCCR3B&~(1<<CS32)&~(1<<CS31)&~(1<<CS30);	//Timer3 stop
+ 268:	e1 e9       	ldi	r30, 0x91	; 145
+ 26a:	f0 e0       	ldi	r31, 0x00	; 0
+ 26c:	80 81       	ld	r24, Z
+ 26e:	88 7f       	andi	r24, 0xF8	; 248
+ 270:	80 83       	st	Z, r24
+		PORTB = PORTB|(1<<PORTB3)|(1<<PORTB1);				//alle LEDs aus
+ 272:	85 b1       	in	r24, 0x05	; 5
+ 274:	8a 60       	ori	r24, 0x0A	; 10
+ 276:	85 b9       	out	0x05, r24	; 5
+		PORTD = PORTD|(1<<PORTD2);							//alle LEDs aus
+ 278:	5a 9a       	sbi	0x0b, 2	; 11
+ 27a:	08 95       	ret
+
+0000027c <drive>:
+
+
+	 
+void drive (unsigned char speed_left, unsigned char speed_right, unsigned char start_stop)
+{
+	OCR0B = speed_right;					//Geschwindigkeit links (0xFF vollgas vor, 0x00 vollgas retout, 0x80 stopp)
+ 27c:	68 bd       	out	0x28, r22	; 40
+	OCR0A = speed_left;						//Geschwindigkeit rechts (0xFF vollgas vor, 0x00 vollgas retout, 0x80 stopp)
+ 27e:	87 bd       	out	0x27, r24	; 39
+
+	if (start_stop == 1)
+ 280:	41 30       	cpi	r20, 0x01	; 1
+ 282:	11 f4       	brne	.+4      	; 0x288 <drive+0xc>
+	{PORTF = PORTF | (1<<PORTF5);}			//Motor Driver Enable => Start
+ 284:	8d 9a       	sbi	0x11, 5	; 17
+ 286:	08 95       	ret
+	else
+	{PORTF = PORTF &~(1<<PORTF5);}			//Motor Driver Disable => Stopp
+ 288:	8d 98       	cbi	0x11, 5	; 17
+ 28a:	08 95       	ret
+
+0000028c <Linie_ADCs>:
+}
+
+
+
+void Linie_ADCs (unsigned int *data)
+{
+ 28c:	cf 93       	push	r28
+ 28e:	df 93       	push	r29
+ 290:	dc 01       	movw	r26, r24
+		ADMUX  = ADMUX |(1<<REFS0);									//Vref=AVCC, rechtsbündig, ADC0/PF0 Line Sensor Left
+ 292:	ec e7       	ldi	r30, 0x7C	; 124
+ 294:	f0 e0       	ldi	r31, 0x00	; 0
+ 296:	80 81       	ld	r24, Z
+ 298:	80 64       	ori	r24, 0x40	; 64
+ 29a:	80 83       	st	Z, r24
+		ADMUX  = ADMUX&~(1<<MUX0);
+ 29c:	80 81       	ld	r24, Z
+ 29e:	8e 7f       	andi	r24, 0xFE	; 254
+ 2a0:	80 83       	st	Z, r24
+		ADCSRA = ADCSRA | (1<<ADSC);								//Start Wandlung
+ 2a2:	ea e7       	ldi	r30, 0x7A	; 122
+ 2a4:	f0 e0       	ldi	r31, 0x00	; 0
+ 2a6:	80 81       	ld	r24, Z
+ 2a8:	80 64       	ori	r24, 0x40	; 64
+ 2aa:	80 83       	st	Z, r24
+		while(!(ADCSRA & (1<<ADIF)));								//warten bis Wandlung fertig ist
+ 2ac:	80 81       	ld	r24, Z
+ 2ae:	84 ff       	sbrs	r24, 4
+ 2b0:	fd cf       	rjmp	.-6      	; 0x2ac <Linie_ADCs+0x20>
+		ADCSRA = ADCSRA | (1<<ADIF);								//Clear ADIF
+ 2b2:	ea e7       	ldi	r30, 0x7A	; 122
+ 2b4:	f0 e0       	ldi	r31, 0x00	; 0
+ 2b6:	80 81       	ld	r24, Z
+ 2b8:	80 61       	ori	r24, 0x10	; 16
+ 2ba:	80 83       	st	Z, r24
+		data[0] = ADCL + (ADCH<<8);									//Wert Line Sensor Left
+ 2bc:	20 91 78 00 	lds	r18, 0x0078
+ 2c0:	30 91 79 00 	lds	r19, 0x0079
+ 2c4:	93 2f       	mov	r25, r19
+ 2c6:	80 e0       	ldi	r24, 0x00	; 0
+ 2c8:	82 0f       	add	r24, r18
+ 2ca:	91 1d       	adc	r25, r1
+ 2cc:	11 96       	adiw	r26, 0x01	; 1
+ 2ce:	9c 93       	st	X, r25
+ 2d0:	8e 93       	st	-X, r24
+	
+		ADMUX  = ADMUX |(1<<REFS0)|(1<<MUX0);						//Vref=AVCC, rechtsbündig, ADC1/PF1 Line Sensor Right
+ 2d2:	cc e7       	ldi	r28, 0x7C	; 124
+ 2d4:	d0 e0       	ldi	r29, 0x00	; 0
+ 2d6:	88 81       	ld	r24, Y
+ 2d8:	81 64       	ori	r24, 0x41	; 65
+ 2da:	88 83       	st	Y, r24
+		ADCSRA = ADCSRA | (1<<ADSC);								//Start Wandlung
+ 2dc:	80 81       	ld	r24, Z
+ 2de:	80 64       	ori	r24, 0x40	; 64
+ 2e0:	80 83       	st	Z, r24
+		while(!(ADCSRA & (1<<ADIF)));								//warten bis Wandlung fertig ist
+ 2e2:	80 81       	ld	r24, Z
+ 2e4:	84 ff       	sbrs	r24, 4
+ 2e6:	fd cf       	rjmp	.-6      	; 0x2e2 <Linie_ADCs+0x56>
+		ADCSRA = ADCSRA | (1<<ADIF);								//Clear ADIF
+ 2e8:	ea e7       	ldi	r30, 0x7A	; 122
+ 2ea:	f0 e0       	ldi	r31, 0x00	; 0
+ 2ec:	80 81       	ld	r24, Z
+ 2ee:	80 61       	ori	r24, 0x10	; 16
+ 2f0:	80 83       	st	Z, r24
+		data[1] = ADCL + (ADCH<<8);									//Wert Line Sensor Right
+ 2f2:	20 91 78 00 	lds	r18, 0x0078
+ 2f6:	30 91 79 00 	lds	r19, 0x0079
+ 2fa:	93 2f       	mov	r25, r19
+ 2fc:	80 e0       	ldi	r24, 0x00	; 0
+ 2fe:	82 0f       	add	r24, r18
+ 300:	91 1d       	adc	r25, r1
+ 302:	13 96       	adiw	r26, 0x03	; 3
+ 304:	9c 93       	st	X, r25
+ 306:	8e 93       	st	-X, r24
+ 308:	12 97       	sbiw	r26, 0x02	; 2
+}
+ 30a:	df 91       	pop	r29
+ 30c:	cf 91       	pop	r28
+ 30e:	08 95       	ret
+
+00000310 <LineLeft>:
+
+
+void LineLeft(void)
+{
+	speedLeft = speedLeft + 0x0F;
+ 310:	80 91 01 01 	lds	r24, 0x0101
+ 314:	81 5f       	subi	r24, 0xF1	; 241
+ 316:	80 93 01 01 	sts	0x0101, r24
+	if (speedLeft > 0xFE)	{speedLeft=0xFF;}						//Vmax = 0xFF
+ 31a:	8f 3f       	cpi	r24, 0xFF	; 255
+ 31c:	29 f0       	breq	.+10     	; 0x328 <LineLeft+0x18>
+	if (speedLeft < 0xB0)	{speedLeft=0xB0;}						//vmin = 0x80 = STOPP
+ 31e:	80 3b       	cpi	r24, 0xB0	; 176
+ 320:	18 f4       	brcc	.+6      	; 0x328 <LineLeft+0x18>
+ 322:	80 eb       	ldi	r24, 0xB0	; 176
+ 324:	80 93 01 01 	sts	0x0101, r24
+	speedRight = 0xB0;           
+ 328:	80 eb       	ldi	r24, 0xB0	; 176
+ 32a:	80 93 00 01 	sts	0x0100, r24
+}
+ 32e:	08 95       	ret
+
+00000330 <LineRight>:
+
+void LineRight(void)
+{
+	speedRight = speedRight + 0x0F;
+ 330:	80 91 00 01 	lds	r24, 0x0100
+ 334:	81 5f       	subi	r24, 0xF1	; 241
+ 336:	80 93 00 01 	sts	0x0100, r24
+	if (speedRight > 0xFE)	{speedRight=0xFF;}						//vmax = 0xFF
+ 33a:	8f 3f       	cpi	r24, 0xFF	; 255
+ 33c:	29 f0       	breq	.+10     	; 0x348 <LineRight+0x18>
+	if (speedRight < 0xB0)	{speedRight=0xB0;}						//vmin = 0x80 = STOPP
+ 33e:	80 3b       	cpi	r24, 0xB0	; 176
+ 340:	18 f4       	brcc	.+6      	; 0x348 <LineRight+0x18>
+ 342:	80 eb       	ldi	r24, 0xB0	; 176
+ 344:	80 93 00 01 	sts	0x0100, r24
+	speedLeft = 0xB0;           
+ 348:	80 eb       	ldi	r24, 0xB0	; 176
+ 34a:	80 93 01 01 	sts	0x0101, r24
+}
+ 34e:	08 95       	ret
+
+00000350 <main>:
+int main (void)
+{
+	unsigned char j;	//Hilfsvariable
+	int i;				//Abweichung der ADC Messung
+	
+	init();
+ 350:	0e 94 75 00 	call	0xea	; 0xea <init>
+	
+	beep(1);								//1=Beep starten
+ 354:	81 e0       	ldi	r24, 0x01	; 1
+ 356:	0e 94 1d 01 	call	0x23a	; 0x23a <beep>
+	blink(1);								//1=blinken starten
+ 35a:	81 e0       	ldi	r24, 0x01	; 1
+ 35c:	0e 94 2c 01 	call	0x258	; 0x258 <blink>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 360:	8f ef       	ldi	r24, 0xFF	; 255
+ 362:	93 ed       	ldi	r25, 0xD3	; 211
+ 364:	a0 e3       	ldi	r26, 0x30	; 48
+ 366:	81 50       	subi	r24, 0x01	; 1
+ 368:	90 40       	sbci	r25, 0x00	; 0
+ 36a:	a0 40       	sbci	r26, 0x00	; 0
+ 36c:	e1 f7       	brne	.-8      	; 0x366 <main+0x16>
+ 36e:	00 c0       	rjmp	.+0      	; 0x370 <main+0x20>
+ 370:	00 00       	nop
+	_delay_ms(2000);
+	beep(0);								//0=Beep stoppen
+ 372:	80 e0       	ldi	r24, 0x00	; 0
+ 374:	0e 94 1d 01 	call	0x23a	; 0x23a <beep>
+	blink(0);								//0=blinken stoppen
+ 378:	80 e0       	ldi	r24, 0x00	; 0
+ 37a:	0e 94 2c 01 	call	0x258	; 0x258 <blink>
+	
+	PORTB = PORTB &~(1<<PORTB1);					//LED Line Sensor EIN
+ 37e:	29 98       	cbi	0x05, 1	; 5
+ 380:	1f ef       	ldi	r17, 0xFF	; 255
+	for (j=0;j<255;j++) {Linie_ADCs(Linienwerte);}	//Werte ausführlich lange auslesen, "ADC Warmlauf"
+ 382:	c4 e0       	ldi	r28, 0x04	; 4
+ 384:	d1 e0       	ldi	r29, 0x01	; 1
+ 386:	ce 01       	movw	r24, r28
+ 388:	0e 94 46 01 	call	0x28c	; 0x28c <Linie_ADCs>
+ 38c:	11 50       	subi	r17, 0x01	; 1
+ 38e:	d9 f7       	brne	.-10     	; 0x386 <main+0x36>
+	ADCDiffernz = Linienwerte[0] - Linienwerte[1];	//Diffrenz der ADC-Werte zur Initialiserung als Referenz
+ 390:	80 91 04 01 	lds	r24, 0x0104
+ 394:	90 91 05 01 	lds	r25, 0x0105
+ 398:	20 91 06 01 	lds	r18, 0x0106
+ 39c:	30 91 07 01 	lds	r19, 0x0107
+ 3a0:	82 1b       	sub	r24, r18
+ 3a2:	93 0b       	sbc	r25, r19
+ 3a4:	90 93 03 01 	sts	0x0103, r25
+ 3a8:	80 93 02 01 	sts	0x0102, r24
+	speedLeft = speedRight = 0xE0;					//Startgeschwindigkeit vorwärts
+ 3ac:	80 ee       	ldi	r24, 0xE0	; 224
+ 3ae:	80 93 00 01 	sts	0x0100, r24
+ 3b2:	80 93 01 01 	sts	0x0101, r24
+	
+	while(1)
+	{
+	    Linie_ADCs(Linienwerte);
+ 3b6:	c4 e0       	ldi	r28, 0x04	; 4
+ 3b8:	d1 e0       	ldi	r29, 0x01	; 1
+		i = (Linienwerte[0]-Linienwerte[1])-ADCDiffernz;
+ 3ba:	ee 24       	eor	r14, r14
+ 3bc:	ff 24       	eor	r15, r15
+ 3be:	68 94       	set
+ 3c0:	e1 f8       	bld	r14, 1
+ 3c2:	ec 0e       	add	r14, r28
+ 3c4:	fd 1e       	adc	r15, r29
+				PORTB = PORTB|(1<<PORTB3);			//left Back LED OFF
+				PORTD = PORTD&~(1<<PORTD2);			//right Front LED ON
+			}
+		else
+			{
+				speedLeft = speedRight = 0xE0;
+ 3c6:	10 ee       	ldi	r17, 0xE0	; 224
+	ADCDiffernz = Linienwerte[0] - Linienwerte[1];	//Diffrenz der ADC-Werte zur Initialiserung als Referenz
+	speedLeft = speedRight = 0xE0;					//Startgeschwindigkeit vorwärts
+	
+	while(1)
+	{
+	    Linie_ADCs(Linienwerte);
+ 3c8:	ce 01       	movw	r24, r28
+ 3ca:	0e 94 46 01 	call	0x28c	; 0x28c <Linie_ADCs>
+		i = (Linienwerte[0]-Linienwerte[1])-ADCDiffernz;
+ 3ce:	28 81       	ld	r18, Y
+ 3d0:	39 81       	ldd	r19, Y+1	; 0x01
+ 3d2:	d7 01       	movw	r26, r14
+ 3d4:	8d 91       	ld	r24, X+
+ 3d6:	9c 91       	ld	r25, X
+ 3d8:	11 97       	sbiw	r26, 0x01	; 1
+ 3da:	28 1b       	sub	r18, r24
+ 3dc:	39 0b       	sbc	r19, r25
+ 3de:	80 91 02 01 	lds	r24, 0x0102
+ 3e2:	90 91 03 01 	lds	r25, 0x0103
+ 3e6:	28 1b       	sub	r18, r24
+ 3e8:	39 0b       	sbc	r19, r25
+		if (i>5)
+ 3ea:	26 30       	cpi	r18, 0x06	; 6
+ 3ec:	31 05       	cpc	r19, r1
+ 3ee:	2c f0       	brlt	.+10     	; 0x3fa <main+0xaa>
+			{
+				LineLeft();
+ 3f0:	0e 94 88 01 	call	0x310	; 0x310 <LineLeft>
+				PORTB = PORTB&~(1<<PORTB3);			//left Back LED ON
+ 3f4:	2b 98       	cbi	0x05, 3	; 5
+				PORTD = PORTD| (1<<PORTD2);			//right Front LED OFF
+ 3f6:	5a 9a       	sbi	0x0b, 2	; 11
+ 3f8:	0f c0       	rjmp	.+30     	; 0x418 <main+0xc8>
+			}
+		else if (i<-5)
+ 3fa:	bf ef       	ldi	r27, 0xFF	; 255
+ 3fc:	2b 3f       	cpi	r18, 0xFB	; 251
+ 3fe:	3b 07       	cpc	r19, r27
+ 400:	2c f4       	brge	.+10     	; 0x40c <main+0xbc>
+			{
+				LineRight();
+ 402:	0e 94 98 01 	call	0x330	; 0x330 <LineRight>
+				PORTB = PORTB|(1<<PORTB3);			//left Back LED OFF
+ 406:	2b 9a       	sbi	0x05, 3	; 5
+				PORTD = PORTD&~(1<<PORTD2);			//right Front LED ON
+ 408:	5a 98       	cbi	0x0b, 2	; 11
+ 40a:	06 c0       	rjmp	.+12     	; 0x418 <main+0xc8>
+			}
+		else
+			{
+				speedLeft = speedRight = 0xE0;
+ 40c:	10 93 00 01 	sts	0x0100, r17
+ 410:	10 93 01 01 	sts	0x0101, r17
+				PORTB = PORTB&~(1<<PORTB3);			//left Back LED ON
+ 414:	2b 98       	cbi	0x05, 3	; 5
+				PORTD = PORTD&~(1<<PORTD2);			//right Front LED ON
+ 416:	5a 98       	cbi	0x0b, 2	; 11
+			}
+		drive(speedLeft,speedRight,1);
+ 418:	80 91 01 01 	lds	r24, 0x0101
+ 41c:	60 91 00 01 	lds	r22, 0x0100
+ 420:	41 e0       	ldi	r20, 0x01	; 1
+ 422:	0e 94 3e 01 	call	0x27c	; 0x27c <drive>
+	}
+ 426:	d0 cf       	rjmp	.-96     	; 0x3c8 <main+0x78>
+
+00000428 <_exit>:
+ 428:	f8 94       	cli
+
+0000042a <__stop_program>:
+ 42a:	ff cf       	rjmp	.-2      	; 0x42a <__stop_program>

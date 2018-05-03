@@ -1,0 +1,180 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100307.html;106,k100310.html;107,k100312.html;108,k100313.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100307.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100310.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100312.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100313.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 48 - Netzwerkprogrammierung
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="urldatenlesen"></a>
+<h2>48.4 Daten mit Hilfe der Klasse URL lesen </h2>
+<hr>
+<ul>
+<li><a href="k100311.html#urldatenlesen">48.4 Daten mit Hilfe der Klasse URL lesen</a>
+</ul>
+<hr>
+
+<p>
+Die Klasse <a name="ixa103576"><a href="index_u.html#ixb102209"><font color=#000080><tt>URL</tt></font></a></a>
+wurde bereits in <a href="k100264.html#dieklasseurl">Abschnitt 41.1.1</a>
+behandelt. Neben den dort beschriebenen M&ouml;glichkeiten besitzt
+sie Methoden, um Daten von der Quelle zu lesen, die durch den URL
+adressiert wird: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public final InputStream openStream()
+  throws IOException
+
+public final Object getContent()
+  throws IOException
+
+public URLConnection openConnection()
+  throws IOException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/net/URL.html" onClick="this.href=getApiDoc('java.net.URL')"><font color="#660066" size=-1>java.net.URL</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa103577"><a href="index_o.html#ixb102686"><font color=#000080><tt>openStream</tt></font></a></a>
+wird ein <a href="index_i.html#ixb100587"><font color=#000080><tt>InputStream</tt></font></a>
+geliefert, der wie die Methode <a href="index_g.html#ixb100683"><font color=#000080><tt>getInputStream</tt></font></a>
+der Klasse <a href="index_s.html#ixb100589"><font color=#000080><tt>Socket</tt></font></a>
+zum Lesen der Quelldaten verwendet werden kann. <a name="ixa103578"><a href="index_g.html#ixb102690"><font color=#000080><tt>getContent</tt></font></a></a>
+versucht dar&uuml;ber hinaus, die Daten zu interpretieren. Dazu k&ouml;nnen
+<a name="ixa103579"><i>Content Handler Factories</i></a> registriert
+werden, die beispielsweise Text-, Image- oder Archivdateien interpretieren
+und ein dazu passendes Java-Objekt liefern. Die Methode <a name="ixa103580"><a href="index_o.html#ixb102692"><font color=#000080><tt>openConnection</tt></font></a></a>
+stellt eine Vorstufe von <a href="index_g.html#ixb102690"><font color=#000080><tt>getContent</tt></font></a>
+dar. Sie liefert ein Objekt des Typs <a name="ixa103581"><a href="index_u.html#ixb102693"><font color=#000080><tt>URLConnection</tt></font></a></a>,
+das eine Abstraktion einer protokollspezifischen Verbindung zwischen
+einem Java-Programm und einem URL darstellt. 
+
+<p>
+Als einfaches Beispiel wollen wir uns das folgende Programm <font color="#000077"><tt>SaveURL</tt></font>
+ansehen. Es wird mit einem URL und einer Datei als Argument aufgerufen.
+Mit Hilfe der Klasse <a href="index_u.html#ixb102209"><font color=#000080><tt>URL</tt></font></a>
+stellt das Programm eine Verbindung zur angegebenen URL her und beschafft
+durch Aufruf von <a href="index_o.html#ixb102686"><font color=#000080><tt>openStream</tt></font></a>
+einen <a href="index_i.html#ixb100587"><font color=#000080><tt>InputStream</tt></font></a>.
+Mit seiner Hilfe wird die Quelle gelesen und das Ergebnis in die als
+zweites Argument angegebene Datei geschrieben: 
+<a name="listingid048010"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* SaveURL.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.net.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> SaveURL
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    <font color="#0000AA">if</font> (args.length != 2) {
+<font color="#555555">011 </font>      System.err.println(
+<font color="#555555">012 </font>        <font color="#0000FF">"Usage: java SaveURL &lt;url&gt; &lt;file&gt;"</font>
+<font color="#555555">013 </font>      );
+<font color="#555555">014 </font>      System.exit(1);
+<font color="#555555">015 </font>    }
+<font color="#555555">016 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">017 </font>      URL url = <font color="#0000AA">new</font> URL(args[0]);
+<font color="#555555">018 </font>      OutputStream out = <font color="#0000AA">new</font> FileOutputStream(args[1]);
+<font color="#555555">019 </font>      InputStream in = url.openStream();
+<font color="#555555">020 </font>      <font color="#006699">int</font> len;
+<font color="#555555">021 </font>      <font color="#006699">byte</font>[] b = <font color="#0000AA">new</font> <font color="#006699">byte</font>[100];
+<font color="#555555">022 </font>      <font color="#0000AA">while</font> ((len = in.read(b)) != -1) {
+<font color="#555555">023 </font>        out.write(b, 0, len);
+<font color="#555555">024 </font>      }
+<font color="#555555">025 </font>      out.close();
+<font color="#555555">026 </font>      in.close();
+<font color="#555555">027 </font>    } <font color="#0000AA">catch</font> (MalformedURLException e) {
+<font color="#555555">028 </font>      System.err.println(e.toString());
+<font color="#555555">029 </font>      System.exit(1);
+<font color="#555555">030 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">031 </font>      System.err.println(e.toString());
+<font color="#555555">032 </font>      System.exit(1);
+<font color="#555555">033 </font>    }
+<font color="#555555">034 </font>  }
+<font color="#555555">035 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/SaveURL.java"><font color="#000055" size=-1>SaveURL.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 48.10: Daten von einem URL lesen</i></p>
+
+<p>
+Das Programm kann nun leicht verwendet werden, um den Inhalt beliebiger
+URLs auf der Festplatte abzuspeichern. Die folgenden beiden Aufrufe
+zeigen den Download der Hauptseite des Java-Servers von Oracle und
+das Laden einer Testseite von unserem in <a href="k100310.html#experimentwebserver">Abschnitt 48.3.3</a>
+vorgestellten Webserver: 
+<font color="#000077">
+<pre>
+java SaveURL http://java.oracle.com x.html
+
+java SaveURL http://localhost/index.html y.html
+</pre>
+</font>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100307.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100310.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100312.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100313.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

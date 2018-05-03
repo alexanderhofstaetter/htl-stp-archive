@@ -1,0 +1,211 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100121.html;106,k100122.html;107,k100124.html;108,k100127.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100121.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100122.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100124.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100127.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 18 - Utility-Klassen II
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id018002"></a>
+<h2>18.2 Die Klasse Math </h2>
+<hr>
+<ul>
+<li><a href="k100123.html#sectlevel2id018002">18.2 Die Klasse Math</a>
+<ul>
+<li><a href="k100123.html#sectlevel3id018002001">18.2.1 Winkelfunktionen</a>
+<li><a href="k100123.html#sectlevel3id018002002">18.2.2 Minimum und Maximum</a>
+<li><a href="k100123.html#sectlevel3id018002003">18.2.3 Arithmetik</a>
+<li><a href="k100123.html#sectlevel3id018002004">18.2.4 Runden und Abschneiden</a>
+</ul>
+</ul>
+<hr>
+
+<p>
+Die Klasse <a name="ixa101143"><a href="index_m.html#ixb100444"><font color=#000080><tt>Math</tt></font></a></a>
+aus dem Paket <a href="index_j.html#ixb100196"><font color=#000080><tt>java.lang</tt></font></a>
+enth&auml;lt Methoden zur Flie&szlig;komma-Arithmetik. Alle Methoden
+dieser Klasse sind <a href="index_s.html#ixb100431"><font color=#000080><tt>static</tt></font></a>
+und k&ouml;nnen daher ohne konkretes Objekt verwendet werden. Nachfolgend
+wollen wir die wichtigsten von ihnen auflisten und eine kurze Beschreibung
+ihrer Funktionsweise geben. 
+
+<!-- Section -->
+
+<a name="sectlevel3id018002001"></a>
+<h3>18.2.1 <a name="ixa101144">Winkelfunktionen</a></h3>
+
+<p>
+<a href="index_m.html#ixb100444"><font color=#000080><tt>java.lang.Math</tt></font></a>
+stellt die &uuml;blichen Winkelfunktionen und ihre Umkehrungen zur
+Verf&uuml;gung. Winkelwerte werden dabei im Bogenma&szlig; &uuml;bergeben.
+<a name="ixa101145"></a> <a name="ixa101146"></a> <a name="ixa101147"></a>
+<a name="ixa101148"></a> <a name="ixa101149"></a> <a name="ixa101150"></a>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static double sin(double x)
+public static double cos(double x)
+public static double tan(double x)
+public static double asin(double x)
+public static double acos(double x)
+public static double atan(double x)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/Math.html" onClick="this.href=getApiDoc('java.lang.Math')"><font color="#660066" size=-1>java.lang.Math</font></a></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id018002002"></a>
+<h3>18.2.2 <a name="ixa101151">Minimum und Maximum</a></h3>
+
+<p>
+Die Methoden <a name="ixa101152"><a href="index_m.html#ixb100892"><font color=#000080><tt>min</tt></font></a></a>
+und <a name="ixa101153"><a href="index_m.html#ixb100893"><font color=#000080><tt>max</tt></font></a></a>
+erwarten zwei numerische Werte als Argument und geben das kleinere
+bzw. gr&ouml;&szlig;ere von beiden zur&uuml;ck. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static int min(int a, int b)
+public static long min(long a, long b)
+public static float min(float a, float b)
+public static double min(double a, double b)
+
+public static int max(int a, int b)
+public static long max(long a, long b)
+public static float max(float a, float b)
+public static double max(double a, double b)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/Math.html" onClick="this.href=getApiDoc('java.lang.Math')"><font color="#660066" size=-1>java.lang.Math</font></a></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id018002003"></a>
+<h3>18.2.3 Arithmetik </h3>
+
+<p>
+Die nachfolgend aufgelisteten Methoden dienen zur Berechnung der <a name="ixa101154">Exponentialfunktion</a>
+zur Basis <i>e</i>, zur Berechnung des nat&uuml;rlichen <a name="ixa101155">Logarithmus</a>
+und zur Berechnung der Exponentialfunktion zu einer beliebigen Basis.
+Mit <a href="index_s.html#ixb100445"><font color=#000080><tt>sqrt</tt></font></a>
+kann die Quadratwurzel berechnet werden. <a name="ixa101156"></a>
+<a name="ixa101157"></a> <a name="ixa101158"></a> <a name="ixa101159"></a>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static double exp(double a)
+
+public static double log(double a)
+   throws ArithmeticException
+
+public static double pow(double a, double b)
+   throws ArithmeticException
+
+public static double sqrt(double a)
+   throws ArithmeticException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/Math.html" onClick="this.href=getApiDoc('java.lang.Math')"><font color="#660066" size=-1>java.lang.Math</font></a></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id018002004"></a>
+<h3>18.2.4 <a name="ixa101160">Runden und Abschneiden</a></h3>
+
+<p>
+Mit Hilfe der Methode <a name="ixa101161"><a href="index_a.html#ixb100803"><font color=#000080><tt>abs</tt></font></a></a>
+wird der absolute Betrag eines numerischen Werts bestimmt. <a name="ixa101162"><a href="index_c.html#ixb100900"><font color=#000080><tt>ceil</tt></font></a></a>
+liefert die kleinste ganze Zahl gr&ouml;&szlig;er und <a name="ixa101163"><a href="index_f.html#ixb100901"><font color=#000080><tt>floor</tt></font></a></a>
+die gr&ouml;&szlig;te ganze Zahl kleiner oder gleich dem &uuml;bergebenen
+Argument. Mit Hilfe von <a name="ixa101164"><a href="index_r.html#ixb100902"><font color=#000080><tt>round</tt></font></a></a>
+kann ein Wert gerundet werden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static int abs(int a)
+public static long abs(long a)
+public static float abs(float a)
+public static double abs(double a)
+
+public static double ceil(double a)
+public static double floor(double a)
+public static int round(float a)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/Math.html" onClick="this.href=getApiDoc('java.lang.Math')"><font color="#660066" size=-1>java.lang.Math</font></a></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100121.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100122.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100124.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100127.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100193.html;106,k100194.html;107,k100196.html;108,k100202.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100193.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100194.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100196.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100202.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 30 - Men&uuml;s
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id030002"></a>
+<h2>30.2 <a name="ixa101945">Men&uuml;leiste</a></h2>
+<hr>
+<ul>
+<li><a href="k100195.html#sectlevel2id030002">30.2 Men&uuml;leiste</a>
+</ul>
+<hr>
+
+<p>
+Eine <i>Men&uuml;leiste</i> stellt das Hauptmen&uuml; eines Fensters
+dar. Sie befindet sich unterhalb der Titelleiste am oberen Rand des
+Fensters und zeigt die Namen der darin enthaltenen Men&uuml;s an.
+Eine Men&uuml;leiste wird durch Instanzieren der Klasse <a href="index_m.html#ixb101493"><font color=#000080><tt>MenuBar</tt></font></a>
+erzeugt: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public MenuBar()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/MenuBar.html" onClick="this.href=getApiDoc('java.awt.MenuBar')"><font color="#660066" size=-1>java.awt.MenuBar</font></a></td>
+</tr>
+</table>
+
+<p>
+Der parameterlose Konstruktor erzeugt eine leere Men&uuml;leiste,
+in die dann durch Aufruf der Methode <a name="ixa101946"><a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a></a>
+Men&uuml;s eingef&uuml;gt werden k&ouml;nnen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void add(Menu m)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/MenuBar.html" onClick="this.href=getApiDoc('java.awt.MenuBar')"><font color="#660066" size=-1>java.awt.MenuBar</font></a></td>
+</tr>
+</table>
+
+<p>
+Zum Entfernen eines bestehenden Men&uuml;s kann die Methode <a name="ixa101947"><a href="index_r.html#ixb100739"><font color=#000080><tt>remove</tt></font></a></a>
+verwendet werden. Zur Auswahl des zu entfernenden Men&uuml;s kann
+dabei entweder das Men&uuml; oder der Index desselben als Parameter
+&uuml;bergeben werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void remove(MenuComponent m)
+public void remove(int index)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/MenuBar.html" onClick="this.href=getApiDoc('java.awt.MenuBar')"><font color="#660066" size=-1>java.awt.MenuBar</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa101948"><a href="index_g.html#ixb101496"><font color=#000080><tt>getMenu</tt></font></a></a>
+stellt die Klasse <a href="index_m.html#ixb101493"><font color=#000080><tt>MenuBar</tt></font></a>
+eine Methode zum Zugriff auf ein beliebiges Men&uuml; der Men&uuml;leiste
+zur Verf&uuml;gung. <a href="index_g.html#ixb101496"><font color=#000080><tt>getMenu</tt></font></a>
+liefert dabei das Men&uuml;objekt, das sich an der Position mit dem
+angegebenen Index befindet: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Menu getMenu(int index)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/MenuBar.html" onClick="this.href=getApiDoc('java.awt.MenuBar')"><font color="#660066" size=-1>java.awt.MenuBar</font></a></td>
+</tr>
+</table>
+
+<p>
+Um eine Men&uuml;leiste an ein Fenster zu binden, besitzt die Klasse
+<a href="index_f.html#ixb101151"><font color=#000080><tt>Frame</tt></font></a>
+eine Methode <a name="ixa101949"><a href="index_s.html#ixb101497"><font color=#000080><tt>setMenuBar</tt></font></a></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setMenuBar(MenuBar mb)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Frame.html" onClick="this.href=getApiDoc('java.awt.Frame')"><font color="#660066" size=-1>java.awt.Frame</font></a></td>
+</tr>
+</table>
+
+<p>
+Durch Aufruf dieser Methode wird die angegebene Men&uuml;leiste im
+Fenster angezeigt, und beim Ausw&auml;hlen eines Men&uuml;punkts werden
+Nachrichten ausgel&ouml;st und an das Fenster gesendet. Die Fensterklasse
+kann diese Nachrichten durch das Registrieren eines Objekts vom Typ
+<a name="ixa101950"><a href="index_a.html#ixb101408"><font color=#000080><tt>ActionListener</tt></font></a></a>
+bearbeiten. Wir gehen darauf sp&auml;ter genauer ein. 
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100193.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100194.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100196.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100202.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

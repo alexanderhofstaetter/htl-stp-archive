@@ -1,0 +1,134 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100332.html;106,k100342.html;107,k100344.html;108,index.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100332.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100342.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100344.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 53 - Hilfsprogramme des JDK
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id053011"></a>
+<h2>53.11 jarsigner - Signieren von Archiven </h2>
+<hr>
+<ul>
+<li><a href="k100343.html#sectlevel2id053011">53.11 jarsigner - Signieren von Archiven</a>
+<ul>
+<li><a href="k100343.html#sectlevel3id053011001">53.11.1 Aufruf</a>
+<li><a href="k100343.html#sectlevel3id053011002">53.11.2 Beschreibung</a>
+<li><a href="k100343.html#sectlevel3id053011003">53.11.3 Optionen</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id053011001"></a>
+<h3>53.11.1 Aufruf </h3>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+jarsigner [ options ] jarfile alias
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id053011002"></a>
+<h3>53.11.2 Beschreibung </h3>
+
+<p>
+<a name="ixa103948"><a href="index_j.html#ixb102782"><font color=#000080><tt>jarsigner</tt></font></a></a>
+dient zum Zugriff auf die Signatur von jar-Archiven. Dazu wird der
+Schl&uuml;ssel verwendet, der unter dem als Argument angegebenen Alias
+in der Schl&uuml;sseldatenbank gespeichert ist. Seine wichtigste Anwendung,
+das Signieren von Archiven, wurde bereits in <a href="k100320.html#appletssignieren">Abschnitt 50.3.2</a>
+erl&auml;utert. 
+
+<!-- Section -->
+
+<a name="sectlevel3id053011003"></a>
+<h3>53.11.3 Optionen </h3>
+<a name="tableid053011"></a>
+<p>
+<table cols=2 border width=100%>
+
+<tr>
+<td valign=top align=left width=33%><b>Option</b></td>
+<td valign=top align=left width=66%><b>Bedeutung </b></td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103949"><a href="index_s.html#ixb102947"><font color=#000080><tt>-signedjar file</tt></font></a></a></td>
+<td valign=top align=left>Name des beim Signieren erzeugten Archivs
+</td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103950"><a href="index_0.html#ixb102948"><font color=#000080><tt>-keystore url</tt></font></a></a></td>
+<td valign=top align=left>Name der Schl&uuml;sseldatenbank </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103951"><a href="index_0.html#ixb102949"><font color=#000080><tt>-storetype type</tt></font></a></a></td>
+<td valign=top align=left>Typ der Schl&uuml;sseldatenbank </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103952"><a href="index_0.html#ixb102950"><font color=#000080><tt>-storepass pass</tt></font></a></a></td>
+<td valign=top align=left>Passwort der Schl&uuml;sseldatenbank (falls
+nicht angegeben, wird es interaktiv abgefragt) </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103953"><a href="index_0.html#ixb102951"><font color=#000080><tt>-keypass pass</tt></font></a></a></td>
+<td valign=top align=left>Passwort des Schl&uuml;ssels (falls nicht
+angegeben, wird es interaktiv abgefragt) </td></tr>
+<tr>
+<td valign=top align=left><a name="ixa103954"><a href="index_0.html#ixb102952"><font color=#000080><tt>-verify</tt></font></a></a></td>
+<td valign=top align=left>Wird diese Option angegeben, so wird das
+Archiv nicht signiert, sondern verifiziert.</td></tr>
+</table>
+<p><i>
+Tabelle 53.11: Optionen von jarsigner</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100332.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100342.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100344.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

@@ -1,0 +1,772 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100076.html;106,k100077.html;107,k100079.html;108,k100084.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100076.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100077.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100079.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100084.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 12 - Strings
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id012002"></a>
+<h2>12.2 Methoden der Klasse String </h2>
+<hr>
+<ul>
+<li><a href="k100078.html#sectlevel2id012002">12.2 Methoden der Klasse String</a>
+<ul>
+<li><a href="k100078.html#sectlevel3id012002001">12.2.1 Konstruktoren</a>
+<li><a href="k100078.html#sectlevel3id012002002">12.2.2 Zeichenextraktion</a>
+<li><a href="k100078.html#sectlevel3id012002003">12.2.3 Die L&auml;nge der Zeichenkette</a>
+<li><a href="k100078.html#vergleichzeichenketten">12.2.4 Vergleichen von Zeichenketten</a>
+<li><a href="k100078.html#sectlevel3id012002005">12.2.5 Suchen in Zeichenketten</a>
+<li><a href="k100078.html#sectlevel3id012002006">12.2.6 Ersetzen von Zeichenketten</a>
+<li><a href="k100078.html#stringzerlegen">12.2.7 Zerlegen von Zeichenketten</a>
+<li><a href="k100078.html#sectlevel3id012002008">12.2.8 Konvertierungsfunktionen</a>
+</ul>
+</ul>
+<hr>
+
+<p>
+Die Klasse <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+definiert eine Vielzahl von Methoden zur Manipulation und zur Bestimmung
+der Eigenschaften von Zeichenketten. Da Strings und die auf ihnen
+definierten Operationen bei der Anwendung einer Programmiersprache
+ein wichtiges und f&uuml;r die Effizienz der Programmentwicklung kritisches
+Merkmal sind, sollen hier die wichtigsten String-Operationen vorgestellt
+werden. Weitere Methoden dieser Klasse k&ouml;nnen den Referenzhandb&uuml;chern
+der Java-Klassenbibliothek oder der Online-Hilfe entnommen werden.
+
+
+<!-- Section -->
+<a name="sectlevel3id012002001"></a>
+<h3>12.2.1 Konstruktoren </h3>
+
+<p>
+Die Klasse <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+bietet eine Reihe von M&ouml;glichkeiten, neue Instanzen zu erzeugen.
+Neben der bereits in <a href="k100028.html#kapiteldatentypen">Kapitel 5</a>
+erl&auml;uterten Initialisierung mit Hilfe von Literalen besitzt die
+Klasse eine Reihe von Konstruktoren, die dazu verwendet werden k&ouml;nnen,
+<a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Objekte
+explizit zu erzeugen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+String()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/String.html" onClick="this.href=getApiDoc('java.lang.String')"><font color="#660066" size=-1>java.lang.String</font></a></td>
+</tr>
+</table>
+
+<p>
+Erzeugt ein leeres String-Objekt. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+String(String value)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/String.html" onClick="this.href=getApiDoc('java.lang.String')"><font color="#660066" size=-1>java.lang.String</font></a></td>
+</tr>
+</table>
+
+<p>
+Erzeugt einen neuen String durch Duplizierung eines bereits vorhandenen.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+String(char[] value)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/String.html" onClick="this.href=getApiDoc('java.lang.String')"><font color="#660066" size=-1>java.lang.String</font></a></td>
+</tr>
+</table>
+
+<p>
+Erzeugt einen neuen String aus einem vorhandenen Zeichen-Array. Dabei
+werden alle Elemente des Arrays in den String &uuml;bernommen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Nachdem ein <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+erzeugt wurde, kann er wie jedes andere Objekt verwendet werden. Insbesondere
+erfolgt damit im Gegensatz zu C oder C++ das Speichermanagement vollautomatisch,
+ohne dass sich der Programmierer darum k&uuml;mmern muss.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id012002002"></a>
+<h3>12.2.2 <a name="ixa100663">Zeichenextraktion</a></h3>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+char charAt(int index)
+  throws StringIndexOutOfBoundsException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/String.html" onClick="this.href=getApiDoc('java.lang.String')"><font color="#660066" size=-1>java.lang.String</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa100664"></a>Liefert das Zeichen an Position <font color="#000077"><tt>index</tt></font>.
+Dabei hat das erste Element eines Strings den Index 0 und das letzte
+den Index <font color="#000077"><tt>length()-1</tt></font>. Falls
+der String k&uuml;rzer als <font color="#000077"><tt>index + 1</tt></font>
+Zeichen ist, wird eine Ausnahme des Typs <a name="ixa100665"><a href="index_s.html#ixb100525"><font color=#000080><tt>StringIndexOutOfBoundsException</tt></font></a></a>
+erzeugt. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+String substring(int begin, int end)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/String.html" onClick="this.href=getApiDoc('java.lang.String')"><font color="#660066" size=-1>java.lang.String</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa100666"></a> Liefert den Teilstring, der an Position <font color="#000077"><tt>begin</tt></font>
+beginnt und an Position <font color="#000077"><tt>end</tt></font>
+endet. Wie bei allen Zugriffen &uuml;ber einen numerischen Index beginnt
+auch hier die Z&auml;hlung bei 0. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Ungew&ouml;hnlich bei der Verwendung dieser Methode ist die Tatsache,
+dass der Parameter <font color="#000077"><tt>end</tt></font> auf das
+erste Zeichen <i>hinter</i> den zu extrahierenden Teilstring verweist
+(siehe <a href="k100078.html#aufrufsubstring">Abbildung 12.1</a>).
+Der R&uuml;ckgabewert ist also die Zeichenkette, die von Indexposition
+<font color="#000077"><tt>begin</tt></font> bis Indexposition <font color="#000077"><tt>end
+- 1</tt></font> reicht.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<p>
+<a name="aufrufsubstring"></a>
+<img src="images/StringSubstr.gif">
+<p>
+
+<p><i>
+Abbildung 12.1: Ein Aufruf von substring(begin, end)</i></p>
+
+<p>
+Es gibt noch eine zweite Variante der Methode <a name="ixa100666"><a href="index_s.html#ixb100526"><font color=#000080><tt>substring</tt></font></a></a>,
+die mit nur einem einzigen Parameter aufgerufen wird. Sie liefert
+den Teilstring von der angegebenen Position bis zum Ende des Strings.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+String trim()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/String.html" onClick="this.href=getApiDoc('java.lang.String')"><font color="#660066" size=-1>java.lang.String</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Methode liefert den String, der entsteht, wenn auf beiden Seiten
+der Zeichenkette jeweils alle zusammenh&auml;ngenden Leerzeichen entfernt
+werden. Dabei werden alle Zeichen, die einen Code kleiner gleich 32
+haben, als Leerzeichen angesehen. Leider gibt es keine separaten Methoden
+f&uuml;r das rechts- oder linksb&uuml;ndige Entfernen von Leerzeichen,
+<a name="ixa100667"><a href="index_t.html#ixb100527"><font color=#000080><tt>trim</tt></font></a></a>
+entfernt immer die Leerzeichen auf beiden Seiten. Da die Klasse <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+als <a href="index_f.html#ixb100410"><font color=#000080><tt>final</tt></font></a>
+deklariert wurde, gibt es auch keine M&ouml;glichkeit, entsprechende
+Methoden nachzur&uuml;sten. 
+
+<!-- Section -->
+
+<a name="sectlevel3id012002003"></a>
+<h3>12.2.3 Die <a name="ixa100668">L&auml;nge der Zeichenkette</a>
+</h3>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+int length()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/String.html" onClick="this.href=getApiDoc('java.lang.String')"><font color="#660066" size=-1>java.lang.String</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa100669"></a>Liefert die aktuelle L&auml;nge des <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Objekts.
+Ist der R&uuml;ckgabewert 0, so bedeutet dies, dass der String leer
+ist. Wird ein Wert <i>n</i> gr&ouml;&szlig;er 0 zur&uuml;ckgegeben,
+so enth&auml;lt der String <i>n</i> Zeichen, die an den Indexpositionen
+0 bis <i>n</i> - 1 liegen. 
+
+<p>
+Das folgende Beispiel zeigt die Verwendung der Methoden <a href="index_s.html#ixb100526"><font color=#000080><tt>substring</tt></font></a>
+und <a name="ixa100669"><a href="index_l.html#ixb100286"><font color=#000080><tt>length</tt></font></a></a>
+und der <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Verkettung
+<a name="ixa100670"></a> auf (Letztere wird in <a href="k100079.html#stringfuercompiler">Abschnitt 12.3.2</a>
+noch einmal genauer behandelt). 
+<a name="listingid012001"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1201.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1201
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    String s1;
+<font color="#555555">008 </font>    s1 =  <font color="#0000FF">"Auf der Mauer"</font>;
+<font color="#555555">009 </font>    s1 += <font color="#0000FF">", auf der Lauer"</font>;
+<font color="#555555">010 </font>    s1 += <font color="#0000FF">", sitzt \'ne kleine Wanze"</font>;
+<font color="#555555">011 </font>    System.out.println(s1);
+<font color="#555555">012 </font>
+<font color="#555555">013 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 1; i &lt;= 5; ++i) {
+<font color="#555555">014 </font>      s1 = s1.substring(0,s1.length()-1);
+<font color="#555555">015 </font>      System.out.println(s1);
+<font color="#555555">016 </font>    }
+<font color="#555555">017 </font>  }
+<font color="#555555">018 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1201.java"><font color="#000055" size=-1>Listing1201.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 12.1: String-Verkettung und die Methode substring</i></p>
+
+<p>
+Die Ausgabe des Programms ist: 
+<font color="#333300">
+<pre>
+Auf der Mauer, auf der Lauer, sitzt 'ne kleine Wanze
+Auf der Mauer, auf der Lauer, sitzt 'ne kleine Wanz
+Auf der Mauer, auf der Lauer, sitzt 'ne kleine Wan
+Auf der Mauer, auf der Lauer, sitzt 'ne kleine Wa
+Auf der Mauer, auf der Lauer, sitzt 'ne kleine W
+Auf der Mauer, auf der Lauer, sitzt 'ne kleine
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="vergleichzeichenketten"></a>
+<h3>12.2.4 <a name="ixa100671">Vergleichen von Zeichenketten</a></h3>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+boolean equals(Object anObject)
+boolean equalsIgnoreCase(String s)
+
+boolean startsWith(String s)
+boolean endsWith(String s)
+
+int compareTo(String s)
+
+boolean regionMatches(
+   int toffset,
+   String other,
+   int ooffset,
+   int len
+)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/String.html" onClick="this.href=getApiDoc('java.lang.String')"><font color="#660066" size=-1>java.lang.String</font></a></td>
+</tr>
+</table>
+
+<p>
+<a name="ixa100672"><a href="index_e.html#ixb100230"><font color=#000080><tt>equals</tt></font></a></a>
+liefert <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>,
+wenn das aktuelle String-Objekt und <font color="#000077"><tt>anObject</tt></font>
+gleich sind. Analog zu der gleichnamigen Methode der Klasse <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+&uuml;berpr&uuml;ft <a href="index_e.html#ixb100230"><font color=#000080><tt>equals</tt></font></a>
+also nicht, ob beide Strings dasselbe Objekt referenzieren, sondern
+testet auf inhaltliche Gleichheit. Interessant an <a href="index_e.html#ixb100230"><font color=#000080><tt>equals</tt></font></a>
+ist die Tatsache, dass als Parameter ein Objekt der Klasse <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+erwartet wird. <a href="index_e.html#ixb100230"><font color=#000080><tt>equals</tt></font></a>
+kann einen String also nicht nur mit einem anderen String vergleichen,
+sondern mit der String-Darstellung eines beliebigen Objekts. 
+
+<p>
+Neben <a href="index_e.html#ixb100230"><font color=#000080><tt>equals</tt></font></a>
+gibt es noch eine &auml;hnliche Methode, <a name="ixa100673"><a href="index_e.html#ixb100530"><font color=#000080><tt>equalsIgnoreCase</tt></font></a></a>,
+die eventuell vorhandene Unterschiede in der Gro&szlig;-/Kleinschreibung
+beider Zeichenketten ignoriert. 
+
+<p>
+<a name="ixa100674"><a href="index_s.html#ixb100531"><font color=#000080><tt>startsWith</tt></font></a></a>
+testet, ob das String-Objekt mit der Zeichenkette <font color="#000077"><tt>s</tt></font>
+beginnt. Ist das der Fall, so gibt die Methode <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+zur&uuml;ck, andernfalls <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>.
+<a name="ixa100675"><a href="index_e.html#ixb100532"><font color=#000080><tt>endsWith</tt></font></a></a>
+&uuml;berpr&uuml;ft dagegen, ob das String-Objekt mit der Zeichenkette
+<font color="#000077"><tt>s</tt></font> endet. Ist das der Fall, gibt
+die Methode ebenfalls <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+zur&uuml;ck, andernfalls <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>.
+
+<p>
+Die wichtige Methode <a name="ixa100676"><a href="index_c.html#ixb100455"><font color=#000080><tt>compareTo</tt></font></a></a>
+f&uuml;hrt einen <i>lexikalischen</i> Vergleich beider Strings durch.
+Bei einem lexikalischen Vergleich werden die Zeichen paarweise von
+links nach rechts verglichen. Tritt ein Unterschied auf oder ist einer
+der Strings beendet, wird das Ergebnis ermittelt. Ist das aktuelle
+String-Objekt dabei kleiner als <font color="#000077"><tt>s</tt></font>,
+wird ein negativer Wert zur&uuml;ckgegeben. Ist es gr&ouml;&szlig;er,
+wird ein positiver Wert zur&uuml;ckgegeben. Bei Gleichheit liefert
+die Methode den R&uuml;ckgabewert 0. 
+
+<p>
+<a name="ixa100677"><a href="index_r.html#ixb100533"><font color=#000080><tt>regionMatches</tt></font></a></a>
+vergleicht zwei gleich lange String-Regionen, die in zwei unterschiedlichen
+Strings an zwei unterschiedlichen Positionen liegen k&ouml;nnen. Die
+Region im ersten String beginnt dabei an der Position <font color="#000077"><tt>toffset</tt></font>,
+die im zweiten String <font color="#000077"><tt>other</tt></font>
+an der Position <font color="#000077"><tt>ooffset</tt></font>. Verglichen
+werden <font color="#000077"><tt>len</tt></font> Zeichen. Das Ergebnis
+ist <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>,
+wenn beide Teilstrings identisch sind, andernfalls ist es <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>.
+Die Methode steht auch in einer Variante zur Verf&uuml;gung, bei der
+Gro&szlig;- und Kleinschreibung ignoriert werden. In diesem Fall wird
+als zus&auml;tzlicher Parameter an erster Stelle ein boolescher Wert
+<font color="#000077"><tt>ignoreCase</tt></font> &uuml;bergeben. 
+
+<p>
+Die Anwendung von <a href="index_r.html#ixb100533"><font color=#000080><tt>regionMatches</tt></font></a>
+soll an folgendem Beispiel erl&auml;utert werden. Der erste Vergleich
+liefert <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+(siehe <a href="k100078.html#aufrufregionmatches">Abbildung 12.2</a>),
+der zweite <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>:
+<a name="listingid012002"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1202.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1202
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    System.out.println(
+<font color="#555555">008 </font>      <font color="#0000FF">"Gr&uuml;&szlig;e aus Hamburg"</font>.regionMatches(
+<font color="#555555">009 </font>        8,
+<font color="#555555">010 </font>        <font color="#0000FF">"Greetings from Australia"</font>,
+<font color="#555555">011 </font>        8,
+<font color="#555555">012 </font>        2
+<font color="#555555">013 </font>      )
+<font color="#555555">014 </font>    );
+<font color="#555555">015 </font>    System.out.println(
+<font color="#555555">016 </font>      <font color="#0000FF">"Gr&uuml;&szlig;e aus Hamburg"</font>.regionMatches(
+<font color="#555555">017 </font>        6,
+<font color="#555555">018 </font>        <font color="#0000FF">"Greetings from Australia"</font>,
+<font color="#555555">019 </font>        15,
+<font color="#555555">020 </font>        3
+<font color="#555555">021 </font>      )
+<font color="#555555">022 </font>    );
+<font color="#555555">023 </font>  }
+<font color="#555555">024 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1202.java"><font color="#000055" size=-1>Listing1202.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 12.2: Die Methode regionMatches der Klasse String</i></p>
+<p>
+<a name="aufrufregionmatches"></a>
+<img src="images/StringRegion.gif">
+<p>
+
+<p><i>
+Abbildung 12.2: Der Aufruf von regionMatches</i></p>
+
+<p>
+Eine weitere M&ouml;glichkeit, Zeichenketten zu vergleichen, bieten
+die Regul&auml;ren Ausdr&uuml;cke, die in <a href="k100122.html#sectionregex">Abschnitt 18.1</a>
+beschrieben werden.
+
+<!-- Section -->
+
+<a name="sectlevel3id012002005"></a>
+<h3>12.2.5 <a name="ixa100678">Suchen in Zeichenketten</a></h3>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+int indexOf(String s)
+int indexOf(String s, int fromIndex)
+int lastIndexOf(String s)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/String.html" onClick="this.href=getApiDoc('java.lang.String')"><font color="#660066" size=-1>java.lang.String</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Methode <a name="ixa100679"><a href="index_i.html#ixb100535"><font color=#000080><tt>indexOf</tt></font></a></a>
+sucht das erste Vorkommen der Zeichenkette <font color="#000077"><tt>s</tt></font>
+innerhalb des <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Objekts.
+Wird <font color="#000077"><tt>s</tt></font> gefunden, liefert die
+Methode den Index des ersten &uuml;bereinstimmenden Zeichens zur&uuml;ck,
+andernfalls wird -1 zur&uuml;ckgegeben. Die Methode gibt es auch in
+einer Version, die einen Parameter vom Typ <a href="index_c.html#ixb100223"><font color=#000080><tt>char</tt></font></a>
+akzeptiert. In diesem Fall sucht sie nach dem ersten Auftreten des
+angegebenen Zeichens. 
+
+<p>
+Die zweite Variante von <a href="index_i.html#ixb100535"><font color=#000080><tt>indexOf</tt></font></a>
+arbeitet wie die erste, beginnt mit der Suche aber erst ab Position
+<font color="#000077"><tt>fromIndex</tt></font>. Wird <font color="#000077"><tt>s</tt></font>
+beginnend ab dieser Position gefunden, liefert die Methode den Index
+des ersten &uuml;bereinstimmenden Zeichens, andernfalls -1. Auch diese
+Methode gibt es in einer Variante, die anstelle eines <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Parameters
+ein Argument des Typs <a href="index_c.html#ixb100223"><font color=#000080><tt>char</tt></font></a>
+erwartet. Ihr Verhalten ist analog zur vorherigen. 
+
+<p>
+Die Methode <a name="ixa100680"><a href="index_l.html#ixb100536"><font color=#000080><tt>lastIndexOf</tt></font></a></a>
+sucht nach dem letzten Vorkommen des Teilstrings <font color="#000077"><tt>s</tt></font>
+im aktuellen <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Objekt.
+Wird <font color="#000077"><tt>s</tt></font> gefunden, liefert die
+Methode den Index des ersten &uuml;bereinstimmenden Zeichens, andernfalls
+-1. Wie die beiden vorherigen Methoden gibt es auch <a href="index_l.html#ixb100536"><font color=#000080><tt>lastIndexOf</tt></font></a>
+wahlweise mit einem Parameter vom Typ <a href="index_c.html#ixb100223"><font color=#000080><tt>char</tt></font></a>
+und mit einem zweiten Parameter, der die Startposition der Suche bestimmt.
+
+
+<!-- Section -->
+<a name="sectlevel3id012002006"></a>
+<h3>12.2.6 <a name="ixa100681">Ersetzen von Zeichenketten</a></h3>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+String toLowerCase()
+String toUpperCase()
+
+String replace(CharSequence oldString, CharSequence newString)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/String.html" onClick="this.href=getApiDoc('java.lang.String')"><font color="#660066" size=-1>java.lang.String</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Methode <a name="ixa100682"><a href="index_t.html#ixb100538"><font color=#000080><tt>toLowerCase</tt></font></a></a>
+liefert den String zur&uuml;ck, der entsteht, wenn alle Zeichen des
+Argumentstrings in Kleinbuchstaben umgewandelt werden. Besitzt der
+String keine umwandelbaren Zeichen, wird der Original-String zur&uuml;ckgegeben.
+<a name="ixa100683"><a href="index_t.html#ixb100539"><font color=#000080><tt>toUpperCase</tt></font></a></a>
+arbeitet ganz &auml;hnlich, liefert aber den String, der entsteht,
+wenn alle Zeichen in Gro&szlig;buchstaben umgewandelt werden. Besitzt
+der String keine umwandelbaren Zeichen, wird der Original-String zur&uuml;ckgegeben.
+
+<p>
+Mit Hilfe von <a name="ixa100684"><a href="index_r.html#ixb100540"><font color=#000080><tt>replace</tt></font></a></a>
+werden alle Vorkommen der Zeichenkette <font color="#000077"><tt>oldString</tt></font>
+durch <font color="#000077"><tt>newString</tt></font> ersetzt. Daf&uuml;r
+wird die Zeichenkette von vorn nach hinten durchlaufen, so dass ein
+Ersetzen von <font color="#000077"><tt>aa</tt></font> durch <font color="#000077"><tt>ab</tt></font>
+auf dem Ausgangswort <font color="#000077"><tt>aaa</tt></font> zum
+Resultat <font color="#000077"><tt>aba</tt></font> f&uuml;hrt. 
+
+<p>
+Neben der Methode <font color="#000077"><tt>replace</tt></font> enth&auml;lt
+das JDK noch eine zweite namens <a name="ixa100685"><a href="index_r.html#ixb100541"><font color=#000080><tt>replaceAll</tt></font></a></a>.
+Diese akzeptiert statt der Originalzeichenkette auch einen Regul&auml;ren
+Ausdruck, dessen Vorkommen dann mit der zweiten Zeichenkette ersetzt
+werden. Regul&auml;re Ausdr&uuml;cke und ihre Verwendung finden Sie
+in <a href="k100122.html#sectionregex">Abschnitt 18.1</a>. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Bei <font color="#000077"><tt>CharSequence</tt></font> im obigen Listing
+handelt es sich um ein Interface, wie in <a href="k100064.html#interfacedefinitionen">Abschnitt 10.1</a>
+beschrieben. Dieses Interface wird von allen zeichenorientierten Klassen
+der Java-Standardbibliothek implementiert und am Ende dieses Kapitels
+vorgestellt.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="stringzerlegen"></a>
+<h3>12.2.7 <a name="ixa100686">Zerlegen von Zeichenketten</a></h3>
+
+<p>
+Mit Hilfe der Methode <a name="ixa100687"><a href="index_s.html#ixb100543"><font color=#000080><tt>split</tt></font></a></a>
+k&ouml;nnen Zeichenketten in mehrere Teile zerlegt werden. Das folgende
+Programm verdeutlicht dies anhand einer einfachen Zeichenkette: 
+<a name="listingid012003"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1203.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1203
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    String satz = <font color="#0000FF">"Dies ist nur ein Test"</font>;
+<font color="#555555">008 </font>    String[] result = satz.split(<font color="#0000FF">"\\s"</font>);
+<font color="#555555">009 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> x=0; x&lt;result.length; x++) {
+<font color="#555555">010 </font>      System.out.println(result[x]);
+<font color="#555555">011 </font>    }
+<font color="#555555">012 </font>  }
+<font color="#555555">013 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1203.java"><font color="#000055" size=-1>Listing1203.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 12.3: Zerlegen von Zeichenketten</i></p>
+
+<p>
+Die Programmausgabe ist: 
+<font color="#333300">
+<pre>
+Dies
+ist
+nur
+ein
+Test
+</pre>
+</font>
+
+<p>
+Der Parameter, den die Methode <a href="index_s.html#ixb100543"><font color=#000080><tt>split</tt></font></a>
+dabei erwartet, ist ein Regul&auml;rer Ausdruck, welcher die zu verwendenden
+Trennzeichen beschreibt. <font color="#000077"><tt>'\s'</tt></font>
+ist hierbei eine Kurzform f&uuml;r alle Arten von &#187;Leerzeichen&#171;.
+Regul&auml;re Ausdr&uuml;cke und ihre Verwendung werden in <a href="k100122.html#sectionregex">Abschnitt 18.1</a>
+vorgestellt. 
+
+<p>
+Die Methode <a href="index_s.html#ixb100543"><font color=#000080><tt>split</tt></font></a>
+wurde mit dem JDK 5 in Java eingef&uuml;hrt; in fr&uuml;heren Versionen
+bediente man sich hierf&uuml;r der Hilfsklasse <a name="ixa100688"><a href="index_s.html#ixb100544"><font color=#000080><tt>StringTokenizer</tt></font></a></a>.
+Um die Abw&auml;rtskompatibilit&auml;t von Java-Programmen zu gew&auml;hrleisten,
+ist diese nat&uuml;rlich auch weiterhin Bestandteil der aktuellen
+JDKs. 
+
+<!-- Section -->
+
+<a name="sectlevel3id012002008"></a>
+<h3>12.2.8 <a name="ixa100689">Konvertierungsfunktionen</a></h3>
+
+<p>
+Da es oftmals n&ouml;tig ist, primitive Datentypen in Zeichenketten
+umzuwandeln, bietet Java eine ganze Reihe von Methoden, die zu diesem
+Zweck entwickelt wurden. Allen Methoden sind der Name <a name="ixa100690"><a href="index_v.html#ixb100546"><font color=#000080><tt>valueOf</tt></font></a></a>
+und die Tatsache, dass sie exakt einen Parameter erwarten, gemein.
+
+<p>
+Alle <a href="index_v.html#ixb100546"><font color=#000080><tt>valueOf</tt></font></a>-Methoden
+sind als Klassenmethoden implementiert, d.h., sie k&ouml;nnen auch
+ohne ein <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>-Objekt
+aufgerufen werden. Dies macht Sinn, denn sie werden ja in aller Regel
+erst dazu verwendet, Strings zu erzeugen. Ein Aufruf von <a href="index_v.html#ixb100546"><font color=#000080><tt>valueOf</tt></font></a>
+wandelt ein primitives Objekt mit Hilfe der Methode <a href="index_t.html#ixb100338"><font color=#000080><tt>toString</tt></font></a>,
+die von der zugeh&ouml;rigen Wrapper-Klasse zur Verf&uuml;gung gestellt
+wird, in eine Zeichenkette um. Die wichtigsten <a href="index_v.html#ixb100546"><font color=#000080><tt>valueOf</tt></font></a>-Methoden
+sind: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+static String valueOf(boolean b)
+static String valueOf(char c)
+static String valueOf(char[] c)
+static String valueOf(double d)
+static String valueOf(float f)
+static String valueOf(int i)
+static String valueOf(long l)
+static String valueOf(Object obj)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/lang/String.html" onClick="this.href=getApiDoc('java.lang.String')"><font color="#660066" size=-1>java.lang.String</font></a></td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die meisten Java-Wrapperklassen f&uuml;r Basistypen im Paket <font color="#000077"><tt>java.lang</tt></font>
+enthalten &uuml;brigens das Pendant zu <font color="#000077"><tt>valueOf</tt></font>.
+Diese erwarten einen <font color="#000077"><tt>String</tt></font>
+und geben den jeweiligen Basistyp zur&uuml;ck. Mehr zum Thema Pakete
+in Java finden Sie in <a href="k100091.html#subsectionpakete">Abschnitt 14.1.5</a>.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100076.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100077.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100079.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100084.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

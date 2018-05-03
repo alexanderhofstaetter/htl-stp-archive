@@ -1,0 +1,1259 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100202.html;106,k100203.html;107,k100205.html;108,k100207.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100202.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100203.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100205.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100207.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 31 - GUI-Dialoge
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id031002"></a>
+<h2>31.2 Die <a name="ixa102026">Layoutmanager</a> </h2>
+<hr>
+<ul>
+<li><a href="k100204.html#sectlevel2id031002">31.2 Die Layoutmanager</a>
+<ul>
+<li><a href="k100204.html#sectlevel3id031002001">31.2.1 FlowLayout</a>
+<li><a href="k100204.html#sectlevel3id031002002">31.2.2 GridLayout</a>
+<ul>
+<li><a href="k100204.html#sectlevel4id031002002001">Die Gr&ouml;&szlig;e der Komponenten</a>
+</ul>
+<li><a href="k100204.html#sectlevel3id031002003">31.2.3 BorderLayout</a>
+<li><a href="k100204.html#sectlevel3id031002004">31.2.4 GridBagLayout</a>
+<li><a href="k100204.html#sectlevel3id031002005">31.2.5 NULL-Layout</a>
+<li><a href="k100204.html#sectlevel3id031002006">31.2.6 Schachteln von Layoutmanagern </a>
+</ul>
+</ul>
+<hr>
+
+<p>
+In vielen grafischen Oberfl&auml;chen wird die Anordnung der Elemente
+eines Dialogs durch Angabe <i>absoluter Koordinaten</i> vorgenommen
+und so f&uuml;r jede Komponente manuell oder mit Hilfe eines Ressourcen-Editors
+pixelgenau festgelegt, an welcher Stelle im Dialog sie zu erscheinen
+hat. 
+
+<p>
+Da Java-Programme auf vielen unterschiedlichen Plattformen mit unterschiedlichen
+Ausgabeger&auml;ten laufen sollen, war eine solche Vorgehensweise
+f&uuml;r die Designer des AWT nicht akzeptabel. Sie w&auml;hlten stattdessen
+den Umweg &uuml;ber einen Layoutmanager, der f&uuml;r die Anordnung
+der Dialogelemente verantwortlich ist. Um einen Layoutmanager verwenden
+zu k&ouml;nnen, wird dieser dem Fenster vor der &Uuml;bergabe der
+Dialogelemente mit der Methode <a name="ixa102027"><a href="index_s.html#ixb101538"><font color=#000080><tt>setLayout</tt></font></a></a>
+zugeordnet. Er ordnet dann die per <a name="ixa102028"><a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a></a>
+&uuml;bergebenen Elemente auf dem Fenster an. 
+
+<p>
+Jeder Layoutmanager implementiert seine eigene Logik bez&uuml;glich
+der optimalen Anordnung der Komponenten: 
+<ul>
+<li>Das <a href="index_f.html#ixb101539"><font color=#000080><tt>FlowLayout</tt></font></a>
+ordnet Dialogelemente nebeneinander in einer Zeile an. Wenn keine
+weiteren Elemente in die Zeile passen, wird mit der n&auml;chsten
+Zeile fortgefahren.
+<li>Das <a href="index_g.html#ixb101540"><font color=#000080><tt>GridLayout</tt></font></a>
+ordnet die Dialogelemente in einem rechteckigen Gitter an, dessen
+Zeilen- und Spaltenzahl beim Erstellen des Layoutmanagers angegeben
+wird.
+<li>Das <a href="index_b.html#ixb101541"><font color=#000080><tt>BorderLayout</tt></font></a>
+verteilt die Dialogelemente nach Vorgabe des Programms auf die vier
+Randbereiche und den Mittelbereich des Fensters.
+<li>Das <a href="index_c.html#ixb101542"><font color=#000080><tt>CardLayout</tt></font></a>
+ist in der Lage, mehrere Unterdialoge in einem Fenster unterzubringen
+und jeweils einen davon auf Anforderung des Programms anzuzeigen.
+<li>Das <a href="index_g.html#ixb101543"><font color=#000080><tt>GridBagLayout</tt></font></a>
+ist ein komplexer Layoutmanager, der die F&auml;higkeiten von <a href="index_g.html#ixb101540"><font color=#000080><tt>GridLayout</tt></font></a>
+erweitert und es erm&ouml;glicht, mit Hilfe von Bedingungsobjekten
+sehr komplexe Layouts zu erzeugen.
+</ul>
+
+<p>
+Neben den gestalterischen F&auml;higkeiten eines Layoutmanagers bestimmt
+in der Regel die Reihenfolge der Aufrufe der <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>-Methode
+des Fensters die tats&auml;chliche Anordnung der Komponenten auf dem
+Bildschirm. Wenn nicht - wie es z.B. beim <a href="index_b.html#ixb101541"><font color=#000080><tt>BorderLayout</tt></font></a>
+m&ouml;glich ist - zus&auml;tzliche Positionierungsinformationen an
+das Fenster &uuml;bergeben werden, ordnet der jeweilige Layoutmanager
+die Komponenten in der Reihenfolge ihres Eintreffens an. 
+
+<p>
+Um komplexere Layouts realisieren zu k&ouml;nnen, als die Layoutmanager
+sie in ihren jeweiligen Grundauspr&auml;gungen bieten, gibt es die
+M&ouml;glichkeit, Layoutmanager zu schachteln. Auf diese Weise kann
+auch ohne Vorgabe fester Koordinaten fast jede gew&uuml;nschte Komponentenanordnung
+realisiert werden. Sollte auch diese Variante nicht genau genug sein,
+so bietet sich schlie&szlig;lich durch Verwendung eines <a name="ixa102029"><i>Null-Layouts</i></a>
+die M&ouml;glichkeit an, Komponenten durch Vorgabe fester Koordinaten
+zu platzieren. 
+
+<!-- Section -->
+
+<a name="sectlevel3id031002001"></a>
+<h3>31.2.1 FlowLayout </h3>
+
+<p>
+Die Klasse <a name="ixa102030"><a href="index_f.html#ixb101539"><font color=#000080><tt>FlowLayout</tt></font></a></a>
+stellt den einfachsten Layoutmanager dar. Alle Elemente werden so
+lange nacheinander in einer Zeile angeordnet, bis kein Platz mehr
+vorhanden ist und in der n&auml;chsten Zeile fortgefahren wird. 
+
+<p>
+Das <a href="index_f.html#ixb101539"><font color=#000080><tt>FlowLayout</tt></font></a>
+wird einem Fenster durch folgende Anweisung zugeordnet: 
+<font color="#000077">
+<pre>
+setLayout(new FlowLayout());
+</pre>
+</font>
+
+<p>
+Neben dem parameterlosen gibt es weitere Konstruktoren, die die M&ouml;glichkeit
+bieten, die Anordnung der Elemente und ihre Abst&auml;nde voneinander
+vorzugeben: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public FlowLayout(int align)
+
+public FlowLayout(int align, int hgap, int vgap)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/FlowLayout.html" onClick="this.href=getApiDoc('java.awt.FlowLayout')"><font color="#660066" size=-1>java.awt.FlowLayout</font></a></td>
+</tr>
+</table>
+
+<p>
+Der Parameter <font color="#000077"><tt>align</tt></font> gibt an,
+ob die Elemente einer Zeile linksb&uuml;ndig, rechtsb&uuml;ndig oder
+zentriert angeordnet werden. Hierzu stehen die Konstanten <a name="ixa102031"><a href="index_c.html#ixb101549"><font color=#000080><tt>FlowLayout.CENTER</tt></font></a></a>,
+<a name="ixa102032"><a href="index_l.html#ixb101555"><font color=#000080><tt>FlowLayout.LEFT</tt></font></a></a>
+und <a name="ixa102033"><a href="index_r.html#ixb101556"><font color=#000080><tt>FlowLayout.RIGHT</tt></font></a></a>
+zur Verf&uuml;gung, als Voreinstellung wird <a href="index_c.html#ixb101549"><font color=#000080><tt>FlowLayout.CENTER</tt></font></a>
+verwendet. Mit <font color="#000077"><tt>hgap</tt></font> und <font color="#000077"><tt>vgap</tt></font>
+k&ouml;nnen die horizontalen und vertikalen Abst&auml;nde zwischen
+den Komponenten vorgegeben werden. Die Voreinstellung ist 5. 
+
+<p>
+Das folgende Listing zeigt die Verwendung der Klasse <a href="index_f.html#ixb101539"><font color=#000080><tt>FlowLayout</tt></font></a>
+am Beispiel von f&uuml;nf Buttons, die in einem Grafikfenster angezeigt
+werden. Anstelle der normalen zentrierten Anordnung werden die Elemente
+linksb&uuml;ndig angeordnet und der Abstand zwischen den Buttons betr&auml;gt
+20 Pixel: 
+<a name="flowlayoutbsp"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3102.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3102
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    Listing3102 wnd = <font color="#0000AA">new</font> Listing3102();
+<font color="#555555">012 </font>    wnd.setVisible(<font color="#006699">true</font>);
+<font color="#555555">013 </font>  }
+<font color="#555555">014 </font>
+<font color="#555555">015 </font>  <font color="#0000AA">public</font> Listing3102()
+<font color="#555555">016 </font>  {
+<font color="#555555">017 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Test FlowLayout"</font>);
+<font color="#555555">018 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">019 </font>    <font color="#00AA00">//Layout setzen und Komponenten hinzuf&uuml;gen</font>
+<font color="#555555">020 </font>    setLayout(<font color="#0000AA">new</font> FlowLayout(FlowLayout.LEFT,20,20));
+<font color="#555555">021 </font>    add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Button 1"</font>));
+<font color="#555555">022 </font>    add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Button 2"</font>));
+<font color="#555555">023 </font>    add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Button 3"</font>));
+<font color="#555555">024 </font>    add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Button 4"</font>));
+<font color="#555555">025 </font>    add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Button 5"</font>));
+<font color="#555555">026 </font>    pack();
+<font color="#555555">027 </font>  }
+<font color="#555555">028 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3102.java"><font color="#000055" size=-1>Listing3102.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 31.2: Die Klasse FlowLayout</i></p>
+
+<p>
+Das Programm erzeugt folgendes Fenster: 
+<p>
+<a name="imageid031002"></a>
+<img src="images/FlowLayout.gif">
+<p>
+
+<p><i>
+Abbildung 31.2: Verwendung der Klasse FlowLayout</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id031002002"></a>
+<h3>31.2.2 GridLayout </h3>
+
+<p>
+Ein <a name="ixa102034"><a href="index_g.html#ixb101540"><font color=#000080><tt>GridLayout</tt></font></a></a>
+bietet eine gr&ouml;&szlig;ere Kontrolle &uuml;ber die Anordnung der
+Elemente als ein <a href="index_f.html#ixb101539"><font color=#000080><tt>FlowLayout</tt></font></a>.
+Hier werden die Komponenten nicht einfach nacheinander auf dem Bildschirm
+positioniert, sondern innerhalb eines rechteckigen Gitters angeordnet,
+dessen Elemente eine feste Gr&ouml;&szlig;e haben. 
+
+<p>
+Das Programm &uuml;bergibt dazu beim Aufruf des Konstruktors zwei
+Parameter, <font color="#000077"><tt>rows</tt></font> und <font color="#000077"><tt>columns</tt></font>,
+mit denen die vertikale und die horizontale Anzahl an Elementen festgelegt
+werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public GridLayout(int rows, int columns)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/GridLayout.html" onClick="this.href=getApiDoc('java.awt.GridLayout')"><font color="#660066" size=-1>java.awt.GridLayout</font></a></td>
+</tr>
+</table>
+
+<p>
+Beim Aufruf von <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+werden die Komponenten dann nacheinander in die einzelnen Zellen der
+Gittermatrix gelegt. Analog zum <a href="index_f.html#ixb101539"><font color=#000080><tt>FlowLayout</tt></font></a>
+wird dabei zun&auml;chst die erste Zeile von links nach rechts gef&uuml;llt,
+dann die zweite usw. 
+
+<p>
+&Auml;hnlich wie beim <a href="index_f.html#ixb101539"><font color=#000080><tt>FlowLayout</tt></font></a>
+steht ein zus&auml;tzlicher Konstruktor zur Verf&uuml;gung, der es
+erlaubt, die Gr&ouml;&szlig;e der horizontalen und vertikalen L&uuml;cken
+zu ver&auml;ndern: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public GridLayout(int rows, int columns, int hgap, int vgap)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/GridLayout.html" onClick="this.href=getApiDoc('java.awt.GridLayout')"><font color="#660066" size=-1>java.awt.GridLayout</font></a></td>
+</tr>
+</table>
+
+<p>
+Die gr&ouml;&szlig;ere Kontrolle des Programms &uuml;ber das Layout
+besteht nun darin, dass der Umbruch in die n&auml;chste Zeile genau
+vorhergesagt werden kann. Anders als beim <a href="index_f.html#ixb101539"><font color=#000080><tt>FlowLayout</tt></font></a>
+erfolgt dieser nicht erst dann, wenn keine weiteren Elemente in die
+Zeile passen, sondern wenn dort so viele Elemente platziert wurden,
+wie das Programm vorgegeben hat. 
+
+<p>
+Das folgende Beispiel zeigt ein Fenster mit einem Gitter der Gr&ouml;&szlig;e
+4*2 Elemente, das ingesamt sieben Buttons anzeigt: 
+<a name="gridlayoutbsp"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3103.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3103
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    Listing3103 wnd = <font color="#0000AA">new</font> Listing3103();
+<font color="#555555">012 </font>    wnd.setVisible(<font color="#006699">true</font>);
+<font color="#555555">013 </font>  }
+<font color="#555555">014 </font>
+<font color="#555555">015 </font>  <font color="#0000AA">public</font> Listing3103()
+<font color="#555555">016 </font>  {
+<font color="#555555">017 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Test GridLayout"</font>);
+<font color="#555555">018 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">019 </font>    <font color="#00AA00">//Layout setzen und Komponenten hinzuf&uuml;gen</font>
+<font color="#555555">020 </font>    setLayout(<font color="#0000AA">new</font> GridLayout(4,2));
+<font color="#555555">021 </font>    add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Button 1"</font>));
+<font color="#555555">022 </font>    add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Button 2"</font>));
+<font color="#555555">023 </font>    add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Button 3"</font>));
+<font color="#555555">024 </font>    add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Button 4"</font>));
+<font color="#555555">025 </font>    add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Button 5"</font>));
+<font color="#555555">026 </font>    add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Button 6"</font>));
+<font color="#555555">027 </font>    add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Button 7"</font>));
+<font color="#555555">028 </font>    pack();
+<font color="#555555">029 </font>  }
+<font color="#555555">030 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3103.java"><font color="#000055" size=-1>Listing3103.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 31.3: Die Klasse GridLayout</i></p>
+
+<p>
+Die Ausgabe des Programms ist: 
+<p>
+<a name="imageid031003"></a>
+<img src="images/GridLayout.gif">
+<p>
+
+<p><i>
+Abbildung 31.3: Verwendung der Klasse GridLayout</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id031002002001"></a>
+<h4>Die Gr&ouml;&szlig;e der Komponenten </h4>
+
+<p>
+Wenn wir die Gr&ouml;&szlig;e des Fensters nicht durch einen Aufruf
+von <a href="index_p.html#ixb101552"><font color=#000080><tt>pack</tt></font></a>,
+sondern manuell festgelegt h&auml;tten, w&auml;re an dieser Stelle
+ein wichtiger Unterschied zwischen den beiden bisher vorgestellten
+Layoutmanagern deutlich geworden. <a href="k100204.html#flowlayoutgross">Abbildung 31.4</a>
+zeigt das ver&auml;nderte <a href="k100204.html#flowlayoutbsp">Listing 31.2</a>,
+bei dem die Gr&ouml;&szlig;e des Fensters durch Aufruf von <font color="#000077"><tt>setSize(500,200);</tt></font>
+auf 500*200 Pixel festgelegt und der Aufruf von <a href="index_p.html#ixb101552"><font color=#000080><tt>pack</tt></font></a>
+entfernt wurde: 
+<p>
+<a name="flowlayoutgross"></a>
+<img src="images/FlowLayoutGross.gif">
+<p>
+
+<p><i>
+Abbildung 31.4: Das FlowLayout in einem gr&ouml;&szlig;eren Fenster</i></p>
+
+<p>
+Hier verh&auml;lt sich das Programm noch so, wie wir es erwarten w&uuml;rden,
+denn die Buttons haben ihre Gr&ouml;&szlig;e behalten, w&auml;hrend
+das Fenster gr&ouml;&szlig;er geworden ist. Anders sieht es dagegen
+aus, wenn wir die Fenstergr&ouml;&szlig;e in <a href="k100204.html#gridlayoutbsp">Listing 31.3</a>
+ebenfalls auf 500*200 Pixel fixieren: 
+<p>
+<a name="imageid031005"></a>
+<img src="images/GridLayoutGross.gif">
+<p>
+
+<p><i>
+Abbildung 31.5: Das GridLayout in einem gr&ouml;&szlig;eren Fenster</i></p>
+
+<p>
+Nun werden die Buttons pl&ouml;tzlich sehr viel gr&ouml;&szlig;er
+als urspr&uuml;nglich angezeigt, obwohl sie eigentlich weniger Platz
+in Anspruch nehmen w&uuml;rden. Der Unterschied besteht darin, dass
+ein <a href="index_f.html#ixb101539"><font color=#000080><tt>FlowLayout</tt></font></a>
+die <i>gew&uuml;nschte</i> Gr&ouml;&szlig;e eines Dialogelements verwendet,
+um seine Ausma&szlig;e zu bestimmen. Das <a href="index_g.html#ixb101540"><font color=#000080><tt>GridLayout</tt></font></a>
+dagegen ignoriert die gew&uuml;nschte Gr&ouml;&szlig;e und dimensioniert
+die Dialogelemente fest in der Gr&ouml;&szlig;e eines Gitterelements.
+Ein <font color="#000077"><tt>LayoutManager</tt></font> hat also offensichtlich
+die Freiheit zu entscheiden, ob und in welcher Weise er die Gr&ouml;&szlig;en
+von Fenster und Dialogelementen den aktuellen Erfordernissen anpasst.
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Wir werden am Ende dieses Abschnitts auch M&ouml;glichkeiten kennenlernen,
+durch Schachteln von Layoutmanagern beide M&ouml;glichkeiten zu kombinieren:
+Das feste Gitterraster bleibt erhalten, aber die einzelnen Komponenten
+innerhalb des Gitters werden in ihrer gew&uuml;nschten Gr&ouml;&szlig;e
+angezeigt. Am Ende von <a href="k100207.html#kapitelawtdialogelemente">Kapitel 32</a>
+werden wir zus&auml;tzlich kurz auf die verschiedenen Gr&ouml;&szlig;eneigenschaften
+von Dialogelementen zur&uuml;ckkommen, wenn wir zeigen, wie selbst
+definierte Komponenten erzeugt werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id031002003"></a>
+<h3>31.2.3 BorderLayout </h3>
+
+<p>
+Das <a name="ixa102035"><a href="index_b.html#ixb101541"><font color=#000080><tt>BorderLayout</tt></font></a></a>
+verfolgt einen anderen Ansatz als die beiden vorigen Layoutmanager,
+denn die Positionierung der Komponenten wird nicht mehr prim&auml;r
+durch die Reihenfolge der Aufrufe von <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+bestimmt. Stattdessen teilt das <a href="index_b.html#ixb101541"><font color=#000080><tt>BorderLayout</tt></font></a>
+den Bildschirm in f&uuml;nf Bereiche auf, und zwar in die vier R&auml;nder
+und das Zentrum. Durch Angabe einer <a name="ixa102036"><i>Himmelsrichtung</i></a>
+wird beim Aufruf von <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+angegeben, auf welchem dieser Bereiche die Komponente platziert werden
+soll. <a href="index_b.html#ixb101541"><font color=#000080><tt>BorderLayout</tt></font></a>
+stellt dazu folgende Konstanten zur Verf&uuml;gung: 
+<ul>
+<li><a href="index_s.html#ixb101545"><font color=#000080><tt>SOUTH</tt></font></a>:
+unterer Rand
+<li><a href="index_n.html#ixb101546"><font color=#000080><tt>NORTH</tt></font></a>:
+oberer Rand
+<li><a href="index_e.html#ixb101548"><font color=#000080><tt>EAST</tt></font></a>:
+rechter Rand
+<li><a href="index_w.html#ixb101547"><font color=#000080><tt>WEST</tt></font></a>:
+linker Rand
+<li><a href="index_c.html#ixb101549"><font color=#000080><tt>CENTER</tt></font></a>:
+Mitte
+</ul>
+
+<p>
+Zur &Uuml;bergabe dieses Parameters gibt es die Methode <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+der Klasse <a href="index_c.html#ixb101294"><font color=#000080><tt>Container</tt></font></a>
+in einer Variante mit einem <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+als zweiten Parameter: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void add(Component comp, Object constraints)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Container.html" onClick="this.href=getApiDoc('java.awt.Container')"><font color="#660066" size=-1>java.awt.Container</font></a></td>
+</tr>
+</table>
+
+<p>
+Das folgende Beispiel zeigt die Anordnung von f&uuml;nf Buttons in
+einem <a href="index_b.html#ixb101541"><font color=#000080><tt>BorderLayout</tt></font></a>.
+Jeweils einer der Buttons wird auf die vier Randbereiche verteilt
+und der f&uuml;nfte Button steht in der Mitte. Die Gr&ouml;&szlig;e
+des Fensters wird fest auf 300*200 Pixel eingestellt: 
+<a name="listingid031004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3104.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3104
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    Listing3104 wnd = <font color="#0000AA">new</font> Listing3104();
+<font color="#555555">012 </font>    wnd.setVisible(<font color="#006699">true</font>);
+<font color="#555555">013 </font>  }
+<font color="#555555">014 </font>
+<font color="#555555">015 </font>  <font color="#0000AA">public</font> Listing3104()
+<font color="#555555">016 </font>  {
+<font color="#555555">017 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Test BorderLayout"</font>);
+<font color="#555555">018 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">019 </font>    <font color="#00AA00">//Layout setzen und Komponenten hinzuf&uuml;gen</font>
+<font color="#555555">020 </font>    setSize(300,200);
+<font color="#555555">021 </font>    setLayout(<font color="#0000AA">new</font> BorderLayout());
+<font color="#555555">022 </font>    add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Button 1"</font>), BorderLayout.NORTH);
+<font color="#555555">023 </font>    add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Button 2"</font>), BorderLayout.SOUTH);
+<font color="#555555">024 </font>    add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Button 3"</font>), BorderLayout.WEST);
+<font color="#555555">025 </font>    add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Button 4"</font>), BorderLayout.EAST);
+<font color="#555555">026 </font>    add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Button 5"</font>), BorderLayout.CENTER);
+<font color="#555555">027 </font>  }
+<font color="#555555">028 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3104.java"><font color="#000055" size=-1>Listing3104.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 31.4: Das BorderLayout</i></p>
+
+<p>
+Die Ausgabe des Programms ist: 
+<p>
+<a name="imageid031006"></a>
+<img src="images/BorderLayout.gif">
+<p>
+
+<p><i>
+Abbildung 31.6: Verwendung der Klasse BorderLayout</i></p>
+
+<p>
+Bez&uuml;glich der Skalierung der Komponenten verfolgt <a href="index_b.html#ixb101541"><font color=#000080><tt>BorderLayout</tt></font></a>
+einen Mittelweg zwischen <a href="index_f.html#ixb101539"><font color=#000080><tt>FlowLayout</tt></font></a>
+und <a href="index_g.html#ixb101540"><font color=#000080><tt>GridLayout</tt></font></a>.
+W&auml;hrend <a href="index_f.html#ixb101539"><font color=#000080><tt>FlowLayout</tt></font></a>
+die Komponenten immer in ihrer gew&uuml;nschten Gr&ouml;&szlig;e bel&auml;sst
+und <a href="index_g.html#ixb101540"><font color=#000080><tt>GridLayout</tt></font></a>
+sie immer skaliert, ist dies bei <a href="index_b.html#ixb101541"><font color=#000080><tt>BorderLayout</tt></font></a>
+von verschiedenen Faktoren abh&auml;ngig: 
+<ul>
+<li> Nord- und S&uuml;delement behalten ihre gew&uuml;nschte H&ouml;he,
+werden aber auf die volle Fensterbreite skaliert.
+<li> Ost- und Westelement behalten ihre gew&uuml;nschte Breite, werden
+aber in der H&ouml;he so skaliert, dass sie genau zwischen Nord- und
+S&uuml;delement passen.
+<li> Das Mittelelement wird in der H&ouml;he und Breite so angepasst,
+dass es den verbleibenden freien Raum einnimmt.
+</ul>
+
+<p>
+Auch beim <a href="index_b.html#ixb101541"><font color=#000080><tt>BorderLayout</tt></font></a>
+kann die Gr&ouml;&szlig;e der L&uuml;cken zwischen den Elementen an
+den Konstruktor &uuml;bergeben werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public BorderLayout(int hgap, int vgap)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/BorderLayout.html" onClick="this.href=getApiDoc('java.awt.BorderLayout')"><font color="#660066" size=-1>java.awt.BorderLayout</font></a></td>
+</tr>
+</table>
+
+<p>
+Wenn das vorige Beispiel ein <a href="index_b.html#ixb101541"><font color=#000080><tt>BorderLayout</tt></font></a>
+mit einer vertikalen und horizontalen L&uuml;cke von 10 Pixeln definieren
+w&uuml;rde, w&auml;re die Ausgabe des Programms wie folgt: 
+<p>
+<a name="imageid031007"></a>
+<img src="images/BorderLayoutLuecken.gif">
+<p>
+
+<p><i>
+Abbildung 31.7: Ein BorderLayout mit L&uuml;cken</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id031002004"></a>
+<h3>31.2.4 GridBagLayout </h3>
+
+<p>
+Das <a name="ixa102037"><a href="index_g.html#ixb101543"><font color=#000080><tt>GridBagLayout</tt></font></a></a>
+ist der aufw&auml;ndigste Layoutmanager in Java. Er erlaubt eine sehr
+flexible Gestaltung der Oberfl&auml;che und bietet viele M&ouml;glichkeiten,
+die in den anderen Layoutmanagern nicht zu finden sind. Der Preis
+daf&uuml;r ist eine etwas kompliziertere Bedienung und ein h&ouml;herer
+Einarbeitungsaufwand. Wir wollen in diesem Abschnitt die Klasse <a href="index_g.html#ixb101543"><font color=#000080><tt>GridBagLayout</tt></font></a>
+vorstellen und ihre grundlegenden Anwendungsm&ouml;glichkeiten besprechen.
+
+<p>
+Um mit einem <a href="index_g.html#ixb101543"><font color=#000080><tt>GridBagLayout</tt></font></a>
+zu arbeiten, ist wie folgt vorzugehen: 
+<ul>
+<li>Zun&auml;chst ist ein Objekt des Typs <a href="index_g.html#ixb101543"><font color=#000080><tt>GridBagLayout</tt></font></a>
+zu instanzieren und durch Aufruf von <a href="index_s.html#ixb101538"><font color=#000080><tt>setLayout</tt></font></a>
+dem Fenster zuzuweisen.
+<li>F&uuml;r jedes einzuf&uuml;gende Dialogelement ist nun ein Objekt
+des Typs <a name="ixa102038"><a href="index_g.html#ixb101558"><font color=#000080><tt>GridBagConstraints</tt></font></a></a>
+anzulegen, um &uuml;ber dessen Membervariablen die spezifischen Layouteigenschaften
+des Dialogelements zu beschreiben.
+<li>Sowohl das Dialogelement als auch das Eigenschaftenobjekt werden
+durch Aufruf der Methode <a name="ixa102039"><a href="index_s.html#ixb101559"><font color=#000080><tt>setConstraints</tt></font></a></a>
+an den Layoutmanager &uuml;bergeben.
+<li>Schlie&szlig;lich wird das Dialogelement mit <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+an das Fenster &uuml;bergeben.
+</ul>
+
+<p>
+Das k&ouml;nnte beispielsweise so aussehen 
+<a name="listingid031005"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>...
+<font color="#555555">002 </font>GridBagLayout gbl = <font color="#0000AA">new</font> GridBagLayout();
+<font color="#555555">003 </font>GridBagConstraints gbc = <font color="#0000AA">new</font> GridBagConstraints();
+<font color="#555555">004 </font>setLayout(gbl);
+<font color="#555555">005 </font>List list = <font color="#0000AA">new</font> List();
+<font color="#555555">006 </font>gbc.gridx = 0;
+<font color="#555555">007 </font>gbc.gridy = 0;
+<font color="#555555">008 </font>gbc.gridwidth = 1;
+<font color="#555555">009 </font>gbc.gridheight = 1;
+<font color="#555555">010 </font>gbc.weightx = 100;
+<font color="#555555">011 </font>gbc.weighty = 100;
+<font color="#555555">012 </font>gbc.fill = GridBagConstraints.BOTH;
+<font color="#555555">013 </font>gbl.setConstraints(list, gbc);
+<font color="#555555">014 </font>add(list);
+<font color="#555555">015 </font>...</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 31.5: Umgang mit GridBagLayout und GridBagConstraints</i></p>
+
+<p>
+Ein <a href="index_g.html#ixb101543"><font color=#000080><tt>GridBagLayout</tt></font></a>
+unterteilt das Fenster &auml;hnlich wie das <a href="index_g.html#ixb101540"><font color=#000080><tt>GridLayout</tt></font></a>
+in ein rechteckiges Gitter von Zellen, in denen die Dialogelemente
+platziert werden. Im Gegensatz zum <a href="index_g.html#ixb101540"><font color=#000080><tt>GridLayout</tt></font></a>
+k&ouml;nnen die Zellen allerdings unterschiedliche Gr&ouml;&szlig;en
+haben und die Dialogelemente k&ouml;nnen auf verschiedene Weise innerhalb
+der Zellen platziert werden. Zudem kann ein Dialogelement sich in
+beiden Richtungen &uuml;ber mehr als eine einzige Zelle erstrecken.
+
+<p>
+Das Geheimnis der korrekten Verwendung eines <a href="index_g.html#ixb101543"><font color=#000080><tt>GridBagLayout</tt></font></a>
+liegt also in der richtigen Konfiguration der Membervariablen der
+<a href="index_g.html#ixb101558"><font color=#000080><tt>GridBagConstraints</tt></font></a>-Objekte:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int gridx
+public int gridy
+
+public int gridwidth
+public int gridheight
+
+public int anchor
+
+public int fill
+
+public double weightx
+public double weighty
+
+public Insets insets
+
+public int ipadx
+public int ipady
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/GridBagConstraints.html" onClick="this.href=getApiDoc('java.awt.GridBagConstraints')"><font color="#660066" size=-1>java.awt.GridBagConstraints</font></a></td>
+</tr>
+</table>
+
+<p>
+Die Anzahl der Zellen in x- und y-Richtung wird dabei dynamisch ermittelt,
+abh&auml;ngig von den Constraints-Vorgaben. Die Parameter bedeuten:
+<ul>
+<li><a name="ixa102040"><a href="index_g.html#ixb101560"><font color=#000080><tt>gridx</tt></font></a></a>
+gibt an, in welcher Spalte des logischen Gitters der linke Rand des
+Dialogelements liegen soll. Die erste Spalte hat den Wert 0. <a name="ixa102041"><a href="index_g.html#ixb101561"><font color=#000080><tt>gridy</tt></font></a></a>
+gibt analog die logische Zeile des oberen Rands des Dialogelements
+an. Beide Werte werden nicht etwa in Pixeln angegeben, sondern bezeichnen
+die Zellen des logischen Gitternetzes. (0, 0) ist die linke obere
+Ecke.
+<li>Die Parameter <a name="ixa102042"><a href="index_g.html#ixb101562"><font color=#000080><tt>gridwidth</tt></font></a></a>
+und <a name="ixa102043"><a href="index_g.html#ixb101563"><font color=#000080><tt>gridheight</tt></font></a></a>
+geben die horizontale und vertikale Ausdehnung des Dialogelements
+an. Soll ein Dialogelement beispielsweise zwei Zellen breit sein,
+so ist f&uuml;r <a href="index_g.html#ixb101562"><font color=#000080><tt>gridwidth</tt></font></a>
+der Wert 2 anzugeben.
+<li>Mit dem Parameter <a name="ixa102044"><a href="index_f.html#ixb100881"><font color=#000080><tt>fill</tt></font></a></a>
+wird definiert, wie sich die Abmessungen des Dialogelements ver&auml;ndern,
+wenn die Gr&ouml;&szlig;e des Fensters ver&auml;ndert wird. Wird hier
+<a name="ixa102045"><a href="index_n.html#ixb101564"><font color=#000080><tt>GridBagConstraints.NONE</tt></font></a></a>
+angegeben, bleibt das Element immer in seiner urspr&uuml;nglichen
+Gr&ouml;&szlig;e. Wird einer der Werte <a name="ixa102046"><a href="index_h.html#ixb101565"><font color=#000080><tt>GridBagConstraints.HORIZONTAL</tt></font></a></a>,
+<a name="ixa102047"><a href="index_v.html#ixb101566"><font color=#000080><tt>GridBagConstraints.VERTICAL</tt></font></a></a>
+oder <a name="ixa102048"><a href="index_b.html#ixb101567"><font color=#000080><tt>GridBagConstraints.BOTH</tt></font></a></a>
+angegeben, skaliert der Layoutmanager das Dialogelement automatisch
+in horizontaler, vertikaler oder in beiden Richtungen.
+<li>Der Parameter <a name="ixa102049"><a href="index_a.html#ixb101568"><font color=#000080><tt>anchor</tt></font></a></a>
+bestimmt, an welcher Kante der Zelle das Dialogelement festgemacht
+wird, wenn nach dem Skalieren noch Platz in der Zelle verbleibt. Hier
+k&ouml;nnen die folgenden Konstanten angegeben werden: 
+<ul>
+<li><a name="ixa102050"><a href="index_c.html#ixb101549"><font color=#000080><tt>GridBagConstraints.CENTER</tt></font></a></a>
+<li><a name="ixa102051"><a href="index_n.html#ixb101546"><font color=#000080><tt>GridBagConstraints.NORTH</tt></font></a></a>
+<li><a name="ixa102052"><a href="index_n.html#ixb101569"><font color=#000080><tt>GridBagConstraints.NORTHEAST</tt></font></a></a>
+<li><a name="ixa102053"><a href="index_e.html#ixb101548"><font color=#000080><tt>GridBagConstraints.EAST</tt></font></a></a>
+<li><a name="ixa102054"><a href="index_s.html#ixb101570"><font color=#000080><tt>GridBagConstraints.SOUTHEAST</tt></font></a></a>
+<li><a name="ixa102055"><a href="index_s.html#ixb101545"><font color=#000080><tt>GridBagConstraints.SOUTH</tt></font></a></a>
+<li><a name="ixa102056"><a href="index_s.html#ixb101571"><font color=#000080><tt>GridBagConstraints.SOUTHWEST</tt></font></a></a>
+<li><a name="ixa102057"><a href="index_w.html#ixb101547"><font color=#000080><tt>GridBagConstraints.WEST</tt></font></a></a>
+<li><a name="ixa102058"><a href="index_n.html#ixb101572"><font color=#000080><tt>GridBagConstraints.NORTHWEST</tt></font></a></a>
+</ul>
+<li>Die Parameter <a name="ixa102059"><a href="index_w.html#ixb101573"><font color=#000080><tt>weightx</tt></font></a></a>
+und <a name="ixa102060"><a href="index_w.html#ixb101574"><font color=#000080><tt>weighty</tt></font></a></a>
+sind etwas trickreich. Sie bestimmen das Verh&auml;ltnis, in dem &uuml;bersch&uuml;ssiger
+Platz auf die Zellen einer Zeile bzw. einer Spalte verteilt wird.
+Ist der Wert 0, bekommt die Zelle nichts von eventuell &uuml;bersch&uuml;ssigem
+Platz ab. Bedeutsam ist dabei nur das relative Verh&auml;ltnis, der
+absolute Wert dieses Parameters spielt keine Rolle. Die Werte sollten
+allerdings nicht negativ sein.
+<li>Mit dem Parameter <a name="ixa102061"><a href="index_i.html#ixb101575"><font color=#000080><tt>insets</tt></font></a></a>
+kann ein Rand gesetzt werden. Er wird um das Dialogelement herum auf
+jeden Fall freigelassen.
+<li>Mit <a name="ixa102062"><a href="index_i.html#ixb101576"><font color=#000080><tt>ipadx</tt></font></a></a>
+und <a name="ixa102063"><a href="index_i.html#ixb101577"><font color=#000080><tt>ipady</tt></font></a></a>
+kann ein konstanter Wert zur minimalen Breite und H&ouml;he der Komponente
+hinzugef&uuml;gt werden.
+</ul>
+
+<p>
+Um die Anwendung der Parameter zu veranschaulichen, wollen wir uns
+ein Beispiel ansehen. Das zu erstellende Programm soll ein Fenster
+mit sechs Dialogelementen entsprechend <a href="k100204.html#gridbaglayout1">Abbildung 31.8</a>
+aufbauen. Die Liste auf der linken Seite soll beim Skalieren in beide
+Richtungen vergr&ouml;&szlig;ert werden. Die Textfelder sollen dagegen
+lediglich in der Breite wachsen, ihre urspr&uuml;ngliche H&ouml;he
+aber beibehalten. Bei vertikaler Vergr&ouml;&szlig;erung des Fensters
+sollen sie untereinander stehen bleiben. Die Beschriftungen sollen
+ihre anf&auml;ngliche Gr&ouml;&szlig;e beibehalten und - unabh&auml;ngig
+von der Fenstergr&ouml;&szlig;e - direkt vor den Textfeldern stehen
+bleiben. Auch der Button soll seine urspr&uuml;ngliche Gr&ouml;&szlig;e
+beibehalten, wenn das Fenster skaliert wird. Zudem soll er immer in
+der rechten unteren Ecke stehen. Zwischen den Dialogelementen soll
+ein Standardabstand von zwei Pixeln eingehalten werden. 
+<p>
+<a name="gridbaglayout1"></a>
+<img src="images/GridBagLayoutBsp1.gif">
+<p>
+
+<p><i>
+Abbildung 31.8: Beispiel f&uuml;r GridBagLayout</i></p>
+
+<p>
+Wir konstruieren das <a href="index_g.html#ixb101543"><font color=#000080><tt>GridBagLayout</tt></font></a>
+als Zelle der Gr&ouml;&szlig;e drei mal drei gem&auml;&szlig; <a href="k100204.html#gridbaglayout2">Abbildung 31.9</a>:
+<p>
+<a name="gridbaglayout2"></a>
+<img src="images/GridBagLayout.gif">
+<p>
+
+<p><i>
+Abbildung 31.9: Zellenschema f&uuml;r GridBagLayout-Beispiel</i></p>
+
+<p>
+Die Listbox beginnt also in Zelle (0, 0) und erstreckt sich &uuml;ber
+eine Zelle in horizontaler und drei Zellen in vertikaler Richtung.
+Die beiden Labels liegen in Spalte 1 und den Zeilen 0 bzw. 1. Die
+Textfelder liegen eine Spalte rechts daneben. Textfelder und Beschriftungen
+sind genau eine Zelle breit und eine Zelle hoch. Der Button liegt
+in Zelle (2, 2). Die &uuml;brigen Eigenschaften werden entsprechend
+unserer Beschreibung so zugewiesen, dass die vorgegebenen Anforderungen
+erf&uuml;llt werden: 
+<a name="listingid031006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3106.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3106
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    Listing3106 wnd = <font color="#0000AA">new</font> Listing3106();
+<font color="#555555">012 </font>    wnd.setVisible(<font color="#006699">true</font>);
+<font color="#555555">013 </font>  }
+<font color="#555555">014 </font>
+<font color="#555555">015 </font>  <font color="#0000AA">public</font> Listing3106()
+<font color="#555555">016 </font>  {
+<font color="#555555">017 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Test GridBagLayout"</font>);
+<font color="#555555">018 </font>    setBackground(Color.lightGray);
+<font color="#555555">019 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">020 </font>    <font color="#00AA00">//Layout setzen und Komponenten hinzuf&uuml;gen</font>
+<font color="#555555">021 </font>    GridBagLayout gbl = <font color="#0000AA">new</font> GridBagLayout();
+<font color="#555555">022 </font>    GridBagConstraints gbc;
+<font color="#555555">023 </font>    setLayout(gbl);
+<font color="#555555">024 </font>
+<font color="#555555">025 </font>    <font color="#00AA00">//List hinzuf&uuml;gen</font>
+<font color="#555555">026 </font>    List list = <font color="#0000AA">new</font> List();
+<font color="#555555">027 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; 20; ++i) {
+<font color="#555555">028 </font>      list.add(<font color="#0000FF">"This is item "</font> + i);
+<font color="#555555">029 </font>    }
+<font color="#555555">030 </font>    gbc = makegbc(0, 0, 1, 3);
+<font color="#555555">031 </font>    gbc.weightx = 100;
+<font color="#555555">032 </font>    gbc.weighty = 100;
+<font color="#555555">033 </font>    gbc.fill = GridBagConstraints.BOTH;
+<font color="#555555">034 </font>    gbl.setConstraints(list, gbc);
+<font color="#555555">035 </font>    add(list);
+<font color="#555555">036 </font>    <font color="#00AA00">//Zwei Labels und zwei Textfelder</font>
+<font color="#555555">037 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; 2; ++i) {
+<font color="#555555">038 </font>      <font color="#00AA00">//Label</font>
+<font color="#555555">039 </font>      gbc = makegbc(1, i, 1, 1);
+<font color="#555555">040 </font>      gbc.fill = GridBagConstraints.NONE;
+<font color="#555555">041 </font>      Label label = <font color="#0000AA">new</font> Label(<font color="#0000FF">"Label "</font> + (i + 1));
+<font color="#555555">042 </font>      gbl.setConstraints(label, gbc);
+<font color="#555555">043 </font>      add(label);
+<font color="#555555">044 </font>      <font color="#00AA00">//Textfeld</font>
+<font color="#555555">045 </font>      gbc = makegbc(2, i, 1, 1);
+<font color="#555555">046 </font>      gbc.weightx = 100;
+<font color="#555555">047 </font>      gbc.fill = GridBagConstraints.HORIZONTAL;
+<font color="#555555">048 </font>      TextField field = <font color="#0000AA">new</font> TextField(<font color="#0000FF">"TextField "</font> + (i +1));
+<font color="#555555">049 </font>      gbl.setConstraints(field, gbc);
+<font color="#555555">050 </font>      add(field);
+<font color="#555555">051 </font>    }
+<font color="#555555">052 </font>    <font color="#00AA00">//Ende-Button</font>
+<font color="#555555">053 </font>    Button button = <font color="#0000AA">new</font> Button(<font color="#0000FF">"Ende"</font>);
+<font color="#555555">054 </font>    gbc = makegbc(2, 2, 0, 0);
+<font color="#555555">055 </font>    gbc.fill = GridBagConstraints.NONE;
+<font color="#555555">056 </font>    gbc.anchor = GridBagConstraints.SOUTHEAST;
+<font color="#555555">057 </font>    gbl.setConstraints(button, gbc);
+<font color="#555555">058 </font>    add(button);
+<font color="#555555">059 </font>    <font color="#00AA00">//Dialogelemente layouten</font>
+<font color="#555555">060 </font>    pack();
+<font color="#555555">061 </font>  }
+<font color="#555555">062 </font>
+<font color="#555555">063 </font>  <font color="#0000AA">private</font> GridBagConstraints makegbc(
+<font color="#555555">064 </font>    <font color="#006699">int</font> x, <font color="#006699">int</font> y, <font color="#006699">int</font> width, <font color="#006699">int</font> height)
+<font color="#555555">065 </font>  {
+<font color="#555555">066 </font>    GridBagConstraints gbc = <font color="#0000AA">new</font> GridBagConstraints();
+<font color="#555555">067 </font>    gbc.gridx = x;
+<font color="#555555">068 </font>    gbc.gridy = y;
+<font color="#555555">069 </font>    gbc.gridwidth = width;
+<font color="#555555">070 </font>    gbc.gridheight = height;
+<font color="#555555">071 </font>    gbc.insets = <font color="#0000AA">new</font> Insets(1, 1, 1, 1);
+<font color="#555555">072 </font>    <font color="#0000AA">return</font> gbc;
+<font color="#555555">073 </font>  }
+<font color="#555555">074 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3106.java"><font color="#000055" size=-1>Listing3106.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 31.6: Beispiel f&uuml;r GridBagLayout</i></p>
+
+<p>
+Das Programm besitzt eine kleine Hilfsmethode <font color="#000077"><tt>makegbc</tt></font>,
+mit der auf einfache Weise ein neues <a href="index_g.html#ixb101558"><font color=#000080><tt>GridBagConstraints</tt></font></a>-Objekt
+f&uuml;r einen vorgegebenen Bereich von Zellen erzeugt werden kann.
+Die &uuml;brigen Membervariablen werden im Konstruktor der Fensterklasse
+zugewiesen. <a href="k100204.html#gridbaglayout3">Abbildung 31.10</a>
+zeigt das Fenster nach dem Skalieren in x- und y-Richtung. 
+<p>
+<a name="gridbaglayout3"></a>
+<img src="images/GridBagLayoutBsp2.gif">
+<p>
+
+<p><i>
+Abbildung 31.10: Das GridBagLayout-Beispiel nach dem Skalieren</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Neben dem parameterlosen gibt es in der Klasse <a href="index_g.html#ixb101558"><font color=#000080><tt>GridBagConstraints</tt></font></a>
+einen weiteren Konstruktor, mit dem alle Membervariablen direkt beim
+Konstruktoraufruf gesetzt werden k&ouml;nnen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id031002005"></a>
+<h3>31.2.5 NULL-Layout </h3>
+
+<p>
+Ein <a name="ixa102064"><i>Null-Layout</i></a> wird erzeugt, indem
+die Methode <a href="index_s.html#ixb101538"><font color=#000080><tt>setLayout</tt></font></a>
+mit dem Argument <a href="index_n.html#ixb100242"><font color=#000080><tt>null</tt></font></a>
+aufgerufen wird. In diesem Fall verwendet das Fenster keinen Layoutmanager,
+sondern &uuml;berl&auml;sst die Positionierung der Komponenten der
+Anwendung. F&uuml;r jedes einzuf&uuml;gende Dialogelement sind dann
+drei Schritte auszuf&uuml;hren: 
+<ul>
+<li>Das Dialogelement wird erzeugt.
+<li>Seine Gr&ouml;&szlig;e und Position werden festgelegt.
+<li>Das Dialogelement wird an das Fenster &uuml;bergeben.
+</ul>
+
+<p>
+Der erste und letzte Schritt unterscheiden sich nicht von unseren
+bisherigen Versuchen, bei denen wir vordefinierte Layoutmanager verwendet
+haben. Im zweiten Schritt ist allerdings etwas Handarbeit notwendig.
+Gr&ouml;&szlig;e und Position des Dialogelements k&ouml;nnen mit den
+Methoden <font color="#000077"><tt>move</tt></font> und <a name="ixa102065"><a href="index_s.html#ixb101167"><font color=#000080><tt>setSize</tt></font></a></a>
+oder - noch einfacher - mit <a name="ixa102066"><a href="index_s.html#ixb101298"><font color=#000080><tt>setBounds</tt></font></a></a>
+festgelegt werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setBounds(
+   int x, int y, int width, int height
+)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Component.html" onClick="this.href=getApiDoc('java.awt.Component')"><font color="#660066" size=-1>java.awt.Component</font></a></td>
+</tr>
+</table>
+
+<p>
+Der Punkt (<font color="#000077"><tt>x</tt></font>,<font color="#000077"><tt>y</tt></font>)
+bestimmt die neue Anfangsposition des Dialogelements und (<font color="#000077"><tt>width</tt></font>,
+<font color="#000077"><tt>height</tt></font>) seine Gr&ouml;&szlig;e.
+
+<p>
+Das folgende Listing demonstriert diese Vorgehensweise am Beispiel
+einer treppenartigen Anordnung von f&uuml;nf Buttons: 
+<a name="listingid031007"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3107.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3107
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    Listing3107 wnd = <font color="#0000AA">new</font> Listing3107();
+<font color="#555555">012 </font>    wnd.setVisible(<font color="#006699">true</font>);
+<font color="#555555">013 </font>  }
+<font color="#555555">014 </font>
+<font color="#555555">015 </font>  <font color="#0000AA">public</font> Listing3107()
+<font color="#555555">016 </font>  {
+<font color="#555555">017 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Dialogelemente ohne Layoutmanager"</font>);
+<font color="#555555">018 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">019 </font>    <font color="#00AA00">//Layout setzen und Komponenten hinzuf&uuml;gen</font>
+<font color="#555555">020 </font>    setSize(300,250);
+<font color="#555555">021 </font>    setLayout(<font color="#006699">null</font>);
+<font color="#555555">022 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; 5; ++i) {
+<font color="#555555">023 </font>      Button button = <font color="#0000AA">new</font> Button(<font color="#0000FF">"Button"</font>+(i+1));
+<font color="#555555">024 </font>      button.setBounds(10+i*35,40+i*35,100,30);
+<font color="#555555">025 </font>      add(button);
+<font color="#555555">026 </font>    }
+<font color="#555555">027 </font>  }
+<font color="#555555">028 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3107.java"><font color="#000055" size=-1>Listing3107.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 31.7: Anordnen von Dialogelementen ohne Layoutmanager</i></p>
+
+<p>
+Die Ausgabe des Programms ist: 
+<p>
+<a name="imageid031011"></a>
+<img src="images/NullLayout.gif">
+<p>
+
+<p><i>
+Abbildung 31.11: Verwendung des Null-Layouts</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id031002006"></a>
+<h3>31.2.6 Schachteln von Layoutmanagern <a name="ixa102067"></a>
+</h3>
+
+<p>
+Eines der Schl&uuml;sselkonzepte zur Realisierung komplexer, portabler
+Dialoge ist die F&auml;higkeit, Layoutmanager schachteln zu k&ouml;nnen.
+Dazu wird an der Stelle, die ein Sublayout erhalten soll, einfach
+ein Objekt der Klasse <a name="ixa102068"><a href="index_p.html#ixb101295"><font color=#000080><tt>Panel</tt></font></a></a>
+eingef&uuml;gt, das einen eigenen Layoutmanager erh&auml;lt. Dieses
+<a href="index_p.html#ixb101295"><font color=#000080><tt>Panel</tt></font></a>
+kann mit Dialogelementen best&uuml;ckt werden, die entsprechend dem
+zugeordneten Unterlayout formatiert werden. 
+
+<p>
+Wenn wir an die in <a href="k100175.html#hierarchiefensterklassen">Abbildung 27.1</a>
+vorgestellte Klassenhierarchie innerhalb des AWT denken, werden wir
+uns daran erinnern, dass ein <a href="index_p.html#ixb101295"><font color=#000080><tt>Panel</tt></font></a>
+die einfachste konkrete Containerklasse ist. Sie erbt alle Eigenschaften
+von <a href="index_c.html#ixb101294"><font color=#000080><tt>Container</tt></font></a>
+und bietet damit die M&ouml;glichkeit, Komponenten aufzunehmen und
+mit Hilfe eines Layoutmanagers auf dem Bildschirm anzuordnen. 
+
+<p>
+Das folgende Beispiel zeigt einen Dialog, der ein <a href="index_g.html#ixb101540"><font color=#000080><tt>GridLayout</tt></font></a>
+der Gr&ouml;&szlig;e 1*2 Elemente verwendet. Innerhalb des ersten
+Elements wird ein <a href="index_p.html#ixb101295"><font color=#000080><tt>Panel</tt></font></a>
+mit einem <a href="index_g.html#ixb101540"><font color=#000080><tt>GridLayout</tt></font></a>
+der Gr&ouml;&szlig;e 3*1 Elemente verwendet, innerhalb des zweiten
+Elements ein <a href="index_b.html#ixb101541"><font color=#000080><tt>BorderLayout</tt></font></a>:
+<a name="listingid031008"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3108.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3108
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    Listing3108 wnd = <font color="#0000AA">new</font> Listing3108();
+<font color="#555555">012 </font>    wnd.setVisible(<font color="#006699">true</font>);
+<font color="#555555">013 </font>  }
+<font color="#555555">014 </font>
+<font color="#555555">015 </font>  <font color="#0000AA">public</font> Listing3108()
+<font color="#555555">016 </font>  {
+<font color="#555555">017 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Geschachtelte Layoutmanager"</font>);
+<font color="#555555">018 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">019 </font>    <font color="#00AA00">//Layout setzen und Komponenten hinzuf&uuml;gen</font>
+<font color="#555555">020 </font>    <font color="#00AA00">//Panel 1</font>
+<font color="#555555">021 </font>    Panel panel1 = <font color="#0000AA">new</font> Panel();
+<font color="#555555">022 </font>    panel1.setLayout(<font color="#0000AA">new</font> GridLayout(3,1));
+<font color="#555555">023 </font>    panel1.add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Button1"</font>));
+<font color="#555555">024 </font>    panel1.add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Button2"</font>));
+<font color="#555555">025 </font>    panel1.add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Button3"</font>));
+<font color="#555555">026 </font>    <font color="#00AA00">//Panel 2</font>
+<font color="#555555">027 </font>    Panel panel2 = <font color="#0000AA">new</font> Panel();
+<font color="#555555">028 </font>    panel2.setLayout(<font color="#0000AA">new</font> BorderLayout());
+<font color="#555555">029 </font>    panel2.add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Button4"</font>), BorderLayout.NORTH);
+<font color="#555555">030 </font>    panel2.add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Button5"</font>), BorderLayout.SOUTH);
+<font color="#555555">031 </font>    panel2.add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Button6"</font>), BorderLayout.WEST);
+<font color="#555555">032 </font>    panel2.add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Button7"</font>), BorderLayout.EAST);
+<font color="#555555">033 </font>    panel2.add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Button8"</font>), BorderLayout.CENTER);
+<font color="#555555">034 </font>    <font color="#00AA00">//Hauptfenster</font>
+<font color="#555555">035 </font>    setLayout(<font color="#0000AA">new</font> GridLayout(1,2));
+<font color="#555555">036 </font>    add(panel1);
+<font color="#555555">037 </font>    add(panel2);
+<font color="#555555">038 </font>    pack();
+<font color="#555555">039 </font>  }
+<font color="#555555">040 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3108.java"><font color="#000055" size=-1>Listing3108.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 31.8: Schachteln von Layoutmanagern</i></p>
+
+<p>
+Die Ausgabe des Programms ist: 
+<p>
+<a name="imageid031012"></a>
+<img src="images/SchachtelLayout1.gif">
+<p>
+
+<p><i>
+Abbildung 31.12: Verwendung eines geschachtelten Layouts</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Geschachtelte Layouts k&ouml;nnen auch dann sinnvoll verwendet werden,
+wenn innerhalb der Bestandteile eines <font color="#000077"><tt>BorderLayouts</tt></font>
+<i>mehrere</i> Komponenten untergebracht werden sollen oder wenn die
+Komponenten eines <i>skalierenden</i> Layoutmanagers ihre urspr&uuml;ngliche
+Gr&ouml;&szlig;e beibehalten sollen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Das folgende Beispiel demonstriert beide Anwendungen anhand eines
+<font color="#000077"><tt>BorderLayouts</tt></font>, das im South-Element
+zwei rechtsb&uuml;ndig angeordnete Buttons in Originalgr&ouml;&szlig;e
+und im Center-Element sechs innerhalb eines <font color="#000077"><tt>GridLayouts</tt></font>
+der Gr&ouml;&szlig;e 3*2 Elemente angeordnete, skalierte Buttons enth&auml;lt:
+<a name="listingid031009"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3109.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3109
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    Listing3109 wnd = <font color="#0000AA">new</font> Listing3109();
+<font color="#555555">012 </font>    wnd.setVisible(<font color="#006699">true</font>);
+<font color="#555555">013 </font>  }
+<font color="#555555">014 </font>
+<font color="#555555">015 </font>  <font color="#0000AA">public</font> Listing3109()
+<font color="#555555">016 </font>  {
+<font color="#555555">017 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Geschachtelte Layoutmanager, Teil II"</font>);
+<font color="#555555">018 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">019 </font>    <font color="#00AA00">//Layout setzen und Komponenten hinzuf&uuml;gen</font>
+<font color="#555555">020 </font>    setSize(300,200);
+<font color="#555555">021 </font>    <font color="#00AA00">//Panel 1</font>
+<font color="#555555">022 </font>    Panel panel1 = <font color="#0000AA">new</font> Panel();
+<font color="#555555">023 </font>    panel1.setLayout(<font color="#0000AA">new</font> GridLayout(3,2));
+<font color="#555555">024 </font>    panel1.add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Button1"</font>));
+<font color="#555555">025 </font>    panel1.add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Button2"</font>));
+<font color="#555555">026 </font>    panel1.add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Button3"</font>));
+<font color="#555555">027 </font>    panel1.add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Button4"</font>));
+<font color="#555555">028 </font>    panel1.add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Button5"</font>));
+<font color="#555555">029 </font>    panel1.add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Button6"</font>));
+<font color="#555555">030 </font>    <font color="#00AA00">//Panel 2</font>
+<font color="#555555">031 </font>    Panel panel2 = <font color="#0000AA">new</font> Panel();
+<font color="#555555">032 </font>    panel2.setLayout(<font color="#0000AA">new</font> FlowLayout(FlowLayout.RIGHT));
+<font color="#555555">033 </font>    panel2.add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"Abbruch"</font>));
+<font color="#555555">034 </font>    panel2.add(<font color="#0000AA">new</font> Button(<font color="#0000FF">"OK"</font>));
+<font color="#555555">035 </font>    <font color="#00AA00">//Hauptfenster</font>
+<font color="#555555">036 </font>    setLayout(<font color="#0000AA">new</font> BorderLayout());
+<font color="#555555">037 </font>    add(panel1, BorderLayout.CENTER);
+<font color="#555555">038 </font>    add(panel2, BorderLayout.SOUTH);
+<font color="#555555">039 </font>  }
+<font color="#555555">040 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3109.java"><font color="#000055" size=-1>Listing3109.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 31.9: Eine weitere Anwendung f&uuml;r geschachtelte Layoutmanager</i></p>
+
+<p>
+Die Ausgabe des Programms ist: 
+<p>
+<a name="imageid031013"></a>
+<img src="images/SchachtelLayout2.gif">
+<p>
+
+<p><i>
+Abbildung 31.13: Ein weiteres Beispiel f&uuml;r geschachtelte Layouts</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100202.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100203.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100205.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100207.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

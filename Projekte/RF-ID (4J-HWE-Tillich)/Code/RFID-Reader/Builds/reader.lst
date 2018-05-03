@@ -1,0 +1,2028 @@
+   1               		.file	"reader.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   8               		.text
+   9               	.Ltext0:
+ 116               	.global	delay_ms
+ 118               	delay_ms:
+ 120               	.Ltext1:
+   1:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** //////////////////////////////////////////////////////////////////////////////
+   2:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** //
+   3:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** // Headerfile LCD.h zur LCD Ansteuerung am Port D
+   4:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** //
+   5:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** // Befehle: LCD_init(), LCD_cmd(char data), LCD_send(char data)
+   6:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** //          LCD_string(char *data)
+   7:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** //
+   8:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** // LCD_init();               initialisiert Port D
+   9:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** //                           und LCD im 4-Bit Mode, 2 Zeilen, 5x7 Dots
+  10:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** //                           Bsp.: LCD_init();
+  11:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** //
+  12:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** // LCD_cmd(char data);       schickt Befehl ans LCD
+  13:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** //                           Bsp.: LCD_cmd(0xC5);  //gehe zu 2. Zeile, 6. Position
+  14:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** //
+  15:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** // LCD_send(char data);      schickt Daten ans LCD
+  16:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** //                           Bsp.: LCD_send(0xEF); //sendet ein �
+  17:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** //
+  18:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** // LCD_string(char *data);   schickt eine Zeichenkette ans LCD
+  19:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** //                           Bsp.: LCD_string("Hallo");    //sendet Hallo
+  20:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** //
+  21:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** // Pinbelegung am Board:
+  22:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** // LCD | Atmega16 | Bemerkung
+  23:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** // ----|----------|--------------------
+  24:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** // DB7 |    PD3   |
+  25:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** // DB6 |	PD2   |
+  26:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** // DB5 |	PD1   |
+  27:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** // DB4 |	PD0   |
+  28:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** // DB3 |	-     | wird nicht ben�tigt
+  29:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** // DB2 |	-     | wird nicht ben�tigt
+  30:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** // DB1 |	-     | wird nicht ben�tigt
+  31:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** // DB0 |	-     | wird nicht ben�tigt
+  32:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** // E   |	PD5   |
+  33:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** // R/W |	-     | per HW auf GND gelegt
+  34:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** // RS  |	PD4   |
+  35:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** //
+  36:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** ////////////////////////////////////////////////////////////////////////////////
+  37:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** 
+  38:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** //-- Hier die Pinzuordnung bei Bedarf aendern (siehe Tabelle oben) --//
+  39:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** #define DB7	PD7
+  40:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** #define DB6	PD6
+  41:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** #define DB5	PD5
+  42:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** #define DB4	PD4
+  43:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** #define E	PD3
+  44:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** #define RS	PD2
+  45:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** 
+  46:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** //------------------- Ende Pinzuordnung ------------------------------//
+  47:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** 
+  48:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** 
+  49:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** #include <avr/io.h>
+  50:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** #include <util/delay.h>		// _delay_ms() geht nur bis max. 262.14 ms / F_CPU !!!
+  51:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** 
+  52:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** 
+  53:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** void delay_ms (unsigned int ms)   //Hilfsfunktion: Zeitvernichtung
+  54:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** {
+ 122               	.LM0:
+ 123               	.LFBB1:
+ 124               	/* prologue: function */
+ 125               	/* frame size = 0 */
+ 126               	/* stack size = 0 */
+ 127               	.L__stack_usage = 0
+ 128               	.LBB9:
+  55:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     for (unsigned int i=0; i<ms; i++)
+ 130               	.LM1:
+ 131 0000 20E0      		ldi r18,0
+ 132 0002 30E0      		ldi r19,0
+ 133               	.L2:
+ 135               	.LM2:
+ 136 0004 2817      		cp r18,r24
+ 137 0006 3907      		cpc r19,r25
+ 138 0008 01F0      		breq .L5
+ 139               	.LBB10:
+ 140               	.LBB11:
+ 142               	.Ltext2:
+   1:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** /* Copyright (c) 2002, Marek Michalkiewicz
+   2:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    Copyright (c) 2004,2005,2007 Joerg Wunsch
+   3:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    Copyright (c) 2007  Florin-Viorel Petrov
+   4:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    All rights reserved.
+   5:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+   6:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    Redistribution and use in source and binary forms, with or without
+   7:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    modification, are permitted provided that the following conditions are met:
+   8:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+   9:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    * Redistributions of source code must retain the above copyright
+  10:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****      notice, this list of conditions and the following disclaimer.
+  11:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  12:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    * Redistributions in binary form must reproduce the above copyright
+  13:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****      notice, this list of conditions and the following disclaimer in
+  14:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****      the documentation and/or other materials provided with the
+  15:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****      distribution.
+  16:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  17:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    * Neither the name of the copyright holders nor the names of
+  18:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****      contributors may be used to endorse or promote products derived
+  19:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****      from this software without specific prior written permission.
+  20:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  21:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  22:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****   AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  23:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****   IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  24:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****   ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+  25:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****   LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  26:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****   CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  27:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****   SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  28:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****   INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  29:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****   CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  30:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  31:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****   POSSIBILITY OF SUCH DAMAGE. */
+  32:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  33:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** /* $Id$ */
+  34:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  35:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #ifndef _UTIL_DELAY_H_
+  36:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #define _UTIL_DELAY_H_ 1
+  37:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  38:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #ifndef __HAS_DELAY_CYCLES
+  39:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #define __HAS_DELAY_CYCLES 1
+  40:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #endif
+  41:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  42:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #include <inttypes.h>
+  43:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #include <util/delay_basic.h>
+  44:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #include <math.h>
+  45:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  46:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** /** \file */
+  47:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** /** \defgroup util_delay <util/delay.h>: Convenience functions for busy-wait delay loops
+  48:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     \code
+  49:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     #define F_CPU 1000000UL  // 1 MHz
+  50:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     //#define F_CPU 14.7456E6
+  51:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     #include <util/delay.h>
+  52:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     \endcode
+  53:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  54:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     \note As an alternative method, it is possible to pass the
+  55:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     F_CPU macro down to the compiler from the Makefile.
+  56:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     Obviously, in that case, no \c \#define statement should be
+  57:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     used.
+  58:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  59:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     The functions in this header file are wrappers around the basic
+  60:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     busy-wait functions from <util/delay_basic.h>.  They are meant as
+  61:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     convenience functions where actual time values can be specified
+  62:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     rather than a number of cycles to wait for.  The idea behind is
+  63:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     that compile-time constant expressions will be eliminated by
+  64:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     compiler optimization so floating-point expressions can be used
+  65:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     to calculate the number of delay cycles needed based on the CPU
+  66:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     frequency passed by the macro F_CPU.
+  67:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  68:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     \note In order for these functions to work as intended, compiler
+  69:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     optimizations <em>must</em> be enabled, and the delay time
+  70:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     <em>must</em> be an expression that is a known constant at
+  71:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     compile-time.  If these requirements are not met, the resulting
+  72:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     delay will be much longer (and basically unpredictable), and
+  73:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     applications that otherwise do not use floating-point calculations
+  74:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     will experience severe code bloat by the floating-point library
+  75:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     routines linked into the application.
+  76:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  77:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     The functions available allow the specification of microsecond, and
+  78:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     millisecond delays directly, using the application-supplied macro
+  79:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     F_CPU as the CPU clock frequency (in Hertz).
+  80:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  81:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** */
+  82:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  83:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #if !defined(__DOXYGEN__)
+  84:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** static inline void _delay_us(double __us) __attribute__((always_inline));
+  85:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** static inline void _delay_ms(double __ms) __attribute__((always_inline));
+  86:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #endif
+  87:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  88:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #ifndef F_CPU
+  89:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** /* prevent compiler error by supplying a default */
+  90:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** # warning "F_CPU not defined for <util/delay.h>"
+  91:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** # define F_CPU 1000000UL
+  92:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #endif
+  93:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  94:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #ifndef __OPTIMIZE__
+  95:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** # warning "Compiler optimizations disabled; functions from <util/delay.h> won't work as designed"
+  96:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #endif
+  97:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+  98:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+  99:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****   !defined(__DELAY_BACKWARD_COMPATIBLE__) &&	   \
+ 100:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****   __STDC_HOSTED__
+ 101:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #  include <math.h>
+ 102:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #endif
+ 103:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+ 104:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** /**
+ 105:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    \ingroup util_delay
+ 106:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+ 107:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    Perform a delay of \c __ms milliseconds, using _delay_loop_2().
+ 108:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+ 109:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    The macro F_CPU is supposed to be defined to a
+ 110:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    constant defining the CPU clock frequency (in Hertz).
+ 111:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+ 112:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    The maximal possible delay is 262.14 ms / F_CPU in MHz.
+ 113:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+ 114:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    When the user request delay which exceed the maximum possible one,
+ 115:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    _delay_ms() provides a decreased resolution functionality. In this
+ 116:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    mode _delay_ms() will work with a resolution of 1/10 ms, providing
+ 117:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    delays up to 6.5535 seconds (independent from CPU frequency).  The
+ 118:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    user will not be informed about decreased resolution.
+ 119:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+ 120:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    If the avr-gcc toolchain has __builtin_avr_delay_cycles(unsigned long)
+ 121:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    support, maximal possible delay is 4294967.295 ms/ F_CPU in MHz. For
+ 122:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    values greater than the maximal possible delay, overflows results in
+ 123:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    no delay i.e., 0ms.
+ 124:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+ 125:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    Conversion of __us into clock cycles may not always result in integer.
+ 126:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    By default, the clock cycles rounded up to next integer. This ensures that
+ 127:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    the user gets atleast __us microseconds of delay.
+ 128:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+ 129:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    Alternatively, user can define __DELAY_ROUND_DOWN__ and __DELAY_ROUND_CLOSEST__
+ 130:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    to round down and round to closest integer.
+ 131:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+ 132:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    Note: The new implementation of _delay_ms(double __ms) with 
+ 133:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****     __builtin_avr_delay_cycles(unsigned long) support is not backward compatible. 
+ 134:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    User can define __DELAY_BACKWARD_COMPATIBLE__ to get a backward compatible delay.
+ 135:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    Also, the backward compatible
+ 136:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    algorithm will be chosen if the code is compiled in a <em>freestanding
+ 137:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    environment</em> (GCC option \c -ffreestanding), as the math functions
+ 138:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****    required for rounding are not available to the compiler then.
+ 139:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+ 140:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****  */
+ 141:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** void
+ 142:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** _delay_ms(double __ms)
+ 143:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** {
+ 144:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 	double __tmp ; 
+ 145:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** #if __HAS_DELAY_CYCLES && defined(__OPTIMIZE__) && \
+ 146:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****   !defined(__DELAY_BACKWARD_COMPATIBLE__) &&	   \
+ 147:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h ****   __STDC_HOSTED__
+ 148:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 	uint32_t __ticks_dc;
+ 149:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 	extern void __builtin_avr_delay_cycles(unsigned long);
+ 150:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 	__tmp = ((F_CPU) / 1e3) * __ms;
+ 151:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+ 152:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 	#if defined(__DELAY_ROUND_DOWN__)
+ 153:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 		__ticks_dc = (uint32_t)fabs(__tmp);
+ 154:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+ 155:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 	#elif defined(__DELAY_ROUND_CLOSEST__)
+ 156:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 		__ticks_dc = (uint32_t)(fabs(__tmp)+0.5);
+ 157:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+ 158:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 	#else
+ 159:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 		//round up by default
+ 160:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+ 161:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 	#endif
+ 162:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 
+ 163:/usr/local/CrossPack-AVR-20131216/avr/include/util/delay.h **** 	__builtin_avr_delay_cycles(__ticks_dc);
+ 144               	.LM3:
+ 145 000a EFE9      		ldi r30,lo8(3999)
+ 146 000c FFE0      		ldi r31,hi8(3999)
+ 147 000e 3197      		1: sbiw r30,1
+ 148 0010 01F4      		brne 1b
+ 149 0012 00C0      		rjmp .
+ 150 0014 0000      		nop
+ 151               	.LBE11:
+ 152               	.LBE10:
+ 154               	.Ltext3:
+ 156               	.LM4:
+ 157 0016 2F5F      		subi r18,-1
+ 158 0018 3F4F      		sbci r19,-1
+ 159 001a 00C0      		rjmp .L2
+ 160               	.L5:
+ 161               	/* epilogue start */
+ 162               	.LBE9:
+  56:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     {
+  57:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****         _delay_ms(1);
+  58:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     }
+  59:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+  60:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** }
+ 164               	.LM5:
+ 165 001c 0895      		ret
+ 170               	.Lscope1:
+ 172               	.global	Enable
+ 174               	Enable:
+  61:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** 
+  62:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** void Enable(void)		//Hilfsfunktion: H=>L Flanke der Enable Leitung (E)
+  63:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** {
+ 176               	.LM6:
+ 177               	.LFBB2:
+ 178               	/* prologue: function */
+ 179               	/* frame size = 0 */
+ 180               	/* stack size = 0 */
+ 181               	.L__stack_usage = 0
+  64:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     PORTD = PORTD | (1<<E);	//E = 1
+ 183               	.LM7:
+ 184 001e 5B9A      		sbi 0xb,3
+  65:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     delay_ms(5);
+ 186               	.LM8:
+ 187 0020 85E0      		ldi r24,lo8(5)
+ 188 0022 90E0      		ldi r25,0
+ 189 0024 0E94 0000 		call delay_ms
+  66:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     PORTD = PORTD &~(1<<E);	//E = 0
+ 191               	.LM9:
+ 192 0028 5B98      		cbi 0xb,3
+  67:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     delay_ms(5);
+ 194               	.LM10:
+ 195 002a 85E0      		ldi r24,lo8(5)
+ 196 002c 90E0      		ldi r25,0
+ 197 002e 0C94 0000 		jmp delay_ms
+ 199               	.Lscope2:
+ 201               	.global	LCD_init
+ 203               	LCD_init:
+  68:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** }
+  69:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** 
+  70:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** ////////////////////////////////////////////////////////////////////////////
+  71:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** //
+  72:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** // LCD_init(..) Initialisierung: Port D, 4-Bit Mode, 2 Zeilen, 5x7 Dots
+  73:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** //
+  74:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** ////////////////////////////////////////////////////////////////////////////
+  75:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** void LCD_init(void)
+  76:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** {
+ 205               	.LM11:
+ 206               	.LFBB3:
+ 207               	/* prologue: function */
+ 208               	/* frame size = 0 */
+ 209               	/* stack size = 0 */
+ 210               	.L__stack_usage = 0
+  77:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     DDRD = DDRD |(1<<E) |(1<<RS);               			//E,RS als Ausgang
+ 212               	.LM12:
+ 213 0032 8AB1      		in r24,0xa
+ 214 0034 8C60      		ori r24,lo8(12)
+ 215 0036 8AB9      		out 0xa,r24
+  78:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     DDRD = DDRD |(1<<DB7)|(1<<DB6)|(1<<DB5)|(1<<DB4);		//DB7..DB4 als Ausgang
+ 217               	.LM13:
+ 218 0038 8AB1      		in r24,0xa
+ 219 003a 806F      		ori r24,lo8(-16)
+ 220 003c 8AB9      		out 0xa,r24
+  79:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+  80:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     delay_ms(50);	//lt. Datenblatt min. 15ms nach Power ON warten
+ 222               	.LM14:
+ 223 003e 82E3      		ldi r24,lo8(50)
+ 224 0040 90E0      		ldi r25,0
+ 225 0042 0E94 0000 		call delay_ms
+  81:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     PORTD = PORTD & (~(1<<RS) &  ~(1<<E)); //RS=0,E=0 (RW=0 per HW)
+ 227               	.LM15:
+ 228 0046 8BB1      		in r24,0xb
+ 229 0048 837F      		andi r24,lo8(-13)
+ 230 004a 8BB9      		out 0xb,r24
+  82:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+  83:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     // Function Set
+  84:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     //DB7..DB4 = 0011
+  85:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     PORTD = PORTD & (~(1<<DB7) & ~(1<<DB6));	//Interface auf 8 Bit
+ 232               	.LM16:
+ 233 004c 8BB1      		in r24,0xb
+ 234 004e 8F73      		andi r24,lo8(63)
+ 235 0050 8BB9      		out 0xb,r24
+  86:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     PORTD = PORTD | (1<<DB5) | (1<<DB4);
+ 237               	.LM17:
+ 238 0052 8BB1      		in r24,0xb
+ 239 0054 8063      		ori r24,lo8(48)
+ 240 0056 8BB9      		out 0xb,r24
+  87:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     Enable();
+ 242               	.LM18:
+ 243 0058 0E94 0000 		call Enable
+  88:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+  89:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     //DB7..DB4 = 0011
+  90:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     PORTD = PORTD & (~(1<<DB7) & ~(1<<DB6));	//Interface auf 8 Bit
+ 245               	.LM19:
+ 246 005c 8BB1      		in r24,0xb
+ 247 005e 8F73      		andi r24,lo8(63)
+ 248 0060 8BB9      		out 0xb,r24
+  91:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     PORTD = PORTD | (1<<DB5) | (1<<DB4);
+ 250               	.LM20:
+ 251 0062 8BB1      		in r24,0xb
+ 252 0064 8063      		ori r24,lo8(48)
+ 253 0066 8BB9      		out 0xb,r24
+  92:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     Enable();
+ 255               	.LM21:
+ 256 0068 0E94 0000 		call Enable
+  93:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+  94:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     //DB7..DB4 = 0011
+  95:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     PORTD = PORTD & (~(1<<DB7) & ~(1<<DB6));	//Interface auf 8 Bit
+ 258               	.LM22:
+ 259 006c 8BB1      		in r24,0xb
+ 260 006e 8F73      		andi r24,lo8(63)
+ 261 0070 8BB9      		out 0xb,r24
+  96:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     PORTD = PORTD | (1<<DB5) | (1<<DB4);
+ 263               	.LM23:
+ 264 0072 8BB1      		in r24,0xb
+ 265 0074 8063      		ori r24,lo8(48)
+ 266 0076 8BB9      		out 0xb,r24
+  97:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     Enable();
+ 268               	.LM24:
+ 269 0078 0E94 0000 		call Enable
+  98:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+  99:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     //DB7..DB4 = 0010
+ 100:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     PORTD = PORTD & (~(1<<DB7) & ~(1<<DB6) &~(1<<DB4));
+ 271               	.LM25:
+ 272 007c 8BB1      		in r24,0xb
+ 273 007e 8F72      		andi r24,lo8(47)
+ 274 0080 8BB9      		out 0xb,r24
+ 101:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     PORTD = PORTD | (1<<DB5);					//Interface auf 4 Bit
+ 276               	.LM26:
+ 277 0082 5D9A      		sbi 0xb,5
+ 102:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     Enable();
+ 279               	.LM27:
+ 280 0084 0E94 0000 		call Enable
+ 103:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 104:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     // 2-zeilig, 5x8 Matrix //
+ 105:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     //DB7..DB4 = 0010
+ 106:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     PORTD = PORTD & (~(1<<DB7) & ~(1<<DB6) &~(1<<DB4));
+ 282               	.LM28:
+ 283 0088 8BB1      		in r24,0xb
+ 284 008a 8F72      		andi r24,lo8(47)
+ 285 008c 8BB9      		out 0xb,r24
+ 107:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     PORTD = PORTD | (1<<DB5);					//Upper Nibble
+ 287               	.LM29:
+ 288 008e 5D9A      		sbi 0xb,5
+ 108:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     Enable();
+ 290               	.LM30:
+ 291 0090 0E94 0000 		call Enable
+ 109:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 110:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     //DB7..DB4 = 1000
+ 111:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     PORTD = PORTD | (1<<DB7);					//Lower Nibble
+ 293               	.LM31:
+ 294 0094 5F9A      		sbi 0xb,7
+ 112:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     PORTD = PORTD & (~(1<<DB6) & ~(1<<DB5) & ~(1<<DB4));
+ 296               	.LM32:
+ 297 0096 8BB1      		in r24,0xb
+ 298 0098 8F78      		andi r24,lo8(-113)
+ 299 009a 8BB9      		out 0xb,r24
+ 113:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     Enable();
+ 301               	.LM33:
+ 302 009c 0E94 0000 		call Enable
+ 114:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 115:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     //Display Off //
+ 116:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     //DB7..DB4 = 0000
+ 117:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     PORTD = PORTD & (~(1<<DB7) & ~(1<<DB6) & ~(1<<DB5) & ~(1<<DB4)); //Upper Nibble
+ 304               	.LM34:
+ 305 00a0 8BB1      		in r24,0xb
+ 306 00a2 8F70      		andi r24,lo8(15)
+ 307 00a4 8BB9      		out 0xb,r24
+ 118:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     Enable();
+ 309               	.LM35:
+ 310 00a6 0E94 0000 		call Enable
+ 119:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 120:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     //DB7..DB4 = 1000
+ 121:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     PORTD = PORTD | (1<<DB7);					//Lower Nibble
+ 312               	.LM36:
+ 313 00aa 5F9A      		sbi 0xb,7
+ 122:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     PORTD = PORTD & (~(1<<DB6) & ~(1<<DB5) & ~(1<<DB4));
+ 315               	.LM37:
+ 316 00ac 8BB1      		in r24,0xb
+ 317 00ae 8F78      		andi r24,lo8(-113)
+ 318 00b0 8BB9      		out 0xb,r24
+ 123:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     Enable();
+ 320               	.LM38:
+ 321 00b2 0E94 0000 		call Enable
+ 124:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 125:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     //Clear Display //
+ 126:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     //DB7..DB4 = 0000
+ 127:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     PORTD = PORTD & (~(1<<DB7) & ~(1<<DB6) & ~(1<<DB5) & ~(1<<DB4)); //Upper Nibble
+ 323               	.LM39:
+ 324 00b6 8BB1      		in r24,0xb
+ 325 00b8 8F70      		andi r24,lo8(15)
+ 326 00ba 8BB9      		out 0xb,r24
+ 128:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     Enable();
+ 328               	.LM40:
+ 329 00bc 0E94 0000 		call Enable
+ 129:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 130:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     //DB7..DB4 = 0001
+ 131:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     PORTD = PORTD & (~(1<<DB7) & ~(1<<DB6) & ~(1<<DB5)); //Lower Nibble
+ 331               	.LM41:
+ 332 00c0 8BB1      		in r24,0xb
+ 333 00c2 8F71      		andi r24,lo8(31)
+ 334 00c4 8BB9      		out 0xb,r24
+ 132:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     PORTD = PORTD | (1<<DB4);
+ 336               	.LM42:
+ 337 00c6 5C9A      		sbi 0xb,4
+ 133:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     Enable();
+ 339               	.LM43:
+ 340 00c8 0E94 0000 		call Enable
+ 134:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 135:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     //No Display Shift //
+ 136:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     //DB7..DB4 = 0000
+ 137:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     PORTD = PORTD & (~(1<<DB7) & ~(1<<DB6) & ~(1<<DB5) & ~(1<<DB4)); //Upper Nibble
+ 342               	.LM44:
+ 343 00cc 8BB1      		in r24,0xb
+ 344 00ce 8F70      		andi r24,lo8(15)
+ 345 00d0 8BB9      		out 0xb,r24
+ 138:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     Enable();
+ 347               	.LM45:
+ 348 00d2 0E94 0000 		call Enable
+ 139:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 140:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     //DB7..DB4 = 0011
+ 141:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     PORTD = PORTD & (~(1<<DB7) & ~(1<<DB6));	//Lower Nibble
+ 350               	.LM46:
+ 351 00d6 8BB1      		in r24,0xb
+ 352 00d8 8F73      		andi r24,lo8(63)
+ 353 00da 8BB9      		out 0xb,r24
+ 142:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     PORTD = PORTD | (1<<DB5) | (1<<DB4);
+ 355               	.LM47:
+ 356 00dc 8BB1      		in r24,0xb
+ 357 00de 8063      		ori r24,lo8(48)
+ 358 00e0 8BB9      		out 0xb,r24
+ 143:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     Enable();
+ 360               	.LM48:
+ 361 00e2 0E94 0000 		call Enable
+ 144:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 145:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     // Display ON , Cursor ON, Blinken ON //
+ 146:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     //DB7..DB4 = 0000
+ 147:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     PORTD = PORTD & (~(1<<DB7) & ~(1<<DB6) & ~(1<<DB5) & ~(1<<DB4)); //Upper Nibble
+ 363               	.LM49:
+ 364 00e6 8BB1      		in r24,0xb
+ 365 00e8 8F70      		andi r24,lo8(15)
+ 366 00ea 8BB9      		out 0xb,r24
+ 148:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     Enable();
+ 368               	.LM50:
+ 369 00ec 0E94 0000 		call Enable
+ 149:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 150:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     //DB7..DB4 = 1111
+ 151:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     PORTD = PORTD | (1<<DB7) | (1<<DB6) | (1<<DB5) | (1<<DB4);	//Lower Nibble
+ 371               	.LM51:
+ 372 00f0 8BB1      		in r24,0xb
+ 373 00f2 806F      		ori r24,lo8(-16)
+ 374 00f4 8BB9      		out 0xb,r24
+ 152:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     Enable();
+ 376               	.LM52:
+ 377 00f6 0C94 0000 		jmp Enable
+ 379               	.Lscope3:
+ 382               	.global	LCD_send
+ 384               	LCD_send:
+ 153:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** }
+ 154:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** 
+ 155:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** ////////////////////////////////////////////////////////////////////////////
+ 156:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** //
+ 157:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** // LCD_send(..) sendet 1 Byte im 4-Bit Mode
+ 158:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** //
+ 159:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** ////////////////////////////////////////////////////////////////////////////
+ 160:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** void LCD_send(char data)
+ 161:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** {
+ 386               	.LM53:
+ 387               	.LFBB4:
+ 388 00fa CF93      		push r28
+ 389               	/* prologue: function */
+ 390               	/* frame size = 0 */
+ 391               	/* stack size = 1 */
+ 392               	.L__stack_usage = 1
+ 393 00fc C82F      		mov r28,r24
+ 162:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     char temp = data;
+ 163:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 164:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     PORTD = PORTD | (1<<RS);	//SFR vom LCD mit RS auf Daten umschlten
+ 395               	.LM54:
+ 396 00fe 5A9A      		sbi 0xb,2
+ 165:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 166:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     //Upper Nibble senden
+ 167:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     if (temp & 0b10000000) {PORTD = PORTD | (1<<DB7);}
+ 398               	.LM55:
+ 399 0100 87FF      		sbrs r24,7
+ 400 0102 00C0      		rjmp .L9
+ 402               	.LM56:
+ 403 0104 5F9A      		sbi 0xb,7
+ 404 0106 00C0      		rjmp .L10
+ 405               	.L9:
+ 168:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     else {PORTD = PORTD & ~(1<<DB7);}
+ 407               	.LM57:
+ 408 0108 5F98      		cbi 0xb,7
+ 409               	.L10:
+ 169:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 170:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     if (temp & 0b01000000) {PORTD = PORTD | (1<<DB6);}
+ 411               	.LM58:
+ 412 010a C6FF      		sbrs r28,6
+ 413 010c 00C0      		rjmp .L11
+ 415               	.LM59:
+ 416 010e 5E9A      		sbi 0xb,6
+ 417 0110 00C0      		rjmp .L12
+ 418               	.L11:
+ 171:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     else {PORTD = PORTD & ~(1<<DB6);}
+ 420               	.LM60:
+ 421 0112 5E98      		cbi 0xb,6
+ 422               	.L12:
+ 172:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 173:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     if (temp & 0b00100000) {PORTD = PORTD | (1<<DB5);}
+ 424               	.LM61:
+ 425 0114 C5FF      		sbrs r28,5
+ 426 0116 00C0      		rjmp .L13
+ 428               	.LM62:
+ 429 0118 5D9A      		sbi 0xb,5
+ 430 011a 00C0      		rjmp .L14
+ 431               	.L13:
+ 174:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     else {PORTD = PORTD & ~(1<<DB5);}
+ 433               	.LM63:
+ 434 011c 5D98      		cbi 0xb,5
+ 435               	.L14:
+ 175:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 176:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     if (temp & 0b00010000) {PORTD = PORTD | (1<<DB4);}
+ 437               	.LM64:
+ 438 011e C4FF      		sbrs r28,4
+ 439 0120 00C0      		rjmp .L15
+ 441               	.LM65:
+ 442 0122 5C9A      		sbi 0xb,4
+ 443 0124 00C0      		rjmp .L16
+ 444               	.L15:
+ 177:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     else {PORTD = PORTD & ~(1<<DB4);}
+ 446               	.LM66:
+ 447 0126 5C98      		cbi 0xb,4
+ 448               	.L16:
+ 178:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 179:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     Enable();
+ 450               	.LM67:
+ 451 0128 0E94 0000 		call Enable
+ 180:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     delay_ms(1);
+ 453               	.LM68:
+ 454 012c 81E0      		ldi r24,lo8(1)
+ 455 012e 90E0      		ldi r25,0
+ 456 0130 0E94 0000 		call delay_ms
+ 181:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 182:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     //Lower Nibble senden
+ 183:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     if (temp & 0b00001000) {PORTD = PORTD | (1<<DB7);}
+ 458               	.LM69:
+ 459 0134 C3FF      		sbrs r28,3
+ 460 0136 00C0      		rjmp .L17
+ 462               	.LM70:
+ 463 0138 5F9A      		sbi 0xb,7
+ 464 013a 00C0      		rjmp .L18
+ 465               	.L17:
+ 184:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     else {PORTD = PORTD & ~(1<<DB7);}
+ 467               	.LM71:
+ 468 013c 5F98      		cbi 0xb,7
+ 469               	.L18:
+ 185:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 186:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     if (temp & 0b00000100) {PORTD = PORTD | (1<<DB6);}
+ 471               	.LM72:
+ 472 013e C2FF      		sbrs r28,2
+ 473 0140 00C0      		rjmp .L19
+ 475               	.LM73:
+ 476 0142 5E9A      		sbi 0xb,6
+ 477 0144 00C0      		rjmp .L20
+ 478               	.L19:
+ 187:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     else {PORTD = PORTD & ~(1<<DB6);}
+ 480               	.LM74:
+ 481 0146 5E98      		cbi 0xb,6
+ 482               	.L20:
+ 188:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 189:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     if (temp & 0b00000010) {PORTD = PORTD | (1<<DB5);}
+ 484               	.LM75:
+ 485 0148 C1FF      		sbrs r28,1
+ 486 014a 00C0      		rjmp .L21
+ 488               	.LM76:
+ 489 014c 5D9A      		sbi 0xb,5
+ 490 014e 00C0      		rjmp .L22
+ 491               	.L21:
+ 190:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     else {PORTD = PORTD & ~(1<<DB5);}
+ 493               	.LM77:
+ 494 0150 5D98      		cbi 0xb,5
+ 495               	.L22:
+ 191:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 192:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     if (temp & 0b00000001) {PORTD = PORTD | (1<<DB4);}
+ 497               	.LM78:
+ 498 0152 C0FF      		sbrs r28,0
+ 499 0154 00C0      		rjmp .L23
+ 501               	.LM79:
+ 502 0156 5C9A      		sbi 0xb,4
+ 503 0158 00C0      		rjmp .L24
+ 504               	.L23:
+ 193:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     else {PORTD = PORTD & ~(1<<DB4);}
+ 506               	.LM80:
+ 507 015a 5C98      		cbi 0xb,4
+ 508               	.L24:
+ 194:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 195:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     Enable();
+ 510               	.LM81:
+ 511 015c 0E94 0000 		call Enable
+ 196:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     delay_ms(1);
+ 513               	.LM82:
+ 514 0160 81E0      		ldi r24,lo8(1)
+ 515 0162 90E0      		ldi r25,0
+ 516               	/* epilogue start */
+ 197:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 198:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** }
+ 518               	.LM83:
+ 519 0164 CF91      		pop r28
+ 196:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     delay_ms(1);
+ 521               	.LM84:
+ 522 0166 0C94 0000 		jmp delay_ms
+ 524               	.Lscope4:
+ 527               	.global	LCD_cmd
+ 529               	LCD_cmd:
+ 199:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** 
+ 200:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** ////////////////////////////////////////////////////////////////////////////
+ 201:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** //
+ 202:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** // LCD_cmd(..) Befehl senden im 4-Bit Mode
+ 203:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** //
+ 204:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** ////////////////////////////////////////////////////////////////////////////
+ 205:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** void LCD_cmd(char data)
+ 206:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** {
+ 531               	.LM85:
+ 532               	.LFBB5:
+ 533 016a CF93      		push r28
+ 534               	/* prologue: function */
+ 535               	/* frame size = 0 */
+ 536               	/* stack size = 1 */
+ 537               	.L__stack_usage = 1
+ 538 016c C82F      		mov r28,r24
+ 207:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     char temp = data;
+ 208:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 209:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     PORTD = PORTD & ~(1<<RS);	//SFR vom LCD mit RS auf Befehle umschalten
+ 540               	.LM86:
+ 541 016e 5A98      		cbi 0xb,2
+ 210:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 211:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     //Upper Nibble senden
+ 212:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     if (temp & 0b10000000) {PORTD = PORTD | (1<<DB7);}
+ 543               	.LM87:
+ 544 0170 87FF      		sbrs r24,7
+ 545 0172 00C0      		rjmp .L26
+ 547               	.LM88:
+ 548 0174 5F9A      		sbi 0xb,7
+ 549 0176 00C0      		rjmp .L27
+ 550               	.L26:
+ 213:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     else {PORTD = PORTD & ~(1<<DB7);}
+ 552               	.LM89:
+ 553 0178 5F98      		cbi 0xb,7
+ 554               	.L27:
+ 214:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 215:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     if (temp & 0b01000000) {PORTD = PORTD | (1<<DB6);}
+ 556               	.LM90:
+ 557 017a C6FF      		sbrs r28,6
+ 558 017c 00C0      		rjmp .L28
+ 560               	.LM91:
+ 561 017e 5E9A      		sbi 0xb,6
+ 562 0180 00C0      		rjmp .L29
+ 563               	.L28:
+ 216:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     else {PORTD = PORTD & ~(1<<DB6);}
+ 565               	.LM92:
+ 566 0182 5E98      		cbi 0xb,6
+ 567               	.L29:
+ 217:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 218:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     if (temp & 0b00100000) {PORTD = PORTD | (1<<DB5);}
+ 569               	.LM93:
+ 570 0184 C5FF      		sbrs r28,5
+ 571 0186 00C0      		rjmp .L30
+ 573               	.LM94:
+ 574 0188 5D9A      		sbi 0xb,5
+ 575 018a 00C0      		rjmp .L31
+ 576               	.L30:
+ 219:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     else {PORTD = PORTD & ~(1<<DB5);}
+ 578               	.LM95:
+ 579 018c 5D98      		cbi 0xb,5
+ 580               	.L31:
+ 220:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 221:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     if (temp & 0b00010000) {PORTD = PORTD | (1<<DB4);}
+ 582               	.LM96:
+ 583 018e C4FF      		sbrs r28,4
+ 584 0190 00C0      		rjmp .L32
+ 586               	.LM97:
+ 587 0192 5C9A      		sbi 0xb,4
+ 588 0194 00C0      		rjmp .L33
+ 589               	.L32:
+ 222:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     else {PORTD = PORTD & ~(1<<DB4);}
+ 591               	.LM98:
+ 592 0196 5C98      		cbi 0xb,4
+ 593               	.L33:
+ 223:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 224:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     Enable();
+ 595               	.LM99:
+ 596 0198 0E94 0000 		call Enable
+ 225:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     delay_ms(1);
+ 598               	.LM100:
+ 599 019c 81E0      		ldi r24,lo8(1)
+ 600 019e 90E0      		ldi r25,0
+ 601 01a0 0E94 0000 		call delay_ms
+ 226:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 227:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     //Lower Nibble senden
+ 228:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     if (temp & 0b00001000) {PORTD = PORTD | (1<<DB7);}
+ 603               	.LM101:
+ 604 01a4 C3FF      		sbrs r28,3
+ 605 01a6 00C0      		rjmp .L34
+ 607               	.LM102:
+ 608 01a8 5F9A      		sbi 0xb,7
+ 609 01aa 00C0      		rjmp .L35
+ 610               	.L34:
+ 229:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     else {PORTD = PORTD & ~(1<<DB7);}
+ 612               	.LM103:
+ 613 01ac 5F98      		cbi 0xb,7
+ 614               	.L35:
+ 230:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 231:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     if (temp & 0b00000100) {PORTD = PORTD | (1<<DB6);}
+ 616               	.LM104:
+ 617 01ae C2FF      		sbrs r28,2
+ 618 01b0 00C0      		rjmp .L36
+ 620               	.LM105:
+ 621 01b2 5E9A      		sbi 0xb,6
+ 622 01b4 00C0      		rjmp .L37
+ 623               	.L36:
+ 232:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     else {PORTD = PORTD & ~(1<<DB6);}
+ 625               	.LM106:
+ 626 01b6 5E98      		cbi 0xb,6
+ 627               	.L37:
+ 233:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 234:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     if (temp & 0b00000010) {PORTD = PORTD | (1<<DB5);}
+ 629               	.LM107:
+ 630 01b8 C1FF      		sbrs r28,1
+ 631 01ba 00C0      		rjmp .L38
+ 633               	.LM108:
+ 634 01bc 5D9A      		sbi 0xb,5
+ 635 01be 00C0      		rjmp .L39
+ 636               	.L38:
+ 235:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     else {PORTD = PORTD & ~(1<<DB5);}
+ 638               	.LM109:
+ 639 01c0 5D98      		cbi 0xb,5
+ 640               	.L39:
+ 236:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 237:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     if (temp & 0b00000001) {PORTD = PORTD | (1<<DB4);}
+ 642               	.LM110:
+ 643 01c2 C0FF      		sbrs r28,0
+ 644 01c4 00C0      		rjmp .L40
+ 646               	.LM111:
+ 647 01c6 5C9A      		sbi 0xb,4
+ 648 01c8 00C0      		rjmp .L41
+ 649               	.L40:
+ 238:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     else {PORTD = PORTD & ~(1<<DB4);}
+ 651               	.LM112:
+ 652 01ca 5C98      		cbi 0xb,4
+ 653               	.L41:
+ 239:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 240:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     Enable();
+ 655               	.LM113:
+ 656 01cc 0E94 0000 		call Enable
+ 241:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     delay_ms(1);
+ 658               	.LM114:
+ 659 01d0 81E0      		ldi r24,lo8(1)
+ 660 01d2 90E0      		ldi r25,0
+ 661               	/* epilogue start */
+ 242:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     
+ 243:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** }
+ 663               	.LM115:
+ 664 01d4 CF91      		pop r28
+ 241:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     delay_ms(1);
+ 666               	.LM116:
+ 667 01d6 0C94 0000 		jmp delay_ms
+ 669               	.Lscope5:
+ 672               	.global	LCD_string
+ 674               	LCD_string:
+ 244:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** 
+ 245:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** ////////////////////////////////////////////////////////////////////////////
+ 246:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** //
+ 247:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** // LCD_string(..) sendet ganzen String im 4-Bit Mode
+ 248:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** //
+ 249:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** ////////////////////////////////////////////////////////////////////////////
+ 250:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** void LCD_string(char *data)
+ 251:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** {
+ 676               	.LM117:
+ 677               	.LFBB6:
+ 678 01da CF93      		push r28
+ 679 01dc DF93      		push r29
+ 680               	/* prologue: function */
+ 681               	/* frame size = 0 */
+ 682               	/* stack size = 2 */
+ 683               	.L__stack_usage = 2
+ 684 01de EC01      		movw r28,r24
+ 685               	.L43:
+ 252:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     while (*data != '\0')	//bis zum letzten Zeichen		
+ 687               	.LM118:
+ 688 01e0 8991      		ld r24,Y+
+ 689 01e2 8823      		tst r24
+ 690 01e4 01F0      		breq .L45
+ 253:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h ****     {LCD_send(*data++);}
+ 692               	.LM119:
+ 693 01e6 0E94 0000 		call LCD_send
+ 694 01ea 00C0      		rjmp .L43
+ 695               	.L45:
+ 696               	/* epilogue start */
+ 254:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/../Global/LCD.h **** }
+ 698               	.LM120:
+ 699 01ec DF91      		pop r29
+ 700 01ee CF91      		pop r28
+ 701 01f0 0895      		ret
+ 703               	.Lscope6:
+ 706               	.global	popQ
+ 708               	popQ:
+ 710               	.Ltext4:
+   1:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** #include <avr/io.h>
+   2:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** #include <util/delay.h>
+   3:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** #include <avr/interrupt.h>
+   4:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** 
+   5:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** #include <stdio.h>
+   6:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** #include <stdint.h>
+   7:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** 
+   8:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** #include "../Global/Manchester.h"
+   9:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** #include "../Global/LCD.h"
+  10:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** 
+  11:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** #include "reader.h"
+  12:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** 
+  13:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** volatile uint32_t samples = 0;
+  14:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** volatile uint8_t samplesReady = 0;
+  15:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** volatile int8_t sampleCount = DATA_SAMPLES - 1;
+  16:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** uint8_t receiving = 0, data = 0, connectionCount = 0;
+  17:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** 
+  18:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** int main(void)
+  19:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** {
+  20:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+  21:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     struct Queue q = {.size = 0};
+  22:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     uint16_t chksm;
+  23:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+  24:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     LCD_init();
+  25:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     initRX();
+  26:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     startRX();
+  27:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+  28:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     while(1)
+  29:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     {
+  30:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         if (receiving && samplesReady && interpretSamples(getSamples()))
+  31:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         {
+  32:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****             pushQ(&q,data);
+  33:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****             
+  34:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****             if (q.size == 14) break;
+  35:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         }
+  36:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     }
+  37:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+  38:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     stopRX();
+  39:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+  40:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     chksm = checksumme(q.data,12);
+  41:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+  42:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     CLEAR_BIT(LED_PORT,LED);
+  43:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+  44:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     if (chksm == ((q.data[12] << 8) | q.data[13])) // alles OK, checksumme passt!!
+  45:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         SET_BIT(LED_PORT,LED);
+  46:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+  47:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     LCD_string(q.data);
+  48:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+  49:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     return 0;
+  50:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+  51:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** }
+  52:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** 
+  53:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** int8_t popQ(struct Queue* queue)
+  54:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** {
+ 712               	.LM121:
+ 713               	.LFBB7:
+ 714 01f2 CF93      		push r28
+ 715 01f4 DF93      		push r29
+ 716               	/* prologue: function */
+ 717               	/* frame size = 0 */
+ 718               	/* stack size = 2 */
+ 719               	.L__stack_usage = 2
+ 720 01f6 FC01      		movw r30,r24
+  55:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     unsigned char i = 0, j = 1;
+  56:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     char item = queue->data[0];
+ 722               	.LM122:
+ 723 01f8 8081      		ld r24,Z
+  57:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+  58:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     /* Alle Elemente ins strukt */
+  59:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     for (; j < queue->size; ++j, ++i)
+ 725               	.LM123:
+ 726 01fa 9F01      		movw r18,r30
+ 727 01fc 2058      		subi r18,-128
+ 728 01fe 3F4F      		sbci r19,-1
+ 729 0200 D901      		movw r26,r18
+ 730 0202 9C91      		ld r25,X
+ 731 0204 5E2F      		mov r21,r30
+ 732 0206 CE2F      		mov r28,r30
+ 733 0208 DF2F      		mov r29,r31
+ 734 020a DF01      		movw r26,r30
+ 735               	.L47:
+ 736 020c 1196      		adiw r26,1
+ 737 020e 4A2F      		mov r20,r26
+ 738 0210 451B      		sub r20,r21
+ 740               	.LM124:
+ 741 0212 4917      		cp r20,r25
+ 742 0214 00F4      		brsh .L49
+  60:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     { queue->data[i] = queue->data[j]; }
+ 744               	.LM125:
+ 745 0216 4C91      		ld r20,X
+ 746 0218 4993      		st Y+,r20
+ 747 021a 00C0      		rjmp .L47
+ 748               	.L49:
+  61:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+  62:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     /* Letztes Element löschen */
+  63:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     queue->data[--queue->size] = 0;
+ 750               	.LM126:
+ 751 021c 9150      		subi r25,lo8(-(-1))
+ 752 021e D901      		movw r26,r18
+ 753 0220 9C93      		st X,r25
+ 754 0222 E90F      		add r30,r25
+ 755 0224 F11D      		adc r31,__zero_reg__
+ 756 0226 1082      		st Z,__zero_reg__
+ 757               	/* epilogue start */
+  64:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+  65:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     return item;
+  66:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** }
+ 759               	.LM127:
+ 760 0228 DF91      		pop r29
+ 761 022a CF91      		pop r28
+ 762 022c 0895      		ret
+ 767               	.Lscope7:
+ 771               	.global	pushQ
+ 773               	pushQ:
+  67:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** 
+  68:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** void pushQ(struct Queue* queue, const uint8_t c)
+  69:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** {
+ 775               	.LM128:
+ 776               	.LFBB8:
+ 777               	/* prologue: function */
+ 778               	/* frame size = 0 */
+ 779               	/* stack size = 0 */
+ 780               	.L__stack_usage = 0
+  70:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     if (queue->size < BUFFER_SIZE)
+ 782               	.LM129:
+ 783 022e FC01      		movw r30,r24
+ 784 0230 E058      		subi r30,-128
+ 785 0232 FF4F      		sbci r31,-1
+ 786 0234 2081      		ld r18,Z
+ 787 0236 27FD      		sbrc r18,7
+ 788 0238 00C0      		rjmp .L50
+  71:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     { queue->data[queue->size++] = c; }
+ 790               	.LM130:
+ 791 023a 31E0      		ldi r19,lo8(1)
+ 792 023c 320F      		add r19,r18
+ 793 023e 3083      		st Z,r19
+ 794 0240 FC01      		movw r30,r24
+ 795 0242 E20F      		add r30,r18
+ 796 0244 F11D      		adc r31,__zero_reg__
+ 797 0246 6083      		st Z,r22
+ 798               	.L50:
+ 799 0248 0895      		ret
+ 801               	.Lscope8:
+ 804               	.global	checksumme
+ 806               	checksumme:
+  72:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** }
+  73:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** 
+  74:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** uint16_t checksumme(const uint8_t* data, uint16_t bytes)
+  75:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** {
+ 808               	.LM131:
+ 809               	.LFBB9:
+ 810               	/* prologue: function */
+ 811               	/* frame size = 0 */
+ 812               	/* stack size = 0 */
+ 813               	.L__stack_usage = 0
+  76:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+  77:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     uint16_t summe1 = 0xFF;
+  78:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     uint16_t summe2 = 0xFF;
+ 815               	.LM132:
+ 816 024a 4FEF      		ldi r20,lo8(-1)
+ 817 024c 50E0      		ldi r21,0
+  77:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     uint16_t summe1 = 0xFF;
+ 819               	.LM133:
+ 820 024e 2FEF      		ldi r18,lo8(-1)
+ 821 0250 30E0      		ldi r19,0
+ 822               	.L53:
+  79:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+  80:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     uint16_t laenge;
+  81:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+  82:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     while (bytes)
+ 824               	.LM134:
+ 825 0252 6115      		cp r22,__zero_reg__
+ 826 0254 7105      		cpc r23,__zero_reg__
+ 827 0256 01F0      		breq .L58
+  83:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     {
+  84:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         /* Maximale Länge bevor Overflow ensteht */
+  85:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         laenge = (bytes > 20) ? 20 : bytes;
+ 829               	.LM135:
+ 830 0258 DB01      		movw r26,r22
+ 831 025a 6531      		cpi r22,21
+ 832 025c 7105      		cpc r23,__zero_reg__
+ 833 025e 00F0      		brlo .L54
+ 834 0260 A4E1      		ldi r26,lo8(20)
+ 835 0262 B0E0      		ldi r27,0
+ 836               	.L54:
+  86:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         
+  87:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         bytes -= laenge;
+ 838               	.LM136:
+ 839 0264 6A1B      		sub r22,r26
+ 840 0266 7B0B      		sbc r23,r27
+ 841 0268 FC01      		movw r30,r24
+ 842 026a A80F      		add r26,r24
+ 843 026c B91F      		adc r27,r25
+ 844               	.L56:
+  88:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         
+  89:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         do
+  90:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         {
+  91:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****             summe1 += *(data++);
+ 846               	.LM137:
+ 847 026e 8191      		ld r24,Z+
+ 848 0270 280F      		add r18,r24
+ 849 0272 311D      		adc r19,__zero_reg__
+  92:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****             summe2 += summe1;
+ 851               	.LM138:
+ 852 0274 420F      		add r20,r18
+ 853 0276 531F      		adc r21,r19
+  93:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         }
+  94:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         
+  95:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         while (--laenge);
+ 855               	.LM139:
+ 856 0278 EA17      		cp r30,r26
+ 857 027a FB07      		cpc r31,r27
+ 858 027c 01F4      		brne .L56
+ 859 027e CF01      		movw r24,r30
+  96:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         
+  97:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         summe1 = (summe1 & 0xFF) + (summe1 >> 8);
+ 861               	.LM140:
+ 862 0280 E32F      		mov r30,r19
+ 863 0282 FF27      		clr r31
+ 864 0284 DF01      		movw r26,r30
+ 865 0286 A20F      		add r26,r18
+ 866 0288 B11D      		adc r27,__zero_reg__
+ 867 028a 9D01      		movw r18,r26
+  98:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         summe2 = (summe2 & 0xFF) + (summe2 >> 8);
+ 869               	.LM141:
+ 870 028c E52F      		mov r30,r21
+ 871 028e FF27      		clr r31
+ 872 0290 DF01      		movw r26,r30
+ 873 0292 A40F      		add r26,r20
+ 874 0294 B11D      		adc r27,__zero_reg__
+ 875 0296 AD01      		movw r20,r26
+ 876 0298 00C0      		rjmp .L53
+ 877               	.L58:
+  99:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     }
+ 100:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+ 101:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     /* Zur Sicherheit unnötiges abschneiden */
+ 102:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     summe1 = (summe1 & 0xFF) + (summe1 >> 8);
+ 879               	.LM142:
+ 880 029a 632F      		mov r22,r19
+ 881 029c 7727      		clr r23
+ 103:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     summe2 = (summe2 & 0xFF) + (summe2 >> 8);
+ 883               	.LM143:
+ 884 029e 852F      		mov r24,r21
+ 885 02a0 9927      		clr r25
+ 886 02a2 840F      		add r24,r20
+ 887 02a4 911D      		adc r25,__zero_reg__
+ 104:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+ 105:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     /* Beiden Summen als 16 Bit Wert zurückgeben*/
+ 106:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     return summe2 << 8 | summe1;
+ 889               	.LM144:
+ 890 02a6 982F      		mov r25,r24
+ 891 02a8 8827      		clr r24
+ 102:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     summe1 = (summe1 & 0xFF) + (summe1 >> 8);
+ 893               	.LM145:
+ 894 02aa 620F      		add r22,r18
+ 895 02ac 711D      		adc r23,__zero_reg__
+ 107:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** }
+ 897               	.LM146:
+ 898 02ae 862B      		or r24,r22
+ 899 02b0 972B      		or r25,r23
+ 900 02b2 0895      		ret
+ 905               	.Lscope9:
+ 907               	.global	getSamples
+ 909               	getSamples:
+ 108:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** 
+ 109:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** uint32_t getSamples(void)
+ 110:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** {
+ 911               	.LM147:
+ 912               	.LFBB10:
+ 913               	/* prologue: function */
+ 914               	/* frame size = 0 */
+ 915               	/* stack size = 0 */
+ 916               	.L__stack_usage = 0
+ 111:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     /* Flag zurücksezen */
+ 112:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     samplesReady = 0;
+ 918               	.LM148:
+ 919 02b4 1092 0000 		sts samplesReady,__zero_reg__
+ 113:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+ 114:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     return samples;
+ 921               	.LM149:
+ 922 02b8 6091 0000 		lds r22,samples
+ 923 02bc 7091 0000 		lds r23,samples+1
+ 924 02c0 8091 0000 		lds r24,samples+2
+ 925 02c4 9091 0000 		lds r25,samples+3
+ 115:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** }
+ 927               	.LM150:
+ 928 02c8 0895      		ret
+ 930               	.Lscope10:
+ 932               	.global	initRX
+ 934               	initRX:
+ 116:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** 
+ 117:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** void initRX(void)
+ 118:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** {
+ 936               	.LM151:
+ 937               	.LFBB11:
+ 938               	/* prologue: function */
+ 939               	/* frame size = 0 */
+ 940               	/* stack size = 0 */
+ 941               	.L__stack_usage = 0
+ 119:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     /* RX Pin als Input setzen */
+ 120:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     CLEAR_BIT(RX_DDR,RX_PIN);
+ 943               	.LM152:
+ 944 02ca 2398      		cbi 0x4,3
+ 121:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+ 122:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     /* LED Pin als Ausgang setzen */
+ 123:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     SET_BIT(LED_DDR,LED);
+ 946               	.LM153:
+ 947 02cc 579A      		sbi 0xa,7
+ 124:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+ 125:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     /* Enable pin change interrupt */
+ 126:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     PCICR |= (1<<PCIE0);
+ 949               	.LM154:
+ 950 02ce E8E6      		ldi r30,lo8(104)
+ 951 02d0 F0E0      		ldi r31,0
+ 952 02d2 8081      		ld r24,Z
+ 953 02d4 8160      		ori r24,lo8(1)
+ 954 02d6 8083      		st Z,r24
+ 127:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+ 128:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     /* Pin change ISR auf PCINT1 (PB1) */
+ 129:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     SET_BIT(PCMSK0,PCINT1);
+ 956               	.LM155:
+ 957 02d8 EBE6      		ldi r30,lo8(107)
+ 958 02da F0E0      		ldi r31,0
+ 959 02dc 8081      		ld r24,Z
+ 960 02de 8260      		ori r24,lo8(2)
+ 961 02e0 8083      		st Z,r24
+ 130:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+ 131:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     /* Timer1 mit clk/4096 prescaler einschalten */
+ 132:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     TCCR1A |= 0x0D;
+ 963               	.LM156:
+ 964 02e2 E0E8      		ldi r30,lo8(-128)
+ 965 02e4 F0E0      		ldi r31,0
+ 966 02e6 8081      		ld r24,Z
+ 967 02e8 8D60      		ori r24,lo8(13)
+ 968 02ea 8083      		st Z,r24
+ 133:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+ 134:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     /* overflow interrupt für Timer1 */
+ 135:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     SET_BIT(TIMSK0,TOIE1);
+ 970               	.LM157:
+ 971 02ec EEE6      		ldi r30,lo8(110)
+ 972 02ee F0E0      		ldi r31,0
+ 973 02f0 8081      		ld r24,Z
+ 974 02f2 8160      		ori r24,lo8(1)
+ 975 02f4 8083      		st Z,r24
+ 136:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+ 137:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     /* Sample alle 100 µs */
+ 138:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     OCR0A = SAMPLE_TIME;
+ 977               	.LM158:
+ 978 02f6 84E6      		ldi r24,lo8(100)
+ 979 02f8 87BD      		out 0x27,r24
+ 139:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+ 140:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     /* output compare interrupt für Timer0 */
+ 141:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     SET_BIT(TIMSK0,OCIE0A);
+ 981               	.LM159:
+ 982 02fa 8081      		ld r24,Z
+ 983 02fc 8260      		ori r24,lo8(2)
+ 984 02fe 8083      		st Z,r24
+ 142:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+ 143:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     /* Timer0 mit clk/8 prescaler, ergibt 1µs pro zyklus, -> bei 8Mhz.
+ 144:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****        Timer0 wird benutzt zum samplen */
+ 145:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     SET_BIT(TCCR0B,CS01);
+ 986               	.LM160:
+ 987 0300 85B5      		in r24,0x25
+ 988 0302 8260      		ori r24,lo8(2)
+ 989 0304 85BD      		out 0x25,r24
+ 990 0306 0895      		ret
+ 992               	.Lscope11:
+ 994               	.global	startRX
+ 996               	startRX:
+ 146:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** }
+ 147:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** 
+ 148:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** void startRX(void)
+ 149:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** {
+ 998               	.LM161:
+ 999               	.LFBB12:
+ 1000               	/* prologue: function */
+ 1001               	/* frame size = 0 */
+ 1002               	/* stack size = 0 */
+ 1003               	.L__stack_usage = 0
+ 150:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     uint8_t preambleBit, lows = 0, highs = 0;
+ 151:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+ 152:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     SET_BIT(LED_PORT,LED);
+ 1005               	.LM162:
+ 1006 0308 5F9A      		sbi 0xb,7
+ 153:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+ 154:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     /* ISR gloabl freigeben*/
+ 155:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     sei();
+ 1008               	.LM163:
+ 1009               	/* #APP */
+ 1010               	 ;  155 "/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reade
+ 1011 030a 7894      		sei
+ 1012               	 ;  0 "" 2
+ 156:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+ 157:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     /* Zurücksetzen */
+ 158:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     TCNT0 = TCNT1 = 0;
+ 1014               	.LM164:
+ 1015               	/* #NOAPP */
+ 1016 030c 1092 8500 		sts 132+1,__zero_reg__
+ 1017 0310 1092 8400 		sts 132,__zero_reg__
+ 1018 0314 16BC      		out 0x26,__zero_reg__
+ 159:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+ 160:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     /* Einschalten während SYNC, -> wird 0 wenn die datenübertragung aus ist*/
+ 161:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     receiving = 1;
+ 1020               	.LM165:
+ 1021 0316 81E0      		ldi r24,lo8(1)
+ 1022 0318 8093 0000 		sts receiving,r24
+ 162:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+ 163:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     /* Individuelle Bits zählen */
+ 164:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     sampleCount = 3;
+ 1024               	.LM166:
+ 1025 031c 83E0      		ldi r24,lo8(3)
+ 1026 031e 8093 0000 		sts sampleCount,r24
+ 165:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** 
+ 166:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     samples = 0;
+ 1028               	.LM167:
+ 1029 0322 1092 0000 		sts samples,__zero_reg__
+ 1030 0326 1092 0000 		sts samples+1,__zero_reg__
+ 1031 032a 1092 0000 		sts samples+2,__zero_reg__
+ 1032 032e 1092 0000 		sts samples+3,__zero_reg__
+ 150:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     uint8_t preambleBit, lows = 0, highs = 0;
+ 1034               	.LM168:
+ 1035 0332 20E0      		ldi r18,0
+ 1036 0334 30E0      		ldi r19,0
+ 167:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+ 168:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     /* so lange daten empfangen werden */
+ 169:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     while (receiving)
+ 170:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     {
+ 171:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         if (samplesReady)
+ 172:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         {
+ 173:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****             /* bit abfragen */
+ 174:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****             preambleBit = getSamples();
+ 175:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****             
+ 176:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****             sampleCount = 3;
+ 1038               	.LM169:
+ 1039 0336 43E0      		ldi r20,lo8(3)
+ 177:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****             
+ 178:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****             /* Die Präabmel enthällt 6 low bits (10) und 2 high bits (01), alles ander setzen den
+ 179:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****             if (preambleBit == LOW)
+ 180:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****             {
+ 181:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****                 if (!highs)
+ 182:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****                     ++lows;
+ 183:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****                 
+ 184:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****                 else
+ 185:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****                     lows = highs = 0;
+ 186:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****             }
+ 187:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****             
+ 188:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****             else if (preambleBit == HIGH)
+ 189:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****             {
+ 190:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****                 if (lows >= 6)
+ 191:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****                 {
+ 192:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****                     if (++highs >= 2)
+ 193:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****                         break;
+ 194:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****                 }
+ 195:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****                 
+ 196:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****                 else
+ 197:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****                     lows = highs = 0;
+ 198:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****             }
+ 199:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****             
+ 200:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****             else
+ 201:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****             {
+ 202:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****                 lows = highs = 0;
+ 203:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****                 sampleCount = 2;
+ 1041               	.LM170:
+ 1042 0338 52E0      		ldi r21,lo8(2)
+ 1043               	.L68:
+ 171:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         if (samplesReady)
+ 1045               	.LM171:
+ 1046 033a 8091 0000 		lds r24,samplesReady
+ 1047 033e 8823      		tst r24
+ 1048 0340 01F0      		breq .L68
+ 1049               	.LBB12:
+ 1050               	.LBB13:
+ 112:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     samplesReady = 0;
+ 1052               	.LM172:
+ 1053 0342 1092 0000 		sts samplesReady,__zero_reg__
+ 114:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     return samples;
+ 1055               	.LM173:
+ 1056 0346 8091 0000 		lds r24,samples
+ 1057 034a 9091 0000 		lds r25,samples+1
+ 1058 034e A091 0000 		lds r26,samples+2
+ 1059 0352 B091 0000 		lds r27,samples+3
+ 1060               	.LBE13:
+ 1061               	.LBE12:
+ 176:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****             sampleCount = 3;
+ 1063               	.LM174:
+ 1064 0356 4093 0000 		sts sampleCount,r20
+ 179:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****             if (preambleBit == LOW)
+ 1066               	.LM175:
+ 1067 035a 8C30      		cpi r24,lo8(12)
+ 1068 035c 01F4      		brne .L63
+ 181:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****                 if (!highs)
+ 1070               	.LM176:
+ 1071 035e 2111      		cpse r18,__zero_reg__
+ 1072 0360 00C0      		rjmp .L70
+ 182:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****                     ++lows;
+ 1074               	.LM177:
+ 1075 0362 3F5F      		subi r19,lo8(-(1))
+ 1076 0364 00C0      		rjmp .L68
+ 1077               	.L63:
+ 188:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****             else if (preambleBit == HIGH)
+ 1079               	.LM178:
+ 1080 0366 8330      		cpi r24,lo8(3)
+ 1081 0368 01F4      		brne .L65
+ 190:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****                 if (lows >= 6)
+ 1083               	.LM179:
+ 1084 036a 3630      		cpi r19,lo8(6)
+ 1085 036c 00F0      		brlo .L70
+ 192:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****                     if (++highs >= 2)
+ 1087               	.LM180:
+ 1088 036e 2F5F      		subi r18,lo8(-(1))
+ 1089 0370 2230      		cpi r18,lo8(2)
+ 1090 0372 00F0      		brlo .L68
+ 204:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****             }
+ 205:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         }
+ 206:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     }
+ 207:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+ 208:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     sampleCount = DATA_SAMPLES - 1;
+ 1092               	.LM181:
+ 1093 0374 8FE1      		ldi r24,lo8(31)
+ 1094 0376 8093 0000 		sts sampleCount,r24
+ 1095 037a 0895      		ret
+ 1096               	.L65:
+ 203:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****                 sampleCount = 2;
+ 1098               	.LM182:
+ 1099 037c 5093 0000 		sts sampleCount,r21
+ 1100               	.L70:
+ 185:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****                     lows = highs = 0;
+ 1102               	.LM183:
+ 1103 0380 20E0      		ldi r18,0
+ 1104 0382 30E0      		ldi r19,0
+ 1105 0384 00C0      		rjmp .L68
+ 1110               	.Lscope12:
+ 1112               	.global	stopRX
+ 1114               	stopRX:
+ 209:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** }
+ 210:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** 
+ 211:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** 
+ 212:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** void stopRX(void)
+ 213:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** {
+ 1116               	.LM184:
+ 1117               	.LFBB13:
+ 1118               	/* prologue: function */
+ 1119               	/* frame size = 0 */
+ 1120               	/* stack size = 0 */
+ 1121               	.L__stack_usage = 0
+ 214:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     receiving = 0;
+ 1123               	.LM185:
+ 1124 0386 1092 0000 		sts receiving,__zero_reg__
+ 215:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+ 216:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     /* Timer/Counter aussschalten*/
+ 217:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     CLEAR_BIT(TIMSK0,OCIE0A);
+ 1126               	.LM186:
+ 1127 038a EEE6      		ldi r30,lo8(110)
+ 1128 038c F0E0      		ldi r31,0
+ 1129 038e 8081      		ld r24,Z
+ 1130 0390 8D7F      		andi r24,lo8(-3)
+ 1131 0392 8083      		st Z,r24
+ 218:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     CLEAR_BIT(LED_PORT,LED);
+ 1133               	.LM187:
+ 1134 0394 5F98      		cbi 0xb,7
+ 1135 0396 0895      		ret
+ 1137               	.Lscope13:
+ 1140               	.global	interpretSamples
+ 1142               	interpretSamples:
+ 219:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** }
+ 220:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** 
+ 221:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** uint8_t interpretSamples(const uint32_t samps)
+ 222:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** {
+ 1144               	.LM188:
+ 1145               	.LFBB14:
+ 1146 0398 4F92      		push r4
+ 1147 039a 5F92      		push r5
+ 1148 039c 6F92      		push r6
+ 1149 039e 7F92      		push r7
+ 1150 03a0 BF92      		push r11
+ 1151 03a2 CF92      		push r12
+ 1152 03a4 DF92      		push r13
+ 1153 03a6 EF92      		push r14
+ 1154 03a8 FF92      		push r15
+ 1155 03aa 0F93      		push r16
+ 1156 03ac 1F93      		push r17
+ 1157 03ae CF93      		push r28
+ 1158 03b0 DF93      		push r29
+ 1159               	/* prologue: function */
+ 1160               	/* frame size = 0 */
+ 1161               	/* stack size = 13 */
+ 1162               	.L__stack_usage = 13
+ 1163 03b2 B090 0000 		lds r11,data
+ 1165               	.LM189:
+ 1166 03b6 E7E0      		ldi r30,lo8(7)
+ 1167 03b8 F0E0      		ldi r31,0
+ 1168 03ba CCE1      		ldi r28,lo8(28)
+ 1169 03bc D0E0      		ldi r29,0
+ 223:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     int8_t i = 7;
+ 224:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+ 225:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     uint8_t bit;
+ 226:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+ 227:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     for (; i >= 0; --i)
+ 228:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     {
+ 229:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         /* Aktuelles Bit holen */
+ 230:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         bit = (samps >> (i*4)) & 0x0F;
+ 231:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         
+ 232:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         if (bit == HIGH)
+ 233:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****             SET_BIT(data,i);
+ 234:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         
+ 235:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         else if (bit == LOW)
+ 236:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****             CLEAR_BIT(data,i);
+ 1171               	.LM190:
+ 1172 03be 412C      		mov r4,__zero_reg__
+ 1173 03c0 512C      		mov r5,__zero_reg__
+ 1174 03c2 3201      		movw r6,r4
+ 1175 03c4 4394      		inc r4
+ 1176               	.L78:
+ 230:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         bit = (samps >> (i*4)) & 0x0F;
+ 1178               	.LM191:
+ 1179 03c6 6B01      		movw r12,r22
+ 1180 03c8 7C01      		movw r14,r24
+ 1181 03ca 0C2E      		mov r0,r28
+ 1182 03cc 00C0      		rjmp 2f
+ 1183               		1:
+ 1184 03ce F694      		lsr r15
+ 1185 03d0 E794      		ror r14
+ 1186 03d2 D794      		ror r13
+ 1187 03d4 C794      		ror r12
+ 1188               		2:
+ 1189 03d6 0A94      		dec r0
+ 1190 03d8 02F4      		brpl 1b
+ 1191 03da 2C2D      		mov r18,r12
+ 1192 03dc 2F70      		andi r18,lo8(15)
+ 232:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         if (bit == HIGH)
+ 1194               	.LM192:
+ 1195 03de 2330      		cpi r18,lo8(3)
+ 1196 03e0 01F4      		brne .L73
+ 233:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****             SET_BIT(data,i);
+ 1198               	.LM193:
+ 1199 03e2 7301      		movw r14,r6
+ 1200 03e4 6201      		movw r12,r4
+ 1201 03e6 0E2E      		mov r0,r30
+ 1202 03e8 00C0      		rjmp 2f
+ 1203               		1:
+ 1204 03ea CC0C      		lsl r12
+ 1205 03ec DD1C      		rol r13
+ 1206 03ee EE1C      		rol r14
+ 1207 03f0 FF1C      		rol r15
+ 1208               		2:
+ 1209 03f2 0A94      		dec r0
+ 1210 03f4 02F4      		brpl 1b
+ 1211 03f6 BC28      		or r11,r12
+ 1212 03f8 00C0      		rjmp .L74
+ 1213               	.L73:
+ 235:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         else if (bit == LOW)
+ 1215               	.LM194:
+ 1216 03fa 2C30      		cpi r18,lo8(12)
+ 1217 03fc 01F0      		breq .L75
+ 1218 03fe B092 0000 		sts data,r11
+ 237:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         
+ 238:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         else return 0;
+ 1220               	.LM195:
+ 1221 0402 80E0      		ldi r24,0
+ 1222 0404 00C0      		rjmp .L76
+ 1223               	.L75:
+ 236:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****             CLEAR_BIT(data,i);
+ 1225               	.LM196:
+ 1226 0406 7301      		movw r14,r6
+ 1227 0408 6201      		movw r12,r4
+ 1228 040a 0E2E      		mov r0,r30
+ 1229 040c 00C0      		rjmp 2f
+ 1230               		1:
+ 1231 040e CC0C      		lsl r12
+ 1232 0410 DD1C      		rol r13
+ 1233 0412 EE1C      		rol r14
+ 1234 0414 FF1C      		rol r15
+ 1235               		2:
+ 1236 0416 0A94      		dec r0
+ 1237 0418 02F4      		brpl 1b
+ 1238 041a 9701      		movw r18,r14
+ 1239 041c 8601      		movw r16,r12
+ 1240 041e 0095      		com r16
+ 1241 0420 B022      		and r11,r16
+ 1242               	.L74:
+ 1243 0422 2497      		sbiw r28,4
+ 1244 0424 3197      		sbiw r30,1
+ 1245 0426 00F4      		brcc .L78
+ 1246 0428 B092 0000 		sts data,r11
+ 239:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     }
+ 240:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+ 241:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     return 1;
+ 1248               	.LM197:
+ 1249 042c 81E0      		ldi r24,lo8(1)
+ 1250               	.L76:
+ 1251               	/* epilogue start */
+ 242:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** }
+ 1253               	.LM198:
+ 1254 042e DF91      		pop r29
+ 1255 0430 CF91      		pop r28
+ 1256 0432 1F91      		pop r17
+ 1257 0434 0F91      		pop r16
+ 1258 0436 FF90      		pop r15
+ 1259 0438 EF90      		pop r14
+ 1260 043a DF90      		pop r13
+ 1261 043c CF90      		pop r12
+ 1262 043e BF90      		pop r11
+ 1263 0440 7F90      		pop r7
+ 1264 0442 6F90      		pop r6
+ 1265 0444 5F90      		pop r5
+ 1266 0446 4F90      		pop r4
+ 1267 0448 0895      		ret
+ 1272               	.Lscope14:
+ 1273               		.section	.text.startup,"ax",@progbits
+ 1275               	.global	main
+ 1277               	main:
+  19:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** {
+ 1279               	.LM199:
+ 1280               	.LFBB15:
+ 1281 0000 0F93      		push r16
+ 1282 0002 1F93      		push r17
+ 1283 0004 CF93      		push r28
+ 1284 0006 DF93      		push r29
+ 1285 0008 CDB7      		in r28,__SP_L__
+ 1286 000a DEB7      		in r29,__SP_H__
+ 1287 000c C158      		subi r28,-127
+ 1288 000e D109      		sbc r29,__zero_reg__
+ 1289 0010 0FB6      		in __tmp_reg__,__SREG__
+ 1290 0012 F894      		cli
+ 1291 0014 DEBF      		out __SP_H__,r29
+ 1292 0016 0FBE      		out __SREG__,__tmp_reg__
+ 1293 0018 CDBF      		out __SP_L__,r28
+ 1294               	/* prologue: function */
+ 1295               	/* frame size = 129 */
+ 1296               	/* stack size = 133 */
+ 1297               	.L__stack_usage = 133
+  21:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     struct Queue q = {.size = 0};
+ 1299               	.LM200:
+ 1300 001a 8E01      		movw r16,r28
+ 1301 001c 0F5F      		subi r16,-1
+ 1302 001e 1F4F      		sbci r17,-1
+ 1303 0020 81E8      		ldi r24,lo8(-127)
+ 1304 0022 F801      		movw r30,r16
+ 1305               		0:
+ 1306 0024 1192      		st Z+,__zero_reg__
+ 1307 0026 8A95      		dec r24
+ 1308 0028 01F4      		brne 0b
+  24:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     LCD_init();
+ 1310               	.LM201:
+ 1311 002a 0E94 0000 		call LCD_init
+  25:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     initRX();
+ 1313               	.LM202:
+ 1314 002e 0E94 0000 		call initRX
+  26:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     startRX();
+ 1316               	.LM203:
+ 1317 0032 0E94 0000 		call startRX
+ 1318               	.L83:
+  30:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         if (receiving && samplesReady && interpretSamples(getSamples()))
+ 1320               	.LM204:
+ 1321 0036 9091 0000 		lds r25,receiving
+ 1322               	.L80:
+ 1323 003a 9111      		cpse r25,__zero_reg__
+ 1324 003c 00C0      		rjmp .L93
+ 1325               	.L91:
+ 1326 003e 00C0      		rjmp .L91
+ 1327               	.L93:
+  30:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         if (receiving && samplesReady && interpretSamples(getSamples()))
+ 1329               	.LM205:
+ 1330 0040 8091 0000 		lds r24,samplesReady
+ 1331 0044 8823      		tst r24
+ 1332 0046 01F0      		breq .L80
+ 1333               	.LBB14:
+ 1334               	.LBB15:
+ 112:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     samplesReady = 0;
+ 1336               	.LM206:
+ 1337 0048 1092 0000 		sts samplesReady,__zero_reg__
+ 114:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     return samples;
+ 1339               	.LM207:
+ 1340 004c 6091 0000 		lds r22,samples
+ 1341 0050 7091 0000 		lds r23,samples+1
+ 1342 0054 8091 0000 		lds r24,samples+2
+ 1343 0058 9091 0000 		lds r25,samples+3
+ 1344               	.LBE15:
+ 1345               	.LBE14:
+  30:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         if (receiving && samplesReady && interpretSamples(getSamples()))
+ 1347               	.LM208:
+ 1348 005c 0E94 0000 		call interpretSamples
+ 1349 0060 8823      		tst r24
+ 1350 0062 01F0      		breq .L83
+  32:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****             pushQ(&q,data);
+ 1352               	.LM209:
+ 1353 0064 6091 0000 		lds r22,data
+ 1354 0068 C801      		movw r24,r16
+ 1355 006a 0E94 0000 		call pushQ
+  34:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****             if (q.size == 14) break;
+ 1357               	.LM210:
+ 1358 006e CF57      		subi r28,lo8(-129)
+ 1359 0070 DF4F      		sbci r29,hi8(-129)
+ 1360 0072 8881      		ld r24,Y
+ 1361 0074 C158      		subi r28,lo8(129)
+ 1362 0076 D040      		sbci r29,hi8(129)
+ 1363 0078 8E30      		cpi r24,lo8(14)
+ 1364 007a 01F4      		brne .L83
+  38:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     stopRX();
+ 1366               	.LM211:
+ 1367 007c 0E94 0000 		call stopRX
+  40:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     chksm = checksumme(q.data,12);
+ 1369               	.LM212:
+ 1370 0080 6CE0      		ldi r22,lo8(12)
+ 1371 0082 70E0      		ldi r23,0
+ 1372 0084 C801      		movw r24,r16
+ 1373 0086 0E94 0000 		call checksumme
+  42:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     CLEAR_BIT(LED_PORT,LED);
+ 1375               	.LM213:
+ 1376 008a 5F98      		cbi 0xb,7
+  44:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     if (chksm == ((q.data[12] << 8) | q.data[13])) // alles OK, checksumme passt!!
+ 1378               	.LM214:
+ 1379 008c 2D85      		ldd r18,Y+13
+ 1380 008e 30E0      		ldi r19,0
+ 1381 0090 322F      		mov r19,r18
+ 1382 0092 2227      		clr r18
+ 1383 0094 4E85      		ldd r20,Y+14
+ 1384 0096 242B      		or r18,r20
+ 1385 0098 8217      		cp r24,r18
+ 1386 009a 9307      		cpc r25,r19
+ 1387 009c 01F4      		brne .L86
+  45:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         SET_BIT(LED_PORT,LED);
+ 1389               	.LM215:
+ 1390 009e 5F9A      		sbi 0xb,7
+ 1391               	.L86:
+  47:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     LCD_string(q.data);
+ 1393               	.LM216:
+ 1394 00a0 C801      		movw r24,r16
+ 1395 00a2 0E94 0000 		call LCD_string
+  51:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** }
+ 1397               	.LM217:
+ 1398 00a6 80E0      		ldi r24,0
+ 1399 00a8 90E0      		ldi r25,0
+ 1400               	/* epilogue start */
+ 1401 00aa CF57      		subi r28,127
+ 1402 00ac DF4F      		sbci r29,-1
+ 1403 00ae 0FB6      		in __tmp_reg__,__SREG__
+ 1404 00b0 F894      		cli
+ 1405 00b2 DEBF      		out __SP_H__,r29
+ 1406 00b4 0FBE      		out __SREG__,__tmp_reg__
+ 1407 00b6 CDBF      		out __SP_L__,r28
+ 1408 00b8 DF91      		pop r29
+ 1409 00ba CF91      		pop r28
+ 1410 00bc 1F91      		pop r17
+ 1411 00be 0F91      		pop r16
+ 1412 00c0 0895      		ret
+ 1417               	.Lscope15:
+ 1418               		.text
+ 1420               	.global	__vector_20
+ 1422               	__vector_20:
+ 243:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** 
+ 244:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** ISR(TIMER1_OVF_vect)
+ 245:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** {
+ 1424               	.LM218:
+ 1425               	.LFBB16:
+ 1426 044a 1F92      		push r1
+ 1427 044c 0F92      		push r0
+ 1428 044e 0FB6      		in r0,__SREG__
+ 1429 0450 0F92      		push r0
+ 1430 0452 1124      		clr __zero_reg__
+ 1431 0454 2F93      		push r18
+ 1432 0456 3F93      		push r19
+ 1433 0458 4F93      		push r20
+ 1434 045a 5F93      		push r21
+ 1435 045c 6F93      		push r22
+ 1436 045e 7F93      		push r23
+ 1437 0460 8F93      		push r24
+ 1438 0462 9F93      		push r25
+ 1439 0464 AF93      		push r26
+ 1440 0466 BF93      		push r27
+ 1441 0468 EF93      		push r30
+ 1442 046a FF93      		push r31
+ 1443               	/* prologue: Signal */
+ 1444               	/* frame size = 0 */
+ 1445               	/* stack size = 15 */
+ 1446               	.L__stack_usage = 15
+ 246:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     if (++connectionCount >= CONNECTION_TIME)
+ 1448               	.LM219:
+ 1449 046c 8091 0000 		lds r24,connectionCount
+ 1450 0470 8F5F      		subi r24,lo8(-(1))
+ 1451 0472 8D34      		cpi r24,lo8(77)
+ 1452 0474 00F4      		brsh .L95
+ 1453 0476 8093 0000 		sts connectionCount,r24
+ 1454 047a 00C0      		rjmp .L94
+ 1455               	.L95:
+ 247:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     {
+ 248:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         connectionCount = 0;
+ 1457               	.LM220:
+ 1458 047c 1092 0000 		sts connectionCount,__zero_reg__
+ 249:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         
+ 250:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         stopRX();
+ 1460               	.LM221:
+ 1461 0480 0E94 0000 		call stopRX
+ 1462               	.L94:
+ 1463               	/* epilogue start */
+ 251:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     }
+ 252:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** }
+ 1465               	.LM222:
+ 1466 0484 FF91      		pop r31
+ 1467 0486 EF91      		pop r30
+ 1468 0488 BF91      		pop r27
+ 1469 048a AF91      		pop r26
+ 1470 048c 9F91      		pop r25
+ 1471 048e 8F91      		pop r24
+ 1472 0490 7F91      		pop r23
+ 1473 0492 6F91      		pop r22
+ 1474 0494 5F91      		pop r21
+ 1475 0496 4F91      		pop r20
+ 1476 0498 3F91      		pop r19
+ 1477 049a 2F91      		pop r18
+ 1478 049c 0F90      		pop r0
+ 1479 049e 0FBE      		out __SREG__,r0
+ 1480 04a0 0F90      		pop r0
+ 1481 04a2 1F90      		pop r1
+ 1482 04a4 1895      		reti
+ 1484               	.Lscope16:
+ 1486               	.global	__vector_9
+ 1488               	__vector_9:
+ 253:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** 
+ 254:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** ISR(PCINT0_vect)
+ 255:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** {
+ 1490               	.LM223:
+ 1491               	.LFBB17:
+ 1492 04a6 1F92      		push r1
+ 1493 04a8 0F92      		push r0
+ 1494 04aa 0FB6      		in r0,__SREG__
+ 1495 04ac 0F92      		push r0
+ 1496 04ae 1124      		clr __zero_reg__
+ 1497 04b0 8F93      		push r24
+ 1498               	/* prologue: Signal */
+ 1499               	/* frame size = 0 */
+ 1500               	/* stack size = 4 */
+ 1501               	.L__stack_usage = 4
+ 256:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     /* Timer setzen, was er bei einem pin change sein soll, 52 istatt 50 wegen Overhead des ISR Auf
+ 257:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     TCNT0 = 52;
+ 1503               	.LM224:
+ 1504 04b2 84E3      		ldi r24,lo8(52)
+ 1505 04b4 86BD      		out 0x26,r24
+ 1506               	/* epilogue start */
+ 258:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** }
+ 1508               	.LM225:
+ 1509 04b6 8F91      		pop r24
+ 1510 04b8 0F90      		pop r0
+ 1511 04ba 0FBE      		out __SREG__,r0
+ 1512 04bc 0F90      		pop r0
+ 1513 04be 1F90      		pop r1
+ 1514 04c0 1895      		reti
+ 1516               	.Lscope17:
+ 1518               	.global	__vector_21
+ 1520               	__vector_21:
+ 259:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** 
+ 260:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** ISR(TIMER0_COMPA_vect)
+ 261:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** {
+ 1522               	.LM226:
+ 1523               	.LFBB18:
+ 1524 04c2 1F92      		push r1
+ 1525 04c4 0F92      		push r0
+ 1526 04c6 0FB6      		in r0,__SREG__
+ 1527 04c8 0F92      		push r0
+ 1528 04ca 1124      		clr __zero_reg__
+ 1529 04cc 2F93      		push r18
+ 1530 04ce 4F93      		push r20
+ 1531 04d0 5F93      		push r21
+ 1532 04d2 6F93      		push r22
+ 1533 04d4 7F93      		push r23
+ 1534 04d6 8F93      		push r24
+ 1535 04d8 9F93      		push r25
+ 1536 04da AF93      		push r26
+ 1537 04dc BF93      		push r27
+ 1538               	/* prologue: Signal */
+ 1539               	/* frame size = 0 */
+ 1540               	/* stack size = 12 */
+ 1541               	.L__stack_usage = 12
+ 262:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     /* Wenn aktuelles Sample hight ausliest -> setze aktuelles bit auf HIGH */
+ 263:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     if (IS_SET(RX_PORT,RX_PIN))
+ 264:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     {
+ 265:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         /* timer nach ganzem bit wieder resetten */
+ 266:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         TCNT0 = 1;
+ 1543               	.LM227:
+ 1544 04de 81E0      		ldi r24,lo8(1)
+ 263:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     if (IS_SET(RX_PORT,RX_PIN))
+ 1546               	.LM228:
+ 1547 04e0 1B9B      		sbis 0x3,3
+ 1548 04e2 00C0      		rjmp .L99
+ 1550               	.LM229:
+ 1551 04e4 86BD      		out 0x26,r24
+ 267:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         
+ 268:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         SET_BIT(samples,sampleCount);
+ 1553               	.LM230:
+ 1554 04e6 4091 0000 		lds r20,samples
+ 1555 04ea 5091 0000 		lds r21,samples+1
+ 1556 04ee 6091 0000 		lds r22,samples+2
+ 1557 04f2 7091 0000 		lds r23,samples+3
+ 1558 04f6 2091 0000 		lds r18,sampleCount
+ 1559 04fa 81E0      		ldi r24,lo8(1)
+ 1560 04fc 90E0      		ldi r25,0
+ 1561 04fe A0E0      		ldi r26,0
+ 1562 0500 B0E0      		ldi r27,0
+ 1563 0502 00C0      		rjmp 2f
+ 1564               		1:
+ 1565 0504 880F      		lsl r24
+ 1566 0506 991F      		rol r25
+ 1567 0508 AA1F      		rol r26
+ 1568 050a BB1F      		rol r27
+ 1569               		2:
+ 1570 050c 2A95      		dec r18
+ 1571 050e 02F4      		brpl 1b
+ 1572 0510 842B      		or r24,r20
+ 1573 0512 952B      		or r25,r21
+ 1574 0514 A62B      		or r26,r22
+ 1575 0516 B72B      		or r27,r23
+ 1576 0518 00C0      		rjmp .L102
+ 1577               	.L99:
+ 269:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     }
+ 270:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+ 271:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     /* sonst aktuelles bit auf LOW setzen */
+ 272:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     else
+ 273:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     {
+ 274:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         /* timer nach sampling zurücksetzen */
+ 275:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         TCNT0 = 1;
+ 1579               	.LM231:
+ 1580 051a 86BD      		out 0x26,r24
+ 276:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         
+ 277:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         CLEAR_BIT(samples,sampleCount);
+ 1582               	.LM232:
+ 1583 051c 4091 0000 		lds r20,samples
+ 1584 0520 5091 0000 		lds r21,samples+1
+ 1585 0524 6091 0000 		lds r22,samples+2
+ 1586 0528 7091 0000 		lds r23,samples+3
+ 1587 052c 2091 0000 		lds r18,sampleCount
+ 1588 0530 81E0      		ldi r24,lo8(1)
+ 1589 0532 90E0      		ldi r25,0
+ 1590 0534 A0E0      		ldi r26,0
+ 1591 0536 B0E0      		ldi r27,0
+ 1592 0538 00C0      		rjmp 2f
+ 1593               		1:
+ 1594 053a 880F      		lsl r24
+ 1595 053c 991F      		rol r25
+ 1596 053e AA1F      		rol r26
+ 1597 0540 BB1F      		rol r27
+ 1598               		2:
+ 1599 0542 2A95      		dec r18
+ 1600 0544 02F4      		brpl 1b
+ 1601 0546 8095      		com r24
+ 1602 0548 9095      		com r25
+ 1603 054a A095      		com r26
+ 1604 054c B095      		com r27
+ 1605 054e 8423      		and r24,r20
+ 1606 0550 9523      		and r25,r21
+ 1607 0552 A623      		and r26,r22
+ 1608 0554 B723      		and r27,r23
+ 1609               	.L102:
+ 1610 0556 8093 0000 		sts samples,r24
+ 1611 055a 9093 0000 		sts samples+1,r25
+ 1612 055e A093 0000 		sts samples+2,r26
+ 1613 0562 B093 0000 		sts samples+3,r27
+ 278:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     }
+ 279:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     
+ 280:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     /* wenn bit fertig ist -> samplesReady flag setzen */
+ 281:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     if (! sampleCount--)
+ 1615               	.LM233:
+ 1616 0566 8091 0000 		lds r24,sampleCount
+ 1617 056a 9FEF      		ldi r25,lo8(-1)
+ 1618 056c 980F      		add r25,r24
+ 1619 056e 9093 0000 		sts sampleCount,r25
+ 1620 0572 8111      		cpse r24,__zero_reg__
+ 1621 0574 00C0      		rjmp .L98
+ 282:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     {
+ 283:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         samplesReady = 1;
+ 1623               	.LM234:
+ 1624 0576 81E0      		ldi r24,lo8(1)
+ 1625 0578 8093 0000 		sts samplesReady,r24
+ 284:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****         sampleCount = DATA_SAMPLES - 1;
+ 1627               	.LM235:
+ 1628 057c 8FE1      		ldi r24,lo8(31)
+ 1629 057e 8093 0000 		sts sampleCount,r24
+ 1630               	.L98:
+ 1631               	/* epilogue start */
+ 285:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c ****     }
+ 286:/Users/alexhofstaetter/Dropbox/Schule/4-jahrgang/hwe/projekte/rf-id/Code/RFID-Reader/reader.c **** }...
+ 1633               	.LM236:
+ 1634 0582 BF91      		pop r27
+ 1635 0584 AF91      		pop r26
+ 1636 0586 9F91      		pop r25
+ 1637 0588 8F91      		pop r24
+ 1638 058a 7F91      		pop r23
+ 1639 058c 6F91      		pop r22
+ 1640 058e 5F91      		pop r21
+ 1641 0590 4F91      		pop r20
+ 1642 0592 2F91      		pop r18
+ 1643 0594 0F90      		pop r0
+ 1644 0596 0FBE      		out __SREG__,r0
+ 1645 0598 0F90      		pop r0
+ 1646 059a 1F90      		pop r1
+ 1647 059c 1895      		reti
+ 1649               	.Lscope18:
+ 1650               	.global	connectionCount
+ 1651               		.section .bss
+ 1654               	connectionCount:
+ 1655 0000 00        		.zero	1
+ 1656               	.global	data
+ 1659               	data:
+ 1660 0001 00        		.zero	1
+ 1661               	.global	receiving
+ 1664               	receiving:
+ 1665 0002 00        		.zero	1
+ 1666               	.global	sampleCount
+ 1667               		.data
+ 1670               	sampleCount:
+ 1671 0000 1F        		.byte	31
+ 1672               	.global	samplesReady
+ 1673               		.section .bss
+ 1676               	samplesReady:
+ 1677 0003 00        		.zero	1
+ 1678               	.global	samples
+ 1681               	samples:
+ 1682 0004 0000 0000 		.zero	4
+ 1689               		.text
+ 1691               	.Letext0:
+ 1692               		.ident	"GCC: (GNU) 4.8.1"
+ 1693               	.global __do_copy_data
+ 1694               	.global __do_clear_bss
+DEFINED SYMBOLS
+                            *ABS*:00000000 reader.c
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc7Pf2bu.s:2      *ABS*:0000003e __SP_H__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc7Pf2bu.s:3      *ABS*:0000003d __SP_L__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc7Pf2bu.s:4      *ABS*:0000003f __SREG__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc7Pf2bu.s:5      *ABS*:00000000 __tmp_reg__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc7Pf2bu.s:6      *ABS*:00000001 __zero_reg__
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc7Pf2bu.s:118    .text:00000000 delay_ms
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc7Pf2bu.s:174    .text:0000001e Enable
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc7Pf2bu.s:203    .text:00000032 LCD_init
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc7Pf2bu.s:384    .text:000000fa LCD_send
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc7Pf2bu.s:529    .text:0000016a LCD_cmd
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc7Pf2bu.s:674    .text:000001da LCD_string
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc7Pf2bu.s:708    .text:000001f2 popQ
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc7Pf2bu.s:773    .text:0000022e pushQ
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc7Pf2bu.s:806    .text:0000024a checksumme
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc7Pf2bu.s:909    .text:000002b4 getSamples
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc7Pf2bu.s:1676   .bss:00000003 samplesReady
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc7Pf2bu.s:1681   .bss:00000004 samples
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc7Pf2bu.s:934    .text:000002ca initRX
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc7Pf2bu.s:996    .text:00000308 startRX
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc7Pf2bu.s:1664   .bss:00000002 receiving
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc7Pf2bu.s:1670   .data:00000000 sampleCount
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc7Pf2bu.s:1114   .text:00000386 stopRX
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc7Pf2bu.s:1142   .text:00000398 interpretSamples
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc7Pf2bu.s:1659   .bss:00000001 data
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc7Pf2bu.s:1277   .text.startup:00000000 main
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc7Pf2bu.s:1422   .text:0000044a __vector_20
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc7Pf2bu.s:1654   .bss:00000000 connectionCount
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc7Pf2bu.s:1488   .text:000004a6 __vector_9
+/var/folders/vy/c0xymnt91xq5x2nf69qzjgfh0000gp/T//cc7Pf2bu.s:1520   .text:000004c2 __vector_21
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss

@@ -1,0 +1,1100 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100052.html;106,k100054.html;107,k100056.html;108,k100057.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100052.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100054.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100056.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100057.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 8 - OOP I: Grundlagen
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id008003"></a>
+<h2>8.3 <a name="ixa100469">Methoden</a></h2>
+<hr>
+<ul>
+<li><a href="k100055.html#sectlevel2id008003">8.3 Methoden</a>
+<ul>
+<li><a href="k100055.html#sectlevel3id008003001">8.3.1 Definition</a>
+<li><a href="k100055.html#sectlevel3id008003002">8.3.2 Aufruf</a>
+<li><a href="k100055.html#sectlevel3id008003003">8.3.3 Parameter</a>
+<li><a href="k100055.html#variableparameterlisten">8.3.4 Variable Parameterlisten </a>
+<li><a href="k100055.html#sectlevel3id008003005">8.3.5 R&uuml;ckgabewert</a>
+<li><a href="k100055.html#ueberladenvonmethoden">8.3.6 &Uuml;berladen von Methoden</a>
+<ul>
+<li><a href="k100055.html#sectlevel4id008003006001">Die Signatur einer Methode</a>
+</ul>
+<li><a href="k100055.html#konstruktoren">8.3.7 Konstruktoren</a>
+<ul>
+<li><a href="k100055.html#sectlevel4id008003007001">Default-Konstruktoren</a>
+<li><a href="k100055.html#sectlevel4id008003007002">Verkettung von Konstruktoren</a>
+<li><a href="k100055.html#sectlevel4id008003007003">Initialisierungsreihenfolge</a>
+</ul>
+<li><a href="k100055.html#destruktoren">8.3.8 Destruktoren</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id008003001"></a>
+<h3>8.3.1 Definition </h3>
+
+<p>
+Methoden definieren das <i>Verhalten</i> von Objekten. Sie werden
+innerhalb einer Klassendefinition angelegt und haben Zugriff auf alle
+Variablen des Objekts. Methoden sind das Pendant zu den <i>Funktionen</i>
+anderer Programmiersprachen, arbeiten aber immer mit den Variablen
+des aktuellen Objekts. <a name="ixa100470"><i>Globale Funktionen</i></a>,
+die vollkommen unabh&auml;ngig von einem Objekt oder einer Klasse
+existieren, gibt es in Java ebenso wenig wie globale Variablen. Wir
+werden sp&auml;ter allerdings Klassenvariablen und -methoden kennenlernen,
+die nicht an eine konkrete Instanz gebunden sind. 
+
+<p>
+Die Syntax der Methodendefinition in Java &auml;hnelt der von C/C++:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+{Modifier}
+Typ Name([Parameter])
+{
+  {Anweisung;}
+}
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+Nach einer Reihe von <a name="ixa100471"><i>Modifiern</i></a> (wir
+kommen weiter in <a href="k100059.html#modifier">Abschnitt 9.2</a>
+darauf zur&uuml;ck) folgen der <i>Typ</i> des R&uuml;ckgabewerts der
+Funktion, ihr <i>Name</i> und eine optionale <i>Parameterliste</i>.
+In geschweiften Klammern folgt dann der <i>Methodenrumpf</i>, also
+die Liste der Anweisungen, die das Verhalten der Methode festlegen.
+Die Erweiterung unserer Beispielklasse um eine Methode zur Berechnung
+des Alters des <font color="#000077"><tt>Auto</tt></font>-Objekts
+w&uuml;rde beispielsweise so aussehen: 
+<a name="listingid008006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Auto
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  <font color="#0000AA">public</font> String name;
+<font color="#555555">004 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font>    erstzulassung;
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font>    leistung;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> alter()
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#0000AA">return</font> 2011 - erstzulassung;
+<font color="#555555">010 </font>  }
+<font color="#555555">011 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 8.6: Eine einfache Methode zur Altersberechnung</i></p>
+
+<p>
+Hier wird eine Methode <font color="#000077"><tt>alter</tt></font>
+definiert, die einen ganzzahligen Wert zur&uuml;ckgibt, der sich aus
+der Differenz des Jahres 2011 und dem Jahr der Erstzulassung errechnet.
+Das funktioniert nat&uuml;rlich nur im Jahr 2011 richtig; eine allgemein
+g&uuml;ltige Methode zur Altersberechnung m&uuml;sste etwas mehr Aufwand
+treiben. 
+
+<!-- Section -->
+
+<a name="sectlevel3id008003002"></a>
+<h3>8.3.2 <a name="ixa100472">Aufruf</a></h3>
+
+<p>
+Der Aufruf einer Methode erfolgt &auml;hnlich der Verwendung einer
+Instanzvariablen in Punktnotation. Zur Unterscheidung von einem Variablenzugriff
+m&uuml;ssen zus&auml;tzlich die Parameter der Methode in Klammern
+angegeben werden, selbst wenn die Liste leer ist. Das folgende Programm
+w&uuml;rde demnach die Zahl 10 auf dem Bildschirm ausgeben. 
+<a name="listingid008007"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>Auto golf1 = <font color="#0000AA">new</font> Auto();
+<font color="#555555">002 </font>golf1.erstzulassung = 2001;
+<font color="#555555">003 </font>System.out.println(golf1.alter());</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 8.7: Aufruf einer Methode</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Wie an der Definition von <font color="#000077"><tt>alter</tt></font>
+zu erkennen ist, darf eine Methode auf die Instanzvariablen ihrer
+Klasse zugreifen, ohne die Punktnotation zu verwenden. Das funktioniert
+deshalb, weil der Compiler alle nicht in Punktnotation verwendeten
+Variablen <font color="#000077"><tt>x</tt></font>, die nicht lokale
+Variablen sind, auf das Objekt <a href="index_t.html#ixb100284"><font color=#000080><tt>this</tt></font></a>
+bezieht und damit als <font color="#000077"><tt>this.x</tt></font>
+interpretiert.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Bei <a name="ixa100473"><a href="index_t.html#ixb100284"><font color=#000080><tt>this</tt></font></a></a>
+handelt es sich um einen Zeiger, der beim Anlegen eines Objekts automatisch
+generiert wird. <a href="index_t.html#ixb100284"><font color=#000080><tt>this</tt></font></a>
+ist eine Referenzvariable, die auf das aktuelle Objekt zeigt und dazu
+verwendet wird, die eigenen Methoden und Instanzvariablen anzusprechen.
+Der <a href="index_t.html#ixb100284"><font color=#000080><tt>this</tt></font></a>-Zeiger
+ist auch <i>explizit</i> verf&uuml;gbar und kann wie eine ganz normale
+Objektvariable verwendet werden. Er wird als versteckter Parameter
+an jede nichtstatische Methode &uuml;bergeben. Die Methode <font color="#000077"><tt>alter</tt></font>
+h&auml;tte also auch so geschrieben werden k&ouml;nnen: 
+<a name="listingid008008"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#006699">int</font> alter()
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  <font color="#0000AA">return</font> 2011 - <font color="#006699">this</font>.erstzulassung;
+<font color="#555555">004 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 8.8: Verwendung von this</i></p>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Manchmal ist es sinnvoll, <a href="index_t.html#ixb100284"><font color=#000080><tt>this</tt></font></a>
+explizit zu verwenden, auch wenn es nicht unbedingt erforderlich ist.
+Dadurch wird hervorgehoben, dass es sich um den Zugriff auf eine Instanzvariable,
+und nicht eine lokale Variable, handelt.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id008003003"></a>
+<h3>8.3.3 <a name="ixa100474">Parameter</a></h3>
+
+<p>
+Eine Methode kann mit Parametern definiert werden. Dazu wird bei der
+Methodendefinition eine Parameterliste innerhalb der Klammern angegeben.
+Jeder formale Parameter besteht aus einem Typnamen und dem Namen des
+Parameters. Soll mehr als ein Parameter definiert werden, so sind
+die einzelnen Definitionen durch Kommata zu trennen. 
+
+<p>
+Alle Parameter werden in Java per <a name="ixa100475"><i>call by value</i></a>
+&uuml;bergeben. Beim Aufruf einer Methode wird also der aktuelle Wert
+in die Parametervariable kopiert und an die Methode &uuml;bergeben.
+Ver&auml;nderungen der Parametervariablen innerhalb der Methode bleiben
+lokal und wirken sich nicht auf den Aufrufer aus. Das folgende Beispiel
+definiert eine Methode <font color="#000077"><tt>printAlter</tt></font>,
+die das Alter des Autos insgesamt <font color="#000077"><tt>wieoft</tt></font>
+mal auf dem Bildschirm ausgibt: 
+<a name="listingid008009"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#006699">void</font> printAlter(<font color="#006699">int</font> wieoft)
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  <font color="#0000AA">while</font> (wieoft-- &gt; 0) {
+<font color="#555555">004 </font>    System.out.println(<font color="#0000FF">"Alter = "</font> + alter());
+<font color="#555555">005 </font>  }
+<font color="#555555">006 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 8.9: Eine Methode zur Ausgabe des Alters</i></p>
+
+<p>
+Obwohl der Parameter <font color="#000077"><tt>wieoft</tt></font>
+innerhalb der Methode ver&auml;ndert wird, merkt ein Aufrufer nichts
+von diesen &Auml;nderungen, da innerhalb der Methode mit einer Kopie
+gearbeitet wird. Das folgende Programm w&uuml;rde das Alter des Objekts
+<font color="#000077"><tt>auto</tt></font> daher insgesamt neunmal
+auf dem Bildschirm ausgeben: 
+<a name="listingid008010"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>...
+<font color="#555555">002 </font><font color="#006699">int</font> a = 3;
+<font color="#555555">003 </font>
+<font color="#555555">004 </font>auto.printAlter(a);
+<font color="#555555">005 </font>auto.printAlter(a);
+<font color="#555555">006 </font>auto.printAlter(a);
+<font color="#555555">007 </font>...</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 8.10: Wiederholter Aufruf der Methode zur Ausgabe des Alters</i></p>
+
+<p>
+Wie bereits erw&auml;hnt, sind Objektvariablen Referenzen, also Zeiger.
+Zwar werden auch sie bei der &Uuml;bergabe an eine Methode per Wert
+&uuml;bergeben. Da innerhalb der Methode aber der Zeiger auf das Originalobjekt
+zur Verf&uuml;gung steht (wenn auch in kopierter Form), wirken sich
+Ver&auml;nderungen an dem Objekt nat&uuml;rlich direkt auf das Originalobjekt
+aus und sind somit f&uuml;r den Aufrufer der Methode sichtbar. Wie
+in allen anderen Programmiersprachen entspricht die <i>call by value</i>-&Uuml;bergabe
+eines <i>Zeigers</i> damit nat&uuml;rlich genau der Semantik von <a name="ixa100476"><i>call
+by reference</i></a>. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die &Uuml;bergabe von Objekten an Methoden hat damit zwei wichtige
+Konsequenzen: 
+<ul>
+<li>Die Methode erh&auml;lt keine Kopie, sondern arbeitet mit dem
+Originalobjekt.
+<li>Die &Uuml;bergabe von Objekten ist performant, gleichg&uuml;ltig
+wie gro&szlig; sie sind.
+</ul>
+</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Sollen Objekte kopiert werden, so muss dies explizit durch Aufruf
+der Methode <a name="ixa100477"><a href="index_c.html#ixb100290"><font color=#000080><tt>clone</tt></font></a></a>
+der Klasse <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+erfolgen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die &Uuml;bergabe von Objekten und Arrays per Referenz kann leicht
+zu verdeckten Fehlern f&uuml;hren. Da die aufgerufene Methode mit
+dem Originalobjekt arbeitet, kann sie deren Membervariablen bzw. Elemente
+ver&auml;ndern, ohne dass der Aufrufer es merkt. Auch der <a href="index_f.html#ixb100410"><font color=#000080><tt>final</tt></font></a>-Modifier
+(siehe <a href="k100059.html#modifier">Abschnitt 9.2</a>) bietet dagegen
+keinen Schutz. Das unbeabsichtigte &Auml;ndern einer modifizierbaren
+Referenzvariable bei der &Uuml;bergabe an eine Methode kann nur durch
+vorheriges Kopieren verhindert werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="variableparameterlisten"></a>
+<h3>8.3.4 <a name="ixa100478">Variable Parameterlisten</a> <a name="ixa100479"></a>
+</h3>
+
+<p>
+Seit Java 5 gibt es die M&ouml;glichkeit, variable Parameterlisten
+zu definieren, in denen ein formaler Parameter f&uuml;r eine beliebige
+Anzahl aktueller Argumente steht. Dazu kann der letzte Parameter einer
+Methode (und nur dieser) nach dem Typbezeichner mit drei Punkten versehen
+werden. So wird angezeigt, dass an dieser Stelle beim Aufruf eine
+beliebige Anzahl Argumente des passenden Typs &uuml;bergeben werden
+darf: 
+<a name="listingid008011"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> printArgs(String... args)
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; args.length; ++i) {
+<font color="#555555">004 </font>    System.out.println(args[i]);
+<font color="#555555">005 </font>  }
+<font color="#555555">006 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 8.11: Eine Methode mit einer variablen Parameterliste</i></p>
+
+<p>
+Technisch entspricht die Deklaration der eines Arrays-Parameters und
+so wird auch auf die Elemente zugegriffen. Die Vereinfachung wird
+sichtbar, wenn man sich den <i>Aufruf</i> der Methode ansieht. An
+dieser Stelle darf n&auml;mlich nicht nur ein einzelnes Array &uuml;bergeben
+werden, sondern die einzelnen Elemente k&ouml;nnen auch separat angegeben
+werden. Dabei erzeugt das Laufzeitsystem automatisch ein Array, in
+das diese Werte &uuml;bertragen werden. Die beiden folgenden Aufrufe
+sind also gleichwertig: 
+<font color="#000077">
+<pre>
+printArgs(new String[]{"so", "wird", "es", "gemacht"});
+
+printArgs("so", "wird", "es", "gemacht");
+</pre>
+</font>
+
+<p>
+Nun wird auch deutlich, warum lediglich der letzte Parameter variabel
+sein darf. Andernfalls k&ouml;nnte der Compiler unter Umst&auml;nden
+nicht mehr unterscheiden, welches aktuelle Argument zu welchem formalen
+Parameter geh&ouml;rt. 
+
+<p>
+Praktischen Nutzen haben die variablen Parameterlisten bei Anwendungen,
+in denen nicht von vorneherein klar ist, wie viele Argumente ben&ouml;tigt
+werden. Tats&auml;chlich wurde ihre Entwicklung durch den Wunsch motiviert,
+flexible Ausgabemethoden definieren zu k&ouml;nnen, wie sie etwa in
+C/C++ mit der printf-Familie zur Verf&uuml;gung stehen (und seit der
+J2SE 5.0 mit der Klasse <a href="index_f.html#ixb100412"><font color=#000080><tt>java.util.Formatter</tt></font></a>,
+die in <a href="k100082.html#ausgabeformatierung">Abschnitt 12.6</a>
+beschrieben wird). Sie k&ouml;nnen dann die in diesem Fall vielfach
+verwendeten &uuml;berladenen Methoden ersetzen (siehe <a href="k100055.html#ueberladenvonmethoden">Abschnitt 8.3.6</a>).
+Nat&uuml;rlich ben&ouml;tigt nicht jede Methode variable Parameterlisten,
+sondern ihre Anwendung sollte auf Spezialf&auml;lle beschr&auml;nkt
+bleiben. 
+
+<p>
+Wird eine Methode mit einem Parameter vom Typ <a name="ixa100480"><a href="index_o.html#ixb100413"><font color=#000080><tt>Object...</tt></font></a></a>
+deklariert, entstehen in Zusammenhang mit dem ebenfalls seit der J2SE
+5.0 verf&uuml;gbaren Mechanismus des <i>Autoboxing</i> (siehe <a href="k100072.html#autoboxing">Abschnitt 11.2.3</a>)
+Methoden, bei denen praktisch alle Typpr&uuml;fungen des Compilers
+ausgehebelt werden. Da ein Element des Typs <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+zu allen anderen Referenztypen kompatibel ist und primitive Typen
+dank des Autoboxing automatisch in passende Wrapper-Objekte konvertiert
+werden, kann an einen Parameter des Typs <a href="index_o.html#ixb100413"><font color=#000080><tt>Object...</tt></font></a>
+eine beliebige Anzahl beliebiger Argumente &uuml;bergeben werden.
+
+<p>
+Das folgende Listing zeigt eine Methode, die numerische Argumente
+jeweils so lange summiert, bis ein nichtnumerischer Wert &uuml;bergeben
+wird. Dieser wird dann in einen String konvertiert und zusammen mit
+der Zwischensumme ausgegeben. Am Ende wird zus&auml;tzlich die Gesamtsumme
+ausgegeben. Nicht unbedingt eine typische Anwendung und erst recht
+kein empfehlenswerter Programmierstil, aber das Listing demonstriert,
+wie weitreichend die M&ouml;glichkeiten dieses Konzepts sind: 
+<a name="listingid008012"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing0812.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing0812
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> registrierKasse(Object... args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#006699">double</font> zwischensumme = 0;
+<font color="#555555">008 </font>    <font color="#006699">double</font> gesamtsumme   = 0;
+<font color="#555555">009 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; args.length; ++i) {
+<font color="#555555">010 </font>      <font color="#0000AA">if</font> (args[i] <font color="#0000AA">instanceof</font> Number) {
+<font color="#555555">011 </font>        zwischensumme += ((Number)args[i]).doubleValue();
+<font color="#555555">012 </font>      } <font color="#0000AA">else</font> {
+<font color="#555555">013 </font>        System.out.println(args[i] + <font color="#0000FF">": "</font> + zwischensumme);
+<font color="#555555">014 </font>        gesamtsumme += zwischensumme;
+<font color="#555555">015 </font>        zwischensumme = 0;
+<font color="#555555">016 </font>      }
+<font color="#555555">017 </font>    }
+<font color="#555555">018 </font>    System.out.println(<font color="#0000FF">"Gesamtsumme: "</font> + gesamtsumme);
+<font color="#555555">019 </font>  }
+<font color="#555555">020 </font>
+<font color="#555555">021 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">022 </font>  {
+<font color="#555555">023 </font>    registrierKasse(
+<font color="#555555">024 </font>      1.45, 0.79, 19.90, <font color="#0000FF">"Ware"</font>,
+<font color="#555555">025 </font>      -3.00, 1.50, <font color="#0000FF">"Pfand"</font>,
+<font color="#555555">026 </font>      -10, <font color="#0000FF">"Gutschein"</font>
+<font color="#555555">027 </font>    );
+<font color="#555555">028 </font>  }
+<font color="#555555">029 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing0812.java"><font color="#000055" size=-1>Listing0812.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 8.12: Die Anwendung von Object...</i></p>
+
+<p>
+Die Ausgabe des Programms ist: 
+<font color="#333300">
+<pre>
+Ware: 22.14
+Pfand: -1.5
+Gutschein: -10.0
+Gesamtsumme: 10.64
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="sectlevel3id008003005"></a>
+<h3>8.3.5 <a name="ixa100481">R&uuml;ckgabewert</a></h3>
+
+<p>
+Jede Methode in Java ist typisiert. Der Typ einer Methode wird zum
+Zeitpunkt der Definition festgelegt und bestimmt den Typ des R&uuml;ckgabewerts.
+Dieser kann von einem beliebigen primitiven Typ, einem Objekttyp (also
+einer Klasse) oder vom Typ <a name="ixa100482"><a href="index_v.html#ixb100345"><font color=#000080><tt>void</tt></font></a></a>
+sein. Die Methoden vom Typ <a href="index_v.html#ixb100345"><font color=#000080><tt>void</tt></font></a>
+haben gar keinen R&uuml;ckgabewert und d&uuml;rfen nicht in Ausdr&uuml;cken
+verwendet werden. Sie sind lediglich wegen ihrer Nebeneffekte von
+Interesse und d&uuml;rfen daher nur als Ausdrucksanweisung verwendet
+werden. 
+
+<p>
+Hat eine Methode einen R&uuml;ckgabewert (ist also nicht vom Typ <a href="index_v.html#ixb100345"><font color=#000080><tt>void</tt></font></a>),
+so kann sie mit Hilfe der <a name="ixa100483"><a href="index_r.html#ixb100344"><font color=#000080><tt>return</tt></font></a></a>-Anweisung
+einen Wert an den Aufrufer zur&uuml;ckgeben. Die <a href="index_r.html#ixb100344"><font color=#000080><tt>return</tt></font></a>-Anweisung
+hat folgende Syntax: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+return Ausdruck;
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+Wenn diese Anweisung ausgef&uuml;hrt wird, f&uuml;hrt dies zum Beenden
+der Methode und der Wert des angegebenen Ausdrucks wird an den Aufrufer
+zur&uuml;ckgegeben. Der Ausdruck muss dabei zuweisungskompatibel zum
+Typ der Funktion sein. Die in <a href="k100036.html#kapitelausdruecke">Kapitel 6</a>
+erl&auml;uterte Datenflussanalyse sorgt daf&uuml;r, dass hinter der
+<a href="index_r.html#ixb100344"><font color=#000080><tt>return</tt></font></a>-Anweisung
+keine unerreichbaren Anweisungen stehen und dass jeder m&ouml;gliche
+Ausgang einer Funktion mit einem <a href="index_r.html#ixb100344"><font color=#000080><tt>return</tt></font></a>
+versehen ist. Der in C beliebte Fehler, einen Funktionsausgang ohne
+<a href="index_r.html#ixb100344"><font color=#000080><tt>return</tt></font></a>-Anweisung
+zu erzeugen (und damit einen undefinierten R&uuml;ckgabewert), kann
+in Java also nicht passieren. 
+
+<!-- Section -->
+
+<a name="ueberladenvonmethoden"></a>
+<h3>8.3.6 <a name="ixa100484">&Uuml;berladen von Methoden</a></h3>
+
+<p>
+In Java ist es erlaubt, Methoden zu <i>&uuml;berladen</i>, d.h. innerhalb
+einer Klasse zwei unterschiedliche Methoden mit demselben Namen zu
+definieren. Der Compiler unterscheidet die verschiedenen Varianten
+anhand der Anzahl und der Typisierung ihrer Parameter. Haben zwei
+Methoden denselben Namen, aber unterschiedliche Parameterlisten, werden
+sie als verschieden angesehen. Es ist dagegen nicht erlaubt, zwei
+Methoden mit exakt demselben Namen und identischer Parameterliste
+zu definieren. 
+
+<p>
+Der R&uuml;ckgabetyp einer Methode tr&auml;gt nicht zu ihrer Unterscheidung
+bei. Zwei Methoden, die sich nur durch den Typ ihres R&uuml;ckgabewerts
+unterscheiden, werden also als gleich angesehen. Da Methoden auch
+ohne die Verwendung ihres R&uuml;ckgabewerts aufgerufen werden k&ouml;nnen
+(was typischerweise wegen ihrer Nebeneffekte geschieht), h&auml;tte
+weder der Compiler noch der menschliche Leser in diesem Fall die M&ouml;glichkeit,
+festzustellen, welche der &uuml;berladenen Varianten tats&auml;chlich
+aufgerufen werden soll. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Das &Uuml;berladen von Methoden ist dann sinnvoll, wenn die gleichnamigen
+Methoden auch eine vergleichbare Funktionalit&auml;t haben. Eine typische
+Anwendung von &uuml;berladenen Methoden besteht etwa in der Simulation
+von variablen Parameterlisten. Auch, um eine Funktion, die bereits
+an vielen verschiedenen Stellen im Programm aufgerufen wird, um einen
+weiteren Parameter zu erweitern, ist es n&uuml;tzlich, diese Funktion
+zu &uuml;berladen, um nicht alle Aufrufstellen anpassen zu m&uuml;ssen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Das folgende Beispiel erweitert die Klasse <font color="#000077"><tt>Auto</tt></font>
+um eine weitere Methode <font color="#000077"><tt>alter</tt></font>,
+die das Alter des Autos nicht nur zur&uuml;ckgibt, sondern es auch
+mit einem als Parameter &uuml;bergebenen Titel versieht und auf dem
+Bildschirm ausgibt: 
+<a name="listingid008013"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#006699">int</font> alter(String titel)
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  <font color="#006699">int</font> alter = alter();
+<font color="#555555">004 </font>  System.out.println(titel+alter);
+<font color="#555555">005 </font>  <font color="#0000AA">return</font> alter;
+<font color="#555555">006 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 8.13: &Uuml;berladen einer Methode</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id008003006001"></a>
+<h4>Die <a name="ixa100485">Signatur einer Methode</a> </h4>
+
+<p>
+Innerhalb dieser Methode wird der Name <font color="#000077"><tt>alter</tt></font>
+in drei verschiedenen Bedeutungen verwendet. Erstens ist <font color="#000077"><tt>alter</tt></font>
+der Name der Methode selbst. Zweitens wird die lokale Variable <font color="#000077"><tt>alter</tt></font>
+definiert, um drittens den R&uuml;ckgabewert der parameterlosen <font color="#000077"><tt>alter</tt></font>-Methode
+aufzunehmen. Der Compiler kann die Namen in allen drei F&auml;llen
+unterscheiden, denn er arbeitet mit der <i>Signatur</i> der Methode.
+Unter der Signatur einer Methode versteht man ihren <i>internen</i>
+Namen. Dieser setzt sich aus dem nach au&szlig;en sichtbaren Namen
+plus codierter Information &uuml;ber die Reihenfolge und Typen der
+formalen Parameter zusammen. Die Signaturen zweier gleichnamiger Methoden
+sind also immer dann unterscheidbar, wenn sie sich wenigstens in einem
+Parameter voneinander unterscheiden. 
+
+<!-- Section -->
+
+<a name="konstruktoren"></a>
+<h3>8.3.7 <a name="ixa100486">Konstruktoren</a></h3>
+
+<p>
+In jeder objektorientierten Programmiersprache lassen sich spezielle
+Methoden definieren, die bei der Initialisierung eines Objekts aufgerufen
+werden: die <i>Konstruktoren</i>. In Java werden Konstruktoren als
+Methoden ohne R&uuml;ckgabewert definiert, die den Namen der Klasse
+erhalten, zu der sie geh&ouml;ren. Konstruktoren d&uuml;rfen eine
+beliebige Anzahl an Parametern haben und k&ouml;nnen &uuml;berladen
+werden. Die Erweiterung unserer <font color="#000077"><tt>Auto</tt></font>-Klasse
+um einen Konstruktor, der den Namen des <font color="#000077"><tt>Auto</tt></font>-Objekts
+vorgibt, sieht beispielsweise so aus: 
+<a name="listingid008014"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Auto
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  <font color="#0000AA">public</font> String name;
+<font color="#555555">004 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font>    erstzulassung;
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font>    leistung;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> Auto(String name)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#006699">this</font>.name = name;
+<font color="#555555">010 </font>  }
+<font color="#555555">011 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 8.14: Definition eines parametrisierten Konstruktors</i></p>
+
+<p>
+Soll ein Objekt unter Verwendung eines parametrisierten Konstruktors
+instanziert werden, so sind die Argumente wie bei einem Methodenaufruf
+in Klammern nach dem Namen des Konstruktors anzugeben: 
+<a name="listingid008015"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>Auto dasAuto = <font color="#0000AA">new</font> Auto(<font color="#0000FF">"Porsche 911"</font>);
+<font color="#555555">002 </font>System.out.println(dasAuto.name);</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 8.15: Aufruf eines parametrisierten Konstruktors</i></p>
+
+<p>
+In diesem Fall wird zun&auml;chst Speicher f&uuml;r das <font color="#000077"><tt>Auto</tt></font>-Objekt
+beschafft und dann der Konstruktor aufgerufen. Dieser initialisiert
+seinerseits die Instanzvariable <font color="#000077"><tt>name</tt></font>
+mit dem &uuml;bergebenen Argument &#187;Porsche 911&#171;. Der nachfolgende
+Aufruf schreibt dann diesen Text auf den Bildschirm. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Explizite Konstruktoren werden immer dann eingesetzt, wenn zur Initialisierung
+eines Objekts besondere Aufgaben zu erledigen sind. Es ist dabei durchaus
+gebr&auml;uchlich, Konstruktoren zu &uuml;berladen und mit unterschiedlichen
+Parameterlisten auszustatten. Beim Ausf&uuml;hren der <a href="index_n.html#ixb100088"><font color=#000080><tt>new</tt></font></a>-Anweisung
+w&auml;hlt der Compiler anhand der aktuellen Parameterliste den passenden
+Konstruktor und ruft ihn mit den angegebenen Argumenten auf.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Wir wollen das vorige Beispiel um einen Konstruktor erweitern, der
+<i>alle</i> Instanzvariablen initialisiert: 
+<a name="listingid008016"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Auto
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  <font color="#0000AA">public</font> String name;
+<font color="#555555">004 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font>    erstzulassung;
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font>    leistung;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> Auto(String name)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#006699">this</font>.name = name;
+<font color="#555555">010 </font>  }
+<font color="#555555">011 </font>
+<font color="#555555">012 </font>  <font color="#0000AA">public</font> Auto(String name,
+<font color="#555555">013 </font>              <font color="#006699">int</font>    erstzulassung,
+<font color="#555555">014 </font>              <font color="#006699">int</font>    leistung)
+<font color="#555555">015 </font>  {
+<font color="#555555">016 </font>    <font color="#006699">this</font>.name = name;
+<font color="#555555">017 </font>    <font color="#006699">this</font>.erstzulassung = erstzulassung;
+<font color="#555555">018 </font>    <font color="#006699">this</font>.leistung = leistung;
+<font color="#555555">019 </font>  }
+<font color="#555555">020 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 8.16: Eine Klasse mit mehreren Konstruktoren</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel4id008003007001"></a>
+<h4>Default-Konstruktoren<a name="ixa100487"></a> </h4>
+
+<p>
+Falls eine Klasse &uuml;berhaupt keinen <i>expliziten</i> Konstruktor
+besitzt, wird vom Compiler automatisch ein parameterloser <i>default</i>-Konstruktor
+generiert. Seine einzige Aufgabe besteht darin, den parameterlosen
+Konstruktor der Superklasse aufzurufen (was eine &#187;Superklasse&#171;
+ist, wird im n&auml;chsten Kapitel ausf&uuml;hrlich erl&auml;utert).
+Enth&auml;lt eine Klassendeklaration dagegen nur <i>parametrisierte</i>
+Konstruktoren, wird kein <i>default</i>-Konstruktor erzeugt und die
+Klassendatei besitzt &uuml;berhaupt keinen parameterlosen Konstruktor.
+
+
+<!-- Section -->
+<a name="sectlevel4id008003007002"></a>
+<h4>Verkettung von Konstruktoren<a name="ixa100488"></a><a name="ixa100489"></a>
+</h4>
+
+<p>
+Unterschiedliche Konstruktoren einer Klasse k&ouml;nnen in Java verkettet
+werden, d.h., sie k&ouml;nnen sich gegenseitig aufrufen. Der aufzurufende
+Konstruktor wird dabei als eine normale Methode angesehen, die &uuml;ber
+den Namen <a name="ixa100490"><a href="index_t.html#ixb100284"><font color=#000080><tt>this</tt></font></a></a>
+aufgerufen werden kann. Die Unterscheidung zum bereits vorgestellten
+<a href="index_t.html#ixb100284"><font color=#000080><tt>this</tt></font></a>-Pointer
+nimmt der Compiler anhand der runden Klammern vor, die dem Aufruf
+folgen. Der im vorigen Beispiel vorgestellte Konstruktor h&auml;tte
+damit auch so geschrieben werden k&ouml;nnen: 
+<a name="listingid008017"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> Auto(String name,
+<font color="#555555">002 </font>            <font color="#006699">int</font>    erstzulassung,
+<font color="#555555">003 </font>            <font color="#006699">int</font>    leistung)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#006699">this</font>(name);
+<font color="#555555">006 </font>  <font color="#006699">this</font>.erstzulassung = erstzulassung;
+<font color="#555555">007 </font>  <font color="#006699">this</font>.leistung = leistung;
+<font color="#555555">008 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 8.17: Verkettung von Konstruktoren</i></p>
+
+<p>
+Der Vorteil der Konstruktorenverkettung besteht darin, dass vorhandener
+Code wiederverwendet werden kann. F&uuml;hrt ein parameterloser Konstruktor
+eine Reihe von nichttrivialen Aktionen durch, so ist es nat&uuml;rlich
+sinnvoller, diesen in einem spezialisierteren Konstruktor durch Aufruf
+wiederzuverwenden, als den Code zu duplizieren. 
+
+<p>
+Wird ein Konstruktor in einem anderen Konstruktor derselben Klasse
+explizit aufgerufen, muss dies als erste Anweisung innerhalb der Methode
+geschehen. Steht der Aufruf nicht an <i>erster</i> Stelle, gibt es
+einen Compiler-Fehler. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Es gibt noch eine zweite Form der Konstruktorenverkettung. Sie findet
+automatisch statt und dient dazu, abgeleitete Klassen w&auml;hrend
+der Instanzierung korrekt zu initialisieren. In <a href="k100058.html#vererbungvonkonstruktoren">Abschnitt 9.1.4</a>
+werden wir auf die Details dieses Mechanismus eingehen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id008003007003"></a>
+<h4>Initialisierungsreihenfolge </h4>
+
+<p>
+Beim Instanzieren eines neuen Objekts werden die Initialisierungschritte
+in einer genau festgelegten Reihenfolge ausgef&uuml;hrt: 
+<ul>
+<li>Zun&auml;chst werden die Superklassenkonstruktoren aufgerufen,
+so wie es im vorigen Abschnitt beschrieben wurde.
+<li>Anschlie&szlig;end werden alle Membervariablen in der textuellen
+Reihenfolge ihrer Deklaration initialisiert.
+<li>Schlie&szlig;lich wird der Programmcode im Rumpf des Konstruktors
+ausgef&uuml;hrt.
+</ul>
+
+<p>
+Wir wollen dies an einem Beispiel veranschaulichen: 
+<a name="listingid008018"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing0818.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing0818
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> String getAndPrint(String s)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    System.out.println(s);
+<font color="#555555">008 </font>    <font color="#0000AA">return</font> s;
+<font color="#555555">009 </font>  }
+<font color="#555555">010 </font>
+<font color="#555555">011 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">012 </font>  {
+<font color="#555555">013 </font>    Son son = <font color="#0000AA">new</font> Son();
+<font color="#555555">014 </font>  }
+<font color="#555555">015 </font>}
+<font color="#555555">016 </font>
+<font color="#555555">017 </font><font color="#0000AA">class</font> Father
+<font color="#555555">018 </font>{
+<font color="#555555">019 </font>  <font color="#0000AA">private</font> String s1 = Listing0818.getAndPrint(<font color="#0000FF">"Father.s1"</font>);
+<font color="#555555">020 </font>
+<font color="#555555">021 </font>  <font color="#0000AA">public</font> Father()
+<font color="#555555">022 </font>  {
+<font color="#555555">023 </font>    Listing0818.getAndPrint(<font color="#0000FF">"Father.&lt;init&gt;"</font>);
+<font color="#555555">024 </font>  }
+<font color="#555555">025 </font>}
+<font color="#555555">026 </font>
+<font color="#555555">027 </font><font color="#0000AA">class</font> Son
+<font color="#555555">028 </font><font color="#0000AA">extends</font> Father
+<font color="#555555">029 </font>{
+<font color="#555555">030 </font>  <font color="#0000AA">private</font> String s1 = Listing0818.getAndPrint(<font color="#0000FF">"Son.s1"</font>);
+<font color="#555555">031 </font>
+<font color="#555555">032 </font>  <font color="#0000AA">public</font> Son()
+<font color="#555555">033 </font>  {
+<font color="#555555">034 </font>    Listing0818.getAndPrint(<font color="#0000FF">"Son.&lt;init&gt;"</font>);
+<font color="#555555">035 </font>  }
+<font color="#555555">036 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing0818.java"><font color="#000055" size=-1>Listing0818.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 8.18: Initialisierungsreihenfolge</i></p>
+
+<p>
+Im Hauptprogramm wird eine neue Instanz der Klasse <font color="#000077"><tt>Son</tt></font>
+angelegt. Durch die Konstruktorenverkettung wird zun&auml;chst zur
+Vaterklasse <font color="#000077"><tt>Father</tt></font> verzweigt.
+Darin wird zun&auml;chst die Membervariable <font color="#000077"><tt>s1</tt></font>
+initialisiert und anschlie&szlig;end wird der Rumpf des Konstruktors
+ausgef&uuml;hrt. Erst danach f&uuml;hrt <font color="#000077"><tt>Son</tt></font>
+dieselben Schritte f&uuml;r sich selbst durch. Die Ausgabe des Programms
+ist demnach: 
+<font color="#333300">
+<pre>
+Father.s1
+Father.&lt;init&gt;
+Son.s1
+Son.&lt;init&gt;
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="destruktoren"></a>
+<h3>8.3.8 <a name="ixa100491">Destruktoren</a></h3>
+
+<p>
+Neben Konstruktoren, die w&auml;hrend der Initialisierung eines Objekts
+aufgerufen werden, gibt es in Java auch <i>Destruktoren</i>. Sie werden
+unmittelbar vor dem Zerst&ouml;ren eines Objekts aufgerufen. 
+
+<p>
+Ein Destruktor wird als gesch&uuml;tzte (<a href="index_p.html#ixb100085"><font color=#000080><tt>protected</tt></font></a>)
+parameterlose Methode mit dem Namen <a name="ixa100492"><a href="index_f.html#ixb100421"><font color=#000080><tt>finalize</tt></font></a></a>
+definiert: 
+<a name="listingid008019"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">protected</font> <font color="#006699">void</font> finalize()
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  ...
+<font color="#555555">004 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 8.19: Die finalize-Methode</i></p>
+
+<p>
+Da Java &uuml;ber ein automatisches Speichermanagement verf&uuml;gt,
+kommt den Destruktoren in Java eine viel geringere Bedeutung zu als
+in anderen objektorientierten Sprachen. Anders als etwa in C++ muss
+sich der Entwickler ja nicht um die R&uuml;ckgabe von belegtem Speicher
+k&uuml;mmern, was beispielsweise eine der Hauptaufgaben von Destruktoren
+in C++ ist. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Tats&auml;chlich garantiert die Sprachspezifikation noch nicht einmal,
+dass ein Destruktor &uuml;berhaupt aufgerufen wird. Wenn er aber aufgerufen
+wird, so erfolgt dies nicht, wenn die Lebensdauer des Objekts endet,
+sondern dann, wenn der Garbage Collector den f&uuml;r das Objekt reservierten
+Speicherplatz zur&uuml;ckgibt. Dies kann unter Umst&auml;nden nicht
+nur viel sp&auml;ter der Fall sein (der Garbage Collector l&auml;uft
+ja als asynchroner Hintergrundprozess), sondern eben auch gar nicht.
+Wird n&auml;mlich das Programm beendet, bevor der Garbage Collector
+das n&auml;chste Mal aufgerufen wird, werden auch keine Destruktoren
+aufgerufen. Selbst wenn Destruktoren aufgerufen werden, ist die Reihenfolge
+oder der Zeitpunkt ihres Aufrufs undefiniert. Der Einsatz von Destruktoren
+in Java sollte also mit der n&ouml;tigen Vorsicht erfolgen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100052.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100054.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100056.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100057.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

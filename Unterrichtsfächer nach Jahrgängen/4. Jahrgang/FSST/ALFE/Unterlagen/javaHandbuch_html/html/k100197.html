@@ -1,0 +1,663 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100193.html;106,k100196.html;107,k100198.html;108,k100202.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100193.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100196.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100198.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100202.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 30 - Men&uuml;s
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id030004"></a>
+<h2>30.4 <a name="ixa101958">Men&uuml;eintr&auml;ge</a></h2>
+<hr>
+<ul>
+<li><a href="k100197.html#sectlevel2id030004">30.4 Men&uuml;eintr&auml;ge</a>
+<ul>
+<li><a href="k100197.html#sectlevel3id030004001">30.4.1 Einfache Men&uuml;eintr&auml;ge</a>
+<li><a href="k100197.html#sectlevel3id030004002">30.4.2 CheckboxMenuItem</a>
+<li><a href="k100197.html#sectlevel3id030004003">30.4.3 Beschleunigertasten</a>
+<li><a href="k100197.html#sectlevel3id030004004">30.4.4 Untermen&uuml;s</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id030004001"></a>
+<h3>30.4.1 Einfache Men&uuml;eintr&auml;ge </h3>
+
+<p>
+Die <i>Men&uuml;eintr&auml;ge</i> sind die elementaren Bestandteile
+eines Men&uuml;s. Sie besitzen einen Text, mit dem sie dem Anwender
+die dahinterstehende Funktion anzeigen. Wenn der zugeh&ouml;rige Men&uuml;punkt
+aufgerufen wird, sendet das Programm eine Nachricht an das zugeh&ouml;rige
+Fenster, die dann zum Aufruf der entsprechenden Methode f&uuml;hrt.
+
+<p>
+Men&uuml;eintr&auml;ge werden in Java mit der Klasse <a name="ixa101959"><a href="index_m.html#ixb101411"><font color=#000080><tt>MenuItem</tt></font></a></a>
+erzeugt. Ihr Konstruktor erwartet als Parameter einen <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>,
+der den Namen des Men&uuml;eintrags angibt: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public MenuItem(String label)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/MenuItem.html" onClick="this.href=getApiDoc('java.awt.MenuItem')"><font color="#660066" size=-1>java.awt.MenuItem</font></a></td>
+</tr>
+</table>
+
+<p>
+Auch nach der Konstruktion eines Men&uuml;eintrags ist ein Zugriff
+auf seinen Namen m&ouml;glich. Mit der Methode <a name="ixa101960"><a href="index_g.html#ixb101504"><font color=#000080><tt>getLabel</tt></font></a></a>
+kann der Name des Men&uuml;eintrags abgefragt und mit <a name="ixa101961"><a href="index_s.html#ixb101505"><font color=#000080><tt>setLabel</tt></font></a></a>
+sogar ver&auml;ndert werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public String getLabel()
+
+public void setLabel(String label)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/MenuItem.html" onClick="this.href=getApiDoc('java.awt.MenuItem')"><font color="#660066" size=-1>java.awt.MenuItem</font></a></td>
+</tr>
+</table>
+
+<p>
+Neben einem Namen besitzt ein Men&uuml;eintrag eine interne Zustandsvariable,
+die anzeigt, ob er <i>aktiv</i> ist oder nicht. Nur ein aktiver Eintrag
+kann vom Anwender ausgew&auml;hlt werden und so eine Nachricht ausl&ouml;sen.
+Ein inaktiver Eintrag dagegen wird im Men&uuml; grau dargestellt,
+kann vom Anwender nicht mehr ausgew&auml;hlt werden und daher auch
+keine Nachricht mehr ausl&ouml;sen. 
+
+<p>
+Nach dem Aufruf des Konstruktors ist ein Men&uuml;eintrag zun&auml;chst
+aktiviert. Er kann durch Aufruf von <a name="ixa101962"><a href="index_s.html#ixb101301"><font color=#000080><tt>setEnabled(false)</tt></font></a></a>
+deaktiviert und mit <a href="index_s.html#ixb101301"><font color=#000080><tt>setEnabled(true)</tt></font></a>
+aktiviert werden. Durch Aufruf von <a name="ixa101963"><a href="index_i.html#ixb101302"><font color=#000080><tt>isEnabled</tt></font></a></a>
+kann der aktuelle Zustand abgefragt werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setEnabled(boolean b)
+
+public boolean isEnabled()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/MenuItem.html" onClick="this.href=getApiDoc('java.awt.MenuItem')"><font color="#660066" size=-1>java.awt.MenuItem</font></a></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id030004002"></a>
+<h3>30.4.2 CheckboxMenuItem </h3>
+
+<p>
+Neben der Klasse <a href="index_m.html#ixb101411"><font color=#000080><tt>MenuItem</tt></font></a>
+gibt es mit der Klasse <a name="ixa101964"><a href="index_c.html#ixb101424"><font color=#000080><tt>CheckboxMenuItem</tt></font></a></a>
+eine zweite Klasse zum Erzeugen von Men&uuml;eintr&auml;gen. <a href="index_c.html#ixb101424"><font color=#000080><tt>CheckboxMenuItem</tt></font></a>
+ist aus <a href="index_m.html#ixb101411"><font color=#000080><tt>MenuItem</tt></font></a>
+abgeleitet und bietet als zus&auml;tzliches Feature eine interne Zustandsvariable,
+die zwischen <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+und <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>
+umgeschaltet werden kann. Die visuelle Darstellung der Zustandsvariablen
+erfolgt durch Anf&uuml;gen oder Entfernen eines H&auml;kchens neben
+dem Men&uuml;eintrag. Der Nutzen der Klasse <a href="index_c.html#ixb101424"><font color=#000080><tt>CheckboxMenuItem</tt></font></a>
+besteht darin, dass eine logische Programmvariable durch Ausw&auml;hlen
+des Men&uuml;punkts abwechselnd an- und ausgeschaltet werden kann.
+
+<p>
+Die Instanzierung eines <a href="index_c.html#ixb101424"><font color=#000080><tt>CheckboxMenuItem</tt></font></a>
+erfolgt wie bei einem <a href="index_m.html#ixb101411"><font color=#000080><tt>MenuItem</tt></font></a>.
+Zus&auml;tzlich stehen die beiden Methoden <a name="ixa101965"><a href="index_s.html#ixb101305"><font color=#000080><tt>setState</tt></font></a></a>
+und <a name="ixa101966"><a href="index_g.html#ixb101306"><font color=#000080><tt>getState</tt></font></a></a>
+zum Setzen und Abfragen des Zustands zur Verf&uuml;gung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setState(boolean state)
+
+public boolean getState()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/CheckboxMenuItem.html" onClick="this.href=getApiDoc('java.awt.CheckboxMenuItem')"><font color="#660066" size=-1>java.awt.CheckboxMenuItem</font></a></td>
+</tr>
+</table>
+
+<p>
+Das folgende Programm stellt alle bisher erw&auml;hnten Eigenschaften
+in einem Beispiel dar. Es leitet dazu die Klasse <font color="#000077"><tt>MainMenu1</tt></font>
+aus <a href="index_m.html#ixb101493"><font color=#000080><tt>MenuBar</tt></font></a>
+ab und erzeugt im Konstruktor die Men&uuml;s und Men&uuml;eintr&auml;ge.
+Gegen&uuml;ber der einfachen Instanzierung von <a href="index_m.html#ixb101493"><font color=#000080><tt>MenuBar</tt></font></a>
+bietet die Ableitung den Vorteil, dass die neue Klasse Methoden zur
+Verf&uuml;gung stellen kann, die zum Zugriff auf Men&uuml;s oder Men&uuml;eintr&auml;ge
+verwendet werden k&ouml;nnen. 
+<a name="listingid030001"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing3001.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">class</font> MainMenu1
+<font color="#555555">006 </font><font color="#0000AA">extends</font> MenuBar
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">private</font> MenuItem miRueck;
+<font color="#555555">009 </font>  <font color="#0000AA">private</font> CheckboxMenuItem miFarbe;
+<font color="#555555">010 </font>
+<font color="#555555">011 </font>  <font color="#0000AA">public</font> MainMenu1()
+<font color="#555555">012 </font>  {
+<font color="#555555">013 </font>    Menu m;
+<font color="#555555">014 </font>
+<font color="#555555">015 </font>    <font color="#00AA00">//Datei</font>
+<font color="#555555">016 </font>    m = <font color="#0000AA">new</font> Menu(<font color="#0000FF">"Datei"</font>);
+<font color="#555555">017 </font>    m.add(<font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Neu"</font>));
+<font color="#555555">018 </font>    m.add(<font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Laden"</font>));
+<font color="#555555">019 </font>    m.add(<font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Speichern"</font>));
+<font color="#555555">020 </font>    m.addSeparator();
+<font color="#555555">021 </font>    m.add(<font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Beenden"</font>));
+<font color="#555555">022 </font>    add(m);
+<font color="#555555">023 </font>    <font color="#00AA00">//Bearbeiten</font>
+<font color="#555555">024 </font>    m = <font color="#0000AA">new</font> Menu(<font color="#0000FF">"Bearbeiten"</font>);
+<font color="#555555">025 </font>    m.add((miRueck = <font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Rueckgaengig"</font>)));
+<font color="#555555">026 </font>    m.addSeparator();
+<font color="#555555">027 </font>    m.add(<font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Ausschneiden"</font>));
+<font color="#555555">028 </font>    m.add(<font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Kopieren"</font>));
+<font color="#555555">029 </font>    m.add(<font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Einfuegen"</font>));
+<font color="#555555">030 </font>    m.add(<font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Loeschen"</font>));
+<font color="#555555">031 </font>    add(m);
+<font color="#555555">032 </font>    <font color="#00AA00">//Optionen</font>
+<font color="#555555">033 </font>    m = <font color="#0000AA">new</font> Menu(<font color="#0000FF">"Optionen"</font>);
+<font color="#555555">034 </font>    m.add(<font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Einstellungen"</font>));
+<font color="#555555">035 </font>    m.add((miFarbe = <font color="#0000AA">new</font> CheckboxMenuItem(<font color="#0000FF">"Farbe"</font>)));
+<font color="#555555">036 </font>    add(m);
+<font color="#555555">037 </font>    <font color="#00AA00">//Rueckgaengig deaktivieren</font>
+<font color="#555555">038 </font>    enableRueckgaengig(<font color="#006699">false</font>);
+<font color="#555555">039 </font>    <font color="#00AA00">//Farbe anschalten</font>
+<font color="#555555">040 </font>    setFarbe(<font color="#006699">true</font>);
+<font color="#555555">041 </font>  }
+<font color="#555555">042 </font>
+<font color="#555555">043 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> enableRueckgaengig(<font color="#006699">boolean</font> ena)
+<font color="#555555">044 </font>  {
+<font color="#555555">045 </font>    <font color="#0000AA">if</font> (ena) {
+<font color="#555555">046 </font>      miRueck.setEnabled(<font color="#006699">true</font>);
+<font color="#555555">047 </font>    } <font color="#0000AA">else</font> {
+<font color="#555555">048 </font>      miRueck.setEnabled(<font color="#006699">false</font>);
+<font color="#555555">049 </font>    }
+<font color="#555555">050 </font>  }
+<font color="#555555">051 </font>
+<font color="#555555">052 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setFarbe(<font color="#006699">boolean</font> on)
+<font color="#555555">053 </font>  {
+<font color="#555555">054 </font>    miFarbe.setState(on);
+<font color="#555555">055 </font>  }
+<font color="#555555">056 </font>}
+<font color="#555555">057 </font>
+<font color="#555555">058 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing3001
+<font color="#555555">059 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">060 </font>{
+<font color="#555555">061 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">062 </font>  {
+<font color="#555555">063 </font>    Listing3001 wnd = <font color="#0000AA">new</font> Listing3001();
+<font color="#555555">064 </font>  }
+<font color="#555555">065 </font>
+<font color="#555555">066 </font>  <font color="#0000AA">public</font> Listing3001()
+<font color="#555555">067 </font>  {
+<font color="#555555">068 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Men&uuml;s"</font>);
+<font color="#555555">069 </font>    setLocation(100,100);
+<font color="#555555">070 </font>    setSize(400,300);
+<font color="#555555">071 </font>    setMenuBar(<font color="#0000AA">new</font> MainMenu1());
+<font color="#555555">072 </font>    setVisible(<font color="#006699">true</font>);
+<font color="#555555">073 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">074 </font>  }
+<font color="#555555">075 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing3001.java"><font color="#000055" size=-1>Listing3001.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 30.1: Erzeugen von Men&uuml;s</i></p>
+
+<p>
+Das Programm erzeugt eine Men&uuml;zeile mit den drei Eintr&auml;gen
+&#187;Datei&#171;, &#187;Bearbeiten&#171; und &#187;Optionen&#171;,
+die in <a href="k100197.html#erzeugenmenues">Abbildung 30.1</a> dargestellt
+wird: 
+<p>
+<a name="erzeugenmenues"></a>
+<img src="images/Menues.gif">
+<p>
+
+<p><i>
+Abbildung 30.1: Erzeugen von Men&uuml;s</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id030004003"></a>
+<h3>30.4.3 <a name="ixa101967">Beschleunigertasten</a></h3>
+
+<p>
+In den meisten Programmen lassen sich Men&uuml;s nicht nur mit der
+Maus bedienen, sondern &uuml;ber <i>Beschleunigertasten</i> auch mit
+der Tastatur. 
+
+<p>
+Das JDK implementiert ein eigenes Beschleunigerkonzept, das &uuml;ber
+Plattformgrenzen hinweg funktioniert. Dazu wurde die Klasse <a name="ixa101968"><a href="index_m.html#ixb101507"><font color=#000080><tt>MenuShortcut</tt></font></a></a>
+eingef&uuml;hrt, mit deren Hilfe Beschleunigertasten definiert und
+an einzelne Men&uuml;eintr&auml;ge angeh&auml;ngt werden k&ouml;nnen.
+Eine Beschleunigertaste ist dabei immer ein einzelnes Zeichen der
+Tastatur, das zusammen mit der <i>systemspezifischen Umschalttaste
+f&uuml;r Beschleuniger</i> (<font color="#007700"><tt>[STRG]</tt></font>
+unter Windows und Motif, <font color="#007700"><tt>[COMMAND]</tt></font>
+unter MAC-OS) gedr&uuml;ckt werden muss, um den Men&uuml;eintrag aufzurufen.
+
+<p>
+Um einen Beschleuniger zu definieren, muss zun&auml;chst eine Instanz
+der Klasse <a href="index_m.html#ixb101507"><font color=#000080><tt>MenuShortcut</tt></font></a>
+erzeugt werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public MenuShortcut(int key)
+
+public MenuShortcut(int key, boolean useShiftModifier)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/MenuShortcut.html" onClick="this.href=getApiDoc('java.awt.MenuShortcut')"><font color="#660066" size=-1>java.awt.MenuShortcut</font></a></td>
+</tr>
+</table>
+
+<p>
+Der erste Konstruktor erwartet den virtuellen Tastencode der gew&uuml;nschten
+Beschleunigertaste (siehe <a href="k100185.html#kapitellowlevelevents">Kapitel 29</a>).
+F&uuml;r einfache alphanumerische Zeichen kann hier auch das Zeichen
+selbst &uuml;bergeben werden. Die &Uuml;bergabe einer Funktionstaste
+ist leider nicht ohne Weiteres m&ouml;glich, denn deren virtuelle
+Tastencodes &uuml;berschneiden sich mit den ASCII-Codes der Kleinbuchstaben.
+Funktionstasten k&ouml;nnen daher nur dann als Beschleuniger verwendet
+werden, wenn ihre virtuellen Tastencodes die Umwandlung in Gro&szlig;buchstaben
+unver&auml;ndert &uuml;berstehen (z.B. <a href="index_v.html#ixb101484"><font color=#000080><tt>VK_DELETE</tt></font></a>).
+Der zweite Konstruktor erlaubt zus&auml;tzlich die &Uuml;bergabe eines
+booleschen Parameters <font color="#000077"><tt>useShiftModifier</tt></font>,
+der daf&uuml;r sorgt, dass der Beschleuniger nur dann greift, wenn
+neben der systemspezifischen Umschalttaste f&uuml;r Beschleuniger
+zus&auml;tzlich die Taste <font color="#007700"><tt>[UMSCHALT]</tt></font>
+gedr&uuml;ckt wird. 
+
+<p>
+Um einen Beschleuniger an einen Men&uuml;punkt zu binden, ist das
+<a href="index_m.html#ixb101507"><font color=#000080><tt>MenuShortcut</tt></font></a>-Objekt
+als zweites Argument an den Konstruktor von <a href="index_m.html#ixb101411"><font color=#000080><tt>MenuItem</tt></font></a>
+zu &uuml;bergeben: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public MenuItem(String label, MenuShortcut s)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/MenuItem.html" onClick="this.href=getApiDoc('java.awt.MenuItem')"><font color="#660066" size=-1>java.awt.MenuItem</font></a></td>
+</tr>
+</table>
+
+<p>
+Alternativ kann auch die Methode <a name="ixa101969"><a href="index_s.html#ixb101508"><font color=#000080><tt>setShortCut</tt></font></a></a>
+aufgerufen werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void setShortcut(MenuShortcut s)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/MenuItem.html" onClick="this.href=getApiDoc('java.awt.MenuItem')"><font color="#660066" size=-1>java.awt.MenuItem</font></a></td>
+</tr>
+</table>
+
+<p>
+Durch Aufruf von <a name="ixa101970"><a href="index_d.html#ixb101509"><font color=#000080><tt>deleteShortCut</tt></font></a></a>
+kann der einem Men&uuml;eintrag zugeordnete Beschleuniger gel&ouml;scht
+werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void deleteShortcut()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/MenuItem.html" onClick="this.href=getApiDoc('java.awt.MenuItem')"><font color="#660066" size=-1>java.awt.MenuItem</font></a></td>
+</tr>
+</table>
+
+<p>
+Eine beispielhafte Aufrufsequenz zur Erzeugung eines Men&uuml;eintrags
+mit Beschleuniger sieht damit so aus: 
+<a name="listingid030002"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font>Menu m;
+<font color="#555555">002 </font>MenuItem mi;
+<font color="#555555">003 </font>MenuShortcut ms;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#00AA00">//Datei</font>
+<font color="#555555">006 </font>m = <font color="#0000AA">new</font> Menu(<font color="#0000FF">"Datei"</font>);
+<font color="#555555">007 </font>
+<font color="#555555">008 </font>ms = <font color="#0000AA">new</font> MenuShortcut(KeyEvent.VK_N);
+<font color="#555555">009 </font>mi = <font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Neu"</font>,ms);
+<font color="#555555">010 </font>mi.addActionListener(listener);
+<font color="#555555">011 </font>m.add(mi);</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 30.2: Erzeugen eines Men&uuml;eintrags mit Beschleuniger</i></p>
+
+<p>
+Hier wird der Men&uuml;eintrag &#187;Neu&#171; wie im vorigen Beispiel
+generiert und mit der Beschleunigertaste <font color="#007700"><tt>[STRG]</tt></font>+<font color="#007700"><tt>[N]</tt></font>
+ausgestattet. 
+
+<p>
+Das folgende Beispiel zeigt eine Men&uuml;leiste mit zwei Men&uuml;s
+&#187;Datei&#171; und &#187;Bearbeiten&#171;, bei denen alle Men&uuml;eintr&auml;ge
+mit Beschleunigern ausgestattet wurden: 
+<a name="listingid030003"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* MainMenu2.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">class</font> MainMenu2
+<font color="#555555">004 </font><font color="#0000AA">extends</font> MenuBar
+<font color="#555555">005 </font>{
+<font color="#555555">006 </font>  <font color="#0000AA">public</font> MainMenu2()
+<font color="#555555">007 </font>  {
+<font color="#555555">008 </font>    Menu m;
+<font color="#555555">009 </font>    MenuItem mi;
+<font color="#555555">010 </font>    MenuShortcut ms;
+<font color="#555555">011 </font>
+<font color="#555555">012 </font>    <font color="#00AA00">//Datei</font>
+<font color="#555555">013 </font>    m = <font color="#0000AA">new</font> Menu(<font color="#0000FF">"Datei"</font>);
+<font color="#555555">014 </font>
+<font color="#555555">015 </font>    ms = <font color="#0000AA">new</font> MenuShortcut(KeyEvent.VK_N);
+<font color="#555555">016 </font>    mi = <font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Neu"</font>,ms);
+<font color="#555555">017 </font>    m.add(mi);
+<font color="#555555">018 </font>
+<font color="#555555">019 </font>    ms = <font color="#0000AA">new</font> MenuShortcut(KeyEvent.VK_L);
+<font color="#555555">020 </font>    mi = <font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Laden"</font>,ms);
+<font color="#555555">021 </font>    m.add(mi);
+<font color="#555555">022 </font>
+<font color="#555555">023 </font>    ms = <font color="#0000AA">new</font> MenuShortcut(KeyEvent.VK_S);
+<font color="#555555">024 </font>    mi = <font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Speichern"</font>,ms);
+<font color="#555555">025 </font>    m.add(mi);
+<font color="#555555">026 </font>
+<font color="#555555">027 </font>    ms = <font color="#0000AA">new</font> MenuShortcut(KeyEvent.VK_E);
+<font color="#555555">028 </font>    mi = <font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Beenden"</font>,ms);
+<font color="#555555">029 </font>    m.add(mi);
+<font color="#555555">030 </font>    add(m);
+<font color="#555555">031 </font>
+<font color="#555555">032 </font>    <font color="#00AA00">//Bearbeiten</font>
+<font color="#555555">033 </font>    m = <font color="#0000AA">new</font> Menu(<font color="#0000FF">"Bearbeiten"</font>);
+<font color="#555555">034 </font>
+<font color="#555555">035 </font>    ms = <font color="#0000AA">new</font> MenuShortcut(KeyEvent.VK_X);
+<font color="#555555">036 </font>    mi = <font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Ausschneiden"</font>,ms);
+<font color="#555555">037 </font>    m.add(mi);
+<font color="#555555">038 </font>
+<font color="#555555">039 </font>    ms = <font color="#0000AA">new</font> MenuShortcut(KeyEvent.VK_C);
+<font color="#555555">040 </font>    mi = <font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Kopieren"</font>,ms);
+<font color="#555555">041 </font>    m.add(mi);
+<font color="#555555">042 </font>
+<font color="#555555">043 </font>    ms = <font color="#0000AA">new</font> MenuShortcut(KeyEvent.VK_V);
+<font color="#555555">044 </font>    mi = <font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Einf&uuml;gen"</font>,ms);
+<font color="#555555">045 </font>    m.add(mi);
+<font color="#555555">046 </font>    add(m);
+<font color="#555555">047 </font>  }
+<font color="#555555">048 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/MainMenu2.inc"><font color="#000055" size=-1>MainMenu2.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 30.3: Men&uuml;leisten mit zwei Men&uuml;s und Beschleunigertasten</i></p>
+
+<p>
+Wir werden sp&auml;ter eine Methode vorstellen, die den Aufwand f&uuml;r
+das Erzeugen und Einf&uuml;gen von Beschleunigern vermindert. 
+
+<p>
+Die im JDK eingef&uuml;hrten Beschleuniger haben Vor- und Nachteile.
+Ihr Vorteil ist, dass sie einfach zu erzeugen sind und &uuml;ber Plattformgrenzen
+hinweg funktionieren. Die Nachteile sind allerdings ihre eingeschr&auml;nkte
+Funktionalit&auml;t und die Unterschiede im Look-and-Feel gegen&uuml;ber
+den speziellen Beschleunigern des jeweiligen Betriebssystems. So gibt
+es unter Windows beispielsweise keine Beschleuniger mehr in der Men&uuml;leiste
+(<font color="#007700"><tt>[ALT]</tt></font>+Buchstabe) und auch Men&uuml;eintr&auml;ge
+k&ouml;nnen nicht mehr mit <font color="#007700"><tt>[ALT]</tt></font>+Tastenk&uuml;rzel
+aufgerufen werden (sie zeigen auch keinen unterstrichenen Buchstaben
+mehr an). 
+
+<p>
+Au&szlig;erdem wird eine Beschleunigertaste zwangsweise an die systemspezifische
+Umschalttaste gebunden. Es ist damit nicht m&ouml;glich, einfache
+Tasten wie <font color="#007700"><tt>[EINFG]</tt></font> oder <font color="#007700"><tt>[ENTF]</tt></font>
+als Beschleuniger zu definieren. Des Weiteren lassen sich wegen der
+ungl&uuml;cklichen Umwandlung des virtuellen Tastencodes in Gro&szlig;buchstaben
+viele Funktionstasten nicht als Beschleuniger verwenden. Dies sind
+sicherlich gravierende Restriktionen, die die Bedienung nicht unerheblich
+einschr&auml;nken. <a href="k100242.html#swingmenues">Abschnitt 37.2</a>
+zeigt, dass es in der Swing-Grafikbibliothek erheblich bessere M&ouml;glichkeiten
+gibt.
+
+<!-- Section -->
+
+<a name="sectlevel3id030004004"></a>
+<h3>30.4.4 <a name="ixa101971">Untermen&uuml;s</a></h3>
+
+<p>
+Men&uuml;s lassen sich auf einfache Art und Weise schachteln. Dazu
+ist beim Aufruf der <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>-Methode
+anstelle einer Instanz der Klasse <a href="index_m.html#ixb101411"><font color=#000080><tt>MenuItem</tt></font></a>
+ein Objekt der Klasse <a href="index_m.html#ixb101494"><font color=#000080><tt>Menu</tt></font></a>
+zu &uuml;bergeben, das das gew&uuml;nschte Untermen&uuml; repr&auml;sentiert.
+Das folgende Beispiel erweitert das Men&uuml; &#187;Optionen&#171;
+der Klasse <font color="#000077"><tt>MainMenu1</tt></font> um den
+Men&uuml;eintrag &#187;Schriftart&#171;, der auf ein Untermen&uuml;
+mit den verf&uuml;gbaren Schriftarten verzweigt (der Code zur Erzeugung
+des Untermen&uuml;s steht in den Zeilen <a href="k100197.html#schachtelmenues.a">034</a>
+bis <a href="k100197.html#schachtelmenues.b">041</a>): 
+<a name="schachtelmenues"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* MainMenu3.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">class</font> MainMenu3
+<font color="#555555">004 </font><font color="#0000AA">extends</font> MenuBar
+<font color="#555555">005 </font>{
+<font color="#555555">006 </font>  <font color="#0000AA">private</font> MenuItem miRueck;
+<font color="#555555">007 </font>  <font color="#0000AA">private</font> CheckboxMenuItem miFarbe;
+<font color="#555555">008 </font>
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> MainMenu3()
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    Menu m;
+<font color="#555555">012 </font>
+<font color="#555555">013 </font>    <font color="#00AA00">//Datei</font>
+<font color="#555555">014 </font>    m = <font color="#0000AA">new</font> Menu(<font color="#0000FF">"Datei"</font>);
+<font color="#555555">015 </font>    m.add(<font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Neu"</font>));
+<font color="#555555">016 </font>    m.add(<font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Laden"</font>));
+<font color="#555555">017 </font>    m.add(<font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Speichern"</font>));
+<font color="#555555">018 </font>    m.addSeparator();
+<font color="#555555">019 </font>    m.add(<font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Beenden"</font>));
+<font color="#555555">020 </font>    add(m);
+<font color="#555555">021 </font>    <font color="#00AA00">//Bearbeiten</font>
+<font color="#555555">022 </font>    m = <font color="#0000AA">new</font> Menu(<font color="#0000FF">"Bearbeiten"</font>);
+<font color="#555555">023 </font>    m.add((miRueck = <font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Rueckgaengig"</font>)));
+<font color="#555555">024 </font>    m.addSeparator();
+<font color="#555555">025 </font>    m.add(<font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Ausschneiden"</font>));
+<font color="#555555">026 </font>    m.add(<font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Kopieren"</font>));
+<font color="#555555">027 </font>    m.add(<font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Einfuegen"</font>));
+<font color="#555555">028 </font>    m.add(<font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Loeschen"</font>));
+<font color="#555555">029 </font>    add(m);
+<font color="#555555">030 </font>    <font color="#00AA00">//Optionen</font>
+<font color="#555555">031 </font>    m = <font color="#0000AA">new</font> Menu(<font color="#0000FF">"Optionen"</font>);
+<font color="#555555">032 </font>    m.add(<font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Einstellungen"</font>));
+<font color="#555555">033 </font>
+<font color="#555555">034 </font>    <font color="#00AA00">//Untermen&uuml; Schriftart <a name="schachtelmenues.a"></a></font>
+<font color="#555555">035 </font>    Menu m1 = <font color="#0000AA">new</font> Menu(<font color="#0000FF">"Schriftart"</font>);
+<font color="#555555">036 </font>    m1.add(<font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Arial"</font>));
+<font color="#555555">037 </font>    m1.add(<font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"TimesRoman"</font>));
+<font color="#555555">038 </font>    m1.add(<font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"Courier"</font>));
+<font color="#555555">039 </font>    m1.add(<font color="#0000AA">new</font> MenuItem(<font color="#0000FF">"System"</font>));
+<font color="#555555">040 </font>    m.add(m1);
+<font color="#555555">041 </font>    <font color="#00AA00">//Ende Untermen&uuml; Schriftart <a name="schachtelmenues.b"></a></font>
+<font color="#555555">042 </font>
+<font color="#555555">043 </font>    m.add((miFarbe = <font color="#0000AA">new</font> CheckboxMenuItem(<font color="#0000FF">"Farbe"</font>)));
+<font color="#555555">044 </font>    add(m);
+<font color="#555555">045 </font>    <font color="#00AA00">//Rueckgaengig deaktivieren</font>
+<font color="#555555">046 </font>    enableRueckgaengig(<font color="#006699">false</font>);
+<font color="#555555">047 </font>    <font color="#00AA00">//Farbe anschalten</font>
+<font color="#555555">048 </font>    setFarbe(<font color="#006699">true</font>);
+<font color="#555555">049 </font>  }
+<font color="#555555">050 </font>
+<font color="#555555">051 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> enableRueckgaengig(<font color="#006699">boolean</font> ena)
+<font color="#555555">052 </font>  {
+<font color="#555555">053 </font>    <font color="#0000AA">if</font> (ena) {
+<font color="#555555">054 </font>      miRueck.setEnabled(<font color="#006699">true</font>);
+<font color="#555555">055 </font>    } <font color="#0000AA">else</font> {
+<font color="#555555">056 </font>      miRueck.setEnabled(<font color="#006699">false</font>);
+<font color="#555555">057 </font>    }
+<font color="#555555">058 </font>  }
+<font color="#555555">059 </font>
+<font color="#555555">060 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setFarbe(<font color="#006699">boolean</font> on)
+<font color="#555555">061 </font>  {
+<font color="#555555">062 </font>    miFarbe.setState(on);
+<font color="#555555">063 </font>  }
+<font color="#555555">064 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/MainMenu3.inc"><font color="#000055" size=-1>MainMenu3.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 30.4: Geschachtelte Men&uuml;s</i></p>
+
+<p>
+Ein Aufruf des Untermen&uuml;s wird folgenderma&szlig;en dargestellt:
+<p>
+<a name="imageid030002"></a>
+<img src="images/SchachtelMenues.gif">
+<p>
+
+<p><i>
+Abbildung 30.2: Geschachtelte Men&uuml;s</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100193.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100196.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100198.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100202.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

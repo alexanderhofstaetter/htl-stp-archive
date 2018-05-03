@@ -1,0 +1,273 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100104.html;106,k100104.html;107,k100106.html;108,k100114.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100104.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100104.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100106.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100114.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 16 - Collections II
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id016001"></a>
+<h2>16.1 Grundlagen und Konzepte </h2>
+<hr>
+<ul>
+<li><a href="k100105.html#sectlevel2id016001">16.1 Grundlagen und Konzepte</a>
+</ul>
+<hr>
+
+<p>
+Wie in <a href="k100097.html#kapitelcollections1">Kapitel 15</a> erl&auml;utert,
+gibt es seit dem JDK 1.0 die &#187;traditionellen&#171; Collections
+mit den Klassen <a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>,
+<a href="index_s.html#ixb100686"><font color=#000080><tt>Stack</tt></font></a>,
+<a href="index_d.html#ixb100687"><font color=#000080><tt>Dictionary</tt></font></a>,
+<a href="index_h.html#ixb100428"><font color=#000080><tt>Hashtable</tt></font></a>
+und <a href="index_b.html#ixb100688"><font color=#000080><tt>BitSet</tt></font></a>.
+Obwohl sie ihren Zweck durchaus erf&uuml;llen, gab es einige Kritik
+am Collections-Konzept des JDK 1.0. Zun&auml;chst wurde die geringe
+Vielseitigkeit kritisiert, etwa im Vergleich zum m&auml;chtigen Collections-Konzept
+der Sprache SmallTalk. 
+
+<p>
+Zudem galten die JDK-1.0-Collections als nicht sehr performant. Fast
+alle wichtigen Methoden sind <a name="ixa100915"><a href="index_s.html#ixb100727"><font color=#000080><tt>synchronized</tt></font></a></a>
+und als generische Speicher von Elementen des Typs <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+ist bei jedem Zugriff ein Typecast bzw. eine Typ&uuml;berpr&uuml;fung
+notwendig (wir kommen auf diese Begriffe in <a href="k100150.html#kapitelmultithreading">Kapitel 23</a>
+zur&uuml;ck). Zudem gab es Detailschw&auml;chen, die immer wieder
+kritisiert wurden. Als Beispiel kann die Wahl der Methodennamen des
+<a href="index_e.html#ixb100697"><font color=#000080><tt>Enumeration</tt></font></a>-Interface
+genannt werden. Oder die Implementierung der Klasse <a href="index_s.html#ixb100686"><font color=#000080><tt>Stack</tt></font></a>,
+die als Ableitung von <a href="index_v.html#ixb100685"><font color=#000080><tt>Vector</tt></font></a>
+weit &uuml;ber ihr eigentliches Ziel hinausschie&szlig;t. 
+
+<p>
+Diese Kritik wurde von den Java-Designern zum Anlass genommen, das
+Collection-Konzept im Rahmen der Version 1.2 neu zu &uuml;berdenken.
+Herausgekommen ist dabei eine Sammlung von gut 20 Klassen und Interfaces
+im Paket <a name="ixa100916"><a href="index_j.html#ixb100149"><font color=#000080><tt>java.util</tt></font></a></a>,
+die das Collections-Framework des JDK 1.2 bilden. Wer bei dieser Zahl
+erschrickt, sei getr&ouml;stet. Letztlich werden im Wesentlichen die
+drei Grundformen <a name="ixa100917"><a href="index_s.html#ixb100728"><font color=#000080><tt>Set</tt></font></a></a>,
+<a name="ixa100918"><a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a></a>
+und <a name="ixa100919"><a href="index_m.html#ixb100109"><font color=#000080><tt>Map</tt></font></a></a>
+realisiert. Die gro&szlig;e Anzahl ergibt sich aus der Bereitstellung
+verschiedender Implementierungsvarianten, Interfaces und einiger abstrakter
+Basisklassen, mit denen die Implementierung eigener Collections vereinfacht
+werden kann. Wir wollen uns zun&auml;chst mit der grundlegenden Arbeitsweise
+der Collection-Typen vertraut machen: 
+<ul>
+<li>Eine <a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>
+ist eine beliebig gro&szlig;e Liste von Elementen beliebigen Typs,
+auf die sowohl wahlfrei als auch sequenziell zugegriffen werden kann.
+<li>Ein <a href="index_s.html#ixb100728"><font color=#000080><tt>Set</tt></font></a>
+ist eine (dublettenlose) Menge von Elementen, auf die mit typischen
+Mengenoperationen zugegriffen werden kann.
+<li>Eine <a href="index_m.html#ixb100109"><font color=#000080><tt>Map</tt></font></a>
+ist eine Abbildung von Elementen eines Typs auf Elemente eines anderen
+Typs, also eine Menge zusammengeh&ouml;riger Paare von Objekten.
+</ul>
+
+<p>
+Jede dieser Grundformen ist als Interface unter dem oben angegebenen
+Namen implementiert. Zudem gibt es jeweils eine oder mehrere konkrete
+Implementierungen. Sie unterscheiden sich in den verwendeten Datenstrukturen
+und Algorithmen und damit in ihrer Eignung f&uuml;r verschiedene Anwendungsf&auml;lle.
+Weiterhin gibt es eine abstrakte Implementierung des Interface, mit
+dessen Hilfe das Erstellen eigener Collections erleichtert wird. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Im Gegensatz zu den 1.1-Klassen sind die Collections des JDK 1.2 aus
+Performance-Gr&uuml;nden durchg&auml;ngig unsynchronisiert. Soll also
+von mehreren Threads gleichzeitig auf eine Collection zugegriffen
+werden, so ist unbedingt darauf zu achten, die Zugriffe selbst zu
+synchronisieren. Andernfalls k&ouml;nnen leicht Programmfehler und
+Dateninkonsistenzen entstehen. Mehr dazu in <a href="k100111.html#subsectionsynccollections">Abschnitt 16.7.2</a>.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Die Namensgebung der Interfaces und Klassen folgt einem einfachen
+Schema. Das Interface hat immer den allgemein verwendeten Namen der
+zu implementierenden Collection, also beispielsweise <a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>,
+<a href="index_s.html#ixb100728"><font color=#000080><tt>Set</tt></font></a>
+oder <a href="index_m.html#ixb100109"><font color=#000080><tt>Map</tt></font></a>.
+Jede Implementierungsvariante stellt vor den Namen dann eine spezifische
+Bezeichnung, die einen Hinweis auf die Art der verwendeten Datenstrukturen
+und Algorithmen geben soll. So gibt es f&uuml;r das Interface <a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>
+beispielsweise die Implementierungsvarianten <a name="ixa100920"><a href="index_l.html#ixb100709"><font color=#000080><tt>LinkedList</tt></font></a></a>
+und <a name="ixa100921"><a href="index_a.html#ixb100195"><font color=#000080><tt>ArrayList</tt></font></a></a>
+sowie die abstrakte Implementierung <a name="ixa100922"><a href="index_a.html#ixb100729"><font color=#000080><tt>AbstractList</tt></font></a></a>.
+Wenn man dieses Schema einmal begriffen hat, verliert der &#187;Collection-Zoo&#171;
+viel von seinem Schrecken. 
+
+<p>
+Die Interfaces spielen eine wichtige Rolle, denn sie beschreiben bereits
+recht detailliert die Eigenschaften der folgenden Implementierungen.
+Um nicht f&uuml;r jede denkbare Collection-Klasse ein eigenes Interface
+definieren zu m&uuml;ssen, wurde ein Basisinterface <a name="ixa100923"><a href="index_c.html#ixb100730"><font color=#000080><tt>Collection</tt></font></a></a>
+geschaffen, aus dem die meisten Interfaces abgeleitet wurden. Es fasst
+die wesentlichen Eigenschaften einer gro&szlig;en Menge unterschiedlicher
+Collections zusammen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+int size()
+boolean isEmpty()
+boolean contains(Object o)
+Iterator iterator()
+Object[] toArray()
+Object[] toArray(Object[] a)
+boolean add(Object o)
+boolean remove(Object o)
+boolean containsAll(Collection c)
+boolean addAll(Collection c)
+boolean removeAll(Collection c)
+boolean retainAll(Collection c)
+void clear()
+boolean equals(Object o)
+int hashCode()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Collection.html" onClick="this.href=getApiDoc('java.util.Collection')"><font color="#660066" size=-1>java.util.Collection</font></a></td>
+</tr>
+</table>
+
+<p>
+Zus&auml;tzlich fordert die JDK-Spezifikation f&uuml;r jede Collection-Klasse
+zwei Konstruktoren (was ja leider nicht im Rahmen der Interface-Definition
+sichergestellt werden kann). Ein parameterloser Konstruktor wird verwendet,
+um eine leere Collection anzulegen. Ein weiterer, der ein einzelnes
+<a href="index_c.html#ixb100730"><font color=#000080><tt>Collection</tt></font></a>-Argument
+besitzt, dient dazu, eine neue Collection anzulegen und mit allen
+Elementen aus der als Argument &uuml;bergebenen Collection zu f&uuml;llen.
+Die Interfaces <a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>
+und <a href="index_s.html#ixb100728"><font color=#000080><tt>Set</tt></font></a>
+sind direkt aus <a href="index_c.html#ixb100730"><font color=#000080><tt>Collection</tt></font></a>
+abgeleitet, <a name="ixa100924"><a href="index_s.html#ixb100731"><font color=#000080><tt>SortedSet</tt></font></a></a>
+entstammt ihr (als Nachfolger von <a href="index_s.html#ixb100728"><font color=#000080><tt>Set</tt></font></a>)
+mittelbar. Lediglich das Interface <a href="index_m.html#ixb100109"><font color=#000080><tt>Map</tt></font></a>
+und das daraus abgeleitete Interface <a name="ixa100925"><a href="index_s.html#ixb100732"><font color=#000080><tt>SortedMap</tt></font></a></a>
+wurden nicht aus <a href="index_c.html#ixb100730"><font color=#000080><tt>Collection</tt></font></a>
+abgeleitet. 
+
+<p>
+Der Vorteil dieses Designs ist nat&uuml;rlich, dass eine flexible
+Schnittstelle f&uuml;r den Umgang mit <i>Mengen von Objekten</i> zur
+Verf&uuml;gung steht. Wenn eine Methode einen R&uuml;ckgabewert vom
+Typ <a href="index_c.html#ixb100730"><font color=#000080><tt>Collection</tt></font></a>
+besitzt, k&ouml;nnen die Aufrufer dieser Methode auf die zur&uuml;ckgegebenen
+Elemente - unabh&auml;ngig vom Typ der tats&auml;chlich zur&uuml;ckgegebenen
+Collection-Klasse - einheitlich zugreifen. Selbst wenn eine andere
+<i>Implementierung</i> gew&auml;hlt wird, &auml;ndert sich f&uuml;r
+den Aufrufer nichts, solange das zur&uuml;ckgegebene Objekt das <a href="index_c.html#ixb100730"><font color=#000080><tt>Collection</tt></font></a>-Interface
+implementiert. 
+
+<p>
+Soweit zur Theorie. Der designerische Nachteil dieses Ansatzes besteht
+darin, dass l&auml;ngst nicht alle tats&auml;chlichen Collections
+eine Schnittstelle besitzen, wie sie in <a href="index_c.html#ixb100730"><font color=#000080><tt>Collection</tt></font></a>
+definiert wurde. W&auml;hrend diese f&uuml;r eine Liste noch passen
+mag, besitzt eine Queue oder ein Stack g&auml;nzlich anders arbeitende
+Zugriffsroutinen. Dieser Konflikt wurde dadurch zu l&ouml;sen versucht,
+dass die Methoden <i>zum &Auml;ndern</i> der Collection <i>optional</i>
+sind. W&auml;hrend also <a name="ixa100926"><a href="index_c.html#ixb100714"><font color=#000080><tt>contains</tt></font></a></a>,
+<a name="ixa100927"><a href="index_c.html#ixb100733"><font color=#000080><tt>containsAll</tt></font></a></a>,
+<a href="index_e.html#ixb100230"><font color=#000080><tt>equals</tt></font></a>,
+<a name="ixa100928"><a href="index_h.html#ixb100427"><font color=#000080><tt>hashCode</tt></font></a></a>,
+<a name="ixa100929"><a href="index_i.html#ixb100690"><font color=#000080><tt>isEmpty</tt></font></a></a>,
+<a name="ixa100930"><a href="index_s.html#ixb100691"><font color=#000080><tt>size</tt></font></a></a>
+und <a name="ixa100931"><a href="index_t.html#ixb100734"><font color=#000080><tt>toArray</tt></font></a></a>
+obligatorisch sind, m&uuml;ssen die &uuml;brigen Methoden in einer
+konkreten Implementierung nicht unbedingt zur Verf&uuml;gung gestellt
+werden, sondern k&ouml;nnen weggelassen, ersetzt oder erg&auml;nzt
+werden. 
+
+<p>
+Aus <a href="k100063.html#kapiteloop3">Kapitel 10</a> wissen wir allerdings,
+dass <i>alle</i> definierten Methoden eines Interface in einer konkreten
+Implementierung zur Verf&uuml;gung gestellt werden m&uuml;ssen. Davon
+sind nat&uuml;rlich auch die Collection-Klassen nicht ausgenommen.
+Wenn sich diese entschlie&szlig;en, eine optionale Methode nicht zu
+realisieren, so muss diese zwar implementiert werden, l&ouml;st aber
+beim Aufruf eine Exception des Typs <a name="ixa100932"><a href="index_u.html#ixb100735"><font color=#000080><tt>UnsupportedOperationException</tt></font></a></a>
+aus. Die tats&auml;chliche Schnittstelle einer konkreten Collection-Klasse
+kann also nicht dem Interface entnommen werden, das sie implementiert,
+sondern erfordert zus&auml;tzlich die schriftliche Dokumentation der
+Klasse. 
+
+<p>
+&Uuml;ber diesen Designansatz kann man sich streiten. Da sowieso nur
+die nichtver&auml;ndernden Methoden nicht optional sind, h&auml;tte
+man ebenso gut diese allein in ein generisches Collection-Interface
+stecken k&ouml;nnen und von allen Collection-Klassen implementieren
+lassen k&ouml;nnen. Zus&auml;tzliche Methoden w&auml;ren dann in abgeleiteten
+Interfaces passend zur jeweiligen Collection-Klasse zu definieren.
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100104.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100104.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100106.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100114.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

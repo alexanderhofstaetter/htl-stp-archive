@@ -1,0 +1,214 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100207.html;106,k100208.html;107,k100210.html;108,k100221.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100207.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100208.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100210.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100221.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 32 - AWT-Dialogelemente
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id032002"></a>
+<h2>32.2 Rahmenprogramm </h2>
+<hr>
+<ul>
+<li><a href="k100209.html#sectlevel2id032002">32.2 Rahmenprogramm</a>
+</ul>
+<hr>
+
+<p>
+Damit nicht jedes Mal ein komplettes Programm abgedruckt werden muss,
+wollen wir die Beispiele in ein vordefiniertes Rahmenprogramm einbetten.
+Dieses erzeugt ein Fenster mit zwei Buttons, die zum Aufrufen des
+Dialogs bzw. zum Beenden des Programms verwendet werden k&ouml;nnen:
+<p>
+<a name="imageid032001"></a>
+<img src="images/DialogBeispiel.gif">
+<p>
+
+<p><i>
+Abbildung 32.1: Das Beispielprogramm zum Aufruf der Beispieldialoge</i></p>
+
+<p>
+Der nach Dr&uuml;cken des &#187;Dialog&#171;-Buttons aufgerufene Dialog
+besitzt ein <a href="index_b.html#ixb101541"><font color=#000080><tt>BorderLayout</tt></font></a>,
+das in der South-Komponente einen <a href="index_b.html#ixb101410"><font color=#000080><tt>Button</tt></font></a>
+zum Beenden des Dialogs enth&auml;lt. In der Center-Komponente wird
+ein <a href="index_p.html#ixb101295"><font color=#000080><tt>Panel</tt></font></a>
+platziert, das an die Methode <font color="#000077"><tt>customizeLayout</tt></font>
+weitergegeben wird, die darin die Beispielkomponenten platziert. In
+der Basisversion ist diese Methode leer und der Dialog hat folgendes
+Aussehen: 
+<p>
+<a name="imageid032002"></a>
+<img src="images/LeerDialog.gif">
+<p>
+
+<p><i>
+Abbildung 32.2: Der noch leere Beispieldialog</i></p>
+
+<p>
+Die Beispielprogramme k&ouml;nnen dann dem &uuml;bergebenen Panel
+innerhalb von <font color="#000077"><tt>customizeLayout</tt></font>
+einen beliebigen Layoutmanager zuordnen und eine beliebige Auswahl
+von Komponenten darauf platzieren. Der Ende-Button bleibt auf jeden
+Fall erhalten und kann zum Beenden des Dialogs verwendet werden: 
+<a name="dialograhmenprog"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* DialogBeispiel.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">class</font> MyDialog
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Dialog
+<font color="#555555">008 </font><font color="#0000AA">implements</font> ActionListener
+<font color="#555555">009 </font>{
+<font color="#555555">010 </font>  <font color="#0000AA">public</font> MyDialog(Frame parent)
+<font color="#555555">011 </font>  {
+<font color="#555555">012 </font>    <font color="#006699">super</font>(parent,<font color="#0000FF">"MyDialog"</font>,<font color="#006699">true</font>);
+<font color="#555555">013 </font>    Point parloc = parent.getLocation();
+<font color="#555555">014 </font>    setBounds(parloc.x + 30, parloc.y + 30,400,300);
+<font color="#555555">015 </font>    setBackground(Color.lightGray);
+<font color="#555555">016 </font>    setLayout(<font color="#0000AA">new</font> BorderLayout());
+<font color="#555555">017 </font>    <font color="#00AA00">//Panel</font>
+<font color="#555555">018 </font>    Panel panel = <font color="#0000AA">new</font> Panel();
+<font color="#555555">019 </font>    customizeLayout(panel);
+<font color="#555555">020 </font>    add(panel, BorderLayout.CENTER);
+<font color="#555555">021 </font>    <font color="#00AA00">//Ende-Button</font>
+<font color="#555555">022 </font>    Button button = <font color="#0000AA">new</font> Button(<font color="#0000FF">"Ende"</font>);
+<font color="#555555">023 </font>    button.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">024 </font>    add(button, BorderLayout.SOUTH);
+<font color="#555555">025 </font>    <font color="#00AA00">//Window-Listener</font>
+<font color="#555555">026 </font>    addWindowListener(
+<font color="#555555">027 </font>      <font color="#0000AA">new</font> WindowAdapter() {
+<font color="#555555">028 </font>        <font color="#0000AA">public</font> <font color="#006699">void</font> windowClosing(WindowEvent event)
+<font color="#555555">029 </font>        {
+<font color="#555555">030 </font>          endDialog();
+<font color="#555555">031 </font>        }
+<font color="#555555">032 </font>      }
+<font color="#555555">033 </font>    );
+<font color="#555555">034 </font>    pack();
+<font color="#555555">035 </font>  }
+<font color="#555555">036 </font>
+<font color="#555555">037 </font>  <font color="#0000AA">private</font> <font color="#006699">void</font> customizeLayout(Panel panel)
+<font color="#555555">038 </font>  {
+<font color="#555555">039 </font>    <font color="#00AA00">//Beispielcode hier</font>
+<font color="#555555">040 </font>  }
+<font color="#555555">041 </font>
+<font color="#555555">042 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> actionPerformed(ActionEvent event)
+<font color="#555555">043 </font>  {
+<font color="#555555">044 </font>    <font color="#0000AA">if</font> (event.getActionCommand().equals(<font color="#0000FF">"Ende"</font>)) {
+<font color="#555555">045 </font>      endDialog();
+<font color="#555555">046 </font>    }
+<font color="#555555">047 </font>  }
+<font color="#555555">048 </font>
+<font color="#555555">049 </font>  <font color="#006699">void</font> endDialog()
+<font color="#555555">050 </font>  {
+<font color="#555555">051 </font>    setVisible(<font color="#006699">false</font>);
+<font color="#555555">052 </font>    dispose();
+<font color="#555555">053 </font>    ((Window)getParent()).toFront();
+<font color="#555555">054 </font>    getParent().requestFocusInWindow();
+<font color="#555555">055 </font>  }
+<font color="#555555">056 </font>}
+<font color="#555555">057 </font>
+<font color="#555555">058 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> DialogBeispiel
+<font color="#555555">059 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">060 </font><font color="#0000AA">implements</font> ActionListener
+<font color="#555555">061 </font>{
+<font color="#555555">062 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">063 </font>  {
+<font color="#555555">064 </font>    DialogBeispiel wnd = <font color="#0000AA">new</font> DialogBeispiel();
+<font color="#555555">065 </font>    wnd.setSize(300,200);
+<font color="#555555">066 </font>    wnd.setVisible(<font color="#006699">true</font>);
+<font color="#555555">067 </font>  }
+<font color="#555555">068 </font>
+<font color="#555555">069 </font>  <font color="#0000AA">public</font> DialogBeispiel()
+<font color="#555555">070 </font>  {
+<font color="#555555">071 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Beispiel Dialogelemente"</font>);
+<font color="#555555">072 </font>    setBackground(Color.lightGray);
+<font color="#555555">073 </font>    setLayout(<font color="#0000AA">new</font> FlowLayout());
+<font color="#555555">074 </font>    <font color="#00AA00">//Dialog-Button</font>
+<font color="#555555">075 </font>    Button button = <font color="#0000AA">new</font> Button(<font color="#0000FF">"Dialog"</font>);
+<font color="#555555">076 </font>    button.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">077 </font>    add(button);
+<font color="#555555">078 </font>    <font color="#00AA00">//Ende-Button</font>
+<font color="#555555">079 </font>    button = <font color="#0000AA">new</font> Button(<font color="#0000FF">"Ende"</font>);
+<font color="#555555">080 </font>    button.addActionListener(<font color="#006699">this</font>);
+<font color="#555555">081 </font>    add(button);
+<font color="#555555">082 </font>    <font color="#00AA00">//Window-Listener</font>
+<font color="#555555">083 </font>    addWindowListener(<font color="#0000AA">new</font> WindowClosingAdapter(<font color="#006699">true</font>));
+<font color="#555555">084 </font>  }
+<font color="#555555">085 </font>
+<font color="#555555">086 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> actionPerformed(ActionEvent event)
+<font color="#555555">087 </font>  {
+<font color="#555555">088 </font>    String cmd = event.getActionCommand();
+<font color="#555555">089 </font>    <font color="#0000AA">if</font> (cmd.equals(<font color="#0000FF">"Dialog"</font>)) {
+<font color="#555555">090 </font>      MyDialog dlg = <font color="#0000AA">new</font> MyDialog(<font color="#006699">this</font>);
+<font color="#555555">091 </font>      dlg.setVisible(<font color="#006699">true</font>);
+<font color="#555555">092 </font>    } <font color="#0000AA">else</font> <font color="#0000AA">if</font> (cmd.equals(<font color="#0000FF">"Ende"</font>)) {
+<font color="#555555">093 </font>      setVisible(<font color="#006699">false</font>);
+<font color="#555555">094 </font>      dispose();
+<font color="#555555">095 </font>      System.exit(0);
+<font color="#555555">096 </font>    }
+<font color="#555555">097 </font>  }
+<font color="#555555">098 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/DialogBeispiel.java"><font color="#000055" size=-1>DialogBeispiel.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 32.1: Rahmenprogramm f&uuml;r Dialogelemente</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100207.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100208.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100210.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100221.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

@@ -1,0 +1,52 @@
+
+AINF 2   		C/C++ - Aufgabe 11
+__________________________________________________________________________
+
+
+C++ - Programm  "memory.cpp"
+
+Folgende Funktionen sollen für das Spieleprogramm "memory" 
+definiert werden: 
+
+// Typdefinition für zweidim. Array 
+typedef int feld[N][M];
+
+int karten( int k[], int k1,int k2)	  
+////////////////////////////////////////////////////////////////////////////
+//   Spielkarten definieren -   
+//   die Karten werden als Integerzahlen im Bereich k1 bis k2 festgelegt
+//   und sind jeweils doppelt hintereinander vorhanden. 
+//   der Rückgabewert gibt die Anzahl der Karten aus
+
+void karten_zeigen( int k[], int kn)	  
+////////////////////////////////////////////////////////////////////////////
+//   Spielkarten am Bildschirm ausgeben -   
+//   kn- Karten werden über die Ordinalwerte als Zeichen ausgegeben 
+
+void spielfeld_auflegen( int k[], int kn, feld f, int fn, int fm )	  
+////////////////////////////////////////////////////////////////////////////
+//   Spielkarten auflegen -   
+//   die kn-Karten aus k[] werden 
+//   auf dem Spielfeld f mit fn-Karten in x-Richtung u. fm in y-Richtung 
+//   an zufälligen Positionen aufgelegt (an das zweidim. Feld f zugewiesen)  
+
+void spielfeld_zeigen( feld f, int sichtbar )	  
+////////////////////////////////////////////////////////////////////////////
+//   Spielfeld am Bildschirm ausgeben -   
+//   alle Karten über die Ordinalwerte als Zeichen 
+//   am Spielfeld anzeigen  
+//   bei sichtbar==0 jedoch alle verdeckt  
+
+void spielfeld_kartezeigen( feld f, int x, int y )	  
+////////////////////////////////////////////////////////////////////////////
+//   einzelne Spielkarte an der Position x,y am Bildschirm ausgeben -   
+//   alle anderen bleiben verdeckt
+
+
+
+Im Hauptprogramm sollen über diese Funktionen - 
+1) 64 Spielkarten mit den Werten 59 bis 90 (Ordinalwerte für ;<=>?@ABC ... Z ) 
+   definiert werden.  
+2) die Karten auf ein 8x8 Spielfeld auflegen und für 1 Sekunde anzeigen  
+3) einzelne Karten an bestimmter Position aufdecken  
+

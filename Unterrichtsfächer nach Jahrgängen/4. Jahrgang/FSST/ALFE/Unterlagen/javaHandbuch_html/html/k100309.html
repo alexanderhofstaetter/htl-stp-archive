@@ -1,0 +1,984 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100307.html;106,k100308.html;107,k100310.html;108,k100313.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100307.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100308.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100310.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100313.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 48 - Netzwerkprogrammierung
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id048002"></a>
+<h2>48.2 Client-Sockets </h2>
+<hr>
+<ul>
+<li><a href="k100309.html#sectlevel2id048002">48.2 Client-Sockets</a>
+<ul>
+<li><a href="k100309.html#sectlevel3id048002001">48.2.1 Adressierung</a>
+<li><a href="k100309.html#sectlevel3id048002002">48.2.2 Aufbau einer einfachen Socket-Verbindung</a>
+<li><a href="k100309.html#sectlevel3id048002003">48.2.3 Lesen und Schreiben von Daten</a>
+<li><a href="k100309.html#zugriffwebserver">48.2.4 Zugriff auf einen Webserver</a>
+<ul>
+<li><a href="k100309.html#zugriffwebserver1.1">Anpassungen f&uuml;r das HTTP 1.1-Protokoll</a>
+<li><a href="k100309.html#zugriffwebserverurl">Zugriff auf einen Webserver unter Verwendung der Klasse URL</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id048002001"></a>
+<h3>48.2.1 Adressierung </h3>
+
+<p>
+Zur Adressierung von Rechnern im Netz wird die Klasse <a name="ixa103544"><a href="index_i.html#ixb102669"><font color=#000080><tt>InetAddress</tt></font></a></a>
+des Pakets <a name="ixa103545"><a href="index_j.html#ixb100202"><font color=#000080><tt>java.net</tt></font></a></a>
+verwendet. Ein <a href="index_i.html#ixb102669"><font color=#000080><tt>InetAddress</tt></font></a>-Objekt
+enth&auml;lt sowohl eine IP-Adresse als auch den symbolischen Namen
+des jeweiligen Rechners. Die beiden Bestandteile k&ouml;nnen mit den
+Methoden <a name="ixa103546"><a href="index_g.html#ixb102670"><font color=#000080><tt>getHostName</tt></font></a></a>
+und <a name="ixa103547"><a href="index_g.html#ixb102671"><font color=#000080><tt>getHostAddress</tt></font></a></a>
+abgefragt werden. Mit Hilfe von <a name="ixa103548"><a href="index_g.html#ixb102672"><font color=#000080><tt>getAddress</tt></font></a></a>
+kann die IP-Adresse auch direkt als <a href="index_b.html#ixb100249"><font color=#000080><tt>byte</tt></font></a>-Array
+mit vier Elementen beschafft werden: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+String getHostName()
+
+String getHostAddress()
+
+byte[] getAddress()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/net/InetAddress.html" onClick="this.href=getApiDoc('java.net.InetAddress')"><font color="#660066" size=-1>java.net.InetAddress</font></a></td>
+</tr>
+</table>
+
+<p>
+Um ein <a href="index_i.html#ixb102669"><font color=#000080><tt>InetAddress</tt></font></a>-Objekt
+zu generieren, stehen die beiden statischen Methoden <a name="ixa103549"><a href="index_g.html#ixb102673"><font color=#000080><tt>getByName</tt></font></a></a>
+und <a name="ixa103550"><a href="index_g.html#ixb102674"><font color=#000080><tt>getLocalHost</tt></font></a></a>
+zur Verf&uuml;gung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public static InetAddress getByName(String host)
+  throws UnknownHostException
+
+public static InetAddress getLocalHost()
+  throws UnknownHostException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/net/InetAddress.html" onClick="this.href=getApiDoc('java.net.InetAddress')"><font color="#660066" size=-1>java.net.InetAddress</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_g.html#ixb102673"><font color=#000080><tt>getByName</tt></font></a>
+erwartet einen String mit der IP-Adresse oder dem Namen des Hosts
+als Argument, <a href="index_g.html#ixb102674"><font color=#000080><tt>getLocalHost</tt></font></a>
+liefert ein <a href="index_i.html#ixb102669"><font color=#000080><tt>InetAddress</tt></font></a>-Objekt
+f&uuml;r den eigenen Rechner. Beide Methoden l&ouml;sen eine Ausnahme
+des Typs <a name="ixa103551"><a href="index_u.html#ixb102675"><font color=#000080><tt>UnknownHostException</tt></font></a></a>
+aus, wenn die Adresse nicht ermittelt werden kann. Das ist insbesondere
+dann der Fall, wenn kein DNS-Server zur Verf&uuml;gung steht, der
+die gew&uuml;nschte Namensaufl&ouml;sung erledigen k&ouml;nnte (beispielsweise
+weil die Dial-In-Verbindung zum Provider gerade nicht besteht). 
+
+<p>
+Das folgende Listing zeigt ein einfaches Programm, das zu einer IP-Adresse
+den symbolischen Namen des zugeh&ouml;rigen Rechners ermittelt und
+umgekehrt: 
+<a name="listingid048001"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4801.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.net.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4801
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#0000AA">if</font> (args.length != 1) {
+<font color="#555555">010 </font>      System.err.println(<font color="#0000FF">"Usage: java Listing4801 &lt;host&gt;"</font>);
+<font color="#555555">011 </font>      System.exit(1);
+<font color="#555555">012 </font>    }
+<font color="#555555">013 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">014 </font>      <font color="#00AA00">//Get requested address</font>
+<font color="#555555">015 </font>      InetAddress addr = InetAddress.getByName(args[0]);
+<font color="#555555">016 </font>      System.out.println(addr.getHostName());
+<font color="#555555">017 </font>      System.out.println(addr.getHostAddress());
+<font color="#555555">018 </font>    } <font color="#0000AA">catch</font> (UnknownHostException e) {
+<font color="#555555">019 </font>      System.err.println(e.toString());
+<font color="#555555">020 </font>      System.exit(1);
+<font color="#555555">021 </font>    }
+<font color="#555555">022 </font>  }
+<font color="#555555">023 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4801.java"><font color="#000055" size=-1>Listing4801.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 48.1: IP-Adressenaufl&ouml;sung</i></p>
+
+<p>
+Wird das Programm mit <font color="#000077"><tt>localhost</tt></font>
+als Argument aufgerufen, ist seine Ausgabe: 
+<font color="#333300">
+<pre>
+localhost
+127.0.0.1
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+<a name="ixa103552"><i>localhost</i></a> ist eine Pseudo-Adresse f&uuml;r
+den eigenen Host. Sie erm&ouml;glicht das Testen von Netzwerkanwendungen,
+auch wenn keine wirkliche Netzwerkverbindung besteht (TCP/IP muss
+allerdings korrekt installiert sein). Sollen wirkliche Adressen verarbeitet
+werden, muss nat&uuml;rlich eine Verbindung zum Netz (insbesondere
+zum DNS-Server) aufgebaut werden k&ouml;nnen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Die nachfolgende Ausgabe zeigt die Ausgabe des Beispielprogramms,
+wenn es nacheinander mit den Argumenten <font color="#000077"><tt>java.sun.com</tt></font>,
+<font color="#000077"><tt>www.gkrueger.com</tt></font> und <font color="#000077"><tt>www.addison-wesley.de</tt></font>
+aufgerufen wird: 
+<font color="#333300">
+<pre>
+java.sun.com
+192.18.97.71
+
+www.gkrueger.com
+213.221.123.45
+
+www.addison-wesley.de
+194.163.213.76
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="sectlevel3id048002002"></a>
+<h3>48.2.2 Aufbau einer einfachen Socket-Verbindung </h3>
+
+<p>
+Als <a name="ixa103553"><i>Socket</i></a> bezeichnet man eine streambasierte
+Programmierschnittstelle zur Kommunikation zweier Rechner in einem
+TCP/IP-Netz. Sockets wurden Anfang der achtziger Jahre f&uuml;r die
+Programmiersprache C entwickelt und mit Berkeley UNIX 4.1/4.2 allgemein
+eingef&uuml;hrt. Das &Uuml;bertragen von Daten &uuml;ber eine Socket-Verbindung
+&auml;hnelt dem Zugriff auf eine Datei: 
+<ul>
+<li>Zun&auml;chst wird eine Verbindung aufgebaut.
+<li>Dann werden Daten gelesen und/oder geschrieben.
+<li>Schlie&szlig;lich wird die Verbindung wieder abgebaut.
+</ul>
+
+<p>
+W&auml;hrend die Socket-Programmierung in C eine etwas m&uuml;hsame
+Angelegenheit war, ist es in Java recht einfach geworden. Im Wesentlichen
+sind dazu die beiden Klassen <a name="ixa103554"><a href="index_s.html#ixb100589"><font color=#000080><tt>Socket</tt></font></a></a>
+und <a name="ixa103555"><a href="index_s.html#ixb102678"><font color=#000080><tt>ServerSocket</tt></font></a></a>
+erforderlich. Sie repr&auml;sentieren Sockets aus der Sicht einer
+Client- bzw. Server-Anwendung. Nachfolgend wollen wir uns mit den
+Client-Sockets besch&auml;ftigen, die Klasse <a href="index_s.html#ixb102678"><font color=#000080><tt>ServerSocket</tt></font></a>
+wird im n&auml;chsten Abschnitt behandelt. 
+
+<p>
+Die Klasse <a href="index_s.html#ixb100589"><font color=#000080><tt>Socket</tt></font></a>
+besitzt verschiedene Konstruktoren, mit denen ein neuer Socket erzeugt
+werden kann. Die wichtigsten von ihnen sind: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Socket(String host, int port)
+  throws UnknownHostException, IOException
+
+public Socket(InetAddress address, int port)
+  throws IOException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/net/Socket.html" onClick="this.href=getApiDoc('java.net.Socket')"><font color="#660066" size=-1>java.net.Socket</font></a></td>
+</tr>
+</table>
+
+<p>
+Beide Konstruktoren erwarten als erstes Argument die &Uuml;bergabe
+des Hostnamens, zu dem eine Verbindung aufgebaut werden soll. Dieser
+kann entweder als Domainname in Form eines Strings oder als Objekt
+des Typs <a href="index_i.html#ixb102669"><font color=#000080><tt>InetAddress</tt></font></a>
+&uuml;bergeben werden. Soll eine Adresse mehrfach verwendet werden,
+ist es besser, die zweite Variante zu verwenden. In diesem Fall kann
+das &uuml;bergebene <a href="index_i.html#ixb102669"><font color=#000080><tt>InetAddress</tt></font></a>-Objekt
+wiederverwendet werden und die Adressaufl&ouml;sung muss nur einmal
+erfolgen. Wenn der Socket nicht ge&ouml;ffnet werden konnte, gibt
+es eine Ausnahme des Typs <a href="index_i.html#ixb100597"><font color=#000080><tt>IOException</tt></font></a>
+bzw. <a href="index_u.html#ixb102675"><font color=#000080><tt>UnknownHostException</tt></font></a>
+(wenn das angegebene Zielsystem nicht angesprochen werden konnte).
+
+<p>
+Der zweite Parameter des Konstruktors ist die Portnummer. Wie in <a href="k100308.html#portsapplikationen">Abschnitt 48.1.4</a>
+erw&auml;hnt, dient sie dazu, den Typ des Servers zu bestimmen, mit
+dem eine Verbindung aufgebaut werden soll. Die wichtigsten Standard-Portnummern
+sind in <a href="k100308.html#portnummern">Tabelle 48.2</a> aufgelistet.
+
+<p>
+Nachdem die Socket-Verbindung erfolgreich aufgebaut wurde, kann mit
+den beiden Methoden <a name="ixa103556"><a href="index_g.html#ixb100683"><font color=#000080><tt>getInputStream</tt></font></a></a>
+und <a name="ixa103557"><a href="index_g.html#ixb100684"><font color=#000080><tt>getOutputStream</tt></font></a></a>
+je ein Stream zum Empfangen und Versenden von Daten beschafft werden:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public InputStream getInputStream()
+  throws IOException
+
+public OutputStream getOutputStream()
+  throws IOException
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/net/Socket.html" onClick="this.href=getApiDoc('java.net.Socket')"><font color="#660066" size=-1>java.net.Socket</font></a></td>
+</tr>
+</table>
+
+<p>
+Diese Streams k&ouml;nnen entweder direkt verwendet oder mit Hilfe
+der Filterstreams in einen bequemer zu verwendenden Streamtyp geschachtelt
+werden. Nach Ende der Kommunikation sollten sowohl die Eingabe- und
+Ausgabestreams als auch der Socket selbst mit <a href="index_c.html#ixb100596"><font color=#000080><tt>close</tt></font></a>
+geschlossen werden. 
+
+<p>
+Als erstes Beispiel wollen wir uns ein Programm ansehen, das eine
+Verbindung zum <a name="ixa103558"><i>DayTime</i></a>-Service auf
+Port 13 herstellt. Dieser Service l&auml;uft auf fast allen UNIX-Maschinen
+und kann gut zu Testzwecken verwendet werden. Nachdem der Client die
+Verbindung aufgebaut hat, sendet der DayTime-Server einen String mit
+dem aktuellen Datum und der aktuellen Uhrzeit und beendet dann die
+Verbindung. 
+<a name="daytimeabfrage"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4802.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.net.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4802
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    <font color="#0000AA">if</font> (args.length != 1) {
+<font color="#555555">011 </font>      System.err.println(<font color="#0000FF">"Usage: java Listing4802 &lt;host&gt;"</font>);
+<font color="#555555">012 </font>      System.exit(1);
+<font color="#555555">013 </font>    }
+<font color="#555555">014 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">015 </font>      Socket sock = <font color="#0000AA">new</font> Socket(args[0], 13); <a name="daytimeabfrage.a"></a>
+<font color="#555555">016 </font>      InputStream in = sock.getInputStream();
+<font color="#555555">017 </font>      <font color="#006699">int</font> len;
+<font color="#555555">018 </font>      <font color="#006699">byte</font>[] b = <font color="#0000AA">new</font> <font color="#006699">byte</font>[100];
+<font color="#555555">019 </font>      <font color="#0000AA">while</font> ((len = in.read(b)) != -1) {
+<font color="#555555">020 </font>        System.out.write(b, 0, len);
+<font color="#555555">021 </font>      }
+<font color="#555555">022 </font>      in.close();
+<font color="#555555">023 </font>      sock.close();
+<font color="#555555">024 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">025 </font>      System.err.println(e.toString());
+<font color="#555555">026 </font>      System.exit(1);
+<font color="#555555">027 </font>    }
+<font color="#555555">028 </font>  }
+<font color="#555555">029 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4802.java"><font color="#000055" size=-1>Listing4802.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 48.2: Abfrage des DayTime-Services</i></p>
+
+<p>
+Das Programm erwartet einen Hostnamen als Argument und gibt diesen
+an den Konstruktor von <a href="index_s.html#ixb100589"><font color=#000080><tt>Socket</tt></font></a>
+weiter, der eine Verbindung zu diesem Host auf Port 13 erzeugt. Nachdem
+der Socket steht, wird der <a href="index_i.html#ixb100587"><font color=#000080><tt>InputStream</tt></font></a>
+beschafft. Das Programm gibt dann so lange die vom Server gesendeten
+Daten aus, bis durch den R&uuml;ckgabewert -1 angezeigt wird, dass
+keine weiteren Daten gesendet werden. Nun werden der Eingabestream
+und der Socket geschlossen und das Programm beendet. Die Ausgabe des
+Programms ist beispielsweise: 
+<font color="#333300">
+<pre>
+Sat Nov  7 22:58:37 1998
+</pre>
+</font>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Um in <a href="k100309.html#daytimeabfrage">Listing 48.2</a> den Socket
+alternativ mit einem <a href="index_i.html#ixb102669"><font color=#000080><tt>InetAddress</tt></font></a>-Objekt
+zu &ouml;ffnen, w&auml;re <a href="k100309.html#daytimeabfrage.a">Zeile 015</a>
+durch den folgenden Code zu ersetzen: 
+<font color="#000077">
+<pre>
+InetAddress addr = InetAddress.getByName(args[0]);
+Socket sock = new Socket(addr, 13);
+</pre>
+</font>
+</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id048002003"></a>
+<h3>48.2.3 Lesen und Schreiben von Daten </h3>
+
+<p>
+Nachdem wir jetzt wissen, wie man lesend auf einen Socket zugreift,
+wollen wir in diesem Abschnitt auch den schreibenden Zugriff vorstellen.
+Dazu schreiben wir ein Programm, das eine Verbindung zum <a name="ixa103559"><i>ECHO-Service</i></a>
+auf Port 7 herstellt. Das Programm liest so lange die Eingaben des
+Anwenders und sendet sie an den Server, bis das Kommando <font color="#000077"><tt>QUIT</tt></font>
+eingegeben wird. Der Server liest die Daten zeilenweise und sendet
+sie unver&auml;ndert an unser Programm zur&uuml;ck, von dem sie auf
+dem Bildschirm ausgegeben werden. Um Lese- und Schreibzugriffe zu
+entkoppeln, verwendet das Programm einen separaten Thread, der die
+eingehenden Daten liest und auf dem Bildschirm ausgibt. Dieser l&auml;uft
+unabh&auml;ngig vom Vordergrund-Thread, in dem die Benutzereingaben
+abgefragt und an den Server gesendet werden. 
+<a name="schreiblesesocket"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* EchoClient.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.net.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> EchoClient
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    <font color="#0000AA">if</font> (args.length != 1) {
+<font color="#555555">011 </font>      System.err.println(<font color="#0000FF">"Usage: java EchoClient &lt;host&gt;"</font>);
+<font color="#555555">012 </font>      System.exit(1);
+<font color="#555555">013 </font>    }
+<font color="#555555">014 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">015 </font>      Socket sock = <font color="#0000AA">new</font> Socket(args[0], 7);
+<font color="#555555">016 </font>      InputStream in = sock.getInputStream();
+<font color="#555555">017 </font>      OutputStream out = sock.getOutputStream();
+<font color="#555555">018 </font>      <font color="#00AA00">//Timeout setzen</font>
+<font color="#555555">019 </font>      sock.setSoTimeout(300); <a name="schreiblesesocket.f"></a>
+<font color="#555555">020 </font>      <font color="#00AA00">//Ausgabethread erzeugen</font>
+<font color="#555555">021 </font>      OutputThread th = <font color="#0000AA">new</font> OutputThread(in);
+<font color="#555555">022 </font>      th.start();
+<font color="#555555">023 </font>      <font color="#00AA00">//Schleife f&uuml;r Benutzereingaben</font>
+<font color="#555555">024 </font>      BufferedReader conin = <font color="#0000AA">new</font> BufferedReader(
+<font color="#555555">025 </font>                             <font color="#0000AA">new</font> InputStreamReader(System.in));
+<font color="#555555">026 </font>      String line = <font color="#0000FF">""</font>;
+<font color="#555555">027 </font>      <font color="#0000AA">while</font> (<font color="#006699">true</font>) { <a name="schreiblesesocket.a"></a>
+<font color="#555555">028 </font>        <font color="#00AA00">//Eingabezeile lesen</font>
+<font color="#555555">029 </font>        line = conin.readLine();
+<font color="#555555">030 </font>        <font color="#0000AA">if</font> (line.equalsIgnoreCase(<font color="#0000FF">"QUIT"</font>)) {
+<font color="#555555">031 </font>          <font color="#0000AA">break</font>;
+<font color="#555555">032 </font>        }
+<font color="#555555">033 </font>        <font color="#00AA00">//Eingabezeile an ECHO-Server schicken</font>
+<font color="#555555">034 </font>        out.write(line.getBytes());
+<font color="#555555">035 </font>        out.write(<font color="#0000FF">'\r'</font>);
+<font color="#555555">036 </font>        out.write(<font color="#0000FF">'\n'</font>);
+<font color="#555555">037 </font>      }
+<font color="#555555">038 </font>      <font color="#00AA00">//Programm beenden</font>
+<font color="#555555">039 </font>      System.out.println(<font color="#0000FF">"terminating output thread..."</font>);
+<font color="#555555">040 </font>      th.requestStop();
+<font color="#555555">041 </font>      <font color="#0000AA">try</font> {
+<font color="#555555">042 </font>        Thread.sleep(1000);
+<font color="#555555">043 </font>      } <font color="#0000AA">catch</font> (InterruptedException e) {
+<font color="#555555">044 </font>      }
+<font color="#555555">045 </font>      in.close(); <a name="schreiblesesocket.e"></a>
+<font color="#555555">046 </font>      out.close();
+<font color="#555555">047 </font>      sock.close();
+<font color="#555555">048 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">049 </font>      System.err.println(e.toString());
+<font color="#555555">050 </font>      System.exit(1);
+<font color="#555555">051 </font>    }
+<font color="#555555">052 </font>  }
+<font color="#555555">053 </font>}
+<font color="#555555">054 </font>
+<font color="#555555">055 </font><font color="#0000AA">class</font> OutputThread
+<font color="#555555">056 </font><font color="#0000AA">extends</font> Thread
+<font color="#555555">057 </font>{
+<font color="#555555">058 </font>  InputStream in;
+<font color="#555555">059 </font>  <font color="#006699">boolean</font>     stoprequested;
+<font color="#555555">060 </font>
+<font color="#555555">061 </font>  <font color="#0000AA">public</font> OutputThread(InputStream in)
+<font color="#555555">062 </font>  {
+<font color="#555555">063 </font>    <font color="#006699">super</font>();
+<font color="#555555">064 </font>    <font color="#006699">this</font>.in = in;
+<font color="#555555">065 </font>    stoprequested = <font color="#006699">false</font>;
+<font color="#555555">066 </font>  }
+<font color="#555555">067 </font>
+<font color="#555555">068 </font>  <font color="#0000AA">public</font> <font color="#0000AA">synchronized</font> <font color="#006699">void</font> requestStop()
+<font color="#555555">069 </font>  {
+<font color="#555555">070 </font>    stoprequested = <font color="#006699">true</font>;
+<font color="#555555">071 </font>  }
+<font color="#555555">072 </font>
+<font color="#555555">073 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> run()
+<font color="#555555">074 </font>  {
+<font color="#555555">075 </font>    <font color="#006699">int</font> len;
+<font color="#555555">076 </font>    <font color="#006699">byte</font>[] b = <font color="#0000AA">new</font> <font color="#006699">byte</font>[100];
+<font color="#555555">077 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">078 </font>      <font color="#0000AA">while</font> (!stoprequested) { <a name="schreiblesesocket.c"></a>
+<font color="#555555">079 </font>        <font color="#0000AA">try</font> {
+<font color="#555555">080 </font>          <font color="#0000AA">if</font> ((len = in.read(b)) == -1) { <a name="schreiblesesocket.d"></a>
+<font color="#555555">081 </font>            <font color="#0000AA">break</font>;
+<font color="#555555">082 </font>          }
+<font color="#555555">083 </font>          System.out.write(b, 0, len);
+<font color="#555555">084 </font>        } <font color="#0000AA">catch</font> (InterruptedIOException e) { <a name="schreiblesesocket.g"></a>
+<font color="#555555">085 </font>          <font color="#00AA00">//nochmal versuchen</font>
+<font color="#555555">086 </font>        }
+<font color="#555555">087 </font>      }
+<font color="#555555">088 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">089 </font>      System.err.println(<font color="#0000FF">"OutputThread: "</font> + e.toString());
+<font color="#555555">090 </font>    }
+<font color="#555555">091 </font>  }
+<font color="#555555">092 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/EchoClient.java"><font color="#000055" size=-1>EchoClient.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 48.3: Lesender und schreibender Zugriff auf einen Socket</i></p>
+
+<p>
+Eine Beispielsession mit dem Programm k&ouml;nnte etwa so aussehen
+(Benutzereingaben sind fettgedruckt): 
+<font color="#333300">
+<pre>
+guido_k@pc1:/home/guido_k/nettest &gt; <b>java EchoClient localhost</b>
+<b>hello</b>
+hello
+<b>world</b>
+world
+<b>12345</b>
+12345
+<b>quit</b>
+closing output thread...
+</pre>
+</font>
+
+<p>
+Wie im vorigen Beispiel wird zun&auml;chst ein Socket zu dem als Argument
+angegebenen Host ge&ouml;ffnet. Das Programm beschafft dann Ein- und
+Ausgabestreams zum Senden und Empfangen von Daten. Der Aufruf von
+<a name="ixa103560"><a href="index_s.html#ixb102681"><font color=#000080><tt>setSoTimeout</tt></font></a></a>
+gibt die maximale Wartezeit bei einem lesenden Zugriff auf den Socket
+an (300 ms.). Wenn bei einem <a href="index_r.html#ixb100989"><font color=#000080><tt>read</tt></font></a>
+auf den <a href="index_i.html#ixb100587"><font color=#000080><tt>InputStream</tt></font></a>
+nach Ablauf dieser Zeit noch keine Daten empfangen wurden, terminiert
+die Methode mit einer <a name="ixa103561"><a href="index_i.html#ixb102682"><font color=#000080><tt>InterruptedIOException</tt></font></a></a>;
+wir kommen darauf gleich zur&uuml;ck. Nun erzeugt das Programm den
+Lesethread und &uuml;bergibt ihm den Eingabestream. In der nun folgenden
+Schleife (<a href="k100309.html#schreiblesesocket.a">Zeile 027</a>)
+werden so lange Eingabezeilen gelesen und an den Server gesendet,
+bis der Anwender das Programm mit <font color="#000077"><tt>QUIT</tt></font>
+beendet. 
+
+<p>
+Die Klasse <font color="#000077"><tt>OutputThread</tt></font> implementiert
+den Thread zum Lesen und Ausgeben der Daten. Da die Methode <a href="index_s.html#ixb101118"><font color=#000080><tt>stop</tt></font></a>
+der Klasse <a href="index_t.html#ixb100606"><font color=#000080><tt>Thread</tt></font></a>
+als <a href="index_d.html#ixb100139"><font color=#000080><tt>deprecated</tt></font></a>
+markiert wurde, m&uuml;ssen wir mit Hilfe der Variable <font color="#000077"><tt>stoprequested</tt></font>
+etwas mehr Aufwand treiben, um den Thread beenden zu k&ouml;nnen.
+<font color="#000077"><tt>stoprequested</tt></font> steht normalerweise
+auf <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>
+und wird beim Beenden des Programms durch Aufruf von <font color="#000077"><tt>requestStop</tt></font>
+auf <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+gesetzt. In der Hauptschleife des Threads wird diese Variable periodisch
+abgefragt, um die Schleife bei Bedarf abbrechen zu k&ouml;nnen (<a href="k100309.html#schreiblesesocket.c">Zeile 078</a>).
+
+<p>
+Problematisch bei dieser Technik ist lediglich, dass der Aufruf von
+<a href="index_r.html#ixb100989"><font color=#000080><tt>read</tt></font></a>
+normalerweise so lange blockiert, bis weitere Zeichen verf&uuml;gbar
+sind. Steht das Programm also in <a href="k100309.html#schreiblesesocket.d">Zeile 080</a>,
+so hat ein Aufruf <font color="#000077"><tt>requestStop</tt></font>
+zun&auml;chst keine Wirkung. Da das Hauptprogramm in <a href="k100309.html#schreiblesesocket.e">Zeile 045</a>
+die Streams und den Socket schlie&szlig;t, w&uuml;rde es zu einer
+<a name="ixa103562"><a href="index_s.html#ixb102683"><font color=#000080><tt>SocketException</tt></font></a></a>
+kommen. Unser Programm verhindert das durch den Aufruf von <a href="index_s.html#ixb102681"><font color=#000080><tt>setSoTimeout</tt></font></a>
+in <a href="k100309.html#schreiblesesocket.f">Zeile 019</a>. Dadurch
+wird ein Aufruf von <a href="index_r.html#ixb100989"><font color=#000080><tt>read</tt></font></a>
+nach sp&auml;testens 300 ms. mit einer <a href="index_i.html#ixb102682"><font color=#000080><tt>InterruptedIOException</tt></font></a>
+beendet. Diese Ausnahme wird in <a href="k100309.html#schreiblesesocket.g">Zeile 084</a>
+abgefangen, um anschlie&szlig;end vor dem n&auml;chsten Schleifendurchlauf
+die Variable <font color="#000077"><tt>stoprequested</tt></font> erneut
+abzufragen. 
+
+<!-- Section -->
+
+<a name="zugriffwebserver"></a>
+<h3>48.2.4 Zugriff auf einen Webserver </h3>
+
+<p>
+Die Kommunikation mit einem Webserver erfolgt &uuml;ber das HTTP-Protokoll,
+wie es in den RFCs 1945 und 2068 beschrieben wurde. Ein Webserver
+l&auml;uft normalerweise auf TCP-Port 80 (manchmal l&auml;uft er zus&auml;tzlich
+auch auf dem UDP-Port 80) und kann wie jeder andere Server &uuml;ber
+einen Client-Socket angesprochen werden. Wir wollen an dieser Stelle
+nicht auf Details eingehen, sondern nur die einfachste und wichtigste
+Anwendung eines Webservers zeigen, n&auml;mlich das &Uuml;bertragen
+einer Seite. Ein Webserver ist in seinen Grundfunktionen ein recht
+einfaches Programm, dessen Hauptaufgabe darin besteht, angeforderte
+Seiten an seine Clients zu versenden. Kompliziert wird er vor allem
+durch die Vielzahl der mittlerweile eingebauten Zusatzfunktionen,
+wie beispielsweise Logging, Server-Scripting, Server-Side-Includes,
+Security- und Tuning-Features usw. 
+
+<p>
+Fordert ein Anwender in seinem Web-Browser eine Seite an, so wird
+diese Anfrage vom Browser als <a name="ixa103563"><a href="index_g.html#ixb102684"><font color=#000080><tt>GET</tt></font></a></a>-Transaktion
+an den Server geschickt. Um beispielsweise die Seite <font color="#000077"><tt>http://www.javabuch.de/index.html</tt></font>
+zu laden, wird folgendes Kommando an den Server <font color="#000077"><tt>www.javabuch.de</tt></font>
+gesendet: 
+<font color="#000077">
+<pre>
+GET /index.html
+</pre>
+</font>
+
+<p>
+Der erste Teil gibt den Kommandonamen an, dann folgt die gew&uuml;nschte
+Datei. Die Zeile muss mit einer CRLF-Sequenz abgeschlossen werden,
+ein einfaches '\n' reicht nicht aus. Der Server versucht nun die angegebene
+Datei zu laden und &uuml;bertr&auml;gt sie an den Client. Ist der
+Client ein Web-Browser, wird er den darin befindlichen HTML-Code interpretieren
+und auf dem Bildschirm anzeigen. Befinden sich in der Seite Verweise
+auf Images, Applets oder Frames, so fordert der Browser die fehlenden
+Seiten in weiteren GET-Transaktionen von deren Servern ab. 
+
+<p>
+Die Struktur des GET-Kommandos wurde mit der Einf&uuml;hrung von HTTP
+1.0 etwas erweitert. Zus&auml;tzlich werden nun am Ende der Zeile
+eine Versionskennung und wahlweise in den darauffolgenden Zeilen weitere
+Headerzeilen mit Zusatzinformationen mitgeschickt. Nachdem die letzte
+Headerzeile gesendet wurde, folgt eine leere Zeile (also ein alleinstehendes
+CRLF), um das Kommandoende anzuzeigen. HTTP 1.0 ist weit verbreitet
+und das obige Kommando w&uuml;rde von den meisten Browsern in folgender
+Form gesendet werden (jede der beiden Zeilen muss mit CRLF abgeschlossen
+werden): 
+<font color="#000077">
+<pre>
+GET /index.html HTTP/1.0
+
+</pre>
+</font>
+
+<p>
+Wird HTTP/1.0 verwendet, ist auch die Antwort des Servers etwas komplexer.
+Anstatt lediglich den Inhalt der Datei zu senden, liefert der Server
+seinerseits einige Headerzeilen mit Zusatzinformationen, wie beispielsweise
+den Server-Typ, das Datum der letzten &Auml;nderung oder den MIME-Typ
+der Datei. Auch hier ist jede Headerzeile mit einem CRLF abgeschlossen
+und nach der letzten Headerzeile folgt eine Leerzeile. Erst dann beginnt
+der eigentliche Dateiinhalt. 
+
+<p>
+Das folgende Programm kann dazu verwendet werden, eine Datei mit Hilfe
+des HTTP 1.0-Protokolls von einem Webserver zu laden. Es wird mit
+einem Host- und einem Dateinamen als Argument aufgerufen und l&auml;dt
+die Seite vom angegebenen Server. Das Ergebnis wird (mit allen Headerzeilen)
+auf dem Bildschirm angezeigt. Anpassungen, die f&uuml;r das gebr&auml;uchliche
+HTTP 1.1-Protokoll erforderlich sind, werden im n&auml;chsten Abschnitt
+demonstriert, w&auml;hrend sich der &uuml;bern&auml;chste Abschnitt
+schlie&szlig;lich mit dem komfortablen Zugriff &uuml;ber die Klasse
+<a href="index_u.html#ixb102209"><font color=#000080><tt>java.net.URL</tt></font></a>
+besch&auml;ftigt. 
+<a name="listingid048004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4804.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.net.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4804
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    <font color="#0000AA">if</font> (args.length != 2) {
+<font color="#555555">011 </font>      System.err.println(
+<font color="#555555">012 </font>        <font color="#0000FF">"Usage: java Listing4804 &lt;host&gt; &lt;file&gt;"</font>
+<font color="#555555">013 </font>      );
+<font color="#555555">014 </font>      System.exit(1);
+<font color="#555555">015 </font>    }
+<font color="#555555">016 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">017 </font>      Socket sock = <font color="#0000AA">new</font> Socket(args[0], 80);
+<font color="#555555">018 </font>      OutputStream out = sock.getOutputStream();
+<font color="#555555">019 </font>      InputStream in = sock.getInputStream();
+<font color="#555555">020 </font>      <font color="#00AA00">//GET-Kommando senden</font>
+<font color="#555555">021 </font>      String s = <font color="#0000FF">"GET "</font> + args[1] + <font color="#0000FF">" HTTP/1.0"</font> + <font color="#0000FF">"\r\n\r\n"</font>;
+<font color="#555555">022 </font>      out.write(s.getBytes());
+<font color="#555555">023 </font>      <font color="#00AA00">//Ausgabe lesen und anzeigen</font>
+<font color="#555555">024 </font>      <font color="#006699">int</font> len;
+<font color="#555555">025 </font>      <font color="#006699">byte</font>[] b = <font color="#0000AA">new</font> <font color="#006699">byte</font>[4096];
+<font color="#555555">026 </font>      <font color="#0000AA">while</font> ((len = in.read(b)) != -1) {
+<font color="#555555">027 </font>        System.out.write(b, 0, len);
+<font color="#555555">028 </font>      }
+<font color="#555555">029 </font>      <font color="#00AA00">//Programm beenden</font>
+<font color="#555555">030 </font>      in.close();
+<font color="#555555">031 </font>      out.close();
+<font color="#555555">032 </font>      sock.close();
+<font color="#555555">033 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">034 </font>      System.err.println(e.toString());
+<font color="#555555">035 </font>      System.exit(1);
+<font color="#555555">036 </font>    }
+<font color="#555555">037 </font>  }
+<font color="#555555">038 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4804.java"><font color="#000055" size=-1>Listing4804.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 48.4: Laden einer Seite von einem Webserver (HTTP 1.0)</i></p>
+
+<p>
+Wird das Programm beispielsweise auf einem SUSE-Linux 5.2 mit frisch
+installiertem <a name="ixa103564"><i>Apache-Server</i></a> mit <font color="#660099">localhost</font>
+und <font color="#660099">/index.html</font> als Argument aufgerufen,
+so beginnt seine Ausgabe wie folgt: 
+<font color="#333300">
+<pre>
+HTTP/1.1 200 OK
+Date: Sun, 08 Nov 1998 18:26:13 GMT
+Server: Apache/1.2.5 S.u.S.E./5.1
+Last-Modified: Sun, 24 May 1998 00:46:46 GMT
+ETag: "e852-45c-35676df6"
+Content-Length: 1116
+Accept-Ranges: bytes
+Connection: close
+Content-Type: text/html
+
+&lt;HTML&gt;
+&lt;HEAD&gt;
+&lt;TITLE&gt;Apache HTTP Server - Beispielseite&lt;/TITLE&gt;
+&lt;/HEAD&gt;
+&lt;BODY bgcolor=#ffffff&gt;
+&lt;H1&gt; Der Apache WWW Server &lt;/H1&gt; &lt;BR&gt;
+Diese Seite soll nur als Beispiel dienen.
+Die &lt;A HREF="./manual/"&gt;Dokumentation zum
+Apache-Server&lt;/A&gt; finden Sie hier.
+&lt;P&gt;
+...
+</pre>
+</font>
+
+
+<!-- Section -->
+<a name="zugriffwebserver1.1"></a>
+<h4>Anpassungen f&uuml;r das HTTP 1.1-Protokoll</h4>
+
+<p>
+Das am CERN in Genf entwickelte Protokoll HTTP 1.0 standardisierte
+den netzwerkbasierenden Zugriff auf entfernte Dokumente. Filehoster
+und multiple URLs auf ein und dieselbe IP-Adresse wurden w&auml;hrend
+der Entwurfsphase des Protokolls allerdings noch nicht vorgesehen
+und erst in der nachfolgenden Version HTTP 1.1 ber&uuml;cksichtigt.
+Dieser Abschnitt beschreibt die Anpassungen, die vorgenommen werden
+m&uuml;ssen, um Dokumente &uuml;ber einen Socket von einem HTTP 1.1-Server
+herunterzuladen, doch zun&auml;chst ein wenig Motivation. 
+
+<p>
+Eventuell sind Sie ja bereits stolzer Besitzer einer eigenen Domain
+und hosten diese bei einem Anbieter wie Strato, 1und1 etc. Dies bedeutet,
+dass Sie zwar rechtlicher Inhaber Ihrer Domain sind, alle Aufrufe
+&uuml;ber das Internet jedoch auf die Server Ihres Webhosters umgeleitet
+und die Dokumente von dort heruntergeladen werden. Abh&auml;ngig von
+Ihrem Vertrag stellt Ihnen Ihr Webhoster dabei einen dedizierten (virtuellen)
+Server zur Verf&uuml;gung oder l&auml;sst die Anfrage von einem Rechner
+beantworten, der neben Ihrer Domain auch f&uuml;r eine Reihe weiterer
+Domains verantwortlich ist. Dieses Konzept wird auch als Virtueller
+Host bezeichnet. Daraus kann sich aber nun folgendes Problem ergeben:
+Angenommen, Sie sind der Besitzer der Domain <font color="#000077"><tt>abc.de</tt></font>
+und hosten diese auf dem gleichen Server wie der Inhaber der Domain
+<font color="#000077"><tt>xyz.de</tt></font>. Au&szlig;erdem beinhalten
+beide Internetauftritte das Dokument <font color="#660099">index.html</font>.
+In dieser Konstellation wird der Server nun &uuml;ber seine IP-Netzwerkadresse
+angesprochen und aufgefordert, die Ressource <font color="#660099">index.html</font>
+zu &uuml;bermitteln. Da diese jedoch doppelt vorhanden ist, ben&ouml;tigt
+der Server zus&auml;tzlich die Information, unter welcher URL die
+betreffende Ressource zu finden sein soll. 
+
+<p>
+Um das oben geschilderte Problem zu l&ouml;sen, wurde mit HTTP 1.1
+der zus&auml;tzliche Request-Header <font color="#000077"><tt>Host</tt></font>
+eingef&uuml;hrt, dessen Wert die angeforderte Domain enth&auml;lt.
+Auf diese Weise kann das Konzept der virtuellen Hosts realisiert werden,
+da der Server die angeforderten Ressourcen nun eindeutig aufl&ouml;sen
+kann. Das folgende Listing zeigt, wie unter Verwendung des Host-Headers
+&uuml;ber das HTTP 1.1-Protokoll auf ein Dokument der Domain <font color="#000077"><tt>www.abc.de</tt></font>
+zugegriffen werden kann. 
+<a name="listingid048005"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4805.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.net.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4805
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    <font color="#0000AA">if</font> (args.length != 2) {
+<font color="#555555">011 </font>      System.err.println(
+<font color="#555555">012 </font>        <font color="#0000FF">"Usage: java Listing4805 &lt;host&gt; &lt;file&gt;"</font>
+<font color="#555555">013 </font>      );
+<font color="#555555">014 </font>      System.exit(1);
+<font color="#555555">015 </font>    }
+<font color="#555555">016 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">017 </font>      Socket sock = <font color="#0000AA">new</font> Socket(args[0], 80);
+<font color="#555555">018 </font>      OutputStream out = sock.getOutputStream();
+<font color="#555555">019 </font>      InputStream in = sock.getInputStream();
+<font color="#555555">020 </font>      <font color="#00AA00">//GET-Kommando unter Verwendung des Host-Headers senden</font>
+<font color="#555555">021 </font>      String s = <font color="#0000FF">"GET "</font> + args[1] + <font color="#0000FF">" HTTP/1.1"</font> + <font color="#0000FF">"\r\n"</font>;
+<font color="#555555">022 </font>      s += <font color="#0000FF">"Host: www.abc.de\r\n\r\n"</font>;
+<font color="#555555">023 </font>      out.write(s.getBytes());
+<font color="#555555">024 </font>      <font color="#00AA00">//Ausgabe lesen und anzeigen</font>
+<font color="#555555">025 </font>      <font color="#006699">int</font> len;
+<font color="#555555">026 </font>      <font color="#006699">byte</font>[] b = <font color="#0000AA">new</font> <font color="#006699">byte</font>[4096];
+<font color="#555555">027 </font>      <font color="#0000AA">while</font> ((len = in.read(b)) != -1) {
+<font color="#555555">028 </font>        System.out.write(b, 0, len);
+<font color="#555555">029 </font>      }
+<font color="#555555">030 </font>      <font color="#00AA00">//Programm beenden</font>
+<font color="#555555">031 </font>      in.close();
+<font color="#555555">032 </font>      out.close();
+<font color="#555555">033 </font>      sock.close();
+<font color="#555555">034 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">035 </font>      System.err.println(e.toString());
+<font color="#555555">036 </font>      System.exit(1);
+<font color="#555555">037 </font>    }
+<font color="#555555">038 </font>  }
+<font color="#555555">039 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4805.java"><font color="#000055" size=-1>Listing4805.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 48.5: Laden einer Seite von einem Webserver (HTTP 1.1)</i></p>
+
+
+<!-- Section -->
+<a name="zugriffwebserverurl"></a>
+<h4>Zugriff auf einen Webserver unter Verwendung der Klasse URL</h4>
+
+<p>
+Die beiden vorangegangenen Beispiele demonstrieren die Arbeitsweise
+von Sockets am Beispiel des Zugriffs auf eine Internetressource. Dabei
+wurde, insbesondere beim Zugriff auf einen virtuellen Host, zus&auml;tzliches
+Wissen &uuml;ber das Protokoll HTTP ben&ouml;tigt. 
+
+<p>
+Um den Zugriff auf eine HTTP-Ressource zu vereinfachen, stellt Java
+die Klasse <font color="#000077"><tt>URL</tt></font> aus dem Paket
+<font color="#000077"><tt>java.net</tt></font> zur Verf&uuml;gung.
+Diese &uuml;bernimmt per Konstruktor die Informationen &uuml;ber Host,
+Port, Protokoll und die angeforderte Ressource und &ouml;ffnet &uuml;ber
+die Methode <a href="index_o.html#ixb102686"><font color=#000080><tt>openStream()</tt></font></a>
+einen <font color="#000077"><tt>InputStream</tt></font>, &uuml;ber
+den die Daten abgerufen werden k&ouml;nnen. Das folgende Listing demonstriert
+den Zugriff auf eine Internetressource mit der Klasse <a name="ixa103565"><a href="index_u.html#ixb102209"><font color=#000080><tt>java.net.URL</tt></font></a></a>.
+<a name="listingid048006"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4806.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.net.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4806
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    <font color="#0000AA">if</font> (args.length != 2) {
+<font color="#555555">011 </font>      System.err.println(
+<font color="#555555">012 </font>        <font color="#0000FF">"Usage: java Listing4806 &lt;host&gt; &lt;file&gt;"</font>
+<font color="#555555">013 </font>      );
+<font color="#555555">014 </font>      System.exit(1);
+<font color="#555555">015 </font>    }
+<font color="#555555">016 </font>    
+<font color="#555555">017 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">018 </font>      <font color="#00AA00">// Aufbau der Connection</font>
+<font color="#555555">019 </font>      URL url = <font color="#0000AA">new</font> URL(<font color="#0000FF">"http"</font>, args[0], 80, args[1]);
+<font color="#555555">020 </font>
+<font color="#555555">021 </font>      InputStream in = url.openStream();
+<font color="#555555">022 </font>      <font color="#006699">int</font> len;
+<font color="#555555">023 </font>      <font color="#006699">byte</font>[] b = <font color="#0000AA">new</font> <font color="#006699">byte</font>[4096];
+<font color="#555555">024 </font>      <font color="#0000AA">while</font> ((len = in.read(b)) != -1) {
+<font color="#555555">025 </font>        System.out.write(b, 0, len);
+<font color="#555555">026 </font>      }
+<font color="#555555">027 </font>      
+<font color="#555555">028 </font>      <font color="#00AA00">//Programm beenden</font>
+<font color="#555555">029 </font>      in.close();
+<font color="#555555">030 </font>    } <font color="#0000AA">catch</font> (IOException e) {
+<font color="#555555">031 </font>      System.err.println(e.toString());
+<font color="#555555">032 </font>      System.exit(1);
+<font color="#555555">033 </font>    }
+<font color="#555555">034 </font>  }
+<font color="#555555">035 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4806.java"><font color="#000055" size=-1>Listing4806.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 48.6: Laden einer Seite von einem Webserver &uuml;ber java.net.URL</i></p>
+
+<p>
+Die vorangegangenen drei Abschnitte haben Ihnen gezeigt, wie Sie mit
+Hilfe eines Socket und unter st&uuml;ckweiser Implementierung des
+HTTP-Protokolls sowie unter Verwendung der Klasse <a href="index_u.html#ixb102209"><font color=#000080><tt>java.net.URL</tt></font></a>
+auf die Dateien eines Webservers zugreifen. Der n&auml;chste Abschnitt
+demonstriert Ihnen nun, wie Sie das Gegenst&uuml;ck, also einen rudiment&auml;ren
+Webserver, in Java implementieren k&ouml;nnen.
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100307.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100308.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100310.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100313.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

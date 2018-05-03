@@ -1,0 +1,309 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100104.html;106,k100106.html;107,k100108.html;108,k100114.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100104.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100106.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100108.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100114.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 16 - Collections II
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id016003"></a>
+<h2>16.3 Iteratoren </h2>
+<hr>
+<ul>
+<li><a href="k100107.html#sectlevel2id016003">16.3 Iteratoren</a>
+<ul>
+<li><a href="k100107.html#sectlevel3id016003001">16.3.1 Das Interface Iterator</a>
+<li><a href="k100107.html#sectlevel3id016003002">16.3.2 Das Interface ListIterator</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id016003001"></a>
+<h3>16.3.1 Das Interface Iterator </h3>
+
+<p>
+Auf die Collections der Pr&auml;-1.2-JDKs konnte mit Hilfe des <a name="ixa100944"><a href="index_e.html#ixb100697"><font color=#000080><tt>Enumeration</tt></font></a></a>-Interface
+und seiner beiden Methoden <a href="index_h.html#ixb100698"><font color=#000080><tt>hasMoreElements</tt></font></a>
+und <a href="index_n.html#ixb100699"><font color=#000080><tt>nextElement</tt></font></a>
+zugegriffen werden. Da Objekte, die dem Durchlaufen von Collections
+dienen, &uuml;berall in der Informatik als <i>Iteratoren</i> bezeichnet
+werden, wurde die Namensgebung des Interface und seiner Methoden vielfach
+kritisiert. Die Designer der Collections der Version 1.2 haben sich
+nun dem allgemeinen Sprachgebrauch angepasst und das Interface zum
+Durchlaufen der Elemente einer Collection als <a name="ixa100945"><a href="index_i.html#ixb100110"><font color=#000080><tt>Iterator</tt></font></a></a>
+bezeichnet und mit folgenden Methoden ausgestattet: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+boolean hasNext()
+
+Object next()
+
+void remove()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/Iterator.html" onClick="this.href=getApiDoc('java.util.Iterator')"><font color="#660066" size=-1>java.util.Iterator</font></a></td>
+</tr>
+</table>
+
+<p>
+Ein solches Iterator-Objekt kann &uuml;ber die Methode <a href="index_i.html#ixb100742"><font color=#000080><tt>iterator</tt></font></a>
+f&uuml;r jede Collection des Frameworks erzeugt werden. Hierf&uuml;r
+wurde das Interface <a href="index_i.html#ixb100368"><font color=#000080><tt>java.lang.Iterable</tt></font></a>
+definiert, welches auch von jeder Collection implementiert wird. 
+
+<p>
+<a name="ixa100946"><a href="index_h.html#ixb100111"><font color=#000080><tt>hasNext</tt></font></a></a>
+gibt genau dann <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+zur&uuml;ck, wenn der Iterator mindestens ein weiteres Element enth&auml;lt.
+<a name="ixa100947"><a href="index_n.html#ixb100112"><font color=#000080><tt>next</tt></font></a></a>
+liefert das n&auml;chste Element bzw. l&ouml;st eine Ausnahme des
+Typs <a name="ixa100948"><a href="index_n.html#ixb100743"><font color=#000080><tt>NoSuchElementException</tt></font></a></a>
+aus, wenn es keine weiteren Elemente gibt. Wie beim <a href="index_e.html#ixb100697"><font color=#000080><tt>Enumeration</tt></font></a>-Interface
+ist der R&uuml;ckgabewert als <a href="index_o.html#ixb100231"><font color=#000080><tt>Object</tt></font></a>
+deklariert und muss daher auf das passende Object gecastet werden.
+Als neues Feature (gegen&uuml;ber einer <a href="index_e.html#ixb100697"><font color=#000080><tt>Enumeration</tt></font></a>)
+bietet ein <a href="index_i.html#ixb100110"><font color=#000080><tt>Iterator</tt></font></a>
+die M&ouml;glichkeit, die Collection w&auml;hrend der Abfrage zu &auml;ndern,
+indem das zuletzt geholte Element mit der Methode <a name="ixa100949"><a href="index_r.html#ixb100739"><font color=#000080><tt>remove</tt></font></a></a>
+gel&ouml;scht wird. Bei allen Collections, die das Interface <a href="index_c.html#ixb100730"><font color=#000080><tt>Collection</tt></font></a>
+implementieren, kann ein Iterator zum Durchlaufen aller Elemente mit
+der Methode <a name="ixa100950"><a href="index_i.html#ixb100742"><font color=#000080><tt>iterator</tt></font></a></a>
+beschafft werden. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die Methode <a href="index_r.html#ixb100739"><font color=#000080><tt>remove</tt></font></a>
+ist die einzig erlaubte M&ouml;glichkeit, die Collection w&auml;hrend
+der Verwendung eines Iterators zu &auml;ndern. Alle direkt &auml;ndernden
+Zugriffe auf die Collection machen das weitere Verhalten des Iterators
+undefiniert.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Wir wollen uns die Benutzung eines Iterators an einem Beispiel ansehen:
+<a name="listingid016002"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing1602.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.util.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing1602
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#00AA00">//F&uuml;llen der Liste</font>
+<font color="#555555">010 </font>    ArrayList list = <font color="#0000AA">new</font> ArrayList();
+<font color="#555555">011 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 1; i &lt;= 20; ++i) {
+<font color="#555555">012 </font>      list.add(<font color="#0000FF">""</font> + i);
+<font color="#555555">013 </font>    }
+<font color="#555555">014 </font>    <font color="#00AA00">//L&ouml;schen von Elementen &uuml;ber Iterator</font>
+<font color="#555555">015 </font>    Iterator it = list.iterator();
+<font color="#555555">016 </font>    <font color="#0000AA">while</font> (it.hasNext()) {
+<font color="#555555">017 </font>      String s = (String) it.next();
+<font color="#555555">018 </font>      <font color="#0000AA">if</font> (s.startsWith(<font color="#0000FF">"1"</font>)) {
+<font color="#555555">019 </font>        it.remove();
+<font color="#555555">020 </font>      }
+<font color="#555555">021 </font>    }
+<font color="#555555">022 </font>    <font color="#00AA00">//Ausgeben der verbleibenden Elemente</font>
+<font color="#555555">023 </font>    it = list.iterator();
+<font color="#555555">024 </font>    <font color="#0000AA">while</font> (it.hasNext()) {
+<font color="#555555">025 </font>      System.out.println((String) it.next());
+<font color="#555555">026 </font>    }
+<font color="#555555">027 </font>  }
+<font color="#555555">028 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing1602.java"><font color="#000055" size=-1>Listing1602.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 16.2: Zugriff auf eine Collection mit einem Iterator</i></p>
+
+<p>
+Das Programm erzeugt zun&auml;chst eine Liste mit den Elementen &#187;1&#171;,
+&#187;2&#171;, ..., &#187;20&#171;. Anschlie&szlig;end wird durch
+Aufruf von <a href="index_i.html#ixb100742"><font color=#000080><tt>iterator</tt></font></a>
+ein Iterator &uuml;ber alle Elemente der Liste beschafft. Mit seiner
+Hilfe werden alle Elemente der Liste durchlaufen und diejenigen, die
+mit &#187;1&#171; anfangen, gel&ouml;scht. Der zweite Durchlauf durch
+die Liste zeigt dann nur noch die &uuml;brig gebliebenen Elemente
+an: 
+<font color="#333300">
+<pre>
+2
+3
+4
+5
+6
+7
+8
+9
+20
+</pre>
+</font>
+
+<p>
+Seit der J2SE 5.0 gibt es eine Erweiterung der <a href="index_f.html#ixb100077"><font color=#000080><tt>for</tt></font></a>-Schleife,
+mit der Collection-Klassen noch einfacher durchlaufen werden k&ouml;nnen.
+Diese als foreach-Schleife bezeichnete Variante wird in <a href="k100049.html#dieforschleife">Abschnitt 7.3.3</a>
+ausf&uuml;hrlich erl&auml;utert. Ein Beispiel dazu findet sich auch
+in <a href="k100049.html#anwendungerwforschleife1">Listing 7.7</a>.
+
+
+<!-- Section -->
+<a name="sectlevel3id016003002"></a>
+<h3>16.3.2 Das Interface ListIterator </h3>
+
+<p>
+Neben dem <a href="index_i.html#ixb100110"><font color=#000080><tt>Iterator</tt></font></a>-Interface
+gibt es das daraus abgeleitete Interface <a name="ixa100951"><a href="index_l.html#ixb100744"><font color=#000080><tt>ListIterator</tt></font></a></a>.
+Es steht nur bei Collections des Typs <a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>
+(und daraus abgeleiteten Klassen) zur Verf&uuml;gung und bietet zus&auml;tzlich
+die M&ouml;glichkeit, die Liste in beiden Richtungen zu durchlaufen,
+auf den Index des n&auml;chsten oder vorigen Elements zuzugreifen,
+das aktuelle Element zu ver&auml;ndern und ein neues Element hinzuzuf&uuml;gen:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+boolean hasPrevious()
+Object previous()
+
+int nextIndex()
+int previousIndex()
+
+void add(Object o)
+void set(Object o)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/util/ListIterator.html" onClick="this.href=getApiDoc('java.util.ListIterator')"><font color="#660066" size=-1>java.util.ListIterator</font></a></td>
+</tr>
+</table>
+
+<p>
+Mit <a name="ixa100952"><a href="index_h.html#ixb100745"><font color=#000080><tt>hasPrevious</tt></font></a></a>
+kann bestimmt werden, ob es <i>vor</i> der aktuellen Position ein
+weiteres Element gibt; der Zugriff darauf w&uuml;rde mit <a name="ixa100953"><a href="index_p.html#ixb100746"><font color=#000080><tt>previous</tt></font></a></a>
+erfolgen. Die Methoden <a name="ixa100954"><a href="index_n.html#ixb100747"><font color=#000080><tt>nextIndex</tt></font></a></a>
+und <a name="ixa100955"><a href="index_p.html#ixb100748"><font color=#000080><tt>previousIndex</tt></font></a></a>
+liefern den Index des n&auml;chsten bzw. vorigen Elements des Iterators.
+Wird <a href="index_p.html#ixb100748"><font color=#000080><tt>previousIndex</tt></font></a>
+am Anfang des Iterators aufgerufen, ist sein R&uuml;ckgabewert -1.
+Wird <a href="index_n.html#ixb100747"><font color=#000080><tt>nextIndex</tt></font></a>
+am Ende aufgerufen, liefert es <font color="#000077"><tt>size()</tt></font>
+als R&uuml;ckgabewert. Mit <a name="ixa100956"><a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a></a>
+kann ein neues Element an der Stelle in die Liste eingef&uuml;gt werden,
+die unmittelbar vor dem n&auml;chsten Element des Iterators liegt.
+<a name="ixa100957"><a href="index_s.html#ixb100160"><font color=#000080><tt>set</tt></font></a></a>
+erlaubt es, das durch den letzten Aufruf von <a href="index_n.html#ixb100112"><font color=#000080><tt>next</tt></font></a>
+bzw. <a href="index_p.html#ixb100746"><font color=#000080><tt>previous</tt></font></a>
+beschaffte Element zu ersetzen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Ebenso wie beim Interface <a href="index_c.html#ixb100730"><font color=#000080><tt>Collection</tt></font></a>
+sind die <i>&auml;ndernden</i> Methoden der Iteratoren optional. Falls
+ein Iterator eine dieser Methoden nicht zur Verf&uuml;gung stellen
+will, l&ouml;st er bei ihrem Aufruf eine Ausnahme des Typs <a href="index_u.html#ixb100735"><font color=#000080><tt>UnsupportedOperationException</tt></font></a>
+aus. Das gilt f&uuml;r die Methoden <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>,
+<a href="index_s.html#ixb100160"><font color=#000080><tt>set</tt></font></a>
+und <a href="index_r.html#ixb100739"><font color=#000080><tt>remove</tt></font></a>.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100104.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100106.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100108.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100114.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

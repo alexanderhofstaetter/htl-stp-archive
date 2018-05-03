@@ -1,0 +1,566 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100046.html;106,k100048.html;107,k100050.html;108,k100052.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100046.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100048.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100050.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100052.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 7 - Anweisungen
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id007003"></a>
+<h2>7.3 <a name="ixa100410">Schleifen</a></h2>
+<hr>
+<ul>
+<li><a href="k100049.html#sectlevel2id007003">7.3 Schleifen</a>
+<ul>
+<li><a href="k100049.html#sectlevel3id007003001">7.3.1 Die while-Schleife</a>
+<ul>
+<li><a href="k100049.html#sectlevel4id007003001001">Syntax</a>
+<li><a href="k100049.html#sectlevel4id007003001002">Bedeutung</a>
+</ul>
+<li><a href="k100049.html#sectlevel3id007003002">7.3.2 Die do-Schleife</a>
+<ul>
+<li><a href="k100049.html#sectlevel4id007003002001">Syntax</a>
+<li><a href="k100049.html#sectlevel4id007003002002">Bedeutung</a>
+</ul>
+<li><a href="k100049.html#dieforschleife">7.3.3 Die for-Schleife</a>
+<ul>
+<li><a href="k100049.html#sectlevel4id007003003001">Syntax</a>
+<li><a href="k100049.html#sectlevel4id007003003002">Bedeutung</a>
+<li><a href="k100049.html#sectlevel4id007003003003">break und continue</a>
+<li><a href="k100049.html#sectlevel4id007003003004">Die erweiterte for-Schleife</a>
+</ul>
+</ul>
+</ul>
+<hr>
+
+<p>
+Java besitzt die drei &uuml;blichen Schleifenanweisungen prozeduraler
+Programmiersprachen: eine nichtabweisende, eine abweisende und eine
+Z&auml;hlschleife. Die Syntax und Semantik der Schleifen ist fast
+vollst&auml;ndig identisch zu den entsprechenden Anweisungen in C.
+
+
+<!-- Section -->
+<a name="sectlevel3id007003001"></a>
+<h3>7.3.1 Die while-Schleife<a name="ixa100411"></a> </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id007003001001"></a>
+<h4>Syntax </h4>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+while (ausdruck)
+  anweisung;
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id007003001002"></a>
+<h4>Bedeutung </h4>
+
+<p>
+Zuerst wird der Testausdruck, der vom Typ <a href="index_b.html#ixb100071"><font color=#000080><tt>boolean</tt></font></a>
+sein muss, gepr&uuml;ft. Ist er <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>,
+wird die Anweisung ausgef&uuml;hrt, andernfalls wird mit der ersten
+Anweisung hinter der Schleife weitergemacht. Nachdem die Anweisung
+ausgef&uuml;hrt wurde, wird der Testausdruck erneut gepr&uuml;ft usw.
+Die Schleife wird beendet, sobald der Test <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>
+ergibt. 
+
+<!-- Section -->
+
+<a name="sectlevel3id007003002"></a>
+<h3>7.3.2 Die do-Schleife<a name="ixa100412"></a> </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id007003002001"></a>
+<h4>Syntax </h4>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+do
+  anweisung;
+while (ausdruck);
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id007003002002"></a>
+<h4>Bedeutung </h4>
+
+<p>
+Die <a name="ixa100413"><a href="index_d.html#ixb100076"><font color=#000080><tt>do</tt></font></a></a>-Schleife
+arbeitet <i>nichtabweisend</i>, d.h. sie wird mindestens einmal ausgef&uuml;hrt.
+Da zun&auml;chst die Schleifenanweisung ausgef&uuml;hrt und erst dann
+der Testausdruck &uuml;berpr&uuml;ft wird, kann die <a href="index_d.html#ixb100076"><font color=#000080><tt>do</tt></font></a>-Schleife
+fr&uuml;hestens nach einem Durchlauf regul&auml;r beendet werden.
+Die Bearbeitung der Schleife wird immer dann beendet, wenn der Test
+des Schleifenausdrucks <a href="index_f.html#ixb100241"><font color=#000080><tt>false</tt></font></a>
+ergibt. 
+
+<!-- Section -->
+
+<a name="dieforschleife"></a>
+<h3>7.3.3 Die <a name="ixa100414">for-Schleife</a> </h3>
+
+
+<!-- Section -->
+<a name="sectlevel4id007003003001"></a>
+<h4>Syntax </h4>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+for (init; test; update)
+  anweisung;
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel4id007003003002"></a>
+<h4>Bedeutung </h4>
+
+<p>
+Der Kopf der <a name="ixa100415"><a href="index_f.html#ixb100077"><font color=#000080><tt>for</tt></font></a></a>-Schleife
+besteht aus drei Ausdr&uuml;cken, die jeder f&uuml;r sich optional
+sind: 
+<ul>
+<li>Der init-Ausdruck wird einmal vor dem Start der Schleife aufgerufen.
+Er dient dazu, Initialisierungen durchzuf&uuml;hren, die durch die
+Auswertung von Ausdr&uuml;cken mit Nebeneffekten verursacht werden.
+Der R&uuml;ckgabewert der Ausdr&uuml;cke wird vollst&auml;ndig ignoriert.
+<li>Der init-Teil darf auch aus mehreren Ausdr&uuml;cken bestehen,
+wenn die einzelnen Teilausdr&uuml;cke durch Kommata getrennt sind.
+Diese syntaktische Erweiterung ist allerdings nur innerhalb des Initialisierungsteils
+einer <a href="index_f.html#ixb100077"><font color=#000080><tt>for</tt></font></a>-Schleife
+erlaubt. Einen allgemeinen Komma-Operator (wie in C und C++) gibt
+es in Java nicht.
+<li>Fehlt der Initialisierungsteil, wird keine Initialisierung im
+Kopf der Schleife durchgef&uuml;hrt.
+<li>Der init-Teil darf auch Variablendeklarationen enthalten, beispielsweise,
+um einen Schleifenz&auml;hler zu erzeugen. Die Variablen m&uuml;ssen
+bei der Deklaration initialisiert werden. Sichtbarkeit und Lebensdauer
+erstrecken sich auf den Block, der die Schleifenanweisungen enth&auml;lt.
+Damit ist es m&ouml;glich, den Namen einer Schleifenvariablen innerhalb
+einer Methode mehrfach zu deklarieren.
+<li>Der test-Teil bildet den Testausdruck der Schleife. Analog zur
+while-Schleife wird er am Anfang der Schleife ausgef&uuml;hrt und
+die Schleifenanweisung wird nur ausgef&uuml;hrt, wenn die Auswertung
+des Testausdrucks true ergibt. Fehlt der Testausdruck, so setzt der
+Compiler an seiner Stelle die Konstante <a href="index_t.html#ixb100240"><font color=#000080><tt>true</tt></font></a>
+ein.
+<li>Der update-Ausdruck dient dazu, den Schleifenz&auml;hler zu ver&auml;ndern.
+Er wird nach jedem Durchlauf der Schleife ausgewertet, bevor der Testausdruck
+das n&auml;chste Mal ausgewertet wird. Wie der init-Teil darf auch
+der update-Teil aus mehreren Ausdr&uuml;cken bestehen. Der R&uuml;ckgabewert
+des Ausdrucks wird ignoriert. Fehlt der update-Ausdruck, so wird keine
+automatische Modifikation des Schleifenz&auml;hlers durchgef&uuml;hrt.
+</ul>
+
+
+<!-- Section -->
+<a name="sectlevel4id007003003003"></a>
+<h4>break und continue </h4>
+
+<p>
+In Java gibt es zwei weitere M&ouml;glichkeiten, die normale Auswertungsreihenfolge
+in einer Schleife zu ver&auml;ndern. Taucht innerhalb einer Schleife
+eine <a name="ixa100416"><a href="index_b.html#ixb100079"><font color=#000080><tt>break</tt></font></a></a>-Anweisung
+auf, wird die Schleife verlassen und das Programm mit der ersten Anweisung
+nach der Schleife fortgesetzt. Taucht dagegen eine <a name="ixa100417"><a href="index_c.html#ixb100080"><font color=#000080><tt>continue</tt></font></a></a>-Anweisung
+auf, springt das Programm an das Ende des Schleifenrumpfs und beginnt
+mit der n&auml;chsten Iteration. 
+
+<p>
+In der einfachsten Form arbeiten <a href="index_b.html#ixb100079"><font color=#000080><tt>break</tt></font></a>
+und <a href="index_c.html#ixb100080"><font color=#000080><tt>continue</tt></font></a>
+genauso wie in C und C++. Beide Anweisungen k&ouml;nnen innerhalb
+von <a name="ixa100418"><a href="index_d.html#ixb100076"><font color=#000080><tt>do</tt></font></a></a>-,
+<a name="ixa100419"><a href="index_w.html#ixb100075"><font color=#000080><tt>while</tt></font></a></a>-
+und <a name="ixa100420"><a href="index_f.html#ixb100077"><font color=#000080><tt>for</tt></font></a></a>-Schleifen
+verwendet werden. Befindet sich ein <a href="index_b.html#ixb100079"><font color=#000080><tt>break</tt></font></a>
+innerhalb einer mehrfach geschachtelten Schleife, so verl&auml;sst
+es die innerste Schleife<a name="ixa100421"></a>. Dies gilt analog
+f&uuml;r <a href="index_c.html#ixb100080"><font color=#000080><tt>continue</tt></font></a>.
+Neben dieser einfachen Form von <a href="index_b.html#ixb100079"><font color=#000080><tt>break</tt></font></a>
+und <a href="index_c.html#ixb100080"><font color=#000080><tt>continue</tt></font></a>
+gibt es in Java noch die mit einem Label versehene Form: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+break Label;
+
+continue Label;
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+Zu jedem mit einem Label versehenen <a href="index_b.html#ixb100079"><font color=#000080><tt>break</tt></font></a>
+oder <a href="index_c.html#ixb100080"><font color=#000080><tt>continue</tt></font></a>
+muss es eine mit einem Label versehene Kontrollstruktur geben, die
+diese Anweisung umschlie&szlig;t. Oft wird ein mit einem Label versehenes
+<a href="index_b.html#ixb100079"><font color=#000080><tt>break</tt></font></a>
+verwendet, um zwei oder mehr ineinander geschachtelte Schleifen zu
+beenden: 
+<a name="labelbreak"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing0706.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing0706
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#006699">int</font>[][] data = <font color="#0000AA">new</font> <font color="#006699">int</font>[10][10];
+<font color="#555555">008 </font>
+<font color="#555555">009 </font>    <font color="#00AA00">//Multiplikationstafel erstellen</font>
+<font color="#555555">010 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 1; i &lt;= 10; ++i) {
+<font color="#555555">011 </font>      <font color="#0000AA">for</font> (<font color="#006699">int</font> j = 1; j &lt;= 10; ++j) {
+<font color="#555555">012 </font>        data[i - 1][j - 1] = i * j;
+<font color="#555555">013 </font>      }
+<font color="#555555">014 </font>    }
+<font color="#555555">015 </font>
+<font color="#555555">016 </font>    <font color="#00AA00">//Produkt gr&ouml;&szlig;er 43 suchen <a name="labelbreak.a"></a></font>
+<font color="#555555">017 </font>  loop1:
+<font color="#555555">018 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 1; i &lt;= 10; ++i) {
+<font color="#555555">019 </font>      <font color="#0000AA">for</font> (<font color="#006699">int</font> j = 1; j &lt;= 10; ++j) {
+<font color="#555555">020 </font>        <font color="#0000AA">if</font> (data[i - 1][j - 1] &gt; 43) {
+<font color="#555555">021 </font>          System.out.println(i + <font color="#0000FF">"*"</font> + j + <font color="#0000FF">"="</font> + (i*j));
+<font color="#555555">022 </font>          <font color="#0000AA">break</font> loop1;
+<font color="#555555">023 </font>        }
+<font color="#555555">024 </font>      } <a name="labelbreak.c"></a>
+<font color="#555555">025 </font>    } <a name="labelbreak.b"></a>
+<font color="#555555">026 </font>  }
+<font color="#555555">027 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing0706.java"><font color="#000055" size=-1>Listing0706.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 7.6: Das gelabelte break</i></p>
+
+<p>
+Das Programm erstellt zun&auml;chst eine Multiplikationstafel f&uuml;r
+die Zahlen von 1 bis 10. Ab <a href="k100049.html#labelbreak.a">Zeile 016</a>
+sucht es dann in einer geschachtelten Schleife nach den ersten beiden
+Faktoren, deren Produkt 43 &uuml;bersteigt. Die &auml;u&szlig;ere
+der beiden Schleifen hat das Label <font color="#000077"><tt>loop1</tt></font>,
+die innere ist ohne Label. Wenn die Anweisung <font color="#000077"><tt>break
+loop1;</tt></font> ausgef&uuml;hrt wird, springt das Programm an das
+Ende des mit dem Label <font color="#000077"><tt>loop1</tt></font>
+markierten Anweisungsblocks, also hinter die geschweifte Klammer in
+<a href="k100049.html#labelbreak.b">Zeile 025</a>. H&auml;tten wir
+ein ungelabeltes <font color="#000077"><tt>break</tt></font> verwendet,
+w&auml;re das Programm lediglich bis an das Ende von <a href="k100049.html#labelbreak.c">Zeile 024</a>
+gesprungen und die &auml;u&szlig;ere Schleife h&auml;tte eine weitere
+Iteration durchgef&uuml;hrt. 
+
+<p>
+Vollkommen analog zu der mit einem Label versehenen <a href="index_b.html#ixb100079"><font color=#000080><tt>break</tt></font></a>-Anweisung
+kann auch die mit einem Label versehene Form der <a href="index_c.html#ixb100080"><font color=#000080><tt>continue</tt></font></a>-Anweisung
+verwendet werden, um die n&auml;chste Iteration einer weiter au&szlig;en
+liegenden Schleife einzuleiten. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die <a href="index_b.html#ixb100079"><font color=#000080><tt>break</tt></font></a>-
+und <a href="index_c.html#ixb100080"><font color=#000080><tt>continue</tt></font></a>-Anweisungen,
+insbesondere die mit einem Label versehenen, stellen <a name="ixa100422"><i>Sprunganweisungen</i></a>
+dar. Im Vergleich zu den <font color="#000077"><tt>goto</tt></font>-Anweisungen
+anderer Programmiersprachen sind ihre F&auml;higkeiten aber auf kontrollierte
+Spr&uuml;nge in Schleifenanweisungen beschr&auml;nkt. Eine <i>allgemeine</i>
+Sprunganweisung gibt es in Java nicht (die Sprachdesigner haben sich
+aber scheinbar ein Hintert&uuml;rchen offengelassen und <font color="#000077"><tt>goto</tt></font>
+zu einem reservierten Wort erkl&auml;rt).</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Die Bedeutung von gelabelten <a href="index_b.html#ixb100079"><font color=#000080><tt>break</tt></font></a>-
+und <a href="index_c.html#ixb100080"><font color=#000080><tt>continue</tt></font></a>-Anweisungen
+ist in der Praxis nicht so gro&szlig;, wie man vermuten k&ouml;nnte.
+Unbedacht eingesetzt, k&ouml;nnen sie die Lesbarkeit eines Programms
+sogar vermindern. Eine weitere n&uuml;tzliche Anwendung des gelabelten
+<a href="index_b.html#ixb100079"><font color=#000080><tt>break</tt></font></a>
+besteht darin, eine Schleife aus einer darin liegenden <a href="index_s.html#ixb100078"><font color=#000080><tt>switch</tt></font></a>-Anweisung
+zu verlassen. 
+
+<!-- Section -->
+
+<a name="sectlevel4id007003003004"></a>
+<h4>Die erweiterte for-Schleife </h4>
+
+<p>
+Mit Java 5 wurde die <a href="index_f.html#ixb100077"><font color=#000080><tt>for</tt></font></a>-Schleife
+um eine syntaktische Variante erweitert, die den Umgang mit listenartigen
+Datenstrukturen, wie Collections und Arrays, vereinfacht. Diese, auch
+als &#187;foreach&#171; <a name="ixa100423"></a><a name="ixa100424"></a>
+bezeichnete Variante wird erst nach der Behandlung von Objekten (<a href="k100052.html#kapiteloop1">Kapitel 8</a>
+bis <a href="k100070.html#kapiteloop4">Kapitel 11</a>) und der Einf&uuml;hrung
+von Collections (<a href="k100097.html#kapitelcollections1">Kapitel 15</a>
+und <a href="k100104.html#kapitelcollections2">Kapitel 16</a>) voll
+verst&auml;ndlich. Aus Gr&uuml;nden der Systematik soll sie trotzdem
+an dieser Stelle erl&auml;utert werden; der Abschnitt kann aber beim
+ersten Lesen &uuml;bersprungen werden. 
+
+<p>
+Die erweiterte <a href="index_f.html#ixb100077"><font color=#000080><tt>for</tt></font></a>-Schleife
+hat folgende Syntax: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+for (formalerparameter : ausdruck)
+  anweisung;
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+&#187;formalerparameter&#171; ist dabei eine aus Datentyp und Variablenname
+bestehende Parameterdeklaration der Art <font color="#000077"><tt>Integer
+i</tt></font> oder <font color="#000077"><tt>Object o</tt></font>
+und &#187;ausdruck&#171; ist eine Instanz oder ein Ausdruck des Typs
+<a name="ixa100425"><a href="index_i.html#ixb100368"><font color=#000080><tt>java.lang.Iterable</tt></font></a></a><a name="ixa100425"></a>
+oder ein Array. Angewendet auf eine Collection hat die erweiterte
+<a href="index_f.html#ixb100077"><font color=#000080><tt>for</tt></font></a>-Schleife
+dieselbe Bedeutung wie folgendes Codest&uuml;ck: 
+<font color="#000077">
+<pre>
+for (Iterator it = ausdruck.iterator(); it.hasNext(); ) {
+  formalerparameter = it.next();
+  anweisung
+}
+</pre>
+</font>
+
+<p>
+Ein einfaches Beispiel zeigt die Anwendung in der Praxis: 
+<a name="anwendungerwforschleife1"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> printVector1(Vector v)
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  <font color="#0000AA">for</font> (Iterator it = v.iterator(); it.hasNext(); ) {
+<font color="#555555">004 </font>    Object o = it.next();
+<font color="#555555">005 </font>    System.out.println(o);
+<font color="#555555">006 </font>  }
+<font color="#555555">007 </font>}
+<font color="#555555">008 </font>
+<font color="#555555">009 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> printVector2(Vector v)
+<font color="#555555">010 </font>{
+<font color="#555555">011 </font>  <font color="#0000AA">for</font> (Object o : v) {
+<font color="#555555">012 </font>    System.out.println(o);
+<font color="#555555">013 </font>  }
+<font color="#555555">014 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 7.7: Anwendung der erweiterten for-Schleife auf Collections</i></p>
+
+<p>
+In <font color="#000077"><tt>printVector1</tt></font> wird eine konventionelle
+<a href="index_f.html#ixb100077"><font color=#000080><tt>for</tt></font></a>-Schleife
+verwendet, um die Elemente des Vectors auf der Konsole auszugeben.
+Dazu wird zun&auml;chst ein <a href="index_i.html#ixb100110"><font color=#000080><tt>Iterator</tt></font></a>
+deklariert, am Anfang der Schleife initialisiert und bei jedem Schleifendurchlauf
+darauf zugegriffen. Das ist etwas umst&auml;ndlich und syntaktisch
+nicht sehr elegant. Die Methode <font color="#000077"><tt>printVector2</tt></font>
+verwendet dagegen die erweiterte <a href="index_f.html#ixb100077"><font color=#000080><tt>for</tt></font></a>-Schleife
+und kann v&ouml;llig auf die explizite Deklaration und Verwendung
+des Iterators verzichten. Sie hat die gleiche Bedeutung wie die erste
+Variante. Der Code ist nun einfacher zu lesen und intuitiv zu verstehen
+(der Doppelpunkt in der Schleifendeklaration wird wie &#187;in&#171;
+gelesen). 
+
+<p>
+Die erweiterte <a href="index_f.html#ixb100077"><font color=#000080><tt>for</tt></font></a>-Schleife
+l&auml;sst sich auch auf Arrays anwenden. Sie ist dann eine Kurzform
+f&uuml;r folgendes Codest&uuml;ck: 
+<font color="#000077">
+<pre>
+Typ[] a = ausdruck;
+for (int i = 0; i &lt; a.length; i++) {
+  formalerparameter = a[i];
+  statement
+}
+</pre>
+</font>
+
+<p>
+Dass dies &auml;hnlich n&uuml;tzlich ist wie die Anwendung auf Collections,
+zeigt folgendes Beispiel: 
+<a name="listingid007008"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> printArray1(<font color="#006699">int</font>[] args)
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  <font color="#00AA00">// Ausgabe aller Elemente des Arrays &uuml;ber den Index</font>
+<font color="#555555">004 </font>  <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; args.length; ++i) {
+<font color="#555555">005 </font>    System.out.println(args[i]);
+<font color="#555555">006 </font>  }
+<font color="#555555">007 </font>}
+<font color="#555555">008 </font>
+<font color="#555555">009 </font><font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> printArray2(<font color="#006699">int</font>[] args)
+<font color="#555555">010 </font>{
+<font color="#555555">011 </font>  <font color="#00AA00">// Ausgabe aller Elemente des Arrays &uuml;ber die erweiterte</font>
+<font color="#555555">012 </font>  <font color="#00AA00">// for-Schleife (gelesen: f&uuml;r all a im Array args)</font>
+<font color="#555555">013 </font>  <font color="#0000AA">for</font> (<font color="#006699">int</font> a : args) {
+<font color="#555555">014 </font>    System.out.println(a);
+<font color="#555555">015 </font>  }
+<font color="#555555">016 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 7.8: Anwendung der erweiterten for-Schleife auf Arrays</i></p>
+
+<p>
+So wird der Code einfacher und klarer. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Die erweiterte <a href="index_f.html#ixb100077"><font color=#000080><tt>for</tt></font></a>-Schleife
+wurde nicht entwickelt, um <i>alle</i> Spezialf&auml;lle eines Collection-
+oder Array-Durchlaufs abzubilden. Sie will lediglich den vermutlich
+h&auml;ufigsten Fall vereinfachen, n&auml;mlich das einmalige Durchlaufen
+aller Elemente von vorne nach hinten. F&uuml;r Sonderf&auml;lle ist
+nach wie vor die konventionelle <a href="index_f.html#ixb100077"><font color=#000080><tt>for</tt></font></a>-Schleife
+zust&auml;ndig. Zu diesen z&auml;hlen beispielsweise: 
+<ul>
+<li>Das Durchlaufen der Collection von hinten nach vorn 
+<li>Das simultane Durchlaufen mehrerer Collections 
+<li>Das L&ouml;schen oder &Auml;ndern einzelner Elemente w&auml;hrend
+des Durchlaufs
+</ul>
+</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100046.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100048.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100050.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100052.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

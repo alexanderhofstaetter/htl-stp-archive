@@ -1,0 +1,338 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100207.html;106,k100215.html;107,k100217.html;108,k100221.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100207.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100215.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100217.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100221.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 32 - AWT-Dialogelemente
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id032009"></a>
+<h2>32.9 Choice </h2>
+<hr>
+<ul>
+<li><a href="k100216.html#sectlevel2id032009">32.9 Choice</a>
+</ul>
+<hr>
+
+<p>
+Ein <a name="ixa102142"><a href="index_c.html#ixb101423"><font color=#000080><tt>Choice</tt></font></a></a>-Men&uuml;
+ist ein aufklappbares Textfeld, dessen Inhalt aus einer vom Programm
+vorgegebenen Liste ausgew&auml;hlt werden kann. Dialogelemente des
+Typs <a href="index_c.html#ixb101423"><font color=#000080><tt>Choice</tt></font></a>
+entsprechen den unter Windows &uuml;blichen <a name="ixa102143"><i>Drop-Down-Listboxen</i></a>,
+einer eingeschr&auml;nkten Form der <a name="ixa102144"><i>Comboboxen</i></a>,
+bei denen das zugeh&ouml;rige Editfeld nicht separat ge&auml;ndert
+werden kann. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public Choice()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Choice.html" onClick="this.href=getApiDoc('java.awt.Choice')"><font color="#660066" size=-1>java.awt.Choice</font></a></td>
+</tr>
+</table>
+
+<p>
+Der parameterlose Konstruktor erstellt ein <a href="index_c.html#ixb101423"><font color=#000080><tt>Choice</tt></font></a>-Objekt
+mit einer leeren Liste. 
+
+<p>
+Eine der wichtigsten Methoden der Klasse <a href="index_c.html#ixb101423"><font color=#000080><tt>Choice</tt></font></a>
+ist <a name="ixa102145"><a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a></a>:
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void add(String item)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Choice.html" onClick="this.href=getApiDoc('java.awt.Choice')"><font color="#660066" size=-1>java.awt.Choice</font></a></td>
+</tr>
+</table>
+
+<p>
+Jeder Aufruf von <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+h&auml;ngt das &uuml;bergebene Element <font color="#000077"><tt>item</tt></font>
+an das Ende der Liste an. Die Elemente werden dabei in der Reihenfolge
+der Aufrufe von <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+eingef&uuml;gt. Eine automatische Sortierung wurde in Java nicht vorgesehen.
+
+<p>
+Analog zur Methode <a href="index_a.html#ixb100736"><font color=#000080><tt>add</tt></font></a>
+gibt es eine bedeutungsgleiche Methode <a name="ixa102146"><a href="index_a.html#ixb101615"><font color=#000080><tt>addItem</tt></font></a></a>.
+W&auml;hrend in der Klasse <a href="index_c.html#ixb101423"><font color=#000080><tt>Choice</tt></font></a>
+beide Methoden verwendet werden k&ouml;nnen, wurde die Methode <a href="index_a.html#ixb101615"><font color=#000080><tt>addItem</tt></font></a>
+in der Klasse <a href="index_l.html#ixb100108"><font color=#000080><tt>List</tt></font></a>
+mit dem JDK 1.2 als <a name="ixa102147"><a href="index_d.html#ixb100139"><font color=#000080><tt>deprecated</tt></font></a></a>
+markiert, sollte also nicht mehr verwendet werden. 
+
+<p>
+F&uuml;r den Zugriff auf die Elemente der Combobox stehen die Methoden
+<a name="ixa102148"><a href="index_g.html#ixb101502"><font color=#000080><tt>getItemCount</tt></font></a></a>,
+<a name="ixa102149"><a href="index_g.html#ixb101616"><font color=#000080><tt>getSelectedIndex</tt></font></a></a>,
+<a name="ixa102150"><a href="index_g.html#ixb101501"><font color=#000080><tt>getItem</tt></font></a></a>
+und <a name="ixa102151"><a href="index_g.html#ixb101617"><font color=#000080><tt>getSelectedItem</tt></font></a></a>
+zur Verf&uuml;gung: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public int getSelectedIndex()
+
+public String getItem(int n)
+
+public String getSelectedItem()
+
+public int getItemCount()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Choice.html" onClick="this.href=getApiDoc('java.awt.Choice')"><font color="#660066" size=-1>java.awt.Choice</font></a></td>
+</tr>
+</table>
+
+<p>
+<a href="index_g.html#ixb101502"><font color=#000080><tt>getItemCount</tt></font></a>
+liefert die Anzahl der Elemente, die sich gegenw&auml;rtig in der
+Liste befinden. Mit <a href="index_g.html#ixb101501"><font color=#000080><tt>getItem</tt></font></a>
+kann auf das <i>n</i>-te Element der Liste &uuml;ber seinen Index
+zugegriffen werden; die Z&auml;hlung beginnt bei 0. 
+
+<p>
+<a href="index_g.html#ixb101616"><font color=#000080><tt>getSelectedIndex</tt></font></a>
+liefert den Index des selektierten Elements, so dass durch &Uuml;bergabe
+dieses Werts an <a href="index_g.html#ixb101501"><font color=#000080><tt>getItem</tt></font></a>
+das aktuelle Element beschafft werden kann. Alternativ dazu kann <a href="index_g.html#ixb101617"><font color=#000080><tt>getSelectedItem</tt></font></a>
+aufgerufen werden, um ohne explizite Kenntnis der internen Nummer
+das selektierte Element zu beschaffen. 
+
+<p>
+Ebenso wie der Anwender kann auch das Programm selbst ein Element
+aus der Liste selektieren: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public select(int)
+public select(String)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Choice.html" onClick="this.href=getApiDoc('java.awt.Choice')"><font color="#660066" size=-1>java.awt.Choice</font></a></td>
+</tr>
+</table>
+
+<p>
+Hierbei wird an <a name="ixa102152"><a href="index_s.html#ixb101598"><font color=#000080><tt>select</tt></font></a></a>
+wahlweise ein <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>
+oder ein <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+&uuml;bergeben. Im ersten Fall wird das Element &uuml;ber seinen numerischen
+Index selektiert, im zweiten direkt durch Suche des angegebenen Werts.
+
+<p>
+Ebenso wie eine <a href="index_c.html#ixb101422"><font color=#000080><tt>Checkbox</tt></font></a>
+sendet auch ein <a href="index_c.html#ixb101423"><font color=#000080><tt>Choice</tt></font></a>-Element
+<a name="ixa102153">Item-Ereignisse</a>, wenn ein Element selektiert
+wurde. Um auf dieses Event zu reagieren, ist durch Aufruf von <a name="ixa102154"><a href="index_a.html#ixb101421"><font color=#000080><tt>addItemListener</tt></font></a></a>
+ein <a name="ixa102155"><a href="index_i.html#ixb101420"><font color=#000080><tt>ItemListener</tt></font></a></a>
+zu registrieren: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public void addItemListener(ItemListener l)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/Choice.html" onClick="this.href=getApiDoc('java.awt.Choice')"><font color="#660066" size=-1>java.awt.Choice</font></a></td>
+</tr>
+</table>
+
+<p>
+Ein Item-Event wird immer dann gesendet, wenn ein anderes Element
+ausgew&auml;hlt wurde. In diesem Fall wird im Ereignisempf&auml;nger
+die Methode <a name="ixa102156"><a href="index_i.html#ixb101425"><font color=#000080><tt>itemStateChanged</tt></font></a></a>
+mit einem Argument vom Typ <a name="ixa102157"><a href="index_i.html#ixb101345"><font color=#000080><tt>ItemEvent</tt></font></a></a>
+aufgerufen: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public abstract void itemStateChanged(ItemEvent e)
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/event/ItemEvent.html" onClick="this.href=getApiDoc('java.awt.event.ItemEvent')"><font color="#660066" size=-1>java.awt.event.ItemEvent</font></a></td>
+</tr>
+</table>
+
+<p>
+Das <a href="index_i.html#ixb101345"><font color=#000080><tt>ItemEvent</tt></font></a>
+stellt die Methode <a name="ixa102158"><a href="index_g.html#ixb101587"><font color=#000080><tt>getItemSelectable</tt></font></a></a>
+zur Verf&uuml;gung, mit der ermittelt werden kann, durch welches <a href="index_c.html#ixb101423"><font color=#000080><tt>Choice</tt></font></a>-Element
+das Ereignis ausgel&ouml;st wurde. Zus&auml;tzlich gibt es die Methode
+<a name="ixa102150"><a href="index_g.html#ixb101501"><font color=#000080><tt>getItem</tt></font></a></a>,
+die das ausgew&auml;hlte Element als <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+zur Verf&uuml;gung stellt: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public ItemSelectable getItemSelectable()
+
+public Object getItem()
+</pre>
+</font>
+</td>
+<td valign=top>
+<a href="../jdkdocs/api/java/awt/event/ItemEvent.html" onClick="this.href=getApiDoc('java.awt.event.ItemEvent')"><font color="#660066" size=-1>java.awt.event.ItemEvent</font></a></td>
+</tr>
+</table>
+
+<p>
+Damit kann offensichtlich auf zwei unterschiedliche Arten auf die
+&Auml;nderung der Auswahl reagiert werden. Einerseits kann mit <a href="index_g.html#ixb101587"><font color=#000080><tt>getItemSelectable</tt></font></a>
+ein <a href="index_c.html#ixb101423"><font color=#000080><tt>Choice</tt></font></a>-Element
+beschafft und mit <a href="index_g.html#ixb101617"><font color=#000080><tt>getSelectedItem</tt></font></a>
+das selektierte Element ermittelt werden. Andererseits kann <a href="index_g.html#ixb101501"><font color=#000080><tt>getItem</tt></font></a>
+aufgerufen und das Ergebnis in einen <a href="index_s.html#ixb100106"><font color=#000080><tt>String</tt></font></a>
+umgewandelt werden. Das folgende Listing demonstriert dies beispielhaft:
+<a name="listingid032011"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Choice2.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#006699">void</font> itemStateChanged(ItemEvent event)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  Choice choice = (Choice) event.getItemSelectable();
+<font color="#555555">006 </font>  String str1 = choice.getSelectedItem();
+<font color="#555555">007 </font>  String str2 = (String) event.getItem();
+<font color="#555555">008 </font>  System.out.println(<font color="#0000FF">"choice.getSelectedItem: "</font> + str1);
+<font color="#555555">009 </font>  System.out.println(<font color="#0000FF">"event.getItem:          "</font> + str2);
+<font color="#555555">010 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Choice2.inc"><font color="#000055" size=-1>Choice2.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 32.11: Behandlung der Ereignisse einer Choice-Komponente</i></p>
+
+<p>
+Das Beispielprogramm zum Testen der <a href="index_c.html#ixb101423"><font color=#000080><tt>Choice</tt></font></a>-Komponente
+sieht so aus: 
+<a name="listingid032012"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Choice1.inc */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">private</font> <font color="#006699">void</font> customizeLayout(Panel panel)
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  panel.setLayout(<font color="#0000AA">new</font> FlowLayout());
+<font color="#555555">006 </font>  Choice choice = <font color="#0000AA">new</font> Choice();
+<font color="#555555">007 </font>  choice.addItemListener(<font color="#006699">this</font>);
+<font color="#555555">008 </font>  choice.add(<font color="#0000FF">"rot"</font>);
+<font color="#555555">009 </font>  choice.add(<font color="#0000FF">"gr&uuml;n"</font>);
+<font color="#555555">010 </font>  choice.add(<font color="#0000FF">"gelb"</font>);
+<font color="#555555">011 </font>  choice.add(<font color="#0000FF">"blau"</font>);
+<font color="#555555">012 </font>  choice.add(<font color="#0000FF">"rosa"</font>);
+<font color="#555555">013 </font>  choice.add(<font color="#0000FF">"lila"</font>);
+<font color="#555555">014 </font>  panel.add(choice);
+<font color="#555555">015 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Choice1.inc"><font color="#000055" size=-1>Choice1.inc</font></a></td>
+</tr>
+</table>
+<i>
+Listing 32.12: Verwendung einer Choice-Komponente</i></p>
+<p>
+<a name="imageid032008"></a>
+<img src="images/Choice.gif">
+<p>
+
+<p><i>
+Abbildung 32.8: Ein Dialog mit einer Choice-Komponente</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100207.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100215.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100217.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100221.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

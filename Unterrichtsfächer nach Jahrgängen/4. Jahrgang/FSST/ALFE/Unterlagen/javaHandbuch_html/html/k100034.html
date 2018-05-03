@@ -1,0 +1,334 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100028.html;106,k100033.html;107,k100035.html;108,k100036.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100028.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100033.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100035.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100036.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 5 - Datentypen
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="abschnitttypkonvertierungen"></a>
+<h2>5.6 <a name="ixa100318">Typkonvertierungen</a></h2>
+<hr>
+<ul>
+<li><a href="k100034.html#abschnitttypkonvertierungen">5.6 Typkonvertierungen</a>
+<ul>
+<li><a href="k100034.html#sectlevel3id005006001">5.6.1 Standardkonvertierungen</a>
+<li><a href="k100034.html#sectlevel3id005006002">5.6.2 Vorzeichenlose Bytes</a>
+</ul>
+</ul>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel3id005006001"></a>
+<h3>5.6.1 Standardkonvertierungen </h3>
+
+<p>
+Es gibt diverse Konvertierungen zwischen unterschiedlichen Datentypen
+in Java. Diese werden einerseits vom Compiler automatisch vorgenommen,
+beispielsweise bei der Auswertung von numerischen Ausdr&uuml;cken.
+Andererseits k&ouml;nnen sie verwendet werden, um mit Hilfe des Type-Cast-Operators
+(siehe <a href="k100036.html#kapitelausdruecke">Kapitel 6</a>) eigene
+Konvertierungen vorzunehmen. 
+
+<p>
+Java unterscheidet prinzipiell zwischen <a name="ixa100319"><i>erweiternden</i></a>
+und <a name="ixa100320"><i>einschr&auml;nkenden Konvertierungen</i></a>
+und diese noch einmal nach primitiven Typen und Referenztypen. Zun&auml;chst
+zu den Referenztypen: 
+<ul>
+<li>Als erweiternde Konvertierung eines Referenztyps <font color="#000077"><tt>T</tt></font>
+wird vor allem die Umwandlung eines Objekts vom Typ <font color="#000077"><tt>T</tt></font>
+in eine seiner Vaterklassen angesehen.
+<li>Als einschr&auml;nkende Konvertierung eines Referenztyps <font color="#000077"><tt>T</tt></font>
+wird vor allem die Umwandlung eines Objekts vom Typ <font color="#000077"><tt>T</tt></font>
+in eine der aus <font color="#000077"><tt>T</tt></font> abgeleiteten
+Klassen angesehen.
+</ul>
+
+<p>
+Daneben gibt es noch eine ganze Reihe weiterer Regeln zur Definition
+von erweiternden und einschr&auml;nkenden Konvertierungen von Referenztypen.
+Die Bedeutung von Vaterklassen und den daraus abgeleiteten Unterklassen
+wird in <a href="k100057.html#kapiteloop2">Kapitel 9</a> ausf&uuml;hrlich
+erl&auml;utert. 
+
+<p>
+<a name="ixa100321">Konvertierungen auf primitiven Datentypen</a>
+sind etwas aufw&auml;ndiger zu erkl&auml;ren. Wir benutzen dazu <a href="k100034.html#konvprimdatentypen">Abbildung 5.1</a>:
+<p>
+<a name="konvprimdatentypen"></a>
+<img src="images/KonvPrimTyp.gif">
+<p>
+
+<p><i>
+Abbildung 5.1: Konvertierungen auf primitiven Datentypen</i></p>
+
+<p>
+Jede Konvertierung, die in Pfeilrichtung erfolgt, beschreibt eine
+erweiternde Konvertierung, und jede Konvertierung, die entgegen der
+Pfeilrichtung erfolgt, beschreibt eine einschr&auml;nkende Konvertierung.
+Andere Konvertierungen zwischen primitiven Datentypen sind nicht erlaubt.
+Insbesondere gibt es also keine legale Konvertierung von und nach
+<a name="ixa100322"><a href="index_b.html#ixb100071"><font color=#000080><tt>boolean</tt></font></a></a>
+und auch keine Konvertierung zwischen primitiven Typen und Referenztypen.
+
+<p>
+Welche Bedeutung haben nun aber die verschiedenen Konvertierungen
+zwischen unterschiedlichen Typen? Wir wollen uns an dieser Stelle
+lediglich mit den Konvertierungen zwischen primitiven Typen besch&auml;ftigen.
+Wie aus <a href="k100034.html#konvprimdatentypen">Abbildung 5.1</a>
+ersichtlich ist, beschr&auml;nken sich diese auf Umwandlungen zwischen
+numerischen Typen. Die Anwendung einer erweiternden Konvertierung
+wird in folgenden F&auml;llen vom Compiler automatisch vorgenommen:
+<ul>
+<li>Bei einer Zuweisung, wenn der Typ der Variablen und des zugewiesenen
+Ausdrucks nicht identisch ist
+<li>Bei der Auswertung eines arithmetischen Ausdrucks, wenn Operanden
+unterschiedlich typisiert sind
+<li>Beim Aufruf einer Methode, falls die Typen der aktuellen Parameter
+nicht mit denen der formalen Parameter &uuml;bereinstimmen
+</ul>
+
+<p>
+Es ist daher beispielsweise ohne Weiteres m&ouml;glich, ein <a href="index_s.html#ixb100250"><font color=#000080><tt>short</tt></font></a>
+und ein <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>
+gemeinsam in einem Additionsausdruck zu verwenden, da ein <a href="index_s.html#ixb100250"><font color=#000080><tt>short</tt></font></a>
+mit Hilfe einer erweiternden Konvertierung in ein <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>
+verwandelt werden kann. Ebenso ist es m&ouml;glich, ein <a href="index_c.html#ixb100223"><font color=#000080><tt>char</tt></font></a>
+als Array-Index zu verwenden, da es erweiternd in ein <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>
+konvertiert werden kann. Auch die Arithmetik in Ausdr&uuml;cken, die
+sowohl integrale als auch Flie&szlig;kommawerte enthalten, ist m&ouml;glich,
+da der Compiler alle integralen Parameter erweiternd in Flie&szlig;kommawerte
+umwandeln kann. 
+
+<p>
+Es ist dagegen nicht ohne Weiteres m&ouml;glich, einer <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>-Variablen
+einen <a href="index_d.html#ixb100254"><font color=#000080><tt>double</tt></font></a>-Wert
+zuzuweisen. Die hierzu erforderliche einschr&auml;nkende Konvertierung
+nimmt der Compiler nicht selbst vor; sie kann allerdings mit Hilfe
+des Type-Cast-Operators manuell durchgef&uuml;hrt werden. Auch die
+Verwendung eines <a href="index_l.html#ixb100252"><font color=#000080><tt>long</tt></font></a>
+als Array-Index verbietet sich aus diesem Grund. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Bei den einschr&auml;nkenden Konvertierungen kann es passieren, dass
+ein Wert verf&auml;lscht wird, da der Wertebereich des Zielobjekts
+kleiner ist. Aber auch erweiternde Konvertierungen sind nicht immer
+gefahrlos m&ouml;glich. So kann zwar beispielsweise ein <a href="index_f.html#ixb100253"><font color=#000080><tt>float</tt></font></a>
+mindestens genauso gro&szlig;e Werte aufnehmen wie ein <a href="index_l.html#ixb100252"><font color=#000080><tt>long</tt></font></a>.
+Seine Genauigkeit ist aber auf ca. 8 Stellen beschr&auml;nkt und daher
+k&ouml;nnen gr&ouml;&szlig;ere Ganzzahlen (z.B. 1000000123) nicht
+mehr mit voller Genauigkeit dargestellt werden.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#CC0000">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Warnung&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#CC0000"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id005006002"></a>
+<h3>5.6.2 Vorzeichenlose Bytes </h3>
+
+<p>
+In Java sind alle numerischen Datentypen vorzeichenbehaftet. Das ist
+in vielen F&auml;llen sinnvoll, kann aber bei der Handhabung von 8-Bit-Bytes
+hinderlich sein. Wird ein Byte als Repr&auml;sentation eines 8-Bit
+langen Maschinenworts angesehen, will man meist den Wertebereich von
+0 bis 255 zur Verf&uuml;gung haben. Als vorzeichenbehafteter Datentyp
+kann <a href="index_b.html#ixb100249"><font color=#000080><tt>byte</tt></font></a>
+aber nur Werte von -128 bis 127 darstellen. Ein Wert gr&ouml;&szlig;er
+oder gleich 128 erfordert also mindestens ein <a href="index_s.html#ixb100250"><font color=#000080><tt>short</tt></font></a>
+oder ein <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>.
+Deren L&auml;nge betr&auml;gt aber 2 bzw. 4 Byte. 
+
+<p>
+Das Dilemma l&auml;sst sich dadurch aufl&ouml;sen, dass man zwischen
+der programminternen Verarbeitung eines Bytes und seiner &auml;u&szlig;eren
+Repr&auml;sentation unterscheidet. Die Repr&auml;sentation nach au&szlig;en
+erfolgt dabei mit dem Datentyp <a href="index_b.html#ixb100249"><font color=#000080><tt>byte</tt></font></a>.
+Zur Verarbeitung im Programm wird er dagegen in ein <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>
+konvertiert, so dass alle Werte von 0 bis 255 dargestellt werden k&ouml;nnen.
+Konvertierungsmethoden erlauben es, zwischen beiden Darstellungen
+zu wechseln. 
+
+<p>
+Nat&uuml;rlich gibt es keinerlei automatischen Schutz gegen Wertebereichs&uuml;berschreitungen,
+wenn ein Byte als <a href="index_i.html#ixb100251"><font color=#000080><tt>int</tt></font></a>
+verarbeitet wird. Daf&uuml;r ist ausschlie&szlig;lich die Anwendung
+selbst verantwortlich. 
+
+<p>
+Das folgende Listing zeigt eine einfache Klasse <font color="#000077"><tt>ByteKit</tt></font>,
+mit der zwischen beiden Darstellungen gewechselt werden kann (Klassen
+werden in <a href="k100052.html#kapiteloop1">Kapitel 8</a> erl&auml;utert):
+<a name="listingid005012"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/**
+<font color="#555555">002 </font> * ByteKit
+<font color="#555555">003 </font> *
+<font color="#555555">004 </font> * Einfache Klasse zur Umwandlung zwischen int, char und
+<font color="#555555">005 </font> * vorzeichenlosen Bytes.
+<font color="#555555">006 </font> */</font>
+<font color="#555555">007 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> ByteKit
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#00AA00">/**
+<font color="#555555">010 </font>   * Wandelt value (0 &lt;= value &lt;= 255) in ein byte um.
+<font color="#555555">011 </font>   */</font>
+<font color="#555555">012 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">byte</font> fromUnsignedInt(<font color="#006699">int</font> value)
+<font color="#555555">013 </font>  {
+<font color="#555555">014 </font>    <font color="#0000AA">return</font> (<font color="#006699">byte</font>)value;
+<font color="#555555">015 </font>  }
+<font color="#555555">016 </font>
+<font color="#555555">017 </font>  <font color="#00AA00">/**
+<font color="#555555">018 </font>   * Wandelt c in ein byte um. Das High-Byte wird ignoriert.
+<font color="#555555">019 </font>   */</font>
+<font color="#555555">020 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">byte</font> fromChar(<font color="#006699">char</font> c)
+<font color="#555555">021 </font>  {
+<font color="#555555">022 </font>    <font color="#0000AA">return</font> (<font color="#006699">byte</font>)(c &amp; 0xFF);
+<font color="#555555">023 </font>  }
+<font color="#555555">024 </font>
+<font color="#555555">025 </font>  <font color="#00AA00">/**
+<font color="#555555">026 </font>   * Betrachtet value als vorzeichenloses byte und wandelt
+<font color="#555555">027 </font>   * es in eine Ganzzahl im Bereich 0..255 um.
+<font color="#555555">028 </font>   */</font>
+<font color="#555555">029 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">int</font> toUnsignedInt(<font color="#006699">byte</font> value)
+<font color="#555555">030 </font>  {
+<font color="#555555">031 </font>    <font color="#0000AA">return</font> (value &amp; 0x7F) + (value &lt; 0 ? 128 : 0);
+<font color="#555555">032 </font>  }
+<font color="#555555">033 </font>
+<font color="#555555">034 </font>  <font color="#00AA00">/**
+<font color="#555555">035 </font>   * Betrachtet value als vorzeichenloses byte und wandelt
+<font color="#555555">036 </font>   * es in ein Unicode-Zeichen mit High-Byte 0 um.
+<font color="#555555">037 </font>   */</font>
+<font color="#555555">038 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">char</font> toChar(<font color="#006699">byte</font> value)
+<font color="#555555">039 </font>  {
+<font color="#555555">040 </font>    <font color="#0000AA">return</font> (<font color="#006699">char</font>)toUnsignedInt(value);
+<font color="#555555">041 </font>  }
+<font color="#555555">042 </font>
+<font color="#555555">043 </font>  <font color="#00AA00">/**
+<font color="#555555">044 </font>   * Liefert die Binaerdarstellung von value.
+<font color="#555555">045 </font>   */</font>
+<font color="#555555">046 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> String toBitString(<font color="#006699">byte</font> value)
+<font color="#555555">047 </font>  {
+<font color="#555555">048 </font>    <font color="#006699">char</font>[] chars = <font color="#0000AA">new</font> <font color="#006699">char</font>[8];
+<font color="#555555">049 </font>    <font color="#006699">int</font> mask = 1;
+<font color="#555555">050 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; 8; ++i) {
+<font color="#555555">051 </font>      chars[7 - i] = (value &amp; mask) != 0 ? <font color="#0000FF">'1'</font> : <font color="#0000FF">'0'</font>;
+<font color="#555555">052 </font>      mask &lt;&lt;= 1;
+<font color="#555555">053 </font>    }
+<font color="#555555">054 </font>    <font color="#0000AA">return</font> <font color="#0000AA">new</font> String(chars);
+<font color="#555555">055 </font>  }
+<font color="#555555">056 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/ByteKit.java"><font color="#000055" size=-1>ByteKit.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 5.12: Umwandlung zwischen int, byte und char</i></p>
+
+<p>
+Eine einfache Anwendung der Klasse <font color="#000077"><tt>ByteKit</tt></font>
+zeigt das folgende Programm: 
+<a name="listingid005013"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing0513 */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing0513
+<font color="#555555">004 </font>{
+<font color="#555555">005 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">006 </font>  {
+<font color="#555555">007 </font>    <font color="#0000AA">for</font> (<font color="#006699">int</font> i = 0; i &lt; 256; ++i) {
+<font color="#555555">008 </font>      System.out.print(<font color="#0000FF">"i="</font> + i);
+<font color="#555555">009 </font>      <font color="#006699">byte</font> b = ByteKit.fromUnsignedInt(i);
+<font color="#555555">010 </font>      System.out.print(<font color="#0000FF">" b="</font> + ByteKit.toBitString(b));
+<font color="#555555">011 </font>      <font color="#006699">char</font> c = ByteKit.toChar(b);
+<font color="#555555">012 </font>      System.out.print(<font color="#0000FF">" c="</font> + (c &gt;= 32 ? c : <font color="#0000FF">'.'</font>));
+<font color="#555555">013 </font>      System.out.println();
+<font color="#555555">014 </font>    }
+<font color="#555555">015 </font>  }
+<font color="#555555">016 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing0513.java"><font color="#000055" size=-1>Listing0513.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 5.13: Anwendung der Klasse ByteKit</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100028.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100033.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100035.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100036.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

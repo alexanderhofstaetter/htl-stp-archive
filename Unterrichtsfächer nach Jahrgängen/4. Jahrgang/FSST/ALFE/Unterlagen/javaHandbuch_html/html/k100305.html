@@ -1,0 +1,503 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100300.html;106,k100304.html;107,k100306.html;108,k100307.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100300.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100304.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100306.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100307.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 47 - Objektorientierte Persistenz
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="jpasectiondatenbankabfragen"></a>
+<h2>47.5 Objektorientierte Datenbankabfragen </h2>
+<hr>
+<ul>
+<li><a href="k100305.html#jpasectiondatenbankabfragen">47.5 Objektorientierte Datenbankabfragen</a>
+<ul>
+<li><a href="k100305.html#sectlevel3id047005001">47.5.1 Suche nach Datens&auml;tzen</a>
+<li><a href="k100305.html#subsectionpersistencequeryparam">47.5.2 Eigenschaftsbasierte Suche nach Datens&auml;tzen</a>
+<li><a href="k100305.html#sectlevel3id047005003">47.5.3 Definition von Standardanfragen</a>
+</ul>
+</ul>
+<hr>
+
+<p>
+Neben den Basisoperationen Anlegen, Speichern und L&ouml;schen eines
+Datensatzes ist die Suche nach Datens&auml;tzen eine weitere Hauptaufgabe
+der Datenbankzugriffsschicht. In <a href="k100282.html#subsectionsqlkurzreferenz">Abschnitt 44.4.7</a>
+haben wir hierf&uuml;r die Datenbankanfragesprache SQL kennengelernt.
+Mit der sogenannten <a name="ixa103502"><i>JPA Query Language</i></a>
+steht eine solche Anfragesprache auch f&uuml;r die objektorientierte
+Zugriffsschicht zur Verf&uuml;gung. 
+
+<!-- Section -->
+
+<a name="sectlevel3id047005001"></a>
+<h3>47.5.1 Suche nach Datens&auml;tzen </h3>
+
+<p>
+Die Anfragesprache f&uuml;r Persistenz Beans orientiert sich stark
+an SQL und wird &uuml;ber ein spezielles Anfrageobjekt <a name="ixa103503"><a href="index_q.html#ixb102629"><font color=#000080><tt>Query</tt></font></a></a>
+ausgef&uuml;hrt. Nachdem beispielsweise <a href="k100304.html#persistenzanlegendir3">Listing 47.16</a>
+erfolgreich ausgef&uuml;hrt und die Datens&auml;tze f&uuml;r das <font color="#000077"><tt>Verzeichnis</tt></font>
+und die zwei anh&auml;ngenden <font color="#000077"><tt>Datei</tt></font>-Objekte
+erstellt wurden, k&ouml;nnen wir mit Hilfe eines <font color="#000077"><tt>Query</tt></font>-Objekts
+die abgespeicherten Verzeichniss&auml;tze auslesen und beispielsweise
+auf der Kommandozeile ausgeben: 
+<a name="persistenzquery1"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4717.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> javax.persistence.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.util.List;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4717
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">009 </font>  {
+<font color="#555555">010 </font>    <font color="#00AA00">//Erzeugen einer EntityManagerFactory mit Hilfe des symbolischen</font>
+<font color="#555555">011 </font>    <font color="#00AA00">//Namens aus dem Persistenz Descriptor (persistence.xml)</font>
+<font color="#555555">012 </font>    EntityManagerFactory emf =
+<font color="#555555">013 </font>      Persistence.createEntityManagerFactory(<font color="#0000FF">"persistenceExample"</font>);
+<font color="#555555">014 </font>
+<font color="#555555">015 </font>    <font color="#00AA00">//Erzeugen eines EntityManagers f&uuml;r den Zugriff auf</font>
+<font color="#555555">016 </font>    <font color="#00AA00">//die Datenbank</font>
+<font color="#555555">017 </font>    EntityManager manager = emf.createEntityManager();
+<font color="#555555">018 </font>
+<font color="#555555">019 </font>    <font color="#00AA00">//Beginn einer neuen Transanktion</font>
+<font color="#555555">020 </font>    EntityTransaction tx = manager.getTransaction();
+<font color="#555555">021 </font>    tx.begin();
+<font color="#555555">022 </font>
+<font color="#555555">023 </font>    <font color="#00AA00">//Erzeugen einer Anfrage</font>
+<font color="#555555">024 </font>    Query query = manager.createQuery(<font color="#0000FF">"select d from Verzeichnis d"</font>); <a name="persistenzquery1.a"></a>
+<font color="#555555">025 </font>
+<font color="#555555">026 </font>    <font color="#00AA00">//Ausf&uuml;hren der Anfrage und ermittel der Ergebnisliste</font>
+<font color="#555555">027 </font>    List&lt;Verzeichnis&gt; directories = query.getResultList();  <a name="persistenzquery1.b"></a>
+<font color="#555555">028 </font>        
+<font color="#555555">029 </font>    <font color="#00AA00">//Ausgabe der Datens&auml;tze</font>
+<font color="#555555">030 </font>    <font color="#0000AA">for</font>(Verzeichnis directory : directories) {
+<font color="#555555">031 </font>      System.out.println(directory.toString());
+<font color="#555555">032 </font>    }
+<font color="#555555">033 </font>        
+<font color="#555555">034 </font>    <font color="#00AA00">//Abschluss der Transaktion mit einem Commit</font>
+<font color="#555555">035 </font>    tx.commit();
+<font color="#555555">036 </font>        
+<font color="#555555">037 </font>    <font color="#00AA00">//Freigabe der Ressourcen des EntityManagers</font>
+<font color="#555555">038 </font>    manager.close();
+<font color="#555555">039 </font>
+<font color="#555555">040 </font>    <font color="#00AA00">//Schlie&szlig;en der EntityManagerFactory und Freigeben der</font>
+<font color="#555555">041 </font>    <font color="#00AA00">//belegten Ressourcen</font>
+<font color="#555555">042 </font>    emf.close();
+<font color="#555555">043 </font>  }
+<font color="#555555">044 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4717.java"><font color="#000055" size=-1>Listing4717.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 47.17: Suche nach Datens&auml;tzen</i></p>
+
+<p>
+Das <a href="index_q.html#ixb102629"><font color=#000080><tt>Query</tt></font></a>-Objekt
+in <a href="k100305.html#persistenzquery1.a">Zeile 024</a> wird mit
+Hilfe einer SQL-&auml;hnlichen Anfrage erzeugt und stellt das JPA-Pendant
+zu einem <font color="#000077"><tt>Statement</tt></font> dar, wie
+wir sie in <a href="k100282.html#jdbcobjekte">Abschnitt 44.4.5</a>
+kennengelernt haben. Die allgemeine Syntax f&uuml;r SQL- und JPA-Anfragen
+finden Sie in <a href="k100282.html#subsectionsqlkurzreferenz">Abschnitt 44.4.7</a>.
+Im Unterschied zu den SQL-Anfragen operiert das Java Persistenz API
+allerdings ausschlie&szlig;lich auf Java-Objekten (wie beispielsweise
+<font color="#000077"><tt>Verzeichnis</tt></font>) - der Name der
+Datenbanktabelle spielt keine Rolle. 
+
+<p>
+Durch Aufruf der Methode <font color="#000077"><tt>getResultList</tt></font>
+in <a href="k100305.html#persistenzquery1.b">Zeile 027</a> wird die
+Anfrage ausgef&uuml;hrt und das Ergebnis als Liste zur&uuml;ckgegeben.
+Hierbei muss der Typ der Liste nat&uuml;rlich zur formulierten Anfrage
+passen, andernfalls kommt es zu einer <font color="#000077"><tt>ClassCastException</tt></font>.
+
+
+<!-- Section -->
+<a name="subsectionpersistencequeryparam"></a>
+<h3>47.5.2 Eigenschaftsbasierte Suche nach Datens&auml;tzen </h3>
+
+<p>
+Bei einer umfangreichen Datenbank ist es nat&uuml;rlich indiskutabel,
+zun&auml;chst <i>alle</i> Datens&auml;tze einer Tabelle auszulesen
+und dann das gew&uuml;nschte Objekt in eine Schleife zu ermitteln.
+Deshalb l&auml;sst sich auch im JPA die Suche &uuml;ber eine <font color="#000077"><tt>Where</tt></font>-Klausel
+einschr&auml;nken. &Auml;hnlich wie bei einem <a href="index_p.html#ixb102431"><font color=#000080><tt>PreparedStatement</tt></font></a>
+in <a href="k100282.html#jdbcpreparedstatement">Abschnitt 44.4.6</a>
+verwenden wir dazu einen Platzhalter als Parameter f&uuml;r die Elemente
+des Suchausdrucks: 
+<a name="persistenzquery2"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4718.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> javax.persistence.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4718
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#00AA00">//Erzeugen einer EntityManagerFactory mit Hilfe des symbolischen</font>
+<font color="#555555">010 </font>    <font color="#00AA00">//Namens aus dem Persistenz Descriptor (persistence.xml)</font>
+<font color="#555555">011 </font>    EntityManagerFactory emf =
+<font color="#555555">012 </font>      Persistence.createEntityManagerFactory(<font color="#0000FF">"persistenceExample"</font>);
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>    <font color="#00AA00">//Erzeugen eines EntityManagers f&uuml;r den Zugriff auf</font>
+<font color="#555555">015 </font>    <font color="#00AA00">//die Datenbank</font>
+<font color="#555555">016 </font>    EntityManager manager = emf.createEntityManager();
+<font color="#555555">017 </font>
+<font color="#555555">018 </font>    <font color="#00AA00">//Beginn einer neuen Transanktion</font>
+<font color="#555555">019 </font>    EntityTransaction tx = manager.getTransaction();
+<font color="#555555">020 </font>    tx.begin();
+<font color="#555555">021 </font>
+<font color="#555555">022 </font>    <font color="#00AA00">//Erzeugen einer Anfrage mit dem Parameter :name</font>
+<font color="#555555">023 </font>    Query query = manager.createQuery(                           <a name="persistenzquery2.a"></a>
+<font color="#555555">024 </font>      <font color="#0000FF">"select d from Verzeichnis d where d.name = :name"</font>
+<font color="#555555">025 </font>    );
+<font color="#555555">026 </font>
+<font color="#555555">027 </font>    <font color="#00AA00">//Setzen des Parameters</font>
+<font color="#555555">028 </font>    query.setParameter(<font color="#0000FF">"name"</font>, <font color="#0000FF">"temp"</font>);                        <a name="persistenzquery2.b"></a>
+<font color="#555555">029 </font>
+<font color="#555555">030 </font>    <font color="#00AA00">//Auslesen eines einzelnen Ergenisses</font>
+<font color="#555555">031 </font>    Verzeichnis directory = (Verzeichnis) query.getSingleResult(); <a name="persistenzquery2.c"></a>
+<font color="#555555">032 </font>    System.out.println(directory.toString());
+<font color="#555555">033 </font>
+<font color="#555555">034 </font>    <font color="#00AA00">//Abschluss der Transaktion mit einem Commit</font>
+<font color="#555555">035 </font>    tx.commit();
+<font color="#555555">036 </font>
+<font color="#555555">037 </font>    <font color="#00AA00">//Freigabe der Ressourcen des EntityManagers</font>
+<font color="#555555">038 </font>    manager.close();
+<font color="#555555">039 </font>
+<font color="#555555">040 </font>    <font color="#00AA00">//Schlie&szlig;en der EntityManagerFactory und Freigeben der</font>
+<font color="#555555">041 </font>    <font color="#00AA00">//belegten Ressourcen</font>
+<font color="#555555">042 </font>    emf.close();    
+<font color="#555555">043 </font>  }
+<font color="#555555">044 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4718.java"><font color="#000055" size=-1>Listing4718.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 47.18: Suche nach Datens&auml;tzen mit einer Where-Klausel</i></p>
+
+<p>
+In <a href="k100305.html#persistenzquery2.a">Zeile 023</a> wird eine
+Query mit einer Einschr&auml;nkung auf den Namen des Verzeichnisses
+definiert. Dabei ist zu beachten, dass der Name des Java-Attributs
+(<font color="#000077"><tt>name</tt></font>) und nicht der Name der
+Spalte in der Datenbanktabelle (<font color="#000077"><tt>dname</tt></font>)
+verwendet wird. Der Name des Platzhalters ist frei w&auml;hlbar und
+wird mit der Escape-Sequenz <font color="#000077"><tt>:</tt></font>
+eingeleitet. 
+
+<p>
+In <a href="k100305.html#persistenzquery2.b">Zeile 028</a> wird der
+zuvor definierte Parameter mit dem Wert "temp" gef&uuml;llt, der in
+der anschlie&szlig;enden Abfrage an seiner Stelle eingesetzt wird.
+Hier wird nur der Name des Parameters ohne f&uuml;hrenden Doppelpunkt
+verwendet. 
+
+<p>
+Um die Anfrage auszuf&uuml;hren, k&ouml;nnten wir nun analog zu <a href="k100305.html#persistenzquery1">Listing 47.17</a>
+die Methode <a name="ixa103504"><a href="index_g.html#ixb102630"><font color=#000080><tt>getResultList</tt></font></a></a>
+aufrufen. Da wir nur einen Treffer erhalten, w&uuml;rde sie uns eine
+Liste der L&auml;nge 1 zur&uuml;ckgeben. F&uuml;r diesen Fall definiert
+das Java Persistenz API mit der Methode <a name="ixa103505"><a href="index_g.html#ixb102631"><font color=#000080><tt>getSingleResult</tt></font></a></a>
+eine Abk&uuml;rzung, die den gesuchten Datensatz direkt zur&uuml;ckgibt.
+
+
+<!-- Section -->
+<a name="sectlevel3id047005003"></a>
+<h3>47.5.3 Definition von Standardanfragen</h3>
+
+<p>
+In gr&ouml;&szlig;eren Programmen werden Datenbankanfragen meist nicht
+nur an einer einzigen Stelle ben&ouml;tigt, sondern sie sollen in
+verschiedenen Programmteilen wiederverwendet werden. F&uuml;r diese
+Anwendungsf&auml;lle sieht das JPA die Definition von Standardanfragen
+in Form einer sogenannten <a name="ixa103506"><i>Named Query</i></a>
+vor. 
+
+<p>
+Eine <a name="ixa103507"><a href="index_n.html#ixb102633"><font color=#000080><tt>NamedQuery</tt></font></a></a>
+ist im Grunde nichts anders als eine parametrisierte Anfrage, die
+an einer Persistenz Bean definiert und anschlie&szlig;end nur noch
+&uuml;ber ihren symbolischen Namen referenziert wird. Das folgende
+Listing zeigt die die Anfrage aus dem letzten Abschnitt als Named
+Query am <font color="#000077"><tt>Verzeichnis</tt></font>-Objekt:
+<a name="directorynamedquery"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Verzeichnis.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> javax.persistence.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.util.List;
+<font color="#555555">005 </font><font color="#0000AA">import</font> java.util.LinkedList;
+<font color="#555555">006 </font>
+<font color="#555555">007 </font><font color="#00AA00">/**
+<font color="#555555">008 </font> * Diese Klasse repr&auml;sentiert die Tabelle 'dir' der 'DirDB'
+<font color="#555555">009 </font> * Jede Instanz der Klasse repr&auml;sentiert wiederum einen
+<font color="#555555">010 </font> * Datensatz
+<font color="#555555">011 </font> */</font>
+<font color="#555555">012 </font>@Entity
+<font color="#555555">013 </font>@Table( name = <font color="#0000FF">"dir"</font> )
+<font color="#555555">014 </font>@NamedQuery(name = <font color="#0000FF">"DIRECTORY_BY_NAME"</font>,          <a name="directorynamedquery.a"></a>
+<font color="#555555">015 </font>            query = <font color="#0000FF">"select d from Verzeichnis d where d.name = :name"</font>)
+<font color="#555555">016 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Verzeichnis 
+<font color="#555555">017 </font>{
+<font color="#555555">018 </font>  @Id
+<font color="#555555">019 </font>  @GeneratedValue
+<font color="#555555">020 </font>  @Column(name = <font color="#0000FF">"did"</font>)
+<font color="#555555">021 </font>  <font color="#0000AA">private</font> Integer id;
+<font color="#555555">022 </font>
+<font color="#555555">023 </font>  @Column(name = <font color="#0000FF">"dname"</font>)
+<font color="#555555">024 </font>  <font color="#0000AA">private</font> String name;
+<font color="#555555">025 </font>
+<font color="#555555">026 </font>  @OneToMany(cascade = CascadeType.ALL, mappedBy = <font color="#0000FF">"directory"</font>)
+<font color="#555555">027 </font>  @OrderBy(value = <font color="#0000FF">"name"</font>)
+<font color="#555555">028 </font>  <font color="#0000AA">private</font> List&lt;Datei&gt; files;
+<font color="#555555">029 </font>
+<font color="#555555">030 </font>  <font color="#00AA00">/**
+<font color="#555555">031 </font>   * Gesch&uuml;tzter Minimalkonstruktor zur Verwendung von Hibernate
+<font color="#555555">032 </font>   */</font>
+<font color="#555555">033 </font>  <font color="#0000AA">protected</font> Verzeichnis() {
+<font color="#555555">034 </font>  }
+<font color="#555555">035 </font>
+<font color="#555555">036 </font>  <font color="#00AA00">/**
+<font color="#555555">037 </font>   * &Ouml;ffentlicher Konstruktor zur Verwendung durch den Entwickler.
+<font color="#555555">038 </font>   * Dieser Konstruktor definiert alle Pflichtfelder der JavaBean.
+<font color="#555555">039 </font>   * @param name - Name des Verzeichniseintrags
+<font color="#555555">040 </font>     */</font>
+<font color="#555555">041 </font>  <font color="#0000AA">public</font> Verzeichnis(String name)
+<font color="#555555">042 </font>  {
+<font color="#555555">043 </font>    <font color="#006699">this</font>.name = name;
+<font color="#555555">044 </font>    <font color="#006699">this</font>.files = <font color="#0000AA">new</font> LinkedList&lt;Datei&gt;();
+<font color="#555555">045 </font>  }
+<font color="#555555">046 </font>
+<font color="#555555">047 </font>  <font color="#0000AA">public</font> Integer getId()
+<font color="#555555">048 </font>  {
+<font color="#555555">049 </font>    <font color="#0000AA">return</font> id;
+<font color="#555555">050 </font>  }
+<font color="#555555">051 </font>
+<font color="#555555">052 </font>  <font color="#0000AA">protected</font> <font color="#006699">void</font> setId(Integer id)
+<font color="#555555">053 </font>  {
+<font color="#555555">054 </font>    <font color="#006699">this</font>.id = id;
+<font color="#555555">055 </font>  }
+<font color="#555555">056 </font>
+<font color="#555555">057 </font>  <font color="#0000AA">public</font> String getName()
+<font color="#555555">058 </font>  {
+<font color="#555555">059 </font>    <font color="#0000AA">return</font> name;
+<font color="#555555">060 </font>  }
+<font color="#555555">061 </font>
+<font color="#555555">062 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setName(String name)
+<font color="#555555">063 </font>  {
+<font color="#555555">064 </font>    <font color="#006699">this</font>.name = name;
+<font color="#555555">065 </font>  }
+<font color="#555555">066 </font>
+<font color="#555555">067 </font>  <font color="#0000AA">public</font> List&lt;Datei&gt; getFiles()
+<font color="#555555">068 </font>  {
+<font color="#555555">069 </font>    <font color="#0000AA">return</font> files;
+<font color="#555555">070 </font>  }
+<font color="#555555">071 </font>
+<font color="#555555">072 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setFiles(List&lt;Datei&gt; files)
+<font color="#555555">073 </font>  {
+<font color="#555555">074 </font>    <font color="#006699">this</font>.files = files;
+<font color="#555555">075 </font>  }
+<font color="#555555">076 </font>
+<font color="#555555">077 </font>  <font color="#0000AA">public</font> <font color="#006699">boolean</font> equals(Object o)
+<font color="#555555">078 </font>  {
+<font color="#555555">079 </font>    <font color="#0000AA">if</font> (<font color="#006699">this</font> == o) <font color="#0000AA">return</font> <font color="#006699">true</font>;
+<font color="#555555">080 </font>    <font color="#0000AA">if</font> (o == <font color="#006699">null</font> || getClass() != o.getClass()) <font color="#0000AA">return</font> <font color="#006699">false</font>;
+<font color="#555555">081 </font>
+<font color="#555555">082 </font>    Verzeichnis dir = (Verzeichnis) o;
+<font color="#555555">083 </font>    <font color="#0000AA">return</font> !(id != <font color="#006699">null</font> ? !id.equals(dir.id) : dir.id != <font color="#006699">null</font>);
+<font color="#555555">084 </font>  }
+<font color="#555555">085 </font>
+<font color="#555555">086 </font>  <font color="#0000AA">public</font> <font color="#006699">int</font> hashCode()
+<font color="#555555">087 </font>  {
+<font color="#555555">088 </font>    <font color="#0000AA">return</font> id != <font color="#006699">null</font> ? id.hashCode() : 0;
+<font color="#555555">089 </font>  }
+<font color="#555555">090 </font>
+<font color="#555555">091 </font>  <font color="#0000AA">public</font> String toString()
+<font color="#555555">092 </font>  {
+<font color="#555555">093 </font>    <font color="#0000AA">return</font> <font color="#0000FF">"Directory[id:"</font>+ id + <font color="#0000FF">", name:"</font> + name +  <font color="#0000FF">"]"</font>;
+<font color="#555555">094 </font>  }
+<font color="#555555">095 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Verzeichnis.java"><font color="#000055" size=-1>Verzeichnis.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 47.19: Definition einer Named Query</i></p>
+
+<p>
+In <a href="k100305.html#directorynamedquery.a">Zeile 014</a> wird
+die Anfrage mit Hilfe der Annotation <a name="ixa103508"><a href="index_0.html#ixb102634"><font color=#000080><tt>@NamedQuery</tt></font></a></a>
+zentral definiert und mit dem (frei w&auml;hlbaren) symbolischen Namen
+<font color="#000077"><tt>DIRECTORY_BY_NAME</tt></font> versehen.
+Das folgende Listing zeigt, wie die Named Query aufgerufen werden
+kann: 
+<a name="persistenzquery3"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4720.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> javax.persistence.*;
+<font color="#555555">004 </font>
+<font color="#555555">005 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4720
+<font color="#555555">006 </font>{
+<font color="#555555">007 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">008 </font>  {
+<font color="#555555">009 </font>    <font color="#00AA00">//Erzeugen einer EntityManagerFactory mit Hilfe des symbolischen</font>
+<font color="#555555">010 </font>    <font color="#00AA00">//Namens aus dem Persistenz Descriptor (persistence.xml)</font>
+<font color="#555555">011 </font>    EntityManagerFactory emf =
+<font color="#555555">012 </font>      Persistence.createEntityManagerFactory(<font color="#0000FF">"persistenceExample"</font>);
+<font color="#555555">013 </font>
+<font color="#555555">014 </font>    <font color="#00AA00">//Erzeugen eines EntityManagers f&uuml;r den Zugriff auf</font>
+<font color="#555555">015 </font>    <font color="#00AA00">//die Datenbank</font>
+<font color="#555555">016 </font>    EntityManager manager = emf.createEntityManager();
+<font color="#555555">017 </font>
+<font color="#555555">018 </font>    <font color="#00AA00">//Beginn einer neuen Transanktion</font>
+<font color="#555555">019 </font>    EntityTransaction tx = manager.getTransaction();
+<font color="#555555">020 </font>    tx.begin();
+<font color="#555555">021 </font>
+<font color="#555555">022 </font>    <font color="#00AA00">//Referenzieren der benannten Anfrage mit dem Parameter :name</font>
+<font color="#555555">023 </font>    Query query = manager.createNamedQuery(<font color="#0000FF">"DIRECTORY_BY_NAME"</font>); <a name="persistenzquery3.a"></a>
+<font color="#555555">024 </font>
+<font color="#555555">025 </font>    <font color="#00AA00">//Setzen des Parameters</font>
+<font color="#555555">026 </font>    query.setParameter(<font color="#0000FF">"name"</font>, <font color="#0000FF">"temp"</font>);
+<font color="#555555">027 </font>
+<font color="#555555">028 </font>    <font color="#00AA00">//Auslesen eines einzelnen Ergebnisses</font>
+<font color="#555555">029 </font>    Verzeichnis directory = (Verzeichnis) query.getSingleResult();
+<font color="#555555">030 </font>    System.out.println(directory.toString());
+<font color="#555555">031 </font>
+<font color="#555555">032 </font>    <font color="#00AA00">//Abschluss der Transaktion mit einem Commit</font>
+<font color="#555555">033 </font>    tx.commit();
+<font color="#555555">034 </font>
+<font color="#555555">035 </font>    <font color="#00AA00">//Freigabe der Ressourcen des EntityManagers</font>
+<font color="#555555">036 </font>    manager.close();
+<font color="#555555">037 </font>
+<font color="#555555">038 </font>    <font color="#00AA00">//Schlie&szlig;en der EntityManagerFactory und Freigeben der</font>
+<font color="#555555">039 </font>    <font color="#00AA00">//belegten Ressourcen</font>
+<font color="#555555">040 </font>    emf.close();
+<font color="#555555">041 </font>  }
+<font color="#555555">042 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4720.java"><font color="#000055" size=-1>Listing4720.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 47.20: Suche nach Datens&auml;tzen mit benannten Anfragen</i></p>
+
+<p>
+In <a href="k100305.html#persistenzquery3.a">Zeile 023</a> wird beim
+Aufruf der Methode <a name="ixa103509"><a href="index_c.html#ixb102635"><font color=#000080><tt>createNamedQuery</tt></font></a></a>
+der Name der benannten Anfrage synonym zur Anfrage verwendet. Anschlie&szlig;end
+werden die definierten Parameter gesetzt und schlie&szlig;lich wird
+die Anfrage mit den Methoden <a href="index_g.html#ixb102631"><font color=#000080><tt>getSingleResult</tt></font></a>
+oder <a href="index_g.html#ixb102630"><font color=#000080><tt>getResultList</tt></font></a>
+ausgef&uuml;hrt. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=1></td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Um mehrere benannte Anfragen an einer <font color="#000077"><tt>Entity</tt></font>
+zu definieren, fasst man die <font color="#000077"><tt>@NamedQuery</tt></font>-Annotationen
+einfach als Attribute einer einzelnen <font color="#000077"><tt>@NamedQueries</tt></font>-Annotation
+zusammen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#0099CC">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Tip&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#0099CC"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100300.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100304.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100306.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100307.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>

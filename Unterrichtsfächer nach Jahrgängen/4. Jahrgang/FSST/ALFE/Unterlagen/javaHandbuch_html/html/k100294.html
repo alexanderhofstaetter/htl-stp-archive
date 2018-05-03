@@ -1,0 +1,617 @@
+<html>
+<head>
+<title>
+Handbuch der Java-Programmierung, 7. Auflage
+</title>
+</head>
+<body>
+<a name="startofbody"></a>
+<script language="JavaScript" src="hjp4lib.js">
+</script>
+<script language="JavaScript">
+installKbdHandler("97,#startofbody;101,#endofbody;116,cover.html;122,k100003.html;115,search.html;105,index.html;100,JDKDOCS;112,APIDOCS;104,k100292.html;106,k100293.html;107,k100295.html;108,k100300.html");
+</script>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100292.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100293.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100295.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100300.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">Kapitel 46 - Beans
+</table>
+<hr>
+
+
+<!-- Section -->
+<a name="sectlevel2id046002"></a>
+<h2>46.2 Entwurf einer einfachen Bean </h2>
+<hr>
+<ul>
+<li><a href="k100294.html#sectlevel2id046002">46.2 Entwurf einer einfachen Bean</a>
+<ul>
+<li><a href="k100294.html#sectlevel3id046002001">46.2.1 Grunds&auml;tzliche Architektur</a>
+<li><a href="k100294.html#sectlevel3id046002002">46.2.2 Grafische Darstellung</a>
+<li><a href="k100294.html#sectlevel3id046002003">46.2.3 Eigenschaften</a>
+<ul>
+<li><a href="k100294.html#sectlevel4id046002003001">Objekte als Eigenschaften</a>
+<li><a href="k100294.html#sectlevel4id046002003002">Indizierte Eigenschaften</a>
+</ul>
+<li><a href="k100294.html#sectlevel3id046002004">46.2.4 Implementierung</a>
+<li><a href="k100294.html#sectlevel3id046002005">46.2.5 Verwendung der Bean</a>
+</ul>
+</ul>
+<hr>
+
+<p>
+Wir wollen uns in diesem Abschnitt mit dem Entwurf einer einfachen
+Bean besch&auml;ftigen. Dazu werden wir eine Klasse <font color="#000077"><tt>LightBulb</tt></font>
+entwerfen, die eine kleine Gl&uuml;hlampe grafisch darstellt. Sie
+kann wahlweise an- oder ausgeschaltet werden. Diese Klasse wird alle
+notwendigen Eigenschaften einer Bean aufweisen und kann im GUI-Designer
+und im laufenden Programm verwendet werden. 
+
+<!-- Section -->
+
+<a name="sectlevel3id046002001"></a>
+<h3>46.2.1 Grunds&auml;tzliche Architektur </h3>
+
+<p>
+Da wir eine GUI-Komponente realisieren wollen, folgen wir analog der
+in <a href="k100221.html#kapitelcanvasundpanel">Kapitel 33</a> beschriebenen
+Vorgehensweise und leiten unsere Klasse <font color="#000077"><tt>LightBulb</tt></font>
+aus der Klasse <a href="index_c.html#ixb101652"><font color=#000080><tt>Canvas</tt></font></a>
+des Pakets <a href="index_j.html#ixb100198"><font color=#000080><tt>java.awt</tt></font></a>
+ab. Um die Eigenschaft der Serialisierbarkeit zu erf&uuml;llen, implementiert
+die Klasse das Interface <a href="index_s.html#ixb100461"><font color=#000080><tt>Serializable</tt></font></a>.
+Der Anschaltzustand wird in der Instanzvariablen <font color="#000077"><tt>lighton</tt></font>
+festgehalten: 
+<a name="listingid046001"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">002 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">003 </font>
+<font color="#555555">004 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> LightBulb
+<font color="#555555">005 </font><font color="#0000AA">extends</font> Canvas
+<font color="#555555">006 </font><font color="#0000AA">implements</font> Serializable
+<font color="#555555">007 </font>{
+<font color="#555555">008 </font>  <font color="#0000AA">protected</font> <font color="#006699">boolean</font> lighton;
+<font color="#555555">009 </font>  <font color="#0000AA">transient</font> <font color="#0000AA">protected</font> Image   offimage;
+<font color="#555555">010 </font>  <font color="#0000AA">transient</font> <font color="#0000AA">protected</font> Image   onimage;
+<font color="#555555">011 </font>  ...
+<font color="#555555">012 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 46.1: Deklaration der Klasse LightBulb</i></p>
+
+
+<!-- Section -->
+<a name="sectlevel3id046002002"></a>
+<h3>46.2.2 Grafische Darstellung </h3>
+
+<p>
+Die grafische Darstellung der Gl&uuml;hbirne soll durch das Anzeigen
+von Bitmaps erfolgen, die bei der Instanzierung aus zwei <font color="#660099">gif</font>-Dateien
+<font color="#660099">bulb1.gif</font> und <font color="#660099">bulb2.gif</font>
+geladen werden. Abh&auml;ngig vom Zustand der Variable <font color="#000077"><tt>lighton</tt></font>
+wird in der &uuml;berlagerten <a href="index_p.html#ixb101155"><font color=#000080><tt>paint</tt></font></a>-Methode
+jeweils eine der beiden Bitmaps angezeigt. Das Verfahren entspricht
+im Wesentlichen dem in <a href="k100227.html#entwicklungbitmapkomponente">Abschnitt 34.1.2</a>
+beschriebenen. Auch die Methoden <a href="index_g.html#ixb101646"><font color=#000080><tt>getPreferredSize</tt></font></a>
+und <a href="index_g.html#ixb101655"><font color=#000080><tt>getMinimumSize</tt></font></a>
+werden &uuml;berlagert, damit die Komponente einem eventuell vorhandenen
+Layoutmanager die gew&uuml;nschte Gr&ouml;&szlig;e (in diesem Fall
+40 mal 40 Pixel) mitteilen kann. 
+
+<p>
+Etwas anders als bisher beschrieben arbeitet die Routine zum Laden
+der Bilddateien. Damit die Bilddatei auch gefunden wird, wenn die
+Klasse aus einer <font color="#660099">.jar</font>-Datei geladen wurde
+(das ist beispielsweise beim Laden von serialisierten Beans oder beim
+Import in einen GUI-Designer der Fall), kann nicht einfach der Dateiname
+an <a href="index_c.html#ixb100656"><font color=#000080><tt>createImage</tt></font></a>
+bzw. <a href="index_g.html#ixb101670"><font color=#000080><tt>getImage</tt></font></a>
+&uuml;bergeben werden. Stattdessen konstruieren wir mit Hilfe des
+Klassenobjekts unserer Bean und dessen Methode <a name="ixa103406"><a href="index_g.html#ixb102545"><font color=#000080><tt>getResource</tt></font></a></a>
+ein <a href="index_u.html#ixb102209"><font color=#000080><tt>URL</tt></font></a>-Objekt,
+das wir an <font color="#000077"><tt>createImage</tt></font> &uuml;bergeben
+k&ouml;nnen: 
+<a name="listingid046002"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#0000AA">private</font> Image getImageResource(String name)
+<font color="#555555">002 </font>{
+<font color="#555555">003 </font>  Image img = <font color="#006699">null</font>;
+<font color="#555555">004 </font>  <font color="#0000AA">try</font> {
+<font color="#555555">005 </font>    java.net.URL url = getClass().getResource(name);
+<font color="#555555">006 </font>    img = getToolkit().createImage(url);
+<font color="#555555">007 </font>    MediaTracker mt = <font color="#0000AA">new</font> MediaTracker(<font color="#006699">this</font>);
+<font color="#555555">008 </font>    mt.addImage(img, 0);
+<font color="#555555">009 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">010 </font>      <font color="#00AA00">//Warten, bis das Image vollst&auml;ndig geladen ist,</font>
+<font color="#555555">011 </font>      mt.waitForAll();
+<font color="#555555">012 </font>    } <font color="#0000AA">catch</font> (InterruptedException e) {
+<font color="#555555">013 </font>      <font color="#00AA00">//nothing</font>
+<font color="#555555">014 </font>    }
+<font color="#555555">015 </font>  } <font color="#0000AA">catch</font> (Exception e) {
+<font color="#555555">016 </font>    System.err.println(e.toString());
+<font color="#555555">017 </font>  }
+<font color="#555555">018 </font>  <font color="#0000AA">return</font> img;
+<font color="#555555">019 </font>}</pre>
+</font>
+</td>
+</tr>
+</table>
+<i>
+Listing 46.2: Laden einer Image-Ressource</i></p>
+
+<p>
+Diese Vorgehensweise basiert darauf, dass jede geladene Klasse ihren
+<a name="ixa103407"><i>Classloader</i></a> (also das Objekt, das f&uuml;r
+das Laden der Klasse verantwortlich war) kennt und an diesen Aufrufe
+zum Laden von Ressourcen delegieren kann. Der beim Laden eines Objekts
+aus einer <font color="#660099">.jar</font>-Datei verwendete Classloader
+unterscheidet sich dabei sehr wohl von dem <a name="ixa103408"><i>Bootstrap Loader</i></a>,
+der System- und Anwendungsklassen aus <font color="#660099">.class</font>-Dateien
+l&auml;dt. Diese Unterscheidung wird in dem von <font color="#000077"><tt>getResource</tt></font>
+gelieferten URL gekapselt und vom AWT-Toolkit beim Aufruf von <font color="#000077"><tt>createImage</tt></font>
+aufgel&ouml;st. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Nach dem Aufruf von <a href="index_c.html#ixb100656"><font color=#000080><tt>createImage</tt></font></a>
+sorgt ein <a href="index_m.html#ixb101678"><font color=#000080><tt>MediaTracker</tt></font></a>
+daf&uuml;r, das die Bilddateien erst vollst&auml;ndig geladen werden,
+bevor die Methode terminiert. Diese Technik verhindert, dass <font color="#000077"><tt>paint</tt></font>
+aufgerufen wird, w&auml;hrend die <font color="#000077"><tt>Image</tt></font>-Objekte
+noch nicht vollst&auml;ndig initialisiert sind. Details dazu wurden
+in <a href="k100227.html#bitmapladenanzeigen">Abschnitt 34.1.1</a>
+vorgestellt.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id046002003"></a>
+<h3>46.2.3 Eigenschaften </h3>
+
+<p>
+Wie im einleitenden Abschnitt dargelegt, sind <i>Eigenschaften</i>
+ein wesentliches Designmerkmal von Beans. Eine Eigenschaft ist eigentlich
+nur eine Membervariable, die &uuml;ber &ouml;ffentliche Methoden gelesen
+und geschrieben werden kann. Eine Bean kann beliebig viele Eigenschaften
+haben, jede von ihnen besitzt einen Namen und einen Datentyp. Die
+Bean-Designkonventionen schreiben vor, dass auf eine Eigenschaft mit
+dem Namen <i>name</i> und dem Datentyp <i>typ</i> &uuml;ber folgende
+Methoden zugegriffen werden soll: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public typ getName();
+
+public void setName(typ newValue);
+</pre>
+</font>
+</td>
+</tr>
+</table>
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Diese beiden Methoden bezeichnet man auch als <a name="ixa103409"><i>getter-</i></a>
+und <a name="ixa103410"><i>setter-Methoden</i></a>.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+<p>
+Unsere Beispiel-Bean hat eine einzige Eigenschaft <i>lightOn</i> vom
+Typ <font color="#000077"><tt>boolean</tt></font>. Ihre getter-/setter-Methoden
+haben demnach folgende Signatur (der erste Buchstabe des Eigenschaftsnamens
+wird gro&szlig;geschrieben, da er hinter dem &#187;get&#171; bzw.
+&#187;set&#171; steht): 
+<font color="#000077">
+<pre>
+public boolean getLightOn();
+
+public void setLightOn(boolean newvalue);
+</pre>
+</font>
+
+<p>
+Auf diese Weise k&ouml;nnen getter- und setter-Methoden f&uuml;r alle
+primitiven Datentypen geschrieben werden. Der GUI-Designer erkennt
+Eigenschaftennamen und -typen anhand der Signaturen und stellt automatisch
+einen passenden Editor daf&uuml;r zur Verf&uuml;gung. 
+
+<!-- Section -->
+
+<a name="sectlevel4id046002003001"></a>
+<h4>Objekte als Eigenschaften </h4>
+
+<p>
+Neben primitiven Typen ist auch die &Uuml;bergabe von Objekttypen
+erlaubt. Die Signaturkonventionen entsprechen genau denen von primitiven
+Typen. Bei Objekteigenschaften kann allerdings nicht unbedingt davon
+ausgegangen werden, dass der GUI-Designer einen geeigneten Editor
+zur Verf&uuml;gung stellen kann. Zwar besitzt der GUI-Designer f&uuml;r
+die h&auml;ufig ben&ouml;tigten Objekttypen <font color="#000077"><tt>Color</tt></font>
+und <font color="#000077"><tt>Font</tt></font> standardm&auml;&szlig;ig
+geeignete Editoren. Bei einem selbst definierten Objekttyp ist das
+nat&uuml;rlich nicht der Fall. Hier muss der Entwickler n&ouml;tigenfalls
+selbst einen Editor entwickeln und dem Designer zur Verf&uuml;gung
+stellen. Wir werden in <a href="k100298.html#propertyeditoren">Abschnitt 46.6.2</a>
+zeigen, wie das gemacht wird. 
+
+<!-- Section -->
+
+<a name="sectlevel4id046002003002"></a>
+<h4>Indizierte Eigenschaften </h4>
+
+<p>
+Anstelle eines Einzelwerts kann eine Eigenschaft auch durch ein Array
+von Werten repr&auml;sentiert werden. Sie wird in diesem Fall als
+<a name="ixa103411"><i>indizierte Eigenschaft</i></a> bezeichnet.
+Die getter-/setter-Methoden sehen dann so aus: 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#EEFFCC">
+<tr>
+<td valign=top width=100%>
+<font color="#660066">
+<pre>
+public typ getName(int index);
+
+public void setName(int index, typ newValue);
+</pre>
+</font>
+</td>
+</tr>
+</table>
+
+<p>
+Es werden also keine Arrays &uuml;bergeben, sondern die Methoden erwarten
+jeweils den Index der gew&uuml;nschten Eigenschaft als zus&auml;tzliches
+Argument. F&uuml;r das Einhalten der Array-Grenzen ist der Aufrufer
+selbst verantwortlich. Ist die Array-Gr&ouml;&szlig;e variabel, k&ouml;nnte
+die Bean sie in einer zweiten Eigenschaft festhalten und &uuml;ber
+eigene getter-/setter-Methoden verf&uuml;gbar machen. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Auch indizierte Eigenschaften werden vom GUI-Designer automatisch
+erkannt und sollten zum Aufruf eines geeigneten Editors f&uuml;hren.
+Die Beanbox selbst (also die von SUN zur Verf&uuml;gung gestellte
+Referenzimplementierung eines GUI-Designers), auf die wir in <a href="k100295.html#beanbox">Abschnitt 46.3</a>
+eingehen werden, kann allerdings nicht mit indizierten Eigenschaften
+umgehen.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id046002004"></a>
+<h3>46.2.4 Implementierung </h3>
+
+<p>
+Nach diesen Vorbemerkungen ist die Implementierung der Bean zur Darstellung
+der Gl&uuml;hbirne keine gro&szlig;e H&uuml;rde mehr: 
+<a name="lightbulblisting"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* LightBulb.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.io.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> LightBulb
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Canvas
+<font color="#555555">008 </font><font color="#0000AA">implements</font> Serializable
+<font color="#555555">009 </font>{
+<font color="#555555">010 </font>  <font color="#00AA00">//Instanzvariablen</font>
+<font color="#555555">011 </font>  <font color="#0000AA">protected</font> <font color="#006699">boolean</font> lighton;
+<font color="#555555">012 </font>  <font color="#0000AA">transient</font> <font color="#0000AA">protected</font> Image offimage;
+<font color="#555555">013 </font>  <font color="#0000AA">transient</font> <font color="#0000AA">protected</font> Image onimage;
+<font color="#555555">014 </font>
+<font color="#555555">015 </font>  <font color="#00AA00">//Methoden</font>
+<font color="#555555">016 </font>  <font color="#0000AA">public</font> LightBulb()
+<font color="#555555">017 </font>  {
+<font color="#555555">018 </font>    lighton = <font color="#006699">false</font>;
+<font color="#555555">019 </font>    initTransientState();
+<font color="#555555">020 </font>  }
+<font color="#555555">021 </font>
+<font color="#555555">022 </font>  <font color="#00AA00">//Getter/Setter Licht an/aus</font>
+<font color="#555555">023 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> setLightOn(<font color="#006699">boolean</font> on)
+<font color="#555555">024 </font>  {
+<font color="#555555">025 </font>    <font color="#0000AA">if</font> (on != <font color="#006699">this</font>.lighton) {
+<font color="#555555">026 </font>      <font color="#006699">this</font>.lighton = on;
+<font color="#555555">027 </font>      repaint();
+<font color="#555555">028 </font>    }
+<font color="#555555">029 </font>  }
+<font color="#555555">030 </font>
+<font color="#555555">031 </font>  <font color="#0000AA">public</font> <font color="#006699">boolean</font> getLightOn()
+<font color="#555555">032 </font>  {
+<font color="#555555">033 </font>    <font color="#0000AA">return</font> <font color="#006699">this</font>.lighton;
+<font color="#555555">034 </font>  }
+<font color="#555555">035 </font>
+<font color="#555555">036 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> toggleLight()
+<font color="#555555">037 </font>  {
+<font color="#555555">038 </font>    setLightOn(!getLightOn());
+<font color="#555555">039 </font>  }
+<font color="#555555">040 </font>
+<font color="#555555">041 </font>  <font color="#00AA00">//Implementierung der Oberfl&auml;che</font>
+<font color="#555555">042 </font>  <font color="#0000AA">public</font> <font color="#006699">void</font> paint(Graphics g)
+<font color="#555555">043 </font>  {
+<font color="#555555">044 </font>    <font color="#006699">int</font> width = getSize().width;
+<font color="#555555">045 </font>    <font color="#006699">int</font> height = getSize().height;
+<font color="#555555">046 </font>    <font color="#006699">int</font> xpos = 0;
+<font color="#555555">047 </font>    <font color="#0000AA">if</font> (width &gt; 40) {
+<font color="#555555">048 </font>      xpos = (width - 40) / 2;
+<font color="#555555">049 </font>    }
+<font color="#555555">050 </font>    <font color="#006699">int</font> ypos = 0;
+<font color="#555555">051 </font>    <font color="#0000AA">if</font> (height &gt; 40) {
+<font color="#555555">052 </font>      ypos = (height - 40) / 2;
+<font color="#555555">053 </font>    }
+<font color="#555555">054 </font>    g.drawImage(
+<font color="#555555">055 </font>      (<font color="#006699">this</font>.lighton ? onimage : offimage),
+<font color="#555555">056 </font>      xpos,
+<font color="#555555">057 </font>      ypos,
+<font color="#555555">058 </font>      <font color="#006699">this</font>
+<font color="#555555">059 </font>    );
+<font color="#555555">060 </font>  }
+<font color="#555555">061 </font>
+<font color="#555555">062 </font>  <font color="#0000AA">public</font> Dimension getPreferredSize()
+<font color="#555555">063 </font>  {
+<font color="#555555">064 </font>    <font color="#0000AA">return</font> <font color="#0000AA">new</font> Dimension(40, 40);
+<font color="#555555">065 </font>  }
+<font color="#555555">066 </font>
+<font color="#555555">067 </font>  <font color="#0000AA">public</font> Dimension getMinimumSize()
+<font color="#555555">068 </font>  {
+<font color="#555555">069 </font>    <font color="#0000AA">return</font> <font color="#0000AA">new</font> Dimension(40, 40);
+<font color="#555555">070 </font>  }
+<font color="#555555">071 </font>
+<font color="#555555">072 </font>  <font color="#00AA00">//Private Methoden</font>
+<font color="#555555">073 </font>  <font color="#0000AA">private</font> <font color="#006699">void</font> initTransientState()
+<font color="#555555">074 </font>  {
+<font color="#555555">075 </font>    offimage = getImageResource(<font color="#0000FF">"bulb1.gif"</font>);
+<font color="#555555">076 </font>    onimage  = getImageResource(<font color="#0000FF">"bulb2.gif"</font>);
+<font color="#555555">077 </font>  }
+<font color="#555555">078 </font>
+<font color="#555555">079 </font>  <font color="#0000AA">private</font> <font color="#006699">void</font> readObject(ObjectInputStream stream)
+<font color="#555555">080 </font>  <font color="#0000AA">throws</font> IOException, ClassNotFoundException
+<font color="#555555">081 </font>  {
+<font color="#555555">082 </font>    stream.defaultReadObject();
+<font color="#555555">083 </font>    initTransientState();
+<font color="#555555">084 </font>  }
+<font color="#555555">085 </font>
+<font color="#555555">086 </font>  <font color="#0000AA">private</font> Image getImageResource(String name)
+<font color="#555555">087 </font>  {
+<font color="#555555">088 </font>    Image img = <font color="#006699">null</font>;
+<font color="#555555">089 </font>    <font color="#0000AA">try</font> {
+<font color="#555555">090 </font>      java.net.URL url = getClass().getResource(name);
+<font color="#555555">091 </font>      img = getToolkit().createImage(url);
+<font color="#555555">092 </font>    } <font color="#0000AA">catch</font> (Exception e) {
+<font color="#555555">093 </font>      System.err.println(e.toString());
+<font color="#555555">094 </font>    }
+<font color="#555555">095 </font>    <font color="#0000AA">return</font> img;
+<font color="#555555">096 </font>  }
+<font color="#555555">097 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/LightBulb.java"><font color="#000055" size=-1>LightBulb.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 46.3: Die Bean zur Anzeige einer Gl&uuml;hbirne</i></p>
+
+<p>
+Der Konstruktor initialisiert zun&auml;chst die Zustandsvariable <font color="#000077"><tt>lighton</tt></font>
+und ruft dann die Methode <font color="#000077"><tt>initTransientState</tt></font>
+auf, um die beiden gif-Dateien zu laden. Durch Aufruf von <font color="#000077"><tt>setLightOn</tt></font>
+kann die Beleuchtung wahlweise an- oder ausgeschaltet werden; <font color="#000077"><tt>getLightOn</tt></font>
+liefert den aktuellen Zustand. In <font color="#000077"><tt>paint</tt></font>
+wird - abh&auml;ngig vom aktuellen Zustand - jeweils eines der beiden
+Images ausgegeben. Die Umrechnungsroutinen dienen dazu, die Images
+zentriert auszugeben, wenn mehr Platz als n&ouml;tig zur Verf&uuml;gung
+steht. 
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+<tr>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top width=1000>
+
+<p>
+Bemerkenswert ist, dass die Methode <a href="index_r.html#ixb102229"><font color=#000080><tt>readObject</tt></font></a>
+&uuml;berlagert wurde. Sie wird immer dann aufgerufen, wenn die zuvor
+serialisierte Bean per Deserialisierung instanziert wird. In diesem
+Fall w&uuml;rde n&auml;mlich der Konstruktor des Objekts gar nicht
+aufgerufen werden (siehe <a href="k100270.html#lesenvonobjekten">Abschnitt 42.1.3</a>)
+und die <font color="#000077"><tt>Image</tt></font>-Variablen blieben
+uninitialisiert. Ihre Initialisierung haben wir deshalb in die Methode
+<font color="#000077"><tt>initTransientState</tt></font> verlagert,
+die sowohl aus dem Konstruktor als auch aus <font color="#000077"><tt>readObject</tt></font>
+aufgerufen wird. Damit wird die Bean in beiden F&auml;llen (Instanzierung
+per <font color="#000077"><tt>new</tt></font> und Deserialisierung)
+vollst&auml;ndig initialisiert. In seiner eigentlichen Funktion ruft
+<font color="#000077"><tt>readObject</tt></font> lediglich <a name="ixa103412"><a href="index_d.html#ixb102550"><font color=#000080><tt>defaultReadObject</tt></font></a></a>
+auf, um die Standarddeserialisierung auszuf&uuml;hren.</td>
+<td><img src="trp1_1.gif" width=2></td>
+<td valign=top>
+<table border=0 cellspacing=0 cellpadding=1 width=100% bgcolor="#000077">
+<tr>
+<td><font color="#FFFFFF">&nbsp;Hinweis&nbsp;</font></td>
+</tr>
+</table>
+</td>
+<td width=1 align=left valign=top bgcolor="#000077"><img src="trp1_1.gif"></td>
+</tr>
+</table>
+
+
+<!-- Section -->
+<a name="sectlevel3id046002005"></a>
+<h3>46.2.5 Verwendung der Bean </h3>
+
+<p>
+Zum Abschluss wollen wir uns ansehen, wie die erstellte Bean in ein
+einfaches Programm eingebunden werden kann. Dazu bedienen wir uns
+exakt der Techniken, die bereits in den Kapiteln <a href="k100202.html#kapitelguidialoge">31</a>
+bis <a href="k100226.html#kapitelbitmapsanimationen">34</a> beschrieben
+wurden. Tats&auml;chlich unterscheidet sich die Verwendung einer selbst
+entwickelten Bean nicht vom Einbinden einer vordefinierten Komponente.
+<a name="listingid046004"></a>
+
+<p>
+<table border=0 cellspacing=0 cellpadding=0 width=100% bgcolor="#DDDDDD">
+<tr>
+<td valign=top>
+<font color="#000055">
+<pre>
+<font color="#555555">001 </font><font color="#00AA00">/* Listing4604.java */</font>
+<font color="#555555">002 </font>
+<font color="#555555">003 </font><font color="#0000AA">import</font> java.awt.*;
+<font color="#555555">004 </font><font color="#0000AA">import</font> java.awt.event.*;
+<font color="#555555">005 </font>
+<font color="#555555">006 </font><font color="#0000AA">public</font> <font color="#0000AA">class</font> Listing4604
+<font color="#555555">007 </font><font color="#0000AA">extends</font> Frame
+<font color="#555555">008 </font>{
+<font color="#555555">009 </font>  <font color="#0000AA">public</font> Listing4604()
+<font color="#555555">010 </font>  {
+<font color="#555555">011 </font>    <font color="#006699">super</font>(<font color="#0000FF">"Bean einbinden"</font>);
+<font color="#555555">012 </font>    setLayout(<font color="#0000AA">new</font> FlowLayout());
+<font color="#555555">013 </font>    setBackground(Color.lightGray);
+<font color="#555555">014 </font>    LightBulb bulb1 = <font color="#0000AA">new</font> LightBulb();
+<font color="#555555">015 </font>    bulb1.setLightOn(<font color="#006699">false</font>);
+<font color="#555555">016 </font>    add(bulb1);
+<font color="#555555">017 </font>    LightBulb bulb2 = <font color="#0000AA">new</font> LightBulb();
+<font color="#555555">018 </font>    bulb2.setLightOn(<font color="#006699">true</font>);
+<font color="#555555">019 </font>    add(bulb2);
+<font color="#555555">020 </font>    addWindowListener(
+<font color="#555555">021 </font>      <font color="#0000AA">new</font> WindowAdapter() {
+<font color="#555555">022 </font>        <font color="#0000AA">public</font> <font color="#006699">void</font> windowClosing(WindowEvent event)
+<font color="#555555">023 </font>        {
+<font color="#555555">024 </font>          System.exit(0);
+<font color="#555555">025 </font>        }
+<font color="#555555">026 </font>      }
+<font color="#555555">027 </font>    );
+<font color="#555555">028 </font>  }
+<font color="#555555">029 </font>
+<font color="#555555">030 </font>  <font color="#0000AA">public</font> <font color="#0000AA">static</font> <font color="#006699">void</font> main(String[] args)
+<font color="#555555">031 </font>  {
+<font color="#555555">032 </font>    Listing4604 frm = <font color="#0000AA">new</font> Listing4604();
+<font color="#555555">033 </font>    frm.setLocation(100, 100);
+<font color="#555555">034 </font>    frm.pack();
+<font color="#555555">035 </font>    frm.setVisible(<font color="#006699">true</font>);
+<font color="#555555">036 </font>  }
+<font color="#555555">037 </font>}</pre>
+</font>
+</td>
+<td valign=top align=right>
+<a href="../examples/Listing4604.java"><font color="#000055" size=-1>Listing4604.java</font></a></td>
+</tr>
+</table>
+<i>
+Listing 46.4: Einbinden einer einfachen Bean</i></p>
+
+<p>
+Die Ausgabe des Programms sieht wie folgt aus: 
+<p>
+<a name="imageid046001"></a>
+<img src="images/BulbTest1.gif">
+<p>
+
+<p><i>
+Abbildung 46.1: Die Gl&uuml;hlampen-Bean</i></p>
+<hr>
+<table border=0 cellpadding=0 cellspacing=1 width="100%">
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="cover.html">&nbsp;Titel&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100003.html">&nbsp;Inhalt&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="search.html">&nbsp;Suchen&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="index.html">&nbsp;Index&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/index.html" onClick="this.href=getDocIndex()">&nbsp;DOC&nbsp;</a>
+<td align="right">Handbuch der Java-Programmierung, 7. Auflage, Addison
+Wesley, Version 7.0
+<tr bgcolor="#EEFFCC">
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100292.html">&nbsp;&lt;&lt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100293.html">&nbsp;&nbsp;&lt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100295.html">&nbsp;&nbsp;&gt;&nbsp;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="k100300.html">&nbsp;&gt;&gt;&nbsp;</a>
+<td width="7%" align=center bgcolor="#DDCC99"><a href="../jdkdocs/api/index.html" onClick="this.href=getApiIndex()">&nbsp;API&nbsp;</a>
+<td align="right">&copy; 1998, 2011 Guido Kr&uuml;ger &amp; Heiko
+Hansen, <a href="http://www.javabuch.de">http://www.javabuch.de</a>
+</table>
+<a name="endofbody"></a>
+</body>
+</html>
